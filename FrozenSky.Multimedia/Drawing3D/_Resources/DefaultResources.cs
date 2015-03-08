@@ -1,0 +1,259 @@
+﻿#region License information (FrozenSky and all based games/applications)
+/*
+    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    Copyright (C) 2014 Roland König (RolandK)
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see http://www.gnu.org/licenses/.
+*/
+#endregion
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using FrozenSky.Multimedia.Core;
+using FrozenSky.Util;
+
+//Some namespace mappings
+using D3D11 = SharpDX.Direct3D11;
+
+namespace FrozenSky.Multimedia.Drawing3D
+{
+    public class DefaultResources : Resource
+    {
+        public static readonly NamedOrGenericKey RESOURCE_KEY = new NamedOrGenericKey(typeof(DefaultResources));
+
+        // Sampler states
+        private Lazy<D3D11.SamplerState> m_defaultSamplerState;
+
+        // Blend states
+        private Lazy<D3D11.BlendState> m_defaultBlendState;
+        private Lazy<D3D11.BlendState> m_alphaBlendingBlendState;
+
+        // Depth stencil states
+        private Lazy<D3D11.DepthStencilState> m_depthStencilStateDefault;
+        private Lazy<D3D11.DepthStencilState> m_depthStencilStateDisableZ;
+        private Lazy<D3D11.DepthStencilState> m_depthStencilStateInvertedZTest;
+
+        // Rastarizer states
+        private Lazy<D3D11.RasterizerState> m_rasterStateLines;
+        private Lazy<D3D11.RasterizerState> m_rasterStateDefault;
+        private Lazy<D3D11.RasterizerState> m_rasterStateBiased;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DefaultResources" /> class.
+        /// </summary>
+        internal DefaultResources()
+        {
+
+        }
+
+        /// <summary>
+        /// Loads the resource.
+        /// </summary>
+        /// <param name="resources">Parent ResourceDictionary.</param>
+        protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
+        {
+            m_defaultSamplerState = new Lazy<D3D11.SamplerState>(() =>
+            {
+                return GraphicsHelper.CreateDefaultTextureSampler(device);
+            });
+
+            // Create default blend state
+            m_defaultBlendState = new Lazy<D3D11.BlendState>(() =>
+            {
+                D3D11.BlendStateDescription blendDesc = D3D11.BlendStateDescription.Default();
+                return new D3D11.BlendState(device.DeviceD3D11, blendDesc);
+            });
+
+            // Create alpha blending blend state
+            m_alphaBlendingBlendState = new Lazy<D3D11.BlendState>(() =>
+            {
+                //Define the blend state (based on http://www.rastertek.com/dx11tut26.html)
+                D3D11.BlendStateDescription blendDesc = D3D11.BlendStateDescription.Default();
+                blendDesc.RenderTarget[0].IsBlendEnabled = true;
+                blendDesc.RenderTarget[0].SourceBlend = D3D11.BlendOption.SourceAlpha;
+                blendDesc.RenderTarget[0].DestinationBlend = D3D11.BlendOption.InverseSourceAlpha;
+                blendDesc.RenderTarget[0].BlendOperation = D3D11.BlendOperation.Add;
+                blendDesc.RenderTarget[0].DestinationAlphaBlend = D3D11.BlendOption.One;
+                blendDesc.RenderTarget[0].SourceAlphaBlend = D3D11.BlendOption.One;
+                blendDesc.RenderTarget[0].AlphaBlendOperation = D3D11.BlendOperation.Maximum;
+                blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11.ColorWriteMaskFlags.All;
+
+                //Create the blendstate object
+                return new D3D11.BlendState(device.DeviceD3D11, blendDesc);
+            });
+
+            // Create default depth stencil state
+            m_depthStencilStateDefault = new Lazy<D3D11.DepthStencilState>(() =>
+            {
+                D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
+                stateDesc.DepthComparison = D3D11.Comparison.LessEqual;
+                return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
+            });
+
+            // Create the depth stencil state for diabling z writes
+            m_depthStencilStateDisableZ = new Lazy<D3D11.DepthStencilState>(() =>
+            {
+                D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
+                stateDesc.DepthWriteMask = D3D11.DepthWriteMask.Zero;
+                stateDesc.DepthComparison = D3D11.Comparison.LessEqual;
+                return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
+            });
+
+            // Create the depth stencil state for inverting z logic
+            m_depthStencilStateInvertedZTest = new Lazy<D3D11.DepthStencilState>(() =>
+            {
+                D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
+                stateDesc.DepthComparison = D3D11.Comparison.Greater;
+                stateDesc.DepthWriteMask = D3D11.DepthWriteMask.Zero;
+                return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
+            });
+
+            // Create default rasterizer state
+            m_rasterStateDefault = new Lazy<D3D11.RasterizerState>(() =>
+            {
+                var stateDesc = D3D11.RasterizerStateDescription.Default();
+                return new D3D11.RasterizerState(device.DeviceD3D11, stateDesc);
+            });
+
+            // Create a raster state with depth bias
+            m_rasterStateBiased = new Lazy<D3D11.RasterizerState>(() =>
+            {
+                D3D11.RasterizerStateDescription rasterDesc = D3D11.RasterizerStateDescription.Default();
+                rasterDesc.DepthBias = GraphicsHelper.GetDepthBiasValue(device, -0.00003f);
+                return new D3D11.RasterizerState(device.DeviceD3D11, rasterDesc);
+            });
+
+            // Create the rasterizer state for line rendering
+            m_rasterStateLines = new Lazy<D3D11.RasterizerState>(() =>
+            {
+                D3D11.RasterizerStateDescription stateDesc = D3D11.RasterizerStateDescription.Default();
+                stateDesc.CullMode = D3D11.CullMode.None;
+                stateDesc.IsAntialiasedLineEnabled = true;
+                stateDesc.FillMode = D3D11.FillMode.Solid;
+                return new D3D11.RasterizerState(device.DeviceD3D11, stateDesc);
+            });
+        }
+
+        /// <summary>
+        /// Unloads the resource.
+        /// </summary>
+        /// <param name="resources">Parent ResourceDictionary.</param>
+        protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
+        {
+            m_defaultSamplerState = GraphicsHelper.DisposeObjectLazy(m_defaultSamplerState);
+            m_defaultBlendState = GraphicsHelper.DisposeObjectLazy(m_defaultBlendState);
+            m_depthStencilStateDefault = GraphicsHelper.DisposeObjectLazy(m_depthStencilStateDefault);
+            m_depthStencilStateDisableZ = GraphicsHelper.DisposeObjectLazy(m_depthStencilStateDisableZ);
+            m_rasterStateLines = GraphicsHelper.DisposeObjectLazy(m_rasterStateLines);
+            m_rasterStateDefault = GraphicsHelper.DisposeObjectLazy(m_rasterStateDefault);
+        }
+
+        /// <summary>
+        /// Are resources loaded?
+        /// </summary>
+        public bool ResourcesLoaded
+        {
+            get { return m_defaultBlendState != null; }
+        }
+
+        internal D3D11.BlendState BlendStateDefault
+        {
+            get
+            {
+                if (m_defaultBlendState == null) { return null; }
+                return m_defaultBlendState.Value;
+            }
+        }
+
+        internal D3D11.BlendState AlphaBlendingBlendState
+        {
+            get
+            {
+                if (m_alphaBlendingBlendState == null) { return null; }
+                return m_alphaBlendingBlendState.Value;
+            }
+        }
+
+        internal D3D11.DepthStencilState DepthStencilStateDefault
+        {
+            get
+            {
+                if (m_depthStencilStateDefault == null) { return null; }
+                return m_depthStencilStateDefault.Value;
+            }
+        }
+
+        internal D3D11.DepthStencilState DepthStencilStateDisableZ
+        {
+            get
+            {
+                if (m_depthStencilStateDisableZ == null) { return null; }
+                return m_depthStencilStateDisableZ.Value;
+            }
+        }
+
+        internal D3D11.DepthStencilState DepthStencilStateInvertedZTest
+        {
+            get
+            {
+                if (m_depthStencilStateInvertedZTest == null) { return null; }
+                return m_depthStencilStateInvertedZTest.Value;
+            }
+        }
+
+        internal D3D11.RasterizerState RasterStateDefault
+        {
+            get
+            {
+                if (m_rasterStateDefault == null) { return null; }
+                return m_rasterStateDefault.Value;
+            }
+        }
+
+        internal D3D11.RasterizerState RasterStateBiased
+        {
+            get
+            {
+                if (m_rasterStateBiased == null) { return null; }
+                return m_rasterStateBiased.Value;
+            }
+        }
+
+        internal D3D11.RasterizerState RasterStateLines
+        {
+            get
+            {
+                if (m_rasterStateLines == null) { return null; }
+                return m_rasterStateLines.Value;
+            }
+        }
+
+        internal D3D11.SamplerState SamplerStateDefault
+        {
+            get
+            {
+                if (m_defaultSamplerState == null) { return null; }
+                return m_defaultSamplerState.Value;
+            }
+        }
+
+        public override bool IsLoaded
+        {
+            get { return m_defaultBlendState != null; }
+        }
+    }
+}

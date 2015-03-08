@@ -1,0 +1,90 @@
+﻿<SwapChainBackgroundPanel
+    x:Class="RK2048.MainGamePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:RK2048"
+    xmlns:logic="using:RK2048.Logic"
+    xmlns:util="using:FrozenSky.Util"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:toolkit="using:WinRTXamlToolkit.Controls"
+    mc:Ignorable="d">
+    
+    <!-- Define all resources needed on windows phone ui-->
+    <SwapChainBackgroundPanel.Resources>
+        <util:BooleanToVisibilityConverter x:Key="ConverterBooleanToVisibility" />
+    </SwapChainBackgroundPanel.Resources>
+
+    <!-- Define main viewmodel (gamelogic) -->
+    <SwapChainBackgroundPanel.DataContext>
+        <logic:GameCore />
+    </SwapChainBackgroundPanel.DataContext>
+
+    <!-- Append game behavior -->
+    <i:Interaction.Behaviors>
+        <local:MainPageBehavior />
+    </i:Interaction.Behaviors>
+
+    <!-- Score bar -->
+
+    <Grid Height="56" VerticalAlignment="Bottom"
+          HorizontalAlignment="Stretch"
+          Background="#99000000">
+        <StackPanel Height="55" 
+                VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                Margin="0,0,0,0"
+                Background="#00CCFF"
+                Orientation="Horizontal" FlowDirection="RightToLeft">
+            <StackPanel Orientation="Vertical"
+                    Margin="45,0,0,0">
+                <TextBlock HorizontalAlignment="Center" 
+                       FontSize="30"
+                       Foreground="White"
+                       Text="{Binding MaximumReachedScore, FallbackValue=100}" />
+                <TextBlock HorizontalAlignment="Center"
+                       FontSize="12"
+                       Foreground="White"
+                       Text="{Binding TextScoreMaximum, FallbackValue=[Maximum]}" />
+            </StackPanel>
+            <StackPanel Orientation="Vertical"
+                    Margin="20,0,0,0">
+                <TextBlock HorizontalAlignment="Center" 
+                       FontSize="30"
+                       Foreground="White"
+                       Text="{Binding CurrentScore, FallbackValue=100}" />
+                <TextBlock HorizontalAlignment="Center"
+                       FontSize="12"
+                       Foreground="White"
+                       Text="{Binding TextScoreCurrent, FallbackValue=[Current]}" />
+            </StackPanel>
+        </StackPanel>
+
+        <Button VerticalAlignment="Bottom" HorizontalAlignment="Left"
+            Margin="35,0,0,0"
+            Command="{Binding CommandRestart}"
+            Height="55" BorderBrush="#44FFFFFF" Background="#22FFFFFF">
+            <StackPanel Orientation="Horizontal">
+                <SymbolIcon Symbol="List" Margin="0,1,10,0" 
+                        Foreground="White"/>
+                <TextBlock VerticalAlignment="Center"
+                       FontSize="14"
+                       Foreground="White"
+                       Text="{Binding TextTitle, FallbackValue=[RK 2048]}" Margin="0" />
+            </StackPanel>
+
+            <!-- see help for flyout: http://www.visuallylocated.com/post/2014/05/29/Migrating-from-the-Windows-Phone-Toolkit-ContextMenu-to-the-new-Runtime-MenuFlyout.aspx -->
+            <FlyoutBase.AttachedFlyout>
+                <MenuFlyout>
+                    <MenuFlyoutItem Text="Blub" />
+                    <MenuFlyoutItem Text="Blub2" />
+                    <MenuFlyoutItem Text="Blu3" />
+                </MenuFlyout>
+            </FlyoutBase.AttachedFlyout>
+        </Button>
+
+    </Grid>
+
+
+
+</SwapChainBackgroundPanel>

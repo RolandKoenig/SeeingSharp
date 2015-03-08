@@ -1,0 +1,226 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <MinimumVisualStudioVersion>12.0</MinimumVisualStudioVersion>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{B077159E-8A45-42D2-896E-131EB2F8B9D0}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FrozenSky</RootNamespace>
+    <AssemblyName>FrozenSky</AssemblyName>
+    <DefaultLanguage>de-DE</DefaultLanguage>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <BaseIntermediateOutputPath>obj.Universal</BaseIntermediateOutputPath>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin.Universal\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;UNIVERSAL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin.Universal\Release\</OutputPath>
+    <DefineConstants>TRACE;UNIVERSAL</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- A reference to the entire .NET Framework is automatically included -->
+    <Page Include="Resources\FrozenSkyWinRTStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+    <TargetPlatform Include="Windows, Version=8.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
+    <Compile Include="ExceptionAnalyzers\SystemExceptionAnalyzer.cs" />
+    <Compile Include="FrozenSkyConstants.cs" />
+    <Compile Include="FrozenSkyException.cs" />
+    <Compile Include="FrozenSkyKey.cs" />
+    <Compile Include="FrozenSkyPointerButton.cs" />
+    <Compile Include="Gaming\_Data\GameDataContainer.cs" />
+    <Compile Include="Gaming\_Data\GameScore.cs" />
+    <Compile Include="Infrastructure\_AppLoader\IFrozenSkyAppLoader.cs" />
+    <Compile Include="Infrastructure\_ErrorAnalysis\ExceptionInfo.cs" />
+    <Compile Include="Infrastructure\_ErrorAnalysis\ExceptionInfoNode.cs" />
+    <Compile Include="Infrastructure\_ErrorAnalysis\ExceptionProperty.cs" />
+    <Compile Include="Infrastructure\_ErrorAnalysis\IExceptionAnalyzer.cs" />
+    <Compile Include="Infrastructure\_Translation\FrozenSkyTranslator.cs" />
+    <Compile Include="Infrastructure\_TypeQuery\TypeQueryHandler.cs" />
+    <Compile Include="Infrastructure\_Attributes\AssemblyQueryableTypeAttribute.cs" />
+    <Compile Include="Infrastructure\_Attributes\TranslateableClassAttribute.cs" />
+    <Compile Include="Infrastructure\_Attributes\UINavigatablePageAttribute.cs" />
+    <Compile Include="Infrastructure\_Bootstrapper\Bootstrapper.cs" />
+    <Compile Include="Infrastructure\FrozenSkyApplication.cs" />
+    <Compile Include="Infrastructure\_Bootstrapper\IBootstrapperItem.cs" />
+    <Compile Include="Infrastructure\_Bootstrapper\_Misc.cs" />
+    <Compile Include="Infrastructure\_Misc.cs" />
+    <Compile Include="Infrastructure\_Singletons\SingletonContainer.cs" />
+    <Compile Include="Infrastructure\_Singletons\SingletonExtension.cs" />
+    <Compile Include="Infrastructure\_Translation\TranslatedWord.cs" />
+    <Compile Include="Infrastructure\_Translation\TranslationXmlFile.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\BitmapComparison.cs" />
+    <Compile Include="Util\CommonTools.UI.cs" />
+    <Compile Include="Util\CommonTools.Cloning.cs" />
+    <Compile Include="Util\CommonTools.cs" />
+    <Compile Include="Util\CustomLazy.cs" />
+    <Compile Include="Util\DummyDisposable.cs" />
+    <Compile Include="Util\MultiDisposable.cs" />
+    <Compile Include="Util\SerializerRepository.cs" />
+    <Compile Include="Util\_Messaging\FrozenSkyMessage.cs" />
+    <Compile Include="Util\_Messaging\FrozenSkyMessageHandler.cs" />
+    <Compile Include="Util\_Mvvm\_Converters\StringFormatConverter.cs" />
+    <Compile Include="Util\_Mvvm\_Converters\Vector2ToMultilineStringConverter.cs" />
+    <Compile Include="Util\_Mvvm\_Converters\Vector3ToMultilineStringConverter.cs" />
+    <Compile Include="Util\_Messaging\_Attributes\MessageAsyncRoutingAttribute.cs" />
+    <Compile Include="Util\_Messaging\_Attributes\MessageDescriptionAttribute.cs" />
+    <Compile Include="Util\_Messaging\_Attributes\MessagePropertyDescriptionAttribute.cs" />
+    <Compile Include="Util\_Messaging\_Attributes\MessageSourceAttribute.cs" />
+    <Compile Include="Util\_Messaging\_Attributes\MessageUsageExampleAttribute.cs" />
+    <Compile Include="Util\_Messaging\_Misc.cs" />
+    <Compile Include="Util\_ResourceLoading\AssemblyResourceUriBuilder.cs" />
+    <Compile Include="Util\_ResourceLoading\ResourceSource.cs" />
+    <Compile Include="Util\TplBasedLoop.cs" />
+    <Compile Include="Util\_AssemblyResources\AssemblyResourceFileAttribute.cs" />
+    <Compile Include="Util\_AssemblyResources\AssemblyResourceInfo.cs" />
+    <Compile Include="Util\_AssemblyResources\AssemblyResourceLink.cs" />
+    <Compile Include="Util\_AssemblyResources\AssemblyResourceReader.cs" />
+    <Compile Include="Util\_Collections\IndexBasedDynamicCollection.cs" />
+    <Compile Include="Util\_Collections\NamedOrGenericKey.cs" />
+    <Compile Include="Util\_Collections\SingleInstanceCollection.cs" />
+    <Compile Include="Util\_Collections\ThreadSaveQueue.cs" />
+    <Compile Include="Util\_Collections\UniqueGenericKeyGenerator.cs" />
+    <Compile Include="Util\_CommonExtensions.cs" />
+    <Compile Include="Util\_Input\GestureCatcher.cs" />
+    <Compile Include="Util\_IO\ReusableMemoryStream.cs" />
+    <Compile Include="Util\_IO\_Misc.cs" />
+    <Compile Include="Util\_Messaging\MessagePublishException.cs" />
+    <Compile Include="Util\_Messaging\MessageSubscription.cs" />
+    <Compile Include="Util\_Misc.cs" />
+    <Compile Include="Util\_Mvvm\CommandManagerHelper.APACHE2.cs" />
+    <Compile Include="Util\_Mvvm\DelegateCommand.APACHE2.cs" />
+    <Compile Include="Util\_Mvvm\PropertyChangedBase.cs" />
+    <Compile Include="Util\_Mvvm\ViewModelBase.cs" />
+    <Compile Include="Util\_Mvvm\_Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Util\_Performance\PerformanceCalculatorBase.cs" />
+    <Compile Include="Util\_Performance\PerformanceAnalyzeResultBase.cs" />
+    <Compile Include="Util\_Performance\PerformanceAnalyzer.cs" />
+    <Compile Include="Util\_Performance\PerformanceAnalyzer.UISync.cs" />
+    <Compile Include="Util\_Performance\_Duration\DurationPerformanceCalculator.cs" />
+    <Compile Include="Util\_Performance\_Duration\DurationPerformanceResult.cs" />
+    <Compile Include="Util\_Performance\_FlowRate\FlowRatePerformanceCalculator.cs" />
+    <Compile Include="Util\_Performance\_FlowRate\FlowRatePerformanceResult.cs" />
+    <Compile Include="Util\_Threading\ObjectThread.cs" />
+    <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
+    <Compile Include="Util\_Threading\_Misc.cs" />
+    <Compile Include="_Math\_Custom\BoundingBox.Custom.cs" />
+    <Compile Include="_Math\_Custom\BoundingBox2D.cs" />
+    <Compile Include="_Math\_Custom\BoundingSphere.Custom.cs" />
+    <Compile Include="_Math\_Custom\Color4.Colors.cs" />
+    <Compile Include="_Math\_Custom\Color4.Custom.cs" />
+    <Compile Include="_Math\_Custom\CuttingEarsTriangulator.MIT.cs" />
+    <Compile Include="_Math\_Custom\EngineMath.cs" />
+    <Compile Include="_Math\_Custom\Line.cs" />
+    <Compile Include="_Math\_Custom\Line2D.cs" />
+    <Compile Include="_Math\_Custom\Matrix.Custom.cs" />
+    <Compile Include="_Math\_Custom\Matrix4Stack.cs" />
+    <Compile Include="_Math\_Custom\Plane.cs" />
+    <Compile Include="_Math\_Custom\Point.cs" />
+    <Compile Include="_Math\_Custom\Polygon.cs" />
+    <Compile Include="_Math\_Custom\Polygon2D.cs" />
+    <Compile Include="_Math\_Custom\Ray.Custom.cs" />
+    <Compile Include="_Math\_Custom\Ray2D.cs" />
+    <Compile Include="_Math\_Custom\Vector3.Custom.cs" />
+    <Compile Include="_Math\_Custom\Vector4.Custom.cs" />
+    <Compile Include="_Math\_Custom\_Misc.cs" />
+    <Compile Include="_Math\MathExtensions.cs" />
+    <Compile Include="_Math\_Mechanics\MovementAnimationHelper.cs" />
+    <Compile Include="_Math\_Mechanics\MovementSpeed.cs" />
+    <Compile Include="_Math\_SharpDXMath\Angle.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Bool.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Bool4.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\BoundingBox.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\BoundingFrustum.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\BoundingSphere.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Collision.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Color.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Color.Palette.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Color3.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Color4.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\ColorBGRA.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Enums.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\FrustumCameraParams.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Half.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Half2.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Half3.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Half4.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\HalfUtils.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Int3.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Int4.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\MathUtil.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Matrix.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Matrix3x2.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Matrix5x4.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\OrientedBoundingBox.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Plane.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Point.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Quaternion.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Ray.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Rectangle.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\RectangleF.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Size2.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Size2F.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Vector2.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Vector3.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Vector4.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Viewport.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\ViewportF.MIT.cs" />
+    <Compile Include="_Misc.cs" />
+    <Compile Include="_Translatables.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Behaviors\" />
+    <Folder Include="View\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PropertyTools">
+      <HintPath>..\Extern\PropertyTools\PropertyTools.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Misc\_FrozenSky.Multimedia.licenseheader">
+      <Link>_FrozenSky.Multimedia.licenseheader</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="_Math\_SharpDXMath\_LicenseInfo.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

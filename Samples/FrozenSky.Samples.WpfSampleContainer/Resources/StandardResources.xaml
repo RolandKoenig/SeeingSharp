@@ -1,0 +1,32 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:gfx="clr-namespace:FrozenSky.Multimedia.Views;assembly=FrozenSky.Multimedia"
+                    xmlns:prop="http://propertytools.org/wpf">
+
+    <Style TargetType="{x:Type Grid}" x:Key="MainBackgroundGrid">
+        <Setter Property="Background">
+            <Setter.Value>
+                <ImageBrush TileMode="FlipX" ImageSource="../Textures/Background.png"/>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="PropertyGridCategoryControlTemplate" TargetType="{x:Type HeaderedContentControl}">
+        <Border Grid.Row="0" Grid.ColumnSpan="2" 
+                BorderBrush="#99000000" BorderThickness="1">
+            <StackPanel Orientation="Vertical">
+                <Border Background="#00CCFF" Padding="5">
+                    <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                </Border>
+                <ContentPresenter Grid.Row="1" Grid.ColumnSpan="2" />
+            </StackPanel>
+        </Border>
+    </ControlTemplate>
+
+    <Style TargetType="prop:PropertyGrid" >
+        <Setter Property="CategoryControlTemplate" Value="{DynamicResource PropertyGridCategoryControlTemplate}"/>
+        <Setter Property="CategoryControlType" Value="Expander"/>
+        <Setter Property="MaxHeight" Value="500" />
+    </Style>    
+    
+</ResourceDictionary>

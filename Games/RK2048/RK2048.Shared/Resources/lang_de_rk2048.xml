@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<translations>
+  <word original="RK 2048" translation="RK 2048" />
+  <word original="Join the numbers and get to the 2048 tile!" translation="Verbinde die Kacheln, bist du die 2048 erreichst!" />
+  <word original="Maximum" translation="Max. erreicht" />
+  <word original="Current" translation="Punkte" />
+  <word original="Restart" translation="Neustart" />
+</translations>

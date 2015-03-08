@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+
+  <!-- Some global variables for this setup file.
+       UpradeGuid:             This value has to be equal for each new version of the game.
+       Platform, PlatformName: Used to identify the supported processor platform.
+       Version:                A standard version identifyier. Must be in standard format (e. g. 1.0).
+                               This field is also used to identify updates.
+  -->
+  <?define UpgradeGuid = "{C405417A-203F-4D8B-8924-9FA79D61230C}"?>
+  <?define ProductName = "RK 2048"?>
+  <?define Version = "1.2.0"?>
+  <?define VersionPrevious = "1.1.0"?>
+  <?define VersionShort = "1.2"?>
+  <?define MainExecutable = "SAPSimulator"?>
+  <?define DllSourcePath = "Games\RK2048\RK2048.DesktopWpf\Bin\Release"?>
+
+  <!--Productinformations-->
+  <Product Id="*" Name="$(var.ProductName) $(var.VersionShort)" Language="1033" Version="$(var.Version)" Manufacturer="RolandK" UpgradeCode="$(var.UpgradeGuid)">
+    <Package InstallerVersion="405" Compressed="yes" Platform="x86" InstallScope="perMachine" Description="Installs $(var.ProductName) $(var.VersionShort)" Manufacturer="RolandK" />
+    <Media Id="1" Cabinet="media1.cab" EmbedCab="yes" />
+
+    <!-- Some additinal properties to be displayed within systemcontrol->software->uninstall -->
+    <Property Id="ARPHELPLINK" Value="http://www.rolandk.de/wp" />
+    <Property Id="ARPCONTACT" Value="RolandK" />
+    <Property Id="ARPURLINFOABOUT" Value="http://www.rolandk.de/wp" />
+    <Property Id="ARPCOMMENTS" Value="RK 2048" />
+    <Property Id="ARPPRODUCTICON" Value="RK2048.ico" />
+
+    <!-- Check for installed .Net 4.5.1 setup -->
+    <PropertyRef Id="NETFRAMEWORK45"/>
+    <Condition Message='This setup requires the .NET Framework 4.5.1 installed.'>
+      <![CDATA[Installed OR NETFRAMEWORK45 >= "#378675"]]>
+    </Condition>
+    
+    <!-- Uninstall older versions of the product before each installation.
+         If there is a a newer version installed, then show an error message with "a later version of ... is already installed"
+    -->
+    <Upgrade Id="$(var.UpgradeGuid)">
+      <UpgradeVersion Minimum="$(var.Version)" IncludeMinimum="no" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="0.0.0" Maximum="$(var.VersionPrevious)" IncludeMinimum="yes" IncludeMaximum="yes" Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+      <Custom Action="NewerVersion" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
+    </InstallExecuteSequence>
+    <CustomAction Id="NewerVersion" Error="A later version of [ProductName] is already installed." />
+
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <!-- Define the directory structure -->
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="RolandK" />
+      </Directory>
+
+      <!--Open the ProgramFilesFolder-->
+      <Directory Id="ProgramFilesFolder">
+        <!--Rootdirectory is a childelement of the ProgramFilesFolder-->
+        <Directory Id="APPLICATIONROOTDIRECTORY" Name="Root" />
+        <Directory Id="DesktopFolder" Name="Desktop" />
+        <Directory Id="CompanyFolder" Name="RolandK">
+          <Directory Id="INSTALLLOCATION" Name="RK 2048">
+
+            <!--Now the real files-->
+            <Component Id="MainFiles" Guid="{9F06BC69-FFAB-4CB6-9BFF-CE5A9B3371E2}">
+              
+              <!-- FrozenSky and game exe -->
+              <File Id="FrozenSky.dll" Name="FrozenSky.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\FrozenSky.dll" />
+              <File Id="FrozenSky.Multimedia.dll" Name="FrozenSky.Multimedia.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\FrozenSky.Multimedia.dll" />
+              <File Id="RK2048.exe" Name="RK2048.exe" Source="$(var.SolutionDir)\$(var.DllSourcePath)\RK2048.exe" KeyPath="yes">
+                <Shortcut Advertise="yes" Id="RK2048.exe" Directory="DesktopFolder" Name="RK 2048" WorkingDirectory="INSTALLLOCATION" Description="Start RK 2048" Icon="RK2048.ico">
+                  <Icon Id="RK2048.ico" SourceFile="Icons\Icon.ico" />
+                </Shortcut>
+              </File>
+              <File Id="RK2048.exe.config" Name="RK2048.exe.config" Source="$(var.SolutionDir)\$(var.DllSourcePath)\RK2048.exe.config" />
+              
+              <!-- SharpDX dlls -->
+              <File Id="SharpDX.D3DCompiler.dll" Name="SharpDX.D3DCompiler.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.D3DCompiler.dll" />
+              <File Id="SharpDX.Direct2D1.dll" Name="SharpDX.Direct2D1.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.Direct2D1.dll" />
+              <File Id="SharpDX.Direct3D9.dll" Name="SharpDX.Direct3D9.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.Direct3D9.dll" />
+              <File Id="SharpDX.Direct3D10.dll" Name="SharpDX.Direct3D10.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.Direct3D10.dll" />
+              <File Id="SharpDX.Direct3D11.dll" Name="SharpDX.Direct3D11.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.Direct3D11.dll" />
+              <File Id="SharpDX.dll" Name="SharpDX.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.dll" />
+              <File Id="SharpDX.DXGI.dll" Name="SharpDX.DXGI.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.DXGI.dll" />
+              <File Id="SharpDX.Toolkit.dll" Name="SharpDX.Toolkit.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.Toolkit.dll" />
+              <File Id="SharpDX.Toolkit.Graphics.dll" Name="SharpDX.Toolkit.Graphics.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SharpDX.Toolkit.Graphics.dll" />
+              
+              <!-- Reactive Extensions dlls -->
+              <File Id="System.Reactive.Core.dll" Name="System.Reactive.Core.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\System.Reactive.Core.dll" />
+              <File Id="System.Reactive.Interfaces.dll" Name="System.Reactive.Interfaces.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\System.Reactive.Interfaces.dll" />
+              <File Id="System.Reactive.Linq.dll" Name="System.Reactive.Linq.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\System.Reactive.Linq.dll" />
+            </Component>
+          </Directory>
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <!-- Step 2: Add the shortcut to your installer package -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="{AF5B7497-3D9F-4D16-8B19-16D58DD5DC28}">
+        <Shortcut Id="GameShortcutID" Name="$(var.ProductName)" Description="$(var.ProductName)" Target="[INSTALLLOCATION]RK2048.exe" WorkingDirectory="INSTALLLOCATION" Icon="NextIco">
+          <Icon Id="NextIco" SourceFile="Icons\Icon.ico" />
+        </Shortcut>
+        <Shortcut Id="UninstallProduct"
+                          Name="$(var.ProductName) Uninstall"
+                          Description="Uninstalls $(var.ProductName)"
+                          Target="[System64Folder]msiexec.exe"
+                          Arguments="/x [ProductCode]" />
+        <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall" />
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\RK2048\$(var.Version)" Name="installed" Type="integer" Value="1" KeyPath="yes" />
+      </Component>
+    </DirectoryRef>
+
+    <!--Add a Ref link for each component-->
+    <Feature Id="ProductFeature" Title="$(var.ProductName) $(var.Version)" Level="1">
+      <ComponentRef Id="MainFiles" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </Feature>
+    
+    <!--Configuration of Setupfiles -->
+    <WixVariable Id="WixUIBannerBmp" Value="Images\banner.jpg" />
+
+    <!--This property is for the standard configuration of the Installocation in the "Install to Path" Window in the Installer-->
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" />
+
+    <!--UI Configuration-->
+    <UIRef Id="WixUI_InstallDir" />
+    <UIRef Id="WixUI_ErrorProgressText" />
+    <UI />
+	</Product>
+</Wix>

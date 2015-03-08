@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<translations>
+  <word original="Loading Translation.." translation="Lade Übersetzung.." />
+  <word original="No hardware graphics device available!" translation="Keine verwendbare Grafik-Hardware gefunden!" />
+</translations>
