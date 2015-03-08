@@ -23,7 +23,7 @@ This one is the most complex library in this project. It contains the graphics e
  - And much more..
  
 # Applications
-For now, there are included the follwing applications.
+For now, there are included the following applications.
  - RK 2048: A simple 3D-game which is running all most current windows platforms
  - WPF and Win.Forms Sample Containers
  
