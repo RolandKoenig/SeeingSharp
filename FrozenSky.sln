@@ -54,6 +54,7 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "RK2048.DesktopSetup", "Game
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertyTools", "PropertyTools", "{7F827007-9F3C-4A8C-A22C-7390A4DA9F5A}"
 	ProjectSection(SolutionItems) = preProject
+		Extern\PropertyTools\_Readme.md = Extern\PropertyTools\_Readme.md
 		Extern\PropertyTools\PropertyTools.dll = Extern\PropertyTools\PropertyTools.dll
 		Extern\PropertyTools\PropertyTools.Wpf.dll = Extern\PropertyTools\PropertyTools.Wpf.dll
 	EndProjectSection
