@@ -61,6 +61,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{4EBD257C-4D52-4836-813B-F31ED1678FBD}"
 	ProjectSection(SolutionItems) = preProject
 		Misc\_FrozenSky.Multimedia.licenseheader = Misc\_FrozenSky.Multimedia.licenseheader
+		LICENSE = LICENSE
 	EndProjectSection
 EndProject
 Global
