@@ -42,6 +42,7 @@
   <ItemGroup>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
   </ItemGroup>
@@ -59,9 +60,15 @@
   </Choose>
   <ItemGroup>
     <Compile Include="MathTests.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ResourceSourceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ThreadingTests.cs" />
+    <Compile Include="UtilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FrozenSky.Multimedia\FrozenSky.Multimedia_DESKTOP.csproj">
@@ -80,6 +87,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Ressources\ReferenceRenderings\BlackScreen.png" />
+    <Content Include="Ressources\ReferenceRenderings\ClearedScreen.png" />
+    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject.png" />
+    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject_Enlighted.png" />
+    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject_Negative.png" />
+    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject_Smaller.png" />
+    <Content Include="Ressources\ReferenceRenderings\WhiteScreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

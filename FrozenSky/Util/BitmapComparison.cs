@@ -44,6 +44,9 @@ namespace FrozenSky.Util
     /// </summary>
     public class BitmapComparison
     {
+        private const int MAX_PER_PIXEL_DIFF = 128;
+        private const decimal MAX_PER_PIXEL_DIFF_DEC = (decimal)MAX_PER_PIXEL_DIFF;
+
         /// <summary>
         /// Determines whether the given bitmaps are near equality.
         /// </summary>
@@ -51,7 +54,7 @@ namespace FrozenSky.Util
         /// <param name="bitmapRight">The bitmap right.</param>
         public static bool IsNearEqual(Bitmap bitmapLeft, Bitmap bitmapRight)
         {
-            return CalculatePercentageDifference(bitmapLeft, bitmapRight) < 0.01;
+            return CalculatePercentageDifference(bitmapLeft, bitmapRight) < 0.05;
         }
 
         /// <summary>
@@ -94,10 +97,11 @@ namespace FrozenSky.Util
                             int diffG = Math.Abs(dataLeftP[currentLoc + 2] - dataRightP[currentLoc + 2]);
                             int diffB = Math.Abs(dataLeftP[currentLoc + 3] - dataRightP[currentLoc + 3]);
                             int maxDiff = Math.Max(diffA, Math.Max(diffR, Math.Max(diffG, diffB)));
+                            if (maxDiff > MAX_PER_PIXEL_DIFF) { maxDiff = MAX_PER_PIXEL_DIFF; }
 
                             // Calculate the difference factor on this pixel and add it to the total difference value
                             decimal pixelDiffPercent =
-                                (decimal)((decimal)maxDiff / 255M);
+                                (decimal)((decimal)maxDiff / MAX_PER_PIXEL_DIFF_DEC);
                             totalDiffPercent += pixelDiffPercent / pixelCount;
                         }
                     }
