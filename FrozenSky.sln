@@ -52,13 +52,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RK2048.DesktopWpf", "Games\
 EndProject
 Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "RK2048.DesktopSetup", "Games\RK2048\RK2048.DesktopSetup\RK2048.DesktopSetup.wixproj", "{15124721-8E5C-47A4-B757-8A33C86CB9EC}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "PropertyTools", "PropertyTools", "{7F827007-9F3C-4A8C-A22C-7390A4DA9F5A}"
-	ProjectSection(SolutionItems) = preProject
-		Extern\PropertyTools\_Readme.md = Extern\PropertyTools\_Readme.md
-		Extern\PropertyTools\PropertyTools.dll = Extern\PropertyTools\PropertyTools.dll
-		Extern\PropertyTools\PropertyTools.Wpf.dll = Extern\PropertyTools\PropertyTools.Wpf.dll
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{4EBD257C-4D52-4836-813B-F31ED1678FBD}"
 	ProjectSection(SolutionItems) = preProject
 		Misc\_FrozenSky.Multimedia.licenseheader = Misc\_FrozenSky.Multimedia.licenseheader
@@ -158,6 +151,5 @@ Global
 		{D2858A05-E9DF-4445-A623-89270F6287C4} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{D1B4FBC0-E93A-4B64-AB6A-3BC29D337657} = {47A52FA2-E0B2-4CB7-A8D8-A70FD4043D9D}
 		{15124721-8E5C-47A4-B757-8A33C86CB9EC} = {47A52FA2-E0B2-4CB7-A8D8-A70FD4043D9D}
-		{7F827007-9F3C-4A8C-A22C-7390A4DA9F5A} = {EA33C922-0F7D-4F56-89C3-EF51E9625EA5}
 	EndGlobalSection
 EndGlobal

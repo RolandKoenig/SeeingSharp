@@ -203,17 +203,17 @@
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="PropertyTools">
-      <HintPath>..\Extern\PropertyTools\PropertyTools.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Misc\_FrozenSky.Multimedia.licenseheader">
       <Link>_FrozenSky.Multimedia.licenseheader</Link>
     </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="_Math\_SharpDXMath\_LicenseInfo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="PropertyTools">
+      <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\portable-net40+net45+sl5+wp8+win8\PropertyTools.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

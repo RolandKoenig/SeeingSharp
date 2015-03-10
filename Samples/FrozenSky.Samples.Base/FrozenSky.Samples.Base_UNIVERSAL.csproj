@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <Reference Include="PropertyTools">
-      <HintPath>..\..\Extern\PropertyTools\PropertyTools.dll</HintPath>
+      <HintPath>..\..\packages\PropertyTools.Wpf.2015.1.49\lib\portable-net40+net45+sl5+wp8+win8\PropertyTools.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
