@@ -540,7 +540,7 @@ namespace FrozenSky.Multimedia.Views
 
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public ICamera3D Camera
+        public Camera3DBase Camera
         {
             get { return m_renderLoop.Camera; }
             set { m_renderLoop.Camera = value; }

@@ -90,7 +90,7 @@ namespace FrozenSky.Multimedia.Core
             PerformanceAnalyzer performanceCalculator,
             RenderTargets renderTargets,
             SharpDX.ViewportF viewport,
-            ICamera3D camera, ViewInformation viewInformation)
+            Camera3DBase camera, ViewInformation viewInformation)
             : this(device, performanceCalculator)
         {
             Reset(renderTargets, viewport, camera, viewInformation);
@@ -166,7 +166,7 @@ namespace FrozenSky.Multimedia.Core
         internal void Reset(
             RenderTargets renderTargets,
             SharpDX.ViewportF viewport,
-            ICamera3D camera, ViewInformation viewInformation)
+            Camera3DBase camera, ViewInformation viewInformation)
         {
             m_renderSettingsStack.Clear();
             m_sceneStack.Clear();
@@ -301,7 +301,7 @@ namespace FrozenSky.Multimedia.Core
         internal void PushRenderTarget(
             RenderTargets renderTargets,
             SharpDX.ViewportF viewport,
-            ICamera3D camera, ViewInformation viewInformation)
+            Camera3DBase camera, ViewInformation viewInformation)
         {
             if (m_disposed) { throw new ObjectDisposedException("RenderState"); }
 
@@ -404,7 +404,7 @@ namespace FrozenSky.Multimedia.Core
         /// <summary>
         /// Gets current camera.
         /// </summary>
-        public ICamera3D Camera
+        public Camera3DBase Camera
         {
             get
             {
@@ -500,7 +500,7 @@ namespace FrozenSky.Multimedia.Core
         private class RenderStackEntry
         {
             public Matrix4Stack Matrix4Stack;
-            public ICamera3D Camera;
+            public Camera3DBase Camera;
             public RenderTargets RenderTargets;
             public SharpDX.ViewportF SingleViewport;
             public ViewInformation ViewInformation;

@@ -49,7 +49,7 @@ namespace FrozenSky.Multimedia.Core
         private GraphicsViewConfiguration m_viewConfiguration;
         private bool m_discardRendering;
         private Color4 m_clearColor;
-        private ICamera3D m_camera;
+        private Camera3DBase m_camera;
 
         // Async actions
         private ThreadSaveQueue<Action> m_afterPresentActions;
@@ -933,7 +933,7 @@ namespace FrozenSky.Multimedia.Core
         /// <summary>
         /// Gets or sets current camera object.
         /// </summary>
-        public ICamera3D Camera
+        public Camera3DBase Camera
         {
             get { return m_camera; }
             set

@@ -70,7 +70,7 @@ namespace FrozenSky.Multimedia.Core
         /// <summary>
         /// Gets the camera object that belongs to this view.
         /// </summary>
-        public ICamera3D Camera
+        public Camera3DBase Camera
         {
             get { return Owner.Camera; }
         }

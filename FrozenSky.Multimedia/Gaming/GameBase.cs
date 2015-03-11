@@ -64,47 +64,47 @@ namespace FrozenSky.Multimedia.Gaming
         /// <summary>
         /// Initializes this game object.
         /// </summary>
-        internal async Task InitializeAsync(IFrozenSkyPainter view)
+        /// <param name="painter">The painter object which represents the view.</param>
+        public async Task InitializeAsync(IFrozenSkyPainter painter)
         {
             // Set scene and camera
-            view.Scene = m_scene;
-            view.Camera = m_camera;
+            painter.Scene = m_scene;
+            painter.Camera = m_camera;
 
-#if UNIVERSAL
-            App.Current.Suspending += OnApp_Suspending;
-#endif
-            //UpdateCameraLocation();
+            // Initialize gaming logic
+            await InitializeInternalAsync(painter);
 
-            //this.CurrentScore = 0;
-            //this.MaximumReachedScore = 0;
-
-            //// Perform all initializations on the scene
-            //await m_scene.ManipulateSceneAsync((manipulator) =>
-            //{
-            //    manipulator.DefineTileResoures();
-            //    manipulator.BuildBackground();
-            //    manipulator.BuildGameField();
-            //    manipulator.BuildGameFieldLabels();
-            //});
-
-            //// Perform start logic
-            //await RestartGameAsync();
-
+            // Trigger main loop
             m_scene.PerformBeforeUpdateAsync(OnGameLoopTick)
                 .FireAndForget();
         }
 
+        protected abstract Task InitializeInternalAsync(IFrozenSkyPainter painter);
+
+        protected abstract void PerformGameLoopTick();
+
+        /// <summary>
+        /// ´Main method of the game loop.
+        /// </summary>
         private void OnGameLoopTick()
         {
             try
             {
-
+                this.PerformGameLoopTick();
             }
             finally
             {
                 m_scene.PerformBeforeUpdateAsync(OnGameLoopTick)
                     .FireAndForget();
             }
+        }
+
+        /// <summary>
+        /// Gets the current randomizer object.
+        /// </summary>
+        public Random Randomizer
+        {
+            get { return m_randomizer; }
         }
     }
 }

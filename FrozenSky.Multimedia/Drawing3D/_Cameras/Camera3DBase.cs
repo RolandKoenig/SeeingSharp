@@ -9,7 +9,7 @@ using FrozenSky.Util;
 namespace FrozenSky.Multimedia.Drawing3D
 {
 
-    public abstract class Camera3DBase : ICamera3D
+    public abstract class Camera3DBase
     {
         private Vector3 m_position = new Vector3(0, 0, 0);
         private Vector3 m_lastBigStepPos = new Vector3(0, 0, 0);

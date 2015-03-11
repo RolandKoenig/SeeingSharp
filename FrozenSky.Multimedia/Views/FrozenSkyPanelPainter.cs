@@ -424,7 +424,7 @@ namespace FrozenSky.Multimedia.Views
         /// <summary>
         /// Gets or sets the current 3D camera.
         /// </summary>
-        public ICamera3D Camera
+        public Camera3DBase Camera
         {
             get { return m_renderLoop.Camera; }
             set { m_renderLoop.Camera = value; }

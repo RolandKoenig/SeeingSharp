@@ -222,7 +222,7 @@ namespace FrozenSky.Multimedia.Core
             // TODO: Trigger some other logic to update transparent object order
             // TODO: Performance improvement!!!
             bool anyOrderChanges = false;
-            ICamera3D camera = m_viewInformation.Camera;
+            Camera3DBase camera = m_viewInformation.Camera;
             m_objectsPassTransparentRender.Subscriptions.Sort(new Comparison<RenderPassSubscription>((left, right) =>
             {
                 SceneSpacialObject leftSpacial = left.SceneObject as SceneSpacialObject;

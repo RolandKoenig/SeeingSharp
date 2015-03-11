@@ -221,7 +221,6 @@
     <Compile Include="Drawing2D\_Resources\WicBitmap.cs" />
     <Compile Include="Drawing2D\_Resources\WicBitmapSource.cs" />
     <Compile Include="Drawing3D\Graphics3D.cs" />
-    <Compile Include="Drawing3D\ICamera3D.cs" />
     <Compile Include="Drawing3D\TexturePainterHelper.cs" />
     <Compile Include="Drawing3D\_Cameras\Camera3DBase.cs" />
     <Compile Include="Drawing3D\_Cameras\OrthographicCamera3D.cs" />
@@ -260,7 +259,6 @@
     <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />
     <Compile Include="FrozenSkyGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
-    <Compile Include="Input\IFrozenSkyDirectionInputHandler.cs" />
     <Compile Include="Input\IFrozenSkyFreeCameraInputHandler.cs" />
     <Compile Include="Input\IInputEnabledView.cs" />
     <Compile Include="Input\InputHandlerContainer.cs" />

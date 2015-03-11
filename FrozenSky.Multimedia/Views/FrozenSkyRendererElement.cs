@@ -53,7 +53,7 @@ namespace FrozenSky.Multimedia.Views
         public static readonly DependencyProperty SceneProperty =
             DependencyProperty.Register("Scene", typeof(Scene), typeof(FrozenSkyRendererElement), new PropertyMetadata(new Scene()));
         public static readonly DependencyProperty CameraProperty =
-            DependencyProperty.Register("Camera", typeof(ICamera3D), typeof(FrozenSkyRendererElement), new PropertyMetadata(new PerspectiveCamera3D()));
+            DependencyProperty.Register("Camera", typeof(Camera3DBase), typeof(FrozenSkyRendererElement), new PropertyMetadata(new PerspectiveCamera3D()));
         public static readonly DependencyProperty DrawingLayer2DProperty =
             DependencyProperty.Register("DrawingLayer2D", typeof(Custom2DDrawingLayer), typeof(FrozenSkyRendererElement), new PropertyMetadata(null));
 
@@ -518,9 +518,9 @@ namespace FrozenSky.Multimedia.Views
         /// <summary>
         /// Gets or sets the camera.
         /// </summary>
-        public ICamera3D Camera
+        public Camera3DBase Camera
         {
-            get { return (ICamera3D)GetValue(CameraProperty); }
+            get { return (Camera3DBase)GetValue(CameraProperty); }
             set { SetValue(CameraProperty, value); }
         }
 

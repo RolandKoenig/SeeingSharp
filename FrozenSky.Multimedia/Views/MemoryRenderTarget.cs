@@ -196,7 +196,7 @@ namespace FrozenSky.Multimedia.Views
             set { m_renderLoop.SetScene(value); }
         }
 
-        public ICamera3D Camera
+        public Camera3DBase Camera
         {
             get { return m_renderLoop.Camera; }
             set { m_renderLoop.Camera = value; }
