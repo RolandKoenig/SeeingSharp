@@ -118,6 +118,8 @@ namespace FrozenSky.Tutorials.Introduction04
             {
                 if (m_mousePosition == Point.Empty) { return; }
 
+                // The main picking call
+                // (needs the mouse position and the detail level
                 List<SceneObject> pickedObjects = await m_panelPainter.RenderLoop.PickObjectAsync(
                     m_mousePosition,
                     new PickingOptions() { OnlyCheckBoundingBoxes = false });

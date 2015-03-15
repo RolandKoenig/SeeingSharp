@@ -71,6 +71,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrozenSky.Tutorials.Introdu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrozenSky.Tutorials.Introduction04", "Tutorials\Introduction\FrozenSky.Tutorials.Introduction04\FrozenSky.Tutorials.Introduction04.csproj", "{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "RKVideoMemory", "RKVideoMemory", "{18D5773D-95A2-4040-A5DD-38553E59C1A9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKVideoMemory", "Games\RKVideoMemory\RKVideoMemory\RKVideoMemory.csproj", "{7F358868-B4DB-4639-ACD8-4C3929E62AB7}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Games\RK2048\RK2048.Shared\RK2048.Shared.projitems*{792cfa46-1e50-4526-9519-ce1e7fbc74cb}*SharedItemsImports = 4
@@ -449,6 +453,20 @@ Global
 		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Release|x86.ActiveCfg = Release|x86
 		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Release|x86.Build.0 = Release|x86
 		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Release|x86.Deploy.0 = Release|x86
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Release|ARM.ActiveCfg = Release|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Release|x64.ActiveCfg = Release|Any CPU
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -472,5 +490,7 @@ Global
 		{0DBC3417-6D67-41EC-832C-513A8543ACD0} = {CB41D200-7619-4F15-9DFE-448BA8B16B07}
 		{E97BBADA-6264-45DD-8199-8252AAAD4B55} = {CB41D200-7619-4F15-9DFE-448BA8B16B07}
 		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6} = {CB41D200-7619-4F15-9DFE-448BA8B16B07}
+		{18D5773D-95A2-4040-A5DD-38553E59C1A9} = {DDC5E643-B65B-4733-81FA-651E93ED7463}
+		{7F358868-B4DB-4639-ACD8-4C3929E62AB7} = {18D5773D-95A2-4040-A5DD-38553E59C1A9}
 	EndGlobalSection
 EndGlobal
