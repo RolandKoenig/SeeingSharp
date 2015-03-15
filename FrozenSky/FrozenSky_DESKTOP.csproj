@@ -184,7 +184,7 @@
     <Compile Include="_Math\_Custom\Matrix.Custom.cs" />
     <Compile Include="_Math\_Custom\Matrix4Stack.cs" />
     <Compile Include="_Math\_Custom\Plane.cs" />
-    <Compile Include="_Math\_Custom\Point.cs" />
+    <Compile Include="_Math\_Custom\Point.Custom.cs" />
     <Compile Include="_Math\_Custom\Polygon.cs" />
     <Compile Include="_Math\_Custom\Polygon2D.cs" />
     <Compile Include="_Math\_Custom\Ray.Custom.cs" />

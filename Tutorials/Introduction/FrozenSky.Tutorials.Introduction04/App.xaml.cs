@@ -18,7 +18,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-namespace FrozenSky.Tutorials.Introduction03
+namespace FrozenSky.Tutorials.Introduction04
 {
     sealed partial class App : Application
     {
