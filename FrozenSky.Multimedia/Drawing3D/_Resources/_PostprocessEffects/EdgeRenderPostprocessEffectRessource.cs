@@ -73,7 +73,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             // Load graphics resources
             m_pixelShaderBlur = resources.GetResourceAndEnsureLoaded(
                 RES_KEY_PIXEL_SHADER_BLUR,
-                () => GraphicsHelper.GetPixelShaderResource(device, "Sprite", "SpriteEdgeDetectPixelShader"));
+                () => GraphicsHelper.GetPixelShaderResource(device, "Postprocessing", "PostprocessEdgeDetect"));
             m_renderTarget = resources.GetResourceAndEnsureLoaded<RenderTargetTextureResource>(
                 KEY_RENDER_TARGET,
                 () => new RenderTargetTextureResource(RenderTargetCreationMode.Color));

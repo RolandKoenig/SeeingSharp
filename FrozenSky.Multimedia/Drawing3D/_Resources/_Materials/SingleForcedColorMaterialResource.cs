@@ -38,9 +38,6 @@ namespace FrozenSky.Multimedia.Drawing3D
         private static readonly NamedOrGenericKey RES_KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER = GraphicsCore.GetNextGenericResourceKey();
 
-        // Local resource key
-        private NamedOrGenericKey RES_KEY_CONSTANT_BUFFER = GraphicsCore.GetNextGenericResourceKey();
-
         // Resource members
         private VertexShaderResource m_vertexShader;
         private PixelShaderResource m_pixelShader;
@@ -79,15 +76,11 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <param name="previousMaterial">The previously applied material.</param>
         internal override void Apply(RenderState renderState, MaterialApplyInstancingMode instancingMode, MaterialResource previousMaterial)
         {
-            // Apply constants and shader resources
-            if ((previousMaterial == null) ||
-                (base.ResourceType != previousMaterial.ResourceType))
-            {
-                D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
+            D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
 
-                deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
-                deviceContext.PixelShader.Set(m_pixelShader.PixelShader);
-            }
+            // Apply constants and shader resources
+            deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
+            deviceContext.PixelShader.Set(m_pixelShader.PixelShader);
         }
 
         /// <summary>
@@ -99,10 +92,10 @@ namespace FrozenSky.Multimedia.Drawing3D
             // Load all required shaders and constant buffers
             m_vertexShader = resources.GetResourceAndEnsureLoaded(
                 RES_KEY_VERTEX_SHADER,
-                () => GraphicsHelper.GetVertexShaderResource(device, "SingleForcedColor", "SingleForcedColorVertexShader"));
+                () => GraphicsHelper.GetVertexShaderResource(device, "Common", "SingleForcedColorVertexShader"));
             m_pixelShader = resources.GetResourceAndEnsureLoaded(
                 RES_KEY_PIXEL_SHADER,
-                () => GraphicsHelper.GetPixelShaderResource(device, "SingleForcedColor", "SingleForcedColorPixelShader"));
+                () => GraphicsHelper.GetPixelShaderResource(device, "Common", "SingleForcedColorPixelShader"));
         }
 
         /// <summary>

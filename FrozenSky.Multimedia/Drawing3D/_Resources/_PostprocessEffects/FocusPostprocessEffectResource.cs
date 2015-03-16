@@ -1,7 +1,7 @@
 ﻿#region License information (FrozenSky and all based games/applications)
 /*
     FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
-    Copyright (C) 2014 Roland König (RolandK)
+    Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -15,6 +15,16 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
+
+	********************************************************************************
+    Additional permission under GNU GPL version 3 section 7
+
+    If you modify this Program, or any covered work, by linking or combining it with 
+	DirectX (or a modified version of that library), containing parts covered by the 
+	terms of [name of library's license], the licensors of this Program grant you additional 
+	permission to convey the resulting work. {Corresponding Source for a non-source form of 
+	such a combination shall include the source code for the parts of DirectX used 
+	as well as that of the covered work.}
 */
 #endregion
 

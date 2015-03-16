@@ -164,12 +164,31 @@ namespace FrozenSky.Multimedia.Drawing3D
 
                 // Apply material
                 renderState.ApplyMaterial(structureToDraw.Material);
-
-                // Draw current rener block
-                deviceContext.DrawIndexed(
-                    structureToDraw.IndexCount,
-                    structureToDraw.StartIndex,
-                    0);
+                D3D11.InputLayout newInputLayout = null;
+                if(renderState.ForcedMaterial != null)
+                {
+                    newInputLayout = renderState.ForcedMaterial.GenerateInputLayout(
+                        renderState.Device,
+                        StandardVertex.InputElements,
+                        MaterialApplyInstancingMode.SingleObject);
+                    deviceContext.InputAssembler.InputLayout = newInputLayout;
+                }
+                try
+                {
+                    // Draw current rener block
+                    deviceContext.DrawIndexed(
+                        structureToDraw.IndexCount,
+                        structureToDraw.StartIndex,
+                        0);
+                }
+                finally
+                {
+                    if (newInputLayout != null)
+                    {
+                        deviceContext.InputAssembler.InputLayout = null;
+                        GraphicsHelper.SafeDispose(ref newInputLayout);
+                    }
+                }
             }
         }
 

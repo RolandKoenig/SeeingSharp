@@ -471,6 +471,14 @@ namespace FrozenSky.Multimedia.Core
         internal D2D.RenderTarget RenderTarget2D;
 
         /// <summary>
+        /// Gets the currently forced material.
+        /// </summary>
+        public MaterialResource ForcedMaterial
+        {
+            get { return m_forcedMaterial; }
+        }
+
+        /// <summary>
         /// Gets or sets the current object for 2D rendering.
         /// </summary>
         public Graphics2D Graphics2D

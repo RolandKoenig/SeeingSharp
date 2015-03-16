@@ -241,7 +241,7 @@
     <Compile Include="Drawing3D\_Resources\_Materials\SpriteMaterialResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Misc.cs" />
     <Compile Include="Drawing3D\_Resources\_PostprocessEffects\EdgeRenderPostprocessEffectRessource.cs" />
-    <Compile Include="Drawing3D\_Resources\_PostprocessEffects\FocusProstprocessEffectResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_PostprocessEffects\FocusPostprocessEffectResource.cs" />
     <Compile Include="Drawing3D\_Resources\_PostprocessEffects\PostprocessEffectResource.cs" />
     <Compile Include="Drawing3D\_Resources\_ResourceDictionaryExtensions.cs" />
     <Compile Include="Drawing3D\_Resources\_Shaders\PixelShaderResource.cs" />
@@ -354,22 +354,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <FrozenSky-PixelShader-Min4_0 Include="Resources\Shaders\Common\CommonPixelShader.hlsl" />
+    <FrozenSky-PixelShader Include="Resources\Shaders\Common\CommonPixelShader.hlsl" />
     <FrozenSky-VertexShader Include="Resources\Shaders\Common\CommonVertexShader.hlsl" />
     <Content Include="Resources\Images\Empty.png" />
     <Content Include="Resources\Shaders\constants.hlsl" />
     <Content Include="Resources\Shaders\functions.hlsl" />
     <FrozenSky-PixelShader Include="Resources\Shaders\LineRendering\LinePixelShader.hlsl" />
     <FrozenSky-VertexShader Include="Resources\Shaders\LineRendering\LineVertexShader.hlsl" />
-    <FrozenSky-PixelShader Include="Resources\Shaders\SingleForcedColor\SingleForcedColorPixelShader.hlsl" />
-    <FrozenSky-VertexShader Include="Resources\Shaders\SingleForcedColor\SingleForcedColorVertexShader.hlsl" />
-    <FrozenSky-PixelShader Include="Resources\Shaders\Sprite\SpriteBlurPixelShader.hlsl" />
+    <FrozenSky-PixelShader Include="Resources\Shaders\Common\SingleForcedColorPixelShader.hlsl" />
+    <FrozenSky-VertexShader Include="Resources\Shaders\Common\SingleForcedColorVertexShader.hlsl" />
     <FrozenSky-PixelShader Include="Resources\Shaders\Sprite\SpritePixelShader.hlsl" />
     <FrozenSky-VertexShader Include="Resources\Shaders\Sprite\SpriteVertexShader.hlsl" />
     <FrozenSky-PixelShader Include="Resources\Shaders\Skybox\CommonPixelShader.hlsl" />
     <FrozenSky-VertexShader Include="Resources\Shaders\Skybox\CommonVertexShader.hlsl" />
-    <FrozenSky-PixelShader Include="Resources\Shaders\Sprite\SpriteEdgeDetectPixelShader.hlsl" />
-    <FrozenSky-PixelShader-Min4_0 Include="Resources\Shaders\Sprite\SpriteFxaaShader.hlsl" />
     <Content Include="Resources\Shaders\structures.hlsl" />
     <Content Include="Resources\Shaders\_mainInclude.hlsl" />
     <Resource Include="Resources\Textures\Blank_16x16.png" />

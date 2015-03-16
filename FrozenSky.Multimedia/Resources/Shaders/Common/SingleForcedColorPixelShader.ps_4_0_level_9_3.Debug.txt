@@ -45,8 +45,25 @@
 // -------------------- ----- ------ -------- -------- ------- ------
 // SV_Target                0   xyzw        0   TARGET   float   xyzw
 //
-ps_5_0
-dcl_globalFlags refactoringAllowed
+//
+// Constant buffer to DX9 shader constant mappings:
+//
+// Target Reg Buffer  Start Reg # of Regs        Data Conversion
+// ---------- ------- --------- --------- ----------------------
+// c0         cb2             4         2  ( FLT, FLT, FLT, FLT)
+//
+//
+// Level9 shader bytecode:
+//
+    ps_2_x
+
+#line 9 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\SingleForcedColorPixelShader.hlsl"
+    mov r0.xyz, c0
+    mov r0.w, c1.z
+    mov oC0, r0  // ::main<0,1,2,3>
+
+// approximately 3 instruction slots used
+ps_4_0
 dcl_constantbuffer cb2[6], immediateIndexed
 dcl_output o0.xyzw
 //
@@ -59,7 +76,7 @@ dcl_output o0.xyzw
 //   v2.z <- input.texFact; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\SingleForcedColor\SingleForcedColorPixelShader.hlsl"
+#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\SingleForcedColorPixelShader.hlsl"
 mov o0.xyz, cb2[4].xyzx
 mov o0.w, cb2[5].z
 ret 
