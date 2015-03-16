@@ -1,7 +1,7 @@
 ﻿#region License information (FrozenSky and all based games/applications)
 /*
     FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
-    Copyright (C) 2014 Roland König (RolandK)
+    Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -27,6 +27,7 @@
 	as well as that of the covered work.}
 */
 #endregion
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,11 +38,9 @@ namespace FrozenSky
 {
     public partial struct Size2
     {
-        //public Size2 ScaleUniformToFill(Size2 targetSize)
-        //{
-        //    float factorX = targetSize.Width / this.Width;
-        //    float factorY = targetSize.Height / this.Height;
-
-        //}
+        public Vector2 ToVector2()
+        {
+            return new Vector2((float)this.Width, (float)this.Height);
+        }
     }
 }

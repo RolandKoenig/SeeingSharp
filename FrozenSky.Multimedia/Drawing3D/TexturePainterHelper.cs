@@ -129,61 +129,6 @@ namespace FrozenSky.Multimedia.Drawing3D
                 World = Matrix.Identity
             });
 
-            // Apply effect
-            m_materialResource.Effect = TexturePainterEffect.Standard;
-
-            // Render using current configuration
-            RenderInternal(renderState);
-        }
-
-        /// <summary>
-        /// Renders the texture painter using the blur effect.
-        /// </summary>
-        /// <param name="renderState">The render state to be used.</param>
-        /// <param name="grayscaleIntensity">The intensity of the grayscale effect.</param>
-        /// <param name="blurIntensity">The intensity of the blur effect.</param>
-        internal void RenderBlured(RenderState renderState, float opacity, float blurIntensity, float grayscaleIntensity)
-        {
-            // Apply rendering parameters
-            m_renderParameters.UpdateValues(renderState, new CBPerObject()
-            {
-                AccentuationFactor = 0f,
-                BorderMultiplyer = blurIntensity,
-                BorderPart = grayscaleIntensity,
-                Color = Vector4.Zero,
-                Opacity = opacity,
-                SpriteScaling = m_scaling,
-                World = Matrix.Identity
-            });
-
-            // Apply effect
-            m_materialResource.Effect = TexturePainterEffect.Blur;
-
-            // Render using current configuration
-            RenderInternal(renderState);
-        }
-
-        /// <summary>
-        /// Renders the texture painter using the edge-render effect.
-        /// </summary>
-        /// <param name="renderState">The render state to be used.</param>
-        internal void RenderEdges(RenderState renderState, float opacity)
-        {
-            // Apply rendering parameters
-            m_renderParameters.UpdateValues(renderState, new CBPerObject()
-            {
-                AccentuationFactor = 0f,
-                BorderMultiplyer = 0f,
-                BorderPart = 0f,
-                Color = Vector4.Zero,
-                Opacity = opacity,
-                SpriteScaling = 1f,//m_scaling,
-                World = Matrix.Identity
-            });
-
-            // Apply effect
-            m_materialResource.Effect = TexturePainterEffect.EdgeRendering;
-
             // Render using current configuration
             RenderInternal(renderState);
         }
@@ -204,7 +149,7 @@ namespace FrozenSky.Multimedia.Drawing3D
 
                 m_geometryResource.Render(renderState);
 
-                deviceContext.OutputMerger.BlendState = m_defaultResources.BlendStateDefault;
+                deviceContext.OutputMerger.BlendState = m_defaultResources.DefaultBlendState;
                 deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
             }
         }

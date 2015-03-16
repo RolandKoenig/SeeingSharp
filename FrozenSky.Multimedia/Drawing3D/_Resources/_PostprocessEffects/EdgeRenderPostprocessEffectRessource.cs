@@ -23,6 +23,7 @@ using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -31,65 +32,74 @@ using D3D11 = SharpDX.Direct3D11;
 
 namespace FrozenSky.Multimedia.Drawing3D
 {
-    public class EdgeRenderPostprocessEffectRessource : PostprocessEffectResource
+    public class EdgeDetectPostprocessEffectResource : PostprocessEffectResource
     {
         // Resource keys
-        private NamedOrGenericKey KEY_MATERIAL = GraphicsCore.GetNextGenericResourceKey();
+        private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER_BLUR = GraphicsCore.GetNextGenericResourceKey();
         private NamedOrGenericKey KEY_RENDER_TARGET = GraphicsCore.GetNextGenericResourceKey();
+        private NamedOrGenericKey KEY_CONSTANT_BUFFER = GraphicsCore.GetNextGenericResourceKey();
 
         // Resources
-        private SingleForcedColorMaterialResource m_singleForcedColor;
         private RenderTargetTextureResource m_renderTarget;
-        private TexturePainterHelper m_texturePainter;
         private DefaultResources m_defaultResources;
+        private PixelShaderResource m_pixelShaderBlur;
+        private CBPerObject m_constantBufferData;
+        private TypeSafeConstantBufferResource<CBPerObject> m_constantBuffer;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FocusPostprocessEffectResource" /> class.
-        /// </summary>
-        public EdgeRenderPostprocessEffectRessource()
-            : this(false)
-        {
-            
-        }
+        // Configuration
+        private float m_thickness;
+        private bool m_drawOriginalObject;
+        private Color4 m_borderColor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FocusPostprocessEffectResource"/> class.
         /// </summary>
-        /// <param name="forceSimpleMethod">Force simple mode. Default to false.</param>
-        public EdgeRenderPostprocessEffectRessource(bool forceSimpleMethod)
+        public EdgeDetectPostprocessEffectResource()
         {
-            m_texturePainter = new TexturePainterHelper(KEY_RENDER_TARGET);
+            m_thickness = 2f;
+            m_borderColor = Color4.BlueColor;
+            m_drawOriginalObject = true;
         }
 
         /// <summary>
         /// Loads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            m_singleForcedColor = resources.GetResourceAndEnsureLoaded<SingleForcedColorMaterialResource>(
-                KEY_MATERIAL,
-                () => new SingleForcedColorMaterialResource());
+            base.LoadResourceInternal(device, resources);
+
+            // Load graphics resources
+            m_pixelShaderBlur = resources.GetResourceAndEnsureLoaded(
+                RES_KEY_PIXEL_SHADER_BLUR,
+                () => GraphicsHelper.GetPixelShaderResource(device, "Sprite", "SpriteEdgeDetectPixelShader"));
             m_renderTarget = resources.GetResourceAndEnsureLoaded<RenderTargetTextureResource>(
                 KEY_RENDER_TARGET,
-                () => new RenderTargetTextureResource());
-            m_defaultResources = resources.GetResourceAndEnsureLoaded<DefaultResources>(DefaultResources.RESOURCE_KEY);
+                () => new RenderTargetTextureResource(RenderTargetCreationMode.Color));
+            m_defaultResources = resources.DefaultResources;
 
-            m_texturePainter.LoadResources(resources);
+            // Load constant buffer
+            m_constantBufferData = new CBPerObject();
+            m_constantBuffer = resources.GetResourceAndEnsureLoaded<TypeSafeConstantBufferResource<CBPerObject>>(
+                KEY_CONSTANT_BUFFER,
+                () => new TypeSafeConstantBufferResource<CBPerObject>(m_constantBufferData));
         }
 
         /// <summary>
         /// Unloads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         /// <exception cref="System.NotImplementedException"></exception>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            m_singleForcedColor = null;
+            base.UnloadResourceInternal(device, resources);
+
+            m_pixelShaderBlur = null;
             m_renderTarget = null;
-            m_renderTarget.UnloadResource();
-            m_texturePainter.UnloadResources();
             m_defaultResources = null;
+            m_constantBuffer = null;
         }
 
         /// <summary>
@@ -102,20 +112,26 @@ namespace FrozenSky.Multimedia.Drawing3D
             switch (passID)
             {
                 //******************************
-                // 1. Pass: Draw the object normaly with one single color
+                // 1. Pass: Draw all pixels that ly behind other already rendered elements
                 case 0:
-                    // Force the single color material
-                    renderState.ForceMaterial(m_singleForcedColor);
-
                     // Apply current render target size an push render target texture on current rendering stack
                     m_renderTarget.ApplySize(renderState);
-                    m_renderTarget.PushOnRenderState(renderState, PushRenderTargetMode.Default);
+                    m_renderTarget.PushOnRenderState(renderState, PushRenderTargetMode.Default_OwnColor_PrevDepthObjectIDNormalDepth);
 
                     // Clear current render target
-                    renderState.ClearCurrentColorBuffer(new Color(1f, 1f, 1f, 0f));
-                    renderState.ClearCurrentDepthBuffer();
+                    renderState.ClearCurrentColorBuffer(new Color(0f, 0f, 0f, 0f));
                     break;
             }
+        }
+
+        /// <summary>
+        /// Notifies that rendering of the plain part has finished.
+        /// </summary>
+        /// <param name="renderState">The current render state.</param>
+        /// <param name="passID">The ID of the current pass (starting with 0)</param>
+        internal override void NotifyAfterRenderPlain(RenderState renderState, int passID)
+        {
+            // Nothing to be done here
         }
 
         /// <summary>
@@ -131,16 +147,37 @@ namespace FrozenSky.Multimedia.Drawing3D
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
 
             // Reset settings made on render state (needed for all passes)
-            renderState.ForceMaterial(null);
+            deviceContext.Rasterizer.State = m_defaultResources.RasterStateDefault;
 
             // Reset render target (needed for all passes)
             m_renderTarget.PopFromRenderState(renderState);
+
+            // Update constant buffer data
+            m_constantBufferData.ScreenPixelSize = renderState.ViewInformation.CurrentViewSize.ToVector2();
+            m_constantBufferData.Opacity = 0.9f;
+            m_constantBufferData.Threshold = 0.2f;
+            m_constantBufferData.Thickness = m_thickness;
+            m_constantBufferData.BorderColor = m_borderColor.ToVector3();
+            m_constantBufferData.OriginalColorAlpha = m_drawOriginalObject ? 1f : 0f;
+            m_constantBuffer.SetData(deviceContext, m_constantBufferData);
 
             // Render result of current pass to the main render target
             switch (passID)
             {
                 case 0:
-                    m_texturePainter.RenderEdges(renderState, 0.5f);
+                    base.ApplyAlphaBasedSpriteRendering(deviceContext);
+                    try
+                    {
+                        deviceContext.PixelShader.SetShaderResource(0, m_renderTarget.TextureView);
+                        deviceContext.PixelShader.SetSampler(0, m_defaultResources.GetSamplerState(TextureSamplerQualityLevel.Low));
+                        deviceContext.PixelShader.SetConstantBuffer(2, m_constantBuffer.ConstantBuffer);
+                        deviceContext.PixelShader.Set(m_pixelShaderBlur.PixelShader);
+                        deviceContext.Draw(3, 0);
+                    }
+                    finally
+                    {
+                        base.DiscardAlphaBasedSpriteRendering(deviceContext);
+                    }
                     return false;
             }
 
@@ -152,12 +189,44 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// </summary>
         public override bool IsLoaded
         {
-            get 
+            get
             {
                 return (m_renderTarget != null) &&
-                       (m_singleForcedColor != null) &&
-                       (m_texturePainter.IsLoaded);
+                       (m_renderTarget.IsLoaded);
             }
+        }
+
+        public float Thickness
+        {
+            get { return m_thickness; }
+            set { m_thickness = value; }
+        }
+
+        public Color4 BorderColor
+        {
+            get { return m_borderColor; }
+            set { m_borderColor = value; }
+        }
+
+        public bool DrawOriginalObject
+        {
+            get { return m_drawOriginalObject; }
+            set { m_drawOriginalObject = value; }
+        }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        [StructLayout(LayoutKind.Sequential)]
+        private struct CBPerObject
+        {
+            public float Opacity;
+            public Vector2 ScreenPixelSize;
+            public float Thickness;
+            public float Threshold;
+            public Vector3 BorderColor;
+            public float OriginalColorAlpha;
+            public Vector3 Dummy;
         }
     }
 }

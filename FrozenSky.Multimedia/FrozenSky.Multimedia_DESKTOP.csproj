@@ -121,7 +121,6 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonExtensions.cs" />
     <Compile Include="Core\Direct2DOverlayRenderer.cs" />
     <Compile Include="Core\EngineMainLoop.cs" />
     <Compile Include="Core\GraphicsCore.cs" />
@@ -320,6 +319,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResourceKeys.cs" />
+    <FrozenSky-VertexShader-Min4_0 Include="Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl" />
+    <FrozenSky-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl" />
+    <FrozenSky-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessBlur.hlsl" />
+    <Content Include="Resources\Shaders\Postprocessing\_structures.hlsl" />
     <Compile Include="Views\FrozenSkyRendererControl.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -328,10 +331,12 @@
     <Compile Include="Views\_Util\HigherD3DImageSource.cs" />
     <Compile Include="Views\MemoryRenderTarget.cs" />
     <Compile Include="_Constants.cs" />
+    <Compile Include="_Extensions.cs" />
     <Compile Include="_Misc.cs" />
     <Compile Include="_Native.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DrawingVideo\" />
     <Folder Include="Input\_Generic\" />
     <Folder Include="Input\_WinRT\" />
     <Folder Include="Resources\Models\" />

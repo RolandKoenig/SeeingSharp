@@ -150,6 +150,7 @@
     <Compile Include="_Math\_Custom\Polygon2D.cs" />
     <Compile Include="_Math\_Custom\Ray.Custom.cs" />
     <Compile Include="_Math\_Custom\Ray2D.cs" />
+    <Compile Include="_Math\_Custom\Size2.Custom.cs" />
     <Compile Include="_Math\_Custom\Vector3.Custom.cs" />
     <Compile Include="_Math\_Custom\Vector4.Custom.cs" />
     <Compile Include="_Math\_Custom\_Misc.cs" />

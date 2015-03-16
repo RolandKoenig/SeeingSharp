@@ -45,7 +45,6 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommonExtensions.cs" />
     <Compile Include="Core\Direct2DOverlayRenderer.cs" />
     <Compile Include="Core\EngineMainLoop.cs" />
     <Compile Include="Core\GraphicsCore.cs" />
@@ -236,6 +235,7 @@
     <Compile Include="Views\IFrozenSkyPainter.cs" />
     <Compile Include="Views\_Util\SwapChainPanelWrapper.cs" />
     <Compile Include="_Constants.cs" />
+    <Compile Include="_Extensions.cs" />
     <Compile Include="_Misc.cs" />
     <Compile Include="_Native.cs" />
   </ItemGroup>
@@ -307,6 +307,7 @@
     <Content Include="Resources\Shaders\_mainInclude.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="DrawingVideo\" />
     <Folder Include="Input\_Generic\" />
     <Folder Include="Input\_WinRT\" />
     <Folder Include="Resources\Models\" />

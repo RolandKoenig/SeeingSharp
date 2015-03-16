@@ -23,6 +23,7 @@ using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -34,8 +35,11 @@ namespace FrozenSky.Multimedia.Drawing3D
     public class FocusPostprocessEffectResource : PostprocessEffectResource
     {
         // Resource keys
-        private NamedOrGenericKey KEY_MATERIAL = GraphicsCore.GetNextGenericResourceKey();
-        private NamedOrGenericKey KEY_RENDER_TARGET = GraphicsCore.GetNextGenericResourceKey();
+        private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER_BLUR = GraphicsCore.GetNextGenericResourceKey();
+        private static readonly NamedOrGenericKey KEY_MATERIAL = GraphicsCore.GetNextGenericResourceKey();
+        private static readonly NamedOrGenericKey KEY_RENDER_TARGET = GraphicsCore.GetNextGenericResourceKey();
+        private NamedOrGenericKey KEY_CB_PASS_01 = GraphicsCore.GetNextGenericResourceKey();
+        private NamedOrGenericKey KEY_CB_PASS_02 = GraphicsCore.GetNextGenericResourceKey();
 
         // Configuration
         private bool m_forceSimpleMethod;
@@ -43,57 +47,74 @@ namespace FrozenSky.Multimedia.Drawing3D
         // Resources
         private SingleForcedColorMaterialResource m_singleForcedColor;
         private RenderTargetTextureResource m_renderTarget;
-        private TexturePainterHelper m_texturePainter;
         private DefaultResources m_defaultResources;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="FocusPostprocessEffectResource" /> class.
-        /// </summary>
-        public FocusPostprocessEffectResource()
-            : this(false)
-        {
-            
-        }
+        private PixelShaderResource m_pixelShaderBlur;
+        private TypeSafeConstantBufferResource<CBPerObject> m_cbFirstPass;
+        private TypeSafeConstantBufferResource<CBPerObject> m_cbSecondPass;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FocusPostprocessEffectResource"/> class.
         /// </summary>
         /// <param name="forceSimpleMethod">Force simple mode. Default to false.</param>
-        public FocusPostprocessEffectResource(bool forceSimpleMethod)
+        public FocusPostprocessEffectResource(bool forceSimpleMethod = false)
         {
-            m_texturePainter = new TexturePainterHelper(KEY_RENDER_TARGET);
             m_forceSimpleMethod = forceSimpleMethod;
         }
 
         /// <summary>
         /// Loads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
+            base.LoadResourceInternal(device, resources);
+
+            // Load graphics resources
+            m_pixelShaderBlur = resources.GetResourceAndEnsureLoaded(
+                RES_KEY_PIXEL_SHADER_BLUR,
+                () => GraphicsHelper.GetPixelShaderResource(device, "Postprocessing", "PostprocessBlur"));
             m_singleForcedColor = resources.GetResourceAndEnsureLoaded<SingleForcedColorMaterialResource>(
                 KEY_MATERIAL,
                 () => new SingleForcedColorMaterialResource());
             m_renderTarget = resources.GetResourceAndEnsureLoaded<RenderTargetTextureResource>(
                 KEY_RENDER_TARGET,
-                () => new RenderTargetTextureResource());
-            m_defaultResources = resources.GetResourceAndEnsureLoaded<DefaultResources>(DefaultResources.RESOURCE_KEY);
+                () => new RenderTargetTextureResource(RenderTargetCreationMode.Color));
+            m_defaultResources = resources.DefaultResources;
 
-            m_texturePainter.LoadResources(resources);
+            // Load constant buffers
+            m_cbFirstPass = resources.GetResourceAndEnsureLoaded<TypeSafeConstantBufferResource<CBPerObject>>(
+                KEY_CB_PASS_01,
+                () => new TypeSafeConstantBufferResource<CBPerObject>(new CBPerObject()
+                {
+                    BlurIntensity = 0.0f,
+                    BlurOpacity = 0.1f
+                }));
+            m_cbSecondPass = resources.GetResourceAndEnsureLoaded<TypeSafeConstantBufferResource<CBPerObject>>(
+                KEY_CB_PASS_02,
+                () => new TypeSafeConstantBufferResource<CBPerObject>(new CBPerObject()
+                {
+                    BlurIntensity = 0.8f,
+                    BlurOpacity = 0.5f
+                }));
         }
 
         /// <summary>
         /// Unloads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         /// <exception cref="System.NotImplementedException"></exception>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
+            base.UnloadResourceInternal(device, resources);
+
+            m_pixelShaderBlur = null;
             m_singleForcedColor = null;
             m_renderTarget = null;
-            m_renderTarget.UnloadResource();
-            m_texturePainter.UnloadResources();
             m_defaultResources = null;
+            m_cbFirstPass = null;
+            m_cbSecondPass = null;
         }
 
         /// <summary>
@@ -115,7 +136,7 @@ namespace FrozenSky.Multimedia.Drawing3D
 
                         // Apply current render target size an push render target texture on current rendering stack
                         m_renderTarget.ApplySize(renderState);
-                        m_renderTarget.PushOnRenderState(renderState, PushRenderTargetMode.OvertakePreviousDepthBuffer);
+                        m_renderTarget.PushOnRenderState(renderState, PushRenderTargetMode.Default_OwnColor_PrevDepthObjectIDNormalDepth);
 
                         // Clear current render target
                         renderState.ClearCurrentColorBuffer(new Color(1f, 1f, 1f, 0f));
@@ -131,7 +152,7 @@ namespace FrozenSky.Multimedia.Drawing3D
                         renderState.ForceMaterial(m_singleForcedColor);
 
                         // Push render target texture on current rendering stack again
-                        m_renderTarget.PushOnRenderState(renderState, PushRenderTargetMode.OvertakePreviousDepthBuffer);
+                        m_renderTarget.PushOnRenderState(renderState, PushRenderTargetMode.Default_OwnColor_PrevDepthObjectIDNormalDepth);
 
                         // Clear current render target
                         renderState.ClearCurrentColorBuffer(new Color(1f, 1f, 1f, 0f));
@@ -148,6 +169,16 @@ namespace FrozenSky.Multimedia.Drawing3D
                 // Change raster state
                 renderState.Device.DeviceImmediateContextD3D11.Rasterizer.State = m_defaultResources.RasterStateBiased;
             }
+        }
+
+        /// <summary>
+        /// Notifies that rendering of the plain part has finished.
+        /// </summary>
+        /// <param name="renderState">The current render state.</param>
+        /// <param name="passID">The ID of the current pass (starting with 0)</param>
+        internal override void NotifyAfterRenderPlain(RenderState renderState, int passID)
+        {
+            // Nothing to be done here
         }
 
         /// <summary>
@@ -176,11 +207,35 @@ namespace FrozenSky.Multimedia.Drawing3D
                 switch (passID)
                 {
                     case 0:
-                        m_texturePainter.RenderBlured(renderState, 0.1f, 0.0f, 0f);
+                        base.ApplyAlphaBasedSpriteRendering(deviceContext);
+                        try
+                        {
+                            deviceContext.PixelShader.SetShaderResource(0, m_renderTarget.TextureView);
+                            deviceContext.PixelShader.SetSampler(0, m_defaultResources.GetSamplerState(TextureSamplerQualityLevel.Low));
+                            deviceContext.PixelShader.SetConstantBuffer(2, m_cbFirstPass.ConstantBuffer);
+                            deviceContext.PixelShader.Set(m_pixelShaderBlur.PixelShader);
+                            deviceContext.Draw(3, 0);
+                        }
+                        finally
+                        {
+                            base.DiscardAlphaBasedSpriteRendering(deviceContext);
+                        }
                         return true;
 
                     case 1:
-                        m_texturePainter.RenderBlured(renderState, 0.5f, 0.8f, 0f);
+                        base.ApplyAlphaBasedSpriteRendering(deviceContext);
+                        try
+                        {
+                            deviceContext.PixelShader.SetShaderResource(0, m_renderTarget.TextureView);
+                            deviceContext.PixelShader.SetSampler(0, m_defaultResources.GetSamplerState(TextureSamplerQualityLevel.Low));
+                            deviceContext.PixelShader.SetConstantBuffer(2, m_cbSecondPass.ConstantBuffer);
+                            deviceContext.PixelShader.Set(m_pixelShaderBlur.PixelShader);
+                            deviceContext.Draw(3, 0);
+                        }
+                        finally
+                        {
+                            base.DiscardAlphaBasedSpriteRendering(deviceContext);
+                        }
                         return false;
                 }
             }
@@ -202,12 +257,28 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// </summary>
         public override bool IsLoaded
         {
-            get 
+            get
             {
                 return (m_renderTarget != null) &&
                        (m_singleForcedColor != null) &&
-                       (m_texturePainter.IsLoaded);
+                       (m_singleForcedColor.IsLoaded);
             }
+        }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        [StructLayout(LayoutKind.Sequential)]
+        private struct CBPerObject
+        {
+            public float BlurIntensity;
+
+            public float BlurOpacity;
+
+            /// <summary>
+            /// A dummy field to ensure a 4-based size of this structure.
+            /// </summary>
+            public Vector2 Dummy;
         }
     }
 }

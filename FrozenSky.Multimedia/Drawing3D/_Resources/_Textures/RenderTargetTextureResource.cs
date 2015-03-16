@@ -32,27 +32,44 @@ namespace FrozenSky.Multimedia.Drawing3D
 {
     internal class RenderTargetTextureResource : TextureResource
     {
+        private RenderTargetCreationMode m_creationMode;
         private int m_width;
         private int m_heigth;
         private bool m_antialiasingEnabled;
         private AntialiasingQualityLevel m_antialiasingQuality;
         private SharpDX.ViewportF m_viewportF;
 
-        // Resources for direct3D 11 rendering
-        private D3D11.Texture2D m_renderTargetDepth;
-        private D3D11.RenderTargetView m_renderTargetView;
-        private D3D11.ShaderResourceView m_shaderResourceView;
-        private D3D11.DepthStencilView m_renderTargetDepthView;
-        private D3D11.Texture2D m_renderTarget;
-        private D3D11.Texture2D m_shaderResource;
+        // Resources for depth buffer
+        private D3D11.Texture2D m_depthBuffer;
+        private D3D11.DepthStencilView m_depthBufferView;
+
+        // Resources for color buffer
+        private D3D11.Texture2D m_colorBuffer;
+        private D3D11.RenderTargetView m_colorBufferRenderTargetView;
+        private D3D11.Texture2D m_colorBufferShaderResource;
+        private D3D11.ShaderResourceView m_colorBufferShaderResourceView;
+
+        // Resources for ObjectID buffer
+        private D3D11.Texture2D m_objectIDBuffer;
+        private D3D11.RenderTargetView m_objectIDBufferRenderTargetView;
+
+        // Resources for normal/depth buffer
+        private D3D11.Texture2D m_normalDepthBuffer;
+        private D3D11.RenderTargetView m_normalDepthBufferRenderTargetView;
+        private D3D11.Texture2D m_normalDepthBufferShaderResource;
+        private D3D11.ShaderResourceView m_normalDepthBufferShaderResourceView;
+
+        // Runtime variables
         private bool m_shaderResourceCreated;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderTargetTextureResource" /> class.
         /// </summary>
-        public RenderTargetTextureResource()
+        /// <param name="creationMode">Tells this object which texture to create.</param>
+        public RenderTargetTextureResource(RenderTargetCreationMode creationMode)
             : base()
         {
+            m_creationMode = creationMode;
             m_width = -1;
             m_heigth = -1;
             m_viewportF = new SharpDX.ViewportF();
@@ -63,12 +80,12 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// Applies the given size.
         /// </summary>
         /// <param name="renderState">The render state used for creating all resources.</param>
-        /// <param name="viewSize">The view size to be used.</param>
         public void ApplySize(RenderState renderState)
         {
             ViewInformation viewInfo = renderState.ViewInformation;
             GraphicsViewConfiguration viewConfig = viewInfo.ViewConfiguration;
 
+            // Get current view size and antialiasing settings
             Size2 currentViewSize = viewInfo.CurrentViewSize;
             bool currentAntialiasingEnabled = viewConfig.AntialiasingEnabled;
             AntialiasingQualityLevel currentAntialiasingQuality = viewConfig.AntialiasingQuality;
@@ -78,32 +95,75 @@ namespace FrozenSky.Multimedia.Drawing3D
                 (m_antialiasingEnabled != currentAntialiasingEnabled) ||
                 (m_antialiasingQuality != currentAntialiasingQuality))
             {
-                // Dispose old resources
-                GraphicsHelper.SafeDispose(ref m_renderTargetView);
-                GraphicsHelper.SafeDispose(ref m_shaderResourceView);
-                GraphicsHelper.SafeDispose(ref m_renderTargetDepthView);
-                GraphicsHelper.SafeDispose(ref m_renderTarget);
-                GraphicsHelper.SafeDispose(ref m_renderTargetDepth);
-                if (m_shaderResourceCreated) { GraphicsHelper.SafeDispose(ref m_shaderResource); }
+                // Dispose color-buffer resources
+                GraphicsHelper.SafeDispose(ref m_colorBuffer);
+                GraphicsHelper.SafeDispose(ref m_colorBufferRenderTargetView);
+                GraphicsHelper.SafeDispose(ref m_colorBufferShaderResourceView);
+                if (m_shaderResourceCreated) { GraphicsHelper.SafeDispose(ref m_colorBufferShaderResource); }
 
-                // Create texture resources
-                m_renderTarget = GraphicsHelper.CreateRenderTargetTexture(
-                    renderState.Device, currentViewSize.Width, currentViewSize.Height, renderState.ViewInformation.ViewConfiguration);
-                m_shaderResource = m_renderTarget;
-                if (renderState.ViewInformation.ViewConfiguration.AntialiasingEnabled)
+                // Dispose depth-buffer resources
+                GraphicsHelper.SafeDispose(ref m_depthBufferView);
+                GraphicsHelper.SafeDispose(ref m_depthBuffer);
+
+                // Dispose object-id buffer
+                GraphicsHelper.SafeDispose(ref m_objectIDBufferRenderTargetView);
+                GraphicsHelper.SafeDispose(ref m_objectIDBuffer);
+
+                // Dispose normal-depth resources
+                GraphicsHelper.SafeDispose(ref m_normalDepthBuffer);
+                GraphicsHelper.SafeDispose(ref m_normalDepthBufferRenderTargetView);
+                GraphicsHelper.SafeDispose(ref m_normalDepthBufferShaderResourceView);
+                if (m_shaderResourceCreated) { GraphicsHelper.SafeDispose(ref m_normalDepthBufferShaderResource); }
+
+                // Create color-buffer resources
+                if (m_creationMode.HasFlag(RenderTargetCreationMode.Color))
                 {
-                    m_shaderResource = GraphicsHelper.CreateTexture(renderState.Device, currentViewSize.Width, currentViewSize.Height);
-                    m_shaderResourceCreated = true;
+                    m_colorBuffer = GraphicsHelper.CreateRenderTargetTexture(
+                        renderState.Device, currentViewSize.Width, currentViewSize.Height, renderState.ViewInformation.ViewConfiguration);
+                    m_colorBufferShaderResource = m_colorBuffer;
+                    if (renderState.ViewInformation.ViewConfiguration.AntialiasingEnabled)
+                    {
+                        m_colorBufferShaderResource = GraphicsHelper.CreateTexture(renderState.Device, currentViewSize.Width, currentViewSize.Height);
+                        m_shaderResourceCreated = true;
+                    }
+                    else
+                    {
+                        m_shaderResourceCreated = false;
+                    }
+                    m_colorBufferRenderTargetView = new D3D11.RenderTargetView(renderState.Device.DeviceD3D11, m_colorBuffer);
+                    m_colorBufferShaderResourceView = new D3D11.ShaderResourceView(renderState.Device.DeviceD3D11, m_colorBufferShaderResource);
                 }
-                else
+
+                // Create depth-buffer resources
+                if (m_creationMode.HasFlag(RenderTargetCreationMode.Depth))
                 {
-                    m_shaderResourceCreated = false;
+                    m_depthBuffer = GraphicsHelper.CreateDepthBufferTexture(
+                        renderState.Device, currentViewSize.Width, currentViewSize.Height, renderState.ViewInformation.ViewConfiguration);
+                    m_depthBufferView = GraphicsHelper.CreateDepthBufferView(renderState.Device, m_depthBuffer);
                 }
-                m_renderTargetDepth = GraphicsHelper.CreateDepthBufferTexture(
-                    renderState.Device, currentViewSize.Width, currentViewSize.Height, renderState.ViewInformation.ViewConfiguration);
-                m_renderTargetView = new D3D11.RenderTargetView(renderState.Device.DeviceD3D11, m_renderTarget);
-                m_renderTargetDepthView = new D3D11.DepthStencilView(renderState.Device.DeviceD3D11, m_renderTargetDepth);
-                m_shaderResourceView = new D3D11.ShaderResourceView(renderState.Device.DeviceD3D11, m_shaderResource);
+
+                // Create object-id resources
+                if (m_creationMode.HasFlag(RenderTargetCreationMode.ObjectID))
+                {
+                    m_objectIDBuffer = GraphicsHelper.CreateRenderTargetTextureObjectIDs(
+                        renderState.Device, currentViewSize.Width, currentViewSize.Height, renderState.ViewInformation.ViewConfiguration);
+                    m_objectIDBufferRenderTargetView = new D3D11.RenderTargetView(renderState.Device.DeviceD3D11, m_objectIDBuffer);
+                }
+
+                // Create normal-depth buffer resources
+                if (m_creationMode.HasFlag(RenderTargetCreationMode.NormalDepth))
+                {
+                    m_normalDepthBuffer = GraphicsHelper.CreateRenderTargetTextureNormalDepth(
+                        renderState.Device, currentViewSize.Width, currentViewSize.Height, renderState.ViewInformation.ViewConfiguration);
+                    m_normalDepthBufferShaderResource = m_normalDepthBuffer;
+                    if (m_shaderResourceCreated)
+                    {
+                        m_normalDepthBufferShaderResource = GraphicsHelper.CreateTexture(
+                            renderState.Device, currentViewSize.Width, currentViewSize.Height, GraphicsHelper.DEFAULT_TEXTURE_FORMAT_NORMAL_DEPTH);
+                    }
+                    m_normalDepthBufferRenderTargetView = new D3D11.RenderTargetView(renderState.Device.DeviceD3D11, m_normalDepthBuffer);
+                    m_normalDepthBufferShaderResourceView = new D3D11.ShaderResourceView(renderState.Device.DeviceD3D11, m_normalDepthBufferShaderResource);
+                }
 
                 // Remember values
                 m_width = currentViewSize.Width;
@@ -121,28 +181,54 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <param name="mode"></param>
         internal void PushOnRenderState(RenderState renderState, PushRenderTargetMode mode)
         {
-            switch(mode)
+            // Store RenderTargets structures
+            RenderTargets prevRenderTargets = renderState.CurrentRenderTargets;
+            RenderTargets newRenderTargets = new RenderTargets();
+
+            // Handle color buffer
+            if (mode.HasFlag(PushRenderTargetMode.UseOwnColorBuffer))
             {
-                    // Push all buffers on render state
-                case PushRenderTargetMode.Default:
-                    renderState.PushRenderTarget(
-                        new RenderTargets(m_renderTargetView, m_renderTargetDepthView),
-                        m_viewportF, renderState.Camera, renderState.ViewInformation);
-                    break;
-
-                    // Push only render target on render state
-                case PushRenderTargetMode.OvertakePreviousDepthBuffer:
-                    D3D11.DepthStencilView depthStencilView = renderState.CurrentRenderTargets.DepthStencilBuffer;
-                    if (depthStencilView == null) { throw new FrozenSkyGraphicsException("No previous single depth stencil buffer available!"); }
-
-                    renderState.PushRenderTarget(
-                        new RenderTargets(m_renderTargetView, m_renderTargetDepthView),
-                        m_viewportF, renderState.Camera, renderState.ViewInformation);
-                    break;
-
-                default:
-                    throw new FrozenSkyGraphicsException("Unable to push on render state: Mode " + mode + " not found!");
+                newRenderTargets.ColorBuffer = m_colorBufferRenderTargetView;
             }
+            else if (mode.HasFlag(PushRenderTargetMode.OvertakeColorBuffer))
+            {
+                newRenderTargets.ColorBuffer = prevRenderTargets.ColorBuffer;
+            }
+
+            // Handle depth-stencil buffer
+            if (mode.HasFlag(PushRenderTargetMode.UseOwnDepthBuffer))
+            {
+                newRenderTargets.DepthStencilBuffer = m_depthBufferView;
+            }
+            else if (mode.HasFlag(PushRenderTargetMode.OvertakeDepthBuffer))
+            {
+                newRenderTargets.DepthStencilBuffer = prevRenderTargets.DepthStencilBuffer;
+            }
+
+            // Handle object-id buffer
+            if (mode.HasFlag(PushRenderTargetMode.UseOwnObjectIDBuffer))
+            {
+                newRenderTargets.ObjectIDBuffer = m_objectIDBufferRenderTargetView;
+            }
+            else if (mode.HasFlag(PushRenderTargetMode.OvertakeObjectIDBuffer))
+            {
+                newRenderTargets.ObjectIDBuffer = prevRenderTargets.ObjectIDBuffer;
+            }
+
+            // Handle normal-depth buffer
+            if (mode.HasFlag(PushRenderTargetMode.UseOwnNormalDepthBuffer))
+            {
+                newRenderTargets.NormalDepthBuffer = m_normalDepthBufferRenderTargetView;
+            }
+            else if (mode.HasFlag(PushRenderTargetMode.OvertakeNormalDepthBuffer))
+            {
+                newRenderTargets.NormalDepthBuffer = prevRenderTargets.NormalDepthBuffer;
+            }
+
+            // Push new RenderTargets structure onto the rendering stack
+            renderState.PushRenderTarget(
+                newRenderTargets,
+                m_viewportF, renderState.Camera, renderState.ViewInformation);
         }
 
         /// <summary>
@@ -156,36 +242,52 @@ namespace FrozenSky.Multimedia.Drawing3D
             // Copy texture data when in antialiasing ode
             if (m_antialiasingEnabled)
             {
-                renderState.Device.DeviceImmediateContextD3D11.ResolveSubresource(
-                    m_renderTarget, 0, m_shaderResource, 0, GraphicsHelper.DEFAULT_TEXTURE_FORMAT);
+                // Resolve color buffer
+                if (m_creationMode.HasFlag(RenderTargetCreationMode.Color))
+                {
+                    renderState.Device.DeviceImmediateContextD3D11.ResolveSubresource(
+                        m_colorBuffer, 0, m_colorBufferShaderResource, 0, GraphicsHelper.DEFAULT_TEXTURE_FORMAT);
+                }
+
+                // Resolve normal-depth buffer
+                if (m_creationMode.HasFlag(RenderTargetCreationMode.NormalDepth))
+                {
+                    renderState.Device.DeviceImmediateContextD3D11.ResolveSubresource(
+                        m_normalDepthBuffer, 0, m_normalDepthBufferShaderResource, 0, GraphicsHelper.DEFAULT_TEXTURE_FORMAT_NORMAL_DEPTH);
+                }
             }
         }
 
         /// <summary>
         /// Loads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-         
         }
 
         /// <summary>
         /// Unloads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            GraphicsHelper.SafeDispose(ref m_renderTargetDepthView);
-            GraphicsHelper.SafeDispose(ref m_renderTargetView);
-            GraphicsHelper.SafeDispose(ref m_shaderResourceView);
-            GraphicsHelper.SafeDispose(ref m_renderTargetDepth);
-            GraphicsHelper.SafeDispose(ref m_renderTarget);
+            GraphicsHelper.SafeDispose(ref m_depthBufferView);
+            GraphicsHelper.SafeDispose(ref m_colorBufferRenderTargetView);
+            GraphicsHelper.SafeDispose(ref m_colorBufferShaderResourceView);
+            GraphicsHelper.SafeDispose(ref m_depthBuffer);
+            GraphicsHelper.SafeDispose(ref m_colorBuffer);
+            GraphicsHelper.SafeDispose(ref m_normalDepthBufferRenderTargetView);
+            GraphicsHelper.SafeDispose(ref m_normalDepthBufferShaderResourceView);
+            GraphicsHelper.SafeDispose(ref m_normalDepthBuffer);
 
             // Unload shader resource if it was created explecitely
-            if(m_shaderResourceCreated)
+            if (m_shaderResourceCreated)
             {
-                GraphicsHelper.SafeDispose(ref m_shaderResource);
+                GraphicsHelper.SafeDispose(ref m_colorBufferShaderResource);
+                GraphicsHelper.SafeDispose(ref m_normalDepthBufferShaderResource);
                 m_shaderResourceCreated = false;
             }
         }
@@ -203,7 +305,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// </summary>
         public override D3D11.Texture2D Texture
         {
-            get { return m_renderTarget; }
+            get { return m_colorBuffer; }
         }
 
         /// <summary>
@@ -211,14 +313,22 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// </summary>
         public override D3D11.ShaderResourceView TextureView
         {
-            get { return m_shaderResourceView; }
+            get { return m_colorBufferShaderResourceView; }
+        }
+
+        public D3D11.ShaderResourceView TextureViewColor
+        {
+            get { return m_colorBufferShaderResourceView; }
         }
 
         /// <summary>
-        /// Gets the size of the texture array.
-        /// 1 for normal textures.
-        /// 6 for cubemap textures.
+        /// Gets the shader resource view to the normal-depth texture.
         /// </summary>
+        public D3D11.ShaderResourceView TextureViewNormalDepth
+        {
+            get { return m_normalDepthBufferShaderResourceView; }
+        }
+
         public override int ArraySize
         {
             get { return 1; }

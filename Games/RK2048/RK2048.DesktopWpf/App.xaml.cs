@@ -38,17 +38,6 @@ namespace RK2048.DesktopWpf
                     TargetHardware.Direct3D11,
                     false);
             }
-
-
-            //// Perform some startup checks
-            //if (GraphicsCore.Current.IsAnyHardwareDeviceLoaded())
-            //{
-            //    TaskDialog.ShowMessage(
-            //        null,
-            //        Translatables.NO_HARDWARE_DEVICE_AVAILABLE,
-            //        FrozenSkyApplication.Current.ProductName);
-            //    return;
-            //}
         }
     }
 }

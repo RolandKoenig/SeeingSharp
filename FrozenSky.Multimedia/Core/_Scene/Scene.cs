@@ -722,7 +722,7 @@ namespace FrozenSky.Multimedia.Core
             // Apply default states on the device
             DefaultResources defaultResource = resources.DefaultResources;
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
-            deviceContext.OutputMerger.BlendState = defaultResource.BlendStateDefault;
+            deviceContext.OutputMerger.BlendState = defaultResource.DefaultBlendState;
             deviceContext.OutputMerger.DepthStencilState = defaultResource.DepthStencilStateDefault;
             deviceContext.Rasterizer.State = defaultResource.RasterStateDefault;
 

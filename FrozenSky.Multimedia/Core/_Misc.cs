@@ -148,6 +148,27 @@ namespace FrozenSky.Multimedia.Core
     }
 
     /// <summary>
+    /// Enumeration containing 3 levels of texture filtering quality.
+    /// </summary>
+    public enum TextureSamplerQualityLevel
+    {
+        /// <summary>
+        /// Low quality texture sampler.
+        /// </summary>
+        Low,
+
+        /// <summary>
+        /// Medium quality texture sampler.
+        /// </summary>
+        Medium,
+
+        /// <summary>
+        /// High texture filtering quality (anisotrophic, 16x)
+        /// </summary>
+        High
+    }
+
+    /// <summary>
     /// Describes a detail level
     /// </summary>
     [Flags]

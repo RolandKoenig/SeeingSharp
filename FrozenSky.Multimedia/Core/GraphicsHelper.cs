@@ -49,13 +49,14 @@ namespace FrozenSky.Multimedia.Core
 {
     public static class GraphicsHelper
     {
-        internal static readonly DXGI.Format DEFAULT_TEXTURE_FORMAT = DXGI.Format.B8G8R8A8_UNorm;//DXGI.Format.R8G8B8A8_UNorm;
-        internal static readonly DXGI.Format DEFAULT_TEXTURE_FORMAT_SHARING = DXGI.Format.B8G8R8A8_UNorm; //DXGI.Format.R8G8B8A8_UNorm;
-        internal static readonly DXGI.Format DEFAULT_TEXTURE_FORMAT_SHARING_D2D = DXGI.Format.B8G8R8A8_UNorm;
-
-        //internal static readonly DXGI.Format DEFAULT_TEXTURE_FORMAT = DXGI.Format.B8G8R8A8_UNorm;//DXGI.Format.R8G8B8A8_UNorm;//DXGI.Format.B8G8R8A8_UNorm;
-        //internal static readonly DXGI.Format DEFAULT_TEXTURE_FORMAT_SHARING = DXGI.Format.B8G8R8A8_UNorm;//DXGI.Format.R8G8B8A8_UNorm;
-        internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT = WIC.PixelFormat.Format32bppBGRA; //WIC.PixelFormat.Format32bppBGRA;
+        // All default texture formats
+        internal const DXGI.Format DEFAULT_TEXTURE_FORMAT = DXGI.Format.B8G8R8A8_UNorm;
+        internal const DXGI.Format DEFAULT_TEXTURE_FORMAT_SHARING = DXGI.Format.B8G8R8A8_UNorm; 
+        internal const DXGI.Format DEFAULT_TEXTURE_FORMAT_SHARING_D2D = DXGI.Format.B8G8R8A8_UNorm;
+        internal const DXGI.Format DEFAULT_TEXTURE_FORMAT_NORMAL_DEPTH = DXGI.Format.R16G16B16A16_Float;
+        internal const DXGI.Format DEFAULT_TEXTURE_FORMAT_OBJECT_ID = DXGI.Format.R32_Float;
+        internal const DXGI.Format DEFAULT_TEXTURE_FORMAT_DEPTH = DXGI.Format.D32_Float_S8X24_UInt;
+        internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT = WIC.PixelFormat.Format32bppBGRA; 
 
 #if DESKTOP
         /// <summary>
@@ -519,14 +520,15 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="device">Graphics device.</param>
         /// <param name="width">Width of generated texture.</param>
         /// <param name="height">Height of generated texture.</param>
-        internal static D3D11.Texture2D CreateTexture(EngineDevice device, int width, int height)
+        /// <param name="format">The format which is used to create the texture.</param>
+        internal static D3D11.Texture2D CreateTexture(EngineDevice device, int width, int height, DXGI.Format format = DEFAULT_TEXTURE_FORMAT)
         {
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
             textureDescription.Width = width;
             textureDescription.Height = height;
             textureDescription.MipLevels = 1;
             textureDescription.ArraySize = 1;
-            textureDescription.Format = DEFAULT_TEXTURE_FORMAT;
+            textureDescription.Format = format;
             textureDescription.Usage = D3D11.ResourceUsage.Default;
             textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
             textureDescription.BindFlags = D3D11.BindFlags.ShaderResource;
@@ -616,11 +618,101 @@ namespace FrozenSky.Multimedia.Core
 
         /// <summary>
         /// Creates a render target texture with the given width and height.
+        /// This texture is used to receive normal and depth data (xyzw components) and stores data in floating point format.
         /// </summary>
         /// <param name="device">Graphics device.</param>
         /// <param name="width">Width of generated texture.</param>
         /// <param name="height">Height of generated texture.</param>
-        internal static D3D11.Texture2D CreateRenderTargetTexture(EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
+        /// <param name="gfxConfig">The GFX configuration.</param>
+        internal static D3D11.Texture2D CreateRenderTargetTextureNormalDepth(
+            EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
+        {
+            D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
+
+            if ((gfxConfig.AntialiasingEnabled) &&
+                (device.IsStandardAntialiasingPossible))
+            {
+                textureDescription.Width = width;
+                textureDescription.Height = height;
+                textureDescription.MipLevels = 1;
+                textureDescription.ArraySize = 1;
+                textureDescription.Format = DEFAULT_TEXTURE_FORMAT_NORMAL_DEPTH;
+                textureDescription.Usage = D3D11.ResourceUsage.Default;
+                textureDescription.SampleDescription = device.GetSampleDescription(gfxConfig.AntialiasingQuality);
+                textureDescription.BindFlags = D3D11.BindFlags.ShaderResource | D3D11.BindFlags.RenderTarget;
+                textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
+                textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
+            }
+            else
+            {
+                textureDescription.Width = width;
+                textureDescription.Height = height;
+                textureDescription.MipLevels = 1;
+                textureDescription.ArraySize = 1;
+                textureDescription.Format = DEFAULT_TEXTURE_FORMAT_NORMAL_DEPTH;
+                textureDescription.Usage = D3D11.ResourceUsage.Default;
+                textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
+                textureDescription.BindFlags = D3D11.BindFlags.ShaderResource | D3D11.BindFlags.RenderTarget;
+                textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
+                textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
+            }
+
+            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+        }
+
+        /// <summary>
+        /// Creates a render target texture with the given width and height.
+        /// This texture is used to receive ObjectIDs and stores data as single unsigned integers (32-Bit).
+        /// </summary>
+        /// <param name="device">Graphics device.</param>
+        /// <param name="width">Width of generated texture.</param>
+        /// <param name="height">Height of generated texture.</param>
+        /// <param name="gfxConfig">The GFX configuration.</param>
+        internal static D3D11.Texture2D CreateRenderTargetTextureObjectIDs(
+            EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
+        {
+            D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
+
+            if ((gfxConfig.AntialiasingEnabled) &&
+                (device.IsStandardAntialiasingPossible))
+            {
+                textureDescription.Width = width;
+                textureDescription.Height = height;
+                textureDescription.MipLevels = 1;
+                textureDescription.ArraySize = 1;
+                textureDescription.Format = DEFAULT_TEXTURE_FORMAT_OBJECT_ID;
+                textureDescription.Usage = D3D11.ResourceUsage.Default;
+                textureDescription.SampleDescription = device.GetSampleDescription(gfxConfig.AntialiasingQuality);
+                textureDescription.BindFlags = D3D11.BindFlags.ShaderResource | D3D11.BindFlags.RenderTarget;
+                textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
+                textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
+            }
+            else
+            {
+                textureDescription.Width = width;
+                textureDescription.Height = height;
+                textureDescription.MipLevels = 1;
+                textureDescription.ArraySize = 1;
+                textureDescription.Format = DEFAULT_TEXTURE_FORMAT_OBJECT_ID;
+                textureDescription.Usage = D3D11.ResourceUsage.Default;
+                textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
+                textureDescription.BindFlags = D3D11.BindFlags.ShaderResource | D3D11.BindFlags.RenderTarget;
+                textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
+                textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
+            }
+
+            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+        }
+
+        /// <summary>
+        /// Creates a render target texture with the given width and height.
+        /// </summary>
+        /// <param name="device">Graphics device.</param>
+        /// <param name="width">Width of generated texture.</param>
+        /// <param name="height">Height of generated texture.</param>
+        /// <param name="gfxConfig">The GFX configuration.</param>
+        internal static D3D11.Texture2D CreateRenderTargetTexture(
+            EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
         {
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
 
@@ -712,6 +804,16 @@ namespace FrozenSky.Multimedia.Core
 
             // Create the texture finally
             return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+        }
+
+        /// <summary>
+        /// Create a new DepthBuffer view to bind the given depth buffer to the rendering device.
+        /// </summary>
+        /// <param name="device">The device on which to create the view.</param>
+        /// <param name="depthBuffer">The target resource.</param>
+        internal static D3D11.DepthStencilView CreateDepthBufferView(EngineDevice device, D3D11.Texture2D depthBuffer)
+        {
+            return new D3D11.DepthStencilView(device.DeviceD3D11, depthBuffer);
         }
 
         /// <summary>
@@ -1063,7 +1165,8 @@ namespace FrozenSky.Multimedia.Core
         /// Creates a default exture sampler state.
         /// </summary>
         /// <param name="device">The device to create the state for.</param>
-        internal static D3D11.SamplerState CreateDefaultTextureSampler(EngineDevice device)
+        /// <param name="samplerQualityLevel">The target sampler quality</param>
+        internal static D3D11.SamplerState CreateDefaultTextureSampler(EngineDevice device, TextureSamplerQualityLevel samplerQualityLevel)
         {
             // Set state parameters
             var samplerDesk = D3D11.SamplerStateDescription.Default();
@@ -1071,6 +1174,33 @@ namespace FrozenSky.Multimedia.Core
             {
                 case HardwareDriverLevel.Direct3D11:
                 case HardwareDriverLevel.Direct3D10:
+                    switch (samplerQualityLevel)
+                    {
+                        case TextureSamplerQualityLevel.High:
+                            if (!device.IsHighDetailSupported) { goto case TextureSamplerQualityLevel.Low; }
+                            samplerDesk.AddressU = D3D11.TextureAddressMode.Wrap;
+                            samplerDesk.AddressV = D3D11.TextureAddressMode.Wrap;
+                            samplerDesk.Filter = D3D11.Filter.Anisotropic;
+                            samplerDesk.MaximumAnisotropy = 16;
+                            break;
+
+                        case TextureSamplerQualityLevel.Medium:
+                            if (!device.IsHighDetailSupported) { goto case TextureSamplerQualityLevel.Low; }
+                            samplerDesk.AddressU = D3D11.TextureAddressMode.Wrap;
+                            samplerDesk.AddressV = D3D11.TextureAddressMode.Wrap;
+                            samplerDesk.Filter = D3D11.Filter.Anisotropic;
+                            samplerDesk.MaximumAnisotropy = 8;
+                            break;
+
+                        case TextureSamplerQualityLevel.Low:
+                            samplerDesk.AddressU = D3D11.TextureAddressMode.Wrap;
+                            samplerDesk.AddressV = D3D11.TextureAddressMode.Wrap;
+                            samplerDesk.Filter = D3D11.Filter.MinMagMipLinear;
+                            break;
+                    }
+                    break;
+
+                default:
                     samplerDesk.AddressU = D3D11.TextureAddressMode.Wrap;
                     samplerDesk.AddressV = D3D11.TextureAddressMode.Wrap;
                     samplerDesk.Filter = D3D11.Filter.MinMagMipLinear;

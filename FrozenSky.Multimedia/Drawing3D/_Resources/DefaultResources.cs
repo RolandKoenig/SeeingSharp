@@ -35,9 +35,6 @@ namespace FrozenSky.Multimedia.Drawing3D
     {
         public static readonly NamedOrGenericKey RESOURCE_KEY = new NamedOrGenericKey(typeof(DefaultResources));
 
-        // Sampler states
-        private Lazy<D3D11.SamplerState> m_defaultSamplerState;
-
         // Blend states
         private Lazy<D3D11.BlendState> m_defaultBlendState;
         private Lazy<D3D11.BlendState> m_alphaBlendingBlendState;
@@ -46,31 +43,53 @@ namespace FrozenSky.Multimedia.Drawing3D
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateDefault;
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateDisableZ;
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateInvertedZTest;
+        private Lazy<D3D11.DepthStencilState> m_depthStencilStateAllwaysPass;
 
         // Rastarizer states
         private Lazy<D3D11.RasterizerState> m_rasterStateLines;
         private Lazy<D3D11.RasterizerState> m_rasterStateDefault;
         private Lazy<D3D11.RasterizerState> m_rasterStateBiased;
 
+        // Sample states
+        private Lazy<D3D11.SamplerState> m_samplerStateLow;
+        private Lazy<D3D11.SamplerState> m_samplerStateMedium;
+        private Lazy<D3D11.SamplerState> m_samplerStateHigh;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultResources" /> class.
         /// </summary>
         internal DefaultResources()
         {
+        }
 
+        /// <summary>
+        /// Gets the sampler state with the given requested quality level.
+        /// </summary>
+        /// <param name="qualityLevel">The quality level to get the sampler state for.</param>
+        internal D3D11.SamplerState GetSamplerState(TextureSamplerQualityLevel qualityLevel)
+        {
+            switch (qualityLevel)
+            {
+                case TextureSamplerQualityLevel.High:
+                    return m_samplerStateHigh.Value;
+
+                case TextureSamplerQualityLevel.Medium:
+                    return m_samplerStateMedium.Value;
+
+                case TextureSamplerQualityLevel.Low:
+                    return m_samplerStateLow.Value;
+            }
+
+            return m_samplerStateLow.Value;
         }
 
         /// <summary>
         /// Loads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            m_defaultSamplerState = new Lazy<D3D11.SamplerState>(() =>
-            {
-                return GraphicsHelper.CreateDefaultTextureSampler(device);
-            });
-
             // Create default blend state
             m_defaultBlendState = new Lazy<D3D11.BlendState>(() =>
             {
@@ -100,7 +119,6 @@ namespace FrozenSky.Multimedia.Drawing3D
             m_depthStencilStateDefault = new Lazy<D3D11.DepthStencilState>(() =>
             {
                 D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
-                stateDesc.DepthComparison = D3D11.Comparison.LessEqual;
                 return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
             });
 
@@ -109,7 +127,15 @@ namespace FrozenSky.Multimedia.Drawing3D
             {
                 D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
                 stateDesc.DepthWriteMask = D3D11.DepthWriteMask.Zero;
-                stateDesc.DepthComparison = D3D11.Comparison.LessEqual;
+                return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
+            });
+
+            m_depthStencilStateAllwaysPass = new Lazy<D3D11.DepthStencilState>(() =>
+            {
+                D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
+                stateDesc.DepthWriteMask = D3D11.DepthWriteMask.Zero;
+                stateDesc.DepthComparison = D3D11.Comparison.Always;
+                stateDesc.IsDepthEnabled = false;
                 return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
             });
 
@@ -125,8 +151,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             // Create default rasterizer state
             m_rasterStateDefault = new Lazy<D3D11.RasterizerState>(() =>
             {
-                var stateDesc = D3D11.RasterizerStateDescription.Default();
-                return new D3D11.RasterizerState(device.DeviceD3D11, stateDesc);
+                return new D3D11.RasterizerState(device.DeviceD3D11, D3D11.RasterizerStateDescription.Default());
             });
 
             // Create a raster state with depth bias
@@ -146,20 +171,37 @@ namespace FrozenSky.Multimedia.Drawing3D
                 stateDesc.FillMode = D3D11.FillMode.Solid;
                 return new D3D11.RasterizerState(device.DeviceD3D11, stateDesc);
             });
+
+            // Create sampler states
+            m_samplerStateLow = new Lazy<D3D11.SamplerState>(() =>
+            {
+                return GraphicsHelper.CreateDefaultTextureSampler(device, TextureSamplerQualityLevel.Low);
+            });
+            m_samplerStateMedium = new Lazy<D3D11.SamplerState>(() =>
+            {
+                return GraphicsHelper.CreateDefaultTextureSampler(device, TextureSamplerQualityLevel.Medium);
+            });
+            m_samplerStateHigh = new Lazy<D3D11.SamplerState>(() =>
+            {
+                return GraphicsHelper.CreateDefaultTextureSampler(device, TextureSamplerQualityLevel.High);
+            });
         }
 
         /// <summary>
         /// Unloads the resource.
         /// </summary>
+        /// <param name="device">The device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            m_defaultSamplerState = GraphicsHelper.DisposeObjectLazy(m_defaultSamplerState);
             m_defaultBlendState = GraphicsHelper.DisposeObjectLazy(m_defaultBlendState);
             m_depthStencilStateDefault = GraphicsHelper.DisposeObjectLazy(m_depthStencilStateDefault);
             m_depthStencilStateDisableZ = GraphicsHelper.DisposeObjectLazy(m_depthStencilStateDisableZ);
             m_rasterStateLines = GraphicsHelper.DisposeObjectLazy(m_rasterStateLines);
             m_rasterStateDefault = GraphicsHelper.DisposeObjectLazy(m_rasterStateDefault);
+            m_samplerStateLow = GraphicsHelper.DisposeObjectLazy(m_samplerStateLow);
+            m_samplerStateMedium = GraphicsHelper.DisposeObjectLazy(m_samplerStateMedium);
+            m_samplerStateHigh = GraphicsHelper.DisposeObjectLazy(m_samplerStateHigh);
         }
 
         /// <summary>
@@ -170,7 +212,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             get { return m_defaultBlendState != null; }
         }
 
-        internal D3D11.BlendState BlendStateDefault
+        internal D3D11.BlendState DefaultBlendState
         {
             get
             {
@@ -203,6 +245,15 @@ namespace FrozenSky.Multimedia.Drawing3D
             {
                 if (m_depthStencilStateDisableZ == null) { return null; }
                 return m_depthStencilStateDisableZ.Value;
+            }
+        }
+
+        internal D3D11.DepthStencilState DepthStencilStateAllwaysPassDepth
+        {
+            get
+            {
+                if (m_depthStencilStateAllwaysPass == null) { return null; }
+                return m_depthStencilStateAllwaysPass.Value;
             }
         }
 
@@ -246,8 +297,8 @@ namespace FrozenSky.Multimedia.Drawing3D
         {
             get
             {
-                if (m_defaultSamplerState == null) { return null; }
-                return m_defaultSamplerState.Value;
+                if (m_samplerStateMedium == null) { return null; }
+                return m_samplerStateMedium.Value;
             }
         }
 

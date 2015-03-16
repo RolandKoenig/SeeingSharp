@@ -19,16 +19,24 @@
 #endregion
 
 using FrozenSky.Multimedia.Core;
+using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using D3D11 = SharpDX.Direct3D11;
+
 namespace FrozenSky.Multimedia.Drawing3D
 {
     public abstract class PostprocessEffectResource : Resource
     {
+        private static readonly NamedOrGenericKey RES_KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
+
+        private VertexShaderResource m_vertexShader;
+        private DefaultResources m_defaultResources;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="PostprocessEffectResource" /> class.
         /// </summary>
@@ -37,12 +45,87 @@ namespace FrozenSky.Multimedia.Drawing3D
 
         }
 
+
+        /// <summary>
+        /// Applies alpha based sprite rendering.
+        /// </summary>
+        /// <param name="deviceContext">The target device context.</param>
+        protected void ApplySpriteRendering(D3D11.DeviceContext deviceContext)
+        {
+            deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
+
+            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateAllwaysPassDepth;
+        }
+
+        /// <summary>
+        /// Discards alpha based sprite rendering.
+        /// </summary>
+        /// <param name="deviceContext">The target device context.</param>
+        protected void DiscardSpriteRendering(D3D11.DeviceContext deviceContext)
+        {
+            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
+        }
+
+        /// <summary>
+        /// Applies alpha based sprite rendering.
+        /// </summary>
+        /// <param name="deviceContext">The target device context.</param>
+        protected void ApplyAlphaBasedSpriteRendering(D3D11.DeviceContext deviceContext)
+        {
+            deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
+
+            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateAllwaysPassDepth;
+            deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
+        }
+
+        /// <summary>
+        /// Discards alpha based sprite rendering.
+        /// </summary>
+        /// <param name="deviceContext">The target device context.</param>
+        protected void DiscardAlphaBasedSpriteRendering(D3D11.DeviceContext deviceContext)
+        {
+            deviceContext.OutputMerger.BlendState = m_defaultResources.DefaultBlendState;
+            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
+        }
+
+        /// <summary>
+        /// Loads the resource.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <param name="resources">Parent ResourceDictionary.</param>
+        protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
+        {
+            m_defaultResources = resources.DefaultResources;
+            m_vertexShader = resources.GetResourceAndEnsureLoaded(
+                RES_KEY_VERTEX_SHADER,
+                () => GraphicsHelper.GetVertexShaderResource(device, "Sprite", "SpriteVertexShader"));
+        }
+
+        /// <summary>
+        /// Unloads the resource.
+        /// </summary>
+        /// <param name="device">The device.</param>
+        /// <param name="resources">Parent ResourceDictionary.</param>
+        protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
+        {
+            m_defaultResources = null;
+            m_vertexShader = null;
+        }
+
         /// <summary>
         /// Notifies that rendering begins.
         /// </summary>
         /// <param name="renderState">The current render state.</param>
         /// <param name="passID">The ID of the current pass (starting with 0)</param>
         internal abstract void NotifyBeforeRender(RenderState renderState, int passID);
+
+        /// <summary>
+        /// Notifies that rendering of the plain part has finished.
+        /// </summary>
+        /// <param name="renderState">The current render state.</param>
+        /// <param name="passID">The ID of the current pass (starting with 0)</param>
+        /// <returns>True, if rendering should continue with next pass. False if postprocess effect is finished.</returns>
+        internal abstract void NotifyAfterRenderPlain(RenderState renderState, int passID);
 
         /// <summary>
         /// Notifies that rendering has finished.

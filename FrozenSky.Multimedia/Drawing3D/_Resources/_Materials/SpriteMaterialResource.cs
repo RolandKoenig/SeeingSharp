@@ -33,19 +33,15 @@ namespace FrozenSky.Multimedia.Drawing3D
         //Resource keys
         private static readonly NamedOrGenericKey RES_KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER = GraphicsCore.GetNextGenericResourceKey();
-        private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER_BLUR = GraphicsCore.GetNextGenericResourceKey();
-        private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER_EDGE_RENDER = GraphicsCore.GetNextGenericResourceKey();
 
         //Some configuration
         private NamedOrGenericKey m_textureKey;
 
         //Resource members
-        private D3D11.SamplerState m_samplerState;
         private TextureResource m_textureResource;
         private VertexShaderResource m_vertexShader;
         private PixelShaderResource m_pixelShader;
-        private PixelShaderResource m_pixelShaderBlur;
-        private PixelShaderResource m_pixelShaderEdgeRender;
+        private DefaultResources m_defaultResources;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SpriteMaterialResource"/> class.
@@ -69,12 +65,9 @@ namespace FrozenSky.Multimedia.Drawing3D
             m_pixelShader = resources.GetResourceAndEnsureLoaded(
                 RES_KEY_PIXEL_SHADER,
                 () => GraphicsHelper.GetPixelShaderResource(device, "Sprite", "SpritePixelShader"));
-            m_pixelShaderBlur = resources.GetResourceAndEnsureLoaded(
-                RES_KEY_PIXEL_SHADER_BLUR,
-                () => GraphicsHelper.GetPixelShaderResource(device, "Sprite", "SpriteBlurPixelShader"));
-            m_pixelShaderEdgeRender = resources.GetResourceAndEnsureLoaded(
-                RES_KEY_PIXEL_SHADER_EDGE_RENDER,
-                () => GraphicsHelper.GetPixelShaderResource(device, "Sprite", "SpriteEdgeDetectPixelShader"));
+
+            // Get a reference to default resource object
+            m_defaultResources = resources.GetResourceAndEnsureLoaded<DefaultResources>(DefaultResources.RESOURCE_KEY);
 
             //Load the texture if any configured.
             if (!m_textureKey.IsEmpty)
@@ -82,9 +75,6 @@ namespace FrozenSky.Multimedia.Drawing3D
                 //Get texture resource
                 m_textureResource = resources.GetResourceAndEnsureLoaded<TextureResource>(m_textureKey);
             }
-
-            //samplerDesk.Filter = D3D11.Filter.Anisotropic;
-            m_samplerState = GraphicsHelper.CreateDefaultTextureSampler(device);
         }
 
         /// <summary>
@@ -93,8 +83,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            m_samplerState = GraphicsHelper.DisposeObject(m_samplerState);
-
+            m_defaultResources = null;
             m_vertexShader = null;
             m_pixelShader = null;
             m_textureResource = null;
@@ -132,10 +121,9 @@ namespace FrozenSky.Multimedia.Drawing3D
                 (previousMaterial != null) &&
                 (previousMaterial.ResourceType == base.ResourceType);
 
-            // Apply sampler
             if (!isResourceSameType)
             {
-                deviceContext.PixelShader.SetSampler(0, m_samplerState);
+                deviceContext.PixelShader.SetSampler(0, m_defaultResources.GetSamplerState(TextureSamplerQualityLevel.Low));
             }
 
             // Set texture resource (if set)
@@ -149,26 +137,8 @@ namespace FrozenSky.Multimedia.Drawing3D
             }
 
             // Set shader resources
-            switch (this.Effect)
-            {
-                case TexturePainterEffect.Blur:
-                    deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
-                    deviceContext.PixelShader.Set(m_pixelShaderBlur.PixelShader);
-                    break;
-
-                case TexturePainterEffect.Standard:
-                    deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
-                    deviceContext.PixelShader.Set(m_pixelShader.PixelShader);
-                    break;
-
-                case TexturePainterEffect.EdgeRendering:
-                    deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
-                    deviceContext.PixelShader.Set(m_pixelShaderEdgeRender.PixelShader);
-                    break;
-
-                default:
-                    throw new FrozenSkyGraphicsException("Effect " + this.Effect + " not supported!");
-            }
+            deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
+            deviceContext.PixelShader.Set(m_pixelShader.PixelShader);
         }
 
         /// <summary>
@@ -185,12 +155,6 @@ namespace FrozenSky.Multimedia.Drawing3D
         public override bool IsLoaded
         {
             get { return m_vertexShader != null; }
-        }
-
-        public TexturePainterEffect Effect 
-        {
-            get;
-            set; 
         }
     }
 }

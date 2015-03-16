@@ -26,19 +26,69 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Multimedia.Drawing3D
 {
-    public enum TexturePainterEffect
+    [Flags]
+    internal enum RenderTargetCreationMode : int
     {
-        Standard,
+        /// <summary>
+        /// Do create the color buffer.
+        /// </summary>
+        Color = 1,
 
-        Blur,
+        /// <summary>
+        /// Do create the depth buffer.
+        /// </summary>
+        Depth = 2,
 
-        EdgeRendering
+        /// <summary>
+        /// Do create the object-id buffer.
+        /// </summary>
+        ObjectID = 4,
+
+        /// <summary>
+        /// Do create the normal-depth buffer.
+        /// </summary>
+        NormalDepth = 8,
+
+        /// <summary>
+        /// Create all textures.
+        /// </summary>
+        All = Color | Depth | ObjectID | NormalDepth
     }
 
-    internal enum PushRenderTargetMode
+    /// <summary>
+    /// Describes the mode how a RenderTargetTexture pushes itself on the rendering stack.
+    /// </summary>
+    [Flags]
+    internal enum PushRenderTargetMode : int
     {
-        Default,
+        /// <summary>
+        /// Use all buffers from this RenderTargetTexture.
+        /// </summary>
+        Default_OwnAll = UseOwnColorBuffer | UseOwnDepthBuffer | UseOwnObjectIDBuffer | UseOwnNormalDepthBuffer,
 
-        OvertakePreviousDepthBuffer
+        Default_OwnColorDepth_PrevObjectIDNormalDepth = UseOwnColorBuffer | UseOwnDepthBuffer | OvertakeObjectIDBuffer | OvertakeNormalDepthBuffer,
+
+        Default_OwnColor_PrevDepthObjectIDNormalDepth = UseOwnColorBuffer | OvertakeDepthBuffer | OvertakeObjectIDBuffer | OvertakeNormalDepthBuffer,
+
+        Default_OwnColorNormalDepth_PrevDepthObjectID = UseOwnColorBuffer | OvertakeDepthBuffer | OvertakeObjectIDBuffer | UseOwnNormalDepthBuffer,
+
+        /// <summary>
+        /// Use the color buffer defined by this render-target texture.
+        /// </summary>
+        UseOwnColorBuffer = 1,
+
+        UseOwnDepthBuffer = 2,
+
+        UseOwnObjectIDBuffer = 4,
+
+        UseOwnNormalDepthBuffer = 8,
+
+        OvertakeColorBuffer = 16,
+
+        OvertakeDepthBuffer = 32,
+
+        OvertakeObjectIDBuffer = 64,
+
+        OvertakeNormalDepthBuffer = 128
     }
 }

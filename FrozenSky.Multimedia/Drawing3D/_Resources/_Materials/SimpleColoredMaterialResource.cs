@@ -44,11 +44,11 @@ namespace FrozenSky.Multimedia.Drawing3D
         private bool m_cbPerMaterialDataChanged;
 
         //Resource members
-        private D3D11.SamplerState m_samplerState;
         private TextureResource m_textureResource;
         private VertexShaderResource m_vertexShader;
         private PixelShaderResource m_pixelShader;
         private TypeSafeConstantBufferResource<CBPerMaterial> m_cbPerMaterial;
+        private DefaultResources m_defaultResources;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleColoredMaterialResource"/> class.
@@ -80,15 +80,15 @@ namespace FrozenSky.Multimedia.Drawing3D
                 () => new TypeSafeConstantBufferResource<CBPerMaterial>());
             m_cbPerMaterialDataChanged = true;
 
+            // Get a reference to default resource object
+            m_defaultResources = resources.GetResourceAndEnsureLoaded<DefaultResources>(DefaultResources.RESOURCE_KEY);
+
             //Load the texture if any configured.
             if (!m_textureKey.IsEmpty)
             {
                 //Get texture resource
                 m_textureResource = resources.GetResourceAndEnsureLoaded<TextureResource>(m_textureKey);
             }
-
-            //Create the sampler state
-            m_samplerState = GraphicsHelper.CreateDefaultTextureSampler(device);
         }
 
         /// <summary>
@@ -97,8 +97,6 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            m_samplerState = GraphicsHelper.DisposeObject(m_samplerState);
-
             m_vertexShader = null;
             m_pixelShader = null;
             m_textureResource = null;
@@ -155,7 +153,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             // Apply sampler and constants
             if (!isResourceSameType)
             {
-                deviceContext.PixelShader.SetSampler(0, m_samplerState);
+                deviceContext.PixelShader.SetSampler(0, m_defaultResources.GetSamplerState(TextureSamplerQualityLevel.Low));
             }
             deviceContext.PixelShader.SetConstantBuffer(3, m_cbPerMaterial.ConstantBuffer);
             deviceContext.VertexShader.SetConstantBuffer(3, m_cbPerMaterial.ConstantBuffer);
