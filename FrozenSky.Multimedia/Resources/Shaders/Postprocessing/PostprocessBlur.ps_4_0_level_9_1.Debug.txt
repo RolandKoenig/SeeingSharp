@@ -61,7 +61,7 @@
     dcl t0.xy  // input<4,5>
     dcl_2d s0
 
-#line 26 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessBlur.hlsl"
+#line 26 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessBlur.hlsl"
     mov r0.xy, c1
     mad_sat r1.x, c0.y, r0.y, t0.x
     mad_sat r1.y, c0.y, -r0.y, t0.y
@@ -112,7 +112,7 @@ dcl_temps 3
 //   v1.x <- input.tex.x; v1.y <- input.tex.y; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 28 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessBlur.hlsl"
+#line 28 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessBlur.hlsl"
 mad_sat r0.xyzw, cb2[0].yyyy, l(0.002000, 0.004000, 0.003000, 0.003000), v1.xxxy
 mov r1.xz, r0.yyzy
 mad_sat r2.xyzw, -cb2[0].yyyy, l(0.004000, 0.003000, 0.002000, 0.003000), v1.yyyx

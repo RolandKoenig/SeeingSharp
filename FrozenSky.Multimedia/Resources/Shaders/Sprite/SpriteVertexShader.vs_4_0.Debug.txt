@@ -75,7 +75,7 @@ dcl_temps 1
 //   o1.x <- <main return value>.col.x; o1.y <- <main return value>.col.y; o1.z <- <main return value>.col.z; o1.w <- <main return value>.col.w; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 17 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpriteVertexShader.hlsl"
+#line 17 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpriteVertexShader.hlsl"
 mov o0.w, l(1.000000)
 
 #line 11
