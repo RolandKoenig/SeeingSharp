@@ -52,7 +52,7 @@ namespace FrozenSky.Multimedia.Core
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
 
             deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
-            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZ;
+            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZWrites;
         }
 
         /// <summary>

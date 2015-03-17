@@ -144,7 +144,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             // Render the object
             using (m_renderParameters.Apply(renderState))
             {
-                deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZ;
+                deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZWrites;
                 deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
 
                 m_geometryResource.Render(renderState);

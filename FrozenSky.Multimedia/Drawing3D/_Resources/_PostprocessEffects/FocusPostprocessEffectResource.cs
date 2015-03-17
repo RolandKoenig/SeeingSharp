@@ -169,6 +169,7 @@ namespace FrozenSky.Multimedia.Drawing3D
 
                         // Change raster state
                         renderState.Device.DeviceImmediateContextD3D11.Rasterizer.State = m_defaultResources.RasterStateBiased;
+                        renderState.Device.DeviceImmediateContextD3D11.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZWrites;
                         break;
                 }
             }
@@ -209,6 +210,8 @@ namespace FrozenSky.Multimedia.Drawing3D
                 deviceContext.Rasterizer.State = m_defaultResources.RasterStateDefault;
                 deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
                 renderState.ForceMaterial(null);
+
+               
 
                 // Reset render target (needed for all passes)
                 m_renderTarget.PopFromRenderState(renderState);

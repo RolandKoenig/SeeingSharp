@@ -38,19 +38,9 @@ namespace FrozenSky.Multimedia.Core
 {
     public unsafe class MemoryMappedTexture32bpp : IDisposable
     {
-        // Some query steps, relevant for QueryForObjectID method
-        private static readonly Point[] QUERY_OBJECT_ID_STEPS = new Point[]
-        {
-            new Point(1, 0),new Point(1, 0),
-            new Point(0, 1),
-            new Point(-1, 0), new Point(-1, 0), new Point(-1, 0), new Point(-1, 0),
-            new Point(0, -1), new Point(0, -1),
-            new Point(1, 0), new Point(1, 0), new Point(1, 0), new Point(1, 0),
-        }; 
-
         // The native structure, where we store all ObjectIDs uploaded from graphics hardware
         private IntPtr m_pointer;
-        private float* m_pointerNative;
+        private int* m_pointerNative;
         private Size2 m_size;
 
         /// <summary>
@@ -60,51 +50,8 @@ namespace FrozenSky.Multimedia.Core
         public MemoryMappedTexture32bpp(Size2 size)
         {
             m_pointer = Marshal.AllocHGlobal(size.Width * size.Height * 4);
-            m_pointerNative = (float*)m_pointer.ToPointer();
+            m_pointerNative = (int*)m_pointer.ToPointer();
             m_size = size;
-        }
-
-        /// <summary>
-        /// Queries for the ObjectID at the given location.
-        /// </summary>
-        /// <param name="xPos">The x position where to start.</param>
-        /// <param name="yPos">The y position where to start.</param>
-        public float QueryForObjectID(int xPos, int yPos)
-        {
-            if (xPos < 0) { throw new ArgumentException("xPos"); }
-            if (xPos >= m_size.Width) { throw new ArgumentException("xPos"); }
-            if (yPos < 0) { throw new ArgumentException("yPos"); }
-            if (yPos >= m_size.Height) { throw new ArgumentException("yPos"); }
-
-            // Loop over more pixels to be sure, that we are directly facing one object
-            //  => This is needed because of manipulations done by multisampling (=Antialiasing)
-            int currentX = xPos;
-            int currentY = yPos;
-            float lastObjID = m_pointerNative[currentY * m_size.Width + currentX];
-            for(int loopActQueryStep =0 ; loopActQueryStep < QUERY_OBJECT_ID_STEPS.Length; loopActQueryStep++)
-            {
-                // Calculate current query location
-                Point currentStep = QUERY_OBJECT_ID_STEPS[loopActQueryStep];
-                currentX = currentX + currentStep.X;
-                currentY = currentY + currentStep.Y;
-
-                // Check whether we are still in a valid pixel coordinate
-                if (currentX < 0) { continue; }
-                if (currentX >= m_size.Width) { continue; }
-                if (currentY < 0) { continue; }
-                if (currentY >= m_size.Height) { continue; }
-
-                // Read current value and compare with last one
-                //  (If equal, than at least two pixels are the same => Return this ObjectID)
-                float currObjID = m_pointerNative[currentY * m_size.Width + currentX];
-                if (currObjID == lastObjID) { return currObjID; }
-
-                // No match found, continue with next one
-                lastObjID = currObjID;
-            }
-
-            // No clear match found
-            return 0f;
         }
 
         /// <summary>
@@ -114,7 +61,7 @@ namespace FrozenSky.Multimedia.Core
         {
             Marshal.FreeHGlobal(m_pointer);
             m_pointer = IntPtr.Zero;
-            m_pointerNative = (float*)0;
+            m_pointerNative = (int*)0;
             m_size = new Size2(0, 0);
         }
 

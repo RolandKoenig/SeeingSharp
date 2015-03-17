@@ -206,6 +206,8 @@
     <Compile Include="Core\_Scene\VisibilityCheckFilterStageData.cs" />
     <Compile Include="Core\_Scene\_Misc.cs" />
     <Compile Include="Core\_Util\MemoryMappedTexture32bpp.cs" />
+    <Compile Include="Core\_Util\MemoryMappedTextureFloat.cs" />
+    <Compile Include="Core\_Util\TextureUploader.cs" />
     <Compile Include="Drawing2D\Custom2DDrawingLayer.cs" />
     <Compile Include="Drawing2D\Graphics2D.cs" />
     <Compile Include="Drawing2D\ResourceCache2D.cs" />

@@ -41,7 +41,7 @@ namespace FrozenSky.Multimedia.Drawing3D
 
         // Depth stencil states
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateDefault;
-        private Lazy<D3D11.DepthStencilState> m_depthStencilStateDisableZ;
+        private Lazy<D3D11.DepthStencilState> m_depthStencilStateDisableZWrites;
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateInvertedZTest;
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateAllwaysPass;
 
@@ -123,7 +123,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             });
 
             // Create the depth stencil state for diabling z writes
-            m_depthStencilStateDisableZ = new Lazy<D3D11.DepthStencilState>(() =>
+            m_depthStencilStateDisableZWrites = new Lazy<D3D11.DepthStencilState>(() =>
             {
                 D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
                 stateDesc.DepthWriteMask = D3D11.DepthWriteMask.Zero;
@@ -196,7 +196,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         {
             m_defaultBlendState = GraphicsHelper.DisposeObjectLazy(m_defaultBlendState);
             m_depthStencilStateDefault = GraphicsHelper.DisposeObjectLazy(m_depthStencilStateDefault);
-            m_depthStencilStateDisableZ = GraphicsHelper.DisposeObjectLazy(m_depthStencilStateDisableZ);
+            m_depthStencilStateDisableZWrites = GraphicsHelper.DisposeObjectLazy(m_depthStencilStateDisableZWrites);
             m_rasterStateLines = GraphicsHelper.DisposeObjectLazy(m_rasterStateLines);
             m_rasterStateDefault = GraphicsHelper.DisposeObjectLazy(m_rasterStateDefault);
             m_samplerStateLow = GraphicsHelper.DisposeObjectLazy(m_samplerStateLow);
@@ -239,12 +239,12 @@ namespace FrozenSky.Multimedia.Drawing3D
             }
         }
 
-        internal D3D11.DepthStencilState DepthStencilStateDisableZ
+        internal D3D11.DepthStencilState DepthStencilStateDisableZWrites
         {
             get
             {
-                if (m_depthStencilStateDisableZ == null) { return null; }
-                return m_depthStencilStateDisableZ.Value;
+                if (m_depthStencilStateDisableZWrites == null) { return null; }
+                return m_depthStencilStateDisableZWrites.Value;
             }
         }
 

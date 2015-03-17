@@ -175,6 +175,7 @@
     <Compile Include="_Math\_Custom\BoundingBox.Custom.cs" />
     <Compile Include="_Math\_Custom\BoundingBox2D.cs" />
     <Compile Include="_Math\_Custom\BoundingSphere.Custom.cs" />
+    <Compile Include="_Math\_Custom\Color.Custom.cs" />
     <Compile Include="_Math\_Custom\Color4.Colors.cs" />
     <Compile Include="_Math\_Custom\Color4.Custom.cs" />
     <Compile Include="_Math\_Custom\CuttingEarsTriangulator.MIT.cs" />

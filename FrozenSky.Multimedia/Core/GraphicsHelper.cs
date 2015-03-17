@@ -596,6 +596,33 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="device">Graphics device.</param>
         /// <param name="width">Width of generated texture.</param>
         /// <param name="height">Height of generated texture.</param>
+        /// <param name="format">The format used to create the texture.</param>
+        internal static D3D11.Texture2D CreateStagingTexture(EngineDevice device, int width, int height, DXGI.Format format = DEFAULT_TEXTURE_FORMAT)
+        {
+            //For handling of staging resource see
+            // http://msdn.microsoft.com/en-us/library/windows/desktop/ff476259(v=vs.85).aspx
+
+            D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
+            textureDescription.Width = width;
+            textureDescription.Height = height;
+            textureDescription.MipLevels = 1;
+            textureDescription.ArraySize = 1;
+            textureDescription.Format = format;
+            textureDescription.Usage = D3D11.ResourceUsage.Staging;
+            textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
+            textureDescription.BindFlags = D3D11.BindFlags.None;
+            textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.Read;
+            textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
+
+            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+        }
+
+        /// <summary>
+        /// Creates a staging texture which enables copying data from gpu to cpu memory.
+        /// </summary>
+        /// <param name="device">Graphics device.</param>
+        /// <param name="width">Width of generated texture.</param>
+        /// <param name="height">Height of generated texture.</param>
         internal static D3D11.Texture2D CreateStagingTexture(EngineDevice device, int width, int height)
         {
             //For handling of staging resource see

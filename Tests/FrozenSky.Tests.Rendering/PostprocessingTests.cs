@@ -68,7 +68,7 @@ namespace FrozenSky.Tests.Rendering
                 await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
                 {
                     var keyPostprocess = manipulator.AddResource<FocusPostprocessEffectResource>(
-                        () => new FocusPostprocessEffectResource());
+                        () => new FocusPostprocessEffectResource(false));
 
                     SceneLayer defaultLayer = manipulator.GetLayer(Scene.DEFAULT_LAYER_NAME);
                     defaultLayer.PostprocessEffectKey = keyPostprocess;
@@ -86,7 +86,7 @@ namespace FrozenSky.Tests.Rendering
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
                 screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
-                //screenshot.DumpToDesktop("Blub.png");
+                screenshot.DumpToDesktop("Blub.png");
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(

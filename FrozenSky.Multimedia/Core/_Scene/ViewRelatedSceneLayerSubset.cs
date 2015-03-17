@@ -496,6 +496,9 @@ namespace FrozenSky.Multimedia.Core
                         // Perform all plain renderings
                         RenderPass(null, m_objectsPassPlainRender, renderState, ref invalidObjects);
 
+                        // Notify state after plain rendering
+                        if (postprocessEffect != null) { postprocessEffect.NotifyAfterRenderPlain(renderState, passID); }
+
                         // Render all lines
                         RenderPass(
                             m_renderPassLineRender, m_objectsPassLineRender,
