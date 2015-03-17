@@ -1,13 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Games", "Games", "{DDC5E643-B65B-4733-81FA-651E93ED7463}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extern", "Extern", "{EA33C922-0F7D-4F56-89C3-EF51E9625EA5}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrozenSky_DESKTOP", "FrozenSky\FrozenSky_DESKTOP.csproj", "{C2A4856D-600E-4FFF-BCBF-CA3F7ED6FE57}"
 EndProject
