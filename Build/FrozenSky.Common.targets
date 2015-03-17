@@ -1,0 +1,134 @@
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+  <!-- Define file extensions for files that can be copied from referenced projects during build -->
+  <PropertyGroup>
+    <AllowedReferenceRelatedFileExtensions>
+      .pdb;
+      .xml;
+      .dll.config;
+      .exe.config;
+      .exe;
+      .dll;
+      .txt;
+      .cso;
+      .ac; 
+      .png
+    </AllowedReferenceRelatedFileExtensions>
+  </PropertyGroup>
+
+  <!-- Define additional build item names -->
+  <ItemGroup>
+    <!-- Define shader build item name-->
+    <AvailableItemName Include="FrozenSky-VertexShader"></AvailableItemName>
+    <AvailableItemName Include="FrozenSky-PixelShader"></AvailableItemName>
+    <AvailableItemName Include="FrozenSky-VertexShader-Min4_0"></AvailableItemName>
+    <AvailableItemName Include="FrozenSky-PixelShader-Min4_0"></AvailableItemName>
+    <AvailableItemName Include="FrozenSky-VertexShader-Min5_0"></AvailableItemName>
+    <AvailableItemName Include="FrozenSky-PixelShader-Min5_0"></AvailableItemName>
+  </ItemGroup>
+
+  <!-- Custom Task references -->
+  <UsingTask AssemblyFile="$(SolutionDir)Build\Tasks\FrozenSky.BuildTasks.dll" TaskName="ShaderBuildTask" />
+  
+  <!-- Configure shader compilation -->
+  <Target Name="BeforeBuild">
+    
+    <!-- Define debug builds of the shaders -->
+    <!-- ... Debug Vertex-Shaders -->
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader);@(FrozenSky-VertexShader-Min4_0);@(FrozenSky-VertexShader-Min5_0)"
+                     ShaderProfile="vs_5_0"
+                     OutputAdditionalExtension="vs_5_0"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader);@(FrozenSky-VertexShader-Min4_0)"
+                     ShaderProfile="vs_4_0"
+                     OutputAdditionalExtension="vs_4_0"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader)"
+                     ShaderProfile="vs_4_0_level_9_1"
+                     OutputAdditionalExtension="vs_4_0_level_9_1"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader)"
+                     ShaderProfile="vs_4_0_level_9_3"
+                     OutputAdditionalExtension="vs_4_0_level_9_3"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+
+    <!-- ... Debug Pixel-Shaders -->
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader);@(FrozenSky-PixelShader-Min4_0);@(FrozenSky-PixelShader-Min5_0)"
+                     ShaderProfile="ps_5_0"
+                     OutputAdditionalExtension="ps_5_0"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader);@(FrozenSky-PixelShader-Min4_0)"
+                     ShaderProfile="ps_4_0"
+                     OutputAdditionalExtension="ps_4_0"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader)"
+                     ShaderProfile="ps_4_0_level_9_1"
+                     OutputAdditionalExtension="ps_4_0_level_9_1"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader)"
+                     ShaderProfile="ps_4_0_level_9_3"
+                     OutputAdditionalExtension="ps_4_0_level_9_3"
+                     AppendDebugInfo="true">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    
+    <!-- Define standard builds of the shaders -->
+    <!-- Release Vertex-Shaders -->
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader);@(FrozenSky-VertexShader-Min4_0);@(FrozenSky-VertexShader-Min5_0)"
+                     ShaderProfile="vs_5_0"
+                     OutputAdditionalExtension="vs_5_0">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader);@(FrozenSky-VertexShader-Min4_0)"
+                     ShaderProfile="vs_4_0"
+                     OutputAdditionalExtension="vs_4_0">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader)"
+                     ShaderProfile="vs_4_0_level_9_1"
+                     OutputAdditionalExtension="vs_4_0_level_9_1">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-VertexShader)"
+                     ShaderProfile="vs_4_0_level_9_3"
+                     OutputAdditionalExtension="vs_4_0_level_9_3">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    
+    <!-- Release Pixel-Shaders -->
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader);@(FrozenSky-PixelShader-Min4_0);@(FrozenSky-PixelShader-Min5_0)"
+                     ShaderProfile="ps_5_0"
+                     OutputAdditionalExtension="ps_5_0">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader);@(FrozenSky-PixelShader-Min4_0)"
+                     ShaderProfile="ps_4_0"
+                     OutputAdditionalExtension="ps_4_0">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader)"
+                     ShaderProfile="ps_4_0_level_9_1"
+                     OutputAdditionalExtension="ps_4_0_level_9_1">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+    <ShaderBuildTask ShaderFiles="@(FrozenSky-PixelShader)"
+                     ShaderProfile="ps_4_0_level_9_3"
+                     OutputAdditionalExtension="ps_4_0_level_9_3">
+      <Output TaskParameter="OutputFiles" ItemName="EmbeddedResource" />
+    </ShaderBuildTask>
+  </Target>
+</Project>
