@@ -211,10 +211,11 @@ namespace FrozenSky.Multimedia.Drawing3D
                 deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
                 renderState.ForceMaterial(null);
 
-               
-
                 // Reset render target (needed for all passes)
                 m_renderTarget.PopFromRenderState(renderState);
+
+                // Clear cached material resource because wie work with shaders directly here
+                renderState.ClearChachedAppliedMaterial();
 
                 // Render result of current pass to the main render target
                 switch (passID)

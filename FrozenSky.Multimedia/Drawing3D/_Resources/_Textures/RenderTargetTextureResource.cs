@@ -316,7 +316,12 @@ namespace FrozenSky.Multimedia.Drawing3D
             get { return m_colorBufferShaderResourceView; }
         }
 
-        public D3D11.ShaderResourceView TextureViewColor
+        internal D3D11.Texture2D TextureColor
+        {
+            get { return m_colorBuffer; }
+        }
+
+        internal D3D11.ShaderResourceView TextureViewColor
         {
             get { return m_colorBufferShaderResourceView; }
         }
@@ -324,7 +329,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <summary>
         /// Gets the shader resource view to the normal-depth texture.
         /// </summary>
-        public D3D11.ShaderResourceView TextureViewNormalDepth
+        internal D3D11.ShaderResourceView TextureViewNormalDepth
         {
             get { return m_normalDepthBufferShaderResourceView; }
         }

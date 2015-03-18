@@ -84,7 +84,7 @@ namespace FrozenSky.Multimedia.Core
         /// <summary>
         /// Takes a screenshot and returns it as a gdi bitmap.
         /// </summary>
-        public GDI.Bitmap GetScreenshotGdi()
+        public GDI.Bitmap UploadToGdiBitmap()
         {
             // Check current format
             if ((m_format != GraphicsHelper.DEFAULT_TEXTURE_FORMAT) &&
@@ -105,11 +105,6 @@ namespace FrozenSky.Multimedia.Core
             return resultBitmap;
         }
 #endif
-
-        public unsafe void UploadTo32bppBuffer(MemoryMappedTexture32bpp intBuffer)
-        {
-            // TODO
-        }
 
         /// <summary>
         /// Upload a floatingpoint texture from the graphics hardware.
@@ -180,64 +175,13 @@ namespace FrozenSky.Multimedia.Core
             }
         }
 
-        /// <summary>
-        /// Takes an ObjectID map from the graphics hardware.
-        /// This method is only falid for resources of type R32_Float.
-        /// </summary>
-        public unsafe float[,] GetDepthValues(out float min, out float max)
-        {
-            // Check current format
-            if (m_format != GraphicsHelper.DEFAULT_TEXTURE_FORMAT_DEPTH)
-            {
-                throw new FrozenSkyGraphicsException("Invalid format for texture uploading to gdi bitmap (" + m_format + ")!");
-            }
-
-            // Upload the texture
-            CopyTextureToStagingResource(false);
-
-            // Read the data into the .Net data block
-            SharpDX.DataBox dataBox = m_device.DeviceImmediateContextD3D11.MapSubresource(
-                m_copyHelperTextureStaging, 0, D3D11.MapMode.Read, D3D11.MapFlags.None);
-            try
-            {
-                float[,] result = new float[m_width, m_height];
-                float* nativeBufferPointer = (float*)dataBox.DataPointer.ToPointer();
-
-                max = nativeBufferPointer[0];
-                min = max;
-
-                int rowPitchSource = dataBox.RowPitch / 4;
-                for (int loopY = 0; loopY < m_height; loopY++)
-                {
-                    for (int loopX = 0; loopX < m_width; loopX++)
-                    {
-                        float actValue = nativeBufferPointer[loopY * rowPitchSource + (loopX * 2)];
-                        if (actValue > max)
-                        {
-                            max = actValue;
-                        }
-                        else if (actValue < min)
-                        {
-                            min = actValue;
-                        }
-                        result[loopX, loopY] = actValue;
-                    }
-                }
-                return result;
-            }
-            finally
-            {
-                m_device.DeviceImmediateContextD3D11.UnmapSubresource(m_copyHelperTextureStaging, 0);
-            }
-        }
-
 #if DESKTOP
         /// <summary>
         /// Takes a NormalDepth texture and creates a normal- and a depth-bitmap
         /// </summary>
         /// <param name="normal">The normal-bitmap</param>
         /// <param name="depth">The depth-bitmap</param>
-        public unsafe void GetNormalDepthBitmapsWpf(out WriteableBitmap normal, out WriteableBitmap depth)
+        public unsafe void UploadNormalDepthBitmapsWpf(out WriteableBitmap normal, out WriteableBitmap depth)
         {
 
             //Check current format

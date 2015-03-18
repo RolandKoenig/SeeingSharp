@@ -93,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
+    <Content Include="Ressources\ReferenceRenderings\PostProcess_Focus.png" />
     <Content Include="Ressources\ReferenceRenderings\PostProcess_EdgeDetect.png" />
     <Content Include="Ressources\ReferenceRenderings\ClearedScreen.png" />
     <Content Include="Ressources\ReferenceRenderings\FlatShadedObject.png" />

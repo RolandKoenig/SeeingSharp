@@ -146,6 +146,18 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// An internal helper method which tells the RenderState to clear
+        /// the cached material resource, which was applied lastly.
+        /// This method musst be called if other parts (e. g. postprocessing) work
+        /// with shaders or such like outside of the renderstate.
+        /// </summary>
+        internal void ClearChachedAppliedMaterial()
+        {
+            m_lastAppliedResource = null;
+            m_lastMaterialInstancingMode = MaterialApplyInstancingMode.SingleObject;
+        }
+
+        /// <summary>
         /// Disposes all resources of this object.
         /// </summary>
         public void Dispose()
