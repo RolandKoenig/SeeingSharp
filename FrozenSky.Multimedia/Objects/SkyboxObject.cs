@@ -187,6 +187,8 @@ namespace FrozenSky.Multimedia.Objects
         /// <param name="renderState">Render this object.</param>
         private void Render(RenderState renderState)
         {
+            renderState.ClearChachedAppliedMaterial();
+
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
             SkyboxLocalResources localResources = m_localResources[renderState.ViewIndex];
 

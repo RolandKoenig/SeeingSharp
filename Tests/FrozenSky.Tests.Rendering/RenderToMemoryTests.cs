@@ -212,11 +212,11 @@ namespace FrozenSky.Tests.Rendering
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
                 screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
-                screenshot.DumpToDesktop("Blub.png");
+                //screenshot.DumpToDesktop("Blub.png");
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageSimpleObject);
+                    screenshot, Properties.Resources.Skybox);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 

@@ -119,6 +119,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             m_depthStencilStateDefault = new Lazy<D3D11.DepthStencilState>(() =>
             {
                 D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
+                stateDesc.DepthComparison = D3D11.Comparison.LessEqual;
                 return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
             });
 
@@ -127,6 +128,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             {
                 D3D11.DepthStencilStateDescription stateDesc = D3D11.DepthStencilStateDescription.Default();
                 stateDesc.DepthWriteMask = D3D11.DepthWriteMask.Zero;
+                stateDesc.DepthComparison = D3D11.Comparison.LessEqual;
                 return new D3D11.DepthStencilState(device.DeviceD3D11, stateDesc);
             });
 
