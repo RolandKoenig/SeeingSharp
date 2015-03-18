@@ -55,7 +55,7 @@
     def c5, 1, 0, 0, 0
     dcl_texcoord v0  // input<0,1,2>
 
-#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LineVertexShader.hlsl"
+#line 12 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LineVertexShader.hlsl"
     mad r0, v0.xyzx, c5.xxxy, c5.yyyx
     dp4 oPos.z, r0, c3  // ::main<2>
     dp4 r1.x, r0, c1  // ::output<0>
@@ -77,7 +77,7 @@ dcl_temps 1
 //   v0.x <- input.pos.x; v0.y <- input.pos.y; v0.z <- input.pos.z; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LineVertexShader.hlsl"
+#line 12 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LineVertexShader.hlsl"
 mov r0.xyz, v0.xyzx
 mov r0.w, l(1.000000)
 dp4 o0.x, r0.xyzw, cb4[0].xyzw

@@ -46,7 +46,7 @@
 //
     ps_2_x
 
-#line 9 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LinePixelShader.hlsl"
+#line 9 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LinePixelShader.hlsl"
     mov oC0, c0  // ::main<0,1,2,3>
 
 // approximately 1 instruction slot used
@@ -58,7 +58,7 @@ dcl_output o0.xyzw
 //   v0.x <- input.pos.x; v0.y <- input.pos.y; v0.z <- input.pos.z; v0.w <- input.pos.w; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 9 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LinePixelShader.hlsl"
+#line 9 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LinePixelShader.hlsl"
 mov o0.xyzw, cb4[4].xyzw
 ret 
 // Approximately 2 instruction slots used

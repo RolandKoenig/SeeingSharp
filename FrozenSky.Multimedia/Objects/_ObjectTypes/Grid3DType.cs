@@ -35,6 +35,10 @@ namespace FrozenSky.Multimedia.Objects
             this.GenerateGround = true;
             this.LineSmallDevider = 25f;
             this.LineBigDevider = 100f;
+            this.TileWidth = 1f;
+            this.TilesX = 10;
+            this.TilesZ = 10;
+            this.GroupTileCount = 5;
 
             this.GroundColor = Color.LightSteelBlue;
             this.LineColor = Color.DarkBlue;
@@ -49,9 +53,9 @@ namespace FrozenSky.Multimedia.Objects
 
             //Calculate parameters
             Vector3 firstCoordinate = new Vector3(
-                -TilesX / 2f,
+                -((TilesX * TileWidth) / 2f),
                 0f,
-                -TilesZ / 2f);
+                -((TilesZ * TileWidth) / 2f));
             float tileWidthX = this.TileWidth;
             float tileWidthZ = this.TileWidth;
             float fieldWidth = tileWidthX * TilesX;

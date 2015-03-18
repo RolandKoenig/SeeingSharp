@@ -524,22 +524,23 @@ namespace FrozenSky.Multimedia.Views
         /// Discard rendering?
         /// </summary>
         [Category("Rendering")]
+        [DefaultValue(false)]
         public bool DiscardRendering
         {
             get { return m_renderLoop.DiscardRendering; }
             set { m_renderLoop.DiscardRendering = value; }
         }
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Category("Rendering")]
+        [Browsable(true)]
         public Scene Scene
         {
             get { return m_renderLoop.Scene; }
             set { m_renderLoop.SetScene(value); }
         }
 
-        [Browsable(false)]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        [Category("Rendering")]
+        [Browsable(true)]
         public Camera3DBase Camera
         {
             get { return m_renderLoop.Camera; }

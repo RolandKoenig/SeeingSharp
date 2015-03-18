@@ -44,7 +44,7 @@ dcl_temps 1
 //   v0.x <- input.pos.x; v0.y <- input.pos.y; v0.z <- input.pos.z; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LineVertexShader.hlsl"
+#line 12 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\LineRendering\LineVertexShader.hlsl"
 mov r0.xyz, v0.xyzx
 mov r0.w, l(1.000000)
 dp4 o0.x, r0.xyzw, cb4[0].xyzw

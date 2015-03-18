@@ -108,7 +108,7 @@ dcl_temps 2
 //   o1.x <- <main return value>.col.x; o1.y <- <main return value>.col.y; o1.z <- <main return value>.col.z; o1.w <- <main return value>.col.w; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
+#line 12 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
 mul r0.xyzw, cb1[0].yyyy, cb2[1].xyzw
 mad r0.xyzw, cb2[0].xyzw, cb1[0].xxxx, r0.xyzw
 mad r0.xyzw, cb2[2].xyzw, cb1[0].zzzz, r0.xyzw
@@ -142,28 +142,28 @@ lt r0.z, l(0.000000), cb3[2].w
 #line 24
 movc r0.xy, r0.zzzz, |r0.xyxx|, v3.xyxx  // r0.x <- output.tex.x; r0.y <- output.tex.y
 
-#line 9 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
+#line 9 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
 mov_sat r0.zw, r0.xxxy  // r0.z <- texCoord.x; r0.w <- texCoord.y
 
-#line 40 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
+#line 40 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
 mov o2.xy, r0.xyxx
 
-#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
+#line 12 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
 mad r0.x, r0.z, l(0.100000), r0.w  // r0.x <- texCoordFactor
 mul r0.x, r0.x, l(0.500000)
 frc r0.x, r0.x
 mad r0.x, r0.x, l(2.000000), l(-1.000000)
 mul r0.x, |r0.x|, cb1[4].w
 
-#line 27 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
+#line 27 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
 add r0.y, -v2.w, l(1.000000)
 mul r0.yzw, r0.yyyy, cb2[4].xxyz
 mad r0.yzw, v2.xxyz, v2.wwww, r0.yyzw  // r0.y <- vertexColor.x; r0.z <- vertexColor.y; r0.w <- vertexColor.z
 
-#line 17 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
+#line 17 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
 mad o1.xyz, r0.xxxx, l(0.066667, 0.066667, 0.066667, 0.000000), r0.yzwy
 
-#line 40 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
+#line 40 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\CommonVertexShader.hlsl"
 mov o1.w, v2.w
 mov o2.z, v4.x
 
