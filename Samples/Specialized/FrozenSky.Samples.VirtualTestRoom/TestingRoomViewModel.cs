@@ -37,6 +37,14 @@ namespace FrozenSky.Samples.VirtualTestRoom
         /// <param name="manipulator">The object provided for scene manipulation.</param>
         private void OnInitializeScene(SceneManipulator manipulator)
         {
+            // Add the background texture to the scene
+            SceneLayer bgLayer = manipulator.AddLayer("BACKGROUND");
+            manipulator.SetLayerOrderID(bgLayer, 0);
+            manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 1);
+            var resBackgroundTexture = manipulator.AddTexture(
+                new Uri("/FrozenSky.Samples.VirtualTestRoom;component/Resources/Textures/Background.dds", UriKind.Relative));
+            manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
+
             Grid3DType gridTypeTopCube = new Grid3DType();
             gridTypeTopCube.GenerateGround = false;
             gridTypeTopCube.TilesX = 20;
@@ -73,7 +81,6 @@ namespace FrozenSky.Samples.VirtualTestRoom
                 objLeft.Position = new Vector3(-10f, 10f, 0f);
                 objLeft.RotationEuler = new Vector3(0f, 0f, -EngineMath.RAD_90DEG);
             }
-
         }
 
         public Scene Scene
