@@ -29,7 +29,7 @@ dcl_temps 1
 //   o1.x <- <main return value>.tex.x; o1.y <- <main return value>.tex.y; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 10 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl"
+#line 10 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl"
 bfi r0.x, l(1), l(1), v0.x, l(0)
 and r0.z, v0.x, l(2)
 utof r0.xy, r0.xzxx  // r0.x <- output.tex.x; r0.y <- output.tex.y

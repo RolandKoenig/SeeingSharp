@@ -75,7 +75,7 @@ dcl_temps 2
 //   o1.x <- <main return value>.col.x; o1.y <- <main return value>.col.y; o1.z <- <main return value>.col.z; o1.w <- <main return value>.col.w; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 13 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Skybox\CommonVertexShader.hlsl"
+#line 13 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Skybox\CommonVertexShader.hlsl"
 add r0.xyz, v0.xyzx, cb1[4].xyzx
 mov r0.w, l(1.000000)
 dp4 r1.x, r0.xyzw, cb1[0].xyzw  // r1.x <- output.pos.x
