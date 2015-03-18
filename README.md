@@ -5,14 +5,12 @@ The base library is separated into the following projects:
  - FrozenSky.Multimedia
  - FrozenSky.BuildTasks
  
-All libraries are optimzed to work on most current Windows platforms containing Windows Tablet, Desktop and Server Systems and 
-Windows Phone (starting 8.1). The libraries are separated in 
- - a "DESKTOP" version optimized for Windows.Forms and WPF 
- - and a "UNIVERSAL" version optimized for Windows Store and Windows Phone Store.
+All libraries are optimized to work on most current Windows platforms containing Windows tablets (also ARM based), Desktop and Server Systems and Windows Phone (starting 8.1). The libraries are separated in 
+ - a "DESKTOP" version optimized for Windows.Forms and WPF.
+ - a "UNIVERSAL" version optimized for Windows Store and Windows Phone Store.
  
 ### Library FrozenSky
-This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and 
-much more. I put all methods/classes there which are not directly related to graphics processing.
+This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
 
 ### Library FrozenSky.Multimedia
 This one is the most complex library in this project. It contains the graphics engine with the following features.
@@ -20,10 +18,16 @@ This one is the most complex library in this project. It contains the graphics e
  - Heavy multithreading (all calculations and rendering is done in background threads)
  - Working with multiple graphics devices at once (dynamically configure the target device per view)
  - Working with multiple scenegraphs at once (dynamically configure the current scene per view)
+ - Flexible postprocessing mechanism
+ - Support for all Direct3D 11 Hardware (Featurelevel 9.1 up to 11)
+ - Support for software rendering using WARP technology
+ - Integration of Direct2D directly into the 3D render process (works also on Windows 7 platform)
+ - Flexible content build system
  - And much more..
  
 # Applications
 For now, there are included the following applications.
  - RK 2048: A simple 3D-game which is running all most current windows platforms
+ - RK Kinect Lounge: A photo viewer which can be controlled using the Kinect technology
  - WPF and Win.Forms Sample Containers
  
