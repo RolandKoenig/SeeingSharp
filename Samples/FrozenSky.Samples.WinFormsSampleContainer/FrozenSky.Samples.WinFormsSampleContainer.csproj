@@ -39,7 +39,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FrozenSky">
@@ -120,11 +120,11 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Icon.ico" />
     <Content Include="Resources\Icons\Adapter16x16.png" />
     <Content Include="Resources\Icons\Copy16x16.png" />
     <Content Include="Resources\Icons\PerformanceMeasure16x16.png" />
     <Content Include="Resources\Icons\Output16x16.png" />
+    <Resource Include="Resources\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FrozenSky.Multimedia\FrozenSky.Multimedia_DESKTOP.csproj">

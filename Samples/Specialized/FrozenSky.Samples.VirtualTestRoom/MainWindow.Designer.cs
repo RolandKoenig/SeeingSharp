@@ -39,7 +39,6 @@
             // 
             this.m_ctrlRenderer.BackColor = System.Drawing.Color.LightBlue;
             this.m_ctrlRenderer.Camera = null;
-            this.m_ctrlRenderer.DiscardRendering = false;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
