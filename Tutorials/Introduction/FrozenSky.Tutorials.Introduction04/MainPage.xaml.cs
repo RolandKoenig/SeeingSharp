@@ -186,7 +186,7 @@ namespace FrozenSky.Tutorials.Introduction04
                             -10f + loopX * 2f,
                             -10f + loopY * 2f,
                             0f);
-                        palletObject.Tag1 = "Palette (X={0}, Y={1})".FormatWith(loopX, loopY);
+                        palletObject.Tag1 = "Pallet (X={0}, Y={1})".FormatWith(loopX, loopY);
                         palletObject.EnableShaderGeneratedBorder();
                         palletObject.BuildAnimationSequence()
                             .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_180DEG, EngineMath.RAD_45DEG), TimeSpan.FromSeconds(2.0))
