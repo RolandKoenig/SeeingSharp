@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Resources\Logo.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -94,7 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Icon.ico" />
+    <Resource Include="Resources\Logo.ico" />
     <Resource Include="Resources\Textures\Background.dds" />
   </ItemGroup>
   <ItemGroup />

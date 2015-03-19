@@ -92,7 +92,9 @@
     <EmbeddedResource Include="Ressources\Models\ModelTwoSided.ac" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Ressources\Textures\SkyBox.dds" />
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
+    <Content Include="Ressources\ReferenceRenderings\Skybox.png" />
     <Content Include="Ressources\ReferenceRenderings\PostProcess_Focus.png" />
     <Content Include="Ressources\ReferenceRenderings\PostProcess_EdgeDetect.png" />
     <Content Include="Ressources\ReferenceRenderings\ClearedScreen.png" />

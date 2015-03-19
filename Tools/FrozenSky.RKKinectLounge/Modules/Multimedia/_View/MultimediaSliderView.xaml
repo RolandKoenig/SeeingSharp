@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="FrozenSky.RKKinectLounge.Modules.Multimedia.MultimediaSliderView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:k="http://schemas.microsoft.com/kinect/2014"
+             xmlns:vm="clr-namespace:FrozenSky.RKKinectLounge.Base"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+    <!-- Reference module resources -->
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../_Resources/GlobalResources.xaml" />
+                <ResourceDictionary Source="../_Resources/LocalResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <!-- Image viasulizer.. no virtualization possible on per-pixel scrolling 
+         see http://www.zagstudio.com/blog/497#.VJvYWBsQ
+    -->
+    <ItemsControl ItemsSource="{Binding Path=[Multimedia].FullViewsLoaded}"
+                  ScrollViewer.HorizontalScrollBarVisibility="Visible"
+                  ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                  ClipToBounds="True"
+                  VerticalAlignment="Center">
+
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal" />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+
+        <!-- Add the ScrollViewer into the ItemsControl -->
+        <ItemsControl.Template>
+            <ControlTemplate>
+                <ScrollViewer Padding="{TemplateBinding Control.Padding}" Focusable="False"
+                              VerticalScrollBarVisibility="Disabled">
+                    <ItemsPresenter SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                </ScrollViewer>
+            </ControlTemplate>
+        </ItemsControl.Template>
+
+        <!-- Define the ItemTemplate for all displayed images -->
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <Border BorderThickness="1" BorderBrush="Gray" Margin="20"
+                        HorizontalAlignment="Center"
+                        Style="{DynamicResource AnimatedBorder}">
+
+                    <!-- Show the image itself -->
+                    <ContentControl Content="{Binding}" />
+                </Border>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>

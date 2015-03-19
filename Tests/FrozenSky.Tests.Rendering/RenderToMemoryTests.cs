@@ -44,7 +44,7 @@ namespace FrozenSky.Tests.Rendering
 
         [TestMethod]
         [TestCategory(TEST_CATEGORY)]
-        public async Task RenderOnlyClearedScreen()
+        public async Task Render_ClearedScreen()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -72,7 +72,7 @@ namespace FrozenSky.Tests.Rendering
 
         [TestMethod]
         [TestCategory(TEST_CATEGORY)]
-        public async Task RenderSimpleLine()
+        public async Task Render_SimpleLine()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -122,7 +122,7 @@ namespace FrozenSky.Tests.Rendering
 
         [TestMethod]
         [TestCategory(TEST_CATEGORY)]
-        public async Task RenderSimpleObject()
+        public async Task Render_SimpleObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -156,6 +156,67 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImageSimpleObject);
+                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+            }
+
+            // Finishing checks
+            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+        }
+
+        [TestMethod]
+        [TestCategory(TEST_CATEGORY)]
+        public async Task Render_Skybox()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                // Get and configure the camera
+                PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
+                camera.Position = new Vector3(-3f, -3f, -7f);
+                camera.Target = new Vector3(0f, 0f, 0f);
+                camera.UpdateCamera();
+
+                // Define scene
+                await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    // Create pallet geometry resource
+                    PalletType pType = new PalletType();
+                    pType.ContentColor = Color4.Transparent;
+                    var resPalletGeometry = manipulator.AddResource<GeometryResource>(
+                        () => new GeometryResource(pType));
+
+                    // Create pallet object
+                    GenericObject palletObject = manipulator.AddGeneric(resPalletGeometry);
+                    palletObject.Color = Color4.GreenColor;
+                    palletObject.EnableShaderGeneratedBorder();
+                    palletObject.BuildAnimationSequence()
+                        .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_180DEG, 0f), TimeSpan.FromSeconds(2.0))
+                        .WaitFinished()
+                        .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_360DEG, 0f), TimeSpan.FromSeconds(2.0))
+                        .WaitFinished()
+                        .CallAction(() => palletObject.RotationEuler = Vector3.Zero)
+                        .ApplyAndRewind();
+
+                    var resSkyboxTexture = manipulator.AddTexture(new Uri("/FrozenSky.Tests.Rendering;component/Ressources/Textures/Skybox.dds", UriKind.Relative));
+
+                    // Create the skybox on a new layer
+                    manipulator.AddLayer("Skybox");
+                    SkyboxObject skyboxObject = new SkyboxObject(resSkyboxTexture);
+                    manipulator.Add(skyboxObject, "Skybox");
+                });
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                bool isNearEqual = BitmapComparison.IsNearEqual(
+                    screenshot, Properties.Resources.Skybox);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 

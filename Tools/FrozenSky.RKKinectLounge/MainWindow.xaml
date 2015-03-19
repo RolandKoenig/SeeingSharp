@@ -1,0 +1,44 @@
+﻿<Window x:Class="FrozenSky.RKKinectLounge.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:k="http://schemas.microsoft.com/kinect/2014"
+        xmlns:gfx="clr-namespace:FrozenSky.Multimedia.Views;assembly=FrozenSky.Multimedia"
+        xmlns:base="clr-namespace:FrozenSky.RKKinectLounge.Base"
+        Icon="/Assets/Logo.ico"
+        Title="{Binding Path=Title}" >
+    
+    <!-- Define default bindingsource (=> MainFolderViewModel is initial)-->
+    <Window.DataContext>
+        <base:MainWindowViewModel />
+    </Window.DataContext>
+    
+    <!-- Apply fullscreen behavior -->
+    <i:Interaction.Behaviors>
+        <base:FullscreenWpfWindowBehavior />
+    </i:Interaction.Behaviors>
+
+    <!-- Define main navigation frame -->
+    <k:KinectRegion Name="MainKinectRegion">
+        <Grid Background="Black">
+            
+            <!-- Define both views which are to be exchanged during runtime -->
+            <Grid.Resources>
+                <DataTemplate DataType="{x:Type base:KinectWelcomeViewModel}">
+                    <base:KinectWelcomeView />
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type base:MainFolderViewModel}">
+                    <base:MainFolderView />
+                </DataTemplate>
+            </Grid.Resources>
+            
+            <!-- Display the main transition container which changes beteween Welcome- and FolderView -->
+            <base:SimpleViewModelFirstTransitionView DisplayedViewModel="{Binding Path=DisplayedViewModel}" />
+
+            <k:KinectUserViewer Width="NaN" Height="NaN"
+                                Visibility="{Binding Path=KinectViewerVisibility}"
+                                VerticalAlignment="Bottom" HorizontalAlignment="Center"
+                                Opacity="0.7" IsHitTestVisible="False"/>
+        </Grid>
+    </k:KinectRegion>
+</Window>

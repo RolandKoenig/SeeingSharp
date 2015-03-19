@@ -40,6 +40,8 @@
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
             this.m_lblRenderResolution = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblRenderResolutionValue = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblCountObjects = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblCountObjectsValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.renderingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -50,8 +52,6 @@
             this.to1024x768ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.to1280x1024ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.to1600x1200ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.m_lblCountObjects = new System.Windows.Forms.ToolStripStatusLabel();
-            this.m_lblCountObjectsValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
             this.menuStrip1.SuspendLayout();
@@ -60,6 +60,7 @@
             // m_barTools
             // 
             this.m_barTools.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.m_barTools.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_barTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_cboDevice,
             this.toolStripSeparator1,
@@ -78,7 +79,7 @@
             this.m_cboDevice.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.m_cboDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cboDevice.Name = "m_cboDevice";
-            this.m_cboDevice.Size = new System.Drawing.Size(103, 24);
+            this.m_cboDevice.Size = new System.Drawing.Size(108, 24);
             this.m_cboDevice.Text = "<Device>";
             // 
             // toolStripSeparator1
@@ -92,7 +93,7 @@
             this.m_cmdCopy.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.Copy16x16;
             this.m_cmdCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdCopy.Name = "m_cmdCopy";
-            this.m_cmdCopy.Size = new System.Drawing.Size(23, 24);
+            this.m_cmdCopy.Size = new System.Drawing.Size(24, 24);
             this.m_cmdCopy.Text = "Copy";
             this.m_cmdCopy.Click += new System.EventHandler(this.OnCmdCopyClick);
             // 
@@ -107,7 +108,7 @@
             this.m_cmdShowPerformance.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.PerformanceMeasure16x16;
             this.m_cmdShowPerformance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdShowPerformance.Name = "m_cmdShowPerformance";
-            this.m_cmdShowPerformance.Size = new System.Drawing.Size(23, 24);
+            this.m_cmdShowPerformance.Size = new System.Drawing.Size(24, 24);
             this.m_cmdShowPerformance.Text = "toolStripButton1";
             this.m_cmdShowPerformance.Click += new System.EventHandler(this.OnCmdShowPerformanceClick);
             // 
@@ -124,6 +125,7 @@
             // 
             // m_barStatus
             // 
+            this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_barStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_lblRenderResolution,
             this.m_lblRenderResolutionValue,
@@ -146,6 +148,19 @@
             this.m_lblRenderResolutionValue.Size = new System.Drawing.Size(99, 24);
             this.m_lblRenderResolutionValue.Text = "<Resolution>";
             // 
+            // m_lblCountObjects
+            // 
+            this.m_lblCountObjects.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.m_lblCountObjects.Name = "m_lblCountObjects";
+            this.m_lblCountObjects.Size = new System.Drawing.Size(75, 24);
+            this.m_lblCountObjects.Text = "#Objects:";
+            // 
+            // m_lblCountObjectsValue
+            // 
+            this.m_lblCountObjectsValue.Name = "m_lblCountObjectsValue";
+            this.m_lblCountObjectsValue.Size = new System.Drawing.Size(68, 24);
+            this.m_lblCountObjectsValue.Text = "<Count>";
+            // 
             // m_refreshTimer
             // 
             this.m_refreshTimer.Enabled = true;
@@ -154,6 +169,7 @@
             // 
             // menuStrip1
             // 
+            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renderingToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
@@ -226,19 +242,6 @@
             this.to1600x1200ToolStripMenuItem.Tag = "1600x1200";
             this.to1600x1200ToolStripMenuItem.Text = ".. to 1600x1200";
             this.to1600x1200ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolutionClick);
-            // 
-            // m_lblCountObjects
-            // 
-            this.m_lblCountObjects.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.m_lblCountObjects.Name = "m_lblCountObjects";
-            this.m_lblCountObjects.Size = new System.Drawing.Size(75, 24);
-            this.m_lblCountObjects.Text = "#Objects:";
-            // 
-            // m_lblCountObjectsValue
-            // 
-            this.m_lblCountObjectsValue.Name = "m_lblCountObjectsValue";
-            this.m_lblCountObjectsValue.Size = new System.Drawing.Size(68, 24);
-            this.m_lblCountObjectsValue.Text = "<Count>";
             // 
             // MainWindow
             // 

@@ -62,7 +62,7 @@ namespace FrozenSky.Samples.Base
                         .CallAction(() => palletObject.RotationEuler = Vector3.Zero)
                         .ApplyAndRewind();
 
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
                     var resSkyboxTexture = manipulator.AddTexture(new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Skybox.dds", UriKind.Relative));
 #else
                     var resSkyboxTexture = manipulator.AddTexture(new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/SkyBox.dds"));
