@@ -61,6 +61,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorials", "Tutorials", "{5AE385D5-4F6A-4C4D-9AB5-59BF514DC45E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Introduction", "Introduction", "{CB41D200-7619-4F15-9DFE-448BA8B16B07}"
+	ProjectSection(SolutionItems) = preProject
+		Tutorials\Introduction\README.md = Tutorials\Introduction\README.md
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FrozenSky.Tutorials.Introduction01", "Tutorials\Introduction\FrozenSky.Tutorials.Introduction01\FrozenSky.Tutorials.Introduction01.csproj", "{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}"
 EndProject

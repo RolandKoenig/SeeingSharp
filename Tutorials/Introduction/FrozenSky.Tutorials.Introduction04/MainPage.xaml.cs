@@ -30,8 +30,10 @@ namespace FrozenSky.Tutorials.Introduction04
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        // Member for painting
+        // Members for painting
+        #region
         private FrozenSkyPanelPainter m_panelPainter;
+        #endregion
 
         // Members for picking
         #region
@@ -160,7 +162,10 @@ namespace FrozenSky.Tutorials.Introduction04
 
                 // Add the background texture painter to the BACKGROUND layer
                 var resBackgroundTexture = manipulator.AddTexture(
-                    new AssemblyResourceUriBuilder("RK2048", true, "Assets/Textures/Background.png"));
+                    new AssemblyResourceUriBuilder(
+                        "FrozenSky.Tutorials.Introduction04", 
+                        true, 
+                        "Assets/Textures/Background.png"));
                 manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
 
                 // Create pallet geometry resource

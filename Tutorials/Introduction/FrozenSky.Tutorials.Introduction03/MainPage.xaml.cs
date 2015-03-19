@@ -56,7 +56,10 @@ namespace FrozenSky.Tutorials.Introduction03
 
                 // Add the background texture painter to the BACKGROUND layer
                 var resBackgroundTexture = manipulator.AddTexture(
-                    new AssemblyResourceUriBuilder("RK2048", true, "Assets/Textures/Background.png"));
+                    new AssemblyResourceUriBuilder(
+                        "FrozenSky.Tutorials.Introduction03", 
+                        true, 
+                        "Assets/Textures/Background.png"));
                 manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
 
                 // Create pallet geometry resource
