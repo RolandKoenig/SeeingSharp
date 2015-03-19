@@ -253,6 +253,35 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// Performs this animation in a completely continuous way.
+        /// </summary>
+        public int CalculateContinuous(TimeSpan singleUpdateInterval)
+        {
+            this.PreCheckExecutionInternal();
+            try
+            {
+                int totalStepCount = 0;
+
+                PrecalculateAnimations();
+
+                UpdateState updateStateObj = new UpdateState(singleUpdateInterval);
+                while (this.CountRunningAnimations > 0)
+                {
+                    updateStateObj.Reset(singleUpdateInterval);
+                    this.Update(updateStateObj);
+
+                    totalStepCount++;
+                }
+
+                return totalStepCount;
+            }
+            finally
+            {
+                this.PostCheckExecutionInternal();
+            }
+        }
+
+        /// <summary>
         /// Performs this animation in a completely event-driven way.
         /// </summary>
         public EventDrivenPassInfo CalculateEventDriven()

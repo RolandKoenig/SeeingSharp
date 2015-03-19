@@ -69,6 +69,39 @@ namespace FrozenSky.Tests.Rendering
             Assert.IsTrue(passInfo.TotalTime == TimeSpan.FromMilliseconds(600.0));
         }
 
+        //[TestMethod]
+        //[TestCategory(TEST_CATEGORY)]
+        //public void Test_Continuous_SimpleAnimation_2()
+        //{
+        //    // Define animation parameters / objects
+        //    DummyAnimatableObject animateableObject = new DummyAnimatableObject();
+
+        //    for (int loop = 0; loop < 20000; loop++)
+        //    {
+        //        int dummyInt = 0;
+        //        animateableObject.BuildAnimationSequence()
+        //            .ChangeFloatBy(
+        //                () => animateableObject.DummyValue,
+        //                (givenValue) => animateableObject.DummyValue = givenValue,
+        //                10f,
+        //                TimeSpan.FromMilliseconds(500.0))
+        //            .WaitFinished()
+        //            .CallAction(() =>
+        //            {
+        //                dummyInt = 10;
+        //            })
+        //            .ChangeFloatBy(
+        //                () => animateableObject.DummyValue,
+        //                (givenValue) => animateableObject.DummyValue = givenValue,
+        //                20f,
+        //                TimeSpan.FromMilliseconds(500.0))
+        //            .Apply();
+        //        //int totalStepCount = animateableObject.AnimationHandler.CalculateContinuous(TimeSpan.FromMilliseconds(50.0));
+        //        //animateableObject.AnimationHandler.CalculateContinuous(TimeSpan.FromMilliseconds(50.0));
+        //        animateableObject.AnimationHandler.CalculateEventDriven();
+        //    }
+        //}
+
         [TestMethod]
         [TestCategory(TEST_CATEGORY)]
         public void Test_EventDriven_SimpleAnimation_2()

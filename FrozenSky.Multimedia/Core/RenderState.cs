@@ -50,7 +50,7 @@ namespace FrozenSky.Multimedia.Core
 
         //Current state
         private MaterialResource m_forcedMaterial;
-        private MaterialResource m_lastAppliedResource;
+        private MaterialResource m_lastAppliedMaterial;
         private MaterialApplyInstancingMode m_lastMaterialInstancingMode;
 
         /// <summary>
@@ -102,6 +102,7 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="material">The material to be forced for further rendering. Null means to disable material forcing.</param>
         internal void ForceMaterial(MaterialResource material)
         {
+            m_lastAppliedMaterial = null;
             m_forcedMaterial = material;
         }
 
@@ -131,16 +132,16 @@ namespace FrozenSky.Multimedia.Core
             // Disable logic if given material is null
             if (resourceToApply == null)
             {
-                m_lastAppliedResource = null;
+                m_lastAppliedMaterial = null;
                 return;
             }
 
-            if ((m_lastAppliedResource != resourceToApply) || (m_lastMaterialInstancingMode != instancingMode))
+            if ((m_lastAppliedMaterial != resourceToApply) || (m_lastMaterialInstancingMode != instancingMode))
             {
                 // Apply material (material or instancing mode has changed)
-                resourceToApply.Apply(this, instancingMode, m_lastAppliedResource);
+                resourceToApply.Apply(this, instancingMode, m_lastAppliedMaterial);
 
-                m_lastAppliedResource = resourceToApply;
+                m_lastAppliedMaterial = resourceToApply;
                 m_lastMaterialInstancingMode = instancingMode;
             }
         }
@@ -153,7 +154,7 @@ namespace FrozenSky.Multimedia.Core
         /// </summary>
         internal void ClearChachedAppliedMaterial()
         {
-            m_lastAppliedResource = null;
+            m_lastAppliedMaterial = null;
             m_lastMaterialInstancingMode = MaterialApplyInstancingMode.SingleObject;
         }
 
@@ -205,7 +206,7 @@ namespace FrozenSky.Multimedia.Core
             if (m_disposed) { throw new ObjectDisposedException("RenderState"); }
 
             // Clear material properties
-            m_lastAppliedResource = null;
+            m_lastAppliedMaterial = null;
             m_forcedMaterial = null;
             m_lastMaterialInstancingMode = MaterialApplyInstancingMode.SingleObject;
 
