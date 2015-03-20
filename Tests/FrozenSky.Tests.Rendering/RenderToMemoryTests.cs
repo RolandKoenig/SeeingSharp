@@ -22,17 +22,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 using System.Threading.Tasks;
-
-// Some namespace mappings
-using GDI = System.Drawing;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Views;
 using FrozenSky.Util;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
 using FrozenSky.Infrastructure;
-using System.Reflection;
+
+// Some namespace mappings
+using GDI = System.Drawing;
 
 namespace FrozenSky.Tests.Rendering
 {
@@ -212,7 +212,7 @@ namespace FrozenSky.Tests.Rendering
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
                 screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
-                //screenshot.DumpToDesktop("Blub.png");
+                screenshot.DumpToDesktop("Blub.png");
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(

@@ -14,6 +14,7 @@ namespace FrozenSky.Tests.Rendering
     {
         public static async Task InitializeWithGrahicsAsync()
         {
+            // Initialize main application singleton
             if (!FrozenSkyApplication.IsInitialized)
             {
                 await FrozenSkyApplication.InitializeAsync(
@@ -21,7 +22,14 @@ namespace FrozenSky.Tests.Rendering
                     new Assembly[]{ typeof(GraphicsCore).Assembly },
                     new string[0]);
             }
-            if (!GraphicsCore.IsInitialized) { GraphicsCore.Initialize(TargetHardware.Direct3D11, false); }
+
+            // Initialize the graphics engine
+            if (!GraphicsCore.IsInitialized) 
+            { 
+                GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+                GraphicsCore.Current.SetDefaultDeviceToSoftware();
+                GraphicsCore.Current.DefaultDevice.ForceDetailLevel(DetailLevel.High);
+            }
 
             Assert.IsTrue(GraphicsCore.IsInitialized, "GraphicsCore could not be initialized!");
         }

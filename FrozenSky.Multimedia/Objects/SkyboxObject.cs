@@ -190,7 +190,7 @@ namespace FrozenSky.Multimedia.Objects
             renderState.ClearChachedAppliedMaterial();
 
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
-            SkyboxLocalResources localResources = m_localResources[renderState.ViewIndex];
+            SkyboxLocalResources localResources = m_localResources[renderState.DeviceIndex];
 
             // Apply constants and shader resources
             deviceContext.VertexShader.Set(localResources.VertexShader.VertexShader);

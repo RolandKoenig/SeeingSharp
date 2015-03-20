@@ -50,17 +50,25 @@ namespace FrozenSky.Multimedia.Core
     {
         private const string CATEGORY_ADAPTER = "Adapter";
 
+        // Main members
+        #region
         private DXGI.Adapter1 m_adapter;
         private TargetHardware m_targetHardware;
         private GraphicsDeviceConfiguration m_configuration;
         private GraphicsCore m_core;
         private bool m_isSoftwareAdapter;
         private bool m_debugEnabled;
-
-        // Default information
         private Exception m_initializationException;
+        #endregion
+
+        // Some configuration
+        #region
+        private bool m_isDetailLevelForced;
+        private DetailLevel m_forcedDetailLevel;
+        #endregion
 
         // Handlers for different DirectX Apis
+        #region
 #if UNIVERSAL
         private DeviceHandlerDXGI m_handlerDXGI;
         private DeviceHandlerD3D11 m_handlerD3D11;
@@ -73,17 +81,20 @@ namespace FrozenSky.Multimedia.Core
         private DeviceHandlerD3D9 m_handlerD3D9;
         private DeviceHandlerD2D m_handlerD2D;
 #endif
+        #endregion
 
         // Possible antialiasing modes
+        #region
         private DXGI.SampleDescription m_antialiasingConfigLow;
         private DXGI.SampleDescription m_antialiasingConfigMedium;
         private DXGI.SampleDescription m_antialiasingConfigHigh;
+        #endregion
 
-        // Possible antialiasing modes
-        private DXGI.SampleDescription m_sampleDescWithAntialiasing;
-
-        // Members for feature support information
+        // Members for antialiasing
+        #region
         private bool m_isStandardAntialiasingSupported;
+        private DXGI.SampleDescription m_sampleDescWithAntialiasing;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineDevice"/> class.
@@ -147,6 +158,15 @@ namespace FrozenSky.Multimedia.Core
                 m_handlerD2D = new DeviceHandlerD2D(m_core, this);
                 this.FakeRenderTarget2D = m_handlerD2D.RenderTarget;
             }
+        }
+
+        /// <summary>
+        /// Forces the given detail level.
+        /// </summary>
+        public void ForceDetailLevel(DetailLevel detailLevel)
+        {
+            m_isDetailLevelForced = true;
+            m_forcedDetailLevel = detailLevel;
         }
 
         /// <summary>
@@ -327,6 +347,8 @@ namespace FrozenSky.Multimedia.Core
         {
             get
             {
+                if (m_isDetailLevelForced) { return m_forcedDetailLevel; }
+
                 if (m_isSoftwareAdapter) { return DetailLevel.Low; }
                 else { return DetailLevel.High; }
             }
