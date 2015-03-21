@@ -34,12 +34,16 @@ namespace FrozenSky.Multimedia.Core
     public class SceneManipulator
     {
         // Main members
+        #region
         private Scene m_owner;
         private bool m_isValid;
+        #endregion
 
         // Objects that remember all changes on object/resource collections
+        #region
         private List<SceneObject> m_createdObjects;
         private List<NamedOrGenericKey> m_createdResources;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneManipulator"/> class.
