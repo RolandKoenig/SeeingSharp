@@ -12,6 +12,9 @@ namespace RKVideoMemory
 {
     public partial class MainWindow : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();

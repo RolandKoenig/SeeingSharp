@@ -113,6 +113,24 @@ namespace FrozenSky.Util
         }
 
         /// <summary>
+        /// Determines whether the specified collection contains the given string.
+        /// </summary>
+        /// <param name="collection">The collection to be searched for the gien string.</param>
+        /// <param name="compareString">The string used for comparison.</param>
+        /// <param name="comparison">The comparison mode.</param>
+        public static bool ContainsString(this IEnumerable<string> collection, string compareString, StringComparison comparison = StringComparison.CurrentCulture)
+        {
+            foreach(string actString in collection)
+            {
+                if (string.Equals(actString, compareString, StringComparison.OrdinalIgnoreCase))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
         /// Converts the given collection to a comma separated string (e. g. object1, object2, object3, ...).
         /// The ToString method is used to get the strings for each individual object.
         /// </summary>

@@ -43,6 +43,8 @@ namespace FrozenSky.Multimedia.Views
 {
     public partial class FrozenSkyRendererControl : Control, IFrozenSkyPainter, IInputEnabledView
     {
+        private const string TEXT_GRAPHICS_NOT_INITIALIZED = "Graphics not initialized!";
+
         // Main reference to 3D-Engine
         private RenderLoop m_renderLoop;
 
@@ -61,6 +63,9 @@ namespace FrozenSky.Multimedia.Views
 
         // Generic members
         private Brush m_backBrush;
+        private Brush m_foreBrushText;
+        private Brush m_backBrushText;
+        private Pen m_borderPen;
         private float m_currentDpi;
 
         private bool m_isMouseInside;
@@ -130,7 +135,7 @@ namespace FrozenSky.Multimedia.Views
                         .Subscribe((eArgs) => OnThrottledViewRecreation()));
 
                 //Initialize background brush
-                m_backBrush = new SolidBrush(this.BackColor);
+                UpdateDrawingResourcesForFailoverRendering();
 
                 // Observe mouse click event
                 this.HandleCreateDisposeOnControl(() =>
@@ -153,7 +158,7 @@ namespace FrozenSky.Multimedia.Views
 
             this.Disposed += OnDisposed;
 
-            m_backBrush = new SolidBrush(this.BackColor);
+            UpdateDrawingResourcesForFailoverRendering();
         }
 
         /// <summary>
@@ -221,13 +226,24 @@ namespace FrozenSky.Multimedia.Views
             if((!m_renderLoop.ViewResourcesLoaded) ||
                (!m_renderLoop.IsRegisteredOnMainLoop))
             {
-                //Paint using System.Drawing
+                // Paint using System.Drawing
                 e.Graphics.FillRectangle(m_backBrush, e.ClipRectangle);
 
                 if (!GraphicsCore.IsInitialized)
                 {
-                    e.Graphics.DrawString("3D Graphics not loaded!", this.Font, Brushes.Black, new PointF(10f, 10f));
+                    GDI.SizeF targetSize = e.Graphics.MeasureString(TEXT_GRAPHICS_NOT_INITIALIZED, this.Font);
+                    GDI.RectangleF targetRect = new GDI.RectangleF(
+                        10f, 10f, targetSize.Width, targetSize.Height);
+
+                    e.Graphics.FillRectangle(m_backBrushText, targetRect);
+                    e.Graphics.DrawString(
+                        TEXT_GRAPHICS_NOT_INITIALIZED, this.Font, 
+                        m_foreBrushText, targetRect.X, targetRect.Y);
                 }
+
+                e.Graphics.DrawRectangle(
+                    m_borderPen,
+                    new GDI.Rectangle(0, 0, this.Width - 1, this.Height - 1));
             }
         }
 
@@ -281,6 +297,24 @@ namespace FrozenSky.Multimedia.Views
         }
 
         /// <summary>
+        /// Updates the background brush used for failover rendering in System.Drawing.
+        /// </summary>
+        private void UpdateDrawingResourcesForFailoverRendering()
+        {
+            GraphicsHelper.SafeDispose(ref m_backBrush);
+            GraphicsHelper.SafeDispose(ref m_foreBrushText);
+            GraphicsHelper.SafeDispose(ref m_backBrushText);
+            GraphicsHelper.SafeDispose(ref m_borderPen);
+
+            m_backBrush = new System.Drawing.Drawing2D.HatchBrush(
+                GDI.Drawing2D.HatchStyle.DottedGrid,
+                GDI.Color.Gray, this.BackColor);
+            m_backBrushText = Brushes.White;
+            m_foreBrushText = Brushes.Black;
+            m_borderPen = Pens.DarkGray;
+        }
+
+        /// <summary>
         /// Called when BackColor property has changed.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
@@ -289,8 +323,7 @@ namespace FrozenSky.Multimedia.Views
             base.OnBackColorChanged(e);
 
             //Update background brush
-            if (m_backBrush != null) { m_backBrush.Dispose(); }
-            m_backBrush = new SolidBrush(this.BackColor);
+            UpdateDrawingResourcesForFailoverRendering();
         }
 
         /// <summary>

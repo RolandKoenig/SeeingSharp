@@ -10,6 +10,8 @@ namespace RKVideoMemory.Data
 {
     public class VideoMemoryLevel
     {
+        private LevelData m_levelData;
+
         private Scene m_scene;
         private PerspectiveCamera3D m_camera;
 
@@ -24,6 +26,9 @@ namespace RKVideoMemory.Data
 
             // Trigger first initialization of the scene
             m_scene.ManipulateSceneAsync(OnScene_Initialize);
+
+            // Preload all level data
+            m_levelData = new LevelData(directoryName);
         }
 
         /// <summary>
