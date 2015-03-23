@@ -25,7 +25,7 @@ namespace FrozenSky.RKKinectLounge.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("D:\\_RKKinectLounge")]
+        [global::System.Configuration.DefaultSettingValueAttribute("C:\\_RKKinectLounge")]
         public string DataPath {
             get {
                 return ((string)(this["DataPath"]));

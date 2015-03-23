@@ -14,23 +14,54 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="focusRect">
+                    <Border RenderTransformOrigin="0.5,0.5">
+                        <Border.RenderTransform>
+                            <ScaleTransform 
+                                x:Name="ZoomTransform" ScaleX="1" ScaleY="1" />
+                        </Border.RenderTransform> 
                         <ContentPresenter />
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">
                                 <VisualState x:Name="Normal">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0:0:0.1" Storyboard.TargetName="focusRect" Storyboard.TargetProperty="Margin" To="0" />
+                                        <DoubleAnimation 
+                                            Duration="0:0:0.1"
+                                            To="1"
+                                            Storyboard.TargetName="ZoomTransform"
+                                            Storyboard.TargetProperty="ScaleX" />
+                                        <DoubleAnimation 
+                                            Duration="0:0:0.1"
+                                            To="1"
+                                            Storyboard.TargetName="ZoomTransform"
+                                            Storyboard.TargetProperty="ScaleY" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="MouseOver">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0:0:0.1" Storyboard.TargetName="focusRect" Storyboard.TargetProperty="Margin" To="-15" />
+                                        <DoubleAnimation 
+                                            Duration="0:0:0.1"
+                                            To="1.15"
+                                            Storyboard.TargetName="ZoomTransform"
+                                            Storyboard.TargetProperty="ScaleX" />
+                                        <DoubleAnimation 
+                                            Duration="0:0:0.1"
+                                            To="1.15"
+                                            Storyboard.TargetName="ZoomTransform"
+                                            Storyboard.TargetProperty="ScaleY" />
                                     </Storyboard>
                                 </VisualState>
                                 <VisualState x:Name="Pressed">
                                     <Storyboard>
-                                        <ThicknessAnimation Duration="0:0:0.05" Storyboard.TargetName="focusRect" Storyboard.TargetProperty="Margin" To="-5" />
+                                        <DoubleAnimation 
+                                            Duration="0:0:0.05"
+                                            To="1.05"
+                                            Storyboard.TargetName="ZoomTransform"
+                                            Storyboard.TargetProperty="ScaleX" />
+                                        <DoubleAnimation 
+                                            Duration="0:0:0.05"
+                                            To="1.05"
+                                            Storyboard.TargetName="ZoomTransform"
+                                            Storyboard.TargetProperty="ScaleY" />
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>

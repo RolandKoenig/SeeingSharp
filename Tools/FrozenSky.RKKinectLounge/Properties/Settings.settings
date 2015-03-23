@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DataPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">D:\_RKKinectLounge</Value>
+      <Value Profile="(Default)">C:\_RKKinectLounge</Value>
     </Setting>
   </Settings>
 </SettingsFile>
