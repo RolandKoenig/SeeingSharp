@@ -136,7 +136,6 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                     // Check for disengagement
                     JointType engagedHandJoint =
                         (bodyHandPair.HandType == HandType.LEFT) ? JointType.HandLeft : JointType.HandRight;
-                    //bool toBeDisengaged = BodyChecks.IsHandBelowHip(engagedHandJoint, body);
                     bool toBeDisengaged = false;
 
                     // Disengage because the body moved outside the main area
@@ -156,6 +155,9 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             {
                 foreach (var body in this.m_bodies)
                 {
+                    if (!body.IsTracked) { continue; }
+                    if (body.IsRestricted) { continue; }
+
                     if (!BodyChecks.IsBodyInsideRegion(body)) { continue; }
 
                     // Check for engagement

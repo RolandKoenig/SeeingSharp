@@ -287,9 +287,9 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
 
                     // Draw the text from the QR code
                     RectangleF titleBounds = new RectangleF(
-                        viewBounds.Width / 2f - 100f,
+                        viewBounds.Width / 2f - 200f,
                         10f,
-                        200f, 30f);
+                        400f, 100f);
                     graphics.FillRoundedRectangle(titleBounds, 5f, 5f, this.TextBackground);
                     graphics.DrawText(
                         this.QRText, this.TextFormat,
