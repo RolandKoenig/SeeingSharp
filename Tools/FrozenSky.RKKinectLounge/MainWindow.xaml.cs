@@ -30,28 +30,25 @@ namespace FrozenSky.RKKinectLounge
 
             // Use the default sensor
             if (!FrozenSkyApplication.IsInitialized) { return; }
-            try
+
+            KinectRegion.SetKinectRegion(this, this.MainKinectRegion);
+
+            // Get the current KinectSensor and attach it to the main KinectRegion object
+            KinectSensor kinectSensor = KinectSensor.GetDefault();
+            this.MainKinectRegion.KinectSensor = kinectSensor;
+
+            // Load main EngagementManager when kinect is loaded
+            kinectSensor.IsAvailableChanged += (sender, eArgs) =>
             {
-                KinectRegion.SetKinectRegion(this, this.MainKinectRegion);
-
-                // Get the current KinectSensor and attach it to the main KinectRegion object
-                KinectSensor kinectSensor = KinectSensor.GetDefault();
-                this.MainKinectRegion.KinectSensor = kinectSensor;
-
-                // Load main EngagementManager when kinect is loaded
-                kinectSensor.IsAvailableChanged += (sender, eArgs) =>
+                if (kinectSensor.IsAvailable)
                 {
-                    if(kinectSensor.IsAvailable)
+                    IKinectEngagementManager engagementManager = FrozenSkyApplication.Current.TryGetService<IKinectEngagementManager>();
+                    if (engagementManager != null)
                     {
-                        IKinectEngagementManager engagementManager = FrozenSkyApplication.Current.TryGetService<IKinectEngagementManager>();
-                        if (engagementManager != null)
-                        {
-                            this.MainKinectRegion.SetKinectOnePersonManualEngagement(engagementManager);
-                        }
+                        this.MainKinectRegion.SetKinectOnePersonManualEngagement(engagementManager);
                     }
-                };
-            }
-            catch (Exception) { }
+                }
+            };
         }
     }
 }
