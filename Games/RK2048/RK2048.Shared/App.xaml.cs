@@ -47,7 +47,7 @@ namespace RK2048
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
             // Initialize application and graphics
-            Exception dummyEx = null;
+            Exception initException = null;
             if (!FrozenSkyApplication.IsInitialized)
             {
                 await FrozenSkyApplication.InitializeAsync(
@@ -75,23 +75,23 @@ namespace RK2048
                 }
                 catch (Exception ex) 
                 {
-                    dummyEx = ex;
+                    initException = ex;
                 }
             }
 
             // Create the main game page and associate it withe the main window
-            if (dummyEx == null)
+            if (initException == null)
             {
                 MainGamePage gamePage = new MainGamePage();
                 Window.Current.Content = gamePage;
             }
             else
             {
-                ExceptionInfo exInfo = new ExceptionInfo(dummyEx);
+                ExceptionInfo exInfo = new ExceptionInfo(initException);
 
-                DummyPage dummyPage = new DummyPage();
-                dummyPage.DataContext = exInfo;
-                Window.Current.Content = dummyPage;
+                DummyPage exceptionPage = new DummyPage();
+                exceptionPage.DataContext = exInfo;
+                Window.Current.Content = exceptionPage;
             }
 
             // Ensure that the main window is activated

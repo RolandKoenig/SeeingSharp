@@ -229,6 +229,7 @@
     <Compile Include="Drawing3D\_Resources\GeometryResource.cs" />
     <Compile Include="Drawing3D\_Resources\LineRenderResources.cs" />
     <Compile Include="Drawing3D\_Resources\MaterialResource.cs" />
+    <Compile Include="Drawing3D\_Resources\ShaderEffectResourceBase.cs" />
     <Compile Include="Drawing3D\_Resources\TextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_ConstantBuffers\ConstantBufferResource.cs" />
     <Compile Include="Drawing3D\_Resources\_ConstantBuffers\TypeSafeConstantBuffer.cs" />
@@ -250,6 +251,8 @@
     <Compile Include="Drawing3D\_Resources\_Textures\LinearGradientTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\RenderTargetTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\StandardTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_TransitionEffects\BlendTransitionEffectResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_TransitionEffects\TransitionEffectResource.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\LineVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\StandardVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />

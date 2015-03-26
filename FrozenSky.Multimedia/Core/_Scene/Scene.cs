@@ -146,10 +146,61 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// Triggers transition logic from the current scene state to another one.
+        /// The given action gets processed directly before scene update process and is responsible
+        /// to define the target state.
         /// 
+        /// Be carefull: The action is called by worker-threads of FrozenSky!
+        /// 
+        /// The given transition effect gets executed to visually swap between current
+        /// to target state.
         /// </summary>
-        /// <param name="manipulatorAction"></param>
-        /// <returns></returns>
+        /// <param name="defineNewStateAction">
+        /// The action which is able to manipulate the scene. 
+        /// This one defines the target state of the transition
+        /// </param>
+        /// <param name="transissionEffectRessource">The transission effect ressource.</param>
+        public Task PerformTransitionAsync(
+            Action<SceneManipulator> defineNewStateAction,
+            NamedOrGenericKey transissionEffectRessource)
+        {
+            return this.PerformTransitionAsync(
+                defineNewStateAction,
+                transissionEffectRessource,
+                TimeSpan.FromSeconds(1.0));
+        }
+
+        /// <summary>
+        /// Triggers transition logic from the current scene state to another one.
+        /// The given action gets processed directly before scene update process and is responsible
+        /// to define the target state.
+        /// 
+        /// Be carefull: The action is called by worker-threads of FrozenSky!
+        /// 
+        /// The given transition effect gets executed to visually swap between current
+        /// to target state.
+        /// </summary>
+        /// <param name="defineNewStateAction">
+        /// The action which is able to manipulate the scene. 
+        /// This one defines the target state of the transition
+        /// </param>
+        /// <param name="transissionEffectRessource">The transission effect ressource.</param>
+        /// <param name="effectDuration">The total duration of the transition effect.</param>
+        public Task PerformTransitionAsync(
+            Action<SceneManipulator> defineNewStateAction,
+            NamedOrGenericKey transissionEffectRessource,
+            TimeSpan effectDuration)
+        {
+            return Task.Delay(100);
+        }
+
+        /// <summary>
+        /// Triggers scene manipulation using the given lambda action.
+        /// The action gets processed directly before scene update process.
+        /// 
+        /// Be carefull: The action is called by worker-threads of FrozenSky!
+        /// </summary>
+        /// <param name="manipulatorAction">The action which is able to manipulate the scene.</param>
         public Task ManipulateSceneAsync(Action<SceneManipulator> manipulatorAction)
         {
             SceneManipulator manipulator = new SceneManipulator(this);

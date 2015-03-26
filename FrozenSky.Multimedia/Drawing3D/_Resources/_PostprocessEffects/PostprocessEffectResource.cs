@@ -30,88 +30,8 @@ using D3D11 = SharpDX.Direct3D11;
 
 namespace FrozenSky.Multimedia.Drawing3D
 {
-    public abstract class PostprocessEffectResource : Resource
+    public abstract class PostprocessEffectResource : ShaderEffectResourceBase
     {
-        private static readonly NamedOrGenericKey RES_KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
-
-        private VertexShaderResource m_vertexShader;
-        private DefaultResources m_defaultResources;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PostprocessEffectResource" /> class.
-        /// </summary>
-        public PostprocessEffectResource()
-        {
-
-        }
-
-
-        /// <summary>
-        /// Applies alpha based sprite rendering.
-        /// </summary>
-        /// <param name="deviceContext">The target device context.</param>
-        protected void ApplySpriteRendering(D3D11.DeviceContext deviceContext)
-        {
-            deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
-
-            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateAllwaysPassDepth;
-        }
-
-        /// <summary>
-        /// Discards alpha based sprite rendering.
-        /// </summary>
-        /// <param name="deviceContext">The target device context.</param>
-        protected void DiscardSpriteRendering(D3D11.DeviceContext deviceContext)
-        {
-            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
-        }
-
-        /// <summary>
-        /// Applies alpha based sprite rendering.
-        /// </summary>
-        /// <param name="deviceContext">The target device context.</param>
-        protected void ApplyAlphaBasedSpriteRendering(D3D11.DeviceContext deviceContext)
-        {
-            deviceContext.VertexShader.Set(m_vertexShader.VertexShader);
-
-            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateAllwaysPassDepth;
-            deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
-        }
-
-        /// <summary>
-        /// Discards alpha based sprite rendering.
-        /// </summary>
-        /// <param name="deviceContext">The target device context.</param>
-        protected void DiscardAlphaBasedSpriteRendering(D3D11.DeviceContext deviceContext)
-        {
-            deviceContext.OutputMerger.BlendState = m_defaultResources.DefaultBlendState;
-            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
-        }
-
-        /// <summary>
-        /// Loads the resource.
-        /// </summary>
-        /// <param name="device">The device.</param>
-        /// <param name="resources">Parent ResourceDictionary.</param>
-        protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
-        {
-            m_defaultResources = resources.DefaultResources;
-            m_vertexShader = resources.GetResourceAndEnsureLoaded(
-                RES_KEY_VERTEX_SHADER,
-                () => GraphicsHelper.GetVertexShaderResource(device, "Postprocessing", "PostprocessVertexShader"));
-        }
-
-        /// <summary>
-        /// Unloads the resource.
-        /// </summary>
-        /// <param name="device">The device.</param>
-        /// <param name="resources">Parent ResourceDictionary.</param>
-        protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
-        {
-            m_defaultResources = null;
-            m_vertexShader = null;
-        }
-
         /// <summary>
         /// Notifies that rendering begins.
         /// </summary>
