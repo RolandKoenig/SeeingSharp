@@ -66,7 +66,6 @@ namespace FrozenSky.Multimedia.Views
         private Brush m_foreBrushText;
         private Brush m_backBrushText;
         private Pen m_borderPen;
-        private float m_currentDpi;
 
         private bool m_isMouseInside;
 
@@ -81,9 +80,6 @@ namespace FrozenSky.Multimedia.Views
         /// </summary>
         [Category("Graphics")]
         public event EventHandler<MouseEventArgs> MouseClickEx;
-
-        [Category("Graphics")]
-        public event EventHandler FocusedObjectChanged;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Direct3D11Panel"/> class.

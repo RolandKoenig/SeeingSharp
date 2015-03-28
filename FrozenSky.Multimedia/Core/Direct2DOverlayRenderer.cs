@@ -61,9 +61,9 @@ namespace FrozenSky.Multimedia.Core
 
         // Only set if we need it (e. g. Win7, Win 2008 platforms)
         private ResourceDictionary m_resourceDict;
-        private TexturePainterHelper m_texturePainter;
-        private ChangeableTextureResource m_changeableTexture;
 #if DESKTOP
+        private ChangeableTextureResource m_changeableTexture;
+        private TexturePainterHelper m_texturePainter;
         private D3D11.Texture2D m_renderTarget3DShared11;
         private D3D10.Texture2D m_renderTarget3DShared10;
         private D3D11.ShaderResourceView m_renderTarget3DShared11View;
@@ -103,9 +103,11 @@ namespace FrozenSky.Multimedia.Core
                 m_resourceDict = null;
             }
 
+#if DESKTOP
             // Reset remaining members
             m_changeableTexture = null;
             m_texturePainter = null;
+#endif
         }
 
         /// <summary>

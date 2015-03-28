@@ -936,12 +936,12 @@ namespace FrozenSky.Multimedia.Core
         internal static D3D11.Buffer CreateImmutableIndexBuffer(EngineDevice device, params int[][] indices)
         {
             int countIndices = indices.Sum((actArray) => actArray.Length);
-            Type indexBufferType = device.SupportsOnly16BitIndexBuffer ? typeof(ushort) : typeof(uint);
+            int bytesPerIndex = device.SupportsOnly16BitIndexBuffer ? Marshal.SizeOf<ushort>() : Marshal.SizeOf<uint>();
 
 
             DataStream outStreamIndex = new DataStream(
                 countIndices *
-                Marshal.SizeOf(indexBufferType), true, true);
+                bytesPerIndex, true, true);
 
             // Write all instance data to the target stream
             foreach (int[] actArray in indices)
@@ -960,7 +960,7 @@ namespace FrozenSky.Multimedia.Core
             bufferDescriptionIndex.BindFlags = D3D11.BindFlags.IndexBuffer;
             bufferDescriptionIndex.CpuAccessFlags = D3D11.CpuAccessFlags.None;
             bufferDescriptionIndex.OptionFlags = D3D11.ResourceOptionFlags.None;
-            bufferDescriptionIndex.SizeInBytes = countIndices * Marshal.SizeOf(indexBufferType);
+            bufferDescriptionIndex.SizeInBytes = countIndices * bytesPerIndex;
             bufferDescriptionIndex.Usage = D3D11.ResourceUsage.Immutable;
 
             // Load the index buffer

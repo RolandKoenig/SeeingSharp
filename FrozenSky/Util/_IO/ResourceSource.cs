@@ -212,7 +212,7 @@ namespace FrozenSky.Util
             // Open stream from file
             if (!string.IsNullOrEmpty(m_fileName))
             {
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP 
                 return File.OpenRead(m_fileName);
 #else
                 return await Package.Current.InstalledLocation.OpenStreamForReadAsync(m_fileName);
@@ -242,6 +242,12 @@ namespace FrozenSky.Util
             {
                 return m_resourceLink.OpenRead();
             }
+
+            // This simple call should prevent the "missing await" on DESKTOP platform
+            // .. not the best solution, but this code is only reached in error case
+#if DESKTOP
+            await Task.Delay(10);
+#endif
 
             throw new FrozenSkyException("Unable to load resource stream:\n" + this.ToString()); 
         }
@@ -294,10 +300,6 @@ namespace FrozenSky.Util
             }
         }
 
-        //private string m_fileName;
-        //private AssemblyResourceLink m_resourceLink;
-        //private Uri m_resourceUri;
-        //private AssemblyResourceUriBuilder m_uriBuilder;
 
         public static implicit operator ResourceSource(string fileName)
         {

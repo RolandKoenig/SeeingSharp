@@ -38,7 +38,7 @@ namespace FrozenSky.Multimedia.Drawing3D
 {
     public abstract class TransitionEffectResource : ShaderEffectResourceBase
     {
-        private float m_progress;
+        //private float m_progress;
 
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
@@ -55,12 +55,12 @@ namespace FrozenSky.Multimedia.Drawing3D
             get { throw new NotImplementedException(); }
         }
 
-        /// <summary>
-        /// Gets the current progress of this TransitionEffect.
-        /// </summary>
-        public float Progress
-        {
-            get { return m_progress; }
-        }
+        ///// <summary>
+        ///// Gets the current progress of this TransitionEffect.
+        ///// </summary>
+        //public float Progress
+        //{
+        //    get { return m_progress; }
+        //}
     }
 }
