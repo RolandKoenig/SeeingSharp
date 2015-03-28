@@ -39,11 +39,12 @@
             // 
             this.m_ctrlRenderer.BackColor = System.Drawing.Color.LightBlue;
             this.m_ctrlRenderer.Camera = null;
+            this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
             this.m_ctrlRenderer.Scene = null;
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(792, 398);
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(715, 348);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
@@ -66,7 +67,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(792, 398);
+            this.ClientSize = new System.Drawing.Size(715, 348);
             this.Controls.Add(this.m_ctrlRenderer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";

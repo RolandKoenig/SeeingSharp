@@ -229,18 +229,23 @@ namespace FrozenSky.Multimedia.Views
                 // Paint using System.Drawing
                 e.Graphics.FillRectangle(m_backBrush, e.ClipRectangle);
 
+                // Paint a simple grid on the background to have something for the Designer
                 if (!GraphicsCore.IsInitialized)
                 {
                     GDI.SizeF targetSize = e.Graphics.MeasureString(TEXT_GRAPHICS_NOT_INITIALIZED, this.Font);
                     GDI.RectangleF targetRect = new GDI.RectangleF(
                         10f, 10f, targetSize.Width, targetSize.Height);
-
-                    e.Graphics.FillRectangle(m_backBrushText, targetRect);
-                    e.Graphics.DrawString(
-                        TEXT_GRAPHICS_NOT_INITIALIZED, this.Font, 
-                        m_foreBrushText, targetRect.X, targetRect.Y);
+                    if ((targetRect.Width > 10) &&
+                       (targetRect.Height > 10))
+                    {
+                        e.Graphics.FillRectangle(m_backBrushText, targetRect);
+                        e.Graphics.DrawString(
+                            TEXT_GRAPHICS_NOT_INITIALIZED, this.Font,
+                            m_foreBrushText, targetRect.X, targetRect.Y);
+                    }
                 }
 
+                // Paint a border rectangle
                 e.Graphics.DrawRectangle(
                     m_borderPen,
                     new GDI.Rectangle(0, 0, this.Width - 1, this.Height - 1));
@@ -309,9 +314,9 @@ namespace FrozenSky.Multimedia.Views
             m_backBrush = new System.Drawing.Drawing2D.HatchBrush(
                 GDI.Drawing2D.HatchStyle.DottedGrid,
                 GDI.Color.Gray, this.BackColor);
-            m_backBrushText = Brushes.White;
-            m_foreBrushText = Brushes.Black;
-            m_borderPen = Pens.DarkGray;
+            m_backBrushText = new SolidBrush(GDI.Color.White);
+            m_foreBrushText = new SolidBrush(GDI.Color.Black);
+            m_borderPen = new Pen(GDI.Color.DarkGray);
         }
 
         /// <summary>
