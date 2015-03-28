@@ -139,9 +139,6 @@ publish/
 # If using the old MSBuild-Integrated Package Restore, uncomment this:
 #!**/packages/repositories.config
 
-# Shader
-*.cso
-
 # Windows Azure Build Output
 csx/
 *.build.csdef
