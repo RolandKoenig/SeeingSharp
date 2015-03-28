@@ -67,6 +67,7 @@
     </Compile>
     <Compile Include="ResourceSourceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TableDataTests.cs" />
     <Compile Include="ThreadingTests.cs" />
     <Compile Include="UtilityTests.cs" />
   </ItemGroup>
@@ -84,18 +85,21 @@
     <None Include="..\..\Misc\_FrozenSky.Multimedia.licenseheader">
       <Link>_FrozenSky.Multimedia.licenseheader</Link>
     </None>
+    <EmbeddedResource Include="Resources\TableData\DummyData.csv" />
+    <EmbeddedResource Include="Resources\TableData\DummyData.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Ressources\ReferenceRenderings\BlackScreen.png" />
-    <Content Include="Ressources\ReferenceRenderings\ClearedScreen.png" />
-    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject.png" />
-    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject_Enlighted.png" />
-    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject_Negative.png" />
-    <Content Include="Ressources\ReferenceRenderings\FlatShadedObject_Smaller.png" />
-    <Content Include="Ressources\ReferenceRenderings\WhiteScreen.png" />
+    <Content Include="Resources\ReferenceRenderings\BlackScreen.png" />
+    <Content Include="Resources\ReferenceRenderings\ClearedScreen.png" />
+    <Content Include="Resources\ReferenceRenderings\FlatShadedObject.png" />
+    <Content Include="Resources\ReferenceRenderings\FlatShadedObject_Enlighted.png" />
+    <Content Include="Resources\ReferenceRenderings\FlatShadedObject_Negative.png" />
+    <Content Include="Resources\ReferenceRenderings\FlatShadedObject_Smaller.png" />
+    <Content Include="Resources\ReferenceRenderings\WhiteScreen.png" />
+    <EmbeddedResource Include="Resources\TableData\DummyData.txt" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -103,6 +107,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

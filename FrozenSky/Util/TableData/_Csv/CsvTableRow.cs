@@ -1,0 +1,63 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FrozenSky.Util.TableData
+{
+    public class CsvTableRow : ITableRow
+    {
+        private static readonly Type TYPE_STRING = typeof(string);
+
+        private CsvTableHeaderRow m_headerRow;
+        private CsvTableFile m_parentFile;
+        private string[] m_rowFields;
+        
+        internal CsvTableRow(CsvTableFile parentFile, string actRowString)
+        {
+            m_parentFile = parentFile;
+            m_rowFields = actRowString.Split(parentFile.ImporterConfig.SeparationChar);
+            m_headerRow = m_parentFile.CachedHeaderRow;
+        }
+
+        /// <summary>
+        /// Reads the contents of the field with the given index.
+        /// </summary>
+        /// <typeparam name="T">The requested type.</typeparam>
+        /// <param name="fieldIndex">The index of the field.</param>
+        public T ReadField<T>(int fieldIndex) 
+            where T : struct
+        {
+            return (T)Convert.ChangeType(m_rowFields[fieldIndex], typeof(T));
+        }
+
+        /// <summary>
+        /// Reads the contents of the field with the given name.
+        /// </summary>
+        /// <typeparam name="T">The requested type.</typeparam>
+        /// <param name="fieldName">The name of the field.</param>
+        public T ReadField<T>(string fieldName) where T : struct
+        {
+            return (T)Convert.ChangeType(m_rowFields[m_headerRow.GetFieldIndex(fieldName)], typeof(T));
+        }
+
+        /// <summary>
+        /// Reads the contents of the field with the given index.
+        /// </summary>
+        /// <param name="fieldIndex">The index of the field.</param>
+        public string ReadFieldAsString(int fieldIndex)
+        {
+            return m_rowFields[fieldIndex];
+        }
+
+        /// <summary>
+        /// Reads the contents of the field with the given name.
+        /// </summary>
+        /// <param name="fieldName">The name of the field.</param>
+        public string ReadFieldAsString(string fieldName)
+        {
+            return m_rowFields[m_headerRow.GetFieldIndex(fieldName)];
+        }
+    }
+}

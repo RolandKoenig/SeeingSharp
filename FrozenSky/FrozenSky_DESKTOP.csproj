@@ -40,6 +40,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.5.5631.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Extern\OpenXmlSdk\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PropertyTools, Version=2015.1.49.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
@@ -123,11 +127,30 @@
     <Compile Include="Util\DummyDisposable.cs" />
     <Compile Include="Util\MultiDisposable.cs" />
     <Compile Include="Util\SerializerRepository.cs" />
+    <Compile Include="Util\TableData\ITableFile.cs" />
+    <Compile Include="Util\TableData\ITableHeaderRow.cs" />
+    <Compile Include="Util\TableData\ITableImporter.cs" />
+    <Compile Include="Util\TableData\ITableRow.cs" />
+    <Compile Include="Util\TableData\ITableRowReader.cs" />
+    <Compile Include="Util\TableData\TableImporterConfig.cs" />
+    <Compile Include="Util\TableData\_Csv\CsvImporterConfig.cs" />
+    <Compile Include="Util\TableData\_Csv\CsvTableFile.cs" />
+    <Compile Include="Util\TableData\_Csv\CsvTableHeaderRow.cs" />
+    <Compile Include="Util\TableData\_Csv\CsvTableImporter.cs" />
+    <Compile Include="Util\TableData\_Csv\CsvTableRow.cs" />
+    <Compile Include="Util\TableData\_Csv\CsvTableRowReader.cs" />
+    <Compile Include="Util\TableData\_Csv\CsvUtil.cs" />
+    <Compile Include="Util\TableData\_OpenXml\XlsxTableRow.cs" />
+    <Compile Include="Util\TableData\_OpenXml\XlsxTableRowReader.cs" />
+    <Compile Include="Util\TableData\_OpenXml\XlsxImporterConfig.cs" />
+    <Compile Include="Util\TableData\_OpenXml\XlsxTableFile.cs" />
+    <Compile Include="Util\TableData\_OpenXml\XlsxTableHeaderRow.cs" />
+    <Compile Include="Util\TableData\_OpenXml\XlsxTableImporter.cs" />
     <Compile Include="Util\TplBasedLoop.cs" />
-    <Compile Include="Util\_AssemblyResources\AssemblyResourceFileAttribute.cs" />
-    <Compile Include="Util\_AssemblyResources\AssemblyResourceInfo.cs" />
-    <Compile Include="Util\_AssemblyResources\AssemblyResourceLink.cs" />
-    <Compile Include="Util\_AssemblyResources\AssemblyResourceReader.cs" />
+    <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceFileAttribute.cs" />
+    <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceInfo.cs" />
+    <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceLink.cs" />
+    <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceReader.cs" />
     <Compile Include="Util\_Collections\IndexBasedDynamicCollection.cs" />
     <Compile Include="Util\_Collections\NamedOrGenericKey.cs" />
     <Compile Include="Util\_Collections\SingleInstanceCollection.cs" />
@@ -167,8 +190,8 @@
     <Compile Include="Util\_Performance\_FlowRate\FlowRatePerformanceResult.cs" />
     <Compile Include="Util\_PropertyTools\FrozenSkyPropertyControlFactory.cs" />
     <Compile Include="Util\_PropertyTools\FrozenSkyPropertyItemFactory.cs" />
-    <Compile Include="Util\_ResourceLoading\AssemblyResourceUriBuilder.cs" />
-    <Compile Include="Util\_ResourceLoading\ResourceSource.cs" />
+    <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceUriBuilder.cs" />
+    <Compile Include="Util\_IO\ResourceSource.cs" />
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />
