@@ -92,7 +92,7 @@ dcl_temps 2
 //   o1.x <- <main return value>.col.x; o1.y <- <main return value>.col.y; o1.z <- <main return value>.col.z; o1.w <- <main return value>.col.w; 
 //   o0.x <- <main return value>.pos.x; o0.y <- <main return value>.pos.y; o0.z <- <main return value>.pos.z; o0.w <- <main return value>.pos.w
 //
-#line 12 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\SingleForcedColorVertexShader.hlsl"
+#line 12 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Common\SingleForcedColorVertexShader.hlsl"
 mul r0.xyzw, cb1[0].yyyy, cb2[1].xyzw
 mad r0.xyzw, cb2[0].xyzw, cb1[0].xxxx, r0.xyzw
 mad r0.xyzw, cb2[2].xyzw, cb1[0].zzzz, r0.xyzw

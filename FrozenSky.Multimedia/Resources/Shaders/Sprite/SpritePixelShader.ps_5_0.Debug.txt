@@ -93,7 +93,7 @@ dcl_temps 2
 //   v2.z <- input.texFact; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 60 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
+#line 60 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
 mov_sat r0.x, cb2[5].w
 add r0.x, -r0.x, l(1.000000)
 mul r0.y, r0.x, cb1[6].x  // r0.y <- locAccentuationFactor
@@ -101,21 +101,21 @@ mul r0.y, r0.x, cb1[6].x  // r0.y <- locAccentuationFactor
 #line 66
 mad r0.x, -r0.x, cb1[6].x, l(1.000000)
 
-#line 9 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpritePixelShader.hlsl"
+#line 9 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpritePixelShader.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r1.xyzw, v2.xyxx, t0.xyzw, s0  // r1.x <- textureColor.x; r1.y <- textureColor.y; r1.z <- textureColor.z; r1.w <- textureColor.w
 
-#line 62 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
+#line 62 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
 dp3 r0.z, r1.xyzx, l(0.300000, 0.590000, 0.110000, 0.000000)  // r0.z <- inputGrayScaled.x
 add r0.w, -r0.z, l(1.000000)
 mad r0.z, r0.w, l(0.769231), r0.z
 mul r1.xyz, r0.xxxx, r1.xyzx
 
-#line 17 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpritePixelShader.hlsl"
+#line 17 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpritePixelShader.hlsl"
 mov o0.w, r1.w
 
-#line 66 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
+#line 66 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\functions.hlsl"
 mad o0.xyz, r0.zzzz, r0.yyyy, r1.xyzx
 
-#line 17 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpritePixelShader.hlsl"
+#line 17 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Sprite\SpritePixelShader.hlsl"
 ret 
 // Approximately 12 instruction slots used

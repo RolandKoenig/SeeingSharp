@@ -87,6 +87,7 @@
     </None>
     <EmbeddedResource Include="Resources\TableData\DummyData.csv" />
     <EmbeddedResource Include="Resources\TableData\DummyData.xlsx" />
+    <EmbeddedResource Include="Resources\TableData\Excel_WithFormulasAndLinks.xlsx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

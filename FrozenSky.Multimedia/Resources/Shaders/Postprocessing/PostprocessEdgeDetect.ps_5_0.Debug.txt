@@ -56,7 +56,7 @@ dcl_temps 4
 //   v1.x <- input.tex.x; v1.y <- input.tex.y; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 36 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl"
+#line 36 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl"
 sample_indexable(texture2d)(float,float,float,float) r0.xyzw, v1.xyxx, t0.xyzw, s0  // r0.x <- outputColor.x; r0.y <- outputColor.y; r0.z <- outputColor.z; r0.w <- outputColor.w
 min r0.w, r0.w, cb2[0].x
 add r0.w, r0.w, l(-0.010000)

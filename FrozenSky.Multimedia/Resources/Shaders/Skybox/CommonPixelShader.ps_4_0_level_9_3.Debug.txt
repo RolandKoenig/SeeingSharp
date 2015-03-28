@@ -64,7 +64,7 @@
     dcl t3.xyz  // input<13,14,15>
     dcl_cube s0
 
-#line 9 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Skybox\CommonPixelShader.hlsl"
+#line 9 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Skybox\CommonPixelShader.hlsl"
     texld r0, t3, s0  // ::result<0,1,2>
     mad r0, r0.xyzx, c0.xxxy, c0.yyyx
     mov oC0, r0  // ::main<0,1,2,3>
@@ -87,7 +87,7 @@ dcl_temps 1
 //   v2.z <- input.texFact; 
 //   o0.x <- <main return value>.x; o0.y <- <main return value>.y; o0.z <- <main return value>.z; o0.w <- <main return value>.w
 //
-#line 9 "G:\GitHub\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Skybox\CommonPixelShader.hlsl"
+#line 9 "D:\Projects\GitHub\RolandKoenig\FrozenSky\FrozenSky.Multimedia\Resources\Shaders\Skybox\CommonPixelShader.hlsl"
 sample r0.xyzw, v4.xyzx, t0.xyzw, s0  // r0.x <- result.x; r0.y <- result.y; r0.z <- result.z
 mov o0.xyz, r0.xyzx
 mov o0.w, l(1.000000)
