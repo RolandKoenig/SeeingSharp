@@ -228,6 +228,8 @@
     <Compile Include="Drawing3D\_Cameras\Camera3DViewPoint.cs" />
     <Compile Include="Drawing3D\_Cameras\OrthographicCamera3D.cs" />
     <Compile Include="Drawing3D\_Cameras\PerspectiveCamera3D.cs" />
+    <Compile Include="Drawing3D\_Cameras\_Animations\CameraStraightMoveAnimation.cs" />
+    <Compile Include="Drawing3D\_Cameras\_Animations\_Extensions.cs" />
     <Compile Include="Drawing3D\_Misc.cs" />
     <Compile Include="Drawing3D\_RenderParameters\ObjectRenderParameters.cs" />
     <Compile Include="Drawing3D\_RenderParameters\SceneRenderParameters.cs" />
