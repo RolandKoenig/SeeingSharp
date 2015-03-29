@@ -613,7 +613,7 @@ namespace FrozenSky.Tests.Rendering
         //*********************************************************************
         //*********************************************************************
         //*********************************************************************
-        private class DummyAnimatableObject : IAnimationHost
+        private class DummyAnimatableObject : IAnimatableObject
         {
             private AnimationHandler m_animHandler;
 

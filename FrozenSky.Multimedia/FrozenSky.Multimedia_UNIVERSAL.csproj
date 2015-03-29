@@ -66,7 +66,7 @@
     <Compile Include="Core\_Animations\AnimationSequenceBuilder.cs" />
     <Compile Include="Core\_Animations\AnimationState.cs" />
     <Compile Include="Core\_Animations\IAnimation.cs" />
-    <Compile Include="Core\_Animations\IAnimationHost.cs" />
+    <Compile Include="Core\_Animations\IAnimatableObject.cs" />
     <Compile Include="Core\_Animations\IAnimationSequenceBuilder.cs" />
     <Compile Include="Core\_Animations\_Analytics\EventDrivenPassInfo.cs" />
     <Compile Include="Core\_Animations\_Analytics\EventDrivenStepInfo.cs" />
@@ -151,6 +151,7 @@
     <Compile Include="Drawing3D\Graphics3D.cs" />
     <Compile Include="Drawing3D\TexturePainterHelper.cs" />
     <Compile Include="Drawing3D\_Cameras\Camera3DBase.cs" />
+    <Compile Include="Drawing3D\_Cameras\Camera3DViewPoint.cs" />
     <Compile Include="Drawing3D\_Cameras\OrthographicCamera3D.cs" />
     <Compile Include="Drawing3D\_Cameras\PerspectiveCamera3D.cs" />
     <Compile Include="Drawing3D\_Misc.cs" />
@@ -247,6 +248,9 @@
     <Compile Include="_Native.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PropertyTools">
       <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\portable-net40+net45+sl5+wp8+win8\PropertyTools.dll</HintPath>
     </Reference>

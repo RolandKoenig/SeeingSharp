@@ -29,33 +29,34 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.frozenSkyRendererControl1 = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
+            this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
             this.m_mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
-            // frozenSkyRendererControl1
+            // m_ctrlRenderer
             // 
-            this.frozenSkyRendererControl1.Camera = null;
-            this.frozenSkyRendererControl1.DiscardRendering = true;
-            this.frozenSkyRendererControl1.Location = new System.Drawing.Point(49, 62);
-            this.frozenSkyRendererControl1.Name = "frozenSkyRendererControl1";
-            this.frozenSkyRendererControl1.Scene = null;
-            this.frozenSkyRendererControl1.Size = new System.Drawing.Size(501, 280);
-            this.frozenSkyRendererControl1.TabIndex = 0;
-            this.frozenSkyRendererControl1.Text = "frozenSkyRendererControl1";
-            this.frozenSkyRendererControl1.ViewConfiguration.AccentuationFactor = 0F;
-            this.frozenSkyRendererControl1.ViewConfiguration.AmbientFactor = 0.2F;
-            this.frozenSkyRendererControl1.ViewConfiguration.AntialiasingEnabled = true;
-            this.frozenSkyRendererControl1.ViewConfiguration.AntialiasingQuality = FrozenSky.Multimedia.Core.AntialiasingQualityLevel.Medium;
-            this.frozenSkyRendererControl1.ViewConfiguration.GeneratedBorderFactor = 1F;
-            this.frozenSkyRendererControl1.ViewConfiguration.GeneratedColorGradientFactor = 1F;
-            this.frozenSkyRendererControl1.ViewConfiguration.LightPower = 0.8F;
-            this.frozenSkyRendererControl1.ViewConfiguration.Overlay2DEnabled = true;
-            this.frozenSkyRendererControl1.ViewConfiguration.ShowTextures = true;
-            this.frozenSkyRendererControl1.ViewConfiguration.StrongLightFactor = 1.5F;
-            this.frozenSkyRendererControl1.ViewConfiguration.WireframeEnabled = false;
+            this.m_ctrlRenderer.Camera = null;
+            this.m_ctrlRenderer.DiscardRendering = true;
+            this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
+            this.m_ctrlRenderer.Name = "m_ctrlRenderer";
+            this.m_ctrlRenderer.Scene = null;
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(657, 390);
+            this.m_ctrlRenderer.TabIndex = 0;
+            this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
+            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.2F;
+            this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
+            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = FrozenSky.Multimedia.Core.AntialiasingQualityLevel.Medium;
+            this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
+            this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
+            this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
+            this.m_ctrlRenderer.ViewConfiguration.Overlay2DEnabled = true;
+            this.m_ctrlRenderer.ViewConfiguration.ShowTextures = true;
+            this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
+            this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
             // 
             // m_mainMenu
             // 
@@ -79,7 +80,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(657, 418);
-            this.Controls.Add(this.frozenSkyRendererControl1);
+            this.Controls.Add(this.m_ctrlRenderer);
             this.Controls.Add(this.m_mainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.m_mainMenu;
@@ -94,7 +95,7 @@
 
         #endregion
 
-        private FrozenSky.Multimedia.Views.FrozenSkyRendererControl frozenSkyRendererControl1;
+        private FrozenSky.Multimedia.Views.FrozenSkyRendererControl m_ctrlRenderer;
         private System.Windows.Forms.MenuStrip m_mainMenu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
     }

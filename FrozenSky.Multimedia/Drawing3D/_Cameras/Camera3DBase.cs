@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrozenSky.Util;
+using FrozenSky.Multimedia.Core;
 
 namespace FrozenSky.Multimedia.Drawing3D
 {
 
-    public abstract class Camera3DBase
+    public abstract class Camera3DBase : IAnimatableObject
     {
         private Vector3 m_position = new Vector3(0, 0, 0);
         private Vector3 m_lastBigStepPos = new Vector3(0, 0, 0);
@@ -35,6 +36,9 @@ namespace FrozenSky.Multimedia.Drawing3D
 
         private bool m_invertScreenMove;
 
+        private AnimationHandler m_animHandler;
+        private RenderLoop m_associatedRenderLoop;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="Camera3DBase"/> class.
         /// </summary>
@@ -54,7 +58,30 @@ namespace FrozenSky.Multimedia.Drawing3D
             m_screenWidth = width;
             m_screenHeight = height;
 
+            m_animHandler = new AnimationHandler(this);
+
             UpdateCamera();
+        }
+
+        /// <summary>
+        /// Applies the data from the given ViewPoint object.
+        /// </summary>
+        /// <param name="camera3DViewPoint">The ViewPoint to be applied.</param>
+        public virtual void ApplyViewPoint(Camera3DViewPoint camera3DViewPoint)
+        {
+            this.Position = camera3DViewPoint.Position;
+            this.TargetRotation = camera3DViewPoint.Rotation;
+        }
+
+        /// <summary>
+        /// Gets a ViewPoint out of this camera object.
+        /// </summary>
+        public virtual Camera3DViewPoint GetViewPoint()
+        {
+            Camera3DViewPoint result = new Camera3DViewPoint();
+            result.Position = this.Position;
+            result.Rotation = this.TargetRotation;
+            return result;
         }
 
         /// <summary>
@@ -447,6 +474,26 @@ namespace FrozenSky.Multimedia.Drawing3D
         {
             get;
             set;
+        }
+
+        /// <summary>
+        /// Gets the current AnimationHandler for this camera.
+        /// </summary>
+        public AnimationHandler AnimationHandler
+        {
+            get { return m_animHandler; }
+        }
+
+        /// <summary>
+        /// Gets the currently associated RenderLoop object.
+        /// </summary>
+        public RenderLoop AssociatedRenderLoop
+        {
+            get { return m_associatedRenderLoop; }
+            internal set
+            {
+                m_associatedRenderLoop = value;
+            }
         }
     }
 }

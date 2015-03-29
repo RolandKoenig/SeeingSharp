@@ -29,7 +29,7 @@ using D3D11 = SharpDX.Direct3D11;
 
 namespace FrozenSky.Multimedia.Core
 {
-    public abstract partial class SceneObject : IDisposable, IAnimationHost
+    public abstract partial class SceneObject : IDisposable, IAnimatableObject
     {
         // Generic members
         private DetailLevel m_targetDetailLevel;

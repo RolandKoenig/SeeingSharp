@@ -56,6 +56,16 @@ namespace FrozenSky.Multimedia.Drawing3D
     }
 
     /// <summary>
+    /// Describes the type of a 3D camera.
+    /// </summary>
+    public enum Camera3DType
+    {
+        Perspective,
+
+        Orthographic
+    }
+
+    /// <summary>
     /// Describes the mode how a RenderTargetTexture pushes itself on the rendering stack.
     /// </summary>
     [Flags]

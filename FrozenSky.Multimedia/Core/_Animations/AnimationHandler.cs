@@ -41,7 +41,7 @@ namespace FrozenSky.Multimedia.Core
         /// Starts building an animation sequence for the current target object.
         /// </summary>
         internal IAnimationSequenceBuilder<TargetObject> BuildAnimationSequence<TargetObject>()
-            where TargetObject : class, IAnimationHost
+            where TargetObject : class, IAnimatableObject
         {
             return new AnimationSequenceBuilder<TargetObject>(this);
         }

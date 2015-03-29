@@ -52,6 +52,27 @@ namespace FrozenSky.Multimedia.Drawing3D
         }
 
         /// <summary>
+        /// Applies the data from the given ViewPoint object.
+        /// </summary>
+        /// <param name="camera3DViewPoint">The ViewPoint to be applied.</param>
+        public override void ApplyViewPoint(Camera3DViewPoint camera3DViewPoint)
+        {
+            base.ApplyViewPoint(camera3DViewPoint);
+
+            m_zoomFactor = camera3DViewPoint.OrthographicZoomFactor;
+        }
+
+        /// <summary>
+        /// Gets a ViewPoint out of this camera object.
+        /// </summary>
+        public override Camera3DViewPoint GetViewPoint()
+        {
+            var result = base.GetViewPoint();
+            result.OrthographicZoomFactor = m_zoomFactor;
+            return result;
+        }
+
+        /// <summary>
         /// Calculates the view and projection matrix for this camera.
         /// </summary>
         /// <param name="position">The position of the camera.</param>

@@ -45,6 +45,10 @@
     <Reference Include="AssimpNet">
       <HintPath>..\packages\AssimpNet.3.3.1\lib\net45\AssimpNet.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="PropertyTools, Version=2015.1.49.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
@@ -135,8 +139,8 @@
     <Compile Include="Core\_Animations\AnimationSequence.cs" />
     <Compile Include="Core\_Animations\AnimationSequenceBuilder.cs" />
     <Compile Include="Core\_Animations\AnimationState.cs" />
+    <Compile Include="Core\_Animations\IAnimatableObject.cs" />
     <Compile Include="Core\_Animations\IAnimation.cs" />
-    <Compile Include="Core\_Animations\IAnimationHost.cs" />
     <Compile Include="Core\_Animations\IAnimationSequenceBuilder.cs" />
     <Compile Include="Core\_Animations\_Analytics\EventDrivenPassInfo.cs" />
     <Compile Include="Core\_Animations\_Analytics\EventDrivenStepInfo.cs" />
@@ -221,6 +225,7 @@
     <Compile Include="Drawing3D\Graphics3D.cs" />
     <Compile Include="Drawing3D\TexturePainterHelper.cs" />
     <Compile Include="Drawing3D\_Cameras\Camera3DBase.cs" />
+    <Compile Include="Drawing3D\_Cameras\Camera3DViewPoint.cs" />
     <Compile Include="Drawing3D\_Cameras\OrthographicCamera3D.cs" />
     <Compile Include="Drawing3D\_Cameras\PerspectiveCamera3D.cs" />
     <Compile Include="Drawing3D\_Misc.cs" />

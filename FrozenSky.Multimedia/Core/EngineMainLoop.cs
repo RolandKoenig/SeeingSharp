@@ -19,6 +19,7 @@
 #endregion
 
 using FrozenSky.Multimedia.Drawing2D;
+using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Util;
 using System;
 using System.Collections.Concurrent;
@@ -133,6 +134,7 @@ namespace FrozenSky.Multimedia.Core
 
                 List<RenderLoop> renderingRenderLoops = new List<RenderLoop>();
                 List<Scene> scenesToRender = new List<Scene>();
+                List<Camera3DBase> camerasToUpdate = new List<Camera3DBase>();
                 List<EngineDevice> devicesInUse = new List<EngineDevice>();
                 while (!cancelToken.IsCancellationRequested)
                 {
@@ -160,7 +162,7 @@ namespace FrozenSky.Multimedia.Core
                             }
 
                             // Queries for devices / scenes in use
-                            QueryForScenesToRender(renderingRenderLoops, scenesToRender);
+                            QueryForScenesAndCameras(renderingRenderLoops, scenesToRender, camerasToUpdate);
                             QueryForDevicesInUse(renderingRenderLoops, devicesInUse);
 
                             // Build new UpdateState object
@@ -172,10 +174,15 @@ namespace FrozenSky.Multimedia.Core
                             renderStopWatch.Restart();
 
                             // First global pass: Update scene and prepare rendering
-                            await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, updateState);
+                            await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, updateState)
+                                .ConfigureAwait(false);
+                            foreach (Camera3DBase actCamera in camerasToUpdate)
+                            {
+                                actCamera.AnimationHandler.Update(updateState);
+                            }
 
                             // Queries for devices / scenes in use (may have changed during prepare)
-                            QueryForScenesToRender(renderingRenderLoops, scenesToRender);
+                            QueryForScenesAndCameras(renderingRenderLoops, scenesToRender, camerasToUpdate);
                             QueryForDevicesInUse(renderingRenderLoops, devicesInUse);
 
                             // Second global pass: Render scene(s) and update beside
@@ -517,15 +524,23 @@ namespace FrozenSky.Multimedia.Core
         /// </summary>
         /// <param name="registeredRenderLoops">The render loops from which to get the scenes.</param>
         /// <param name="scenesToRender">The collection to be modiefied.</param>
-        private static void QueryForScenesToRender(List<RenderLoop> registeredRenderLoops, List<Scene> scenesToRender)
+        /// <param name="camerasToUpdate">A list containing all cameras which are defined in currently bound scenes.</param>
+        private static void QueryForScenesAndCameras(List<RenderLoop> registeredRenderLoops, List<Scene> scenesToRender, List<Camera3DBase> camerasToUpdate)
         {
             scenesToRender.Clear();
+            camerasToUpdate.Clear();
             for (int loop = 0; loop < registeredRenderLoops.Count; loop++)
             {
                 Scene actScene = registeredRenderLoops[loop].Scene;
                 if ((actScene != null) && (!scenesToRender.Contains(actScene)))
                 {
                     scenesToRender.Add(actScene);
+                }
+
+                Camera3DBase actCamera = registeredRenderLoops[loop].Camera;
+                if ((actCamera != null) && (!camerasToUpdate.Contains(actCamera)))
+                {
+                    camerasToUpdate.Add(actCamera);
                 }
             }
         }

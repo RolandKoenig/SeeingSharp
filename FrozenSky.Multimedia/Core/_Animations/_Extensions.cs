@@ -34,7 +34,7 @@ namespace FrozenSky.Multimedia.Core
         /// <typeparam name="TargetObjectType">The type of the target object.</typeparam>
         /// <param name="animatableObject">The object to be animated.</param>
         public static IAnimationSequenceBuilder<TargetObjectType> BuildAnimationSequence<TargetObjectType>(this TargetObjectType animatableObject)
-            where TargetObjectType : class, IAnimationHost
+            where TargetObjectType : class, IAnimatableObject
         {
             return animatableObject.AnimationHandler.BuildAnimationSequence<TargetObjectType>();
         }
@@ -46,7 +46,7 @@ namespace FrozenSky.Multimedia.Core
         /// <typeparam name="TargetObjectType">The type of the target object.</typeparam>
         /// <param name="animationHost">The host object of the animation.</param>
         /// <param name="animatableObject">The object to be animated.</param>
-        public static IAnimationSequenceBuilder<TargetObjectType> BuildAnimationSequence<TargetObjectType>(this IAnimationHost animationHost, TargetObjectType animatableObject)
+        public static IAnimationSequenceBuilder<TargetObjectType> BuildAnimationSequence<TargetObjectType>(this IAnimatableObject animationHost, TargetObjectType animatableObject)
             where TargetObjectType : class
         {
             return animationHost.AnimationHandler.BuildAnimationSequence<TargetObjectType>(animatableObject);
