@@ -98,11 +98,11 @@ namespace FrozenSky
         /// Calculates the intersection point and distance to the intersection seen from local start position.
         /// </summary>
         /// <param name="other">The ray to calculate intersection with</param>
-        public Tuple<bool, Vector2> Intersect(Ray2D ray2)
+        public Tuple<bool, Vector2> Intersect(Ray2D other)
         {
             //Perform simple ray to ray intersection first
             Ray2D ray1 = this.ToRay();
-            Tuple<bool, Vector2> intersectionResult = ray1.Intersect(ray2);
+            Tuple<bool, Vector2> intersectionResult = ray1.Intersect(other);
             if (!intersectionResult.Item1) { return intersectionResult; }
 
             //Is intersection point within line 1?

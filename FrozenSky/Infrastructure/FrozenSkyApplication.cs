@@ -71,6 +71,7 @@ namespace FrozenSky.Infrastructure
         /// Initializes the RKApplication object.
         /// </summary>
         /// <param name="mainAssembly">The main assembly of the application.</param>
+        /// <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
         public static async Task InitializeAsync(Assembly mainAssembly, IEnumerable<Assembly> otherAssemblies, string[] startupArguments)
         {
             if (s_current != null) { throw new FrozenSkyException("RKApplication is already initialized!"); }

@@ -667,6 +667,7 @@ namespace FrozenSky.Util
         /// <param name="loopAction">The action to perform more times.</param>
         /// <param name="delayTime">The interval between callings of <paramref name="loopAction"/>.</param>
         /// <param name="finishingAction">This action is called once when <paramref name="condition"/> returns false.</param>
+        /// <param name="mode">A not how to interpred the delay time.</param>
         public static void InvokeDelayedWhile(this UIElement control, Func<bool> condition, Action loopAction, TimeSpan delayTime, Action finishingAction, InvokeDelayedMode mode)
         {
             Func<int, TimeSpan> getDelayTimeFunc = null;

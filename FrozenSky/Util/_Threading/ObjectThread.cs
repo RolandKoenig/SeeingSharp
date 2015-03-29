@@ -62,6 +62,7 @@ namespace FrozenSky.Util
         /// Initializes a new instance of the <see cref="ObjectThread"/> class.
         /// </summary>
         /// <param name="name">The name of the generated thread.</param>
+        /// <param name="heartBeat">The initial heartbeat of the ObjectThread.</param>
         /// <param name="createMessageHandler">Do automatically create a message handler for this thread?</param>
         public ObjectThread(string name, int heartBeat, bool createMessageHandler = false)
         {

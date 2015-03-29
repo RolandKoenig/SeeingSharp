@@ -162,7 +162,6 @@ namespace FrozenSky.Util
         /// <summary>
         /// Removes the item at the given index.
         /// </summary>
-        /// <param name="index">The index at which to remove the item.</param>
         public void RemoveObject(T objectToRemove)
         {
             lock (m_lockObject)

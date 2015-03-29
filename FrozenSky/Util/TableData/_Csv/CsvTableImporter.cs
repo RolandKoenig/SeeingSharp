@@ -44,6 +44,7 @@ namespace FrozenSky.Util.TableData
         /// Null is returned if opening is not possible.
         /// </summary>
         /// <param name="tableFileSource">The file to be loaded.</param>
+        /// <param name="importerConfig">Configuration for the import process.</param>
         public ITableFile OpenTableFile(ResourceSource tableFileSource, TableImporterConfig importerConfig)
         {
             CsvImporterConfig csvImporterConfig = importerConfig as CsvImporterConfig;

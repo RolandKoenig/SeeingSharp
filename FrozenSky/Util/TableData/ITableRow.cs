@@ -21,7 +21,7 @@ namespace FrozenSky.Util.TableData
         /// <summary>
         /// Reads the contents of the field with the given name.
         /// </summary>
-        /// <param name="fieldIndex">The name of the field.</param>
+        /// <param name="fieldName">The name of the field to read.</param>
         T ReadField<T>(string fieldName)
             where T : struct;
 

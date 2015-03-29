@@ -59,7 +59,6 @@ namespace FrozenSky.Util
         /// <summary>
         /// Handles the given result object for the UI layer.
         /// </summary>
-        /// <param name="actResultactFlowRateResult">The result to be processed.</param>
         private void HandleResultForUIForFlowRateKpi<T>(
             T kpiResult,
             ObservableCollection<T> kpisHistorical,

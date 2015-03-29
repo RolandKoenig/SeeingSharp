@@ -68,17 +68,15 @@ namespace FrozenSky
         /// <summary>
         /// Merges this polygon with the given one defining a hole. The result is a new polygon.
         /// </summary>
-        /// <param name="actHole">The hole to merge this polygon with.</param>
         public Polygon2D MergeWithHole(Polygon2D actHole, Polygon2DMergeOptions mergeOptions)
         {
             return MergeWithHole(actHole, mergeOptions, null);
         }
 
         /// <summary>
-        /// Merges this polygon with the given one defining a hole. The result is a new polygon.
+        /// Merges the with hole.
         /// </summary>
-        /// <param name="actHole">The hole to merge this polygon with.</param>
-        public Polygon2D MergeWithHole(Polygon2D actHole, Polygon2DMergeOptions mergeOptions, List<Vector2> cutPoints)
+         public Polygon2D MergeWithHole(Polygon2D actHole, Polygon2DMergeOptions mergeOptions, List<Vector2> cutPoints)
         {
             //This algorithm uses the method described in http://www.geometrictools.com/Documentation/TriangulationByEarClipping.pdf
 
