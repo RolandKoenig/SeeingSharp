@@ -452,6 +452,7 @@ namespace FrozenSky.Util
         /// </summary>
         /// <param name="syncContext">The context to send the action to.</param>
         /// <param name="actionToSend">The action to send.</param>
+        /// <param name="actionIfNull">What should we do if weg get no SyncContext?</param>
         public static void PostAlsoIfNull(this SynchronizationContext syncContext, Action actionToSend, ActionIfSyncContextIsNull actionIfNull)
         {
             if (syncContext != null) { syncContext.Post((arg) => actionToSend(), null); }
@@ -481,6 +482,7 @@ namespace FrozenSky.Util
         /// </summary>
         /// <param name="syncContext">The target SynchronizationContext.</param>
         /// <param name="postAction">The action to be posted.</param>
+        /// <param name="actionIfNull">What should we do if we get no SyncContext?</param>
         public static Task PostAlsoIfNullAsync(this SynchronizationContext syncContext, Action postAction, ActionIfSyncContextIsNull actionIfNull)
         {
             TaskCompletionSource<object> completionSource = new TaskCompletionSource<object>();

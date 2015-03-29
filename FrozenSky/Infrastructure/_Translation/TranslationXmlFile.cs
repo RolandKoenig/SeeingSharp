@@ -57,6 +57,7 @@ namespace FrozenSky.Infrastructure
         /// Gets the translation for the given sentence.
         /// </summary>
         /// <param name="original">The original sentence.</param>
+        /// <param name="actTranslated">The translation of the given string.</param>
         public string GetTranslation(string original, ref string actTranslated)
         {
             m_wordsDict.TryGetValue(original, out actTranslated);

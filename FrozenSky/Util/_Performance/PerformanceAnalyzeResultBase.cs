@@ -34,6 +34,7 @@ namespace FrozenSky.Util
         /// <summary>
         /// Initializes a new instance of the <see cref="PerformanceAnalyzeResultBase"/> class.
         /// </summary>
+        /// <param name="calculator">The Calculator this result object belongs to.</param>
         /// <param name="keyTimestamp">The key of this result object..</param>
         internal PerformanceAnalyzeResultBase(PerformanceCalculatorBase calculator, DateTime keyTimestamp)
         {
