@@ -90,7 +90,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.PostProcess_Focus);
+                    screenshot, Properties.Resources.ReferenceImage_PostProcess_Focus);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -143,7 +143,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.PostProcess_EdgeDetect);
+                    screenshot, Properties.Resources.ReferenceImage_PostProcess_EdgeDetect);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 

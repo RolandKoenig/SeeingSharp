@@ -62,7 +62,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageClearedScreen);
+                    screenshot, Properties.Resources.ReferenceImage_ClearedScreen);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -115,7 +115,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageSimpleLine);
+                    screenshot, Properties.Resources.ReferenceImage_SimpleLine);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
         }
@@ -155,7 +155,54 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageSimpleObject);
+                    screenshot, Properties.Resources.ReferenceImage_SimpleObject);
+                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+            }
+
+            // Finishing checks
+            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+        }
+
+        [TestMethod]
+        [TestCategory(TEST_CATEGORY)]
+        public async Task Render_SimpleObject_Orthographic()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                // Get and configure the camera
+                OrthographicCamera3D camera = new OrthographicCamera3D();
+                camera.Position = new Vector3(0f, 5f, -7f);
+                camera.Target = new Vector3(0f, 1f, 0f);
+                camera.ZoomFactor = 200f;
+                camera.UpdateCamera();
+                memRenderTarget.RenderLoop.Camera = camera;
+
+                // Define scene
+                await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    NamedOrGenericKey geoResource = manipulator.AddResource<GeometryResource>(
+                        () => new GeometryResource(new PalletType()));
+
+                    GenericObject newObject = manipulator.AddGeneric(geoResource);
+                    newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
+                    newObject.Scaling = new Vector3(2f, 2f, 2f);
+                });
+
+                await memRenderTarget.AwaitRenderAsync();
+                await memRenderTarget.AwaitRenderAsync();
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                bool isNearEqual = BitmapComparison.IsNearEqual(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleObject_Ortho);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -216,7 +263,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.Skybox);
+                    screenshot, Properties.Resources.ReferenceImage_Skybox);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 

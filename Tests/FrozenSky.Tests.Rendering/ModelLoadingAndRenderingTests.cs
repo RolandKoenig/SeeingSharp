@@ -78,7 +78,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageFlatShadedObject);
+                    screenshot, Properties.Resources.ReferenceImage_FlatShadedObject);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -120,7 +120,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageShadedObject);
+                    screenshot, Properties.Resources.ReferenceImage_ShadedObject);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -162,7 +162,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageTwoSidedObject);
+                    screenshot, Properties.Resources.ReferenceImage_TwoSidedObject);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -204,7 +204,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageSingleSidedObject);
+                    screenshot, Properties.Resources.ReferenceImage_SingleSidedObject);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -249,7 +249,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageTexturedObject);
+                    screenshot, Properties.Resources.ReferenceImage_TexturedObject);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 
@@ -290,7 +290,7 @@ namespace FrozenSky.Tests.Rendering
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImageShadedObject);
+                    screenshot, Properties.Resources.ReferenceImage_ShadedObject);
                 Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
             }
 

@@ -123,9 +123,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap PostProcess_EdgeDetect {
+        internal static System.Drawing.Bitmap ReferenceImage_ClearedScreen {
             get {
-                object obj = ResourceManager.GetObject("PostProcess_EdgeDetect", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_ClearedScreen", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -133,9 +133,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap PostProcess_Focus {
+        internal static System.Drawing.Bitmap ReferenceImage_FlatShadedObject {
             get {
-                object obj = ResourceManager.GetObject("PostProcess_Focus", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_FlatShadedObject", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -143,9 +143,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageClearedScreen {
+        internal static System.Drawing.Bitmap ReferenceImage_PostProcess_EdgeDetect {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageClearedScreen", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_PostProcess_EdgeDetect", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -153,9 +153,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageFlatShadedObject {
+        internal static System.Drawing.Bitmap ReferenceImage_PostProcess_Focus {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageFlatShadedObject", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_PostProcess_Focus", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -163,9 +163,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageShadedObject {
+        internal static System.Drawing.Bitmap ReferenceImage_ShadedObject {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageShadedObject", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_ShadedObject", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -173,9 +173,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageSimpleLine {
+        internal static System.Drawing.Bitmap ReferenceImage_SimpleLine {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageSimpleLine", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_SimpleLine", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -183,9 +183,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageSimpleObject {
+        internal static System.Drawing.Bitmap ReferenceImage_SimpleObject {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageSimpleObject", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_SimpleObject", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -193,9 +193,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageSingleSidedObject {
+        internal static System.Drawing.Bitmap ReferenceImage_SimpleObject_Ortho {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageSingleSidedObject", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_SimpleObject_Ortho", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -203,9 +203,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageTexturedObject {
+        internal static System.Drawing.Bitmap ReferenceImage_SingleSidedObject {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageTexturedObject", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_SingleSidedObject", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -213,9 +213,9 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImageTwoSidedObject {
+        internal static System.Drawing.Bitmap ReferenceImage_Skybox {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImageTwoSidedObject", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_Skybox", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -223,9 +223,19 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Skybox {
+        internal static System.Drawing.Bitmap ReferenceImage_TexturedObject {
             get {
-                object obj = ResourceManager.GetObject("Skybox", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_TexturedObject", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_TwoSidedObject {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_TwoSidedObject", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

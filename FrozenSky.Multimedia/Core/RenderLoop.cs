@@ -434,6 +434,9 @@ namespace FrozenSky.Multimedia.Core
                 (float)m_currentViewSize.Width / m_currentDpiScaling.ScaleFactorX,
                 (float)m_currentViewSize.Height / m_currentDpiScaling.ScaleFactorY);
 
+            // Update view size on camera
+            if (m_camera != null) { m_camera.SetScreenSize(m_currentViewSize.Width, m_currentViewSize.Height); }
+
             m_viewConfiguration.ViewNeedsRefresh = false;
 
             // Try to create a Direct2D overlay
@@ -940,11 +943,28 @@ namespace FrozenSky.Multimedia.Core
             {
                 if (m_camera != value)
                 {
-                    if (value == null) { m_camera = new PerspectiveCamera3D(); }
-                    else { m_camera = value; }
+                    // Reset AssociatedRenderLoop flag on previous one
+                    if (m_camera != null)
+                    {
+                        m_camera.AssociatedRenderLoop = null;
+                    }
 
-                    // Apply current screen size on the camera
-                    m_camera.SetScreenSize(this.CurrentViewSize.Width, this.CurrentViewSize.Height);
+                    // Change the current camera reference
+                    Camera3DBase newCamera = null;
+                    if (value == null) { newCamera = new PerspectiveCamera3D(); }
+                    else { newCamera = value; }
+                    if (newCamera.AssociatedRenderLoop != null)
+                    {
+                        throw new FrozenSkyGraphicsException("Unable to change camera: The given one is already associated to another RenderLoop!");
+                    }
+                    m_camera = newCamera;
+
+                    // Set AssociatedRenderLoop flag on new one
+                    if (m_camera != null)
+                    {
+                        m_camera.SetScreenSize(this.CurrentViewSize.Width, this.CurrentViewSize.Height);
+                        m_camera.AssociatedRenderLoop = this;
+                    }
 
                     CameraChanged.Raise(this, EventArgs.Empty);
                 }
