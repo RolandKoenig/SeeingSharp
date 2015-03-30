@@ -27,7 +27,7 @@
 	as well as that of the covered work.}
 */
 #endregion
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +36,7 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [TestClass]
+    [Collection("Rendering_2D")]
     public class Render2DTests
     {
         public const string TEST_CATEGORY = "FrozenSky Multimedia Render2D";

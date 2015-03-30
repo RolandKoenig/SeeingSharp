@@ -1,6 +1,6 @@
 ﻿using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,7 +31,7 @@ namespace FrozenSky.Tests.Rendering
                 GraphicsCore.Current.DefaultDevice.ForceDetailLevel(DetailLevel.High);
             }
 
-            Assert.IsTrue(GraphicsCore.IsInitialized, "GraphicsCore could not be initialized!");
+            Assert.True(GraphicsCore.IsInitialized, "GraphicsCore could not be initialized!");
         }
     }
 }

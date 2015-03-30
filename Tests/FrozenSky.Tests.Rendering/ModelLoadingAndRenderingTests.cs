@@ -17,7 +17,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,15 +37,15 @@ using GDI = System.Drawing;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [TestClass]
+    [Collection("Rendering_3D")]
     public class ModelLoadingAndRenderingTests
     {
         public const int MANIPULATE_WAIT_TIME = 500;
         public const string TEST_DUMMY_FILE_NAME = "UnitTest.Screenshot.png";
         public const string TEST_CATEGORY = "FrozenSky Multimedia Model Loading and Rendering";
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task LoadAndRender_ACFlatShadedObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -79,15 +79,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_FlatShadedObject);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task LoadAndRender_ACShadedObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -121,15 +121,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_ShadedObject);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task LoadAndRender_ACTwoSidedObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -163,15 +163,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_TwoSidedObject);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task LoadAndRender_ACSingleSidedObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -205,15 +205,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_SingleSidedObject);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task LoadAndRender_ACTexturedObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -250,15 +250,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_TexturedObject);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task ImportAndRender_ACShadedObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -291,13 +291,13 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_ShadedObject);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
-            Assert.IsNotNull(importedObjects);
-            Assert.IsTrue(importedObjects.Count() == 1);
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.NotNull(importedObjects);
+            Assert.True(importedObjects.Count() == 1);
         }
     }
 }

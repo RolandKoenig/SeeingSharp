@@ -5,17 +5,16 @@ using System.Text;
 using System.Threading.Tasks;
 using FrozenSky.Util;
 using FrozenSky.Util.TableData;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace FrozenSky.Tests
 {
-    [TestClass]
     public class TableDataTests
     {
         public const string TEST_CATEGORY = "FrozenSky TableData";
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void Load_DummyData_Csv()
         {
             ResourceSource tableSource = new AssemblyResourceLink(
@@ -25,8 +24,8 @@ namespace FrozenSky.Tests
             Load_DummyData_GenericPart(tableSource, tableImporter, tableImporter.CreateDefaultConfig(tableSource), "CSV");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void Load_DummyData_Txt()
         {
             ResourceSource tableSource = new AssemblyResourceLink(
@@ -36,8 +35,8 @@ namespace FrozenSky.Tests
             Load_DummyData_GenericPart(tableSource, tableImporter, tableImporter.CreateDefaultConfig(tableSource), "CSV");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void Load_DummyData_Xlsx()
         {
             ResourceSource tableSource = new AssemblyResourceLink(
@@ -47,8 +46,8 @@ namespace FrozenSky.Tests
             Load_DummyData_GenericPart(tableSource, tableImporter, tableImporter.CreateDefaultConfig(tableSource), "Table_01");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void Load_DataWithFormulasAndLinks_Xlsx()
         {
             // Define data source
@@ -73,12 +72,12 @@ namespace FrozenSky.Tests
             }
 
             // Check all data that we've read from the excel sheet
-            Assert.IsTrue(xlsxData.Count == 20);
+            Assert.True(xlsxData.Count == 20);
             foreach(var actDataRow in xlsxData)
             {
-                Assert.IsTrue(actDataRow.Item1 == actDataRow.Item2);
+                Assert.True(actDataRow.Item1 == actDataRow.Item2);
             }
-            Assert.IsTrue(xlsxData[3].Item1 == "87");
+            Assert.True(xlsxData[3].Item1 == "87");
         }
 
         /// <summary>
@@ -109,14 +108,14 @@ namespace FrozenSky.Tests
             }
 
             // Do all checking
-            Assert.IsTrue(tableNames.Length > 0);
-            Assert.IsTrue(tableNames[0] == firstTableName);
-            Assert.IsNotNull(headerRow);
-            Assert.IsTrue(headerRow.FieldCount == 7);
-            Assert.IsTrue(headerRow.GetFieldName(1) == "TestCol_2");
-            Assert.IsTrue(headerRow.GetFieldName(3) == "TestCol_4");
-            Assert.IsTrue(loadedRows.Count == 20);
-            Assert.IsTrue(loadedRows[4].ReadField<int>("TestCol_4") == 2202304);
+            Assert.True(tableNames.Length > 0);
+            Assert.True(tableNames[0] == firstTableName);
+            Assert.NotNull(headerRow);
+            Assert.True(headerRow.FieldCount == 7);
+            Assert.True(headerRow.GetFieldName(1) == "TestCol_2");
+            Assert.True(headerRow.GetFieldName(3) == "TestCol_4");
+            Assert.True(loadedRows.Count == 20);
+            Assert.True(loadedRows[4].ReadField<int>("TestCol_4") == 2202304);
         }
     }
 }

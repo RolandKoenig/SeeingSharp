@@ -17,7 +17,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,50 +27,51 @@ using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Views;
 using FrozenSky.Infrastructure;
 using System.Reflection;
+using Xunit;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [TestClass]
+    [Collection("Rendering_3D")]
     public class DeviceHandlingTests
     {
         public const string TEST_CATEGORY = "FrozenSky Multimedia Device-Handling";
 
-        [TestInitialize]
-        public void Initialize()
-        {
-            UnitTestHelper.InitializeWithGrahicsAsync().Wait();
-        }
-
         /// <summary>
         /// Checks for existence of a software device.
         /// </summary>
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
-        public void CheckForSoftwareDevice()
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task CheckForSoftwareDevice()
         {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
             EngineDevice softwareDevice = GraphicsCore.Current.LoadedDevices.FirstOrDefault(
                 (actDevice) => actDevice.IsSoftware);
 
-            Assert.IsNotNull(softwareDevice, "No software device created!");
+            Assert.NotNull(softwareDevice);
         }
 
         /// <summary>
         /// Check for existence of a default device.
         /// </summary>
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
-        public void CheckForDefaultDevice()
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task CheckForDefaultDevice()
         {
-            Assert.IsNotNull(GraphicsCore.Current.DefaultDevice, "Default device not set!");
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            Assert.NotNull(GraphicsCore.Current.DefaultDevice);
         }
 
         /// <summary>
         /// This method checks for correct behavior on device switches.
         /// </summary>
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
-        public void CheckDeviceSwitch()
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task CheckDeviceSwitch()
         {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
             List<EngineDevice> devices = new List<EngineDevice>(GraphicsCore.Current.LoadedDevices);
             if (devices.Count < 2) { return; }
 

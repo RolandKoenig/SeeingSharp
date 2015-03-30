@@ -28,7 +28,6 @@
 */
 #endregion
 using FrozenSky.Util;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,87 +36,87 @@ using System.Threading.Tasks;
 
 // Some namespace mappings
 using GDI = System.Drawing;
+using Xunit;
 
 namespace FrozenSky.Tests
 {
-    [TestClass]
     public class UtilityTests
     {
         public const string TEST_CATEGORY = "FrozenSky Utilities";
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void BitmapComparison_Positive()
         {
             using(GDI.Bitmap leftBitmap = Properties.Resources.FlatShadedObject)
             using(GDI.Bitmap rightBitmap = Properties.Resources.FlatShadedObject)
             {
-                Assert.IsTrue(
+                Assert.True(
                     BitmapComparison.CalculatePercentageDifference(leftBitmap, rightBitmap) == 0f);
             }
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void BitmapComparison_Negative_Without_Model()
         {
             using (GDI.Bitmap leftBitmap = Properties.Resources.ClearedScreen)
             using (GDI.Bitmap rightBitmap = Properties.Resources.FlatShadedObject)
             {
                 float comparisonResult = BitmapComparison.CalculatePercentageDifference(leftBitmap, rightBitmap);
-                Assert.IsTrue(comparisonResult > 0.25f);
-                Assert.IsTrue(comparisonResult < 0.6f);
+                Assert.True(comparisonResult > 0.25f);
+                Assert.True(comparisonResult < 0.6f);
             }
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void BitmapComparison_Negative_Inversed_Image()
         {
             using (GDI.Bitmap leftBitmap = Properties.Resources.FlatShadedObject)
             using (GDI.Bitmap rightBitmap = Properties.Resources.FlatShadedObject_Negative)
             {
                 float comparisonResult = BitmapComparison.CalculatePercentageDifference(leftBitmap, rightBitmap);
-                Assert.IsTrue(comparisonResult > 0.9f);
-                Assert.IsTrue(comparisonResult <= 1.0f);
+                Assert.True(comparisonResult > 0.9f);
+                Assert.True(comparisonResult <= 1.0f);
             }
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void BitmapComparison_Negative_BlackWhite()
         {
             using (GDI.Bitmap leftBitmap = Properties.Resources.WhiteScreen)
             using (GDI.Bitmap rightBitmap = Properties.Resources.BlackScreen)
             {
                 float comparisonResult = BitmapComparison.CalculatePercentageDifference(leftBitmap, rightBitmap);
-                Assert.IsTrue(comparisonResult == 1.0f);
+                Assert.True(comparisonResult == 1.0f);
             }
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void BitmapComparison_Negative_Enlighted()
         {
             using (GDI.Bitmap leftBitmap = Properties.Resources.FlatShadedObject)
             using (GDI.Bitmap rightBitmap = Properties.Resources.FlatShadedObject_Enlighted)
             {
                 float comparisonResult = BitmapComparison.CalculatePercentageDifference(leftBitmap, rightBitmap);
-                Assert.IsTrue(comparisonResult > 0.1);
-                Assert.IsTrue(comparisonResult < 0.4);
+                Assert.True(comparisonResult > 0.1);
+                Assert.True(comparisonResult < 0.4);
             }
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public void BitmapComparison_Negative_Smaller()
         {
             using (GDI.Bitmap leftBitmap = Properties.Resources.FlatShadedObject)
             using (GDI.Bitmap rightBitmap = Properties.Resources.FlatShadedObject_Smaller)
             {
                 float comparisonResult = BitmapComparison.CalculatePercentageDifference(leftBitmap, rightBitmap);
-                Assert.IsTrue(comparisonResult > 0.1);
-                Assert.IsTrue(comparisonResult < 0.4);
+                Assert.True(comparisonResult > 0.1);
+                Assert.True(comparisonResult < 0.4);
             }
         }
     }

@@ -1,21 +1,20 @@
 ﻿using FrozenSky.Util;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xunit;
 
 namespace FrozenSky.Tests
 {
-    [TestClass]
     public class ThreadingTests
     {
         public const string TEST_CATEGORY = "FrozenSky Threading ObjectThread";
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task CheckObjectThread_Heartbeat()
         {
             List<int> tickDurations = new List<int>();
@@ -44,15 +43,15 @@ namespace FrozenSky.Tests
             await objThread.StopAsync(1000);
 
             // Check results
-            Assert.IsNull(occurredException);
-            Assert.IsTrue(tickDurations.Count > 4);
-            Assert.IsTrue(tickDurations.Count < 10);
-            Assert.IsTrue(tickDurations
+            Assert.Null(occurredException);
+            Assert.True(tickDurations.Count > 4);
+            Assert.True(tickDurations.Count < 10);
+            Assert.True(tickDurations
                 .Count((actInt) => actInt > 450 && actInt < 550) > 4);
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task CheckObjectThread_Invokes()
         {
             List<int> tickDurations = new List<int>();
@@ -85,11 +84,11 @@ namespace FrozenSky.Tests
             await objThread.StopAsync(1000);
 
             // Check results
-            Assert.IsNull(occurredException);
-            Assert.IsTrue(tickDurations.Count > 10);
-            Assert.IsTrue(tickDurations.Count < 20);
-            Assert.IsTrue(tickDurations.Count((actInt) => actInt > 80) > 8);
-            Assert.IsTrue(tickDurations.Count((actInt) => actInt > 150) == 0);
+            Assert.Null(occurredException);
+            Assert.True(tickDurations.Count > 10);
+            Assert.True(tickDurations.Count < 20);
+            Assert.True(tickDurations.Count((actInt) => actInt > 80) > 8);
+            Assert.True(tickDurations.Count((actInt) => actInt > 150) == 0);
         }
     }
 }
