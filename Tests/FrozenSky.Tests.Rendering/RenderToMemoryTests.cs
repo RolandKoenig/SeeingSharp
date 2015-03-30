@@ -17,7 +17,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,14 +36,14 @@ using GDI = System.Drawing;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [TestClass]
+    [Collection("Rendering_3D")]
     public class RenderToMemoryTests
     {
         public const int MANIPULATE_WAIT_TIME = 500;
         public const string TEST_CATEGORY = "FrozenSky Multimedia Render-To-Memory";
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_ClearedScreen()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -63,15 +63,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_ClearedScreen);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_SimpleLine()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -116,12 +116,12 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_SimpleLine);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_SimpleObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -156,15 +156,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_SimpleObject);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_SimpleObject_Orthographic()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -203,15 +203,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_SimpleObject_Ortho);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_Skybox()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -264,11 +264,11 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_Skybox);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
     }
 }

@@ -32,7 +32,7 @@ using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
 using FrozenSky.Multimedia.Views;
 using FrozenSky.Util;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,14 +42,14 @@ using GDI = System.Drawing;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [TestClass]
+    [Collection("Rendering_3D")]
     public class PostprocessingTests
     {
         public const string TEST_DUMMY_FILE_NAME = "UnitTest.Screenshot.png";
         public const string TEST_CATEGORY = "FrozenSky Multimedia Postprocessing";
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Postprocessing_Focus()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -91,15 +91,15 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_PostProcess_Focus);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
-        [TestMethod]
-        [TestCategory(TEST_CATEGORY)]
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Postprocessing_EdgeDetect()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -144,11 +144,11 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_PostProcess_EdgeDetect);
-                Assert.IsTrue(isNearEqual, "Difference to reference image is to big!");
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
             // Finishing checks
-            Assert.IsTrue(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
     }
 }
