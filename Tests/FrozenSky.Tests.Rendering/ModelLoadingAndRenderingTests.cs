@@ -37,7 +37,7 @@ using GDI = System.Drawing;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [Collection("Rendering_3D")]
+    [Collection("Rendering_FrozenSky")]
     public class ModelLoadingAndRenderingTests
     {
         public const int MANIPULATE_WAIT_TIME = 500;

@@ -31,7 +31,6 @@ using Xunit;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [Collection("Rendering_3D")]
     public class AnimationSystemTests
     {
         private const string TEST_CATEGORY = "FrozenSky Multimedia Animation";
@@ -391,7 +390,7 @@ namespace FrozenSky.Tests.Rendering
         [Trait("Category", TEST_CATEGORY)]
         public async Task Test_Continued_MultipleAnimations_2()
         {
-            int countCycles = 1000;
+            const int COUNT_CYCLES = 1000;
 
             int dummyInt = 0;
             float dummyFloat = 0;
@@ -405,7 +404,7 @@ namespace FrozenSky.Tests.Rendering
                 animLoop.RunAsync(cancelTokenSource.Token)
                     .FireAndForget();
 
-                for (int loop = 0; loop < countCycles; loop++)
+                for (int loop = 0; loop < COUNT_CYCLES; loop++)
                 {
                     allTasks.Add(animateableObject.BuildAnimationSequence()
                         .ChangeFloatBy(
@@ -426,7 +425,7 @@ namespace FrozenSky.Tests.Rendering
                 await Task.WhenAll(allTasks);
             }
 
-            Assert.True(dummyInt == countCycles);
+            Assert.True(dummyInt == COUNT_CYCLES);
         }
 
         /// <summary>
@@ -436,8 +435,9 @@ namespace FrozenSky.Tests.Rendering
         [Trait("Category", TEST_CATEGORY)]
         public async Task Test_Continued_CancelAnimations_1()
         {
+            const int COUNT_CYCLES = 500;
+
             // Some variables for preparation
-            int countCycles = 500;
             int dummyInt = 0;
             float dummyFloat = 0;
             DummyAnimatableObject animateableObject = new DummyAnimatableObject();
@@ -455,7 +455,7 @@ namespace FrozenSky.Tests.Rendering
                     .FireAndForget();
 
                 // Define a high count of animations
-                for (int loop = 0; loop < countCycles; loop++)
+                for (int loop = 0; loop < COUNT_CYCLES; loop++)
                 {
                     allTasks.Add(animateableObject.BuildAnimationSequence()
                         .ChangeFloatBy(
@@ -499,7 +499,7 @@ namespace FrozenSky.Tests.Rendering
             }
 
             // Checks after animation processing
-            Assert.True(dummyInt < countCycles, "Wrong count of cycles!");
+            Assert.True(dummyInt < COUNT_CYCLES, "Wrong count of cycles!");
             Assert.True(animDuration < TimeSpan.FromMilliseconds(500.0), "Animation was not cancelled correctly!");
             Assert.NotNull(cancelException);
         }
@@ -509,15 +509,15 @@ namespace FrozenSky.Tests.Rendering
         /// </summary>
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public void Test_Continued_SecondaryAnimations_1()
+        public async Task Test_Continued_SecondaryAnimations_1()
         {
-            int countCycles = 500;
+            const int COUNT_CYCLES = 500;
+
             int dummyInt = 0;
             float dummyFloat = 0;
             DummyAnimatableObject animateableObject = new DummyAnimatableObject();
             List<Task> allTasks = new List<Task>();
-            bool waitSuccessful = false;
-            AggregateException aggregateException = null;
+            TaskCanceledException cancelEx = null;
 
             using (CancellationTokenSource cancelTokenSource = new CancellationTokenSource())
             {
@@ -528,7 +528,7 @@ namespace FrozenSky.Tests.Rendering
                     .FireAndForget();
 
                 // Start all animations
-                for (int loop = 0; loop < countCycles; loop++)
+                for (int loop = 0; loop < COUNT_CYCLES; loop++)
                 {
                     allTasks.Add(animateableObject.BuildAnimationSequence()
                         .ChangeFloatBy(
@@ -547,32 +547,31 @@ namespace FrozenSky.Tests.Rendering
                 }
 
                 // Create a secondary animation (works in parallel)
-                Task secondaryOne = animateableObject.BuildAnimationSequence()
-                        .ChangeFloatBy(
-                            () => animateableObject.DummyValue2,
-                            (givenValue) => animateableObject.DummyValue2 = givenValue,
-                            10f,
-                            TimeSpan.FromMilliseconds(500.0))
-                        .ApplyAsSecondaryAsync();
-                secondaryOne.Wait();
+                await animateableObject.BuildAnimationSequence()
+                   .ChangeFloatBy(
+                       () => animateableObject.DummyValue2,
+                       (givenValue) => animateableObject.DummyValue2 = givenValue,
+                       10f,
+                       TimeSpan.FromMilliseconds(500.0))
+                   .ApplyAsSecondaryAsync();
 
                 // Now cancel all animations
                 animateableObject.AnimationHandler.BeginCancelAnimation();
 
-                // This has to be false here because animations get canceled
-                try { waitSuccessful = Task.WhenAll(allTasks).Wait(50000); }
-                catch (AggregateException ex)
+                // Wait for all tasks
+                try
                 {
-                    aggregateException = ex;
+                    await Task.WhenAll(allTasks);
+                }
+                catch(TaskCanceledException ex)
+                {
+                    cancelEx = ex;
                 }
             }
 
-            //Assert.False(waitSuccessful);
-            //Assert.True(
-            //    aggregateException.InnerExceptions.Count((actEx) => actEx is TaskCanceledException) == aggregateException.InnerExceptions.Count,
-            //    "Some unexpected exception was raised!");
-            //Assert.True(dummyInt < countCycles, "Wrong count of cycles!");
-            //Assert.True(animateableObject.DummyValue2 == 10f, "Secondary animation has not processed correctly!");
+            Assert.True(cancelEx is TaskCanceledException, "Some unexpected exception was raised!");
+            Assert.True(dummyInt < COUNT_CYCLES, "Wrong count of cycles!");
+            Assert.True(animateableObject.DummyValue2 == 10f, "Secondary animation has not processed correctly!");
         }
 
         //*********************************************************************

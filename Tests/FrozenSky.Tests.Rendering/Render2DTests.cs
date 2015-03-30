@@ -36,7 +36,7 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [Collection("Rendering_2D")]
+    [Collection("Rendering_FrozenSky")]
     public class Render2DTests
     {
         public const string TEST_CATEGORY = "FrozenSky Multimedia Render2D";

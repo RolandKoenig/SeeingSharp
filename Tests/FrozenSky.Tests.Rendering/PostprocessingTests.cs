@@ -42,7 +42,7 @@ using GDI = System.Drawing;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [Collection("Rendering_3D")]
+    [Collection("Rendering_FrozenSky")]
     public class PostprocessingTests
     {
         public const string TEST_DUMMY_FILE_NAME = "UnitTest.Screenshot.png";

@@ -31,7 +31,7 @@ using Xunit;
 
 namespace FrozenSky.Tests.Rendering
 {
-    [Collection("Rendering_3D")]
+    [Collection("Rendering_FrozenSky")]
     public class DeviceHandlingTests
     {
         public const string TEST_CATEGORY = "FrozenSky Multimedia Device-Handling";
