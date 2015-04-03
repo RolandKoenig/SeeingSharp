@@ -38,34 +38,56 @@ namespace FrozenSky.Multimedia.Core
     public partial class Scene
     {
         public static readonly string DEFAULT_LAYER_NAME = "Default";
+        public static readonly string DEFAULT_SCENE_NAME = "Scene";
 
         // Standard members
+        #region
         private bool m_initialized;
         private string m_name;
         private List<SceneLayer> m_sceneLayers;
         private ReadOnlyCollection<SceneLayer> m_sceneLayersPublic;
+        private FrozenSkyMessageHandler m_messageHandler;
+        private SceneSynchronizationContext m_syncContext;
+        #endregion
 
         // Members for 2D rendering
+        #region
         private List<Custom2DDrawingLayer> m_drawing2DLayers;
+        #endregion
 
         // Async update actions
+        #region
         private ThreadSaveQueue<Action> m_asyncInvokesBeforeUpdate;
         private ThreadSaveQueue<Action> m_asyncInvokesUpdateBesideRendering;
+        #endregion
 
         // Resource keys
+        #region
         private NamedOrGenericKey KEY_SCENE_RENDER_PARAMETERS = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
         // Some runtime values
+        #region
         private IndexBasedDynamicCollection<ResourceDictionary> m_registeredResourceDicts;
         private IndexBasedDynamicCollection<ViewInformation> m_registeredViews;
         private IndexBasedDynamicCollection<SceneRenderParameters> m_renderParameters;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scene" /> class.
         /// </summary>
-        public Scene()
+        /// <param name="name">The global name of this scene.</param>
+        /// <param name="registerForMessaging">
+        /// Do register this scene for application messaging?
+        /// If true, then the caller has to ensure that the name is only used once 
+        /// across the currently executed application.
+        /// </param>
+        public Scene(
+            string name = "",
+            bool registerForMessaging = false)
         {
-            this.Name = "Default";
+            if (string.IsNullOrEmpty(name)) { name = DEFAULT_SCENE_NAME; }
+            this.Name = name;
 
             m_sceneLayers = new List<SceneLayer>();
             m_sceneLayers.Add(new SceneLayer(DEFAULT_LAYER_NAME, this));
@@ -82,6 +104,17 @@ namespace FrozenSky.Multimedia.Core
 
             // Try to initialize this scene object
             InitializeResourceDictionaries(false);
+
+            // Register the scene for ApplicationMessaging
+            if(registerForMessaging)
+            {
+                m_syncContext = new SceneSynchronizationContext(this);
+                m_messageHandler = new FrozenSkyMessageHandler();
+                m_messageHandler.ApplyThreadSynchronization(
+                    FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
+                    this.Name,
+                    m_syncContext);
+            }
         }
 
         /// <summary>
@@ -692,36 +725,55 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="updateTime">Current update state.</param>
         internal void Update(UpdateState updateState)
         {
-            //Invoke all async action attached to this scene
-            int asyncActionsBeforeUpdateCount = m_asyncInvokesBeforeUpdate.Count;
-            if (asyncActionsBeforeUpdateCount > 0)
+            // Apply local SynchronizationContext if configured so
+            SynchronizationContext previousSyncContext = null; 
+            if(m_syncContext != null)
             {
-                Action actAsyncAction = null;
-                int actIndex = 0;
-                while ((actIndex < asyncActionsBeforeUpdateCount) && 
-                       m_asyncInvokesBeforeUpdate.Dequeue(out actAsyncAction))
-                {
-                    actAsyncAction();
-                    actIndex++;
-                }
+                previousSyncContext = SynchronizationContext.Current;
+                SynchronizationContext.SetSynchronizationContext(m_syncContext);
             }
 
-            //Render all renderable resources
-            foreach (ResourceDictionary actResourceDict in m_registeredResourceDicts)
+            try
             {
-                foreach (IRenderableResource actRenderableResource in actResourceDict.RenderableResources)
+                // Invoke all async action attached to this scene
+                int asyncActionsBeforeUpdateCount = m_asyncInvokesBeforeUpdate.Count;
+                if (asyncActionsBeforeUpdateCount > 0)
                 {
-                    if (actRenderableResource.IsLoaded)
+                    Action actAsyncAction = null;
+                    int actIndex = 0;
+                    while ((actIndex < asyncActionsBeforeUpdateCount) &&
+                           m_asyncInvokesBeforeUpdate.Dequeue(out actAsyncAction))
                     {
-                        actRenderableResource.Update(updateState);
+                        actAsyncAction();
+                        actIndex++;
                     }
                 }
-            }
 
-            //Update all standard object.
-            foreach (SceneLayer actLayer in m_sceneLayers)
+                // Render all renderable resources
+                foreach (ResourceDictionary actResourceDict in m_registeredResourceDicts)
+                {
+                    foreach (IRenderableResource actRenderableResource in actResourceDict.RenderableResources)
+                    {
+                        if (actRenderableResource.IsLoaded)
+                        {
+                            actRenderableResource.Update(updateState);
+                        }
+                    }
+                }
+
+                // Update all standard objects.
+                foreach (SceneLayer actLayer in m_sceneLayers)
+                {
+                    actLayer.Update(updateState);
+                }
+            }
+            finally
             {
-                actLayer.Update(updateState);
+                // Discard local SynchronizationContext
+                if(m_syncContext != null)
+                {
+                    SynchronizationContext.SetSynchronizationContext(previousSyncContext);
+                }
             }
         }
 
@@ -961,16 +1013,32 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets the message handler of this scene.
+        /// This object is null unless the registerForMessaging argument of the
+        /// constructor was set to true.
+        /// </summary>
+        public FrozenSkyMessageHandler MessageHandler
+        {
+            get { return m_messageHandler; }
+        }
+
+        /// <summary>
+        /// Gets the synchronization context.
+        /// This object is null unless the registerForMessaging argument of the
+        /// constructor was set to true.
+        /// </summary>
+        public SynchronizationContext SynchronizationContext
+        {
+            get { return m_syncContext; }
+        }
+
+        /// <summary>
         /// Gets or sets the name of this scene.
         /// </summary>
         public string Name
         {
             get { return m_name; }
-            set
-            {
-                if (value == null) { m_name = string.Empty; }
-                else { m_name = value; }
-            }
+            private set { m_name = value; }
         }
     }
 }

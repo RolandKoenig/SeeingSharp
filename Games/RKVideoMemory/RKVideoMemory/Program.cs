@@ -1,6 +1,9 @@
-﻿using System;
+﻿using FrozenSky.Infrastructure;
+using FrozenSky.Multimedia.Core;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -16,7 +19,20 @@ namespace RKVideoMemory
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainWindow());
+
+            // Default initializations
+            FrozenSkyApplication.InitializeAsync(
+                Assembly.GetExecutingAssembly(),
+                new Assembly[]{
+                    typeof(GraphicsCore).Assembly
+                },
+                new string[0]).Wait();
+            GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+
+            // Run the application
+            MainWindow mainWindow = new MainWindow();
+            FrozenSkyApplication.Current.InitializeUIEnvironment();
+            Application.Run(mainWindow);
         }
     }
 }

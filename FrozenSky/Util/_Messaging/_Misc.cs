@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Util
 {
+    /// <summary>
+    /// This enum describes the threading behavior of a MessageHandler.
+    /// </summary>
     public enum FrozenSkyMessageThreadingBehavior
     {
         /// <summary>
@@ -16,6 +19,12 @@ namespace FrozenSky.Util
         /// <summary>
         /// Ensures that the main thread of this MessageHandler is used on synchronous calls.
         /// </summary>
-        EnsureMainThreadOnSyncCalls
+        EnsureMainThreadOnSyncCalls,
+
+        /// <summary>
+        /// Ensures that the main SynchronizationContext is set when 
+        /// this MessageHandler is used on synchronous calls.
+        /// </summary>
+        EnsureMainSyncContextOnSyncCalls
     }
 }

@@ -23,7 +23,7 @@ using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Dynamic;
-
+using System.Threading;
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 
@@ -440,6 +440,34 @@ namespace FrozenSky.Multimedia.Core
         {
             get { return m_scene; }
             internal set { m_scene = value; }
+        }
+
+        /// <summary>
+        /// Gets the synchronization context.
+        /// This object is null unless the registerForMessaging argument of the
+        /// Scene's constructor was set to true.
+        /// </summary>
+        public FrozenSkyMessageHandler MessageHandler
+        {
+            get 
+            {
+                if (m_scene == null) { return null; }
+                return m_scene.MessageHandler; 
+            }
+        }
+
+        /// <summary>
+        /// Gets the synchronization context.
+        /// This object is null unless the registerForMessaging argument of the
+        /// Scene's constructor was set to true.
+        /// </summary>
+        public SynchronizationContext SynchronizationContext
+        {
+            get 
+            {
+                if (m_scene == null) { return null; }
+                return m_scene.SynchronizationContext; 
+            }
         }
 
         /// <summary>

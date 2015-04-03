@@ -32,6 +32,8 @@
             this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
             this.m_mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
+            this.m_cmdLoadLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +45,7 @@
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
             this.m_ctrlRenderer.Scene = null;
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(657, 390);
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 371);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
@@ -65,21 +67,30 @@
             this.fileToolStripMenuItem});
             this.m_mainMenu.Location = new System.Drawing.Point(0, 0);
             this.m_mainMenu.Name = "m_mainMenu";
-            this.m_mainMenu.Size = new System.Drawing.Size(657, 28);
+            this.m_mainMenu.Size = new System.Drawing.Size(668, 28);
             this.m_mainMenu.TabIndex = 1;
             this.m_mainMenu.Text = "menuStrip1";
             // 
             // fileToolStripMenuItem
             // 
+            this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_cmdLoadLevel});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
             this.fileToolStripMenuItem.Text = "Datei";
+            // 
+            // m_cmdLoadLevel
+            // 
+            this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(175, 24);
+            this.m_cmdLoadLevel.Text = "Level Laden";
+            this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(657, 418);
+            this.ClientSize = new System.Drawing.Size(668, 399);
             this.Controls.Add(this.m_ctrlRenderer);
             this.Controls.Add(this.m_mainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -98,6 +109,8 @@
         private FrozenSky.Multimedia.Views.FrozenSkyRendererControl m_ctrlRenderer;
         private System.Windows.Forms.MenuStrip m_mainMenu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem m_cmdLoadLevel;
+        private System.Windows.Forms.FolderBrowserDialog m_dlgOpenDir;
     }
 }
 

@@ -15,9 +15,18 @@ namespace RKVideoMemory.Data
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryPairData"/> class.
         /// </summary>
-        public MemoryPairData()
+        /// <param name="title">The title of this pari.</param>
+        internal MemoryPairData(string title)
         {
+            this.Title = title;
+
             m_childImageFiles = new List<string>();
+        }
+
+        public override string ToString()
+        {
+            if (!string.IsNullOrEmpty(this.Title)) { return this.Title; }
+            return base.ToString();
         }
 
         /// <summary>
@@ -46,6 +55,12 @@ namespace RKVideoMemory.Data
                 // We are loading a image for the image sequence
                 m_childImageFiles.Add(filePath);
             }
+        }
+
+        public string Title
+        {
+            get;
+            private set;
         }
 
         public string TitleFile

@@ -412,8 +412,20 @@ namespace FrozenSky.Util
 #if DESKTOP
                     if (Thread.CurrentThread.Name != m_mainThreadName) { throw new MessagePublishException(typeof(MessageType), "Synchronous publish is not possible because caller comes from another thread!"); }
 #else
-
+                    throw new FrozenSkyException(
+                        "Unable to check by thread during publish on platforms other than DESKTOP. " +
+                        "Please don't use " + m_threadBehavior + "!");
 #endif
+                }
+                else if(m_threadBehavior == FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls)
+                {
+                    if(SynchronizationContext.Current != m_syncContext)
+                    {
+                        throw new FrozenSkyException(
+                            "Unable to perform a synchronous publish call because current " +
+                            "SynchronizationContext is set wrong. This indicates that the call " +
+                            "comes from a wrong thread!");
+                    }
                 }
 
                 // Notify all subscribed targets

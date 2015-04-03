@@ -16,12 +16,13 @@ namespace RKVideoMemory.Data
         /// Initializes a new instance of the <see cref="LevelData"/> class.
         /// </summary>
         /// <param name="directoryName">Name of the directory.</param>
-        public LevelData(string directoryName)
+        private LevelData(string directoryName)
         {
             m_memoryPairs = new List<MemoryPairData>();
             foreach(string actSubdirectory in Directory.GetDirectories(directoryName))
             {
-                MemoryPairData actMemoryPair = new MemoryPairData();
+                MemoryPairData actMemoryPair = new MemoryPairData(
+                    Path.GetFileName(actSubdirectory));
 
                 // Select all file names within the directory (order by filename)
                 IEnumerable<string> fileNames =
@@ -45,6 +46,17 @@ namespace RKVideoMemory.Data
                     m_memoryPairs.Add(actMemoryPair);
                 }
             }
+        }
+
+        /// <summary>
+        /// Loads the level from the given directory.
+        /// </summary>
+        /// <param name="directoryName">Name of the directory.</param>
+        public static async Task<LevelData> FromDirectory(string directoryName)
+        {
+            LevelData result = null;
+            await Task.Factory.StartNew(() => result = new LevelData(directoryName));
+            return result;
         }
 
         /// <summary>

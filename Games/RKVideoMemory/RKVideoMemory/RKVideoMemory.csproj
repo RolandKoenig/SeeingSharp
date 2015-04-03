@@ -48,9 +48,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Textures\_Textures.cs" />
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Data\MemoryPairData.cs" />
-    <Compile Include="Data\VideoMemoryLevel.cs" />
+    <Compile Include="Game\Card.cs" />
+    <Compile Include="Game\CardPair.cs" />
+    <Compile Include="Game\GameCore.cs" />
+    <Compile Include="Game\GameMap.cs" />
+    <Compile Include="Graphics\CardObjectType.cs" />
+    <Compile Include="Graphics\GenericGraphics.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,33 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Util\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\Floor.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\LogoTexture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\SkyBox.dds" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\Tile1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\Tile2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\Tile3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\Wall.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\White.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

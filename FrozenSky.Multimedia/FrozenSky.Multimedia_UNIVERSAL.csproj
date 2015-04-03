@@ -128,6 +128,7 @@
     <Compile Include="Core\_Scene\SceneObject.SubscriptionHandling.cs" />
     <Compile Include="Core\_Scene\ScenePivotObject.cs" />
     <Compile Include="Core\_Scene\SceneSpacialObject.cs" />
+    <Compile Include="Core\_Scene\SceneSynchronizationContext.cs" />
     <Compile Include="Core\_Scene\ViewRelatedSceneLayerSubset.cs" />
     <Compile Include="Core\_Scene\VisibilityCheckData.cs" />
     <Compile Include="Core\_Scene\VisibilityCheckFilterStageData.cs" />
