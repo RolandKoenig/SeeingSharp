@@ -576,5 +576,13 @@ namespace FrozenSky.Util
                 }
             }
         }
+
+        /// <summary>
+        /// Gets the total count of globally registered message handlers.
+        /// </summary>
+        public static int CountGlobalMessageHandlers
+        {
+            get { return s_handlersByThreadName.Count; }
+        }
     }
 }

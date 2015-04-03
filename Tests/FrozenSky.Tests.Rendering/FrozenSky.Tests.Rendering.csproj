@@ -65,7 +65,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="AnimationSystemTests.cs" />
-    <Compile Include="DeviceHandlingTests.cs" />
+    <Compile Include="BasicTests.cs" />
     <Compile Include="ModelLoadingAndRenderingTests.cs" />
     <Compile Include="PostprocessingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

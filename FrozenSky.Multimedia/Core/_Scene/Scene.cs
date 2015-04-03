@@ -118,6 +118,26 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// Deregisters this scene from ApplicationMessaging logic.
+        /// </summary>
+        public void DeregisterMessaging()
+        {
+            if (this.CountViews > 0)
+            {
+                throw new FrozenSkyGraphicsException("Unable to deregister messaging as long this Scene is associated to a view!");
+            }
+
+            if (m_syncContext != null)
+            {
+                SynchronizationContext syncContext = m_syncContext;
+                FrozenSkyMessageHandler messageHandler = m_messageHandler;
+
+                m_syncContext = null;
+                messageHandler.DiscardThreadSynchronization();
+            }
+        }
+
+        /// <summary>
         /// Waits until the given object is visible.
         /// </summary>
         /// <param name="sceneObject">The scene object.</param>
