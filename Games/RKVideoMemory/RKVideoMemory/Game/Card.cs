@@ -13,16 +13,20 @@ namespace RKVideoMemory.Game
         /// <summary>
         /// Initializes a new instance of the <see cref="Card"/> class.
         /// </summary>
-        public Card()
-            : base(NamedOrGenericKey.Empty)
+        /// <param name="resGeometry">The key of the GeometryResource.</param>
+        /// <param name="cardPair">The pair this card belongs to.</param>
+        public Card(NamedOrGenericKey resGeometry, CardPair cardPair)
+            : base(resGeometry)
         {
-
+            this.Pair = cardPair;
         }
+
+
 
         public CardPair Pair
         {
             get;
-            set;
+            private set;
         }
     }
 }

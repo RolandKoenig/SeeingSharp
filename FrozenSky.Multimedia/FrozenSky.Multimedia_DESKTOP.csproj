@@ -197,6 +197,7 @@
     <Compile Include="Core\_Scene\Scene.cs" />
     <Compile Include="Core\_Scene\Scene.ImportExport.cs" />
     <Compile Include="Core\_Scene\SceneLayer.cs" />
+    <Compile Include="Core\_Scene\SceneLogicalObject.cs" />
     <Compile Include="Core\_Scene\SceneManipulator.cs" />
     <Compile Include="Core\_Scene\SceneObject.cs" />
     <Compile Include="Core\_Scene\SceneObject.SubscriptionHandling.cs" />

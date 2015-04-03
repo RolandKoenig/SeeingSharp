@@ -58,6 +58,7 @@
     <Compile Include="Game\_Messages\GameInitializedMessage.cs" />
     <Compile Include="Game\_Messages\LevelLoadedMessage.cs" />
     <Compile Include="Game\_Messages\LevelUnloadedMessage.cs" />
+    <Compile Include="Game\_Messages\MainMemoryScreenEnteredMessage.cs" />
     <Compile Include="Graphics\CardObjectType.cs" />
     <Compile Include="Graphics\GenericGraphics.cs" />
     <Compile Include="MainWindow.cs">
@@ -136,6 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\White.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\CardBackground.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

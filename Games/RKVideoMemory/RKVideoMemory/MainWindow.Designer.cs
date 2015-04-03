@@ -32,8 +32,8 @@
             this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
             this.m_mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
             this.m_cmdLoadLevel = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
             this.m_mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -49,7 +49,7 @@
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
-            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.2F;
+            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.5F;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = FrozenSky.Multimedia.Core.AntialiasingQualityLevel.Medium;
             this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
@@ -82,7 +82,7 @@
             // m_cmdLoadLevel
             // 
             this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
-            this.m_cmdLoadLevel.Size = new System.Drawing.Size(175, 24);
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(156, 24);
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
             // 
