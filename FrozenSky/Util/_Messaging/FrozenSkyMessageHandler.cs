@@ -165,6 +165,97 @@ namespace FrozenSky.Util
             return result;
         }
 
+#if DESKTOP
+        /// <summary>
+        /// Subscribes all handlers of the given target object to this MessageHandler.
+        /// Subscribe and unsubscribe is automatically called when the control is created/destroyed.
+        /// </summary>
+        /// <param name="targetObject">The target object which is to subscribe..</param>
+        public void SubscribeAllOnControl(System.Windows.Forms.Control target)
+        {
+            IEnumerable<MessageSubscription> generatedSubscriptions = null;
+
+            // Create handler delegates
+            EventHandler onHandleCreated = (sender, eArgs) =>
+            {
+                if (generatedSubscriptions == null)
+                {
+                    generatedSubscriptions = SubscribeAllHandlers(target);
+                }
+            };
+            EventHandler onHandleDestroyed = (inner, eArgs) =>
+            {
+                if (generatedSubscriptions != null)
+                {
+                    foreach(MessageSubscription actSubscription in generatedSubscriptions)
+                    {
+                        actSubscription.Unsubscribe();
+                    }
+                    generatedSubscriptions = null;
+                }
+            };
+
+            // Attach to events and subscribe on message, if handle is already created
+            target.HandleCreated += onHandleCreated;
+            target.HandleDestroyed += onHandleDestroyed;
+            if (target.IsHandleCreated)
+            {
+                generatedSubscriptions = SubscribeAllHandlers(target);
+            }
+        }
+#endif
+
+        /// <summary>
+        /// Subscribes all handlers of the given target object to this MessageHandler.
+        /// </summary>
+        /// <param name="targetObject">The target object which is to subscribe..</param>
+        public IEnumerable<MessageSubscription> SubscribeAllHandlers(object targetObject)
+        {
+            Type targetObjectType = targetObject.GetType();
+
+            List<MessageSubscription> generatedSubscriptions = new List<MessageSubscription>(16);
+            try
+            {
+                Type typeofMessage = typeof(FrozenSkyMessage);
+#if DESKTOP
+                foreach (MethodInfo actMethod in targetObjectType.GetMethods(
+                    BindingFlags.NonPublic | BindingFlags.Public | 
+                    BindingFlags.Instance | BindingFlags.InvokeMethod))
+#else
+                foreach(MethodInfo actMethod in targetObjectType.GetTypeInfo().GetDeclaredMethods(
+                    FrozenSkyConstants.METHOD_NAME_MESSAGE_RECEIVED))
+#endif
+                {
+                    if (!actMethod.Name.Equals(FrozenSkyConstants.METHOD_NAME_MESSAGE_RECEIVED)) { continue; }
+
+                    ParameterInfo[] parameters = actMethod.GetParameters();
+                    if (parameters.Length != 1) { continue; }
+
+                    if (!typeofMessage.GetTypeInfo().IsAssignableFrom(
+                        parameters[0].ParameterType.GetTypeInfo())) 
+                    {
+                        continue; 
+                    }
+
+                    Type genericAction = typeof(Action<>);
+                    Type delegateType = genericAction.MakeGenericType(parameters[0].ParameterType);
+                    generatedSubscriptions.Add(this.Subscribe(
+                        actMethod.CreateDelegate(delegateType, targetObject),
+                        parameters[0].ParameterType));
+                }
+            }
+            catch(Exception)
+            {
+                foreach(MessageSubscription actSubscription in generatedSubscriptions)
+                {
+                    actSubscription.Unsubscribe();
+                }
+                generatedSubscriptions.Clear();
+            }
+
+            return generatedSubscriptions;
+        }
+
         /// <summary>
         /// Subscribes to the given MessageType.
         /// </summary>

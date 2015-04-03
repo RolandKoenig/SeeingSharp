@@ -31,6 +31,8 @@ namespace FrozenSky
 
         public static readonly int BOOTSTRAP_ORDERID_TRANSLATOR = -1000;
 
-        public static string THREAD_NAME_GUI = "Gui-Thread";
+        public const string THREAD_NAME_GUI = "Gui-Thread";
+
+        public static string METHOD_NAME_MESSAGE_RECEIVED = "OnMessage_Received";
     }
 }

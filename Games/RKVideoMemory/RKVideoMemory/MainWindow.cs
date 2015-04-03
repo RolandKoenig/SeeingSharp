@@ -43,31 +43,30 @@ namespace RKVideoMemory
 
             if (!FrozenSkyApplication.IsInitialized) { return; }
 
+            // Subscribe all handlers to the UIMessageHandler
+            FrozenSkyApplication.Current.UIMessageHandler
+                .SubscribeAllOnControl(this);
+
             // Associate game logic to UI
             m_game = new GameCore();
             m_ctrlRenderer.RenderLoop.Camera = m_game.Camera;
             m_ctrlRenderer.RenderLoop.SetScene(m_game.Scene);
 
-            // Register on main events
-            m_game.Initialized += OnGame_Initialized;
-            m_game.LevelLoaded += OnGame_LevelLoaded;
-            m_game.LevelUnloaded += OnGame_LevelUnloaded;
-
             // Initialize game logic
             await m_game.InitializeAsync();
         }
 
-        private void OnGame_LevelUnloaded(object sender, EventArgs e)
+        private void OnMessage_Received(GameInitializedMessage message)
         {
             this.UpdateDialogStates();
         }
 
-        private void OnGame_LevelLoaded(object sender, EventArgs e)
+        private void OnMessage_Received(LevelLoadedMessage message)
         {
             this.UpdateDialogStates();
         }
 
-        private void OnGame_Initialized(object sender, EventArgs e)
+        private void OnMessage_Received(LevelUnloadedMessage message)
         {
             this.UpdateDialogStates();
         }

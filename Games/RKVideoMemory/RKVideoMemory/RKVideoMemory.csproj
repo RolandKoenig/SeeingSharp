@@ -55,6 +55,9 @@
     <Compile Include="Game\CardPair.cs" />
     <Compile Include="Game\GameCore.cs" />
     <Compile Include="Game\GameMap.cs" />
+    <Compile Include="Game\_Messages\GameInitializedMessage.cs" />
+    <Compile Include="Game\_Messages\LevelLoadedMessage.cs" />
+    <Compile Include="Game\_Messages\LevelUnloadedMessage.cs" />
     <Compile Include="Graphics\CardObjectType.cs" />
     <Compile Include="Graphics\GenericGraphics.cs" />
     <Compile Include="MainWindow.cs">

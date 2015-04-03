@@ -24,6 +24,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Threading;
+
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 

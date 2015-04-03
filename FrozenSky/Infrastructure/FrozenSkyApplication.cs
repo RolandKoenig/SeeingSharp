@@ -114,11 +114,13 @@ namespace FrozenSky.Infrastructure
         {
             // Get and check ui synchronization context
             m_uiSynchronizationContext = SynchronizationContext.Current;
-            if (m_uiSynchronizationContext.GetType() == typeof(SynchronizationContext))
+            if ((m_uiSynchronizationContext == null) ||
+                (m_uiSynchronizationContext.GetType() == typeof(SynchronizationContext)))
             {
                 throw new InvalidOperationException("Unable to initialize RKApplication object: No valid UI SynchronizationContext found!");
             }
 
+            // Set the name on the UI thread
 #if DESKTOP
             Thread.CurrentThread.Name = FrozenSkyConstants.THREAD_NAME_GUI;
 #endif
