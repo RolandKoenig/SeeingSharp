@@ -110,7 +110,7 @@ namespace FrozenSky.Multimedia.Core
             {
                 m_syncContext = new SceneSynchronizationContext(this);
                 m_messageHandler = new FrozenSkyMessageHandler();
-                m_messageHandler.ApplyThreadSynchronization(
+                m_messageHandler.ApplyForGlobalSynchronization(
                     FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
                     this.Name,
                     m_syncContext);
@@ -133,7 +133,7 @@ namespace FrozenSky.Multimedia.Core
                 FrozenSkyMessageHandler messageHandler = m_messageHandler;
 
                 m_syncContext = null;
-                messageHandler.DiscardThreadSynchronization();
+                messageHandler.DiscardGlobalSynchronization();
             }
         }
 

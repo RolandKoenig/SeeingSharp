@@ -127,8 +127,8 @@ namespace FrozenSky.Infrastructure
 
             // Create the UI message handler
             m_uiMessageHandler = new FrozenSkyMessageHandler();
-            m_uiMessageHandler.ApplyThreadSynchronization(
-                FrozenSkyMessageThreadingBehavior.EnsureMainThreadOnSyncCalls,
+            m_uiMessageHandler.ApplyForGlobalSynchronization(
+                FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
                 FrozenSkyConstants.THREAD_NAME_GUI,
                 m_uiSynchronizationContext);
         }

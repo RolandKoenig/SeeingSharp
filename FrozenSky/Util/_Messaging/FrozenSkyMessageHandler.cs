@@ -23,11 +23,14 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using FrozenSky.Checking;
 
 namespace FrozenSky.Util
 {
     /// <summary>
     /// Main class for application messaging. 
+    /// This class followes the EventAggregator pattern but modifies it on some parts like 
+    /// thread synchronization.
     /// </summary>
     public class FrozenSkyMessageHandler
     {
@@ -37,28 +40,34 @@ namespace FrozenSky.Util
         /// </summary>
         public static Func<FrozenSkyMessageHandler, Exception, bool> CustomPublishExceptionHandler;
 
-        // Global threading synchronization (enables the possibility to publish a message over more threads)
-        private static ConcurrentDictionary<string, FrozenSkyMessageHandler> s_handlersByThreadName;
+        // Global synchronization (enables the possibility to publish a message over more threads / areas of the application)
+        private static ConcurrentDictionary<string, FrozenSkyMessageHandler> s_handlersByHandlerName;
 
         // Global information about message routing
+        #region
         private static ConcurrentDictionary<Type, string[]> s_messagesAsyncTargets;
         private static ConcurrentDictionary<Type, string[]> s_messageSources;
+        #endregion
 
-        // Threading
-        private string m_mainThreadName;
+        // Checking and global synchronization
+        #region
+        private string m_handlerName;
         private SynchronizationContext m_syncContext;
-        private FrozenSkyMessageThreadingBehavior m_threadBehavior;
+        private FrozenSkyMessageThreadingBehavior m_checkBehavior;
+        #endregion
 
         // Message subscriptions
+        #region
         private Dictionary<Type, List<MessageSubscription>> m_messageSubscriptions;
         private object m_messageSubscriptionsLock;
+        #endregion
 
         /// <summary>
         /// Initializes the <see cref="FrozenSkyMessageHandler" /> class.
         /// </summary>
         static FrozenSkyMessageHandler()
         {
-            s_handlersByThreadName = new ConcurrentDictionary<string, FrozenSkyMessageHandler>();
+            s_handlersByHandlerName = new ConcurrentDictionary<string, FrozenSkyMessageHandler>();
 
             s_messagesAsyncTargets = new ConcurrentDictionary<Type, string[]>();
             s_messageSources = new ConcurrentDictionary<Type, string[]>();
@@ -69,78 +78,88 @@ namespace FrozenSky.Util
         /// </summary>
         public FrozenSkyMessageHandler()
         {
-            m_mainThreadName = string.Empty;
+            m_handlerName = string.Empty;
             m_syncContext = null;
-            m_threadBehavior = FrozenSkyMessageThreadingBehavior.EnsureMainThreadOnSyncCalls;
+            m_checkBehavior = FrozenSkyMessageThreadingBehavior.Ignore;
 
             m_messageSubscriptions = new Dictionary<Type, List<MessageSubscription>>();
             m_messageSubscriptionsLock = new object();
         }
 
         /// <summary>
-        /// Gets the FrozenSkyMessageHandler for the thread with the given name.
+        /// Gets the FrozenSkyMessageHandler by the given name.
         /// </summary>
-        /// <param name="threadName">The name of the thread.</param>
-        public static FrozenSkyMessageHandler GetForThread(string threadName)
+        /// <param name="handlerName">The name of the handler.</param>
+        public static FrozenSkyMessageHandler GetByName(string handlerName)
         {
-            var result = TryGetForThread(threadName);
-            if (result == null) { throw new FrozenSkyException("Unable to find MessageHandler for thread " + threadName + "!"); }
+            handlerName.EnsureNotNullOrEmpty("handlerName");
+
+            var result = TryGetByName(handlerName);
+            if (result == null) { throw new FrozenSkyException(string.Format("Unable to find MessageHandler for thread {0}!", handlerName)); }
             return result;
         }
 
         /// <summary>
-        /// Gets the FrozenSkyMessageHandler for the thread with the given name.
+        /// Gets the FrozenSkyMessageHandler by the given name.
         /// </summary>
-        /// <param name="threadName">The name of the thread.</param>
-        public static FrozenSkyMessageHandler TryGetForThread(string threadName)
+        /// <param name="handlerName">The name of the handler.</param>
+        public static FrozenSkyMessageHandler TryGetByName(string handlerName)
         {
+            handlerName.EnsureNotNullOrEmpty("handlerName");
+
             FrozenSkyMessageHandler result = null;
-            s_handlersByThreadName.TryGetValue(threadName, out result);
+            s_handlersByHandlerName.TryGetValue(handlerName, out result);
             return result;
         }
 
         /// <summary>
         /// Sets all required threading properties based on the given target thread.
+        /// The name of the handler is directly taken from the given ObjectThread.
         /// </summary>
         /// <param name="targetThread">The thread on which this MessageHandler should work on.</param>
-        public void ApplyThreadSynchronization(ObjectThread targetThread)
+        public void ApplyForGlobalSynchronization(ObjectThread targetThread)
         {
-            ApplyThreadSynchronization(
-                FrozenSkyMessageThreadingBehavior.EnsureMainThreadOnSyncCalls,
+            targetThread.EnsureNotNull("targetThread");
+
+            ApplyForGlobalSynchronization(
+                FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
                 targetThread.Name,
                 targetThread.SyncContext);
         }
 
         /// <summary>
-        /// Sets all required threading properties.
+        /// Sets all required synchronization properties.
         /// </summary>
-        /// <param name="threadBehavior">Defines the threading behavior.</param>
-        /// <param name="threadName">The name of the thread to be registered.</param>
+        /// <param name="checkBehavior">Defines the checking behavior for Publish calls.</param>
+        /// <param name="handlerName">The name by which this handler should be registered.</param>
         /// <param name="syncContext">The synchronization context to be used.</param>
-        public void ApplyThreadSynchronization(FrozenSkyMessageThreadingBehavior threadBehavior, string threadName, SynchronizationContext syncContext)
+        public void ApplyForGlobalSynchronization(FrozenSkyMessageThreadingBehavior checkBehavior, string handlerName, SynchronizationContext syncContext)
         {
-            m_mainThreadName = threadName;
-            m_threadBehavior = threadBehavior;
+            handlerName.EnsureNotNullOrEmpty("handlerName");
+            syncContext.EnsureNotNull("syncContext");
+
+            m_handlerName = handlerName;
+            m_checkBehavior = checkBehavior;
             m_syncContext = syncContext;
 
-            if (!string.IsNullOrEmpty(threadName))
+            if (!string.IsNullOrEmpty(handlerName))
             {
-                s_handlersByThreadName.TryAdd(threadName, this);
+                s_handlersByHandlerName.TryAdd(handlerName, this);
             }
         }
 
         /// <summary>
-        /// Clears all thread synchronization options.
+        /// Clears all synchronization options.
         /// </summary>
-        public void DiscardThreadSynchronization()
+        public void DiscardGlobalSynchronization()
         {
-            if (string.IsNullOrEmpty(m_mainThreadName)) { return; }
+            if (string.IsNullOrEmpty(m_handlerName)) { return; }
 
             FrozenSkyMessageHandler dummyResult = null;
-            s_handlersByThreadName.TryRemove(m_mainThreadName, out dummyResult);
+            s_handlersByHandlerName.TryRemove(m_handlerName, out dummyResult);
 
-            m_threadBehavior = FrozenSkyMessageThreadingBehavior.EnsureMainThreadOnSyncCalls;
-            m_mainThreadName = string.Empty;
+            m_checkBehavior = FrozenSkyMessageThreadingBehavior.Ignore;
+            m_handlerName = string.Empty;
             m_syncContext = null;
         }
 
@@ -173,6 +192,8 @@ namespace FrozenSky.Util
         /// <param name="targetObject">The target object which is to subscribe..</param>
         public void SubscribeAllOnControl(System.Windows.Forms.Control target)
         {
+            target.EnsureNotNull("target");
+
             IEnumerable<MessageSubscription> generatedSubscriptions = null;
 
             // Create handler delegates
@@ -211,6 +232,8 @@ namespace FrozenSky.Util
         /// <param name="targetObject">The target object which is to subscribe..</param>
         public IEnumerable<MessageSubscription> SubscribeAllHandlers(object targetObject)
         {
+            targetObject.EnsureNotNull("targetObject");
+
             Type targetObjectType = targetObject.GetType();
 
             List<MessageSubscription> generatedSubscriptions = new List<MessageSubscription>(16);
@@ -264,6 +287,8 @@ namespace FrozenSky.Util
         public MessageSubscription Subscribe<MessageType>(Action<MessageType> messageHandler)
             where MessageType : FrozenSkyMessage
         {
+            messageHandler.EnsureNotNull("messageHandler");
+
             Type currentType = typeof(MessageType);
             return this.Subscribe(messageHandler, currentType);
         }
@@ -278,6 +303,9 @@ namespace FrozenSky.Util
         public MessageSubscription SubscribeWhen<MessageType>(Func<MessageType, bool> condition, Action<MessageType> messageHandler)
             where MessageType : FrozenSkyMessage
         {
+            condition.EnsureNotNull("condition");
+            messageHandler.EnsureNotNull("messageHandler");
+
             Action<MessageType> filterAction = (message) =>
             {
                 if (condition(message))
@@ -298,6 +326,9 @@ namespace FrozenSky.Util
         public MessageSubscription Subscribe(
             Delegate messageHandler, Type messageType)
         {
+            messageHandler.EnsureNotNull("messageHandler");
+            messageType.EnsureNotNull("messageType");
+
             if (!messageType.GetTypeInfo().IsSubclassOf(typeof(FrozenSkyMessage))) { throw new ArgumentException("Given message type does not derive from FrozenSkyMessage!"); }
 
             MessageSubscription newOne = new MessageSubscription(this, messageType, messageHandler);
@@ -329,6 +360,8 @@ namespace FrozenSky.Util
         public void SubscribeOnControl<MessageType>(System.Windows.Forms.Control target, Action<MessageType> messageHandler)
             where MessageType : FrozenSkyMessage
         {
+            target.EnsureNotNull("target");
+            messageHandler.EnsureNotNull("messageHandler");
             MessageSubscription subscription = null;
 
             //Create handler delegates
@@ -364,6 +397,8 @@ namespace FrozenSky.Util
         /// <param name="messageSubscription">The subscription to clear.</param>
         public void Unsubscribe(MessageSubscription messageSubscription)
         {
+            messageSubscription.EnsureNotNull("messageSubscription");
+
             if (messageSubscription != null && !messageSubscription.IsDisposed)
             {
                 Type messageType = messageSubscription.MessageType;
@@ -494,21 +529,12 @@ namespace FrozenSky.Util
             MessageType message, bool isInitialCall)
             where MessageType : FrozenSkyMessage
         {
+            message.EnsureNotNull("message");
+
             try
             {
                 // Check whether publich is possible
-                if ((m_threadBehavior == FrozenSkyMessageThreadingBehavior.EnsureMainThreadOnSyncCalls) &&
-                    (!string.IsNullOrEmpty(m_mainThreadName)))
-                {
-#if DESKTOP
-                    if (Thread.CurrentThread.Name != m_mainThreadName) { throw new MessagePublishException(typeof(MessageType), "Synchronous publish is not possible because caller comes from another thread!"); }
-#else
-                    throw new FrozenSkyException(
-                        "Unable to check by thread during publish on platforms other than DESKTOP. " +
-                        "Please don't use " + m_threadBehavior + "!");
-#endif
-                }
-                else if(m_threadBehavior == FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls)
+                if(m_checkBehavior == FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls)
                 {
                     if(SynchronizationContext.Current != m_syncContext)
                     {
@@ -528,7 +554,7 @@ namespace FrozenSky.Util
                     string[] possibleSources = s_messageSources.GetOrAdd(currentType, (inputType) => message.GetPossibleSourceThreads());
                     if (possibleSources.Length > 0)
                     {
-                        string mainThreadName = m_mainThreadName;
+                        string mainThreadName = m_handlerName;
                         if (string.IsNullOrEmpty(mainThreadName) ||
                             (Array.IndexOf(possibleSources, mainThreadName) < 0))
                         {
@@ -572,14 +598,14 @@ namespace FrozenSky.Util
                 {
                     // Get information about message routing
                     string[] asyncTargets = s_messagesAsyncTargets.GetOrAdd(currentType, (inputType) => message.GetAsyncRoutingTargetThreads());
-                    string mainThreadName = m_mainThreadName;
+                    string mainThreadName = m_handlerName;
                     for (int loop = 0; loop < asyncTargets.Length; loop++)
                     {
                         string actAsyncTargetName = asyncTargets[loop];
                         if (mainThreadName == actAsyncTargetName) { continue; }
 
                         FrozenSkyMessageHandler actAsyncTargetHandler = null;
-                        if (s_handlersByThreadName.TryGetValue(actAsyncTargetName, out actAsyncTargetHandler))
+                        if (s_handlersByHandlerName.TryGetValue(actAsyncTargetName, out actAsyncTargetHandler))
                         {
                             SynchronizationContext actSyncContext = actAsyncTargetHandler.m_syncContext;
                             if (actSyncContext == null) { continue; }
@@ -614,7 +640,10 @@ namespace FrozenSky.Util
                     {
                         doRaise = !globalExceptionHandler(this, ex);
                     }
-                    catch { }
+                    catch 
+                    {
+                        doRaise = true;
+                    }
                 }
 
                 // Raise the exception to inform caller about it
@@ -635,7 +664,7 @@ namespace FrozenSky.Util
         /// </summary>
         public FrozenSkyMessageThreadingBehavior ThreadingBehavior
         {
-            get { return m_threadBehavior; }
+            get { return m_checkBehavior; }
         }
 
         /// <summary>
@@ -645,7 +674,7 @@ namespace FrozenSky.Util
         {
             get
             {
-                return m_mainThreadName;
+                return m_handlerName;
             }
         }
 
@@ -673,7 +702,7 @@ namespace FrozenSky.Util
         /// </summary>
         public static int CountGlobalMessageHandlers
         {
-            get { return s_handlersByThreadName.Count; }
+            get { return s_handlersByHandlerName.Count; }
         }
     }
 }

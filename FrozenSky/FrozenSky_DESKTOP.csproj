@@ -93,6 +93,8 @@
     <Compile Include="Behaviors\FrozenSkyPropertyGridAutoRefreshBehavior.cs" />
     <Compile Include="Behaviors\FrozenSkyPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
+    <Compile Include="Checking\Ensure.cs" />
+    <Compile Include="Checking\FrozenSkyCheckException.cs" />
     <Compile Include="ExceptionAnalyzers\SystemExceptionAnalyzer.cs" />
     <Compile Include="FrozenSkyConstants.cs" />
     <Compile Include="FrozenSkyException.cs" />

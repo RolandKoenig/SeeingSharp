@@ -249,7 +249,7 @@ namespace FrozenSky.Util
                 if(m_createMessageHandler)
                 {
                     m_messageHandler = new FrozenSkyMessageHandler();
-                    m_messageHandler.ApplyThreadSynchronization(this);
+                    m_messageHandler.ApplyForGlobalSynchronization(this);
                 }
 
                 //Notify start process

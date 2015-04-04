@@ -17,11 +17,6 @@ namespace FrozenSky.Util
         Ignore,
 
         /// <summary>
-        /// Ensures that the main thread of this MessageHandler is used on synchronous calls.
-        /// </summary>
-        EnsureMainThreadOnSyncCalls,
-
-        /// <summary>
         /// Ensures that the main SynchronizationContext is set when 
         /// this MessageHandler is used on synchronous calls.
         /// </summary>

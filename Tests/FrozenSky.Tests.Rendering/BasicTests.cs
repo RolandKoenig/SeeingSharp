@@ -101,7 +101,7 @@ namespace FrozenSky.Tests.Rendering
             try
             {
                 Assert.True(FrozenSkyMessageHandler.CountGlobalMessageHandlers == 1);
-                Assert.True(FrozenSkyMessageHandler.GetForThread("DummyScene") == dummyScene.MessageHandler);
+                Assert.True(FrozenSkyMessageHandler.GetByName("DummyScene") == dummyScene.MessageHandler);
             }
             finally
             {
