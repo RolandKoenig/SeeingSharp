@@ -37,110 +37,106 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Checking
 {
-    /// <summary>
-    /// This class contains some helper methods which can be used
-    /// to check method parameters.
-    /// Note: All methods are only executing in DebugBuilds.
-    /// </summary>
     public static partial class Ensure
     {
+        //---------------------------------------------------------------------
+        // Method 'EnsurePositive' for all common numeric variables
+        #region
         [Conditional("DEBUG")]
-        public static void EnsureNotNullOrEmpty<T>(
-            this T[] array, string checkedVariableName,
+        public static void EnsurePositive(
+            this int numValue, string checkedVariableName,
             [CallerMemberName]
             string callerMethod = "")
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if ((array == null) ||
-                (array.Length == 0))
+            if (numValue >= 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
-                    "Array {0} within method {1} must not be null or empty!",
-                    checkedVariableName, callerMethod));
+                    "Value {0} within method {1} must be positive (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
             }
         }
 
         [Conditional("DEBUG")]
-        public static void EnsureNotNullOrEmpty<T>(
-            this ICollection<T> collection, string checkedVariableName,
+        public static void EnsurePositive(
+            this short numValue, string checkedVariableName,
             [CallerMemberName]
             string callerMethod = "")
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if ((collection == null) ||
-                (collection.Count == 0))
+            if (numValue >= 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
-                    "Collection {0} within method {1} must not be null or empty!",
-                    checkedVariableName, callerMethod));
+                    "Value {0} within method {1} must be positive (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
             }
         }
 
         [Conditional("DEBUG")]
-        public static void EnsureNotNullOrEmpty<T>(
-            this IReadOnlyCollection<T> collection, string checkedVariableName,
+        public static void EnsurePositive(
+            this long numValue, string checkedVariableName,
             [CallerMemberName]
             string callerMethod = "")
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if ((collection == null) ||
-                (collection.Count == 0))
+            if (numValue >= 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
-                    "Collection {0} within method {1} must not be null or empty!",
-                    checkedVariableName, callerMethod));
+                    "Value {0} within method {1} must be positive (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
             }
         }
 
         [Conditional("DEBUG")]
-        public static void EnsureNotNullOrEmpty(
-            this string stringParam, string checkedVariableName,
+        public static void EnsurePositive(
+            this float numValue, string checkedVariableName,
             [CallerMemberName]
             string callerMethod = "")
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if(string.IsNullOrEmpty(stringParam))
+            if (numValue >= 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
-                    "String {0} within method {1} must not be null or empty!",
-                    checkedVariableName, callerMethod));
+                    "Value {0} within method {1} must be positive (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
             }
         }
 
         [Conditional("DEBUG")]
-        public static void EnsureNotNullOrEmptyOrWhiteSpace(
-            this string stringParam, string checkedVariableName,
+        public static void EnsurePositive(
+            this double numValue, string checkedVariableName,
             [CallerMemberName]
             string callerMethod = "")
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (string.IsNullOrWhiteSpace(stringParam))
+            if (numValue >= 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
-                    "String {0} within method {1} must not be null or empty!",
-                    checkedVariableName, callerMethod));
+                    "Value {0} within method {1} must be positive (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
             }
         }
 
         [Conditional("DEBUG")]
-        public static void EnsureNotNull(
-            this object objParam, string checkedVariableName,
+        public static void EnsurePositive(
+            this decimal numValue, string checkedVariableName,
             [CallerMemberName]
             string callerMethod = "")
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (objParam == null)
+            if (numValue >= 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
-                    "Object {0} within method {1} must not be null!",
-                    checkedVariableName, callerMethod));
+                    "Value {0} within method {1} must be positive (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
             }
         }
+        #endregion
     }
 }
