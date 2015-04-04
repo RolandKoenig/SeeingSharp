@@ -58,33 +58,40 @@ namespace FrozenSky.Multimedia.Core
         private static GraphicsCore s_current;
 
         // Hardware 
+        #region
         private EngineHardwareInfo m_hardwareInfo;
         private List<EngineDevice> m_devices;
         private EngineDevice m_defaultDevice;
+        #endregion
 
         // Some helpers
+        #region
         private GraphicsCoreConfiguration m_configuration;
         private UniqueGenericKeyGenerator m_resourceKeyGenerator;
-#if !WINDOWS_PHONE
         private PerformanceAnalyzer m_performanceCalculator;
-#endif
         private InputHandlerContainer m_inputHandlers;
         private ImportExportHandler m_importExporters;
+        #endregion
 
         // Global device handlers
-#if !WINDOWS_PHONE
+        #region
         private FactoryHandlerWIC m_factoryHandlerWIC;
         private FactoryHandlerD2D m_factoryHandlerD2D;
         private FactoryHandlerDWrite m_factoryHandlerDWrite;
-#endif
+        private FactoryHandlerMF m_factoryHandlerMF;
+        #endregion
 
         // Members for threading
+        #region
         private Task m_mainLoopTask;
         private CancellationTokenSource m_mainLoopCancelTokenSource;
+        #endregion
 
-        // Some configurations
+        // Configurations
+        #region
         private bool m_debugEnabled;
         private TargetHardware m_targetHardware;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsCore"/> class.
@@ -97,12 +104,10 @@ namespace FrozenSky.Multimedia.Core
                 m_debugEnabled = debugEnabled;
                 m_targetHardware = targetHardware;
                 m_devices = new List<EngineDevice>();
-#if !WINDOWS_PHONE
                 m_performanceCalculator = new PerformanceAnalyzer(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(2.0));
                 m_performanceCalculator.SyncContext = SynchronizationContext.Current; // <-- TODO
                 m_performanceCalculator.RunAsync(CancellationToken.None)
                     .FireAndForget();
-#endif
 
                 m_configuration = new GraphicsCoreConfiguration();
                 m_configuration.DebugEnabled = debugEnabled;
@@ -111,13 +116,13 @@ namespace FrozenSky.Multimedia.Core
                 m_inputHandlers = new InputHandlerContainer();
                 m_importExporters = new ImportExportHandler();
 
-#if !WINDOWS_PHONE
                 // Try to initialize global api factories (mostly for 2D rendering / operations)
                 try
                 {
                     m_factoryHandlerWIC = new FactoryHandlerWIC();
                     m_factoryHandlerD2D = new FactoryHandlerD2D(this);
                     m_factoryHandlerDWrite = new FactoryHandlerDWrite(this);
+                    m_factoryHandlerMF = new FactoryHandlerMF();
                 }
                 catch (Exception)
                 {
@@ -125,13 +130,12 @@ namespace FrozenSky.Multimedia.Core
                     m_factoryHandlerWIC = null;
                     m_factoryHandlerD2D = null;
                     m_factoryHandlerDWrite = null;
-
+                    m_factoryHandlerMF = null;
                     return;
                 }
                 this.FactoryD2D = m_factoryHandlerD2D.Factory;
                 this.FactoryDWrite = m_factoryHandlerDWrite.Factory;
                 this.FactoryWIC = m_factoryHandlerWIC.Factory;
-#endif
 
                 // Create the object containing all hardware information
                 m_hardwareInfo = new EngineHardwareInfo();

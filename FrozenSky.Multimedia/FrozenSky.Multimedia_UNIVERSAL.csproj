@@ -100,6 +100,7 @@
     <Compile Include="Core\_Devices\EngineDevice.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerD2D.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerDWrite.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerMF.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerWIC.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD2D.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D10.cs" />
@@ -269,6 +270,9 @@
     </Reference>
     <Reference Include="SharpDX.DXGI">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.DXGI.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpDX.MediaFoundation">
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.MediaFoundation.dll</HintPath>
     </Reference>
     <Reference Include="SharpDX.Toolkit">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.dll</HintPath>

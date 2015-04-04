@@ -81,6 +81,10 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.DXGI.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX.MediaFoundation, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.MediaFoundation.dll</HintPath>
+    </Reference>
     <Reference Include="SharpDX.Toolkit, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.dll</HintPath>
@@ -174,6 +178,7 @@
     <Compile Include="Core\_Configuration\GraphicsViewConfiguration.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerD2D.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerDWrite.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerMF.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerWIC.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD2D.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D10.cs" />
