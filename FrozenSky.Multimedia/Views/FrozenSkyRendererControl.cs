@@ -565,16 +565,14 @@ namespace FrozenSky.Multimedia.Views
             set { m_renderLoop.DiscardRendering = value; }
         }
 
-        [Category("Rendering")]
-        [Browsable(true)]
+        [Browsable(false)]
         public Scene Scene
         {
             get { return m_renderLoop.Scene; }
             set { m_renderLoop.SetScene(value); }
         }
 
-        [Category("Rendering")]
-        [Browsable(true)]
+        [Browsable(false)]
         public Camera3DBase Camera
         {
             get { return m_renderLoop.Camera; }

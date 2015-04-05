@@ -501,6 +501,44 @@ namespace FrozenSky.Multimedia.Core
         }
 #endif
 
+#if DESKTOP
+        /// <summary>
+        /// Loads a bitmap from the given mapped texture.
+        /// </summary>
+        /// <param name="mappedTexture">The mapped texture from which to read all pixel data.</param>
+        internal static GDI.Bitmap LoadBitmapFromMappedTexture(MemoryMappedTexture32bpp mappedTexture)
+        {
+            GDI.Bitmap resultBitmap = new GDI.Bitmap(mappedTexture.Width, mappedTexture.Height);
+
+            //Lock bitmap so it can be accessed for texture loading
+            System.Drawing.Imaging.BitmapData bitmapData = resultBitmap.LockBits(
+                new System.Drawing.Rectangle(0, 0, resultBitmap.Width, resultBitmap.Height),
+                System.Drawing.Imaging.ImageLockMode.WriteOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
+            try
+            {
+                //Copy data row by row
+                // => Rows form datasource may have more pixels because driver changes the size of textures
+                UIntPtr rowPitch = new UIntPtr((uint)(mappedTexture.Width * 4));
+                for (int loopRow = 0; loopRow < mappedTexture.Height; loopRow++)
+                {
+                    // Copy bitmap data
+                    int rowPitchSource = mappedTexture.Pitch;
+                    int rowPitchDestination = mappedTexture.Width * 4;
+                    NativeMethods.MemCopy(
+                        bitmapData.Scan0 + loopRow * rowPitchDestination,
+                        mappedTexture.Pointer + loopRow * rowPitchSource,
+                        rowPitch);
+                }
+            }
+            finally
+            {
+                resultBitmap.UnlockBits(bitmapData);
+            }
+
+            return resultBitmap;
+        }
+#endif
+
         /// <summary>
         /// Creates a default viewport for the given width and height
         /// </summary>

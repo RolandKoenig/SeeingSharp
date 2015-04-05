@@ -137,7 +137,9 @@
     <Compile Include="Core\_Scene\_Misc.cs" />
     <Compile Include="Core\_Util\MemoryMappedTexture32bpp.cs" />
     <Compile Include="Core\_Util\MemoryMappedTextureFloat.cs" />
+    <Compile Include="Core\_Util\MFHelper.cs" />
     <Compile Include="Core\_Util\TextureUploader.cs" />
+    <Compile Include="Core\_Util\_MediaFoundationUtil.cs" />
     <Compile Include="Drawing2D\Custom2DDrawingLayer.cs" />
     <Compile Include="Drawing2D\Graphics2D.cs" />
     <Compile Include="Drawing2D\ResourceCache2D.cs" />
@@ -192,6 +194,11 @@
     <Compile Include="Drawing3D\_ShaderInteraction\LineVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\StandardVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />
+    <Compile Include="DrawingVideo\FrozenSkyVideoWriter.cs" />
+    <Compile Include="DrawingVideo\_Writers\FullImageVideoWriter.cs" />
+    <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
+    <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
+    <Compile Include="DrawingVideo\_Writers\WmvVideoWriter.cs" />
     <Compile Include="FrozenSkyGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
     <Compile Include="Input\IFrozenSkyFreeCameraInputHandler.cs" />
@@ -327,7 +334,6 @@
     <Content Include="Resources\Shaders\_mainInclude.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DrawingVideo\" />
     <Folder Include="Input\_Generic\" />
     <Folder Include="Input\_WinRT\" />
     <Folder Include="Resources\Models\" />

@@ -245,6 +245,5 @@ namespace FrozenSky.Util
             return result;
         }
 #endif
-
     }
 }

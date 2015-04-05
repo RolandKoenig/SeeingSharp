@@ -101,6 +101,17 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets the pixel size of this texture.
+        /// </summary>
+        public Size2 PixelSize
+        {
+            get
+            {
+                return m_size;
+            }
+        }
+
+        /// <summary>
         /// Gets the pointer of the buffer.
         /// </summary>
         public IntPtr Pointer

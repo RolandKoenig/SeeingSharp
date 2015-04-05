@@ -39,12 +39,10 @@
             // 
             // m_ctrlRenderer
             // 
-            this.m_ctrlRenderer.Camera = null;
             this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
-            this.m_ctrlRenderer.Scene = null;
             this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 371);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";

@@ -107,6 +107,62 @@ namespace FrozenSky.Multimedia.Core
 #endif
 
         /// <summary>
+        /// Takes a color texture and uploads it to the given buffer.
+        /// </summary>
+        /// <param name="intBuffer">The target int buffer to which to copy all pixel data.</param>
+        public unsafe void UploadToIntBuffer(MemoryMappedTexture32bpp intBuffer)
+        {
+            // Check current format
+            if ((m_format != GraphicsHelper.DEFAULT_TEXTURE_FORMAT) &&
+                (m_format != GraphicsHelper.DEFAULT_TEXTURE_FORMAT_SHARING) &&
+                (m_format != GraphicsHelper.DEFAULT_TEXTURE_FORMAT_SHARING_D2D))
+            {
+                throw new FrozenSkyGraphicsException(string.Format("Invalid format for texture uploading to a color map ({0})!", m_format));
+            }
+
+            // Upload the texture
+            CopyTextureToStagingResource();
+
+            // Read the data into the .Net data block
+            SharpDX.DataBox dataBox = m_device.DeviceImmediateContextD3D11.MapSubresource(
+                m_copyHelperTextureStaging, 0, D3D11.MapMode.Read, D3D11.MapFlags.None);
+            try
+            {
+                int rowPitchSource = dataBox.RowPitch;
+                int rowPitchDestination = intBuffer.Width * 4;
+
+#if !DESKTOP
+                float* sourcePointer = (float*)dataBox.DataPointer.ToPointer();
+                float* destPointer = (float*)intBuffer.Pointer.ToPointer();
+#endif
+                if ((rowPitchSource > 0) && (rowPitchSource < 20000) &&
+                    (rowPitchDestination > 0) && (rowPitchDestination < 20000))
+                {
+                    for (int loopY = 0; loopY < m_height; loopY++)
+                    {
+#if DESKTOP
+                        NativeMethods.MemCopy(
+                            intBuffer.Pointer + loopY * rowPitchDestination,
+                            dataBox.DataPointer + loopY * rowPitchSource,
+                            new UIntPtr((uint)rowPitchDestination));
+#else
+                        float* memLocSource = sourcePointer + loopY * rowPitchSource;
+                        float* memLocDest = destPointer + loopY * rowPitchDestination;
+                        for(int loopX=0; loopX < m_width; loopX++)
+                        {
+                            memLocDest[loopX] = memLocSource[loopX];
+                        }
+#endif
+                    }
+                }
+            }
+            finally
+            {
+                m_device.DeviceImmediateContextD3D11.UnmapSubresource(m_copyHelperTextureStaging, 0);
+            }
+        }
+
+        /// <summary>
         /// Upload a floatingpoint texture from the graphics hardware.
         /// This method is only valid for resources of type R32_Floatfloat.
         /// </summary>

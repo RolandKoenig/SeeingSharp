@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using FrozenSky.Multimedia.Drawing2D;
 using FrozenSky.Multimedia.Drawing3D;
+using FrozenSky.Multimedia.DrawingVideo;
 using FrozenSky.Infrastructure;
 using FrozenSky.Checking;
 using FrozenSky.Util;
@@ -82,6 +83,7 @@ namespace FrozenSky.Multimedia.Core
         private bool m_nextRenderAllowed;
         private int m_totalRenderCount;
         private RenderState m_renderState;
+        private List<FrozenSkyVideoWriter> m_videoWriters;
         #endregion
 
         // Direct3D resources and other values gathered during graphics loading
@@ -160,6 +162,8 @@ namespace FrozenSky.Multimedia.Core
             m_viewConfiguration = new GraphicsViewConfiguration();
 
             m_afterPresentActions = new ThreadSaveQueue<Action>();
+
+            m_videoWriters = new List<FrozenSkyVideoWriter>();
 
             // Assign all given actions
             m_actionCreateViewResources = actionCreateViewResources;
@@ -246,6 +250,21 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// Waits for the next finished render process.
+        /// </summary>
+        public Task WaitForNextFinishedRenderAsync()
+        {
+            TaskCompletionSource<object> result = new TaskCompletionSource<object>();
+
+            m_afterPresentActions.Enqueue(() =>
+            {
+                result.TrySetResult(null);
+            });
+
+            return result.Task;
+        }
+
+        /// <summary>
         /// Registers the given drawing layer that is used for 2d rendering.
         /// </summary>
         /// <param name="drawAction">The action that performs 2D drawing</param>
@@ -256,6 +275,79 @@ namespace FrozenSky.Multimedia.Core
             Custom2DDrawingLayer result = new Custom2DDrawingLayer(drawAction);
             return Register2DDrawingLayerAsync(result)
                 .ContinueWith((givenTask) => result);
+        }
+
+        /// <summary>
+        /// Finishes the given VideoWriter object and deregisters it from this RenderLoop.
+        /// </summary>
+        /// <param name="videoWriter">The VideoWriter to be finished.</param>
+        public Task FinishVideoWriterAsync(FrozenSkyVideoWriter videoWriter)
+        {
+            videoWriter.EnsureNotNull("videoWriter");
+
+            if (videoWriter.AssociatedRenderLoop != this) { throw new FrozenSkyGraphicsException("The given VideoWriter is not associated with this RenderLoop!"); }
+
+            TaskCompletionSource<object> result = new TaskCompletionSource<object>();
+            m_afterPresentActions.Enqueue(() =>
+            {
+                try
+                {
+                    if (videoWriter.AssociatedRenderLoop != this) { throw new FrozenSkyGraphicsException("The given VideoWriter is not associated with this RenderLoop!"); }
+
+                    // Try to finish rendering first
+                    if (videoWriter.IsStarted)
+                    {
+                        videoWriter.FinishRendering();
+                    }
+
+                    // Remote the VideoWriter from this RenderLoop
+                    m_videoWriters.Remove(videoWriter);
+                    videoWriter.AssociatedRenderLoop = null;
+
+                    result.SetResult(null);
+                }
+                catch (Exception ex)
+                {
+                    result.SetException(ex);
+                }
+            });
+
+            return result.Task;
+        }
+
+        /// <summary>
+        /// Applies the given VideoWriter to this RenderLoop.
+        /// </summary>
+        /// <param name="videoWriter">The VideoWriter to be applied.</param>
+        public Task RegisterVideoWriterAsync(FrozenSkyVideoWriter videoWriter)
+        {
+            videoWriter.EnsureNotNull("videoWriter");
+
+            if (m_currentScene == null) { throw new FrozenSkyGraphicsException("No scene set to RenderLoop!"); }
+            if (m_currentDevice == null) { throw new FrozenSkyGraphicsException("No device associated to RenderLoop!"); }
+            if (videoWriter.AssociatedRenderLoop != null) { throw new FrozenSkyGraphicsException("Given VideoWriter is associated to another RenderLoop!"); }
+
+            TaskCompletionSource<object> result = new TaskCompletionSource<object>();
+            m_afterPresentActions.Enqueue(() =>
+            {
+                try
+                {
+                    if (videoWriter.AssociatedRenderLoop == this) { return; }
+                    if (videoWriter.AssociatedRenderLoop != null) { throw new FrozenSkyGraphicsException("Given VideoWriter is associated to another RenderLoop!"); }
+
+                    // Apply the VideoWriter to this RenderLoop
+                    m_videoWriters.Add(videoWriter);
+                    videoWriter.AssociatedRenderLoop = this;
+
+                    result.SetResult(null);
+                }
+                catch (Exception ex)
+                {
+                    result.SetException(ex);
+                }
+            });
+
+            return result.Task;
         }
 
         /// <summary>
@@ -334,10 +426,10 @@ namespace FrozenSky.Multimedia.Core
                 Matrix viewWorld = m_camera.View * worldMatrix;
                 Matrix inversionViewWorld = Matrix.Invert(viewWorld); 
 
-                Vector3 rayDirection = new Vector3(
+                Vector3 rayDirection = Vector3.Normalize(new Vector3(
                     pickingVector.X * inversionViewWorld.M11 + pickingVector.Y * inversionViewWorld.M21 + pickingVector.Z * inversionViewWorld.M31,
                     pickingVector.X * inversionViewWorld.M12 + pickingVector.Y * inversionViewWorld.M22 + pickingVector.Z * inversionViewWorld.M32,
-                    pickingVector.X * inversionViewWorld.M13 + pickingVector.Y * inversionViewWorld.M23 + pickingVector.Z * inversionViewWorld.M33);
+                    pickingVector.X * inversionViewWorld.M13 + pickingVector.Y * inversionViewWorld.M23 + pickingVector.Z * inversionViewWorld.M33));
                 Vector3 rayStart = new Vector3(
                     inversionViewWorld.M41,
                     inversionViewWorld.M42,
@@ -557,6 +649,8 @@ namespace FrozenSky.Multimedia.Core
             List<Action> continuationActions = new List<Action>();
             if (m_discardRendering) { return continuationActions; }
 
+            bool writeVideoFrames = m_lastRenderSuccessfully;
+
             // Call present from Threadpool (if configured)
             if(!CallPresentInUIThread)
             {
@@ -704,7 +798,63 @@ namespace FrozenSky.Multimedia.Core
                 this.ManipulateFilterList.Raise(this, new ManipulateFilterListArgs(m_filters));
             });
 
+            // Draw all frames to registered VideoWriters
+            if (writeVideoFrames)
+            {
+                DrawVideoFrames();
+            }
+
             return continuationActions;
+        }
+
+        /// <summary>
+        /// This method call draws the current frame into all registered video writers.
+        /// </summary>
+        internal void DrawVideoFrames()
+        {
+            // Write current frame if we have an associated video writer
+            if (m_videoWriters.Count > 0)
+            {
+                using (TextureUploader texUploader = new TextureUploader(m_currentDevice, m_renderTarget))
+                using (MemoryMappedTexture32bpp mappedTexture = new MemoryMappedTexture32bpp(m_currentViewSize))
+                {
+                    // Upload texture
+                    texUploader.UploadToIntBuffer(mappedTexture);
+
+                    // Render the texture to all video writers
+                    Parallel.For(0, m_videoWriters.Count, (actIndex) =>
+                    {
+                        FrozenSkyVideoWriter actVideoWriter = m_videoWriters[actIndex];
+
+                        // Start video rendering if not done so before
+                        if (!actVideoWriter.IsStarted) { actVideoWriter.StartRendering(m_currentViewSize); }
+
+                        // Render current frame
+                        if (actVideoWriter.IsStarted)
+                        {
+                            actVideoWriter.DrawFrame(m_currentDevice, mappedTexture);
+                        }
+                    });
+                }
+
+                // Check for occurred errors (Cancel writing if there was any)
+                for (int loop = 0; loop < m_videoWriters.Count; loop++)
+                {
+                    FrozenSkyVideoWriter actWriter = m_videoWriters[loop];
+                    if ((actWriter.LastDrawException != null) ||
+                        (actWriter.LastStartException != null) ||
+                        (actWriter.LastFinishException != null))
+                    {
+                        // Try to finish rendering first
+                        actWriter.FinishRendering();
+
+                        // Remote the VideoWriter from this RenderLoop
+                        m_videoWriters.RemoveAt(loop);
+                        actWriter.AssociatedRenderLoop = null;
+                        loop--;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -968,6 +1118,14 @@ namespace FrozenSky.Multimedia.Core
         internal List<SceneObjectFilter> Filters
         {
             get { return m_filters; }
+        }
+
+        /// <summary>
+        /// Counts the currently applied video writers.
+        /// </summary>
+        public int CountVideoWriters
+        {
+            get { return m_videoWriters.Count; }
         }
 
         /// <summary>

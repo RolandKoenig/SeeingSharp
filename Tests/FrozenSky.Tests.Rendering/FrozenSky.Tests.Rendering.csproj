@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="AnimationSystemTests.cs" />
     <Compile Include="BasicTests.cs" />
+    <Compile Include="DrawingVideoTests.cs" />
     <Compile Include="ModelLoadingAndRenderingTests.cs" />
     <Compile Include="PostprocessingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -74,7 +75,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Render2DTests.cs" />
+    <Compile Include="Drawing2DTests.cs" />
     <Compile Include="RenderToMemoryTests.cs" />
     <Compile Include="_Helper.cs" />
   </ItemGroup>

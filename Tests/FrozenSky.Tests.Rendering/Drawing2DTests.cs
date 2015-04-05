@@ -33,21 +33,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Drawing2D;
 using FrozenSky.Multimedia.Views;
-using FrozenSky.Util;
+using FrozenSky.Multimedia.Objects;
 using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
+using FrozenSky.Util;
 
 using GDI = System.Drawing;
-using FrozenSky.Multimedia.Objects;
 
 namespace FrozenSky.Tests.Rendering
 {
     [Collection("Rendering_FrozenSky")]
-    public class Render2DTests
+    public class Drawing2DTests
     {
-        public const string TEST_CATEGORY = "FrozenSky Multimedia Render2D";
+        public const string TEST_CATEGORY = "FrozenSky Multimedia Drawing 2D";
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
