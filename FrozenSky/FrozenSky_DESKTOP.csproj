@@ -90,8 +90,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Behaviors\FrozenSkyPropertyGridAutoRefreshBehavior.cs" />
-    <Compile Include="Behaviors\FrozenSkyPropertyGridBehavior.cs" />
+    <Compile Include="Behaviors\_Wpf\FrozenSkyPropertyGridAutoRefreshBehavior.cs" />
+    <Compile Include="Behaviors\_Wpf\FrozenSkyPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
     <Compile Include="Checking\Ensure.Rectangles.cs" />
     <Compile Include="Checking\Ensure.Vectors.cs" />
@@ -280,6 +280,8 @@
     <EmbeddedResource Include="Resources\frozensky.lang-DE.langXml" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Behaviors\_WinForms\" />
+    <Folder Include="Behaviors\_WinRT\" />
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>

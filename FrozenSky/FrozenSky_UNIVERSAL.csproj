@@ -60,6 +60,8 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\_Wpf\FrozenSkyPropertyGridAutoRefreshBehavior.cs" />
+    <Compile Include="Behaviors\_Wpf\FrozenSkyPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
     <Compile Include="Checking\Ensure.cs" />
     <Compile Include="Checking\Ensure.Numeric.cs" />
@@ -228,7 +230,8 @@
     <Compile Include="_Translatables.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Behaviors\" />
+    <Folder Include="Behaviors\_WinForms\" />
+    <Folder Include="Behaviors\_WinRT\" />
     <Folder Include="Util\TableData\_OpenXml\" />
     <Folder Include="View\" />
   </ItemGroup>
