@@ -40,6 +40,173 @@ namespace FrozenSky.Checking
     public static partial class Ensure
     {
         //---------------------------------------------------------------------
+        // Method 'EnsureInRange' for all common numeric variables
+        #region
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this byte numValue, byte min, byte max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this short numValue, short min, short max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this int numValue, int min, int max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this long numValue, long min, long max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this ushort numValue, ushort min, ushort max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this uint numValue, uint min, uint max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this ulong numValue, ulong min, ulong max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this float numValue, float min, float max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureInRange(
+            this double numValue, double min, double max, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((numValue < min) ||
+                (numValue > max))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Value {0} within method {1} must be between {2} and {3} (given value is {4}!",
+                    checkedVariableName, callerMethod,
+                    min, max, numValue));
+            }
+        }
+
+        #endregion
+
+        //---------------------------------------------------------------------
         // Method 'EnsurePositive' for all common numeric variables
         #region
         [Conditional("DEBUG")]
@@ -50,7 +217,7 @@ namespace FrozenSky.Checking
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (numValue >= 0)
+            if (numValue < 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
                     "Value {0} within method {1} must be positive (value: {2})!",
@@ -66,7 +233,7 @@ namespace FrozenSky.Checking
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (numValue >= 0)
+            if (numValue < 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
                     "Value {0} within method {1} must be positive (value: {2})!",
@@ -82,7 +249,7 @@ namespace FrozenSky.Checking
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (numValue >= 0)
+            if (numValue < 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
                     "Value {0} within method {1} must be positive (value: {2})!",
@@ -98,7 +265,7 @@ namespace FrozenSky.Checking
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (numValue >= 0)
+            if (numValue < 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
                     "Value {0} within method {1} must be positive (value: {2})!",
@@ -114,7 +281,7 @@ namespace FrozenSky.Checking
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (numValue >= 0)
+            if (numValue < 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
                     "Value {0} within method {1} must be positive (value: {2})!",
@@ -130,7 +297,7 @@ namespace FrozenSky.Checking
         {
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
-            if (numValue >= 0)
+            if (numValue < 0)
             {
                 throw new FrozenSkyCheckException(string.Format(
                     "Value {0} within method {1} must be positive (value: {2})!",

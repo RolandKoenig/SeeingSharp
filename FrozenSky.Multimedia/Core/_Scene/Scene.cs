@@ -26,6 +26,7 @@ using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
 using FrozenSky.Util;
+using FrozenSky.Checking;
 using FrozenSky.Multimedia.Drawing2D;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
@@ -145,6 +146,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="cancelToken">The cancel token.</param>
         public Task WaitUntilVisibleAsync(SceneObject sceneObject, ViewInformation viewInfo, CancellationToken cancelToken = default(CancellationToken))
         {
+            sceneObject.EnsureNotNull("sceneObject");
+            sceneObject.EnsureNotNull("viewInfo");
+
             return WaitUntilVisibleAsync(
                 new SceneObject[] { sceneObject },
                 viewInfo, cancelToken);
@@ -158,6 +162,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="cancelToken">The cancel token.</param>
         public Task WaitUntilVisibleAsync(IEnumerable<SceneObject> sceneObjects, ViewInformation viewInfo, CancellationToken cancelToken = default(CancellationToken))
         {
+            sceneObjects.EnsureNotNull("sceneObjects");
+            viewInfo.EnsureNotNull("viewInfo");
+
             TaskCompletionSource<object> taskComplSource = new TaskCompletionSource<object>();
 
             // Define the poll action (polling is done inside scene update
@@ -191,6 +198,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="viewInfo">The view information.</param>
         public bool AreAllObjectsVisible(IEnumerable<SceneObject> sceneObjects, ViewInformation viewInfo)
         {
+            sceneObjects.EnsureNotNull("sceneObjects");
+            viewInfo.EnsureNotNull("viewInfo");
+
             foreach(var actObject in sceneObjects)
             {
                 if (!actObject.IsVisible(viewInfo)) { return false; }
@@ -217,6 +227,8 @@ namespace FrozenSky.Multimedia.Core
             Action<SceneManipulator> defineNewStateAction,
             NamedOrGenericKey transissionEffectRessource)
         {
+            defineNewStateAction.EnsureNotNull("defineNewStateAction");
+
             return this.PerformTransitionAsync(
                 defineNewStateAction,
                 transissionEffectRessource,
@@ -256,6 +268,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="manipulatorAction">The action which is able to manipulate the scene.</param>
         public Task ManipulateSceneAsync(Action<SceneManipulator> manipulatorAction)
         {
+            manipulatorAction.EnsureNotNull("manipulatorAction");
+
             SceneManipulator manipulator = new SceneManipulator(this);
             return this.PerformBeforeUpdateAsync(() =>
             {
@@ -281,6 +295,8 @@ namespace FrozenSky.Multimedia.Core
         internal NamedOrGenericKey AddResource<ResourceType>(Func<ResourceType> resourceFactory, NamedOrGenericKey resourceKey)
             where ResourceType : Resource
         {
+            resourceFactory.EnsureNotNull("resourceFactory");
+
             InitializeResourceDictionaries(true);
 
             if (resourceKey == NamedOrGenericKey.Empty) { resourceKey = GraphicsCore.GetNextGenericResourceKey(); }
@@ -316,6 +332,8 @@ namespace FrozenSky.Multimedia.Core
         internal void ManipulateResource<ResourceType>(Action<ResourceType> manipulateAction, NamedOrGenericKey resourceKey)
             where ResourceType : Resource
         {
+            manipulateAction.EnsureNotNull("manipulateAction");
+
             InitializeResourceDictionaries(true);
 
             foreach (ResourceDictionary actResourceDict in m_registeredResourceDicts)
@@ -349,6 +367,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="rayDirection">Normal of picking ray.</param>
         internal List<SceneObject> Pick(Vector3 rayStart, Vector3 rayDirection, ViewInformation viewInformation, PickingOptions pickingOptions)
         {
+            rayDirection.EnsureNormalized("rayDirection");
+            viewInformation.EnsureNotNull("viewInformation");
+            pickingOptions.EnsureNotNull("pickingOptions");
+
             // Query for all objects below the cursor
             List<Tuple<SceneObject, float>> pickedObjects = new List<Tuple<SceneObject, float>>();
             foreach (SceneLayer actLayer in m_sceneLayers)
@@ -379,6 +401,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="sceneObjectLocal">The object to trigger filter logic for.</param>
         internal void TriggerNewFilter(SceneObject sceneObjectLocal)
         {
+            sceneObjectLocal.EnsureNotNull("sceneObjectLocal");
+
             sceneObjectLocal.ClearVisibilityStageData();
         }
 
@@ -388,6 +412,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="drawingLayer">The drawing layer.</param>
         internal void AddDrawingLayer(Custom2DDrawingLayer drawingLayer)
         {
+            drawingLayer.EnsureNotNull("drawingLayer");
+
             if (!m_drawing2DLayers.Contains(drawingLayer))
             {
                 m_drawing2DLayers.Add(drawingLayer);
@@ -400,6 +426,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="drawingLayer">The drawing layer.</param>
         internal void RemoveDrawingLayer(Custom2DDrawingLayer drawingLayer)
         {
+            drawingLayer.EnsureNotNull("drawingLayer");
+
             while (m_drawing2DLayers.Remove(drawingLayer)) { }
         }
 
@@ -411,6 +439,9 @@ namespace FrozenSky.Multimedia.Core
         internal T Add<T>(T sceneObject, string layer)
             where T : SceneObject
         {
+            sceneObject.EnsureNotNull("sceneObject");
+            layer.EnsureNotNullOrEmpty("layer");
+
             InitializeResourceDictionaries(true);
 
             SceneLayer layerObject = GetLayer(layer);
@@ -426,6 +457,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="viewInformation">The view to register.</param>
         internal void RegisterView(ViewInformation viewInformation)
         {
+            viewInformation.EnsureNotNull("viewInformation");
+
             bool isFirstView = m_registeredViews.Count == 0;
 
             InitializeResourceDictionaries(true);
@@ -466,6 +499,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="viewInformation">The view to check for.</param>
         internal bool IsViewRegistered(ViewInformation viewInformation)
         {
+            viewInformation.EnsureNotNull("viewInformation");
+
             return m_registeredViews.Contains(viewInformation);
         }
 
@@ -476,6 +511,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="viewInformation">The view to deregister.</param>
         internal void DeregisterView(ViewInformation viewInformation)
         {
+            viewInformation.EnsureNotNull("viewInformation");
+
             // Check for registration
             // If there is no one, then the caller made an error
             if (!m_registeredViews.Contains(viewInformation))
@@ -507,6 +544,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="name">Name of the layer.</param>
         internal SceneLayer AddLayer(string name)
         {
+            name.EnsureNotNullOrEmpty("name");
+
             SceneLayer currentLayer = TryGetLayer(name);
             if (currentLayer != null) { throw new ArgumentException("There is already a SceneLayer with the given name!", "name"); }
             
@@ -536,6 +575,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="layerName">Name of the layer.</param>
         internal void RemoveLayer(string layerName)
         {
+            layerName.EnsureNotNullOrEmpty("layerName");
+
             SceneLayer layerToRemove = TryGetLayer(layerName);
             if (layerToRemove != null)
             {
@@ -550,6 +591,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="newOrderID">the new order id.</param>
         internal void SetLayerOrderID(SceneLayer layer, int newOrderID)
         {
+            layer.EnsureNotNull("layer");
+
             if (!m_sceneLayers.Contains(layer)) { throw new ArgumentException("This scene does not contain the given layer!"); }
 
             // Change the order id
@@ -565,6 +608,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="layer">Layer to remove.</param>
         internal void RemoveLayer(SceneLayer layer)
         {
+            layer.EnsureNotNull("layer");
+
             if (layer == null) { throw new ArgumentNullException("layer"); }
             if (layer.Scene != this) { throw new ArgumentException("Given layer does not belong to this scene!", "layer"); }
             if (layer.Name == DEFAULT_LAYER_NAME) { throw new ArgumentNullException("Unable to remove the default layer!", "layer"); }
@@ -582,6 +627,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="layerName">The name of the layer.</param>
         internal void ClearLayer(string layerName)
         {
+            layerName.EnsureNotNullOrEmpty("layerName");
+
             SceneLayer layerToClear = GetLayer(layerName);
             ClearLayer(layerToClear);
         }
@@ -592,6 +639,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="layer">The layer to be cleared.</param>
         internal void ClearLayer(SceneLayer layer)
         {
+            layer.EnsureNotNull("layer");
+
             if (layer == null) { throw new ArgumentNullException("layer"); }
             if (layer.Scene != this) { throw new ArgumentException("Given layer does not belong to this scene!", "layer"); }
 
@@ -604,6 +653,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="layerName">Name of the layer.</param>
         internal SceneLayer TryGetLayer(string layerName)
         {
+            layerName.EnsureNotNullOrEmpty("layerName");
+
             if (string.IsNullOrEmpty(layerName)) { throw new ArgumentException("Given layer name is not valid!", "layerName"); }
 
             foreach (SceneLayer actLayer in m_sceneLayers)
@@ -620,6 +671,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="layerName">Name of the layer.</param>
         internal SceneLayer GetLayer(string layerName)
         {
+            layerName.EnsureNotNullOrEmpty("layerName");
+
             SceneLayer result = TryGetLayer(layerName);
             if (result == null)
             {
@@ -670,6 +723,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="sceneObject">Object to remove.</param>
         internal void Remove(SceneObject sceneObject)
         {
+            sceneObject.EnsureNotNull("sceneObject");
+
             foreach (SceneLayer actLayer in m_sceneLayers)
             {
                 actLayer.RemoveObject(sceneObject);
@@ -683,6 +738,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="layerName">Layer on wich the scene object was added.</param>
         internal void Remove(SceneObject sceneObject, string layerName)
         {
+            sceneObject.EnsureNotNull("sceneObject");
+            layerName.EnsureNotNullOrEmpty("layerName");
+
             SceneLayer layerObject = GetLayer(layerName);
             layerObject.RemoveObject(sceneObject);
         }
@@ -694,6 +752,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="actionToInvoke">The action to be invoked.</param>
         public Task PerformBeforeUpdateAsync(Action actionToInvoke)
         {
+            actionToInvoke.EnsureNotNull("actionToInvoke");
+
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
 
             m_asyncInvokesBeforeUpdate.Enqueue(() =>
@@ -720,6 +780,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="actionToInvoke">The action to be invoked.</param>
         public Task PerformBesideRenderingAsync(Action actionToInvoke)
         {
+            actionToInvoke.EnsureNotNull("actionToInvoke");
+
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
 
             m_asyncInvokesUpdateBesideRendering.Enqueue(() =>

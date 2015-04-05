@@ -29,6 +29,7 @@
 #endregion
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia;
+using FrozenSky.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,6 +77,9 @@ namespace FrozenSky.Multimedia.Drawing2D
         /// <param name="brush">The brush to be used.</param>
         public void FillRectangle(RectangleF rectangle, BrushResource brush)
         {
+            rectangle.EnsureNotEmpty("rectangle");
+            brush.EnsureNotNull("brush");
+
             m_renderTarget.FillRectangle(
                 rectangle.ToDXRectangle(),
                 brush.GetBrush(m_device));
@@ -90,6 +94,11 @@ namespace FrozenSky.Multimedia.Drawing2D
         /// <param name="brush">The brush to be used.</param>
         public void FillRoundedRectangle(RectangleF rectangle, float radiusX, float radiusY, BrushResource brush)
         {
+            rectangle.EnsureNotEmpty("rectangle");
+            brush.EnsureNotNull("brush");
+            radiusX.EnsurePositive("radiusX");
+            radiusY.EnsurePositive("radiusY");
+
             D2D.RoundedRectangle roundedRect = new D2D.RoundedRectangle();
             roundedRect.Rect = rectangle.ToDXRectangle();
             roundedRect.RadiusX = radiusX;
@@ -114,6 +123,10 @@ namespace FrozenSky.Multimedia.Drawing2D
             DrawTextOptions drawOptions = DrawTextOptions.None,
             MeasuringMode measuringMode = MeasuringMode.Natural)
         {
+            textToDraw.EnsureNotNull("textToDraw");
+            targetRectangle.EnsureNotEmpty("targetRectangle");
+            brush.EnsureNotNull("brush");
+
             D2D.DrawTextOptions drawOptionsD2D = (D2D.DrawTextOptions)drawOptions;
             D2D.MeasuringMode measuringModeD2D = (D2D.MeasuringMode)measuringMode;
 
@@ -136,6 +149,9 @@ namespace FrozenSky.Multimedia.Drawing2D
             float opacity = 1f, 
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
         {
+            bitmap.EnsureNotNull("bitmap");
+            opacity.EnsureInRange(0f, 1f, "opacity");
+
             m_renderTarget.DrawBitmap(
                 bitmap.GetBitmap(m_device),
                 opacity, (D2D.BitmapInterpolationMode)interpolationMode);
@@ -154,6 +170,10 @@ namespace FrozenSky.Multimedia.Drawing2D
             float opacity = 1f, 
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
         {
+            bitmap.EnsureNotNull("bitmap");
+            destinationRectangle.EnsureNotEmpty("destinationRectangle");
+            opacity.EnsureInRange(0f, 1f, "opacity");
+
             m_renderTarget.DrawBitmap(
                 bitmap.GetBitmap(m_device),
                 destinationRectangle.ToDXRectangle(),

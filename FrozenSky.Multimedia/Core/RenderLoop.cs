@@ -26,6 +26,7 @@ using System.Collections.Concurrent;
 using FrozenSky.Multimedia.Drawing2D;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Infrastructure;
+using FrozenSky.Checking;
 using FrozenSky.Util;
 
 //Some namespace mappings
@@ -45,58 +46,68 @@ namespace FrozenSky.Multimedia.Core
         internal const int MIN_VIEW_HEIGHT = 32;
 
         // Configuration values
+        #region
         private SynchronizationContext m_guiSyncContext;
         private GraphicsViewConfiguration m_viewConfiguration;
         private bool m_discardRendering;
         private Color4 m_clearColor;
         private Camera3DBase m_camera;
+        #endregion
 
         // Async actions
         private ThreadSaveQueue<Action> m_afterPresentActions;
 
         // Target parameters for rendering
+        #region
         private DateTime m_lastTargetParametersChanged;
         private EngineDevice m_targetDevice;
         private Size2 m_targetSize;
         private DpiScaling m_currentDpiScaling;
         private Scene m_targetScene;
+        #endregion
 
         // Callback methods for current host object
+        #region
         private Func<EngineDevice, Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling>> m_actionCreateViewResources;
         private Action<EngineDevice> m_actionDisposeViewResources;
         private Func<EngineDevice, bool> m_actionCheckCanRender;
         private Action<EngineDevice> m_actionPrepareRendering;
         private Action<EngineDevice> m_actionAfterRendering;
         private Action<EngineDevice> m_actionPresent;
+        #endregion
 
         // Values needed for runtime
+        #region
         private bool m_lastRenderSuccessfully;
         private bool m_nextRenderAllowed;
         private int m_totalRenderCount;
         private RenderState m_renderState;
+        #endregion
 
         // Direct3D resources and other values gathered during graphics loading
+        #region
         private List<Custom2DDrawingLayer> m_2dDrawingLayers;
         private DebugDrawingLayer m_debugDrawingLayer;
         private EngineDevice m_currentDevice;
         private Size2 m_currentViewSize;
         private Size2F m_currentViewSizeDpiScaled;
         private Scene m_currentScene;
-#if !WINDOWS_PHONE
         private Direct2DOverlayRenderer m_d2dOverlay;
-#endif
         private D3D11.Texture2D m_renderTarget;
         private D3D11.Texture2D m_renderTargetDepth;
         private D3D11.RenderTargetView m_renderTargetView;
         private D3D11.DepthStencilView m_renderTargetDepthView;
         private SharpDX.ViewportF m_viewport;
+        #endregion
 
         //Direct3D resources for rendertarget capturing
         // A staging texture for reading contents by Cpu
         // A standard texture for copying data from multisample texture to standard one
         // see http://www.rolandk.de/wp/2013/06/inhalt-der-rendertarget-textur-in-ein-bitmap-kopieren/
+        #region
         private D3D11.Texture2D m_copyHelperTextureStaging;
         private D3D11.Texture2D m_copyHelperTextureStandard;
+        #endregion
 
         // Filters
         private List<SceneObjectFilter> m_filters;
@@ -184,6 +195,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="height"></param>
         internal void SetCurrentViewSize(int width, int height)
         {
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             if (width < MIN_VIEW_WIDTH) { width = MIN_VIEW_WIDTH; }
             if (height < MIN_VIEW_HEIGHT) { height = MIN_VIEW_HEIGHT; }
 
@@ -206,6 +220,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="device">The device to be set.</param>
         public void SetRenderingDevice(EngineDevice device)
         {
+            device.EnsureNotNull("device");
+
             // Only set state values here. All logic is triggered during render process
             m_targetDevice = device;
         }
@@ -216,6 +232,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="scene">The scene to be set.</param>
         public void SetScene(Scene scene)
         {
+            scene.EnsureNotNull("scene");
+
             m_targetScene = scene;
         }
 
@@ -233,6 +251,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="drawingLayer">The layer to be registered.</param>
         public Task Register2DDrawingLayerAsync(Custom2DDrawingLayer drawingLayer)
         {
+            drawingLayer.EnsureNotNull("drawingLayer");
+
             TaskCompletionSource<object> result = new TaskCompletionSource<object>();
 
             m_afterPresentActions.Enqueue(() =>
@@ -261,6 +281,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="drawingLayer">The drawing layer to be deregistered.</param>
         public Task Deregister2DDrawingLayerAsync(Custom2DDrawingLayer drawingLayer)
         {
+            drawingLayer.EnsureNotNull("drawingLayer");
+
             TaskCompletionSource<object> result = new TaskCompletionSource<object>();
 
             m_afterPresentActions.Enqueue(() =>
@@ -333,6 +355,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="newViewConfiguration">The new configuration object to be applied.</param>
         public Task ExchangeViewConfigurationAsync(GraphicsViewConfiguration newViewConfiguration)
         {
+            newViewConfiguration.EnsureNotNull("newViewConfiguration");
+
             TaskCompletionSource<object> result = new TaskCompletionSource<object>();
 
             m_afterPresentActions.Enqueue(() =>
