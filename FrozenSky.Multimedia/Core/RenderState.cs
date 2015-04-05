@@ -45,7 +45,6 @@ namespace FrozenSky.Multimedia.Core
         private Scene m_currentScene;
         private ResourceDictionary m_currentResourceDictionary;
         private Matrix4Stack m_world;
-        private Graphics3D m_graphics;
         private PerformanceAnalyzer m_perfomanceCalculator;
 
         //Current state
@@ -70,9 +69,6 @@ namespace FrozenSky.Multimedia.Core
             //Create settings stack
             m_renderSettingsStack = new Stack<RenderStackEntry>();
             m_sceneStack = new Stack<Tuple<Core.Scene, ResourceDictionary>>();
-
-            //Creates a new graphics object
-            m_graphics = new Graphics3D(this);
 
             m_perfomanceCalculator = performanceCalculator;
         }
@@ -165,7 +161,6 @@ namespace FrozenSky.Multimedia.Core
         {
             if (m_disposed) { return; }
 
-            GraphicsHelper.SafeDispose(ref m_graphics);
             m_disposed = true;
         }
 
@@ -436,14 +431,6 @@ namespace FrozenSky.Multimedia.Core
                 if (m_currentRenderSettings != null) { return m_currentRenderSettings.ViewInformation; }
                 else { return null; }
             }
-        }
-
-        /// <summary>
-        /// Gets current graphics object.
-        /// </summary>
-        public Graphics3D Graphics3D
-        {
-            get { return m_graphics; }
         }
 
         /// <summary>

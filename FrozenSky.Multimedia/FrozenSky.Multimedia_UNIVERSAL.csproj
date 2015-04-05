@@ -151,7 +151,6 @@
     <Compile Include="Drawing2D\_Misc.cs" />
     <Compile Include="Drawing2D\_Resources\WicBitmap.cs" />
     <Compile Include="Drawing2D\_Resources\WicBitmapSource.cs" />
-    <Compile Include="Drawing3D\Graphics3D.cs" />
     <Compile Include="Drawing3D\TexturePainterHelper.cs" />
     <Compile Include="Drawing3D\_Cameras\Camera3DBase.cs" />
     <Compile Include="Drawing3D\_Cameras\Camera3DViewPoint.cs" />
