@@ -248,6 +248,19 @@ namespace FrozenSky.Multimedia.Core
         /// <summary>
         /// Registers the given drawing layer that is used for 2d rendering.
         /// </summary>
+        /// <param name="drawAction">The action that performs 2D drawing</param>
+        public Task<Custom2DDrawingLayer> Register2DDrawingLayerAsync(Action<Graphics2D> drawAction)
+        {
+            drawAction.EnsureNotNull("drawAction");
+
+            Custom2DDrawingLayer result = new Custom2DDrawingLayer(drawAction);
+            return Register2DDrawingLayerAsync(result)
+                .ContinueWith((givenTask) => result);
+        }
+
+        /// <summary>
+        /// Registers the given drawing layer that is used for 2d rendering.
+        /// </summary>
         /// <param name="drawingLayer">The layer to be registered.</param>
         public Task Register2DDrawingLayerAsync(Custom2DDrawingLayer drawingLayer)
         {

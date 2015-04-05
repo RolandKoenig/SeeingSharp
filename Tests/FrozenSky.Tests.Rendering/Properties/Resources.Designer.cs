@@ -133,6 +133,16 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_DebugDawingLayer {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_DebugDawingLayer", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ReferenceImage_FlatShadedObject {
             get {
                 object obj = ResourceManager.GetObject("ReferenceImage_FlatShadedObject", resourceCulture);
@@ -156,6 +166,16 @@ namespace FrozenSky.Tests.Rendering.Properties {
         internal static System.Drawing.Bitmap ReferenceImage_PostProcess_Focus {
             get {
                 object obj = ResourceManager.GetObject("ReferenceImage_PostProcess_Focus", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_RoundedRectOver3D {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_RoundedRectOver3D", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
@@ -196,6 +216,26 @@ namespace FrozenSky.Tests.Rendering.Properties {
         internal static System.Drawing.Bitmap ReferenceImage_SimpleObject_Ortho {
             get {
                 object obj = ResourceManager.GetObject("ReferenceImage_SimpleObject_Ortho", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_SimpleRoundedRectFilled {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_SimpleRoundedRectFilled", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_SimpleText_SingleColor {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_SimpleText_SingleColor", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
