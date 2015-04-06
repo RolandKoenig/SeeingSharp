@@ -311,8 +311,7 @@ namespace FrozenSky.Multimedia.Core
         /// </summary>
         private void UnloadResources()
         {
-            // Clear all device references
-            m_devices.ClearAndDisposeAll();
+            throw new NotImplementedException();
         }
 
         /// <summary>

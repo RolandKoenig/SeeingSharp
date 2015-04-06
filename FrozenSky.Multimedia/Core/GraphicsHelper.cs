@@ -27,6 +27,7 @@ using System.Runtime.InteropServices;
 using SharpDX;
 using System.Text;
 using FrozenSky;
+using FrozenSky.Checking;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Util;
 
@@ -67,6 +68,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="device">Graphics device.</param>
         internal static DXGI.SwapChain CreateDefaultSwapChain(WinForms.Control targetControl, EngineDevice device, GraphicsViewConfiguration gfxConfig)
         {
+            targetControl.EnsureNotNull("targetControl");
+            device.EnsureNotNull("device");
+            gfxConfig.EnsureNotNull("gfxConfig");
+
             // Create the swap chain description
             DXGI.SwapChainDescription swapChainDesc = new DXGI.SwapChainDescription();
             if (gfxConfig.AntialiasingEnabled && device.IsStandardAntialiasingPossible)
@@ -111,6 +116,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="bitmap">The source bitmap.</param>
         internal static D3D11.Texture2D LoadTextureFromBitmap(EngineDevice device, GDI.Bitmap bitmap)
         {
+            device.EnsureNotNull("device");
+            bitmap.EnsureNotNull("bitmap");
+
             return LoadTextureFromBitmap(device, bitmap, 1);
         }
 
@@ -122,6 +130,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="mipLevels">Total count of levels for mipmapping.</param>
         internal static D3D11.Texture2D LoadTextureFromBitmap(EngineDevice device, GDI.Bitmap bitmap, int mipLevels)
         {
+            device.EnsureNotNull("device");
+            bitmap.EnsureNotNull("bitmap");
+            mipLevels.EnsurePositive("mipLevels");
+
             D3D11.Texture2D result = null;
 
             // Lock bitmap so it can be accessed for texture loading
@@ -130,11 +142,6 @@ namespace FrozenSky.Multimedia.Core
                 System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
             try
             {
-                // Convert pixel format form GDI to Direct3D
-                ConvertPixelFormatGdiToDirect3DOrReverse(
-                    bitmapData.Scan0, bitmapData.Stride, bitmap.Height,
-                    PixelConvertMode.GdiToDirect3D);
-
                 // Open a reading stream for bitmap memory
                 DataRectangle dataRectangle = new DataRectangle(bitmapData.Scan0, bitmap.Width * 4);
 
@@ -177,6 +184,11 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="height">The height of the texture.</param>
         internal static GDI.Bitmap LoadBitmapFromStagingTexture(EngineDevice device, D3D11.Texture2D stagingTexture, int width, int height)
         {
+            device.EnsureNotNull("device");
+            stagingTexture.EnsureNotNull("stagingTexture");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             //Prepare target bitmap 
             GDI.Bitmap resultBitmap = new GDI.Bitmap(width, height);
             SharpDX.DataBox dataBox = device.DeviceImmediateContextD3D11.MapSubresource(stagingTexture, 0, D3D11.MapMode.Read, D3D11.MapFlags.None);
@@ -200,12 +212,6 @@ namespace FrozenSky.Multimedia.Core
                             bitmapData.Scan0 + loopRow * rowPitchDestination,
                             dataBox.DataPointer + loopRow * rowPitchSource,
                             rowPitch);
-
-                        // Convert pixel data
-                        GraphicsHelper.ConvertPixelFormatGdiToDirect3DOrReverse(
-                            bitmapData.Scan0 + loopRow * rowPitchDestination,
-                            rowPitchDestination, 1,
-                            PixelConvertMode.Direct3DToGdi);
                     }
                 }
                 finally
@@ -221,7 +227,7 @@ namespace FrozenSky.Multimedia.Core
         }
 #endif
 
-#if WINRT || UNIVERSAL
+#if UNIVERSAL
         /// <summary>
         /// Creates the SwapChain object that is used on WinRT platforms.
         /// </summary>
@@ -231,6 +237,11 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="gfxConfig">Current graphics configuration.</param>
         internal static DXGI.SwapChain1 CreateSwapChainForComposition(EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+            gfxConfig.EnsureNotNull("gfxConfig");
+
             DXGI.SwapChainDescription1 desc = new SharpDX.DXGI.SwapChainDescription1()
             {
                 Width = width,
@@ -250,88 +261,6 @@ namespace FrozenSky.Multimedia.Core
 #endif
 
         /// <summary>
-        /// Switches the pixel format between GDI and Direct3D.
-        /// </summary>
-        /// <param name="scan0">Pointer to the beginning of the bitmap data in local memory.</param>
-        /// <param name="stride">Size in bytes of one line of pixels.</param>
-        /// <param name="height">The total height of the bitmap in pixels.</param>
-        internal static void ConvertPixelFormatGdiToDirect3DOrReverse(IntPtr scan0, int stride, int height, PixelConvertMode convertMode)
-        {
-            //switch(convertMode)
-            //{
-            //    case PixelConvertMode.GdiToDirect3D:
-            //        unsafe
-            //        {
-            //            byte* startPointer = (byte*)scan0;
-            //            for (int loop = 0; loop < (stride / 4) * height; loop++)
-            //            {
-            //                // Be careful: This is format ARGB in reverse order
-            //                //   .. don't know exactly why, but testet with debugger and some images
-            //                byte blueValue = startPointer[loop * 4];
-            //                byte greenValue = startPointer[loop * 4 + 1];
-            //                byte redValue = startPointer[loop * 4 + 2];
-            //                byte alphaValue = startPointer[loop * 4 + 3];
-
-            //                // Apply new format as in constant DEFAULT_TEXTURE_FORMAT
-            //                startPointer[loop * 4] = redValue;
-            //                startPointer[loop * 4 + 1] = greenValue;
-            //                startPointer[loop * 4 + 2] = blueValue;
-            //                startPointer[loop * 4 + 3] = alphaValue;
-            //            }
-            //        }
-            //        break;
-
-            //    case PixelConvertMode.Direct3DToGdi:
-            //        unsafe
-            //        {
-            //            byte* startPointer = (byte*)scan0;
-            //            for (int loop = 0; loop < (stride / 4) * height; loop++)
-            //            {
-            //                // Be careful: This is format ARGB in reverse order
-            //                //   .. don't know exactly why, but testet with debugger and some images
-            //                byte redValue = startPointer[loop * 4];
-            //                byte greenValue = startPointer[loop * 4 + 1];
-            //                byte blueValue = startPointer[loop * 4 + 2];
-            //                byte alphaValue = startPointer[loop * 4 + 3];
-
-            //                // Apply new format as in constant DEFAULT_TEXTURE_FORMAT
-            //                startPointer[loop * 4] = blueValue;
-            //                startPointer[loop * 4 + 1] = greenValue;
-            //                startPointer[loop * 4 + 2] = redValue;
-            //                startPointer[loop * 4 + 3] = alphaValue;
-            //            }
-            //        }
-            //        break;
-            //}
-        }
-
-#if WINDOWS_PHONE
-        /// <summary>
-        /// Creates a Direct3D 11 texture that can be shared between more devices.
-        /// </summary>
-        /// <param name="device">The Direct3D 11 device.</param>
-        /// <param name="width">The width of the generated texture.</param>
-        /// <param name="height">The height of the generated texture.</param>
-        internal static D3D11.Texture2D CreateSharedTextureWP8Xaml(EngineDevice device, int width, int height)
-        {
-            D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription
-            {
-                Format = DEFAULT_TEXTURE_FORMAT_SHARING,
-                Width = width,
-                Height = height,
-                ArraySize = 1,
-                MipLevels = 1,
-                BindFlags = D3D11.BindFlags.RenderTarget | D3D11.BindFlags.ShaderResource,
-                Usage = D3D11.ResourceUsage.Default,
-                CpuAccessFlags = D3D11.CpuAccessFlags.None,
-                OptionFlags = D3D11.ResourceOptionFlags.SharedKeyedmutex | D3D11.ResourceOptionFlags.SharedNthandle,
-                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0)
-            };
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
-        }
-#endif
-
-        /// <summary>
         /// Creates a Direct3D 11 texture that can be shared between more devices.
         /// </summary>
         /// <param name="device">The Direct3D 11 device.</param>
@@ -339,6 +268,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="height">The height of the generated texture.</param>
         internal static D3D11.Texture2D CreateSharedTexture(EngineDevice device, int width, int height)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription
             {
                 BindFlags = D3D11.BindFlags.RenderTarget | D3D11.BindFlags.ShaderResource,
@@ -364,6 +297,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="height">The height of the generated texture.</param>
         internal static D3D10.Texture2D CreateSharedTexture10(EngineDevice device, int width, int height)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             D3D10.Texture2DDescription textureDescription = new D3D10.Texture2DDescription
             {
                 BindFlags = D3D10.BindFlags.RenderTarget | D3D10.BindFlags.ShaderResource,
@@ -381,7 +318,6 @@ namespace FrozenSky.Multimedia.Core
         }
 #endif
 
-#if !WINDOWS_PHONE
         /// <summary>
         /// Loads the texture2 D from stream.
         /// </summary>
@@ -414,6 +350,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="inStream">The stream from wich to load the texture file.</param>
         internal static WIC.BitmapSource LoadBitmapSource(Stream inStream)
         {
+            inStream.EnsureNotNull("inStream");
+            inStream.EnsureReadable("inStream");
+
             var bitmapDecoder = new SharpDX.WIC.BitmapDecoder(
                 GraphicsCore.Current.FactoryWIC,
                 inStream,
@@ -438,6 +377,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="inStream">The file from wich to load the texture.</param>
         internal static WIC.BitmapSource LoadBitmap(string filename)
         {
+            filename.EnsureNotNullOrEmpty("filename");
+            filename.EnsureFileExists("filename");
+
             var bitmapDecoder = new SharpDX.WIC.BitmapDecoder(
                 GraphicsCore.Current.FactoryWIC,
                 filename,
@@ -465,6 +407,9 @@ namespace FrozenSky.Multimedia.Core
         /// <returns>A Texture2D</returns>
         internal static D3D11.Texture2D LoadTexture2DFromBitmap(EngineDevice device, WIC.BitmapSource bitmapSource)
         {
+            device.EnsureNotNull("device");
+            bitmapSource.EnsureNotNullOrDisposed("bitmapSource");
+
             // Allocate DataStream to receive the WIC image pixels
             int stride = bitmapSource.Size.Width * 4;
             using (var buffer = new SharpDX.DataStream(bitmapSource.Size.Height * stride, true, true))
@@ -499,7 +444,6 @@ namespace FrozenSky.Multimedia.Core
                 return result;
             }
         }
-#endif
 
 #if DESKTOP
         /// <summary>
@@ -508,6 +452,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="mappedTexture">The mapped texture from which to read all pixel data.</param>
         internal static GDI.Bitmap LoadBitmapFromMappedTexture(MemoryMappedTexture32bpp mappedTexture)
         {
+            mappedTexture.EnsureNotNull("mappedTexture");
+
             GDI.Bitmap resultBitmap = new GDI.Bitmap(mappedTexture.Width, mappedTexture.Height);
 
             //Lock bitmap so it can be accessed for texture loading
@@ -545,6 +491,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="targetControl">Target control object.</param>
         internal static SharpDX.ViewportF CreateDefaultViewport(int width, int height)
         {
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             SharpDX.ViewportF result = new SharpDX.ViewportF(
                 0f, 0f,
                 (float)width, (float)height,
@@ -561,6 +510,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="format">The format which is used to create the texture.</param>
         internal static D3D11.Texture2D CreateTexture(EngineDevice device, int width, int height, DXGI.Format format = DEFAULT_TEXTURE_FORMAT)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
             textureDescription.Width = width;
             textureDescription.Height = height;
@@ -585,6 +538,11 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="rawData">Raw data to be loaded into the texture.</param>
         internal static D3D11.Texture2D CreateTexture(EngineDevice device, int width, int height, SharpDX.DataBox[] rawData)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+            rawData.EnsureNotNull("rawData");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
             textureDescription.Width = width;
             textureDescription.Height = height;
@@ -607,6 +565,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="rawImage">Raw image data.</param>
         internal static D3D11.Texture2D CreateTexture(EngineDevice device, TKGFX.Image rawImage)
         {
+            device.EnsureNotNull("device");
+            rawImage.EnsureNotNull("rawImage");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
             textureDescription.Width = rawImage.Description.Width;
             textureDescription.Height = rawImage.Description.Height;
@@ -637,6 +598,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="format">The format used to create the texture.</param>
         internal static D3D11.Texture2D CreateStagingTexture(EngineDevice device, int width, int height, DXGI.Format format = DEFAULT_TEXTURE_FORMAT)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             //For handling of staging resource see
             // http://msdn.microsoft.com/en-us/library/windows/desktop/ff476259(v=vs.85).aspx
 
@@ -663,6 +628,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="height">Height of generated texture.</param>
         internal static D3D11.Texture2D CreateStagingTexture(EngineDevice device, int width, int height)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             //For handling of staging resource see
             // http://msdn.microsoft.com/en-us/library/windows/desktop/ff476259(v=vs.85).aspx
 
@@ -692,6 +661,11 @@ namespace FrozenSky.Multimedia.Core
         internal static D3D11.Texture2D CreateRenderTargetTextureNormalDepth(
             EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+            gfxConfig.EnsureNotNull("gfxConfig");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
 
             if ((gfxConfig.AntialiasingEnabled) &&
@@ -736,6 +710,11 @@ namespace FrozenSky.Multimedia.Core
         internal static D3D11.Texture2D CreateRenderTargetTextureObjectIDs(
             EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+            gfxConfig.EnsureNotNull("gfxConfig");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
 
             if ((gfxConfig.AntialiasingEnabled) &&
@@ -779,6 +758,11 @@ namespace FrozenSky.Multimedia.Core
         internal static D3D11.Texture2D CreateRenderTargetTexture(
             EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+            gfxConfig.EnsureNotNull("gfxConfig");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
 
             if ((gfxConfig.AntialiasingEnabled) &&
@@ -820,6 +804,11 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="height">Height of generated texture.</param>
         internal static D3D11.Texture2D CreateDepthBufferTexture(EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+            gfxConfig.EnsureNotNull("gfxConfig");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
 
             if ((gfxConfig.AntialiasingEnabled) &&
@@ -878,6 +867,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="depthBuffer">The target resource.</param>
         internal static D3D11.DepthStencilView CreateDepthBufferView(EngineDevice device, D3D11.Texture2D depthBuffer)
         {
+            device.EnsureNotNull("device");
+            depthBuffer.EnsureNotNullOrDisposed("depthBuffer");
+
             return new D3D11.DepthStencilView(device.DeviceD3D11, depthBuffer);
         }
 
@@ -887,6 +879,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="zValue">The z value to be added.</param>
         public static int GetDepthBiasValue(EngineDevice device, float zValue)
         {
+            device.EnsureNotNull("device");
+
             // Calulation depends on depth buffer format
             // see http://msdn.microsoft.com/de-de/library/windows/desktop/cc308048(v=vs.85).aspx
             // see Book "3D Game Programming With Direct3D 11, Frank D. Luna, 2012" Page 678
@@ -916,6 +910,9 @@ namespace FrozenSky.Multimedia.Core
         internal static D3D11.Buffer CreateDynamicVertexBuffer<T>(EngineDevice device, int vertexCount)
             where T : struct
         {
+            device.EnsureNotNull("device");
+            vertexCount.EnsurePositive("vertexCount");
+
             Type vertexType = typeof(T);
             int vertexSize = Marshal.SizeOf<T>();
 
@@ -939,6 +936,9 @@ namespace FrozenSky.Multimedia.Core
         internal static D3D11.Buffer CreateImmutableVertexBuffer<T>(EngineDevice device, params T[][] vertices)
             where T : struct
         {
+            device.EnsureNotNull("device");
+            vertices.EnsureNotNull("vertices");
+
             Type vertexType = typeof(T);
             int vertexCount = vertices.Sum((actArray) => actArray.Length);
             int vertexSize = Marshal.SizeOf<T>();
@@ -973,9 +973,11 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="indices">Source index array.</param>
         internal static D3D11.Buffer CreateImmutableIndexBuffer(EngineDevice device, params int[][] indices)
         {
+            device.EnsureNotNull("device");
+            indices.EnsureNotNull("indices");
+
             int countIndices = indices.Sum((actArray) => actArray.Length);
             int bytesPerIndex = device.SupportsOnly16BitIndexBuffer ? Marshal.SizeOf<ushort>() : Marshal.SizeOf<uint>();
-
 
             DataStream outStreamIndex = new DataStream(
                 countIndices *
@@ -1018,6 +1020,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="newHeight">Height of the genrated bitmap.</param>
         internal static GDI.Bitmap ResizeGdiBitmap(GDI.Bitmap bitmapToResize, int newWidth, int newHeight)
         {
+            bitmapToResize.EnsureNotNull("bitmapToResize");
+            newWidth.EnsurePositive("newWidth");
+            newHeight.EnsurePositive("newHeight");
+
             GDI.Bitmap result = new GDI.Bitmap(newWidth, newHeight);
             using (GDI.Graphics g = GDI.Graphics.FromImage((GDI.Image)result))
             {
@@ -1027,43 +1033,6 @@ namespace FrozenSky.Multimedia.Core
         }
 #endif
 
-        ///// <summary>
-        ///// Loads a Direct2D bitmap from the given gdi resource.
-        ///// </summary>
-        ///// <param name="drawingBitmap">The source gdi bitmap.</param>
-        ///// <param name="renderTarget">The RenderTarget object for wich to create the resource.</param>
-        //internal static D2D.Bitmap LoadBitmap(D2D.RenderTarget renderTarget, GDI.Bitmap drawingBitmap)
-        //{
-        //    D2D.Bitmap result = null;
-
-        //    //Lock the gdi resource
-        //    System.Drawing.Imaging.BitmapData drawingBitmapData = drawingBitmap.LockBits(
-        //        new GDI.Rectangle(0, 0, drawingBitmap.Width, drawingBitmap.Height),
-        //        System.Drawing.Imaging.ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppPArgb);
-
-        //    //Prepare loading the image from gdi resource
-        //    DataStream dataStream = new DataStream(
-        //        drawingBitmapData.Scan0,
-        //        drawingBitmapData.Stride * drawingBitmapData.Height,
-        //        true, false);
-        //    D2D.BitmapProperties properties = new D2D.BitmapProperties();
-        //    properties.PixelFormat = new D2D.PixelFormat(
-        //        DEFAULT_TEXTURE_FORMAT,
-        //        D2D.AlphaMode.Premultiplied);
-
-        //    //Load the image from the gdi resource
-        //    result = new D2D.Bitmap(
-        //        renderTarget,
-        //        new SharpDX.Size2(drawingBitmap.Width, drawingBitmap.Height),
-        //        dataStream, drawingBitmapData.Stride,
-        //        properties);
-
-        //    //Unlock the gdi resource
-        //    drawingBitmap.UnlockBits(drawingBitmapData);
-
-        //    return result;
-        //}
-
 #if DESKTOP
         /// <summary>
         /// Copies all contents of the given gdi bitmap into the given Direct2D bitmap.
@@ -1072,6 +1041,9 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="drawingBitmap">The source gdi bitmap.</param>
         internal static void SetBitmapContents(D2D.Bitmap targetBitmap, GDI.Bitmap drawingBitmap)
         {
+            targetBitmap.EnsureNotNullOrDisposed("targetBitmap");
+            drawingBitmap.EnsureNotNull("drawingBitmap");
+
             //Lock the gdi resource
             System.Drawing.Imaging.BitmapData drawingBitmapData = drawingBitmap.LockBits(
                 new GDI.Rectangle(0, 0, drawingBitmap.Width, drawingBitmap.Height),
@@ -1157,6 +1129,8 @@ namespace FrozenSky.Multimedia.Core
             string subdirectory, string shaderNameWithoutExt,
             string shaderModel)
         {
+            device.EnsureNotNull("device");
+
             // Build raw shader resource name
             StringBuilder resultBuilderNamespace = new StringBuilder(100);
             resultBuilderNamespace.Append("FrozenSky.Multimedia.Resources.Shaders.");
@@ -1190,6 +1164,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="isMinimalistic">Was minimalistic shader chosen?</param>
         internal static AssemblyResourceLink GetShaderResourceLink(EngineDevice device, string subdirectory, string shaderNameWithoutExt, string shaderModel)
         {
+            device.EnsureNotNull("device");
+
             var shaderResourcePath = GetShaderResourcePath(device, subdirectory, shaderNameWithoutExt, shaderModel);
 
             return new AssemblyResourceLink(
@@ -1205,6 +1181,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="shaderNameWithoutExt">The name of the shader without extension.</param>
         internal static VertexShaderResource GetVertexShaderResource(EngineDevice device, string subdirectory, string shaderNameWithoutExt)
         {
+            device.EnsureNotNull("device");
+
             string shaderModel = device.DefaultVertexShaderModel;
 
             AssemblyResourceLink resourceLink = GetShaderResourceLink(device, subdirectory, shaderNameWithoutExt, shaderModel);
@@ -1219,6 +1197,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="shaderNameWithoutExt">The name of the shader without extension.</param>
         internal static PixelShaderResource GetPixelShaderResource(EngineDevice device, string subdirectory, string shaderNameWithoutExt)
         {
+            device.EnsureNotNull("device");
+
             string shaderModel = device.DefaultPixelShaderModel;
 
             AssemblyResourceLink resourceLink = GetShaderResourceLink(device, subdirectory, shaderNameWithoutExt, shaderModel);
@@ -1233,6 +1213,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="samplerQualityLevel">The target sampler quality</param>
         internal static D3D11.SamplerState CreateDefaultTextureSampler(EngineDevice device, TextureSamplerQualityLevel samplerQualityLevel)
         {
+            device.EnsureNotNull("device");
+
             // Set state parameters
             var samplerDesk = D3D11.SamplerStateDescription.Default();
             switch (device.DriverLevel)
@@ -1284,6 +1266,10 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="height">Height of generated texture.</param>
         internal static D3D11.Texture2D CreateRenderTargetTextureDummy(D3D11.Device device, int width, int height)
         {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
             D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
 
             textureDescription.Width = width;

@@ -64,6 +64,7 @@
     <Compile Include="Behaviors\_Wpf\FrozenSkyPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
     <Compile Include="Checking\Ensure.cs" />
+    <Compile Include="Checking\Ensure.IO.cs" />
     <Compile Include="Checking\Ensure.Numeric.cs" />
     <Compile Include="Checking\Ensure.Rectangles.cs" />
     <Compile Include="Checking\Ensure.Vectors.cs" />

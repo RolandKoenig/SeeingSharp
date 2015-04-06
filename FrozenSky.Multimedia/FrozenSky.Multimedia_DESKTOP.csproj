@@ -341,6 +341,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResourceKeys.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
     <FrozenSky-VertexShader-Min4_0 Include="Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl" />
     <FrozenSky-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl" />
     <FrozenSky-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessBlur.hlsl" />

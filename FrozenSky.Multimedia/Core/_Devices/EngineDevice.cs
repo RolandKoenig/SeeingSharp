@@ -46,7 +46,7 @@ using D2D = SharpDX.Direct2D1;
 
 namespace FrozenSky.Multimedia.Core
 {
-    public class EngineDevice : IDisposable
+    public class EngineDevice
     {
         private const string CATEGORY_ADAPTER = "Adapter";
 
@@ -167,14 +167,6 @@ namespace FrozenSky.Multimedia.Core
         {
             m_isDetailLevelForced = true;
             m_forcedDetailLevel = detailLevel;
-        }
-
-        /// <summary>
-        /// Disposes this object.
-        /// </summary>
-        public void Dispose()
-        {
-            
         }
 
         /// <summary>

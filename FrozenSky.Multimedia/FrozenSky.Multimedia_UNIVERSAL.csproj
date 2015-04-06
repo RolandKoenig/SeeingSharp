@@ -257,6 +257,7 @@
     <Compile Include="_Extensions.cs" />
     <Compile Include="_Misc.cs" />
     <Compile Include="_Native.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
