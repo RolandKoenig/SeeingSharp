@@ -90,15 +90,17 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
-        /// Loads the resource.
+        /// Loads all resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
+        /// <param name="device">The device on which to load all resources.</param>
+        /// <param name="resources">The current ResourceDictionary.</param>
         protected abstract void LoadResourceInternal(EngineDevice device, ResourceDictionary resources);
 
         /// <summary>
-        /// Unloads the resource.
+        /// Unloads all resources.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
+        /// <param name="device">The device on which the resources where loaded.</param>
+        /// <param name="resources">The current ResourceDictionary.</param>
         protected abstract void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources);
 
         /// <summary>

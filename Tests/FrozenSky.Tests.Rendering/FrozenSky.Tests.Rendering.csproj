@@ -103,6 +103,7 @@
   <ItemGroup>
     <Resource Include="Ressources\Textures\SkyBox.dds" />
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
+    <Content Include="Ressources\ReferenceRenderings\SimpleObject_D2DTexture.png" />
     <Content Include="Ressources\ReferenceRenderings\DebugDawingLayer.png" />
     <Content Include="Ressources\ReferenceRenderings\RoundedRectOver3D.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleRoundedRectFilled.png" />

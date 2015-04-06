@@ -28,6 +28,7 @@ using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Views;
 using FrozenSky.Util;
 using FrozenSky.Multimedia.Drawing3D;
+using FrozenSky.Multimedia.Drawing2D;
 using FrozenSky.Multimedia.Objects;
 using FrozenSky.Infrastructure;
 
@@ -40,7 +41,7 @@ namespace FrozenSky.Tests.Rendering
     public class RenderToMemoryTests
     {
         public const int MANIPULATE_WAIT_TIME = 500;
-        public const string TEST_CATEGORY = "FrozenSky Multimedia Render-To-Memory";
+        public const string TEST_CATEGORY = "FrozenSky Multimedia Drawing 3D";
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
@@ -264,6 +265,70 @@ namespace FrozenSky.Tests.Rendering
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_Skybox);
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
+            }
+
+            // Finishing checks
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Render_SimpleObject_D2D_Texture()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (SolidBrushResource solidBrush = new SolidBrushResource(Color4.Gray))
+            using (TextFormatResource textFormat = new TextFormatResource("Arial", 36))
+            using (SolidBrushResource textBrush = new SolidBrushResource(Color4.RedColor))
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                // Get and configure the camera
+                PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
+                camera.Position = new Vector3(0f, 5f, -7f);
+                camera.Target = new Vector3(0f, 0f, 0f);
+                camera.UpdateCamera();
+
+                // 2D rendering is made here
+                Custom2DDrawingLayer d2dDrawingLayer = new Custom2DDrawingLayer((graphics) =>
+                {
+                    RectangleF d2dRectangle = new RectangleF(10, 10, 236, 236);
+                    graphics.Clear(Color4.LightBlue);
+                    graphics.FillRoundedRectangle(
+                        d2dRectangle, 30, 30,
+                        solidBrush);
+
+                    d2dRectangle.Inflate(-10, -10);
+                    graphics.DrawText("Hello Direct2D!", textFormat, d2dRectangle, textBrush); 
+                });
+
+                // Define scene
+                await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    var resD2DTexture = manipulator.AddResource<Direct2DTextureResource>(
+                        () => new Direct2DTextureResource(d2dDrawingLayer, 256, 256));
+                    var resD2DMaterial = manipulator.AddSimpleColoredMaterial(resD2DTexture);
+                    var geoResource = manipulator.AddResource<GeometryResource>(
+                        () => new GeometryResource(new PalletType(
+                            palletMaterial: NamedOrGenericKey.Empty,
+                            contentMaterial: resD2DMaterial)));
+
+                    GenericObject newObject = manipulator.AddGeneric(geoResource);
+                    newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
+                    newObject.Scaling = new Vector3(2f, 2f, 2f);
+                });
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                bool isNearEqual = BitmapComparison.IsNearEqual(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleObject_D2DTexture);
                 Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 
