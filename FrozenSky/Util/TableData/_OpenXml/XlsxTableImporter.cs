@@ -20,7 +20,7 @@ namespace FrozenSky.Util.TableData
         /// Creates a default importer configuration object.
         /// </summary>
         /// <param name="sourceFile">The source file for which the default configuration should be created.</param>
-        public TableImporterConfig CreateDefaultConfig(ResourceSource sourceFile)
+        public TableImporterConfig CreateDefaultConfig(ResourceLink sourceFile)
         {
             return new XlsxImporterConfig();
         }
@@ -31,7 +31,7 @@ namespace FrozenSky.Util.TableData
         /// </summary>
         /// <param name="tableFile">The file to be loaded.</param>
         /// <param name="importConfig">The configuration for the importer.</param>
-        public ITableFile OpenTableFile(ResourceSource tableFile, TableImporterConfig importConfig)
+        public ITableFile OpenTableFile(ResourceLink tableFile, TableImporterConfig importConfig)
         {
             XlsxImporterConfig xslxImporterConfig = importConfig as XlsxImporterConfig;
             if (xslxImporterConfig == null) { throw new FrozenSkyException(string.Format("Invalid configuration object: {0}", importConfig)); }

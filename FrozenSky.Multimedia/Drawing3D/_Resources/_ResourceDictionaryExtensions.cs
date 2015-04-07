@@ -78,26 +78,26 @@ namespace FrozenSky.Multimedia.Drawing3D
                        (!string.IsNullOrEmpty(textureKey.NameKey)))
                     {
                         // Try to find and create the texture resource by its name
-                        if (targetStructure.ResourceSource != null)
+                        if (targetStructure.ResourceLink != null)
                         {
-                            var textureResourceSource = targetStructure.ResourceSource.GetForAnotherFile(textureKey.NameKey);
+                            var textureResourceLink = targetStructure.ResourceLink.GetForAnotherFile(textureKey.NameKey);
                            
                             resourceDict.AddResource<StandardTextureResource>(
                                 textureKey,
                                 new StandardTextureResource(
-                                    targetStructure.ResourceSource.GetForAnotherFile(textureKey.NameKey)));
+                                    targetStructure.ResourceLink.GetForAnotherFile(textureKey.NameKey)));
                         }
                         else if (targetStructure.ResourceSourceAssembly != null)
                         {
-                            var textureResourceSource = new AssemblyResourceLink(
+                            var textureResourceLink = new AssemblyResourceLink(
                                 targetStructure.ResourceSourceAssembly,
                                 targetStructure.ResourceSourceAssembly.GetName().Name + ".Resources.Textures",
                                 textureKey.NameKey);
-                            if (textureResourceSource.IsValid())
+                            if (textureResourceLink.IsValid())
                             {
                                 resourceDict.AddResource<StandardTextureResource>(
                                     textureKey,
-                                    new StandardTextureResource(textureResourceSource));
+                                    new StandardTextureResource(textureResourceLink));
                             }
                             else
                             {

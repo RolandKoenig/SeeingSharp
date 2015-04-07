@@ -275,7 +275,7 @@ namespace FrozenSky.Tests.Rendering
                 camera.Target = new Vector3(1f, 0f, 1f);
                 camera.UpdateCamera();
 
-                ResourceSource objSource = new AssemblyResourceLink(
+                ResourceLink objSource = new AssemblyResourceLink(
                     typeof(ModelLoadingAndRenderingTests),
                     "Ressources.Models.ModelShaded.ac");
                 importedObjects = await memRenderTarget.Scene.ImportAsync(objSource);

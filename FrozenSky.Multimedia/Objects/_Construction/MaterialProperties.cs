@@ -52,7 +52,7 @@ namespace FrozenSky.Multimedia.Objects
         /// <summary>
         /// Gets or sets the original source of this geometry / material.
         /// </summary>
-        public ResourceSource ResourceSource
+        public ResourceLink ResourceLink
         {
             get;
             set;

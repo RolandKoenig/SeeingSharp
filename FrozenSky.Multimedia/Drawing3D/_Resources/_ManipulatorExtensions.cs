@@ -36,7 +36,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// </summary>
         /// <param name="sceneManipulator">The manipulator of the scene.</param>
         /// <param name="textureSource">The source of the texture.</param>
-        public static NamedOrGenericKey AddTexture(this SceneManipulator sceneManipulator, ResourceSource textureSource)
+        public static NamedOrGenericKey AddTexture(this SceneManipulator sceneManipulator, ResourceLink textureSource)
         {
             return sceneManipulator.AddResource<StandardTextureResource>(() => new StandardTextureResource(textureSource));
         }
@@ -49,8 +49,8 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <param name="textureSourceLowQuality">The texture in low quality.</param>
         public static NamedOrGenericKey AddTexture(
             this SceneManipulator sceneManipulator, 
-            ResourceSource textureSourceHighQuality,
-            ResourceSource textureSourceLowQuality)
+            ResourceLink textureSourceHighQuality,
+            ResourceLink textureSourceLowQuality)
         {
             return sceneManipulator.AddResource<StandardTextureResource>(() => new StandardTextureResource(textureSourceHighQuality, textureSourceLowQuality));
         }
@@ -79,7 +79,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// </summary>
         /// <param name="sceneManipulator">The manipulator of the scene.</param>
         /// <param name="textureSource">The source of the texture which should be loaded.</param>
-        public static NamedOrGenericKey AddSimpleColoredMaterial(this SceneManipulator sceneManipulator, ResourceSource textureSource)
+        public static NamedOrGenericKey AddSimpleColoredMaterial(this SceneManipulator sceneManipulator, ResourceLink textureSource)
         {
             NamedOrGenericKey resTexture = sceneManipulator.AddTexture(textureSource);
             return sceneManipulator.AddResource<SimpleColoredMaterialResource>(() => new SimpleColoredMaterialResource(resTexture));
@@ -93,7 +93,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <param name="textureSourceLowQuality">The source of the texture with low quality.</param>
         public static NamedOrGenericKey AddSimpleColoredMaterial(
             this SceneManipulator sceneManipulator, 
-            ResourceSource textureSourceHighQuality, ResourceSource textureSourceLowQuality)
+            ResourceLink textureSourceHighQuality, ResourceLink textureSourceLowQuality)
         {
             NamedOrGenericKey resTexture = sceneManipulator.AddTexture(textureSourceHighQuality, textureSourceLowQuality);
             return sceneManipulator.AddResource<SimpleColoredMaterialResource>(() => new SimpleColoredMaterialResource(resTexture));

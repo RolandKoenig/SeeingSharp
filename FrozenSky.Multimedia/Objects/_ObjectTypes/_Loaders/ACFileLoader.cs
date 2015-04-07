@@ -53,12 +53,12 @@ namespace FrozenSky.Multimedia.Objects
         /// <summary>
         /// Imports a ac file from the given stream.
         /// </summary>
-        /// <param name="resourceSource">The link to the ac file.</param>
-        public static ObjectType ImportObjectType(ResourceSource resourceSource)
+        /// <param name="resourceLink">The link to the ac file.</param>
+        public static ObjectType ImportObjectType(ResourceLink resourceLink)
         {
-            using (Stream inStream = resourceSource.OpenInputStream())
+            using (Stream inStream = resourceLink.OpenInputStream())
             {
-                VertexStructure[] structures = ImportVertexStructures(inStream, resourceSource);
+                VertexStructure[] structures = ImportVertexStructures(inStream, resourceLink);
                 return new GenericObjectType(structures);
             }
         }
@@ -77,7 +77,7 @@ namespace FrozenSky.Multimedia.Objects
         /// </summary>
         /// <param name="inStream">The stream to load the data from.</param>
         /// <param name="originalSource">The original source of the generated geometry.</param>
-        public static VertexStructure[] ImportVertexStructures(Stream inStream, ResourceSource originalSource)
+        public static VertexStructure[] ImportVertexStructures(Stream inStream, ResourceLink originalSource)
         {
             try
             {
@@ -90,7 +90,7 @@ namespace FrozenSky.Multimedia.Objects
                 {
                     for (int loop = 0; loop < result.Length; loop++)
                     {
-                        result[loop].ResourceSource = originalSource;
+                        result[loop].ResourceLink = originalSource;
                     }
                 }
 

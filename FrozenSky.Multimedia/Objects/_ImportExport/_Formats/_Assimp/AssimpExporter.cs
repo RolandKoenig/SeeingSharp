@@ -25,7 +25,7 @@
 //        /// <param name="modelContainer">The model(s) to export.</param>
 //        /// <param name="targetFile">The path to the target file.</param>
 //        /// <param name="exportOptions">Some configuration for the exporter.</param>
-//        public void ExportModelAsync(ImportedModelContainer modelContainer, ResourceSource targetFile, ExportOptions exportOptions)
+//        public void ExportModelAsync(ImportedModelContainer modelContainer, ResourceLink targetFile, ExportOptions exportOptions)
 //        {
             
 //        }

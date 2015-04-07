@@ -30,13 +30,13 @@
 //{
 //    internal class FrozenSkyAssimpIOSystem : Assimp.IOSystem
 //    {
-//        private ResourceSource m_originalSource;
+//        private ResourceLink m_originalSource;
 
 //        /// <summary>
 //        /// Initializes a new instance of the <see cref="FrozenSkyAssimpIOSystem"/> class.
 //        /// </summary>
 //        /// <param name="originalSource">The original source.</param>
-//        public FrozenSkyAssimpIOSystem(ResourceSource originalSource)
+//        public FrozenSkyAssimpIOSystem(ResourceLink originalSource)
 //        {
 //            m_originalSource = originalSource;
 //        }

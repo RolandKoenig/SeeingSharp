@@ -1,7 +1,7 @@
 ﻿#region License information (FrozenSky and all based games/applications)
 /*
     FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
-    Copyright (C) 2014 Roland König (RolandK)
+    Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -17,6 +17,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+
 using FrozenSky.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -33,7 +34,7 @@ using Windows.Storage;
 
 namespace FrozenSky.Util
 {
-    public class ResourceSource
+    public class ResourceLink
     {
         private Func<Stream> m_streamFactory;
         private string m_fileName;
@@ -45,60 +46,60 @@ namespace FrozenSky.Util
 #endif
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceSource" /> class.
+        /// Initializes a new instance of the <see cref="ResourceLink" /> class.
         /// </summary>
         /// <param name="fileName">Name of the physical file.</param>
-        public ResourceSource(string fileName)
+        public ResourceLink(string fileName)
         {
             m_fileName = fileName;
         }
 
 #if UNIVERSAL
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceSource"/> class.
+        /// Initializes a new instance of the <see cref="ResourceLink"/> class.
         /// </summary>
         /// <param name="storageFile">The reference to the WinRT StorageFile object.</param>
-        public ResourceSource(StorageFile storageFile)
+        public ResourceLink(StorageFile storageFile)
         {
             m_storageFile = storageFile;
         }
 #endif
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceSource" /> class.
+        /// Initializes a new instance of the <see cref="ResourceLink" /> class.
         /// </summary>
         /// <param name="resourceLink">The assembly resource link.</param>
-        public ResourceSource(AssemblyResourceLink resourceLink)
+        public ResourceLink(AssemblyResourceLink resourceLink)
         {
             m_fileName = string.Empty;
             m_resourceLink = resourceLink;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceSource" /> class.
+        /// Initializes a new instance of the <see cref="ResourceLink" /> class.
         /// </summary>
         /// <param name="resourceUri">The WPF/WinRT resource URI.</param>
-        public ResourceSource(Uri resourceUri)
+        public ResourceLink(Uri resourceUri)
         {
             m_fileName = string.Empty;
             m_resourceUri = resourceUri;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceSource"/> class.
+        /// Initializes a new instance of the <see cref="ResourceLink"/> class.
         /// </summary>
         /// <param name="streamFactory">A factory method which creates a stream.</param>
-        public ResourceSource(Func<Stream> streamFactory)
+        public ResourceLink(Func<Stream> streamFactory)
         {
             m_streamFactory = streamFactory;
             m_fileName = string.Empty;
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ResourceSource"/> class.
+        /// Initializes a new instance of the <see cref="ResourceLink"/> class.
         /// </summary>
         /// <param name="uriBuilder">The URI builder.</param>
-        public ResourceSource(AssemblyResourceUriBuilder uriBuilder)
+        public ResourceLink(AssemblyResourceUriBuilder uriBuilder)
         {
             m_fileName = string.Empty;
             m_uriBuilder = uriBuilder;
@@ -141,8 +142,8 @@ namespace FrozenSky.Util
         /// <summary>
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>
-        /// <param name="newFileName">The new file name for which to get the ResourceSource object.</param>
-        public ResourceSource GetForAnotherFile(string newFileName)
+        /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+        public ResourceLink GetForAnotherFile(string newFileName)
         {
             // Handle file path on hard disc
             if(!string.IsNullOrEmpty(m_fileName))
@@ -150,18 +151,18 @@ namespace FrozenSky.Util
                 string directoryName = Path.GetDirectoryName(m_fileName);
                 if(!string.IsNullOrEmpty(directoryName))
                 {
-                    return new ResourceSource(Path.Combine(directoryName, newFileName));
+                    return new ResourceLink(Path.Combine(directoryName, newFileName));
                 }
                 else
                 {
-                    return new ResourceSource(newFileName);
+                    return new ResourceLink(newFileName);
                 }
             }
 
             // Handle AssemblyResourceLink objects
             if(m_resourceLink != null)
             {
-                return new ResourceSource(m_resourceLink.GetForAnotherFile(newFileName));
+                return new ResourceLink(m_resourceLink.GetForAnotherFile(newFileName));
             }
 
             if(m_resourceUri != null)
@@ -176,7 +177,7 @@ namespace FrozenSky.Util
             }
 #endif
 
-            throw new FrozenSkyException("Unable to get a new ResourceSource object for file " + newFileName + "!");
+            throw new FrozenSkyException("Unable to get a new ResourceLink object for file " + newFileName + "!");
         }
 
         /// <summary>
@@ -190,7 +191,7 @@ namespace FrozenSky.Util
 #if DESKTOP || WINDOWS_PHONE
                 return new FileStream(m_fileName, FileMode.Create, FileAccess.Write);
 #else
-            throw new FrozenSkyException("Writing to this ResourceSource not supported!");
+            throw new FrozenSkyException("Writing to this ResourceLink not supported!");
 #endif
             }
 
@@ -201,7 +202,7 @@ namespace FrozenSky.Util
             }
 #endif
 
-            throw new FrozenSkyException("Writing to this ResourceSource not supported!");
+            throw new FrozenSkyException("Writing to this ResourceLink not supported!");
         }
 
         /// <summary>
@@ -301,36 +302,36 @@ namespace FrozenSky.Util
         }
 
 
-        public static implicit operator ResourceSource(string fileName)
+        public static implicit operator ResourceLink(string fileName)
         {
-            return new ResourceSource(fileName);
+            return new ResourceLink(fileName);
         }
 
 #if UNIVERSAL
-        public static implicit operator ResourceSource(StorageFile storageFile)
+        public static implicit operator ResourceLink(StorageFile storageFile)
         {
-            return new ResourceSource(storageFile);
+            return new ResourceLink(storageFile);
         }
 #endif
 
-        public static implicit operator ResourceSource(AssemblyResourceLink resourceLink)
+        public static implicit operator ResourceLink(AssemblyResourceLink resourceLink)
         {
-            return new ResourceSource(resourceLink);
+            return new ResourceLink(resourceLink);
         }
 
-        public static implicit operator ResourceSource(Uri resourceUri)
+        public static implicit operator ResourceLink(Uri resourceUri)
         {
-            return new ResourceSource(resourceUri);
+            return new ResourceLink(resourceUri);
         }
 
-        public static implicit operator ResourceSource(Func<Stream> streamFactory)
+        public static implicit operator ResourceLink(Func<Stream> streamFactory)
         {
-            return new ResourceSource(streamFactory);
+            return new ResourceLink(streamFactory);
         }
 
-        public static implicit operator ResourceSource(AssemblyResourceUriBuilder uriBuilder)
+        public static implicit operator ResourceLink(AssemblyResourceUriBuilder uriBuilder)
         {
-            return new ResourceSource(uriBuilder);
+            return new ResourceLink(uriBuilder);
         }
     }
 }

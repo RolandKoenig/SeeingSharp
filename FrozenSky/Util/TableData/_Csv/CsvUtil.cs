@@ -43,7 +43,7 @@ namespace FrozenSky.Util.TableData
         /// </summary>
         /// <param name="sourceFile">The source file to be loaded.</param>
         /// <param name="importerConfig">The configuration of the importer.</param>
-        internal static StreamReader OpenReader(ResourceSource sourceFile, CsvImporterConfig importerConfig)
+        internal static StreamReader OpenReader(ResourceLink sourceFile, CsvImporterConfig importerConfig)
         {
             if (importerConfig.Encoding != null) { return new StreamReader(sourceFile.OpenInputStream(), importerConfig.Encoding); }
             else { return new StreamReader(sourceFile.OpenInputStream()); }

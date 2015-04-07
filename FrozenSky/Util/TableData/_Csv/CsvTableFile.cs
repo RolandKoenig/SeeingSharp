@@ -15,7 +15,7 @@ namespace FrozenSky.Util.TableData
 
         // Configuration members
         #region
-        private ResourceSource m_tableFileSource;
+        private ResourceLink m_tableFileSource;
         private CsvImporterConfig m_importerConfig;
         #endregion
 
@@ -29,7 +29,7 @@ namespace FrozenSky.Util.TableData
         /// </summary>
         /// <param name="tableFileSource">The file from which to load the table data.</param>
         /// <param name="importerConfig">The configuration for the import process.</param>
-        internal CsvTableFile(ResourceSource tableFileSource, CsvImporterConfig importerConfig)
+        internal CsvTableFile(ResourceLink tableFileSource, CsvImporterConfig importerConfig)
         {
             m_importerConfig = importerConfig;
             m_tableFileSource = tableFileSource;

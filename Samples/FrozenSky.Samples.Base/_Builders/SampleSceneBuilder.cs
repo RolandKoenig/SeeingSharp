@@ -43,11 +43,11 @@ namespace FrozenSky.Samples.Base
             manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 1);
 
 #if DESKTOP || WINDOWS_PHONE
-            ResourceSource sourceWallTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Background.dds", UriKind.Relative);
-            ResourceSource sourceTileTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Floor.dds", UriKind.Relative);
+            ResourceLink sourceWallTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Background.dds", UriKind.Relative);
+            ResourceLink sourceTileTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Floor.dds", UriKind.Relative);
 #else
-            ResourceSource sourceWallTexture = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/Background.png");
-            ResourceSource sourceTileTexture = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/Floor.png");
+            ResourceLink sourceWallTexture = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/Background.png");
+            ResourceLink sourceTileTexture = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/Floor.png");
 #endif
 
             var resBackgroundTexture = manipulator.AddTexture(sourceWallTexture);

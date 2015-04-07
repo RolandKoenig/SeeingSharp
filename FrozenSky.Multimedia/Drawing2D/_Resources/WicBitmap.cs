@@ -70,11 +70,11 @@ namespace FrozenSky.Multimedia.Drawing2D
         /// <summary>
         /// Creates a WIC bitmap from the given source.
         /// </summary>
-        /// <param name="resourceSource">The source of the resource.</param>
-        public static async Task<WicBitmap> FromResourceSourceAsync(ResourceSource resourceSource)
+        /// <param name="resourceLink">The source of the resource.</param>
+        public static async Task<WicBitmap> FromResourceLinkAsync(ResourceLink resourceLink)
         {
             WIC.Bitmap wicBitmap = null;
-            using (Stream inStream = await resourceSource.OpenInputStreamAsync())
+            using (Stream inStream = await resourceLink.OpenInputStreamAsync())
             using (WIC.BitmapSource bitmapSource = await CommonTools.CallAsync(() => GraphicsHelper.LoadBitmapSource(inStream)))
             {
                 wicBitmap = new WIC.Bitmap(

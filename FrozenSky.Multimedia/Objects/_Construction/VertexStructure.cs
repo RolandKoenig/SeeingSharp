@@ -915,10 +915,10 @@ namespace FrozenSky.Multimedia.Objects
         /// <summary>
         /// Gets or sets the original source of this geometry.
         /// </summary>
-        public ResourceSource ResourceSource
+        public ResourceLink ResourceLink
         {
-            get { return m_materialProperties.ResourceSource; }
-            set { m_materialProperties.ResourceSource = value; }
+            get { return m_materialProperties.ResourceLink; }
+            set { m_materialProperties.ResourceLink = value; }
         }
 
         /// <summary>

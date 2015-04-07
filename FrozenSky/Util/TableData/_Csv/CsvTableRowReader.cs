@@ -13,7 +13,7 @@ namespace FrozenSky.Util.TableData
         private CsvTableFile m_parentFile;
         private StreamReader m_inStreamReader;
 
-        internal CsvTableRowReader(CsvTableFile parentFile, ResourceSource csvFile)
+        internal CsvTableRowReader(CsvTableFile parentFile, ResourceLink csvFile)
         {
             // Open the csv file for reading
             m_parentFile = parentFile;

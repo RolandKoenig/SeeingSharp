@@ -38,8 +38,8 @@ namespace FrozenSky.Multimedia.Drawing3D
     public class StandardTextureResource : TextureResource
     {
         // Given configuration
-        private ResourceSource m_resourceSourceHighQuality;
-        private ResourceSource m_resourceSourceLowQuality;
+        private ResourceLink m_resourceLinkHighQuality;
+        private ResourceLink m_resourceLinkLowQuality;
 
         // Loaded resources
         private D3D11.Texture2D m_texture;
@@ -52,10 +52,10 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// Initializes a new instance of the <see cref="StandardTextureResource" /> class.
         /// </summary>
         /// <param name="fileName">Name of the file.</param>
-        public StandardTextureResource(ResourceSource textureSource)
+        public StandardTextureResource(ResourceLink textureSource)
         {
-            m_resourceSourceHighQuality = textureSource;
-            m_resourceSourceLowQuality = textureSource;
+            m_resourceLinkHighQuality = textureSource;
+            m_resourceLinkLowQuality = textureSource;
         }
 
         internal StandardTextureResource(byte[] textureBytes, int width, int height, DXGI.Format textureFormat)
@@ -68,10 +68,10 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// </summary>
         /// <param name="highQualityTextureSource">High quality version of the texture.</param>
         /// <param name="lowQualityTextureSource">Low quality version of the texture.</param>
-        public StandardTextureResource(ResourceSource highQualityTextureSource, ResourceSource lowQualityTextureSource)
+        public StandardTextureResource(ResourceLink highQualityTextureSource, ResourceLink lowQualityTextureSource)
         {
-            m_resourceSourceHighQuality = highQualityTextureSource;
-            m_resourceSourceLowQuality = lowQualityTextureSource;
+            m_resourceLinkHighQuality = highQualityTextureSource;
+            m_resourceLinkLowQuality = lowQualityTextureSource;
         }
 
         /// <summary>
@@ -82,8 +82,8 @@ namespace FrozenSky.Multimedia.Drawing3D
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             // Select source texture
-            ResourceSource source = m_resourceSourceLowQuality;
-            if (device.Configuration.TextureQuality == TextureQuality.Hight) { source = m_resourceSourceHighQuality; }
+            ResourceLink source = m_resourceLinkLowQuality;
+            if (device.Configuration.TextureQuality == TextureQuality.Hight) { source = m_resourceLinkHighQuality; }
 
             // Load the texture
             try

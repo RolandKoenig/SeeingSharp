@@ -29,7 +29,7 @@ namespace FrozenSky.Multimedia.Objects
         /// </summary>
         /// <param name="importOptions">Some configuration for the importer.</param>
         /// <param name="sourceFile">The source file to be loaded.</param>
-        ImportedModelContainer ImportModel(ResourceSource sourceFile, ImportOptions importOptions);
+        ImportedModelContainer ImportModel(ResourceLink sourceFile, ImportOptions importOptions);
 
         /// <summary>
         /// Creates a default import options object for this importer.

@@ -117,7 +117,7 @@
     <Compile Include="Util\TableData\_Csv\CsvTableRow.cs" />
     <Compile Include="Util\TableData\_Csv\CsvTableRowReader.cs" />
     <Compile Include="Util\TableData\_Csv\CsvUtil.cs" />
-    <Compile Include="Util\_IO\ResourceSource.cs" />
+    <Compile Include="Util\_IO\ResourceLink.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceFileAttribute.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceInfo.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceLink.cs" />

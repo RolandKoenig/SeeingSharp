@@ -30,7 +30,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         // Generic members
         private string m_shaderProfile;
         private byte[] m_shaderBytecode;
-        private ResourceSource m_resourceSource;
+        private ResourceLink m_resourceLink;
 
         ///// <summary>
         ///// Initializes a new instance of the <see cref="ShaderResource"/> class.
@@ -50,11 +50,11 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// Initializes a new instance of the <see cref="ShaderResource"/> class.
         /// </summary>
         /// <param name="shaderProfile">Shader profile used for compilation.</param>
-        /// <param name="resourceSource">The source of the resource.</param>
-        protected ShaderResource(string shaderProfile, ResourceSource resourceSource)
+        /// <param name="resourceLink">The source of the resource.</param>
+        protected ShaderResource(string shaderProfile, ResourceLink resourceLink)
         {
             m_shaderProfile = shaderProfile;
-            m_resourceSource = resourceSource;
+            m_resourceLink = resourceLink;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             //Load the shader itself
             if (m_shaderBytecode == null)
             {
-                using (Stream inStream = m_resourceSource.OpenInputStream())
+                using (Stream inStream = m_resourceLink.OpenInputStream())
                 {
                     m_shaderBytecode = inStream.ReadAllBytes();
                 }

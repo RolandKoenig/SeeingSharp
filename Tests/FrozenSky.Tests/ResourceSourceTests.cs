@@ -23,18 +23,18 @@ using Xunit;
 
 namespace FrozenSky.Tests
 {
-    public class ResourceSourceTests
+    public class ResourceLinkTests
     {
-        public const string TEST_CATEGORY = "FrozenSky ResourceSource";
+        public const string TEST_CATEGORY = "FrozenSky ResourceLink";
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
         public void GetFileExtension_StandardFile()
         {
-            ResourceSource extCS = new ResourceSource("C:/Blub/Blub.cs");
-            ResourceSource extC = new ResourceSource("C:/Blub/Blub.c");
-            ResourceSource extNull = new ResourceSource("C:/Club/Blub");
-            ResourceSource extVB = new ResourceSource("C:/Club/Blub.cs.vb");
+            ResourceLink extCS = new ResourceLink("C:/Blub/Blub.cs");
+            ResourceLink extC = new ResourceLink("C:/Blub/Blub.c");
+            ResourceLink extNull = new ResourceLink("C:/Club/Blub");
+            ResourceLink extVB = new ResourceLink("C:/Club/Blub.cs.vb");
 
             Assert.True(extCS.FileExtension == "cs");
             Assert.True(extC.FileExtension == "c");
@@ -53,8 +53,8 @@ namespace FrozenSky.Tests
                 new System.Windows.Application();
             }
 
-            ResourceSource extPNG = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/LogoTexture.png", UriKind.Relative);
-            ResourceSource extJPG = new Uri("pack://application:,,,/FrozenSky.Tests;component/Resources/Textures/Background.jpg");
+            ResourceLink extPNG = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/LogoTexture.png", UriKind.Relative);
+            ResourceLink extJPG = new Uri("pack://application:,,,/FrozenSky.Tests;component/Resources/Textures/Background.jpg");
 
             Assert.True(extPNG.FileExtension == "png");
             Assert.True(extJPG.FileExtension == "jpg");
@@ -64,7 +64,7 @@ namespace FrozenSky.Tests
         [Trait("Category", TEST_CATEGORY)]
         public void GetFileExtension_WinRTResourceUri()
         {
-            ResourceSource extPNG = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/LogoTexture.png");
+            ResourceLink extPNG = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/LogoTexture.png");
 
             Assert.True(extPNG.FileExtension == "png");
         }
@@ -73,8 +73,8 @@ namespace FrozenSky.Tests
         [Trait("Category", TEST_CATEGORY)]
         public void GetFileExtension_AssemblyResourceLink()
         {
-            ResourceSource extPNG = new AssemblyResourceLink(this.GetType(), "DummyNamespace.DummyFile.png");
-            ResourceSource extJPG = extPNG.GetForAnotherFile("Dummy.jpg");
+            ResourceLink extPNG = new AssemblyResourceLink(this.GetType(), "DummyNamespace.DummyFile.png");
+            ResourceLink extJPG = extPNG.GetForAnotherFile("Dummy.jpg");
 
             Assert.True(extPNG.FileExtension == "png");
             Assert.True(extJPG.FileExtension == "jpg");

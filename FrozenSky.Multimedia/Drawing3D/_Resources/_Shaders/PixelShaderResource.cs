@@ -35,9 +35,9 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// Initializes a new instance of the <see cref="VertexShaderResource" /> class.
         /// </summary>
         /// <param name="shaderProfile">Shader profile used for compiling.</param>
-        /// <param name="resourceSource">The resource source.</param>
-        public PixelShaderResource(string shaderProfile, ResourceSource resourceSource)
-            : base(shaderProfile, resourceSource)
+        /// <param name="resourceLink">The resourceLink.</param>
+        public PixelShaderResource(string shaderProfile, ResourceLink resourceLink)
+            : base(shaderProfile, resourceLink)
         {
 
         }

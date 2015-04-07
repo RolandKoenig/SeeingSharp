@@ -53,7 +53,7 @@
 //        /// <param name="sourceFile">The source file to be loaded.</param>
 //        /// <param name="importOptions">Some configuration for the importer.</param>
 //        /// <returns></returns>
-//        public ImportedModelContainer ImportModel(ResourceSource sourceFile, ImportOptions importOptions)
+//        public ImportedModelContainer ImportModel(ResourceLink sourceFile, ImportOptions importOptions)
 //        {
 //            ImportedModelContainer result = new ImportedModelContainer(importOptions);
 
@@ -93,7 +93,7 @@
 //        /// <param name="container">The target container object.</param>
 //        /// <param name="importedScene">The scene to be imported.</param>
 //        /// <param name="sourceFile">The original source file.</param>
-//        private void ImportGeometry(ImportedModelContainer container, Assimp.Scene importedScene, ResourceSource sourceFile)
+//        private void ImportGeometry(ImportedModelContainer container, Assimp.Scene importedScene, ResourceLink sourceFile)
 //        {
 //            for (int actMeshID = 0; actMeshID < importedScene.MeshCount; actMeshID++)
 //            {
@@ -182,7 +182,7 @@
 //        /// <param name="container">The target container object.</param>
 //        /// <param name="importedScene">The scene to be imported.</param>
 //        /// <param name="sourceFile">The original source file</param>
-//        private void ImportMaterials(ImportedModelContainer container, Assimp.Scene importedScene, ResourceSource sourceFile)
+//        private void ImportMaterials(ImportedModelContainer container, Assimp.Scene importedScene, ResourceLink sourceFile)
 //        {
 //            for(int actMaterialID =0; actMaterialID < importedScene.MaterialCount; actMaterialID++)
 //            {
@@ -195,7 +195,7 @@
 //                {
 //                    textureKey = container.GetResourceKey(RES_CLASS_TEXTURE, actMaterialID.ToString());
 //                    Assimp.TextureSlot textureInfo = actMaterial.GetTexture(Assimp.TextureType.Diffuse, 0);
-//                    ResourceSource textureFile = sourceFile.GetForAnotherFile(textureInfo.FilePath);
+//                    ResourceLink textureFile = sourceFile.GetForAnotherFile(textureInfo.FilePath);
 //                    container.ImportedResources.Add(new ImportedResourceInfo(
 //                        textureKey,
 //                        () => new StandardTextureResource(textureFile)));

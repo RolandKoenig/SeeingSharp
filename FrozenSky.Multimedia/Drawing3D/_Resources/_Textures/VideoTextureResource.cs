@@ -39,7 +39,7 @@ namespace FrozenSky.Multimedia.Drawing3D
     /// </summary>
     public class VideoTextureResource : TextureResource
     {
-        private ResourceSource m_videoSource;
+        private ResourceLink m_videoSource;
 
         // Direct3D resources
         #region
@@ -55,7 +55,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         private MF.SourceReader m_sourceReader;
         #endregion
 
-        public VideoTextureResource(ResourceSource videoSource)
+        public VideoTextureResource(ResourceLink videoSource)
         {
             videoSource.EnsureNotNull("videoSource");
 

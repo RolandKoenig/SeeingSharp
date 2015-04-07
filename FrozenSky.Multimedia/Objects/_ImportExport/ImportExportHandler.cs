@@ -123,7 +123,7 @@ namespace FrozenSky.Multimedia.Objects
         /// Creates an ImportOptions object by the given source.
         /// </summary>
         /// <param name="source">The source of the resource.</param>
-        public ImportOptions CreateImportOptions(ResourceSource source)
+        public ImportOptions CreateImportOptions(ResourceLink source)
         {
             IModelImporter importer = GetImporterBySource(source);
             return importer.CreateDefaultImportOptions();
@@ -143,7 +143,7 @@ namespace FrozenSky.Multimedia.Objects
         /// Imports model(s) from the given source.
         /// </summary>
         /// <param name="source">The source where to load all objects from..</param>
-        public Task<ImportedModelContainer> ImportAsync(ResourceSource source)
+        public Task<ImportedModelContainer> ImportAsync(ResourceLink source)
         {
             return ImportAsync(source, null);
         }
@@ -153,7 +153,7 @@ namespace FrozenSky.Multimedia.Objects
         /// </summary>
         /// <param name="source">The source where to load all objects from..</param>
         /// <param name="importOptions">The import options.</param>
-        public Task<ImportedModelContainer> ImportAsync(ResourceSource source, ImportOptions importOptions)
+        public Task<ImportedModelContainer> ImportAsync(ResourceLink source, ImportOptions importOptions)
         {
             IModelImporter importer = GetImporterBySource(source);
             if (importOptions == null) { importOptions = importer.CreateDefaultImportOptions(); }
@@ -169,7 +169,7 @@ namespace FrozenSky.Multimedia.Objects
         /// Gets a ModelImporter by the given source.
         /// </summary>
         /// <param name="source">The source of the resource.</param>
-        private IModelImporter GetImporterBySource(ResourceSource source)
+        private IModelImporter GetImporterBySource(ResourceLink source)
         {
             // Query for file extension
             string fileExtension = source.FileExtension;

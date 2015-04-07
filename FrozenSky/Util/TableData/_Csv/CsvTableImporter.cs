@@ -22,7 +22,7 @@ namespace FrozenSky.Util.TableData
         /// Creates a default importer configuration object.
         /// </summary>
         /// <param name="sourceFile">The source file for which the default configuration should be created.</param>
-        public TableImporterConfig CreateDefaultConfig(ResourceSource sourceFile)
+        public TableImporterConfig CreateDefaultConfig(ResourceLink sourceFile)
         {
             switch(sourceFile.FileExtension.ToLower())
             {
@@ -45,7 +45,7 @@ namespace FrozenSky.Util.TableData
         /// </summary>
         /// <param name="tableFileSource">The file to be loaded.</param>
         /// <param name="importerConfig">Configuration for the import process.</param>
-        public ITableFile OpenTableFile(ResourceSource tableFileSource, TableImporterConfig importerConfig)
+        public ITableFile OpenTableFile(ResourceLink tableFileSource, TableImporterConfig importerConfig)
         {
             CsvImporterConfig csvImporterConfig = importerConfig as CsvImporterConfig;
             if (csvImporterConfig == null) { throw new FrozenSkyException(string.Format("Invalid configuration object: {0}", importerConfig)); }

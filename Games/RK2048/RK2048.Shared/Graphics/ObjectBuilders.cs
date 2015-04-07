@@ -93,8 +93,8 @@ namespace RK2048.Graphics
         /// <param name="manipulator">The manipulator that is used for building.</param>
         public static void BuildGameField(this SceneManipulator manipulator)
         {
-            ResourceSource sourceTileTexture = new AssemblyResourceUriBuilder("RK2048", true, "Assets/Textures/Floor.png");
-            ResourceSource sourceTileTextureLow = new AssemblyResourceUriBuilder("RK2048", true, "Assets/Textures/Floor.Low.png");
+            ResourceLink sourceTileTexture = new AssemblyResourceUriBuilder("RK2048", true, "Assets/Textures/Floor.png");
+            ResourceLink sourceTileTextureLow = new AssemblyResourceUriBuilder("RK2048", true, "Assets/Textures/Floor.Low.png");
 
             // Define textures and materials
             var resTileTexture = manipulator.AddResource(() => new StandardTextureResource(sourceTileTexture, sourceTileTextureLow));

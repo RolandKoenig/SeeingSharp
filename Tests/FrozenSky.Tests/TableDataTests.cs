@@ -17,7 +17,7 @@ namespace FrozenSky.Tests
         [Trait("Category", TEST_CATEGORY)]
         public void Load_DummyData_Csv()
         {
-            ResourceSource tableSource = new AssemblyResourceLink(
+            ResourceLink tableSource = new AssemblyResourceLink(
                 typeof(TableDataTests), "Resources.TableData.DummyData.csv");
 
             CsvTableImporter tableImporter = new CsvTableImporter();
@@ -28,7 +28,7 @@ namespace FrozenSky.Tests
         [Trait("Category", TEST_CATEGORY)]
         public void Load_DummyData_Txt()
         {
-            ResourceSource tableSource = new AssemblyResourceLink(
+            ResourceLink tableSource = new AssemblyResourceLink(
                 typeof(TableDataTests), "Resources.TableData.DummyData.txt");
 
             CsvTableImporter tableImporter = new CsvTableImporter();
@@ -39,7 +39,7 @@ namespace FrozenSky.Tests
         [Trait("Category", TEST_CATEGORY)]
         public void Load_DummyData_Xlsx()
         {
-            ResourceSource tableSource = new AssemblyResourceLink(
+            ResourceLink tableSource = new AssemblyResourceLink(
                 typeof(TableDataTests), "Resources.TableData.DummyData.xlsx");
 
             XlsxTableImporter tableImporter = new XlsxTableImporter();
@@ -51,7 +51,7 @@ namespace FrozenSky.Tests
         public void Load_DataWithFormulasAndLinks_Xlsx()
         {
             // Define data source
-            ResourceSource tableSource = new AssemblyResourceLink(
+            ResourceLink tableSource = new AssemblyResourceLink(
                 typeof(TableDataTests), "Resources.TableData.Excel_WithFormulasAndLinks.xlsx");
 
             // Import the excel file
@@ -86,7 +86,7 @@ namespace FrozenSky.Tests
         /// <param name="tableSource">The source of the table file.</param>
         /// <param name="tableImporter">The importer to be used.</param>
         private static void Load_DummyData_GenericPart(
-            ResourceSource tableSource, 
+            ResourceLink tableSource, 
             ITableImporter tableImporter, 
             TableImporterConfig importConfig,
             string firstTableName)

@@ -34,7 +34,7 @@ namespace FrozenSky.Multimedia.Core
         /// Imports all objects from the given source.
         /// </summary>
         /// <param name="objSource">The source to load from.</param>
-        public Task<IEnumerable<SceneObject>> ImportAsync(ResourceSource objSource)
+        public Task<IEnumerable<SceneObject>> ImportAsync(ResourceLink objSource)
         {
             return ImportAsync(objSource, null);
         }
@@ -44,7 +44,7 @@ namespace FrozenSky.Multimedia.Core
         /// </summary>
         /// <param name="objSource">The source to load from.</param>
         /// <param name="importOptions">All options for import logic.</param>
-        public async Task<IEnumerable<SceneObject>> ImportAsync(ResourceSource objSource, ImportOptions importOptions)
+        public async Task<IEnumerable<SceneObject>> ImportAsync(ResourceLink objSource, ImportOptions importOptions)
         {
             List<SceneObject> result = new List<SceneObject>();
 

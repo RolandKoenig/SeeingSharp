@@ -27,7 +27,7 @@ namespace FrozenSky.Util.TableData
         private List<string> m_sharedStrings;
         #endregion
 
-        internal XlsxTableFile(ResourceSource fileSource, XlsxImporterConfig importerConfig)
+        internal XlsxTableFile(ResourceLink fileSource, XlsxImporterConfig importerConfig)
         {
             m_spreadsheetDocument = SpreadsheetDocument.Open(
                 fileSource.OpenInputStream(),
