@@ -170,6 +170,11 @@
     <Compile Include="Util\_Collections\UniqueGenericKeyGenerator.cs" />
     <Compile Include="Util\_CommonExtensions.cs" />
     <Compile Include="Util\_CommonExtensions.Xml.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\StorageFileResourceLink.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\UriResourceLink.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\AssemblyResourceLinkSource.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\StreamFactoryResourceLink.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\DesktopFileSystemResourceLink.cs" />
     <Compile Include="Util\_Mvvm\CommandManagerHelper.APACHE2.cs" />
     <Compile Include="Util\_Mvvm\DelegateCommand.APACHE2.cs" />
     <Compile Include="Util\_Mvvm\_Converters\StringFormatConverter.cs" />

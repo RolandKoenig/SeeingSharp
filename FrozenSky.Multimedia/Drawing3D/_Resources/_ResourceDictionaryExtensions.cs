@@ -164,7 +164,6 @@ namespace FrozenSky.Multimedia.Drawing3D
             return resourceDiciontary.AddResource(resourceKey, new GeometryResource(objectType));
         }
 
-#if !WINDOWS_PHONE
         /// <summary>
         /// Adds a new text geometry with the given text.
         /// </summary>
@@ -211,8 +210,8 @@ namespace FrozenSky.Multimedia.Drawing3D
             newStructure.Material = textGeometryOptions.SurfaceMaterial;
             return resourceDiciontary.AddGeometry(resourceKey, newStructure);
         }
-#endif
 
+#if DESKTOP
         /// <summary>
         /// Adds a new texture resource pointing to the given texture file name.
         /// </summary>
@@ -232,7 +231,6 @@ namespace FrozenSky.Multimedia.Drawing3D
             return resourceDiciontary.AddResource(resourceKey, new StandardTextureResource(textureFileName));
         }
 
-#if DESKTOP
         /// <summary>
         /// Adds a new texture resource pointing to the given texture file name.
         /// </summary>

@@ -31,10 +31,10 @@ namespace FrozenSky.Tests
         [Trait("Category", TEST_CATEGORY)]
         public void GetFileExtension_StandardFile()
         {
-            ResourceLink extCS = new ResourceLink("C:/Blub/Blub.cs");
-            ResourceLink extC = new ResourceLink("C:/Blub/Blub.c");
-            ResourceLink extNull = new ResourceLink("C:/Club/Blub");
-            ResourceLink extVB = new ResourceLink("C:/Club/Blub.cs.vb");
+            ResourceLink extCS = new DesktopFileSystemResourceLink("C:/Blub/Blub.cs");
+            ResourceLink extC = new DesktopFileSystemResourceLink("C:/Blub/Blub.c");
+            ResourceLink extNull = new DesktopFileSystemResourceLink("C:/Club/Blub");
+            ResourceLink extVB = new DesktopFileSystemResourceLink("C:/Club/Blub.cs.vb");
 
             Assert.True(extCS.FileExtension == "cs");
             Assert.True(extC.FileExtension == "c");

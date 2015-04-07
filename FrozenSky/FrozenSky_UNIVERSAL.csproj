@@ -123,6 +123,11 @@
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceLink.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceReader.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceUriBuilder.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\AssemblyResourceLinkSource.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\DesktopFileSystemResourceLink.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\StorageFileResourceLink.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\StreamFactoryResourceLink.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\UriResourceLink.cs" />
     <Compile Include="Util\_Messaging\FrozenSkyMessage.cs" />
     <Compile Include="Util\_Messaging\FrozenSkyMessageHandler.cs" />
     <Compile Include="Util\_Mvvm\_Converters\StringFormatConverter.cs" />
