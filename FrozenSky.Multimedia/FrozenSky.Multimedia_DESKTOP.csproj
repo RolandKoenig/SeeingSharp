@@ -40,6 +40,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="AssimpNet">
@@ -267,6 +268,7 @@
     <Compile Include="Drawing3D\_Resources\_Textures\LinearGradientTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\RenderTargetTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\StandardTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\VideoTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_TransitionEffects\BlendTransitionEffectResource.cs" />
     <Compile Include="Drawing3D\_Resources\_TransitionEffects\TransitionEffectResource.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\LineVertex.cs" />

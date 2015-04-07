@@ -535,6 +535,34 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="device">Graphics device.</param>
         /// <param name="width">Width of generated texture.</param>
         /// <param name="height">Height of generated texture.</param>
+        /// <param name="format">The format which is used to create the texture.</param>
+        internal static D3D11.Texture2D CreateCpuWritableTexture(EngineDevice device, int width, int height, DXGI.Format format = DEFAULT_TEXTURE_FORMAT)
+        {
+            device.EnsureNotNull("device");
+            width.EnsurePositive("width");
+            height.EnsurePositive("height");
+
+            D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
+            textureDescription.Width = width;
+            textureDescription.Height = height;
+            textureDescription.MipLevels = 1;
+            textureDescription.ArraySize = 1;
+            textureDescription.Format = format;
+            textureDescription.Usage = D3D11.ResourceUsage.Default;
+            textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
+            textureDescription.BindFlags = D3D11.BindFlags.ShaderResource;
+            textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.Write;
+            textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
+
+            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+        }
+
+        /// <summary>
+        /// Creates a standard texture with the given width and height.
+        /// </summary>
+        /// <param name="device">Graphics device.</param>
+        /// <param name="width">Width of generated texture.</param>
+        /// <param name="height">Height of generated texture.</param>
         /// <param name="rawData">Raw data to be loaded into the texture.</param>
         internal static D3D11.Texture2D CreateTexture(EngineDevice device, int width, int height, SharpDX.DataBox[] rawData)
         {
