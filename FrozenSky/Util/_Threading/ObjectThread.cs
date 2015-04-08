@@ -14,11 +14,11 @@ namespace FrozenSky.Util
         // Members for thread configuration
         private string m_name;
         private int m_heartBeat;
-        private bool m_createMessageHandler;
+        private bool m_createMessenger;
 
         //Members for thread runtime
         private volatile ObjectThreadState m_currentState;
-        private FrozenSkyMessageHandler m_messageHandler;
+        private FrozenSkyMessenger m_Messenger;
         private ObjectThreadTimer m_timer;
 #if DESKTOP
         private Thread m_mainThread;
@@ -63,8 +63,8 @@ namespace FrozenSky.Util
         /// </summary>
         /// <param name="name">The name of the generated thread.</param>
         /// <param name="heartBeat">The initial heartbeat of the ObjectThread.</param>
-        /// <param name="createMessageHandler">Do automatically create a message handler for this thread?</param>
-        public ObjectThread(string name, int heartBeat, bool createMessageHandler = false)
+        /// <param name="createMessenger">Do automatically create a messenger for this thread?</param>
+        public ObjectThread(string name, int heartBeat, bool createMessenger = false)
         {
             m_taskQueue = new ConcurrentQueue<Action>();
             m_mainLoopSynchronizeObject = new SemaphoreSlim(1);
@@ -73,7 +73,7 @@ namespace FrozenSky.Util
             m_heartBeat = heartBeat;
 
             m_timer = new ObjectThreadTimer();
-            m_createMessageHandler = createMessageHandler;
+            m_createMessenger = createMessenger;
         }
 
         /// <summary>
@@ -245,11 +245,11 @@ namespace FrozenSky.Util
                 SynchronizationContext.SetSynchronizationContext(m_syncContext);
 #endif
 
-                // Do create the message handler if configured
-                if(m_createMessageHandler)
+                // Do create the messenger if configured
+                if(m_createMessenger)
                 {
-                    m_messageHandler = new FrozenSkyMessageHandler();
-                    m_messageHandler.ApplyForGlobalSynchronization(this);
+                    m_Messenger = new FrozenSkyMessenger();
+                    m_Messenger.ApplyForGlobalSynchronization(this);
                 }
 
                 //Notify start process
@@ -359,11 +359,11 @@ namespace FrozenSky.Util
         }
 
         /// <summary>
-        /// Gets the MessageHandler which belongs to this thread.
+        /// Gets the Messenger which belongs to this thread.
         /// </summary>
-        public FrozenSkyMessageHandler MessageHandler
+        public FrozenSkyMessenger Messenger
         {
-            get { return m_messageHandler; }
+            get { return m_Messenger; }
         }
 
         /// <summary>

@@ -41,14 +41,14 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             m_bodyScene = new Scene();
             m_bodyScene.ManipulateSceneAsync(OnBodyScene_Initialize);
 
-            // Get the MessageHandler of the KinectThread
-            FrozenSkyMessageHandler kinectMessageHandler =
-                FrozenSkyMessageHandler.GetByName(Constants.KINECT_THREAD_NAME);
+            // Get the Messenger of the KinectThread
+            FrozenSkyMessenger kinectMessenger =
+                FrozenSkyMessenger.GetByName(Constants.KINECT_THREAD_NAME);
 
             // Subscribe to messages from kinect
             m_messageSubscriptions = new List<MessageSubscription>();
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageBodyFrameArrived>(OnMessage_BodyFrameArrived));
+                kinectMessenger.Subscribe<MessageBodyFrameArrived>(OnMessage_BodyFrameArrived));
         }
 
         /// <summary>

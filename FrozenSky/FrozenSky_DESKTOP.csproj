@@ -182,7 +182,7 @@
     <Compile Include="Util\_IO\ReusableMemoryStream.cs" />
     <Compile Include="Util\_IO\_Misc.cs" />
     <Compile Include="Util\_Messaging\FrozenSkyMessage.cs" />
-    <Compile Include="Util\_Messaging\FrozenSkyMessageHandler.cs" />
+    <Compile Include="Util\_Messaging\FrozenSkyMessenger.cs" />
     <Compile Include="Util\_Messaging\MessagePublishException.cs" />
     <Compile Include="Util\_Messaging\MessageSubscription.cs" />
     <Compile Include="Util\_Messaging\_Attributes\MessageAsyncRoutingAttribute.cs" />

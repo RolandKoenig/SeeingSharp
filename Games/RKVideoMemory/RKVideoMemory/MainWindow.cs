@@ -43,8 +43,8 @@ namespace RKVideoMemory
 
             if (!FrozenSkyApplication.IsInitialized) { return; }
 
-            // Subscribe all handlers to the UIMessageHandler
-            FrozenSkyApplication.Current.UIMessageHandler
+            // Subscribe all handlers to the UIMessenger
+            FrozenSkyApplication.Current.UIMessenger
                 .SubscribeAllOnControl(this);
 
             // Associate game logic to UI

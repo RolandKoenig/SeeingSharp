@@ -93,27 +93,27 @@ namespace FrozenSky.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public void Check_SceneMessageHandler_Registration_Deregistration()
+        public void Check_SceneMessenger_Registration_Deregistration()
         {
             Scene dummyScene = new Scene(
                 name: "DummyScene",
                 registerForMessaging: true);
             try
             {
-                Assert.True(FrozenSkyMessageHandler.CountGlobalMessageHandlers == 1);
-                Assert.True(FrozenSkyMessageHandler.GetByName("DummyScene") == dummyScene.MessageHandler);
+                Assert.True(FrozenSkyMessenger.CountGlobalMessengers == 1);
+                Assert.True(FrozenSkyMessenger.GetByName("DummyScene") == dummyScene.Messenger);
             }
             finally
             {
                 dummyScene.DeregisterMessaging();
             }
 
-            Assert.True(FrozenSkyMessageHandler.CountGlobalMessageHandlers == 0);
+            Assert.True(FrozenSkyMessenger.CountGlobalMessengers == 0);
         }
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public void Check_SceneMessageHandler_WrongPublish()
+        public void Check_SceneMessenger_WrongPublish()
         {
             Scene dummyScene = new Scene(
                 name: "DummyScene",
@@ -121,7 +121,7 @@ namespace FrozenSky.Tests.Rendering
             FrozenSkyException publishException = null;
             try
             {
-                dummyScene.MessageHandler.Publish<DummyMessage>();
+                dummyScene.Messenger.Publish<DummyMessage>();
             }
             catch(FrozenSkyException ex)
             {
@@ -133,12 +133,12 @@ namespace FrozenSky.Tests.Rendering
             }
 
             Assert.NotNull(publishException);
-            Assert.True(FrozenSkyMessageHandler.CountGlobalMessageHandlers == 0);
+            Assert.True(FrozenSkyMessenger.CountGlobalMessengers == 0);
         }
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public async Task Check_SceneMessageHandler_CorrectPublish()
+        public async Task Check_SceneMessenger_CorrectPublish()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -154,7 +154,7 @@ namespace FrozenSky.Tests.Rendering
                 {
                     await dummyScene.PerformBeforeUpdateAsync(() =>
                     {
-                        dummyScene.MessageHandler.Publish<DummyMessage>();
+                        dummyScene.Messenger.Publish<DummyMessage>();
                     });
                 }
                 catch (Exception ex)
@@ -167,7 +167,7 @@ namespace FrozenSky.Tests.Rendering
                 }
 
                 Assert.Null(publishException);
-                Assert.True(FrozenSkyMessageHandler.CountGlobalMessageHandlers == 0);
+                Assert.True(FrozenSkyMessenger.CountGlobalMessengers == 0);
             }
         }
 

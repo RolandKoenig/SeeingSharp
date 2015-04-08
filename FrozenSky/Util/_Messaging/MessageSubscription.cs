@@ -29,19 +29,19 @@ namespace FrozenSky.Util
     public class MessageSubscription : IDisposable
     {
         // Main members for publishing
-        private FrozenSkyMessageHandler m_messageHandler;
+        private FrozenSkyMessenger m_Messenger;
         private Type m_messageType;
         private Delegate m_targetHandler;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MessageSubscription"/> class.
         /// </summary>
-        /// <param name="messageHandler">The message handler.</param>
+        /// <param name="Messenger">The messenger.</param>
         /// <param name="messageType">Type of the message.</param>
         /// <param name="targetHandler">The target handler.</param>
-        internal MessageSubscription(FrozenSkyMessageHandler messageHandler, Type messageType, Delegate targetHandler)
+        internal MessageSubscription(FrozenSkyMessenger Messenger, Type messageType, Delegate targetHandler)
         {
-            m_messageHandler = messageHandler;
+            m_Messenger = Messenger;
             m_messageType = messageType;
             m_targetHandler = targetHandler;
         }
@@ -78,7 +78,7 @@ namespace FrozenSky.Util
         /// </summary>
         internal void Clear()
         {
-            m_messageHandler = null;
+            m_Messenger = null;
             m_messageType = null;
             m_targetHandler = null;
         }
@@ -90,7 +90,7 @@ namespace FrozenSky.Util
         {
             if (!IsDisposed)
             {
-                m_messageHandler.Unsubscribe(this);
+                m_Messenger.Unsubscribe(this);
             }
         }
 
@@ -103,19 +103,19 @@ namespace FrozenSky.Util
             get
             {
                 return
-                    (m_messageHandler == null) ||
+                    (m_Messenger == null) ||
                     (m_messageType == null) ||
                     (m_targetHandler == null);
             }
         }
 
         /// <summary>
-        /// Gets the corresponding MessageHandler object.
+        /// Gets the corresponding Messenger object.
         /// </summary>
         [Browsable(false)]
-        public FrozenSkyMessageHandler MessageHandler
+        public FrozenSkyMessenger Messenger
         {
-            get { return m_messageHandler; }
+            get { return m_Messenger; }
         }
 
         /// <summary>

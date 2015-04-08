@@ -30,7 +30,7 @@ namespace FrozenSky.RKKinectLounge.Base
             if (!FrozenSkyApplication.IsInitialized) { return; }
 
             this.CommandManualEnter = new DelegateCommand(() => 
-                FrozenSkyApplication.Current.UIMessageHandler.Publish<MessageManualEnter>());
+                FrozenSkyApplication.Current.UIMessenger.Publish<MessageManualEnter>());
 
             // Load all images for the WelcomeScreen
             string sourceDirectory =

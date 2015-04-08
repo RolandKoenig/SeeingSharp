@@ -47,7 +47,7 @@ namespace FrozenSky.Multimedia.Core
         private string m_name;
         private List<SceneLayer> m_sceneLayers;
         private ReadOnlyCollection<SceneLayer> m_sceneLayersPublic;
-        private FrozenSkyMessageHandler m_messageHandler;
+        private FrozenSkyMessenger m_Messenger;
         private SceneSynchronizationContext m_syncContext;
         #endregion
 
@@ -110,8 +110,8 @@ namespace FrozenSky.Multimedia.Core
             if(registerForMessaging)
             {
                 m_syncContext = new SceneSynchronizationContext(this);
-                m_messageHandler = new FrozenSkyMessageHandler();
-                m_messageHandler.ApplyForGlobalSynchronization(
+                m_Messenger = new FrozenSkyMessenger();
+                m_Messenger.ApplyForGlobalSynchronization(
                     FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
                     this.Name,
                     m_syncContext);
@@ -131,10 +131,10 @@ namespace FrozenSky.Multimedia.Core
             if (m_syncContext != null)
             {
                 SynchronizationContext syncContext = m_syncContext;
-                FrozenSkyMessageHandler messageHandler = m_messageHandler;
+                FrozenSkyMessenger Messenger = m_Messenger;
 
                 m_syncContext = null;
-                messageHandler.DiscardGlobalSynchronization();
+                Messenger.DiscardGlobalSynchronization();
             }
         }
 
@@ -1095,13 +1095,13 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
-        /// Gets the message handler of this scene.
+        /// Gets the messenger of this scene.
         /// This object is null unless the registerForMessaging argument of the
         /// constructor was set to true.
         /// </summary>
-        public FrozenSkyMessageHandler MessageHandler
+        public FrozenSkyMessenger Messenger
         {
-            get { return m_messageHandler; }
+            get { return m_Messenger; }
         }
 
         /// <summary>

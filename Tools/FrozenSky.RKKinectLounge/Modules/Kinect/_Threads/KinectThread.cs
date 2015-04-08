@@ -20,7 +20,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             : base(
                 name: Constants.KINECT_THREAD_NAME, 
                 heartBeat: 500, 
-                createMessageHandler: true)
+                createMessenger: true)
         {
             m_performanceAnalyzer = performanceAnalyzer;
         }
@@ -34,7 +34,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             base.OnStarting(eArgs);
 
             // Initialize Kinect handling (all done in constructor)
-            m_kinectHandler = new KinectHandler(base.MessageHandler, m_performanceAnalyzer);
+            m_kinectHandler = new KinectHandler(base.Messenger, m_performanceAnalyzer);
         }
 
         /// <summary>

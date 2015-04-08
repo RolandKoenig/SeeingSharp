@@ -35,14 +35,14 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             m_arReaderRawBitmap = new byte[0];
             m_qrReader = new QRCodeReader();
 
-            // Get the MessageHandler of the KinectThread
-            FrozenSkyMessageHandler kinectMessageHandler =
-                FrozenSkyMessageHandler.GetByName(Constants.KINECT_THREAD_NAME);
+            // Get the Messenger of the KinectThread
+            FrozenSkyMessenger kinectMessenger =
+                FrozenSkyMessenger.GetByName(Constants.KINECT_THREAD_NAME);
 
             // Subscribe to messages from KinectHandler
             m_messageSubscriptions = new List<MessageSubscription>();
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageColorFrameArrived>(OnMessage_WpfColorFrameArrived));
+                kinectMessenger.Subscribe<MessageColorFrameArrived>(OnMessage_WpfColorFrameArrived));
         }
 
         /// <summary>

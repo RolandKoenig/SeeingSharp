@@ -27,11 +27,11 @@ namespace FrozenSky.RKKinectLounge.Base
             if (!FrozenSkyApplication.IsInitialized) { return; }
 
             // Register on messages 
-            FrozenSkyMessageHandler uiMessageHandler = FrozenSkyApplication.Current.UIMessageHandler;
-            uiMessageHandler.Subscribe<MessagePersonEngaged>(OnMessagePersonEngaged);
-            uiMessageHandler.Subscribe<MessagePersonDisengaged>(OnMessagePersonDisengaged);
-            uiMessageHandler.Subscribe<MessageManualEnter>(OnMessageManualEnter);
-            uiMessageHandler.Subscribe<MessageManualExit>(OnMessageManualExit);
+            FrozenSkyMessenger uiMessenger = FrozenSkyApplication.Current.UIMessenger;
+            uiMessenger.Subscribe<MessagePersonEngaged>(OnMessagePersonEngaged);
+            uiMessenger.Subscribe<MessagePersonDisengaged>(OnMessagePersonDisengaged);
+            uiMessenger.Subscribe<MessageManualEnter>(OnMessageManualEnter);
+            uiMessenger.Subscribe<MessageManualExit>(OnMessageManualExit);
         }
 
         private void ActivateWelcomeView()

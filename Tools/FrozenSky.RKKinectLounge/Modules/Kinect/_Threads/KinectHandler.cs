@@ -12,7 +12,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
 {
     public class KinectHandler : PropertyChangedBase
     {
-        private FrozenSkyMessageHandler m_messageHandler;
+        private FrozenSkyMessenger m_Messenger;
         private PerformanceAnalyzer m_performanceAnalyzer;
 
         private KinectSensor m_sensor;
@@ -26,15 +26,15 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
         /// <summary>
         /// Initializes a new instance of the <see cref="KinectHandler"/> class.
         /// </summary>
-        /// <param name="messageHandler">The MessageHandler which is used for thread- und component-synchronization.</param>
+        /// <param name="Messenger">The Messenger which is used for thread- und component-synchronization.</param>
         /// <param name="performanceAnalyzer">The PerformanceAnalyzer which tracks the kinect's performance values.</param>
         public KinectHandler(
-            FrozenSkyMessageHandler messageHandler,
+            FrozenSkyMessenger Messenger,
             PerformanceAnalyzer performanceAnalyzer)
         {
             if (!FrozenSkyApplication.IsInitialized) { return; }
 
-            m_messageHandler = messageHandler;
+            m_Messenger = Messenger;
             m_performanceAnalyzer = performanceAnalyzer;
 
 
@@ -106,7 +106,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                 this.AquiredInfraredFrames = this.AquiredInfraredFrames + 1;
 
                 // Publich event to whole application
-                m_messageHandler.Publish(
+                m_Messenger.Publish(
                     new MessageInfraredFrameArrived(e));
             }
         }
@@ -129,7 +129,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                 this.AquiredLongExposureInfraredFrames = this.AquiredLongExposureInfraredFrames + 1;
 
                 // Publich event to whole application
-                m_messageHandler.Publish(
+                m_Messenger.Publish(
                     new MessageLongExposureInfraredFrameArrived(e));
             }
         }
@@ -152,7 +152,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                 this.AquiredColorFrames = this.AquiredColorFrames + 1;
 
                 // Publich event to whole application
-                m_messageHandler.Publish(
+                m_Messenger.Publish(
                     new MessageColorFrameArrived(e));
             }
         }
@@ -175,7 +175,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                 this.AquiredDepthFrames = this.AquiredDepthFrames + 1;
 
                 // Publich event to whole application
-                m_messageHandler.Publish(
+                m_Messenger.Publish(
                     new MessageDepthFrameArrived(e));
             }
         }
@@ -198,7 +198,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                 this.AquiredBodyFrames = this.AquiredBodyFrames + 1;
 
                 // Publich event to whole application
-                m_messageHandler.Publish(
+                m_Messenger.Publish(
                     new MessageBodyFrameArrived(e));
             }
         }
@@ -221,7 +221,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                 this.AquiredBodyFrames = this.AquiredBodyFrames + 1;
 
                 // Publich event to whole application
-                m_messageHandler.Publish(
+                m_Messenger.Publish(
                     new MessageBodyIndexFrameArrived(e));
             }
         }

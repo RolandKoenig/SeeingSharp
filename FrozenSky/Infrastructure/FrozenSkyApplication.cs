@@ -50,8 +50,8 @@ namespace FrozenSky.Infrastructure
         private TypeQueryHandler m_assemblyQuery;
         private FrozenSkyTranslator m_translator;
 
-        // Main ApplicationMessageHandler (responsible for EventAggregator pattern)
-        private FrozenSkyMessageHandler m_uiMessageHandler;
+        // Main ApplicationMessenger (responsible for EventAggregator pattern)
+        private FrozenSkyMessenger m_uiMessenger;
 
         // Main UI SynchronizationContext
         private SynchronizationContext m_uiSynchronizationContext;
@@ -125,9 +125,9 @@ namespace FrozenSky.Infrastructure
             Thread.CurrentThread.Name = FrozenSkyConstants.THREAD_NAME_GUI;
 #endif
 
-            // Create the UI message handler
-            m_uiMessageHandler = new FrozenSkyMessageHandler();
-            m_uiMessageHandler.ApplyForGlobalSynchronization(
+            // Create the UI messenger
+            m_uiMessenger = new FrozenSkyMessenger();
+            m_uiMessenger.ApplyForGlobalSynchronization(
                 FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
                 FrozenSkyConstants.THREAD_NAME_GUI,
                 m_uiSynchronizationContext);
@@ -304,7 +304,7 @@ namespace FrozenSky.Infrastructure
             get
             {
                 if (s_current == null) { return false; }
-                return s_current.m_uiMessageHandler != null;
+                return s_current.m_uiMessenger != null;
             }
         }
 
@@ -353,11 +353,11 @@ namespace FrozenSky.Infrastructure
         }
 
         /// <summary>
-        /// Gets the message handler of the ui.
+        /// Gets the messenger of the ui.
         /// </summary>
-        public FrozenSkyMessageHandler UIMessageHandler
+        public FrozenSkyMessenger UIMessenger
         {
-            get { return m_uiMessageHandler; }
+            get { return m_uiMessenger; }
         }
 
         /// <summary>

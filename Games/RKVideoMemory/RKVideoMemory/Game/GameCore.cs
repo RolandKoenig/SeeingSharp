@@ -48,7 +48,7 @@ namespace RKVideoMemory.Game
             await m_scene.BuildBackgroundAsync();
 
             m_initialized = true;
-            MessageHandler.BeginPublish<GameInitializedMessage>();
+            Messenger.BeginPublish<GameInitializedMessage>();
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace RKVideoMemory.Game
             m_camera.Target = new Vector3(3f, 0f, 3f);
             m_camera.UpdateCamera();
 
-            MessageHandler.BeginPublish<MainMemoryScreenEnteredMessage>();
-            MessageHandler.BeginPublish<LevelLoadedMessage>();
+            Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();
+            Messenger.BeginPublish<LevelLoadedMessage>();
         }
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace RKVideoMemory.Game
             // TODO
             await Task.Delay(100);
 
-            MessageHandler.BeginPublish<LevelUnloadedMessage>();
+            Messenger.BeginPublish<LevelUnloadedMessage>();
         }
        
         public bool IsInitialized
@@ -103,9 +103,9 @@ namespace RKVideoMemory.Game
             get { return m_currentLevel; }
         }
 
-        public FrozenSkyMessageHandler MessageHandler
+        public FrozenSkyMessenger Messenger
         {
-            get { return m_scene.MessageHandler; }
+            get { return m_scene.Messenger; }
         }
 
         public Scene Scene

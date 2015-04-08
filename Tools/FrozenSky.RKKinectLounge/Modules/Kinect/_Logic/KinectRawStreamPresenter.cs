@@ -31,22 +31,22 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             m_dataFlowLongExposureInfrared = new ImageDataFlowHelper("L. Exp. Infrared");
             m_dataFlowBodyIndex = new ImageDataFlowHelper("Body Index");
 
-            // Get the MessageHandler of the KinectThread
-            FrozenSkyMessageHandler kinectMessageHandler =
-                FrozenSkyMessageHandler.GetByName(Constants.KINECT_THREAD_NAME);
+            // Get the Messenger of the KinectThread
+            FrozenSkyMessenger kinectMessenger =
+                FrozenSkyMessenger.GetByName(Constants.KINECT_THREAD_NAME);
 
             // Subscribe to messages from KinectHandler
             m_messageSubscriptions = new List<MessageSubscription>();
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageColorFrameArrived>(OnMessage_WpfColorFrameArrived));
+                kinectMessenger.Subscribe<MessageColorFrameArrived>(OnMessage_WpfColorFrameArrived));
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageDepthFrameArrived>(OnMessage_DepthFrameArrived));
+                kinectMessenger.Subscribe<MessageDepthFrameArrived>(OnMessage_DepthFrameArrived));
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageInfraredFrameArrived>(OnMessage_InfraredFrameArrived));
+                kinectMessenger.Subscribe<MessageInfraredFrameArrived>(OnMessage_InfraredFrameArrived));
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageLongExposureInfraredFrameArrived>(OnMessage_LongExposureInfraredFrameArrived));
+                kinectMessenger.Subscribe<MessageLongExposureInfraredFrameArrived>(OnMessage_LongExposureInfraredFrameArrived));
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageBodyIndexFrameArrived>(OnMessage_BodyIndexFrameArrived));
+                kinectMessenger.Subscribe<MessageBodyIndexFrameArrived>(OnMessage_BodyIndexFrameArrived));
         }
 
         /// <summary>

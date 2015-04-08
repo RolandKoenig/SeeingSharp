@@ -129,7 +129,7 @@
     <Compile Include="Util\_IO\_ResourceLinkImpl\StreamFactoryResourceLink.cs" />
     <Compile Include="Util\_IO\_ResourceLinkImpl\UriResourceLink.cs" />
     <Compile Include="Util\_Messaging\FrozenSkyMessage.cs" />
-    <Compile Include="Util\_Messaging\FrozenSkyMessageHandler.cs" />
+    <Compile Include="Util\_Messaging\FrozenSkyMessenger.cs" />
     <Compile Include="Util\_Mvvm\_Converters\StringFormatConverter.cs" />
     <Compile Include="Util\_Mvvm\_Converters\Vector2ToMultilineStringConverter.cs" />
     <Compile Include="Util\_Mvvm\_Converters\Vector3ToMultilineStringConverter.cs" />

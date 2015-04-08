@@ -448,12 +448,12 @@ namespace FrozenSky.Multimedia.Core
         /// This object is null unless the registerForMessaging argument of the
         /// Scene's constructor was set to true.
         /// </summary>
-        public FrozenSkyMessageHandler MessageHandler
+        public FrozenSkyMessenger Messenger
         {
             get 
             {
                 if (m_scene == null) { return null; }
-                return m_scene.MessageHandler; 
+                return m_scene.Messenger; 
             }
         }
 

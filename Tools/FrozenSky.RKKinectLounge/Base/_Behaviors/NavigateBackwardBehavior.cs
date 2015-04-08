@@ -101,7 +101,7 @@ namespace FrozenSky.RKKinectLounge.Base
             }
             else
             {
-                FrozenSkyApplication.Current.UIMessageHandler.Publish<MessageManualExit>();
+                FrozenSkyApplication.Current.UIMessenger.Publish<MessageManualExit>();
             }
         }
     }

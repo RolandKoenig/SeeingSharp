@@ -41,14 +41,14 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             m_bodies = new List<Body>();
             m_handsToEngage = new List<BodyHandPair>();
 
-            // Get the MessageHandler of the KinectThread
-            FrozenSkyMessageHandler kinectMessageHandler =
-                FrozenSkyMessageHandler.GetByName(Constants.KINECT_THREAD_NAME);
+            // Get the Messenger of the KinectThread
+            FrozenSkyMessenger kinectMessenger =
+                FrozenSkyMessenger.GetByName(Constants.KINECT_THREAD_NAME);
 
             // Subscribe to messages from kinect
             m_messageSubscriptions = new List<MessageSubscription>();
             m_messageSubscriptions.Add(
-                kinectMessageHandler.Subscribe<MessageBodyFrameArrived>(OnMessage_BodyFrameArrived));
+                kinectMessenger.Subscribe<MessageBodyFrameArrived>(OnMessage_BodyFrameArrived));
         }
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                     KinectCoreWindow.SetKinectOnePersonManualEngagement(firstPersonToEngage);
 
                     // We've engaged a new person
-                    FrozenSkyApplication.Current.UIMessageHandler.Publish<MessagePersonEngaged>();
+                    FrozenSkyApplication.Current.UIMessenger.Publish<MessagePersonEngaged>();
                 }
                 else
                 {
@@ -198,7 +198,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
                     KinectCoreWindow.SetKinectOnePersonManualEngagement(null);
 
                     // We've disengaged
-                    FrozenSkyApplication.Current.UIMessageHandler.Publish<MessagePersonDisengaged>();
+                    FrozenSkyApplication.Current.UIMessenger.Publish<MessagePersonDisengaged>();
                 }
             }
         }

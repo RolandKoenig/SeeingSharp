@@ -27,7 +27,7 @@ using System.Text;
 namespace FrozenSky.Util
 {
     /// <summary>
-    /// Base class of all messages sent and received through ApplicationMessageHandler class.
+    /// Base class of all messages sent and received through ApplicationMessenger class.
     /// </summary>
     public class FrozenSkyMessage
     {
