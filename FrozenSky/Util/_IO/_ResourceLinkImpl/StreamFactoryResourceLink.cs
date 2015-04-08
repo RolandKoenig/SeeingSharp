@@ -23,6 +23,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrozenSky.Checking;
 
 namespace FrozenSky.Util
 {
@@ -40,6 +41,8 @@ namespace FrozenSky.Util
             Func<Stream> streamFactory,
             string fileName = "unknown.dat")
         {
+            streamFactory.EnsureNotNull("streamFactory");
+
             m_streamFactory = streamFactory;
             m_fileName = fileName;
         }
@@ -66,7 +69,7 @@ namespace FrozenSky.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
-            throw new NotSupportedException();
+            throw new FrozenSkyException("Unable to read another file on a stream factory source!");
         }
 
         /// <summary>

@@ -88,7 +88,41 @@ namespace FrozenSky.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
-            throw new NotSupportedException();
+            if(m_resourceUri.IsAbsoluteUri)
+            {
+                try
+                {
+                    UriBuilder uriBuilder = new UriBuilder(m_resourceUri);
+
+                    string path = uriBuilder.Path;
+                    string fileName = Path.GetFileName(path);
+                    uriBuilder.Path = path.Replace(fileName, newFileName);
+
+                    return new UriResourceLink(uriBuilder.Uri);
+                }
+                catch(Exception ex)
+                {
+                    throw new FrozenSkyException(
+                        string.Format("Unable to change file name in current absolute uri: {0}",
+                        ex.Message), ex);
+                }
+            }
+            else
+            {
+                try
+                {
+                    string originalString = m_resourceUri.OriginalString;
+                    string fileName = Path.GetFileName(originalString);
+                    return new UriResourceLink(
+                        new Uri(originalString.Replace(fileName, newFileName)));
+                }
+                catch(Exception ex)
+                {
+                    throw new FrozenSkyException(
+                        string.Format("Unable to change file name in current relative uri: {0}",
+                        ex.Message), ex);
+                }
+            }
         }
 
         /// <summary>
@@ -96,7 +130,7 @@ namespace FrozenSky.Util
         /// </summary>
         public override Stream OpenOutputStream()
         {
-            throw new NotSupportedException();
+            throw new FrozenSkyException("Output stream to uri resources not supported currently!");
         }
 
         /// <summary>

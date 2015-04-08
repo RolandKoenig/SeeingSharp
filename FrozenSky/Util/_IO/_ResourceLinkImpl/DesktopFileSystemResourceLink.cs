@@ -24,6 +24,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrozenSky.Checking;
 
 namespace FrozenSky.Util
 {
@@ -37,6 +38,8 @@ namespace FrozenSky.Util
         /// <param name="filePath">The path to the physical file.</param>
         public DesktopFileSystemResourceLink(string filePath)
         {
+            filePath.EnsureNotNullOrEmptyOrWhiteSpace("filePath");
+
             m_filePath = filePath;
         }
 
@@ -63,6 +66,8 @@ namespace FrozenSky.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
+            newFileName.EnsureNotNullOrEmptyOrWhiteSpace("newFileName");
+
             string directoryName = Path.GetDirectoryName(m_filePath);
             if (!string.IsNullOrEmpty(directoryName))
             {

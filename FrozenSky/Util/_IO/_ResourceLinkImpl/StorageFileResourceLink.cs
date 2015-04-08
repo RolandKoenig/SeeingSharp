@@ -19,26 +19,35 @@
 #endregion
 #if UNIVERSAL
 using System;
+using System.Threading;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
+using FrozenSky.Checking;
 
 namespace FrozenSky.Util
 {
     public class StorageFileResourceLink : ResourceLink
     {
         private StorageFile m_storageFile;
+        private StorageFolder m_storageParentFolder;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageFileResourceLink"/> class.
         /// </summary>
         /// <param name="storageFile">The reference to the WinRT StorageFile object.</param>
-        public StorageFileResourceLink(StorageFile storageFile)
+        /// <param name="parentFolder">The parent folder which contains the given file.</param>
+        public StorageFileResourceLink(
+            StorageFile storageFile,
+            StorageFolder parentFolder = null)
         {
+            storageFile.EnsureNotNull("storageFile");
+
             m_storageFile = storageFile;
+            m_storageParentFolder = parentFolder;
         }
 
         /// <summary>
@@ -64,7 +73,18 @@ namespace FrozenSky.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
-            throw new NotImplementedException();
+            newFileName.EnsureNotNullOrEmptyOrWhiteSpace("newFileName");
+
+            if(m_storageParentFolder != null)
+            {
+                return new StorageFileResourceLink(
+                    m_storageParentFolder.GetFileAsync(newFileName).AsTask().Result,
+                    m_storageParentFolder);
+            }
+            else
+            {
+                throw new FrozenSkyException("Unabel to query another file in the folder because no reference to the parent folder is given!");
+            }
         }
 
         /// <summary>
@@ -97,7 +117,12 @@ namespace FrozenSky.Util
         /// </summary>
         public override string FileExtension
         {
-            get { return base.GetExtensionFromFileName(m_storageFile.Path); }
+            get 
+            {
+                if (string.IsNullOrEmpty(m_storageFile.Path)) { return string.Empty; }
+
+                return base.GetExtensionFromFileName(m_storageFile.Path);
+            }
         }
     }
 }

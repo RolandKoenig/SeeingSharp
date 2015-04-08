@@ -64,6 +64,8 @@ namespace FrozenSky.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
+            newFileName.EnsureNotNullOrEmptyOrWhiteSpace("newFileName");
+
             return new AssemblyResourceLinkSource(
                 m_resourceLink.GetForAnotherFile(newFileName));
         }
@@ -73,7 +75,7 @@ namespace FrozenSky.Util
         /// </summary>
         public override Stream OpenOutputStream()
         {
-            throw new NotSupportedException();
+            throw new FrozenSkyException("Unable to get an output stream to an assembly resource!");
         }
 
         /// <summary>
