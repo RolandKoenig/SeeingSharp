@@ -277,6 +277,7 @@
     <Compile Include="DrawingVideo\FrozenSkyVideoWriter.cs" />
     <Compile Include="Core\_Util\MFHelper.cs" />
     <Compile Include="Core\_Util\_MediaFoundationUtil.cs" />
+    <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />
     <Compile Include="DrawingVideo\_Writers\FullImageVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />

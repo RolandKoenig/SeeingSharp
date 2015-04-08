@@ -101,6 +101,7 @@
     <EmbeddedResource Include="Ressources\Models\ModelTwoSided.ac" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Ressources\Videos\DummyVideo.wmv" />
     <Resource Include="Ressources\Textures\SkyBox.dds" />
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleObject_D2DTexture.png" />

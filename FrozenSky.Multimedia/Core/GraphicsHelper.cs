@@ -450,7 +450,7 @@ namespace FrozenSky.Multimedia.Core
         /// Loads a bitmap from the given mapped texture.
         /// </summary>
         /// <param name="mappedTexture">The mapped texture from which to read all pixel data.</param>
-        internal static GDI.Bitmap LoadBitmapFromMappedTexture(MemoryMappedTexture32bpp mappedTexture)
+        public static GDI.Bitmap LoadBitmapFromMappedTexture(MemoryMappedTexture32bpp mappedTexture)
         {
             mappedTexture.EnsureNotNull("mappedTexture");
 

@@ -15,16 +15,6 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
-
-	********************************************************************************
-    Additional permission under GNU GPL version 3 section 7
-
-    If you modify this Program, or any covered work, by linking or combining it with 
-	DirectX (or a modified version of that library), containing parts covered by the 
-	terms of [name of library's license], the licensors of this Program grant you additional 
-	permission to convey the resulting work. {Corresponding Source for a non-source form of 
-	such a combination shall include the source code for the parts of DirectX used 
-	as well as that of the covered work.}
 */
 #endregion
 using System;
@@ -37,6 +27,9 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Multimedia.Core
 {
+    /// <summary>
+    /// A helper class containing utility methods used when working with Media Foundation.
+    /// </summary>
     internal class MFHelper
     {
         /// <summary>
@@ -108,26 +101,82 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
-        /// Gets a size value for media foundation.
+        /// Encodes the given values to a single long.
+        /// Example usage: Size attribute.
         /// </summary>
-        /// <param name="valueX"></param>
-        /// <param name="valueY"></param>
-        internal static long GetMFLongEncodedInts(int valueX, int valueY)
+        /// <param name="valueA">The first value.</param>
+        /// <param name="valueB">The second value.</param>
+        internal static long GetMFEncodedIntsByValues(int valueA, int valueB)
         {
-            byte[] valueXBytes = BitConverter.GetBytes(valueX);
-            byte[] valueYBytes = BitConverter.GetBytes(valueY);
+            byte[] valueXBytes = BitConverter.GetBytes(valueA);
+            byte[] valueYBytes = BitConverter.GetBytes(valueB);
 
             byte[] resultBytes = new byte[8];
-            resultBytes[0] = valueYBytes[0];
-            resultBytes[1] = valueYBytes[1];
-            resultBytes[2] = valueYBytes[2];
-            resultBytes[3] = valueYBytes[3];
-            resultBytes[4] = valueXBytes[0];
-            resultBytes[5] = valueXBytes[1];
-            resultBytes[6] = valueXBytes[2];
-            resultBytes[7] = valueXBytes[3];
+            if (BitConverter.IsLittleEndian)
+            {
+                resultBytes[0] = valueYBytes[0];
+                resultBytes[1] = valueYBytes[1];
+                resultBytes[2] = valueYBytes[2];
+                resultBytes[3] = valueYBytes[3];
+                resultBytes[4] = valueXBytes[0];
+                resultBytes[5] = valueXBytes[1];
+                resultBytes[6] = valueXBytes[2];
+                resultBytes[7] = valueXBytes[3];
+            }
+            else
+            {
+                resultBytes[0] = valueXBytes[0];
+                resultBytes[1] = valueXBytes[1];
+                resultBytes[2] = valueXBytes[2];
+                resultBytes[3] = valueXBytes[3];
+                resultBytes[4] = valueYBytes[0];
+                resultBytes[5] = valueYBytes[1];
+                resultBytes[6] = valueYBytes[2];
+                resultBytes[7] = valueYBytes[3];
+            }
 
             return BitConverter.ToInt64(resultBytes, 0);
+        }
+
+        /// <summary>
+        /// Decodes two integer values from the given long.
+        /// Example usage: Size attribute.
+        /// </summary>
+        /// <param name="encodedInts">The long containing both encoded ints.</param>
+        internal static Tuple<int, int> GetValuesByMFEncodedInts(long encodedInts)
+        {
+            byte[] rawBytes = BitConverter.GetBytes(encodedInts);
+
+            if (BitConverter.IsLittleEndian)
+            {
+                return Tuple.Create(
+                    BitConverter.ToInt32(rawBytes, 4),
+                    BitConverter.ToInt32(rawBytes, 0));
+            }
+            else
+            {
+                return Tuple.Create(
+                    BitConverter.ToInt32(rawBytes, 0),
+                    BitConverter.ToInt32(rawBytes, 4));
+            }
+        }
+
+        /// <summary>
+        /// Converts the given duration value from media foundation to a TimeSpan structure.
+        /// </summary>
+        /// <param name="durationLong">The duration value.</param>
+        internal static TimeSpan DurationLongToTimeSpan(long durationLong)
+        {
+            return TimeSpan.FromMilliseconds(durationLong / 10000);
+        }
+
+        /// <summary>
+        /// Converts the given TimeSpan value to a duration value for media foundation
+        /// </summary>
+        /// <param name="timespan">The timespan.</param>
+        internal static long TimeSpanToDurationLong(TimeSpan timespan)
+        {
+            return (long)(timespan.TotalMilliseconds * 10000);
         }
     }
 }

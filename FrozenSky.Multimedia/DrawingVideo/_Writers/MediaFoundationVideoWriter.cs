@@ -49,14 +49,12 @@ namespace FrozenSky.Multimedia.DrawingVideo
     {
         private static readonly Guid VIDEO_INPUT_FORMAT = MFVideoFormats.FORMAT_RBG32;
 
-        // Configuration
-        #region
+        #region Configuration
         private int m_bitrate;
         private int m_framerate;
         #endregion
 
-        // Resources for MediaFoundation video rendering
-        #region
+        #region Resources for MediaFoundation video rendering
         private MF.SinkWriter m_sinkWriter;
         private Size2 m_videoPixelSize;
         private int m_frameIndex;
@@ -91,8 +89,8 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 mediaTypeIn.Set<Guid>(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
                 mediaTypeIn.Set<Guid>(MF.MediaTypeAttributeKeys.Subtype, VIDEO_INPUT_FORMAT);
                 mediaTypeIn.Set<int>(MF.MediaTypeAttributeKeys.InterlaceMode, (int)MF.VideoInterlaceMode.Progressive);
-                mediaTypeIn.Set<long>(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFLongEncodedInts(videoPixelSize.Width, videoPixelSize.Height));
-                mediaTypeIn.Set<long>(MF.MediaTypeAttributeKeys.FrameRate, MFHelper.GetMFLongEncodedInts(m_framerate, 1));
+                mediaTypeIn.Set<long>(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFEncodedIntsByValues(videoPixelSize.Width, videoPixelSize.Height));
+                mediaTypeIn.Set<long>(MF.MediaTypeAttributeKeys.FrameRate, MFHelper.GetMFEncodedIntsByValues(m_framerate, 1));
                 m_sinkWriter.SetInputMediaType(m_streamIndex, mediaTypeIn, null);
             }
 

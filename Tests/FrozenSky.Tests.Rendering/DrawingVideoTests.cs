@@ -30,6 +30,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xunit;
+
+// Namespace mappings
 using GDI = System.Drawing;
 
 namespace FrozenSky.Tests.Rendering
@@ -38,6 +40,29 @@ namespace FrozenSky.Tests.Rendering
     public class DrawingVideoTests
     {
         public const string TEST_CATEGORY = "FrozenSky Multimedia Drawing Video";
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Read_WmvVideo()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using(MediaFoundationVideoReader videoReader = 
+                new MediaFoundationVideoReader(
+                    new AssemblyResourceLink(
+                        this.GetType().Assembly,
+                        "FrozenSky.Tests.Rendering.Ressources.Videos",
+                        "DummyVideo.wmv")))
+            {
+                using(MemoryMappedTexture32bpp actFrameBuffer = videoReader.ReadFrame())
+                using(GDI.Bitmap actFrameBitmap = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer))
+                {
+                    actFrameBitmap.DumpToDesktop("Blub.png");
+                }
+            }
+
+            Assert.True(false, "This test is WORK IN PROGRESS");
+        }
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]

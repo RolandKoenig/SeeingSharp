@@ -39,18 +39,18 @@ namespace FrozenSky.Multimedia.Drawing3D
     /// </summary>
     public class VideoTextureResource : TextureResource
     {
+        #region Configuration
         private ResourceLink m_videoSource;
+        #endregion
 
-        // Direct3D resources
-        #region
+        #region Direct3D resources
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;
         private int m_currentWidth;
         private int m_currentHeight;
         #endregion
 
-        // Media foundation resources
-        #region
+        #region Media foundation resources
         private Stream m_videoSourceStream;
         private MF.SourceReader m_sourceReader;
         #endregion

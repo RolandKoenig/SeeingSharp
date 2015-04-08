@@ -71,8 +71,8 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 mediaTypeOut.Set<Guid>(MF.MediaTypeAttributeKeys.Subtype, VIDEO_ENCODING_FORMAT);
                 mediaTypeOut.Set<int>(MF.MediaTypeAttributeKeys.AvgBitrate, base.Bitrate * 1000);
                 mediaTypeOut.Set<int>(MF.MediaTypeAttributeKeys.InterlaceMode, (int)MF.VideoInterlaceMode.Progressive);
-                mediaTypeOut.Set<long>(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFLongEncodedInts(videoPixelSize.Width, videoPixelSize.Height));
-                mediaTypeOut.Set<long>(MF.MediaTypeAttributeKeys.FrameRate, MFHelper.GetMFLongEncodedInts(base.Framerate, 1));
+                mediaTypeOut.Set<long>(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFEncodedIntsByValues(videoPixelSize.Width, videoPixelSize.Height));
+                mediaTypeOut.Set<long>(MF.MediaTypeAttributeKeys.FrameRate, MFHelper.GetMFEncodedIntsByValues(base.Framerate, 1));
                 sinkWriter.AddStream(mediaTypeOut, out streamIndex);
             }
         }
