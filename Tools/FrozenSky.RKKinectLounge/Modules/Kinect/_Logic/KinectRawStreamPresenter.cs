@@ -33,7 +33,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
 
             // Get the MessageHandler of the KinectThread
             FrozenSkyMessageHandler kinectMessageHandler =
-                FrozenSkyMessageHandler.GetForThread(Constants.KINECT_THREAD_NAME);
+                FrozenSkyMessageHandler.GetByName(Constants.KINECT_THREAD_NAME);
 
             // Subscribe to messages from KinectHandler
             m_messageSubscriptions = new List<MessageSubscription>();

@@ -43,7 +43,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
 
             // Get the MessageHandler of the KinectThread
             FrozenSkyMessageHandler kinectMessageHandler =
-                FrozenSkyMessageHandler.GetForThread(Constants.KINECT_THREAD_NAME);
+                FrozenSkyMessageHandler.GetByName(Constants.KINECT_THREAD_NAME);
 
             // Subscribe to messages from kinect
             m_messageSubscriptions = new List<MessageSubscription>();
@@ -93,7 +93,7 @@ namespace FrozenSky.RKKinectLounge.Modules.Kinect
             manipulator.SetLayerOrderID(bgLayer, 0);
             manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 1);
 
-            ResourceSource sourceWallTexture = new Uri(
+            ResourceLink sourceWallTexture = new Uri(
                 "/FrozenSky.ModelViewer;component/Resources/Textures/Background.png",
                 UriKind.Relative);
             var resBackgroundTexture = manipulator.AddTexture(sourceWallTexture);
