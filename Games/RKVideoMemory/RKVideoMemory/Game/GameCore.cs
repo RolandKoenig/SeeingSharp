@@ -14,14 +14,12 @@ namespace RKVideoMemory.Game
 {
     public class GameCore
     {
-        // Game related members
-        #region
+        #region Game related members
         private LevelData m_currentLevel; 
         private GameMap m_gameMap;
         #endregion
 
-        // Graphics related members
-        #region
+        #region Graphics related members
         private bool m_initialized;
         private PerspectiveCamera3D m_camera;
         private Scene m_scene;
@@ -30,14 +28,12 @@ namespace RKVideoMemory.Game
         /// <summary>
         /// Initializes a new instance of the <see cref="GameCore"/> class.
         /// </summary>
-        /// <param name="camera">The main camera of the 3D scene.</param>
-        /// <param name="scene">The scene object itself.</param>
         public GameCore()
         {
             m_camera = new PerspectiveCamera3D();
             m_scene = new Scene(
                 name: Constants.GAME_SCENE_NAME,
-                registerForMessaging: true);
+                registerOnMessenger: true);
         }
 
         /// <summary>

@@ -32,29 +32,32 @@ namespace FrozenSky.Multimedia.Core
 {
     public abstract partial class SceneObject : IDisposable, IAnimatableObject
     {
-        // Generic members
+        #region Generic members
+        private IndexBasedDynamicCollection<VisibilityCheckData> m_visibilityData;
         private DetailLevel m_targetDetailLevel;
         private dynamic m_customData;
         private object m_tag1;
         private object m_tag2;
         private bool m_isStatic;
+        #endregion
 
-        // Some information about parent containers
+        #region Some information about parent containers
         private Scene m_scene;
         private SceneLayer m_sceneLayer;
+        #endregion
 
-        // Members for behaviors
+        #region Members for behaviors
         private List<SceneObjectBehavior> m_behaviors;
+        #endregion
 
-        // Members for animations
+        #region Members for animations
         private AnimationHandler m_animationHandler;
+        #endregion
 
-        // Collections for describing object hierarchies
+        #region Collections for describing object hierarchies
         private List<SceneObject> m_dependencies;
         private SceneObject m_owner;
-
-        // Generic data
-        private IndexBasedDynamicCollection<VisibilityCheckData> m_visibilityData;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneObject"/> class.
@@ -444,7 +447,7 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
-        /// Gets the synchronization context.
+        /// Gets the messenager associated to this object.
         /// This object is null unless the registerForMessaging argument of the
         /// Scene's constructor was set to true.
         /// </summary>

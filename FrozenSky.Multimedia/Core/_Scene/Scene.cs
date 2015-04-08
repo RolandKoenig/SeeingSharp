@@ -41,34 +41,29 @@ namespace FrozenSky.Multimedia.Core
         public static readonly string DEFAULT_LAYER_NAME = "Default";
         public static readonly string DEFAULT_SCENE_NAME = "Scene";
 
-        // Standard members
-        #region
+        #region Standard members
         private bool m_initialized;
         private string m_name;
         private List<SceneLayer> m_sceneLayers;
         private ReadOnlyCollection<SceneLayer> m_sceneLayersPublic;
-        private FrozenSkyMessenger m_Messenger;
+        private FrozenSkyMessenger m_messenger;
         private SceneSynchronizationContext m_syncContext;
         #endregion
 
-        // Members for 2D rendering
-        #region
+        #region Members for 2D rendering
         private List<Custom2DDrawingLayer> m_drawing2DLayers;
         #endregion
 
-        // Async update actions
-        #region
+        #region Async update actions
         private ThreadSaveQueue<Action> m_asyncInvokesBeforeUpdate;
         private ThreadSaveQueue<Action> m_asyncInvokesUpdateBesideRendering;
         #endregion
 
-        // Resource keys
-        #region
+        #region Resource keys
         private NamedOrGenericKey KEY_SCENE_RENDER_PARAMETERS = GraphicsCore.GetNextGenericResourceKey();
         #endregion
 
-        // Some runtime values
-        #region
+        #region Some runtime values
         private IndexBasedDynamicCollection<ResourceDictionary> m_registeredResourceDicts;
         private IndexBasedDynamicCollection<ViewInformation> m_registeredViews;
         private IndexBasedDynamicCollection<SceneRenderParameters> m_renderParameters;
@@ -78,14 +73,14 @@ namespace FrozenSky.Multimedia.Core
         /// Initializes a new instance of the <see cref="Scene" /> class.
         /// </summary>
         /// <param name="name">The global name of this scene.</param>
-        /// <param name="registerForMessaging">
+        /// <param name="registerOnMessenger">
         /// Do register this scene for application messaging?
         /// If true, then the caller has to ensure that the name is only used once 
         /// across the currently executed application.
         /// </param>
         public Scene(
             string name = "",
-            bool registerForMessaging = false)
+            bool registerOnMessenger = false)
         {
             if (string.IsNullOrEmpty(name)) { name = DEFAULT_SCENE_NAME; }
             this.Name = name;
@@ -107,11 +102,11 @@ namespace FrozenSky.Multimedia.Core
             InitializeResourceDictionaries(false);
 
             // Register the scene for ApplicationMessaging
-            if(registerForMessaging)
+            if(registerOnMessenger)
             {
                 m_syncContext = new SceneSynchronizationContext(this);
-                m_Messenger = new FrozenSkyMessenger();
-                m_Messenger.ApplyForGlobalSynchronization(
+                m_messenger = new FrozenSkyMessenger();
+                m_messenger.ApplyForGlobalSynchronization(
                     FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
                     this.Name,
                     m_syncContext);
@@ -131,7 +126,7 @@ namespace FrozenSky.Multimedia.Core
             if (m_syncContext != null)
             {
                 SynchronizationContext syncContext = m_syncContext;
-                FrozenSkyMessenger Messenger = m_Messenger;
+                FrozenSkyMessenger Messenger = m_messenger;
 
                 m_syncContext = null;
                 Messenger.DiscardGlobalSynchronization();
@@ -1101,7 +1096,7 @@ namespace FrozenSky.Multimedia.Core
         /// </summary>
         public FrozenSkyMessenger Messenger
         {
-            get { return m_Messenger; }
+            get { return m_messenger; }
         }
 
         /// <summary>

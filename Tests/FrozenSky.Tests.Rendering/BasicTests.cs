@@ -98,7 +98,7 @@ namespace FrozenSky.Tests.Rendering
         {
             Scene dummyScene = new Scene(
                 name: "DummyScene",
-                registerForMessaging: true);
+                registerOnMessenger: true);
             try
             {
                 Assert.True(FrozenSkyMessenger.CountGlobalMessengers == 1);
@@ -118,7 +118,7 @@ namespace FrozenSky.Tests.Rendering
         {
             Scene dummyScene = new Scene(
                 name: "DummyScene",
-                registerForMessaging: true);
+                registerOnMessenger: true);
             FrozenSkyException publishException = null;
             try
             {
@@ -143,12 +143,12 @@ namespace FrozenSky.Tests.Rendering
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
-                Scene dummyScene = new Scene(
-                    name: "DummyScene",
-                    registerForMessaging: true);
-                Exception publishException = null;
-                try
-                {
+            Scene dummyScene = new Scene(
+                name: "DummyScene",
+                registerOnMessenger: true);
+            Exception publishException = null;
+            try
+            {
                 using (MemoryRenderTarget renderTarget = new MemoryRenderTarget(1024, 1024))
                 {
                     renderTarget.Scene = dummyScene;
@@ -158,18 +158,18 @@ namespace FrozenSky.Tests.Rendering
                     });
                 }
             }
-                catch (Exception ex)
-                {
-                    publishException = ex;
-                }
-                finally
-                {
-                    dummyScene.DeregisterMessaging();
-                }
-
-                Assert.Null(publishException);
-                Assert.True(FrozenSkyMessenger.CountGlobalMessengers == 0);
+            catch (Exception ex)
+            {
+                publishException = ex;
             }
+            finally
+            {
+                dummyScene.DeregisterMessaging();
+            }
+
+            Assert.Null(publishException);
+            Assert.True(FrozenSkyMessenger.CountGlobalMessengers == 0);
+        }
 
         //*********************************************************************
         //*********************************************************************
