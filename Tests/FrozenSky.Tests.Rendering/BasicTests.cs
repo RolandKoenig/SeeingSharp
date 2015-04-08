@@ -16,19 +16,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (FrozenSky and all based games/applications)
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Views;
-using FrozenSky.Infrastructure;
-using System.Reflection;
-using Xunit;
 using FrozenSky.Util;
+using Xunit;
 
 namespace FrozenSky.Tests.Rendering
 {
@@ -123,7 +124,7 @@ namespace FrozenSky.Tests.Rendering
             {
                 dummyScene.MessageHandler.Publish<DummyMessage>();
             }
-            catch(FrozenSkyException ex)
+            catch (FrozenSkyException ex)
             {
                 publishException = ex;
             }
@@ -142,40 +143,39 @@ namespace FrozenSky.Tests.Rendering
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
-            using (MemoryRenderTarget renderTarget = new MemoryRenderTarget(1024, 1024))
+            Scene dummyScene = new Scene(
+                name: "DummyScene",
+                registerForMessaging: true);
+            Exception publishException = null;
+            try
             {
-                Scene dummyScene = new Scene(
-                    name: "DummyScene",
-                    registerForMessaging: true);
-                renderTarget.Scene = dummyScene;
-
-                Exception publishException = null;
-                try
+                using (MemoryRenderTarget renderTarget = new MemoryRenderTarget(1024, 1024))
                 {
+                    renderTarget.Scene = dummyScene;
                     await dummyScene.PerformBeforeUpdateAsync(() =>
                     {
                         dummyScene.MessageHandler.Publish<DummyMessage>();
                     });
                 }
-                catch (Exception ex)
-                {
-                    publishException = ex;
-                }
-                finally
-                {
-                    dummyScene.DeregisterMessaging();
-                }
-
-                Assert.Null(publishException);
-                Assert.True(FrozenSkyMessageHandler.CountGlobalMessageHandlers == 0);
             }
+            catch (Exception ex)
+            {
+                publishException = ex;
+            }
+            finally
+            {
+                dummyScene.DeregisterMessaging();
+            }
+
+            Assert.Null(publishException);
+            Assert.True(FrozenSkyMessageHandler.CountGlobalMessageHandlers == 0);
         }
 
         //*********************************************************************
         //*********************************************************************
         //*********************************************************************
         private class DummyMessage : FrozenSkyMessage
-        { 
+        {
         }
     }
 }
