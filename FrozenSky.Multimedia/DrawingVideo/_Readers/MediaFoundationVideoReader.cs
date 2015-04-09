@@ -60,8 +60,18 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 m_videoSource = videoSource;
 
                 // Create the source reader
-                m_videoSourceStream = m_videoSource.OpenInputStream();
-                m_sourceReader = new MF.SourceReader(m_videoSourceStream);
+#if DESKTOP
+                DesktopFileSystemResourceLink fileVideoResource = videoSource as DesktopFileSystemResourceLink;
+                if(fileVideoResource != null)
+                {
+                    m_sourceReader = new MF.SourceReader(fileVideoResource.FilePath);
+                }
+#endif
+                if (m_sourceReader == null)
+                {
+                    m_videoSourceStream = m_videoSource.OpenInputStream();
+                    m_sourceReader = new MF.SourceReader(m_videoSourceStream);
+                }
 
                 // Read some information about the source
                 using (MF.MediaType mediaType = m_sourceReader.GetCurrentMediaType(MF.SourceReaderIndex.FirstVideoStream))
@@ -74,7 +84,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 using (MF.MediaType mediaType = new MF.MediaType())
                 {
                     mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32);
+                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MFVideoFormats.FORMAT_RBG32); //MF.VideoFormatGuids.Rgb32);
                     mediaType.Set(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFEncodedIntsByValues(m_frameSize.Width, m_frameSize.Height));
                     m_sourceReader.SetCurrentMediaType(
                         MF.SourceReaderIndex.FirstVideoStream, 
@@ -96,8 +106,12 @@ namespace FrozenSky.Multimedia.DrawingVideo
             MemoryMappedTexture32bpp result = new MemoryMappedTexture32bpp(m_frameSize);
             try
             {
-                this.ReadFrame(result);
-                return result;
+                if (this.ReadFrame(result)) { return result; }
+                else 
+                {
+                    result.Dispose();
+                    return null;
+                }
             }
             catch(Exception)
             {
@@ -110,7 +124,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// Reads the next frame and puts it into the provided buffer.
         /// </summary>
         /// <param name="targetBuffer">The target buffer to write to.</param>
-        public void ReadFrame(MemoryMappedTexture32bpp targetBuffer)
+        public bool ReadFrame(MemoryMappedTexture32bpp targetBuffer)
         {
             if (this.IsDisposed) { throw new ObjectDisposedException(this.GetType().FullName); }
             targetBuffer.EnsureNotNull("targetBuffer");
@@ -130,14 +144,17 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 out readerFlags,
                 out timestamp))
             {
-                // Media type has change.. reconfigure the decoder here
-                if (readerFlags == MF.SourceReaderFlags.Nativemediatypechanged)
-                {
-
-                }
-                else if (readerFlags == MF.SourceReaderFlags.Endofstream)
+                // Check for end-of-stream
+                if (readerFlags == MF.SourceReaderFlags.Endofstream)
                 {
                     m_endReached = true;
+                    return false;
+                }
+
+                // No sample received
+                if(nextSample == null)
+                {
+                    return false;
                 }
 
                 // Copy pixel data into target buffer
@@ -150,21 +167,31 @@ namespace FrozenSky.Multimedia.DrawingVideo
                         IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
                         try
                         {
+                            //byte[] rawBytes = new byte[cbMaxLength];
+                            //for(int loop=0 ; loop<cbMaxLength; loop++)
+                            //{
+                            //    rawBytes[loop] = System.Runtime.InteropServices.Marshal.ReadByte(rawBytes, loop);
+                            //}
+
+                            int stride = m_frameSize.Width * 4;
                             MF.MediaFactory.CopyImage(
                                 targetBuffer.Pointer,
-                                m_frameSize.Width,
+                                stride,
                                 mediaBufferPointer,
-                                m_frameSize.Width,
-                                m_frameSize.Width,
+                                stride,
+                                stride,
                                 m_frameSize.Height);
                         }
                         finally
                         {
                             mediaBuffer.Unlock();
                         }
+                        return true;
                     }
                 }
             }
+
+            return false;
         }
 
         /// <summary>

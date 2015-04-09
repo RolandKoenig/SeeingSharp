@@ -41,23 +41,39 @@ namespace FrozenSky.Tests.Rendering
     {
         public const string TEST_CATEGORY = "FrozenSky Multimedia Drawing Video";
 
+        /// <summary>
+        /// Read_s the WMV video.
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
         public async Task Read_WmvVideo()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
-            using(MediaFoundationVideoReader videoReader = 
-                new MediaFoundationVideoReader(
-                    new AssemblyResourceLink(
-                        this.GetType().Assembly,
-                        "FrozenSky.Tests.Rendering.Ressources.Videos",
-                        "DummyVideo.wmv")))
+            //using(MediaFoundationVideoReader videoReader = 
+            //    new MediaFoundationVideoReader(
+            //        new AssemblyResourceLink(
+            //            this.GetType().Assembly,
+            //            "FrozenSky.Tests.Rendering.Ressources.Videos",
+            //            "DummyVideo.wmv")))
+            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader("C:\\Users\\Roland\\Desktop\\DummyVideo.wmv"))
+            using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
             {
-                using(MemoryMappedTexture32bpp actFrameBuffer = videoReader.ReadFrame())
-                using(GDI.Bitmap actFrameBitmap = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer))
+                int frameIndex = 0;
+                while(!videoReader.EndReached)
                 {
-                    actFrameBitmap.DumpToDesktop("Blub.png");
+                    if (videoReader.ReadFrame(actFrameBuffer))
+                    {
+                        frameIndex++;
+                        if (frameIndex == 10)
+                        {
+                            using (GDI.Bitmap actFrameBitmap = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer))
+                            {
+                                actFrameBitmap.DumpToDesktop(string.Format("Blub{0}.png", frameIndex));
+                            }
+                        }
+                    }
                 }
             }
 

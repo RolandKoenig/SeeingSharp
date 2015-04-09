@@ -110,6 +110,14 @@ namespace FrozenSky.Util
         {
             get { return base.GetExtensionFromFileName(m_filePath); }
         }
+
+        /// <summary>
+        /// Gets the path to the file.
+        /// </summary>
+        public string FilePath
+        {
+            get { return m_filePath; }
+        }
     }
 }
 #endif
