@@ -52,9 +52,11 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// <summary>
         /// Initializes a new instance of the <see cref="Mp4VideoWriter"/> class.
         /// </summary>
-        public Mp4VideoWriter()
+        /// <param name="targetFile">The target file to write to.</param>
+        public Mp4VideoWriter(ResourceLink targetFile)
+            : base(targetFile)
         {
-            this.FileNameTemplate = "Video_{0}.mp4";
+
         }
 
         /// <summary>
@@ -86,6 +88,15 @@ namespace FrozenSky.Multimedia.DrawingVideo
             {
                 return true;
             }
+        }
+
+        /// <summary>
+        /// Gets a dummy video file name, for example Dummy.mp4.
+        /// This is needed to pass a dummy name to MediaFoundation.
+        /// </summary>
+        protected override string DummyFileName
+        {
+            get { return "Dummy.mp4"; }
         }
     }
 }

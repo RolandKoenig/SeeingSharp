@@ -60,17 +60,24 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 m_videoSource = videoSource;
 
                 // Create the source reader
+                using(MF.MediaAttributes mediaAttributes =new MF.MediaAttributes(1))
+                {
+                    // We need the 'EnableVideoProcessing' attribute because of the RGB32 format
+                    // see (lowest post): http://msdn.developer-works.com/article/11388495/How+to+use+SourceReader+(for+H.264+to+RGB+conversion)%3F
+                    mediaAttributes.Set(MF.SourceReaderAttributeKeys.EnableVideoProcessing, 1);
 #if DESKTOP
-                DesktopFileSystemResourceLink fileVideoResource = videoSource as DesktopFileSystemResourceLink;
-                if(fileVideoResource != null)
-                {
-                    m_sourceReader = new MF.SourceReader(fileVideoResource.FilePath);
-                }
+                    //DesktopFileSystemResourceLink fileVideoResource = videoSource as DesktopFileSystemResourceLink;
+                    //if(fileVideoResource != null)
+                    //{
+                        
+                    //    m_sourceReader = new MF.SourceReader(fileVideoResource.FilePath, mediaAttributes);
+                    //}
 #endif
-                if (m_sourceReader == null)
-                {
-                    m_videoSourceStream = m_videoSource.OpenInputStream();
-                    m_sourceReader = new MF.SourceReader(m_videoSourceStream);
+                    if (m_sourceReader == null)
+                    {
+                        m_videoSourceStream = m_videoSource.OpenInputStream();
+                        m_sourceReader = new MF.SourceReader(m_videoSourceStream, mediaAttributes);
+                    }
                 }
 
                 // Read some information about the source
@@ -84,7 +91,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 using (MF.MediaType mediaType = new MF.MediaType())
                 {
                     mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MFVideoFormats.FORMAT_RBG32); //MF.VideoFormatGuids.Rgb32);
+                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32); //MF.VideoFormatGuids.Rgb32);
                     mediaType.Set(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFEncodedIntsByValues(m_frameSize.Width, m_frameSize.Height));
                     m_sourceReader.SetCurrentMediaType(
                         MF.SourceReaderIndex.FirstVideoStream, 

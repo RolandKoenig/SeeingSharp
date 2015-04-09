@@ -47,7 +47,7 @@ namespace FrozenSky.Tests.Rendering
         /// <returns></returns>
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public async Task Read_WmvVideo()
+        public async Task ReadSimple_Mp4Video()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -57,7 +57,7 @@ namespace FrozenSky.Tests.Rendering
             //            this.GetType().Assembly,
             //            "FrozenSky.Tests.Rendering.Ressources.Videos",
             //            "DummyVideo.wmv")))
-            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader("C:\\Users\\Roland\\Desktop\\DummyVideo.wmv"))
+            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader("C:\\Users\\Roland\\Desktop\\Video_0.mp4"))
             using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
             {
                 int frameIndex = 0;
@@ -82,104 +82,28 @@ namespace FrozenSky.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public async Task RenderSimple_FullImages()
-        {
-            await UnitTestHelper.InitializeWithGrahicsAsync();
-
-            // Configure video rendering
-            string videoBasePath = Path.Combine(Environment.CurrentDirectory, "VideoImages");
-            try
-            {
-                FullImageVideoWriter videoWriter = new FullImageVideoWriter();
-                videoWriter.TargetDirectory = videoBasePath;
-
-                // Perform video rendering
-                await RenderSimple_Generic(
-                    videoWriter, 4,
-                    doAnimate: false);
-
-                // Check results
-                int imageCount = 0;
-                foreach (string actFileName in Directory.GetFiles(videoBasePath))
-                {
-                    imageCount++;
-                    using (GDI.Bitmap actBitmap = (GDI.Bitmap)GDI.Bitmap.FromFile(actFileName))
-                    {
-                        float diff = BitmapComparison.CalculatePercentageDifference(
-                            actBitmap, Properties.Resources.ReferenceImage_SimpleObject);
-                        Assert.True(diff < 0.05, "Difference to reference image is to big!");
-                    }
-                }
-                Assert.True(imageCount >= 3);
-                Assert.True(imageCount <= 6);
-            }
-            finally
-            {
-                if (Directory.Exists(videoBasePath))
-                {
-                    Directory.Delete(videoBasePath, true);
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", TEST_CATEGORY)]
-        public async Task RenderSimple_WmvVideo()
-        {
-            await UnitTestHelper.InitializeWithGrahicsAsync();
-
-            // Configure video rendering
-            string videoBasePath = Path.Combine(Environment.CurrentDirectory, "Videos");
-            try
-            {
-                WmvVideoWriter videoWriter = new WmvVideoWriter();
-                videoWriter.TargetDirectory = videoBasePath;
-                videoWriter.FileNameTemplate = "Video_{0}.wmv";
-                videoWriter.Bitrate = 1500;
-
-                // Perform video rendering
-                await RenderSimple_Generic(videoWriter, 100);
-
-                // Check results
-                Assert.False(string.IsNullOrEmpty(videoWriter.LastGeneratedFileName));
-                Assert.True(File.Exists(videoWriter.LastGeneratedFileName));
-            }
-            finally
-            {
-                if (Directory.Exists(videoBasePath))
-                {
-                    Directory.Delete(videoBasePath, true);
-                }
-            }
-        }
-
-        [Fact]
-        [Trait("Category", TEST_CATEGORY)]
         public async Task RenderSimple_Mp4Video()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
             // Configure video rendering
-            string videoBasePath = Path.Combine(Environment.CurrentDirectory, "Videos");
+            string videoFilePath = Path.Combine(Environment.CurrentDirectory, "Video.wmv");
             try
             {
-                Mp4VideoWriter videoWriter = new Mp4VideoWriter();
-                videoWriter.TargetDirectory = videoBasePath;
-                videoWriter.FileNameTemplate = "Video_{0}.mp4";
+                Mp4VideoWriter videoWriter = new Mp4VideoWriter(videoFilePath);
                 videoWriter.Bitrate = 1500;
 
                 // Perform video rendering
                 await RenderSimple_Generic(videoWriter, 100);
 
                 // Check results
-                Assert.False(string.IsNullOrEmpty(videoWriter.LastGeneratedFileName));
-                Assert.True(File.Exists(videoWriter.LastGeneratedFileName));
+                Assert.True(File.Exists(videoFilePath));
             }
             finally
             {
-                if (Directory.Exists(videoBasePath))
+                if (File.Exists(videoFilePath))
                 {
-                    Directory.Delete(videoBasePath, true);
+                    File.Delete(videoFilePath);
                 }
             }
         }

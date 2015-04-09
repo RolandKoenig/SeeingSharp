@@ -55,6 +55,8 @@ namespace FrozenSky.Multimedia.DrawingVideo
         #endregion
 
         #region Resources for MediaFoundation video rendering
+        private Stream m_outStreamNet;
+        private MF.ByteStream m_outStream;
         private MF.SinkWriter m_sinkWriter;
         private Size2 m_videoPixelSize;
         private int m_frameIndex;
@@ -62,9 +64,11 @@ namespace FrozenSky.Multimedia.DrawingVideo
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MediaFoundationVideoWriter"/> class.
+        /// Initializes a new instance of the <see cref="MediaFoundationVideoWriter" /> class.
         /// </summary>
-        public MediaFoundationVideoWriter()
+        /// <param name="targetFile">The target file to write to.</param>
+        public MediaFoundationVideoWriter(ResourceLink targetFile)
+            : base(targetFile)
         {
             m_bitrate = 1500000;
             m_framerate = 25;
@@ -76,9 +80,13 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// <param name="videoPixelSize">The pixel size of the video.</param>
         protected override void StartRenderingInternal(Size2 videoPixelSize)
         {
+            m_outStreamNet = base.TargetFile.OpenOutputStream();
+            m_outStream = new MF.ByteStream(m_outStreamNet);
+
+            // Pass dummy filename as described here:
+            // https://social.msdn.microsoft.com/forums/windowsapps/en-us/49bffa74-4e84-4fd6-9d67-42e8385611b8/video-sinkwriter-in-metro-app
             m_sinkWriter = MF.MediaFactory.CreateSinkWriterFromURL(
-                base.GetNextFileName(), 
-                IntPtr.Zero, null);
+                this.DummyFileName, m_outStream.NativePointer, null);
             m_videoPixelSize = videoPixelSize;
 
             CreateMediaTarget(m_sinkWriter, m_videoPixelSize, out m_streamIndex);
@@ -109,7 +117,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
         protected override void DrawFrameInternal(EngineDevice device, MemoryMappedTexture32bpp uploadedTexture)
         {
 #if UNIVERSAL
-            throw new NotImplementedException("Not implemented for WinRT currently!");
+            throw new NotImplementedException();
 #else
 
             // Cancel here if the given texture has an invalid size
@@ -187,9 +195,12 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// </summary>
         protected override void FinishRenderingInternal()
         {
+            m_sinkWriter.NotifyEndOfSegment(m_streamIndex);
             m_sinkWriter.Finalize();
 
             GraphicsHelper.SafeDispose(ref m_sinkWriter);
+            GraphicsHelper.SafeDispose(ref m_outStream);
+            GraphicsHelper.SafeDispose(ref m_outStreamNet);
         }
 
         /// <summary>
@@ -199,6 +210,12 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// <param name="videoPixelSize">The pixel size of the video.</param>
         /// <param name="streamIndex">The stream index for the new target.</param>
         protected abstract void CreateMediaTarget(MF.SinkWriter sinkWriter, Size2 videoPixelSize, out int streamIndex);
+
+        /// <summary>
+        /// Gets a dummy video file name, for example Dummy.mp4.
+        /// This is needed to pass a dummy name to MediaFoundation.
+        /// </summary>
+        protected abstract string DummyFileName { get; }
 
         /// <summary>
         /// Gets the total count of frames rendered.

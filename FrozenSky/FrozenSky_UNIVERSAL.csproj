@@ -67,6 +67,7 @@
     <Compile Include="Checking\Ensure.IO.cs" />
     <Compile Include="Checking\Ensure.Numeric.cs" />
     <Compile Include="Checking\Ensure.Rectangles.cs" />
+    <Compile Include="Checking\Ensure.Size.cs" />
     <Compile Include="Checking\Ensure.Vectors.cs" />
     <Compile Include="Checking\FrozenSkyCheckException.cs" />
     <Compile Include="ExceptionAnalyzers\SystemExceptionAnalyzer.cs" />

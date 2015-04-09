@@ -15,16 +15,6 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
-
-	********************************************************************************
-    Additional permission under GNU GPL version 3 section 7
-
-    If you modify this Program, or any covered work, by linking or combining it with 
-	DirectX (or a modified version of that library), containing parts covered by the 
-	terms of [name of library's license], the licensors of this Program grant you additional 
-	permission to convey the resulting work. {Corresponding Source for a non-source form of 
-	such a combination shall include the source code for the parts of DirectX used 
-	as well as that of the covered work.}
 */
 #endregion
 using System;
@@ -35,11 +25,8 @@ using System.Text;
 using System.Threading.Tasks;
 using PropertyTools.DataAnnotations;
 using FrozenSky.Util;
+using FrozenSky.Checking;
 using FrozenSky.Multimedia.Core;
-
-#if UNIVERSAL
-using Windows.Storage;
-#endif
 
 // Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
@@ -51,69 +38,31 @@ namespace FrozenSky.Multimedia.DrawingVideo
     /// </summary>
     public abstract class FrozenSkyVideoWriter
     {
-        // Configuration
-        #region
-        private string m_fileNameTemplate;
-#if DESKTOP
-        private string m_targetFolderPath;
-#endif
+        #region Configuration
+        private ResourceLink m_targetFile;
         #endregion
 
-        // Runtime values
-        #region
-        private int m_fileCounter;
-#if DESKTOP
-        private string m_lastFileName;
-#endif
+        #region Runtime values
         private Size2 m_videoSize;
-        private bool m_isStarted;
-        private Exception m_lastStartException;
-        private Exception m_lastDrawException;
-        private Exception m_lastFinishExeption;
+        private bool m_hasStarted;
+        private bool m_hasFinished;
+        private Exception m_startException;
+        private Exception m_drawException;
+        private Exception m_finishExeption;
         #endregion
-
+        
+        /// <summary>
+        /// Occurs when recording was finished (by success or failure).
+        /// </summary>
         public event EventHandler RecordingFinished;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrozenSkyVideoWriter"/> class.
         /// </summary>
-        public FrozenSkyVideoWriter()
+        /// <param name="targetFile">The target file to write to.</param>
+        public FrozenSkyVideoWriter(ResourceLink targetFile)
         {
-            m_fileCounter = -1;
-        }
-
-        public void ResetRenderExceptions()
-        {
-            m_lastFinishExeption = null;
-            m_lastDrawException = null;
-            m_lastStartException = null;
-        }
-
-        /// <summary>
-        /// Gets the next file to be written by this video writer.
-        /// </summary>
-        /// <param name="restoreFileCounter">Do resture the file counter before returning the new filename?</param>
-        protected string GetNextFileName(bool restoreFileCounter = false)
-        {
-            int prevFileCounter = m_fileCounter;
-
-            // Query for next file name
-            m_fileCounter++;
-#if DESKTOP
-            string actFileName = Path.Combine(m_targetFolderPath, string.Format(m_fileNameTemplate, m_fileCounter));
-            while (File.Exists(actFileName))
-            {
-                m_fileCounter++;
-                actFileName = Path.Combine(m_targetFolderPath, string.Format(m_fileNameTemplate, m_fileCounter));
-            }
-
-            if (restoreFileCounter) { m_fileCounter = prevFileCounter; }
-            m_lastFileName = actFileName;
-
-            return actFileName;
-#else
-            throw new NotImplementedException("Not implemented for WinRT currently!");
-#endif
+            m_targetFile = targetFile;
         }
 
         /// <summary>
@@ -121,36 +70,28 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// </summary>
         internal void StartRendering(Size2 videoSize)
         {
-            if (m_isStarted) { throw new FrozenSkyGraphicsException("VideoWriter is already started!"); }
+            videoSize.EnsureNotEmpty("videoSize");
+            if (m_hasStarted) { throw new FrozenSkyGraphicsException("VideoWriter has already started before!"); }
+            if (m_hasFinished) { throw new FrozenSkyGraphicsException("VideoWriter has already finished before!"); }
 
             m_videoSize = videoSize;
 
-#if UNIVERSAL
-            throw new NotImplementedException("Not implemented for WinRT currently!");
-#else
-
             // Reset exceptions
-            m_lastDrawException = null;
-            m_lastStartException = null;
-            m_lastFinishExeption = null;
+            m_drawException = null;
+            m_startException = null;
+            m_finishExeption = null;
 
             // Ensure that the target directory exists
             try
             {
-                if (!Directory.Exists(m_targetFolderPath))
-                {
-                    Directory.CreateDirectory(m_targetFolderPath);
-                }
-
                 this.StartRenderingInternal(m_videoSize);
-                m_isStarted = true;
+                m_hasStarted = true;
             }
             catch(Exception ex)
             {
-                m_lastStartException = ex;
-                m_isStarted = false;
+                m_startException = ex;
+                m_hasStarted = false;
             }
-#endif
         }
 
         /// <summary>
@@ -160,21 +101,24 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// <param name="uploadedTexture">The texture which should be added to the video.</param>
         public void DrawFrame(EngineDevice device, MemoryMappedTexture32bpp uploadedTexture)
         {
-            if (!m_isStarted) { throw new FrozenSkyGraphicsException("VideoWriter is not started!"); }
-
-            // Check for correct image size
-            if(m_videoSize != uploadedTexture.PixelSize)
-            {
-                throw new FrozenSkyGraphicsException("Size has changed during recording!");
-            }
-
             try
             {
+                device.EnsureNotNull("device");
+                uploadedTexture.EnsureNotNull("uploadedTexture");
+                if (!m_hasStarted) { throw new FrozenSkyGraphicsException("VideoWriter is not started!"); }
+                if (m_hasFinished) { throw new FrozenSkyGraphicsException("VideoWriter has already finished before!"); }
+
+                // Check for correct image size
+                if (m_videoSize != uploadedTexture.PixelSize)
+                {
+                    throw new FrozenSkyGraphicsException("Size has changed during recording!");
+                }
+
                 this.DrawFrameInternal(device, uploadedTexture);
             }
             catch(Exception ex)
             {
-                m_lastDrawException = ex;
+                m_drawException = ex;
             }
         }
 
@@ -185,22 +129,29 @@ namespace FrozenSky.Multimedia.DrawingVideo
         {
             try
             {
+                if (!m_hasStarted) { throw new FrozenSkyGraphicsException("VideoWriter is not started!"); }
+                if (m_hasFinished) { throw new FrozenSkyGraphicsException("VideoWriter has already finished before!"); }
+
                 FinishRenderingInternal();
             }
             catch(Exception ex)
             {
-                m_lastFinishExeption = ex;
+                m_finishExeption = ex;
             }
             finally
             {
-                m_isStarted = false;
+                m_hasFinished = true;
                 this.RecordingFinished.Raise(this, EventArgs.Empty);
             }
         }
 
+        /// <summary>
+        /// Checks whether changes on the configuration of this object are valid currently.
+        /// The method throws an exception, if not.
+        /// </summary>
         protected void CheckWhetherChangesAreValid()
         {
-            if (m_isStarted) { throw new FrozenSkyGraphicsException("Unable to do changed when VideoWriter is running!"); }
+            if (m_hasStarted || m_hasFinished) { throw new FrozenSkyGraphicsException("Unable to do changed when VideoWriter is running!"); }
         }
 
         /// <summary>
@@ -222,47 +173,31 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// </summary>
         protected abstract void FinishRenderingInternal();
 
-#if DESKTOP
         /// <summary>
-        /// Gets or sets the target directory.
-        /// </summary>
-        [DirectoryPath]
-        public string TargetDirectory
-        {
-            get { return m_targetFolderPath; }
-            set
-            {
-                this.CheckWhetherChangesAreValid();
-                m_targetFolderPath = value;
-            }
-        }
-#endif
-       
-        public string FileNameTemplate
-        {
-            get { return m_fileNameTemplate; }
-            set
-            {
-                this.CheckWhetherChangesAreValid();
-                m_fileNameTemplate = value;
-            }
-        }
-
-#if DESKTOP
-        [Browsable(false)]
-        public string LastGeneratedFileName
-        {
-            get { return m_lastFileName; }
-        }
-#endif
-
-        /// <summary>
-        /// Was rendering started?
+        /// Gets the target file this VideoWriter is writing to.
         /// </summary>
         [Browsable(false)]
-        public bool IsStarted
+        public ResourceLink TargetFile
         {
-            get { return m_isStarted; }
+            get { return m_targetFile; }
+        }
+
+        /// <summary>
+        /// Has rendering started?
+        /// </summary>
+        [Browsable(false)]
+        public bool HasStarted
+        {
+            get { return m_hasStarted; }
+        }
+
+        /// <summary>
+        /// Has rendering finished?
+        /// </summary>
+        [Browsable(false)]
+        public bool HasFinished
+        {
+            get { return m_hasFinished; }
         }
 
         /// <summary>
@@ -287,45 +222,43 @@ namespace FrozenSky.Multimedia.DrawingVideo
         [Browsable(false)]
         public Exception LastStartException
         {
-            get { return m_lastStartException; }
+            get { return m_startException; }
         }
 
         [Browsable(false)]
         public Exception LastDrawException
         {
-            get { return m_lastDrawException; }
+            get { return m_drawException; }
         }
 
         [Browsable(false)]
         public Exception LastFinishException
         {
-            get { return m_lastFinishExeption; }
+            get { return m_finishExeption; }
         }
 
-//#if DESKTOP
-//        [Browsable(false)]
-//        public string ErrorText
-//        {
-//            get
-//            {
-//                if(m_lastStartException != null)
-//                {
-//                    return string.Format(Localizables.ERROR_VIDEO_START, m_lastStartException.Message);
-//                }
-//                else if(m_lastDrawException != null)
-//                {
-//                    return string.Format(Localizables.ERROR_VIDEO_RENDERING, m_lastDrawException.Message);
-//                }
-//                else if(m_lastFinishExeption != null)
-//                {
-//                    return string.Format(Localizables.ERROR_VIDEO_COMPLETING, m_lastFinishExeption.Message);
-//                }
-//                else
-//                {
-//                    return base.ErrorWithoutHtml;
-//                }
-//            }
-//        }
-//#endif
+        [Browsable(false)]
+        public string ErrorText
+        {
+            get
+            {
+                if (m_startException != null)
+                {
+                    return string.Format(Translatables.ERROR_VIDEO_START, m_startException.Message);
+                }
+                else if (m_drawException != null)
+                {
+                    return string.Format(Translatables.ERROR_VIDEO_RENDERING, m_drawException.Message);
+                }
+                else if (m_finishExeption != null)
+                {
+                    return string.Format(Translatables.ERROR_VIDEO_COMPLETING, m_finishExeption.Message);
+                }
+                else
+                {
+                    return string.Empty;
+                }
+            }
+        }
     }
 }

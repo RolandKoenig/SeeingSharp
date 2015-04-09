@@ -197,10 +197,8 @@
     <Compile Include="Drawing3D\_ShaderInteraction\StandardVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />
     <Compile Include="DrawingVideo\FrozenSkyVideoWriter.cs" />
-    <Compile Include="DrawingVideo\_Writers\FullImageVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
-    <Compile Include="DrawingVideo\_Writers\WmvVideoWriter.cs" />
     <Compile Include="FrozenSkyGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
     <Compile Include="Input\IFrozenSkyFreeCameraInputHandler.cs" />
@@ -260,6 +258,7 @@
     <Compile Include="_Misc.cs" />
     <Compile Include="_Native.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
+    <Compile Include="_Translatables.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">

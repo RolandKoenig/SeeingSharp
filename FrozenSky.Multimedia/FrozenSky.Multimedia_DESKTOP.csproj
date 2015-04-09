@@ -278,10 +278,8 @@
     <Compile Include="Core\_Util\MFHelper.cs" />
     <Compile Include="Core\_Util\_MediaFoundationUtil.cs" />
     <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />
-    <Compile Include="DrawingVideo\_Writers\FullImageVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
-    <Compile Include="DrawingVideo\_Writers\WmvVideoWriter.cs" />
     <Compile Include="FrozenSkyGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
     <Compile Include="Input\IFrozenSkyFreeCameraInputHandler.cs" />
@@ -346,6 +344,7 @@
     </Compile>
     <Compile Include="ResourceKeys.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
+    <Compile Include="_Translatables.cs" />
     <FrozenSky-VertexShader-Min4_0 Include="Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl" />
     <FrozenSky-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl" />
     <FrozenSky-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessBlur.hlsl" />

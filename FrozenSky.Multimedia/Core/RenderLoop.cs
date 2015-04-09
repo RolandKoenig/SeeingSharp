@@ -295,7 +295,7 @@ namespace FrozenSky.Multimedia.Core
                     if (videoWriter.AssociatedRenderLoop != this) { throw new FrozenSkyGraphicsException("The given VideoWriter is not associated with this RenderLoop!"); }
 
                     // Try to finish rendering first
-                    if (videoWriter.IsStarted)
+                    if (videoWriter.HasStarted)
                     {
                         videoWriter.FinishRendering();
                     }
@@ -827,10 +827,10 @@ namespace FrozenSky.Multimedia.Core
                         FrozenSkyVideoWriter actVideoWriter = m_videoWriters[actIndex];
 
                         // Start video rendering if not done so before
-                        if (!actVideoWriter.IsStarted) { actVideoWriter.StartRendering(m_currentViewSize); }
+                        if (!actVideoWriter.HasStarted) { actVideoWriter.StartRendering(m_currentViewSize); }
 
                         // Render current frame
-                        if (actVideoWriter.IsStarted)
+                        if (actVideoWriter.HasStarted)
                         {
                             actVideoWriter.DrawFrame(m_currentDevice, mappedTexture);
                         }
