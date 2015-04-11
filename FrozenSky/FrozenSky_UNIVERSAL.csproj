@@ -56,10 +56,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
-    <TargetPlatform Include="Windows, Version=8.1" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="Behaviors\_Wpf\FrozenSkyPropertyGridAutoRefreshBehavior.cs" />
     <Compile Include="Behaviors\_Wpf\FrozenSkyPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
@@ -68,6 +64,7 @@
     <Compile Include="Checking\Ensure.Numeric.cs" />
     <Compile Include="Checking\Ensure.Rectangles.cs" />
     <Compile Include="Checking\Ensure.Size.cs" />
+    <Compile Include="Checking\Ensure.Time.cs" />
     <Compile Include="Checking\Ensure.Vectors.cs" />
     <Compile Include="Checking\FrozenSkyCheckException.cs" />
     <Compile Include="ExceptionAnalyzers\SystemExceptionAnalyzer.cs" />
@@ -246,18 +243,22 @@
     <None Include="..\Misc\_FrozenSky.Multimedia.licenseheader">
       <Link>_FrozenSky.Multimedia.licenseheader</Link>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.FrozenSky_UNIVERSAL.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="_Math\_SharpDXMath\_LicenseInfo.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net40+sl5+wp80+win8+wpa81\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\portable-net45+wp80+win8+wpa81+aspnetcore50\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="PropertyTools">
       <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\portable-net40+net45+sl5+wp8+win8\PropertyTools.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <TargetPlatform Include="Windows, Version=8.1" />
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

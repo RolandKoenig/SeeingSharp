@@ -28,6 +28,7 @@
 */
 #endregion
 using FrozenSky.Multimedia.Core;
+using FrozenSky.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,12 +39,13 @@ namespace FrozenSky.Multimedia.Drawing3D
 {
     public class CameraStraightMoveAnimation : AnimationBase
     {
+        #region Configuration
         private Camera3DBase m_camera;
         private PerspectiveCamera3D m_cameraPerspective;
         private OrthographicCamera3D m_cameraOrthographic;
-
         private Camera3DViewPoint m_viewPointSource;
         private Camera3DViewPoint m_viewPointTarget;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CameraStraightMoveAnimation"/> class.
@@ -54,6 +56,10 @@ namespace FrozenSky.Multimedia.Drawing3D
         public CameraStraightMoveAnimation(Camera3DBase targetCamera, Camera3DViewPoint targetViewPoint, TimeSpan animationTime)
             : base(targetCamera, AnimationType.FixedTime, animationTime)
         {
+            targetCamera.EnsureNotNull("targetCamera");
+            targetViewPoint.EnsureNotNull("targetViewPoint");
+ 
+
             m_camera = targetCamera;
             m_cameraPerspective = m_camera as PerspectiveCamera3D;
             m_cameraOrthographic = m_camera as OrthographicCamera3D;

@@ -21,22 +21,25 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FrozenSky.Checking;
 
 namespace FrozenSky.Multimedia.Core
 {
     public abstract class AnimationBase : IAnimation
     {
-        // Main properties of this animation
+        #region Main properties of this animation
         private AnimationType m_animationType;
         private object m_targetObject;
+        #endregion
 
-        // Control members for AnimationTypes
+        #region Control members for AnimationTypes
         private Task m_asyncTask;
         private TimeSpan m_fixedTime;
         private TimeSpan m_currentTime;
         private bool m_finished;
         private bool m_started;
         private bool m_canceled;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnimationBase"/> class.
@@ -69,6 +72,8 @@ namespace FrozenSky.Multimedia.Core
         public AnimationBase(object targetObject, AnimationType animationType, TimeSpan fixedTime)
             : this(targetObject)
         {
+            fixedTime.EnsureLongerOrEqualZero("fixedTime");
+
             m_animationType = animationType;
             m_fixedTime = fixedTime;
         }
@@ -79,6 +84,8 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="fixedTime">This fixed time to be set.</param>
         protected void ChangeToFixedTime(TimeSpan fixedTime)
         {
+            fixedTime.EnsureLongerOrEqualZero("fixedTime");
+
             if (m_currentTime > TimeSpan.Zero) { throw new InvalidOperationException("Unable to change animation type when animation was started already!"); }
 
             m_fixedTime = fixedTime;

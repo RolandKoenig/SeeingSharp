@@ -15,18 +15,10 @@
 
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
-
-	********************************************************************************
-    Additional permission under GNU GPL version 3 section 7
-
-    If you modify this Program, or any covered work, by linking or combining it with 
-	DirectX (or a modified version of that library), containing parts covered by the 
-	terms of [name of library's license], the licensors of this Program grant you additional 
-	permission to convey the resulting work. {Corresponding Source for a non-source form of 
-	such a combination shall include the source code for the parts of DirectX used 
-	as well as that of the covered work.}
 */
 #endregion
+using FrozenSky.Util;
+using FrozenSky.Checking;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -34,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
+using System.IO;
 
 namespace FrozenSky.Multimedia.Drawing3D
 {
@@ -51,6 +44,55 @@ namespace FrozenSky.Multimedia.Drawing3D
         {
             this.OrthographicZoomFactor = 10f;
             this.CameraType = Camera3DType.Perspective;
+        }
+
+        /// <summary>
+        /// Loads a Camera3DViewPoint from the given resource.
+        /// </summary>
+        /// <param name="resourceLink">The resource link.</param>
+        public static Camera3DViewPoint FromResourceLink(ResourceLink resourceLink)
+        {
+            resourceLink.EnsureNotNull("resourceLink");
+
+            using(Stream inStream = resourceLink.OpenInputStream())
+            using(TextReader textReader = new StreamReader(inStream))
+            using(JsonReader jsonReader = new JsonTextReader(textReader))
+            {
+                return SerializerRepository.DEFAULT_JSON.Deserialize<Camera3DViewPoint>(jsonReader);
+            }
+        }
+
+        /// <summary>
+        /// Loads a Camera3DViewPoint from the given resource.
+        /// </summary>
+        /// <param name="resourceLink">The resource link.</param>
+        public static async Task<Camera3DViewPoint> FromResourceLinkAsync(ResourceLink resourceLink)
+        {
+            resourceLink.EnsureNotNull("resourceLink");
+
+            using (Stream inStream = await resourceLink.OpenInputStreamAsync())
+            using (TextReader textReader = new StreamReader(inStream))
+            using (JsonReader jsonReader = new JsonTextReader(textReader))
+            {
+                return await Task.Factory.StartNew(() =>
+                    SerializerRepository.DEFAULT_JSON.Deserialize<Camera3DViewPoint>(jsonReader));
+            }
+        }
+
+        /// <summary>
+        /// Writes this Camera3DViewPoint to the given resource link.
+        /// </summary>
+        /// <param name="resourceLink">The resource link.</param>
+        public void ToResourceLink(ResourceLink resourceLink)
+        {
+            resourceLink.EnsureNotNull("resourceLink");
+
+            using(Stream outStream = resourceLink.OpenOutputStream())
+            using(TextWriter textWriter = new StreamWriter(outStream))
+            using(JsonWriter jsonWriter = new JsonTextWriter(textWriter))
+            {
+                SerializerRepository.DEFAULT_JSON.Serialize(jsonWriter, this);
+            }
         }
 
         [XmlIgnore]

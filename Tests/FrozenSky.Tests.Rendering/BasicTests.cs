@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Views;
+using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Util;
 using Xunit;
 
@@ -63,6 +64,26 @@ namespace FrozenSky.Tests.Rendering
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
             Assert.NotNull(GraphicsCore.Current.DefaultDevice);
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public void Check_ViewPoint_ReadWriterJson()
+        {
+            ResourceLink dummyFile = "DummyFile.json";
+            Camera3DViewPoint viewPointOriginal = new Camera3DViewPoint();
+            viewPointOriginal.CameraType = Camera3DType.Perspective;
+            viewPointOriginal.OrthographicZoomFactor = 10f;
+            viewPointOriginal.Position = new Vector3(2f, 3f, 4f);
+            viewPointOriginal.Rotation = new Vector2(1f, 1.5f);
+
+            viewPointOriginal.ToResourceLink(dummyFile);
+            Camera3DViewPoint loadedOne = Camera3DViewPoint.FromResourceLink(dummyFile);
+
+            Assert.Equal(viewPointOriginal.CameraType, loadedOne.CameraType);
+            Assert.Equal(viewPointOriginal.OrthographicZoomFactor, loadedOne.OrthographicZoomFactor);
+            Assert.Equal(viewPointOriginal.Position, loadedOne.Position);
+            Assert.Equal(viewPointOriginal.Rotation, loadedOne.Rotation);
         }
 
         /// <summary>

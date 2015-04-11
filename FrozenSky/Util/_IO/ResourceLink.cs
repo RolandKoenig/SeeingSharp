@@ -41,6 +41,30 @@ namespace FrozenSky.Util
         }
 
         /// <summary>
+        /// Reads the complete resource to a new string.
+        /// </summary>
+        public string ReadCompleteToString()
+        {
+            using(Stream inStream = this.OpenInputStream())
+            using(StreamReader inStreamReader = new StreamReader(inStream))
+            {
+                return inStreamReader.ReadToEnd();
+            }
+        }
+
+        /// <summary>
+        /// Reads the complete resource to a new string.
+        /// </summary>
+        public async Task<string> ReadCompleteToStringAsync()
+        {
+            using (Stream inStream = await this.OpenInputStreamAsync())
+            using (StreamReader inStreamReader = new StreamReader(inStream))
+            {
+                return await inStreamReader.ReadToEndAsync();
+            }
+        }
+
+        /// <summary>
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>

@@ -17,10 +17,13 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -29,9 +32,40 @@ namespace FrozenSky.Util
 {
     public class SerializerRepository
     {
+        /// <summary>
+        /// Gets the default JsonSerializer which can be used to serialize complex object graphs.
+        /// The serializer should be threadsafe, see http://json.codeplex.com/discussions/110461
+        /// </summary>
+        public static readonly JsonSerializer DEFAULT_JSON;
+        public static readonly JsonSerializer DEFAULT_JSON_WITHOUT_INDENT;
+
         private static SerializerRepository s_current;
 
         private ConcurrentDictionary<Type, XmlSerializer> m_serializers;
+
+        /// <summary>
+        /// Initializes the <see cref="SerializerRepository"/> class.
+        /// </summary>
+        static SerializerRepository()
+        {
+            // Create the default serializer
+            DEFAULT_JSON = new JsonSerializer();
+            DEFAULT_JSON.ContractResolver = new FrozenSkyJsonContractResolver();
+            DEFAULT_JSON.PreserveReferencesHandling = PreserveReferencesHandling.All;
+            DEFAULT_JSON.Formatting = Formatting.Indented;
+            DEFAULT_JSON.ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor;
+            DEFAULT_JSON.TypeNameHandling = TypeNameHandling.Auto;
+            DEFAULT_JSON.MissingMemberHandling = MissingMemberHandling.Ignore;
+
+            // Create the default serializer without any indent
+            DEFAULT_JSON_WITHOUT_INDENT = new JsonSerializer();
+            DEFAULT_JSON_WITHOUT_INDENT.ContractResolver = new FrozenSkyJsonContractResolver();
+            DEFAULT_JSON_WITHOUT_INDENT.PreserveReferencesHandling = PreserveReferencesHandling.All;
+            DEFAULT_JSON_WITHOUT_INDENT.Formatting = Formatting.None;
+            DEFAULT_JSON_WITHOUT_INDENT.ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor;
+            DEFAULT_JSON_WITHOUT_INDENT.TypeNameHandling = TypeNameHandling.Auto;
+            DEFAULT_JSON_WITHOUT_INDENT.MissingMemberHandling = MissingMemberHandling.Ignore;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SerializerRepository"/> class.
@@ -70,6 +104,41 @@ namespace FrozenSky.Util
             {
                 if (s_current == null) { s_current = new SerializerRepository(); }
                 return s_current;
+            }
+        }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        /// <summary>
+        /// Base class for creating a custom contract resolver that looks at each property to see if
+        /// it is allowed to be serialized.
+        /// </summary>
+        public class FrozenSkyJsonContractResolver : DefaultContractResolver
+        {
+            /// <summary>
+            /// Gets the serializable members for the type.
+            /// </summary>
+            /// <param name="objectType">The type to get serializable members for.</param>
+            protected override List<MemberInfo> GetSerializableMembers(Type objectType)
+            {
+                // Call base class and return this result in some cases
+                //  e. g. => Don't modify here when we have a value type (like Vector3, Color, DateTime, TimeSpan, ...)
+                List<MemberInfo> result = base.GetSerializableMembers(objectType);
+                if (result == null) { return result; }
+                if (objectType.GetTypeInfo().IsValueType) { return result; }
+
+                // Filter out all members which don't have a JsonProperty attribute attached
+                List<MemberInfo> trueResult = new List<MemberInfo>(result.Count);
+                foreach (MemberInfo actMember in result)
+                {
+                    JsonPropertyAttribute actPropertyAttrib = actMember.GetCustomAttribute<JsonPropertyAttribute>();
+                    if (actPropertyAttrib == null) { continue; }
+
+                    trueResult.Add(actMember);
+                }
+
+                return trueResult;
             }
         }
     }
