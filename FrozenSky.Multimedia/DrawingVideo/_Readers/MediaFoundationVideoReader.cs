@@ -57,6 +57,8 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// <param name="videoSource">The source video file.</param>
         public MediaFoundationVideoReader(ResourceLink videoSource)
         {
+            videoSource.EnsureNotNull("videoSource");
+
             try
             {
                 m_videoSource = videoSource;
