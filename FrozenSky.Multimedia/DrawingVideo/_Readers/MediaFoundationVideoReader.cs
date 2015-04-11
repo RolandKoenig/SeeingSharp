@@ -21,6 +21,7 @@ using FrozenSky.Multimedia.Core;
 using FrozenSky.Util;
 using FrozenSky.Checking;
 using System;
+using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,7 +30,6 @@ using System.Threading.Tasks;
 
 // Namespace mappings
 using MF = SharpDX.MediaFoundation;
-using System.Runtime.InteropServices;
 
 namespace FrozenSky.Multimedia.DrawingVideo
 {
@@ -37,7 +37,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
     /// This object reads video streams from a file source using the MediaFoundation.
     /// See https://msdn.microsoft.com/de-de/library/windows/desktop/dd389281(v=vs.85).aspx
     /// </summary>
-    public class MediaFoundationVideoReader : IDisposable
+    public class MediaFoundationVideoReader : IDisposable, ICheckDisposed
     {
         #region Configuration
         private ResourceLink m_videoSource;
@@ -67,7 +67,9 @@ namespace FrozenSky.Multimedia.DrawingVideo
                     // We need the 'EnableVideoProcessing' attribute because of the RGB32 format
                     // see (lowest post): http://msdn.developer-works.com/article/11388495/How+to+use+SourceReader+(for+H.264+to+RGB+conversion)%3F
                     mediaAttributes.Set(MF.SourceReaderAttributeKeys.EnableVideoProcessing, 1);
+                    mediaAttributes.Set(MF.SourceReaderAttributeKeys.DisableDxva, 1);
 
+                    // Wrap the .net stream to a MF Bytestream
                     m_videoSourceStreamNet = m_videoSource.OpenInputStream();
                     m_videoSourceStream = new MF.ByteStream(m_videoSourceStreamNet);
                     using(MF.MediaAttributes byteStreamAttributes = m_videoSourceStream.QueryInterface<MF.MediaAttributes>())
@@ -97,7 +99,10 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 using (MF.MediaType mediaType = new MF.MediaType())
                 {
                     mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32); 
+                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32);
+                    mediaType.Set(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFEncodedIntsByValues(m_frameSize.Width, m_frameSize.Height));
+                    mediaType.Set(MF.MediaTypeAttributeKeys.InterlaceMode, (int)MF.VideoInterlaceMode.Progressive);
+                    mediaType.Set(MF.MediaTypeAttributeKeys.FrameRate, MFHelper.GetMFEncodedIntsByValues(25, 1));
                     m_sourceReader.SetCurrentMediaType(
                         MF.SourceReaderIndex.FirstVideoStream, 
                         mediaType);
@@ -115,6 +120,8 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// </summary>
         public MemoryMappedTexture32bpp ReadFrame()
         {
+            this.EnsureNotNullOrDisposed("this");
+
             MemoryMappedTexture32bpp result = new MemoryMappedTexture32bpp(m_frameSize);
             try
             {
@@ -138,7 +145,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// <param name="targetBuffer">The target buffer to write to.</param>
         public bool ReadFrame(MemoryMappedTexture32bpp targetBuffer)
         {
-            if (this.IsDisposed) { throw new ObjectDisposedException(this.GetType().FullName); }
+            this.EnsureNotNullOrDisposed("this");
             targetBuffer.EnsureNotNull("targetBuffer");
             if((targetBuffer.Width != m_frameSize.Width) ||
                (targetBuffer.Height != m_frameSize.Height))
@@ -201,7 +208,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
         }
 
         /// <summary>
-        /// Disposes all resources.
+        /// Disposes all native resources.
         /// </summary>
         public void Dispose()
         {

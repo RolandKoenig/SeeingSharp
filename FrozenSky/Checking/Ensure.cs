@@ -34,6 +34,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using FrozenSky.Util;
 
 namespace FrozenSky.Checking
 {
@@ -44,6 +45,23 @@ namespace FrozenSky.Checking
     /// </summary>
     public static partial class Ensure
     {
+        [Conditional("DEBUG")]
+        public static void EnsureNotNullOrDisposed(
+            this ICheckDisposed disposable, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((disposable == null) ||
+                (disposable.IsDisposed))
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Disposable onject {0} within method {1} must not be null or disposed!",
+                    checkedVariableName, callerMethod));
+            }
+        }
+
         [Conditional("DEBUG")]
         public static void EnsureNotNullOrEmpty<T>(
             this T[] array, string checkedVariableName,

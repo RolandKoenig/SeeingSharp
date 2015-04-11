@@ -25,6 +25,14 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Util
 {
+    /// <summary>
+    /// An interface which can return the disposed state of an object.
+    /// </summary>
+    public interface ICheckDisposed
+    {
+        bool IsDisposed { get; }
+    }
+
     public enum ActionIfSyncContextIsNull
     {
         InvokeSynchronous,
