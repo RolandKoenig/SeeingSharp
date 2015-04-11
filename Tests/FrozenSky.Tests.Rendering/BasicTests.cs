@@ -170,6 +170,7 @@ namespace FrozenSky.Tests.Rendering
             Exception publishException = null;
             try
             {
+                // Publish a message during scene update pass
                 using (MemoryRenderTarget renderTarget = new MemoryRenderTarget(1024, 1024))
                 {
                     renderTarget.Scene = dummyScene;
@@ -178,6 +179,10 @@ namespace FrozenSky.Tests.Rendering
                         dummyScene.Messenger.Publish<DummyMessage>();
                     });
                 }
+
+                // Wait while the render loop is surely unsubscribed from main loop
+                await GraphicsCore.Current.MainLoop.WaitForNextPassedLoop();
+                await GraphicsCore.Current.MainLoop.WaitForNextPassedLoop();
             }
             catch (Exception ex)
             {

@@ -40,7 +40,10 @@ namespace FrozenSky.Multimedia.Core
 
         private static EngineMainLoop s_current;
 
+        #region main thread synchronization
         private Task m_runningTask;
+        private ConcurrentQueue<Action> m_globalLoopAwaiters;
+        #endregion
 
         // RenderLoop collections
         #region
@@ -65,6 +68,7 @@ namespace FrozenSky.Multimedia.Core
         /// </summary>
         private EngineMainLoop()
         {
+            m_globalLoopAwaiters = new ConcurrentQueue<Action>();
             m_registeredRenderLoops = new List<RenderLoop>();
             m_unregisteredRenderLoops = new List<RenderLoop>();
             m_registeredRenderLoopsLock = new object();
@@ -73,6 +77,19 @@ namespace FrozenSky.Multimedia.Core
 
             m_scenesForUnload = new List<Scene>();
             m_scenesForUnloadLock = new object();
+        }
+
+        /// <summary>
+        /// Waits for next passed loop cycle.
+        /// </summary>
+        public Task WaitForNextPassedLoop()
+        {
+            TaskCompletionSource<object> result = new TaskCompletionSource<object>();
+            m_globalLoopAwaiters.Enqueue(() =>
+            {
+                result.SetResult(null);
+            });
+            return result.Task;
         }
 
         /// <summary>
@@ -213,6 +230,16 @@ namespace FrozenSky.Multimedia.Core
                     catch (Exception) 
                     {
                         exceptionOccurred = true;
+                    }
+
+                    // Execute global awaiters
+                    while(m_globalLoopAwaiters.Count > 0)
+                    {
+                        Action currentAction = null;
+                        if(m_globalLoopAwaiters.TryDequeue(out currentAction))
+                        {
+                            currentAction();
+                        }
                     }
 
                     if(exceptionOccurred)
