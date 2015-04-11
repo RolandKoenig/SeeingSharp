@@ -29,6 +29,7 @@ using System.Threading.Tasks;
 
 // Namespace mappings
 using MF = SharpDX.MediaFoundation;
+using System.Runtime.InteropServices;
 
 namespace FrozenSky.Multimedia.DrawingVideo
 {
@@ -43,7 +44,8 @@ namespace FrozenSky.Multimedia.DrawingVideo
         #endregion
 
         #region Media foundation resources
-        private Stream m_videoSourceStream;
+        private Stream m_videoSourceStreamNet;
+        private MF.ByteStream m_videoSourceStream;
         private MF.SourceReader m_sourceReader;
         private Size2 m_frameSize;
         private bool m_endReached;
@@ -60,24 +62,28 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 m_videoSource = videoSource;
 
                 // Create the source reader
-                using(MF.MediaAttributes mediaAttributes =new MF.MediaAttributes(1))
+                using (MF.MediaAttributes mediaAttributes = new MF.MediaAttributes(1))
                 {
                     // We need the 'EnableVideoProcessing' attribute because of the RGB32 format
                     // see (lowest post): http://msdn.developer-works.com/article/11388495/How+to+use+SourceReader+(for+H.264+to+RGB+conversion)%3F
                     mediaAttributes.Set(MF.SourceReaderAttributeKeys.EnableVideoProcessing, 1);
-#if DESKTOP
-                    //DesktopFileSystemResourceLink fileVideoResource = videoSource as DesktopFileSystemResourceLink;
-                    //if(fileVideoResource != null)
-                    //{
-                        
-                    //    m_sourceReader = new MF.SourceReader(fileVideoResource.FilePath, mediaAttributes);
-                    //}
-#endif
-                    if (m_sourceReader == null)
+
+                    m_videoSourceStreamNet = m_videoSource.OpenInputStream();
+                    m_videoSourceStream = new MF.ByteStream(m_videoSourceStreamNet);
+                    using(MF.MediaAttributes byteStreamAttributes = m_videoSourceStream.QueryInterface<MF.MediaAttributes>())
                     {
-                        m_videoSourceStream = m_videoSource.OpenInputStream();
-                        m_sourceReader = new MF.SourceReader(m_videoSourceStream, mediaAttributes);
+                        byteStreamAttributes.Set(MF.ByteStreamAttributeKeys.OriginName, "Dummy." + videoSource.FileExtension);
                     }
+
+                    // Create the sourcereader by custom native method (needed because of the ByteStream arg)
+                    IntPtr sourceReaderPointer = IntPtr.Zero;
+                    SharpDX.Result sdxResult = NativeMethods.MFCreateSourceReaderFromByteStream_Native(
+                        m_videoSourceStream.NativePointer,
+                        mediaAttributes.NativePointer,
+                        out sourceReaderPointer);
+                    sdxResult.CheckError();
+
+                    m_sourceReader = new MF.SourceReader(sourceReaderPointer);
                 }
 
                 // Read some information about the source
@@ -91,8 +97,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 using (MF.MediaType mediaType = new MF.MediaType())
                 {
                     mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32); //MF.VideoFormatGuids.Rgb32);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFEncodedIntsByValues(m_frameSize.Width, m_frameSize.Height));
+                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32); 
                     m_sourceReader.SetCurrentMediaType(
                         MF.SourceReaderIndex.FirstVideoStream, 
                         mediaType);
@@ -167,19 +172,13 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 // Copy pixel data into target buffer
                 if (nextSample.BufferCount > 0)
                 {
-                    using (MF.MediaBuffer mediaBuffer = nextSample.GetBufferByIndex(0))
+                    using (MF.MediaBuffer mediaBuffer = nextSample.ConvertToContiguousBuffer())
                     {
                         int cbMaxLength;
                         int cbCurrentLenght;
                         IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
                         try
                         {
-                            //byte[] rawBytes = new byte[cbMaxLength];
-                            //for(int loop=0 ; loop<cbMaxLength; loop++)
-                            //{
-                            //    rawBytes[loop] = System.Runtime.InteropServices.Marshal.ReadByte(rawBytes, loop);
-                            //}
-
                             int stride = m_frameSize.Width * 4;
                             MF.MediaFactory.CopyImage(
                                 targetBuffer.Pointer,
@@ -208,6 +207,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
         {
             GraphicsHelper.SafeDispose(ref m_sourceReader);
             GraphicsHelper.SafeDispose(ref m_videoSourceStream);
+            GraphicsHelper.SafeDispose(ref m_videoSourceStreamNet);
         }
 
         /// <summary>

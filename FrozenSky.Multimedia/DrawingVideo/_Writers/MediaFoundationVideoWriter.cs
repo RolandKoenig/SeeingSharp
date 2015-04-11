@@ -47,7 +47,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
     /// </summary>
     public abstract class MediaFoundationVideoWriter : FrozenSkyVideoWriter
     {
-        private static readonly Guid VIDEO_INPUT_FORMAT = MFVideoFormats.FORMAT_RBG32;
+        private static readonly Guid VIDEO_INPUT_FORMAT = MF.VideoFormatGuids.Rgb32;
 
         #region Configuration
         private int m_bitrate;

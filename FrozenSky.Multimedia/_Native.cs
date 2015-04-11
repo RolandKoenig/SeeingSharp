@@ -29,6 +29,9 @@ namespace FrozenSky.Multimedia
 {
     static class NativeMethods
     {
+        [DllImport("Mfreadwrite.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "MFCreateSourceReaderFromByteStream")]
+        public static extern int MFCreateSourceReaderFromByteStream_Native(IntPtr pByteStream, IntPtr pAttributes, out IntPtr pSourceReader);
+
 #if !UNIVERSAL
         /// <summary>
         /// Copies unmanaged memory from given source location to given target. 

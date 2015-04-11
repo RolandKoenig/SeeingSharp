@@ -47,7 +47,7 @@ namespace FrozenSky.Multimedia.DrawingVideo
     /// </summary>
     public class Mp4VideoWriter : MediaFoundationVideoWriter
     {
-        private static readonly Guid VIDEO_ENCODING_FORMAT = MFVideoFormats.FORMAT_H264;
+        private static readonly Guid VIDEO_ENCODING_FORMAT = MF.VideoFormatGuids.H264;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Mp4VideoWriter"/> class.

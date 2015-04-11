@@ -47,17 +47,15 @@ namespace FrozenSky.Tests.Rendering
         /// <returns></returns>
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public async Task ReadSimple_Mp4Video()
+        public async Task ReadSimple_WmvVideo()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
-            //using(MediaFoundationVideoReader videoReader = 
-            //    new MediaFoundationVideoReader(
-            //        new AssemblyResourceLink(
-            //            this.GetType().Assembly,
-            //            "FrozenSky.Tests.Rendering.Ressources.Videos",
-            //            "DummyVideo.wmv")))
-            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader("C:\\Users\\Roland\\Desktop\\Video_0.mp4"))
+            ResourceLink videoLink = new AssemblyResourceLink(
+                this.GetType().Assembly,
+                "FrozenSky.Tests.Rendering.Ressources.Videos",
+                "DummyVideo.wmv");
+            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader(videoLink))
             using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
             {
                 int frameIndex = 0;

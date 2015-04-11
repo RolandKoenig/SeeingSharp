@@ -139,7 +139,6 @@
     <Compile Include="Core\_Util\MemoryMappedTextureFloat.cs" />
     <Compile Include="Core\_Util\MFHelper.cs" />
     <Compile Include="Core\_Util\TextureUploader.cs" />
-    <Compile Include="Core\_Util\_MediaFoundationUtil.cs" />
     <Compile Include="Drawing2D\Custom2DDrawingLayer.cs" />
     <Compile Include="Drawing2D\Graphics2D.cs" />
     <Compile Include="Drawing2D\ResourceCache2D.cs" />
