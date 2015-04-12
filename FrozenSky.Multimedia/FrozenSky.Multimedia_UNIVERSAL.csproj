@@ -196,6 +196,7 @@
     <Compile Include="Drawing3D\_ShaderInteraction\StandardVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />
     <Compile Include="DrawingVideo\FrozenSkyVideoWriter.cs" />
+    <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
     <Compile Include="FrozenSkyGraphicsException.cs" />

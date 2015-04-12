@@ -17,6 +17,8 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+
+#if DESKTOP
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Util;
 using FrozenSky.Checking;
@@ -244,3 +246,4 @@ namespace FrozenSky.Multimedia.DrawingVideo
         }
     }
 }
+#endif

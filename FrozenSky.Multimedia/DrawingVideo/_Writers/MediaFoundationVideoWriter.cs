@@ -18,6 +18,7 @@
 */
 #endregion
 
+#if DESKTOP
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -107,10 +108,6 @@ namespace FrozenSky.Multimedia.DrawingVideo
         /// <param name="uploadedTexture">The texture which should be added to the video.</param>
         protected override void DrawFrameInternal(EngineDevice device, MemoryMappedTexture32bpp uploadedTexture)
         {
-#if UNIVERSAL
-            throw new NotImplementedException();
-#else
-
             // Cancel here if the given texture has an invalid size
             if (m_videoPixelSize != new Size2(uploadedTexture.Width, uploadedTexture.Height)) { return; }
 
@@ -177,7 +174,6 @@ namespace FrozenSky.Multimedia.DrawingVideo
             {
                 GraphicsHelper.SafeDispose(ref mediaBuffer);
             }
-#endif
         }
 
         /// <summary>
@@ -247,3 +243,4 @@ namespace FrozenSky.Multimedia.DrawingVideo
         }
     }
 }
+#endif
