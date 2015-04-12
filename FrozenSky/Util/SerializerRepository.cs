@@ -127,16 +127,33 @@ namespace FrozenSky.Util
                 //  e. g. => Don't modify here when we have a value type (like Vector3, Color, DateTime, TimeSpan, ...)
                 List<MemberInfo> result = base.GetSerializableMembers(objectType);
                 if (result == null) { return result; }
-                if (objectType.GetTypeInfo().IsValueType) { return result; }
 
-                // Filter out all members which don't have a JsonProperty attribute attached
                 List<MemberInfo> trueResult = new List<MemberInfo>(result.Count);
-                foreach (MemberInfo actMember in result)
+                if (objectType.GetTypeInfo().IsValueType)
                 {
-                    JsonPropertyAttribute actPropertyAttrib = actMember.GetCustomAttribute<JsonPropertyAttribute>();
-                    if (actPropertyAttrib == null) { continue; }
+                    // Filter out all members which only have get-access
+                    foreach(MemberInfo actMember in result)
+                    {
+                        PropertyInfo actPropertyInfo = actMember as PropertyInfo;
+                        if((actPropertyInfo != null) &&
+                           (actPropertyInfo.SetMethod == null))
+                        {
+                            continue;
+                        }
 
-                    trueResult.Add(actMember);
+                        trueResult.Add(actMember);
+                    }
+                }
+                else
+                {
+                    // Filter out all members which don't have a JsonProperty attribute attached
+                    foreach (MemberInfo actMember in result)
+                    {
+                        JsonPropertyAttribute actPropertyAttrib = actMember.GetCustomAttribute<JsonPropertyAttribute>();
+                        if (actPropertyAttrib == null) { continue; }
+
+                        trueResult.Add(actMember);
+                    }
                 }
 
                 return trueResult;
