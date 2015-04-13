@@ -29,10 +29,11 @@ namespace FrozenSky.Multimedia.Core
 {
     public unsafe class MemoryMappedTexture32bpp : IDisposable
     {
-        // The native structure, where we store all ObjectIDs uploaded from graphics hardware
+        #region The native structure, where we store all ObjectIDs uploaded from graphics hardware
         private IntPtr m_pointer;
         private int* m_pointerNative;
         private Size2 m_size;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryMappedTexture32bpp"/> class.
@@ -54,6 +55,33 @@ namespace FrozenSky.Multimedia.Core
             m_pointer = IntPtr.Zero;
             m_pointerNative = (int*)0;
             m_size = new Size2(0, 0);
+        }
+
+        /// <summary>
+        /// Gets the value at the given (pixel) location.
+        /// </summary>
+        /// <param name="xPos">The x position.</param>
+        /// <param name="yPos">The y position.</param>
+        public int GetValue(int xPos, int yPos)
+        {
+            return m_pointerNative[xPos + (yPos * m_size.Width)];
+        }
+
+        /// <summary>
+        /// Sets all alpha values to one.
+        /// </summary>
+        public void SetAllAlphaValuesToOne()
+        {
+            byte* pointerNativeByte = (byte*)m_pointerNative;
+            for(int loopX=0 ; loopX<m_size.Width; loopX++)
+            {
+                for(int loopY=0 ; loopY<m_size.Height; loopY++)
+                {
+                    // Change alpha byte to 255
+                    int index = loopX * 4 + (loopY * this.Pitch);
+                    pointerNativeByte[index + 3] = 255;  
+                }
+            }
         }
 
         /// <summary>

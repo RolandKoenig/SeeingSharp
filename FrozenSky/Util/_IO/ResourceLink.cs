@@ -40,6 +40,27 @@ namespace FrozenSky.Util
 
         }
 
+#if DESKTOP        
+        /// <summary>
+        /// Writes the contents of this resource to the given dummy file.
+        /// </summary>
+        /// <param name="fileName">Name of the dummy file.</param>
+        public void WriteAllBytesToDummyFile(string fileName)
+        {
+            using(Stream inStream = this.OpenInputStream())
+            using(Stream outStream = new FileStream(fileName, FileMode.Create, FileAccess.Write))
+            {
+                byte[] buffer = new byte[1024];
+                int readBytes = inStream.Read(buffer, 0, buffer.Length);
+                while(readBytes > 0)
+                {
+                    outStream.Write(buffer, 0, readBytes);
+                    readBytes = inStream.Read(buffer, 0, buffer.Length);
+                }
+            }
+        }
+#endif
+
         /// <summary>
         /// Reads the complete resource to a new string.
         /// </summary>

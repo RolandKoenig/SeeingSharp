@@ -92,24 +92,22 @@ namespace FrozenSky.Multimedia.DrawingVideo
                     m_sourceReader = new MF.SourceReader(sourceReaderPointer);
                 }
 
+                // Apply source configuration 
+                using (MF.MediaType mediaType = new MF.MediaType())
+                {
+                    mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
+                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32);
+                    m_sourceReader.SetCurrentMediaType(
+                        MF.SourceReaderIndex.FirstVideoStream, 
+                        mediaType);
+                    m_sourceReader.SetStreamSelection(MF.SourceReaderIndex.FirstVideoStream, new SharpDX.Bool(true));
+                }
+
                 // Read some information about the source
                 using (MF.MediaType mediaType = m_sourceReader.GetCurrentMediaType(MF.SourceReaderIndex.FirstVideoStream))
                 {
                     long frameSizeLong = mediaType.Get(MF.MediaTypeAttributeKeys.FrameSize);
                     m_frameSize = new Size2(MFHelper.GetValuesByMFEncodedInts(frameSizeLong));
-                }
-
-                // Set the source type to video / uncompressed format
-                using (MF.MediaType mediaType = new MF.MediaType())
-                {
-                    mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.FrameSize, MFHelper.GetMFEncodedIntsByValues(m_frameSize.Width, m_frameSize.Height));
-                    mediaType.Set(MF.MediaTypeAttributeKeys.InterlaceMode, (int)MF.VideoInterlaceMode.Progressive);
-                    mediaType.Set(MF.MediaTypeAttributeKeys.FrameRate, MFHelper.GetMFEncodedIntsByValues(25, 1));
-                    m_sourceReader.SetCurrentMediaType(
-                        MF.SourceReaderIndex.FirstVideoStream, 
-                        mediaType);
                 }
             }
             catch(Exception)
@@ -203,6 +201,10 @@ namespace FrozenSky.Multimedia.DrawingVideo
                         {
                             mediaBuffer.Unlock();
                         }
+
+                        // Apply 1 to all alpha values (these are not changed by the video frame!)
+                        targetBuffer.SetAllAlphaValuesToOne();
+
                         return true;
                     }
                 }

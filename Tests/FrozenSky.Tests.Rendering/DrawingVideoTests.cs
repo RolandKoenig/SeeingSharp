@@ -41,10 +41,6 @@ namespace FrozenSky.Tests.Rendering
     {
         public const string TEST_CATEGORY = "FrozenSky Multimedia Drawing Video";
 
-        /// <summary>
-        /// Read_s the WMV video.
-        /// </summary>
-        /// <returns></returns>
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
         public async Task ReadSimple_WmvVideo()
@@ -55,6 +51,7 @@ namespace FrozenSky.Tests.Rendering
                 this.GetType().Assembly,
                 "FrozenSky.Tests.Rendering.Ressources.Videos",
                 "DummyVideo.wmv");
+            GDI.Bitmap bitmapFrame10 = null;
             using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader(videoLink))
             using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
             {
@@ -64,18 +61,17 @@ namespace FrozenSky.Tests.Rendering
                     if (videoReader.ReadFrame(actFrameBuffer))
                     {
                         frameIndex++;
-                        if (frameIndex == 10)
-                        {
-                            using (GDI.Bitmap actFrameBitmap = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer))
-                            {
-                                actFrameBitmap.DumpToDesktop(string.Format("Blub{0}.png", frameIndex));
-                            }
-                        }
+                        if (frameIndex != 10) { continue; }
+
+                        bitmapFrame10 = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer);
+                        break;
                     }
                 }
             }
 
-            Assert.True(false, "This test is WORK IN PROGRESS");
+            Assert.NotNull(bitmapFrame10);
+            Assert.True(
+                BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrame10));
         }
 
         [Fact]
