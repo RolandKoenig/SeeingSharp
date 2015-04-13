@@ -101,10 +101,12 @@
     <EmbeddedResource Include="Ressources\Models\ModelTwoSided.ac" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Ressources\Videos\DummyVideo.mp4" />
     <EmbeddedResource Include="Ressources\Videos\DummyVideo.wmv" />
     <Resource Include="Ressources\Textures\SkyBox.dds" />
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
-    <Content Include="Ressources\ReferenceRenderings\VideoFrame10.png" />
+    <Content Include="Ressources\ReferenceRenderings\VideoFrameMp4.png" />
+    <Content Include="Ressources\ReferenceRenderings\VideoFrameWmv.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleObject_D2DTexture.png" />
     <Content Include="Ressources\ReferenceRenderings\DebugDawingLayer.png" />
     <Content Include="Ressources\ReferenceRenderings\RoundedRectOver3D.png" />

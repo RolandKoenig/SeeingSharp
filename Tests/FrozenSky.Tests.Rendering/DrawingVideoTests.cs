@@ -71,7 +71,40 @@ namespace FrozenSky.Tests.Rendering
 
             Assert.NotNull(bitmapFrame10);
             Assert.True(
-                BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrame10));
+                BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrameWmv));
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task ReadSimple_Mp4Video()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            ResourceLink videoLink = new AssemblyResourceLink(
+                this.GetType().Assembly,
+                "FrozenSky.Tests.Rendering.Ressources.Videos",
+                "DummyVideo.mp4");
+            GDI.Bitmap bitmapFrame10 = null;
+            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader(videoLink))
+            using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
+            {
+                int frameIndex = 0;
+                while (!videoReader.EndReached)
+                {
+                    if (videoReader.ReadFrame(actFrameBuffer))
+                    {
+                        frameIndex++;
+                        if (frameIndex != 10) { continue; }
+
+                        bitmapFrame10 = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer);
+                        break;
+                    }
+                }
+            }
+
+            Assert.NotNull(bitmapFrame10);
+            Assert.True(
+                BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrameMp4));
         }
 
         [Fact]
@@ -81,7 +114,7 @@ namespace FrozenSky.Tests.Rendering
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
             // Configure video rendering
-            string videoFilePath = Path.Combine(Environment.CurrentDirectory, "Video.wmv");
+            string videoFilePath = Path.Combine(Environment.CurrentDirectory, "Video.mp4");
             try
             {
                 Mp4VideoWriter videoWriter = new Mp4VideoWriter(videoFilePath);

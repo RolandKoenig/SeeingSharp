@@ -63,6 +63,16 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
         /// </summary>
+        internal static byte[] DummyVideo {
+            get {
+                object obj = ResourceManager.GetObject("DummyVideo", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Byte[].
+        /// </summary>
         internal static byte[] ModelFlatShading {
             get {
                 object obj = ResourceManager.GetObject("ModelFlatShading", resourceCulture);
@@ -293,9 +303,19 @@ namespace FrozenSky.Tests.Rendering.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap ReferenceImage_VideoFrame10 {
+        internal static System.Drawing.Bitmap ReferenceImage_VideoFrameMp4 {
             get {
-                object obj = ResourceManager.GetObject("ReferenceImage_VideoFrame10", resourceCulture);
+                object obj = ResourceManager.GetObject("ReferenceImage_VideoFrameMp4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_VideoFrameWmv {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_VideoFrameWmv", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
