@@ -48,6 +48,40 @@ namespace FrozenSky.Checking
         }
 
         [Conditional("DEBUG")]
+        public static void EnsureLongerOrEqualThan(
+            this TimeSpan timeSpan, TimeSpan compareValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (timeSpan < compareValue)
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Timespan {0} within method {1} must be longer or equal {2} (given value is {3}!",
+                    checkedVariableName, callerMethod,
+                    compareValue, timeSpan));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureShorterOrEqualThan(
+            this TimeSpan timeSpan, TimeSpan compareValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (timeSpan > compareValue)
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Timespan {0} within method {1} must be shorter or equal {2} (given value is {3}!",
+                    checkedVariableName, callerMethod,
+                    compareValue, timeSpan));
+            }
+        }
+
+        [Conditional("DEBUG")]
         public static void EnsureLongerThanZero(
             this TimeSpan timeSpan, string checkedVariableName,
             [CallerMemberName]

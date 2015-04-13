@@ -49,8 +49,14 @@ namespace FrozenSky.Multimedia.DrawingVideo
         private Stream m_videoSourceStreamNet;
         private MF.ByteStream m_videoSourceStream;
         private MF.SourceReader m_sourceReader;
-        private Size2 m_frameSize;
         private bool m_endReached;
+        #endregion
+
+        #region Video properties
+        private Size2 m_frameSize;
+        private long m_durationLong;
+        private long m_currentPositionLong;
+        private MediaSourceCharacteristics_Internal m_characteristics;
         #endregion
 
         /// <summary>
@@ -109,6 +115,12 @@ namespace FrozenSky.Multimedia.DrawingVideo
                     long frameSizeLong = mediaType.Get(MF.MediaTypeAttributeKeys.FrameSize);
                     m_frameSize = new Size2(MFHelper.GetValuesByMFEncodedInts(frameSizeLong));
                 }
+
+                // Get additional propertie3s
+                m_durationLong = m_sourceReader.GetPresentationAttribute(
+                    MF.SourceReaderIndex.MediaSource, MF.PresentationDescriptionAttributeKeys.Duration);
+                m_characteristics = (MediaSourceCharacteristics_Internal)m_sourceReader.GetPresentationAttribute(
+                    MF.SourceReaderIndex.MediaSource, MF.SourceReaderAttributeKeys.MediaSourceCharacteristics);
             }
             catch(Exception)
             {
@@ -156,14 +168,13 @@ namespace FrozenSky.Multimedia.DrawingVideo
             }
 
             MF.SourceReaderFlags readerFlags;
-            long timestamp;
             int dummyStreamIndex;
             using (MF.Sample nextSample = m_sourceReader.ReadSample(
                 MF.SourceReaderIndex.FirstVideoStream,
                 MF.SourceReaderControlFlags.None,
                 out dummyStreamIndex,
                 out readerFlags,
-                out timestamp))
+                out m_currentPositionLong))
             {
                 // Check for end-of-stream
                 if (readerFlags == MF.SourceReaderFlags.Endofstream)
@@ -214,6 +225,19 @@ namespace FrozenSky.Multimedia.DrawingVideo
         }
 
         /// <summary>
+        /// Sets the current position of this video reader.
+        /// </summary>
+        /// <param name="position">The position to be set.</param>
+        public void SetCurrentPosition(TimeSpan position)
+        {
+            position.EnsureLongerOrEqualZero("position");
+            position.EnsureShorterOrEqualThan(this.Duration, "position");
+            this.EnsureSeekable("self");
+
+            m_sourceReader.SetCurrentPosition(position.Ticks);
+        }
+
+        /// <summary>
         /// Disposes all native resources.
         /// </summary>
         public void Dispose()
@@ -245,6 +269,32 @@ namespace FrozenSky.Multimedia.DrawingVideo
         public Size2 FrameSize
         {
             get { return m_frameSize; }
+        }
+
+        /// <summary>
+        /// Gets the total duration of the video.
+        /// </summary>
+        public TimeSpan Duration
+        {
+            get { return TimeSpan.FromMilliseconds((double)(m_durationLong / 10000)); }
+        }
+
+        /// <summary>
+        /// Gets the current time position within the video.
+        /// </summary>
+        public TimeSpan CurrentPosition
+        {
+            get { return TimeSpan.FromMilliseconds((double)(m_currentPositionLong / 10000)); }
+        }
+
+        public bool IsSeekable
+        {
+            get 
+            {
+                return m_characteristics.HasFlag(MediaSourceCharacteristics_Internal.CanSeek) &&
+                       (!m_characteristics.HasFlag(MediaSourceCharacteristics_Internal.HasSlowSeek));
+
+            }
         }
     }
 }

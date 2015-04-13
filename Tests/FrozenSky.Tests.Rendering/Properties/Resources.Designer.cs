@@ -319,5 +319,15 @@ namespace FrozenSky.Tests.Rendering.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_VideoFrameWmv_Seek {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_VideoFrameWmv_Seek", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
     }
 }

@@ -43,6 +43,36 @@ namespace FrozenSky.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
+        public async Task ReadSimple_WmvVideo_Seek()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            ResourceLink videoLink = new AssemblyResourceLink(
+                this.GetType().Assembly,
+                "FrozenSky.Tests.Rendering.Ressources.Videos",
+                "DummyVideo.wmv");
+            GDI.Bitmap bitmapFrame = null;
+            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader(videoLink))
+            using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
+            {
+                videoReader.SetCurrentPosition(TimeSpan.FromSeconds(2.0));
+                videoReader.ReadFrame(actFrameBuffer);
+                using (bitmapFrame = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer))
+                {
+                    Assert.NotNull(bitmapFrame);
+                    Assert.True(videoReader.CurrentPosition > TimeSpan.FromSeconds(1.9));
+                    Assert.True(videoReader.CurrentPosition < TimeSpan.FromSeconds(2.1));
+                    Assert.True(videoReader.Duration > TimeSpan.FromSeconds(3.9));
+                    Assert.True(videoReader.Duration < TimeSpan.FromSeconds(4.1));
+                    Assert.True(videoReader.IsSeekable);
+                    Assert.True(
+                        BitmapComparison.IsNearEqual(bitmapFrame, Properties.Resources.ReferenceImage_VideoFrameWmv_Seek));
+                }
+            }
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task ReadSimple_WmvVideo()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -67,11 +97,14 @@ namespace FrozenSky.Tests.Rendering
                         break;
                     }
                 }
-            }
 
-            Assert.NotNull(bitmapFrame10);
-            Assert.True(
-                BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrameWmv));
+                Assert.NotNull(bitmapFrame10);
+                Assert.True(videoReader.Duration > TimeSpan.FromSeconds(3.9));
+                Assert.True(videoReader.Duration < TimeSpan.FromSeconds(4.1));
+                Assert.True(videoReader.IsSeekable);
+                Assert.True(
+                    BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrameWmv));
+            }
         }
 
         [Fact]
@@ -100,11 +133,14 @@ namespace FrozenSky.Tests.Rendering
                         break;
                     }
                 }
-            }
 
-            Assert.NotNull(bitmapFrame10);
-            Assert.True(
-                BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrameMp4));
+                Assert.NotNull(bitmapFrame10);
+                Assert.True(videoReader.Duration > TimeSpan.FromSeconds(3.9));
+                Assert.True(videoReader.Duration < TimeSpan.FromSeconds(4.1));
+                Assert.True(videoReader.IsSeekable);
+                Assert.True(
+                    BitmapComparison.IsNearEqual(bitmapFrame10, Properties.Resources.ReferenceImage_VideoFrameMp4));
+            }
         }
 
         [Fact]
