@@ -188,6 +188,9 @@ namespace FrozenSky.Multimedia.DrawingVideo
                     return false;
                 }
 
+                // Reset end-reached flag (maybe the user called SetPosition again..)
+                m_endReached = false;
+
                 // Copy pixel data into target buffer
                 if (nextSample.BufferCount > 0)
                 {
