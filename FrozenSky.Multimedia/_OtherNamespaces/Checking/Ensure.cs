@@ -33,7 +33,6 @@ namespace FrozenSky.Checking
 {
     public static partial class EnsureMultimedia
     {
-#if DESKTOP
         [Conditional("DEBUG")]
         internal static void EnsureSeekable(
             this MediaFoundationVideoReader videoReader, string checkedVariableName,
@@ -49,6 +48,5 @@ namespace FrozenSky.Checking
                     checkedVariableName, callerMethod));
             }
         }
-#endif
    }
 }

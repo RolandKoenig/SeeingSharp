@@ -18,7 +18,6 @@
 */
 #endregion
 
-#if DESKTOP
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Util;
 using FrozenSky.Checking;
@@ -199,14 +198,20 @@ namespace FrozenSky.Multimedia.DrawingVideo
                         IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
                         try
                         {
-                            int stride = m_frameSize.Width * 4;
-                            MF.MediaFactory.CopyImage(
-                                targetBuffer.Pointer,
-                                stride,
-                                mediaBufferPointer,
-                                stride,
-                                stride,
-                                m_frameSize.Height);
+                            unsafe
+                            {
+                                int stride = m_frameSize.Width * 4;
+                                int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
+                                int* targetBufferPointerNative = (int*)targetBuffer.Pointer.ToPointer();
+                                for (int loopY = 0; loopY < m_frameSize.Height; loopY++)
+                                {
+                                    for (int loopX = 0; loopX < m_frameSize.Width; loopX++)
+                                    {
+                                        int actIndex = loopX + (loopY * m_frameSize.Width);
+                                        targetBufferPointerNative[actIndex] = mediaBufferPointerNative[actIndex];
+                                    }
+                                }
+                            }
                         }
                         finally
                         {
@@ -298,4 +303,3 @@ namespace FrozenSky.Multimedia.DrawingVideo
         }
     }
 }
-#endif
