@@ -18,7 +18,6 @@
 */
 #endregion
 
-#if DESKTOP
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -121,30 +120,40 @@ namespace FrozenSky.Multimedia.DrawingVideo
                 IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLength);
                 try
                 {
-
-                    int stride = m_videoPixelSize.Width * 4;
                     if (this.FlipY)
                     {
-                        for(int loop=0 ; loop<m_videoPixelSize.Height; loop++)
+                        unsafe
                         {
-                            MF.MediaFactory.CopyImage(
-                                mediaBufferPointer + (m_videoPixelSize.Height - (1 + loop)) * stride,
-                                stride,
-                                uploadedTexture.Pointer + loop * stride,
-                                stride,
-                                stride,
-                                1);
+                            int stride = m_videoPixelSize.Width;
+                            int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
+                            int* targetBufferPointerNative = (int*)uploadedTexture.Pointer.ToPointer();
+                            for (int loopY = 0; loopY < m_videoPixelSize.Height; loopY++)
+                            {
+                                for (int loopX = 0; loopX < m_videoPixelSize.Width; loopX++)
+                                {
+                                    int actIndexTarget = loopX + (loopY * m_videoPixelSize.Width);
+                                    int actIndexSource = loopX + ((m_videoPixelSize.Height - (1 + loopY)) * m_videoPixelSize.Width);
+                                    mediaBufferPointerNative[actIndexTarget] = targetBufferPointerNative[actIndexSource];
+                                }
+                            }
                         }
                     }
                     else
                     {
-                        MF.MediaFactory.CopyImage(
-                            mediaBufferPointer,
-                            stride,
-                            uploadedTexture.Pointer,
-                            stride,
-                            stride,
-                            m_videoPixelSize.Height);
+                        unsafe
+                        {
+                            int stride = m_videoPixelSize.Width;
+                            int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
+                            int* targetBufferPointerNative = (int*)uploadedTexture.Pointer.ToPointer();
+                            for (int loopY = 0; loopY < m_videoPixelSize.Height; loopY++)
+                            {
+                                for (int loopX = 0; loopX < m_videoPixelSize.Width; loopX++)
+                                {
+                                    int actIndex = loopX + (loopY * m_videoPixelSize.Width);
+                                    mediaBufferPointerNative[actIndex] = targetBufferPointerNative[actIndex];
+                                }
+                            }
+                        }
                     }
                 }
                 finally
@@ -243,4 +252,3 @@ namespace FrozenSky.Multimedia.DrawingVideo
         }
     }
 }
-#endif

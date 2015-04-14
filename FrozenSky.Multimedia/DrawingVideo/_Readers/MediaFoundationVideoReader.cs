@@ -200,7 +200,6 @@ namespace FrozenSky.Multimedia.DrawingVideo
                         {
                             unsafe
                             {
-                                int stride = m_frameSize.Width * 4;
                                 int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
                                 int* targetBufferPointerNative = (int*)targetBuffer.Pointer.ToPointer();
                                 for (int loopY = 0; loopY < m_frameSize.Height; loopY++)
