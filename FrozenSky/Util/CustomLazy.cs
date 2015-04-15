@@ -107,7 +107,7 @@ namespace FrozenSky.Util
             {
                 m_asyncLoadWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP 
                 ThreadPool.QueueUserWorkItem((arg) =>
                 {
                     try { m_value = m_factoryFunc(); }

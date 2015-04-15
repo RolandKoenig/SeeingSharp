@@ -20,15 +20,13 @@
 
 using System;
 using System.Collections.Generic;
+using FrozenSky.Multimedia.Drawing2D;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Util;
 
 //Same namespace mappings.
-#if !WINDOWS_PHONE
 using D2D = SharpDX.Direct2D1;
-#endif
 using D3D11 = SharpDX.Direct3D11;
-using FrozenSky.Multimedia.Drawing2D;
 
 namespace FrozenSky.Multimedia.Core
 {

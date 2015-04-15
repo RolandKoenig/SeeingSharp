@@ -26,10 +26,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 // Some namespace mappings
-#if WINDOWS_PHONE
-using D3D11 = SharpDX.Direct3D11;
-using DXGI = SharpDX.DXGI;
-#endif
 #if UNIVERSAL
 using DXGI = SharpDX.DXGI;
 using D3D11 = SharpDX.Direct3D11;

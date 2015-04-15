@@ -18,7 +18,6 @@
 */
 #endregion
 
-#if !WINDOWS_PHONE
 //Some namespace mappings
 using D2D = SharpDX.Direct2D1;
 
@@ -75,4 +74,3 @@ namespace FrozenSky.Multimedia.Core
         }
     }
 }
-#endif

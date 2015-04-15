@@ -64,7 +64,7 @@ namespace FrozenSky.Samples.Base
         private static void AppendWallObjectToScene(SceneManipulator manipulator)
         {
             //Define wall object (define geometry and create object for the scene).
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
             var resWallTexture = manipulator.AddTexture(new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Wall.png", UriKind.Relative));
             var resWallMaterial = manipulator.AddSimpleColoredMaterial(resWallTexture);
 #else

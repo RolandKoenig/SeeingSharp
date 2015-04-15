@@ -18,7 +18,6 @@
 */
 #endregion
 
-#if !WINDOWS_PHONE
 using System.Collections.Generic;
 using SharpDX;
 using SharpDX.Direct2D1;
@@ -225,4 +224,3 @@ namespace FrozenSky.Multimedia.Objects
         }
     }
 }
-#endif

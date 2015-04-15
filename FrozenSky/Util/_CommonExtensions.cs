@@ -398,7 +398,7 @@ namespace FrozenSky.Util
         {
             if (syncContext == null)
             {
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
                 ThreadPool.QueueUserWorkItem(obj => postAction());
 #else
                 ThreadPool.RunAsync((arg) => { postAction(); })

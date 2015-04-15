@@ -315,7 +315,7 @@ namespace FrozenSky.Util
 }
 #endif
 
-#if WINRT || WINDOWS_PHONE || UNIVERSAL
+#if WINRT || UNIVERSAL
 using System;
 using System.Windows.Input;
 

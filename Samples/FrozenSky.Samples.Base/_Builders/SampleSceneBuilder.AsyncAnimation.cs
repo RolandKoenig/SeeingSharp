@@ -48,7 +48,7 @@ namespace FrozenSky.Samples.Base
                     // Create floor
                     manipulator.BuildStandardConveyorFloor(Scene.DEFAULT_LAYER_NAME);
 
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
                     ObjectType bananaType = ACFileLoader.ImportObjectType(
                         new Uri("/FrozenSky.Samples.Base;component/Assets/Models/Banana.ac", UriKind.Relative));
 #else

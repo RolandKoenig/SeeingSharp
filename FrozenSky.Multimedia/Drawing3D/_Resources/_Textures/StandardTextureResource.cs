@@ -21,17 +21,14 @@
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Util;
 using System;
+using System.Collections.Generic;
 using System.IO;
 
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
 using TKGFX = SharpDX.Toolkit.Graphics;
-
-#if !WINDOWS_PHONE
 using WIC = SharpDX.WIC;
-using System.Collections.Generic;
-#endif
 
 namespace FrozenSky.Multimedia.Drawing3D
 {

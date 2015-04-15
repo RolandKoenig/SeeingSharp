@@ -34,12 +34,7 @@ namespace FrozenSky.Samples.Base
     public static partial class SampleSceneBuilder
     {
         // TODO: Implement Instance Buffering, 150 pallets should suite in one batch
-
-#if WINDOWS_PHONE
-        private const int SIDE_LENGTH = 7;
-#else
         private const int SIDE_LENGTH = 20;
-#endif
 
         private const float SPACE_X = 1.4f;
         private const float SPACE_Y = 1.3f;
@@ -97,7 +92,7 @@ namespace FrozenSky.Samples.Base
             {
                 await scene.ManipulateSceneAsync((manipulator) =>
                 {
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
                     NamedOrGenericKey resMaterialLogo = manipulator.AddSimpleColoredMaterial(
                         new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/LogoTexture.png", UriKind.Relative));
 #else
@@ -173,7 +168,7 @@ namespace FrozenSky.Samples.Base
         private static void PalletsAppendWallObjectToScene(SceneManipulator manipulator, int sideLength)
         {
             //Define wall object (define geometry and create object for the scene).
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
             var resWallTexture = manipulator.AddTexture(new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Wall.png", UriKind.Relative));
             var resWallMaterial = manipulator.AddSimpleColoredMaterial(resWallTexture);
 #else

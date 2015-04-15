@@ -28,15 +28,11 @@ using FrozenSky.Multimedia.Input;
 using FrozenSky.Multimedia.Objects;
 
 //Some namespace mappings
-#if WINDOWS_PHONE
-using D3D11 = SharpDX.Direct3D11;
-#else
 using D2D = SharpDX.Direct2D1;
 using D3D = SharpDX.Direct3D;
 using D3D11 = SharpDX.Direct3D11;
 using DWrite = SharpDX.DirectWrite;
 using WIC = SharpDX.WIC;
-#endif
 
 #if DESKTOP
 using D3D10 = SharpDX.Direct3D10;
@@ -186,9 +182,6 @@ namespace FrozenSky.Multimedia.Core
             if (s_current != null) { return; }
 
             //Get supported feature level
-#if WINDOWS_PHONE
-            Initialize(TargetHardware.Direct3D11, false);
-#else
             D3D.FeatureLevel featureLevel = D3D.FeatureLevel.Level_9_1;
             try
             {
@@ -212,7 +205,6 @@ namespace FrozenSky.Multimedia.Core
                     Initialize(TargetHardware.Minimalistic, false);
                     break;
             }
-#endif
         }
 
         /// <summary>
@@ -264,11 +256,7 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="activityName">The name of the activity.</param>
         internal IDisposable BeginMeasureActivityDuration(string activityName)
         {
-#if !WINDOWS_PHONE
             return this.PerformanceCalculator.BeginMeasureActivityDuration(activityName);
-#else
-            return new DummyDisposable(() => { });
-#endif
         }
 
         /// <summary>
@@ -278,11 +266,7 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="activityAction">The activity action.</param>
         internal void ExecuteAndMeasureActivityDuration(string activityName, Action activityAction)
         {
-#if !WINDOWS_PHONE
             this.PerformanceCalculator.ExecuteAndMeasureActivityDuration(activityName, activityAction);
-#else
-            activityAction();
-#endif
         }
 
         /// <summary>
@@ -292,9 +276,7 @@ namespace FrozenSky.Multimedia.Core
         /// <param name="durationTicks"></param>
         internal void NotifyActivityDuration(string activityName, long durationTicks)
         {
-#if !WINDOWS_PHONE
             this.PerformanceCalculator.NotifyActivityDuration(activityName, durationTicks);
-#endif
         }
 
         /// <summary>
@@ -460,7 +442,6 @@ namespace FrozenSky.Multimedia.Core
             get { return EngineMainLoop.Current; }
         }
 
-#if !WINDOWS_PHONE
         /// <summary>
         /// Gets the current performance calculator.
         /// </summary>
@@ -483,6 +464,5 @@ namespace FrozenSky.Multimedia.Core
         /// Gets the DirectWrite factory object.
         /// </summary>
         internal DWrite.Factory FactoryDWrite;
-#endif
     }
 }

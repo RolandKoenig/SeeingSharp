@@ -43,7 +43,7 @@ namespace FrozenSky.Samples.Base
             manipulator.SetLayerOrderID(bgLayer, 0);
             manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 1);
 
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
             ResourceLink sourceWallTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Background.dds", UriKind.Relative);
             ResourceLink sourceTileTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Floor.dds", UriKind.Relative);
 #else
@@ -55,14 +55,8 @@ namespace FrozenSky.Samples.Base
             manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
 
             // Define textures and materials
-#if WINDOWS_PHONE
             var resTileTexture = manipulator.AddResource(() => new StandardTextureResource(sourceTileTexture));
             var resTileMaterial = manipulator.AddResource(() => new SimpleColoredMaterialResource(resTileTexture));
-            //var resTileMaterial = manipulator.AddResource(() => new SimpleColoredMaterialResource());
-#else
-            var resTileTexture = manipulator.AddResource(() => new StandardTextureResource(sourceTileTexture));
-            var resTileMaterial = manipulator.AddResource(() => new SimpleColoredMaterialResource(resTileTexture));
-#endif
 
             // Define floor geometry
             FloorType floorType = new FloorType(new Vector2(4f, 4f), 0f);

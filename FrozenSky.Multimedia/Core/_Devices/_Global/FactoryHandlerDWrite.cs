@@ -18,7 +18,6 @@
 */
 #endregion
 
-#if !WINDOWS_PHONE
 //Some namespace mappings
 using DWrite = SharpDX.DirectWrite;
 
@@ -70,4 +69,3 @@ namespace FrozenSky.Multimedia.Core
         }
     }
 }
-#endif

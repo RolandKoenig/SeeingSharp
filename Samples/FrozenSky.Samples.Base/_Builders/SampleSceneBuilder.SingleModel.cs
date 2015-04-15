@@ -46,7 +46,7 @@ namespace FrozenSky.Samples.Base
                     manipulator.BuildStandardConveyorFloor(Scene.DEFAULT_LAYER_NAME);
 
                     // Load model resource
-#if DESKTOP || WINDOWS_PHONE
+#if DESKTOP
                     ObjectType modelType = ACFileLoader.ImportObjectType(
                         new Uri("/FrozenSky.Samples.Base;component/Assets/Models/Penguin.ac", UriKind.Relative));
                     var resModel = manipulator.AddResource(() => new GeometryResource(modelType));

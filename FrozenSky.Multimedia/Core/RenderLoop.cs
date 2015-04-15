@@ -613,10 +613,8 @@ namespace FrozenSky.Multimedia.Core
             // Dispose resources of parent object first
             m_actionDisposeViewResources(m_currentDevice);
 
-#if !WINDOWS_PHONE
             // Free direct2d render target (if created)
             GraphicsHelper.SafeDispose(ref m_d2dOverlay);
-#endif
 
             // Set values to initial
             m_renderTarget = null;

@@ -39,11 +39,6 @@ using DxgiAdapter = SharpDX.DXGI.Adapter1;
 using DxgiDevice = SharpDX.DXGI.Device1;
 using DxgiFactory = SharpDX.DXGI.Factory1;
 #endif
-#if WINDOWS_PHONE
-using DxgiFactory = SharpDX.DXGI.Factory1;
-using DxgiAdapter = SharpDX.DXGI.Adapter1;
-using DxgiDevice = SharpDX.DXGI.Device1;
-#endif
 
 namespace FrozenSky.Multimedia.Core
 {

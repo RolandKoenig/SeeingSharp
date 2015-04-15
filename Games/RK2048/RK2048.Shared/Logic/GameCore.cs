@@ -101,21 +101,6 @@ namespace RK2048.Logic
             {
                 m_lastCameraAspectRatio = m_camera.AspectRatio;
 
-#if WINDOWS_PHONE_APP
-                if (m_lastCameraAspectRatio == 1.6f)
-                {
-                    m_camera.Position = new Vector3(0f, 6.5f, -8f);
-                    m_camera.Target = new Vector3(0f, -2f, 0f);
-                    m_camera.UpdateCamera();
-                }
-                else
-                {
-                    float changedBy = m_lastCameraAspectRatio / 1.6f;
-                    m_camera.Position = new Vector3(0f, 6.5f / changedBy, -8f / changedBy);
-                    m_camera.Target = new Vector3(0f, -2f, 0f);
-                    m_camera.UpdateCamera();
-                }
-#else
                 if (m_lastCameraAspectRatio == 1.6f)
                 {
                     m_camera.Position = new Vector3(0f, 8.5f, -8f);
@@ -129,7 +114,6 @@ namespace RK2048.Logic
                     m_camera.Target = new Vector3(0f, 0f, 0f);
                     m_camera.UpdateCamera();
                 }
-#endif
             }
         }
 

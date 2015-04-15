@@ -18,7 +18,6 @@
 */
 #endregion
 
-#if !WINDOWS_PHONE
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -106,4 +105,3 @@ namespace FrozenSky.Util
         }
     }
 }
-#endif

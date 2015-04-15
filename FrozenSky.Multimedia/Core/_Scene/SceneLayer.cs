@@ -328,17 +328,10 @@ namespace FrozenSky.Multimedia.Core
                 // Call default update method in parallel for each object
                 int updateListLength = m_sceneObjectsNotStatic.Count;
                 SceneObject[] updateList = m_sceneObjectsNotStatic.GetBackingArray();
-#if !WINDOWS_PHONE
-                Parallel.For(0, updateListLength, (actIndex) =>
-                {
-                    updateList[actIndex].Update(updateState);
-                });
-#else
                 for(int actIndex = 0; actIndex < updateListLength; actIndex++)
                 {
                     updateList[actIndex].Update(updateState);
                 }
-#endif
 
                 // Call overall updates on all objects
                 for (int loop = 0; loop < updateListLength; loop++)

@@ -339,11 +339,7 @@ namespace FrozenSky.Multimedia.Core
 
                 // Update all scenes
                 ThreadSaveQueue<Exception> exceptionsDuringUpdate = new ThreadSaveQueue<Exception>();
-#if !WINDOWS_PHONE
                 Parallel.For(0, scenesToRender.Count, (actTaskIndex) =>
-#else
-                for(int actTaskIndex =0; actTaskIndex < scenesToRender.Count; actTaskIndex++)
-#endif
                 {
                     try
                     {
@@ -357,11 +353,7 @@ namespace FrozenSky.Multimedia.Core
                     {
                         exceptionsDuringUpdate.Enqueue(ex);
                     }
-#if !WINDOWS_PHONE
                 });
-#else
-                }
-#endif
 
                 // Await synchronizations with the view(s)
                 if (prepareRenderTasks.Count > 0)
@@ -436,11 +428,7 @@ namespace FrozenSky.Multimedia.Core
                 ThreadSaveQueue<RenderLoop> invalidRenderLoops = new ThreadSaveQueue<RenderLoop>();
 
                 // Trigger all tasks for 'Update' pass
-#if !WINDOWS_PHONE
                 Parallel.For(0, devicesInUse.Count + scenesToRender.Count, (actTaskIndex) =>
-#else
-                for (int actTaskIndex = 0; actTaskIndex < devicesInUse.Count + scenesToRender.Count; actTaskIndex++)
-#endif
                 {
                     if (actTaskIndex < devicesInUse.Count)
                     {
@@ -476,11 +464,7 @@ namespace FrozenSky.Multimedia.Core
                             actScene.UpdateBesideRender(updateState);
                         }
                     }
-#if !WINDOWS_PHONE
                 });
-#else
-                }
-#endif
 
                 // Handle all invalid render loops
                 if(invalidRenderLoops.HasAny())
