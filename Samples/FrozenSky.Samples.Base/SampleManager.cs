@@ -21,6 +21,7 @@
 using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,38 +29,41 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base
 {
-    public static class SampleManager
+    public class SampleManager
     {
-        private const string SAMPLE_ROT_PALLET = "Rotating Pallet";
-        private const string SAMPLE_SKYBOX = "Skybox";
-        private const string SAMPLE_SINGLE_MODEL = "Single Model";
-        private const string SAMPLE_ASYNC_ANIM = "Async Animation";
-        private const string SAMPLE_TRANS_PALLETS = "Transparent Pallets";
-        private const string SAMPLE_PALLETS = "Pallets";
-        private const string SAMPLE_PALLETS_TEXTURED = "Pallets (Textured)";
+        private static SampleManager s_current;
+
+        private List<Tuple<SampleInfoAttribute, Type>> m_sampleTypes;
 
         /// <summary>
-        /// Initializes the <see cref="SampleManager"/> class.
+        /// Prevents a default instance of the <see cref="SampleManager"/> class from being created.
         /// </summary>
-        static SampleManager()
+        private SampleManager()
         {
             // Create and register viewmodel for performance analyziation
             PerformanceAnalysisViewModel performanceAnalyzisViewModel = new PerformanceAnalysisViewModel();
             FrozenSkyApplication.Current.RegisterSingleton(performanceAnalyzisViewModel);
+
+            // Query for all sample types
+            m_sampleTypes = new List<Tuple<SampleInfoAttribute, Type>>();
+            foreach(Type actSampleType in FrozenSkyApplication.Current.TypeQuery
+                .GetTypesByContract(typeof(SampleBase)))
+            {
+                SampleInfoAttribute actInfoAttrib = actSampleType.GetTypeInfo().GetCustomAttribute<SampleInfoAttribute>();
+                if (actInfoAttrib == null) { continue; }
+
+                m_sampleTypes.Add(Tuple.Create(
+                    actInfoAttrib,
+                    actSampleType));
+            }
         }
 
         /// <summary>
         /// Gets the Names of all implemented samples.
         /// </summary>
-        public static IEnumerable<string> GetSampleNames()
+        public IEnumerable<string> GetSampleNames()
         {
-            yield return SAMPLE_ROT_PALLET;
-            yield return SAMPLE_SKYBOX;
-            yield return SAMPLE_SINGLE_MODEL;
-            yield return SAMPLE_ASYNC_ANIM;
-            yield return SAMPLE_TRANS_PALLETS;
-            yield return SAMPLE_PALLETS;
-            yield return SAMPLE_PALLETS_TEXTURED;
+            return m_sampleTypes.Select((actSampleType) => actSampleType.Item1.Name);
         }
 
         /// <summary>
@@ -67,17 +71,24 @@ namespace FrozenSky.Samples.Base
         /// </summary>
         /// <param name="renderLoop">The render loop.</param>
         /// <param name="sampleName">Name of the sample.</param>
-        public static void ApplySample(this RenderLoop renderLoop, string sampleName)
+        public void ApplySample(RenderLoop renderLoop, string sampleName)
         {
-            switch(sampleName)
+            var sampleType = m_sampleTypes
+                .Where((actSampleType) => actSampleType.Item1.Name == sampleName)
+                .Select((actTuple) => actTuple.Item2)
+                .FirstOrDefault();
+            if (sampleType == null) { throw new FrozenSkyException(string.Format("Unable to find sample {0}!", sampleName)); }
+
+            SampleBase sample = Activator.CreateInstance(sampleType) as SampleBase;
+            sample.OnStartup(renderLoop);
+        }
+
+        public static SampleManager Current
+        {
+            get
             {
-                case SAMPLE_ROT_PALLET: renderLoop.BuildRotatingPalletDemo(); break;
-                case SAMPLE_SKYBOX: renderLoop.BuildSkyboxRenderingDemo(); break;
-                case SAMPLE_SINGLE_MODEL: renderLoop.BuildSingleModelDemo(); break;
-                case SAMPLE_ASYNC_ANIM: renderLoop.BuildAsyncAnimationDemo(); break;
-                case SAMPLE_TRANS_PALLETS: renderLoop.BuildTransparentPalletDemo(); break;
-                case SAMPLE_PALLETS: renderLoop.BuildPalletsDemo(); break;
-                case SAMPLE_PALLETS_TEXTURED: renderLoop.BuildPalletsDemoTextured(); break;
+                if (s_current == null) { s_current = new SampleManager(); }
+                return s_current;
             }
         }
     }

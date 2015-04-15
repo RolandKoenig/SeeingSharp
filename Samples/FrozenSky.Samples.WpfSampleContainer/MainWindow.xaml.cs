@@ -32,7 +32,7 @@ namespace FrozenSky.Samples.WpfSampleContainer
             m_loadedSamples = new Dictionary<string, SamplePage>();
 
             // Build the menu bar
-            foreach (string actSample in SampleManager.GetSampleNames())
+            foreach (string actSample in SampleManager.Current.GetSampleNames())
             {
                 string actSampleInner = actSample;
 

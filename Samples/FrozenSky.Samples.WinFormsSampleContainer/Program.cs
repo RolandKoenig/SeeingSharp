@@ -20,6 +20,7 @@
 
 using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
+using FrozenSky.Samples.Base;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,8 +41,20 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            // Default initializations
+            FrozenSkyApplication.InitializeAsync(
+                Assembly.GetExecutingAssembly(),
+                new Assembly[]{
+                    typeof(GraphicsCore).Assembly,
+                    typeof(SampleBase).Assembly
+                },
+                new string[0]).Wait();
+            GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+
             // Run the application
-            Application.Run(new MainWindow());
+            MainWindow mainWindow = new MainWindow();
+            FrozenSkyApplication.Current.InitializeUIEnvironment();
+            Application.Run(mainWindow);
         }
     }
 }

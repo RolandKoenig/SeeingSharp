@@ -18,6 +18,7 @@
 */
 #endregion
 using FrozenSky.Multimedia.Core;
+using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +27,7 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base
 {
-    abstract class SampleBase
+    public abstract class SampleBase : ViewModelBase
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="SampleBase"/> class.
@@ -36,6 +37,15 @@ namespace FrozenSky.Samples.Base
 
         }
 
+        public void SetClosed()
+        {
+            if(!this.IsClosed)
+            {
+                this.IsClosed = true;
+                this.OnClosed();
+            }
+        }
+
         /// <summary>
         /// Called when the sample has to startup.
         /// </summary>
@@ -43,8 +53,19 @@ namespace FrozenSky.Samples.Base
         public abstract Task OnStartup(RenderLoop targetRenderLoop);
 
         /// <summary>
-        /// Called when the sample has to run down.
+        /// Called when the sample is closed.
+        /// Scene objects and resources are automatically removed, no need to do it
+        /// manually in this method's implementation.
         /// </summary>
-        public abstract Task OnClose();
+        public virtual void OnClosed()
+        {
+
+        }
+
+        public bool IsClosed
+        {
+            get;
+            private set;
+        }
     }
 }

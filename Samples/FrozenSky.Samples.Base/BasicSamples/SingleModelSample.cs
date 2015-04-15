@@ -17,7 +17,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
+using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
@@ -27,15 +27,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrozenSky.Samples.Base
+// Define assembly attributes for type that is defined in this file
+[assembly: AssemblyQueryableType(
+    targetType: typeof(FrozenSky.Samples.Base.BasicSamples.SingleModelSample),
+    contractType: typeof(FrozenSky.Samples.Base.SampleBase))]
+
+namespace FrozenSky.Samples.Base.BasicSamples
 {
-    public static partial class SampleSceneBuilder
+    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "SingleModel")]
+    public class SingleModelSample : SampleBase
     {
-        public static async void BuildSingleModelDemo(this RenderLoop renderLoop)
+        /// <summary>
+        /// Called when the sample has to startup.
+        /// </summary>
+        /// <param name="targetRenderLoop">The target render loop.</param>
+        public override async Task OnStartup(RenderLoop targetRenderLoop)
         {
             // Build dummy scene
-            Scene scene = renderLoop.Scene;
-            Camera3DBase camera = renderLoop.Camera as Camera3DBase;
+            Scene scene = targetRenderLoop.Scene;
+            Camera3DBase camera = targetRenderLoop.Camera as Camera3DBase;
 
             // Build scene initially if we are on first load
             if (scene.CountObjects <= 0)

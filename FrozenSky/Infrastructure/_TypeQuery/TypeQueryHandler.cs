@@ -99,7 +99,12 @@ namespace FrozenSky.Infrastructure
             List<Type> typesByContract = null;
             m_typesByContract.TryGetValue(contractType, out typesByContract);
             if (typesByContract != null) { return new List<Type>(typesByContract); }
-            else { return new List<Type>(); }
+            else
+            { 
+
+
+                return new List<Type>(); 
+            }
         }
 
         /// <summary>

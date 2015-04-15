@@ -84,7 +84,9 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             if (rendererControl.RenderLoop.Scene.CountObjects > 0) { return; }
 
             // Initialize demo
-            rendererControl.RenderLoop.ApplySample(actTabPage.Tag as string);
+            SampleManager.Current.ApplySample(
+                rendererControl.RenderLoop,
+                actTabPage.Tag as string);
         }
 
         /// <summary>
@@ -149,18 +151,10 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
 
             // Just a dummy call to trigger initialization
             Assembly test = System.Windows.Application.ResourceAssembly;
-   
-            // Default initializations
-            FrozenSkyApplication.InitializeAsync(
-                Assembly.GetExecutingAssembly(),
-                new Assembly[]{
-                    typeof(GraphicsCore).Assembly
-                },
-                new string[0]).Wait();
-            GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+  
 
             // Add all sample pages
-            foreach(string actSampleName in SampleManager.GetSampleNames())
+            foreach(string actSampleName in SampleManager.Current.GetSampleNames())
             {
                 var actRenderControl = new FrozenSkyRendererControl() { Dock = DockStyle.Fill };
                 //actRenderControl.Camera = new FrozenSky.Multimedia.Drawing3D.OrthographicCamera3D(100, 100);

@@ -17,26 +17,40 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
-using FrozenSky.Multimedia.Objects;
-using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using FrozenSky.Multimedia.Drawing3D;
+using FrozenSky.Multimedia.Objects;
+using FrozenSky.Multimedia.Core;
+using FrozenSky.Checking;
+using FrozenSky.Util;
+using FrozenSky.Infrastructure;
 
-namespace FrozenSky.Samples.Base
+// Define assembly attributes for type that is defined in this file
+[assembly: AssemblyQueryableType(
+    targetType: typeof(FrozenSky.Samples.Base.BasicSamples.AsyncAnimationPalletSample),
+    contractType: typeof(FrozenSky.Samples.Base.SampleBase))]
+
+namespace FrozenSky.Samples.Base.BasicSamples
 {
-    public static partial class SampleSceneBuilder
+    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "AsyncAnimation")]
+    public class AsyncAnimationPalletSample : SampleBase
     {
-        public static async void BuildAsyncAnimationDemo(this RenderLoop renderLoop)
+        private RenderLoop m_renderLoop;
+
+        /// <summary>
+        /// Called when the sample has to startup.
+        /// </summary>
+        /// <param name="targetRenderLoop">The target render loop.</param>
+        public override async Task OnStartup(RenderLoop targetRenderLoop)
         {
             // Build dummy scene
-            Scene scene = renderLoop.Scene;
-            Camera3DBase camera = renderLoop.Camera as Camera3DBase;
+            m_renderLoop = targetRenderLoop;
+            Scene scene = m_renderLoop.Scene;
+            Camera3DBase camera = m_renderLoop.Camera as Camera3DBase;
 
             // Build scene initially if we are on first load
             if (scene.CountObjects <= 0)
@@ -59,7 +73,7 @@ namespace FrozenSky.Samples.Base
                 });
 
                 // Triggers async object creation
-                TriggerAsyncObjectCreation(renderLoop, resGeometry);
+                TriggerAsyncObjectCreation(m_renderLoop, resGeometry);
 
                 // Configure camera
                 camera.Position = new Vector3(-10f, 8f, -10f);
@@ -68,12 +82,13 @@ namespace FrozenSky.Samples.Base
             }
         }
 
-        private static async void TriggerAsyncObjectCreation(RenderLoop renderLoop, NamedOrGenericKey resGeometry)
+        private async void TriggerAsyncObjectCreation(RenderLoop renderLoop, NamedOrGenericKey resGeometry)
         {
-            while(true)
+            while (!base.IsClosed) 
             {
                 // Wait some time
                 await Task.Delay(1000);
+                if (base.IsClosed) { return; }
 
                 if (!renderLoop.IsAttachedToVisibleView) { continue; }
 
@@ -83,7 +98,8 @@ namespace FrozenSky.Samples.Base
                 {
                     newGenericObject = manipulator.AddGeneric(resGeometry);
                 });
-                
+                if (base.IsClosed) { return; }
+
                 // Attach move behavior on the created object.
                 AttachMoveBehavior(newGenericObject);
             }
@@ -93,7 +109,7 @@ namespace FrozenSky.Samples.Base
         /// Starts and controls the animation for the given object.
         /// </summary>
         /// <param name="targetObject">The object to be animated.</param>
-        private static async void AttachMoveBehavior(GenericObject targetObject)
+        private async void AttachMoveBehavior(GenericObject targetObject)
         {
             Random randomizer = new Random(Environment.TickCount);
 

@@ -17,11 +17,10 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
+using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
-using FrozenSky;
 using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
@@ -29,13 +28,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FrozenSky.Samples.Base
-{
-    public static partial class SampleSceneBuilder
-    {
-        // TODO: Implement Instance Buffering, 150 pallets should suite in one batch
-        private const int SIDE_LENGTH = 20;
+// Define assembly attributes for type that is defined in this file
+[assembly: AssemblyQueryableType(
+    targetType: typeof(FrozenSky.Samples.Base.BasicSamples.PalletsSample),
+    contractType: typeof(FrozenSky.Samples.Base.SampleBase))]
 
+namespace FrozenSky.Samples.Base.BasicSamples
+{
+    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "Pallets")]
+    public class PalletsSample : SampleBase
+    {
+        private const int SIDE_LENGTH = 20;
         private const float SPACE_X = 1.4f;
         private const float SPACE_Y = 1.3f;
         private const float SPACE_Z = 1f;
@@ -47,11 +50,15 @@ namespace FrozenSky.Samples.Base
             Color4.LightSteelBlue,
         };
 
-        public static async void BuildPalletsDemo(this RenderLoop renderLoop)
+        /// <summary>
+        /// Called when the sample has to startup.
+        /// </summary>
+        /// <param name="targetRenderLoop">The target render loop.</param>
+        public override async Task OnStartup(RenderLoop targetRenderLoop)
         {
             // Build dummy scene
-            Scene scene = renderLoop.Scene;
-            Camera3DBase camera = renderLoop.Camera as Camera3DBase;
+            Scene scene = targetRenderLoop.Scene;
+            Camera3DBase camera = targetRenderLoop.Camera as Camera3DBase;
 
             // Build scene initially if we are on first load
             if (scene.CountObjects <= 0)
@@ -71,7 +78,7 @@ namespace FrozenSky.Samples.Base
                     PalletsAppendWallObjectToScene(manipulator, SIDE_LENGTH);
 
                     // Trigger building of the pallet stack
-                    PalletsBuildPalletCube(manipulator, new NamedOrGenericKey[]{ resPalletGeometry }, SIDE_LENGTH);
+                    PalletsBuildPalletCube(manipulator, new NamedOrGenericKey[] { resPalletGeometry }, SIDE_LENGTH);
                 });
 
                 // Configure camera
@@ -81,7 +88,7 @@ namespace FrozenSky.Samples.Base
             }
         }
 
-        public static async void BuildPalletsDemoTextured(this RenderLoop renderLoop)
+        public static async void BuildPalletsDemoTextured(RenderLoop renderLoop)
         {
             // Build dummy scene
             Scene scene = renderLoop.Scene;
@@ -110,11 +117,6 @@ namespace FrozenSky.Samples.Base
                     pType2.PalletMaterial = resMaterialLogo;
                     var resPalletGeometry2 = manipulator.AddResource<GeometryResource>(
                         () => new GeometryResource(pType2));
-                    //PalletType pType2 = new PalletType();
-                    //pType2.ContentColor = Color4.Transparent;
-                    //pType2.ContentMaterial = resMaterialLogo;
-                    //var resPalletGeometry2 = manipulator.AddResource<GeometryResource>(
-                    //    () => new GeometryResource(pType2));
 
                     // Create floor
                     manipulator.BuildStandardConveyorFloor(Scene.DEFAULT_LAYER_NAME);
@@ -124,8 +126,8 @@ namespace FrozenSky.Samples.Base
 
                     // Trigger building of the pallet stack
                     PalletsBuildPalletCube(
-                        manipulator, 
-                        new NamedOrGenericKey[] { resPalletGeometry, resPalletGeometry2 }, 
+                        manipulator,
+                        new NamedOrGenericKey[] { resPalletGeometry, resPalletGeometry2 },
                         SIDE_LENGTH);
                 });
 

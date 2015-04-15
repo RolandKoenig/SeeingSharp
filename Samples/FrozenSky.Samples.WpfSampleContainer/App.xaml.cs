@@ -1,5 +1,6 @@
 ﻿using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
+using FrozenSky.Samples.Base;
 using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,8 @@ namespace FrozenSky.Samples.WpfSampleContainer
             FrozenSkyApplication.InitializeAsync(
                 Assembly.GetExecutingAssembly(),
                 new Assembly[]{
-                    typeof(GraphicsCore).Assembly
+                    typeof(GraphicsCore).Assembly,
+                    typeof(SampleBase).Assembly
                 },
                 new string[0]).Wait();
             GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
