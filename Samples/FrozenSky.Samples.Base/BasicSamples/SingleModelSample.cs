@@ -53,7 +53,8 @@ namespace FrozenSky.Samples.Base.BasicSamples
                 await scene.ManipulateSceneAsync((manipulator) =>
                 {
                     // Create floor
-                    manipulator.BuildStandardConveyorFloor(Scene.DEFAULT_LAYER_NAME);
+                    SampleSceneBuilder.BuildStandardConveyorFloor(
+                        manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Load model resource
 #if DESKTOP

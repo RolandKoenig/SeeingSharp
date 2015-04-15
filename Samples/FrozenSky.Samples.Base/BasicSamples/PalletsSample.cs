@@ -72,7 +72,8 @@ namespace FrozenSky.Samples.Base.BasicSamples
                         () => new GeometryResource(pType));
 
                     // Create floor
-                    manipulator.BuildStandardConveyorFloor(Scene.DEFAULT_LAYER_NAME);
+                    SampleSceneBuilder.BuildStandardConveyorFloor(
+                        manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Build the wall object
                     PalletsAppendWallObjectToScene(manipulator, SIDE_LENGTH);
@@ -119,7 +120,8 @@ namespace FrozenSky.Samples.Base.BasicSamples
                         () => new GeometryResource(pType2));
 
                     // Create floor
-                    manipulator.BuildStandardConveyorFloor(Scene.DEFAULT_LAYER_NAME);
+                    SampleSceneBuilder.BuildStandardConveyorFloor(
+                        manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Build the wall object
                     PalletsAppendWallObjectToScene(manipulator, SIDE_LENGTH);

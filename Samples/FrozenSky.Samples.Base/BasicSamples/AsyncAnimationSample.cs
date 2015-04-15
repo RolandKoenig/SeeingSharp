@@ -60,15 +60,14 @@ namespace FrozenSky.Samples.Base.BasicSamples
                 await scene.ManipulateSceneAsync((manipulator) =>
                 {
                     // Create floor
-                    manipulator.BuildStandardConveyorFloor(Scene.DEFAULT_LAYER_NAME);
+                    SampleSceneBuilder.BuildStandardConveyorFloor(
+                        manipulator, Scene.DEFAULT_LAYER_NAME);
 
-#if DESKTOP
+                    // Define banana object
                     ObjectType bananaType = ACFileLoader.ImportObjectType(
-                        new Uri("/FrozenSky.Samples.Base;component/Assets/Models/Banana.ac", UriKind.Relative));
-#else
-                    ObjectType bananaType = ACFileLoader.ImportObjectType(new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Models/Banana.ac"));
-#endif
-
+                        new UriResourceLink(new AssemblyResourceUriBuilder(
+                            "FrozenSky.Samples.Base", false, 
+                            "Assets/Models/Banana.ac")));
                     resGeometry = manipulator.AddGeometry(bananaType);
                 });
 
