@@ -228,5 +228,60 @@ namespace FrozenSky.Tests.Rendering
             // Make shure that all the renderloop is correctly disposed
             Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Render3D_VideoTexture()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            ResourceLink videoLink = new AssemblyResourceLink(
+                this.GetType().Assembly,
+                "FrozenSky.Tests.Rendering.Ressources.Videos",
+                "DummyVideo.mp4");
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                // Get and configure the camera
+                PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
+                camera.Position = new Vector3(0f, 5f, -7f);
+                camera.Target = new Vector3(0f, 0f, 0f);
+                camera.UpdateCamera();
+
+                // Define scene
+                await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    var resVideoTexture = manipulator.AddResource<VideoTextureResource>(
+                        () => new VideoTextureResource(videoLink));
+                    var resVideoMaterial = manipulator.AddSimpleColoredMaterial(resVideoTexture);
+                    var geoResource = manipulator.AddResource<GeometryResource>(
+                        () => new GeometryResource(new PalletType(
+                            palletMaterial: NamedOrGenericKey.Empty,
+                            contentMaterial: resVideoMaterial)));
+
+                    GenericObject newObject = manipulator.AddGeneric(geoResource);
+                    newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
+                    newObject.Scaling = new Vector3(2f, 2f, 2f);
+                });
+
+                await memRenderTarget.RenderLoop.WaitForNextFinishedRenderAsync();
+                await memRenderTarget.RenderLoop.WaitForNextFinishedRenderAsync();
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                bool isNearEqual = BitmapComparison.IsNearEqual(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleObject_VideoTexture);
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
+            }
+
+            // Finishing checks
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+        }
     }
 }

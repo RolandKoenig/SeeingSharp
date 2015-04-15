@@ -548,7 +548,7 @@ namespace FrozenSky.Multimedia.Core
             textureDescription.MipLevels = 1;
             textureDescription.ArraySize = 1;
             textureDescription.Format = format;
-            textureDescription.Usage = D3D11.ResourceUsage.Default;
+            textureDescription.Usage = D3D11.ResourceUsage.Dynamic;
             textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
             textureDescription.BindFlags = D3D11.BindFlags.ShaderResource;
             textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.Write;

@@ -122,7 +122,7 @@ namespace FrozenSky.Multimedia.Drawing3D
             if (m_newFrameArrived)
             {
                 m_newFrameArrived = false;
-                SharpDX.DataBox dataBox = deviceContext.MapSubresource(m_texture, 0, D3D11.MapMode.Write, D3D11.MapFlags.None);
+                SharpDX.DataBox dataBox = deviceContext.MapSubresource(m_texture, 0, D3D11.MapMode.WriteDiscard, D3D11.MapFlags.None);
                 try
                 {
                     unsafe
