@@ -37,6 +37,7 @@
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.m_cmdShowPerformance = new System.Windows.Forms.ToolStripButton();
             this.m_tabControlSamples = new System.Windows.Forms.TabControl();
+            this.m_images = new System.Windows.Forms.ImageList(this.components);
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
             this.m_lblRenderResolution = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblRenderResolutionValue = new System.Windows.Forms.ToolStripStatusLabel();
@@ -53,9 +54,14 @@
             this.to1280x1024ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.to1600x1200ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
+            this.m_splitter = new System.Windows.Forms.SplitContainer();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
             this.m_menuMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).BeginInit();
+            this.m_splitter.Panel1.SuspendLayout();
+            this.m_splitter.Panel2.SuspendLayout();
+            this.m_splitter.SuspendLayout();
             this.SuspendLayout();
             // 
             // m_barTools
@@ -115,13 +121,21 @@
             // 
             // m_tabControlSamples
             // 
-            this.m_tabControlSamples.Dock = System.Windows.Forms.DockStyle.Top;
-            this.m_tabControlSamples.Location = new System.Drawing.Point(0, 55);
+            this.m_tabControlSamples.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_tabControlSamples.ImageList = this.m_images;
+            this.m_tabControlSamples.ItemSize = new System.Drawing.Size(0, 21);
+            this.m_tabControlSamples.Location = new System.Drawing.Point(0, 0);
             this.m_tabControlSamples.Margin = new System.Windows.Forms.Padding(0);
             this.m_tabControlSamples.Name = "m_tabControlSamples";
             this.m_tabControlSamples.SelectedIndex = 0;
-            this.m_tabControlSamples.Size = new System.Drawing.Size(762, 102);
+            this.m_tabControlSamples.Size = new System.Drawing.Size(762, 128);
             this.m_tabControlSamples.TabIndex = 3;
+            // 
+            // m_images
+            // 
+            this.m_images.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.m_images.ImageSize = new System.Drawing.Size(64, 64);
+            this.m_images.TransparentColor = System.Drawing.Color.Transparent;
             // 
             // m_barStatus
             // 
@@ -248,9 +262,9 @@
             this.m_ctrlRenderer.Camera = null;
             this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 157);
+            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 336);
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 306);
             this.m_ctrlRenderer.TabIndex = 6;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
@@ -265,13 +279,31 @@
             this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
             this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
             // 
+            // m_splitter
+            // 
+            this.m_splitter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_splitter.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+            this.m_splitter.Location = new System.Drawing.Point(0, 55);
+            this.m_splitter.Name = "m_splitter";
+            this.m_splitter.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // m_splitter.Panel1
+            // 
+            this.m_splitter.Panel1.Controls.Add(this.m_tabControlSamples);
+            // 
+            // m_splitter.Panel2
+            // 
+            this.m_splitter.Panel2.Controls.Add(this.m_ctrlRenderer);
+            this.m_splitter.Size = new System.Drawing.Size(762, 438);
+            this.m_splitter.SplitterDistance = 128;
+            this.m_splitter.TabIndex = 7;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(762, 522);
-            this.Controls.Add(this.m_ctrlRenderer);
-            this.Controls.Add(this.m_tabControlSamples);
+            this.Controls.Add(this.m_splitter);
             this.Controls.Add(this.m_barStatus);
             this.Controls.Add(this.m_barTools);
             this.Controls.Add(this.m_menuMain);
@@ -285,6 +317,10 @@
             this.m_barStatus.PerformLayout();
             this.m_menuMain.ResumeLayout(false);
             this.m_menuMain.PerformLayout();
+            this.m_splitter.Panel1.ResumeLayout(false);
+            this.m_splitter.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).EndInit();
+            this.m_splitter.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -315,6 +351,8 @@
         private System.Windows.Forms.ToolStripStatusLabel m_lblCountObjects;
         private System.Windows.Forms.ToolStripStatusLabel m_lblCountObjectsValue;
         private Multimedia.Views.FrozenSkyRendererControl m_ctrlRenderer;
+        private System.Windows.Forms.ImageList m_images;
+        private System.Windows.Forms.SplitContainer m_splitter;
     }
 }
 

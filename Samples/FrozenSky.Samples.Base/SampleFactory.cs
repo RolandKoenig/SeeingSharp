@@ -34,7 +34,7 @@ namespace FrozenSky.Samples.Base
     {
         private static SampleFactory s_current;
 
-        private List<Tuple<SampleInfoAttribute, Type>> m_sampleTypes;
+        private List<Tuple<SampleDescription, Type>> m_sampleTypes;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="SampleFactory"/> class from being created.
@@ -46,7 +46,7 @@ namespace FrozenSky.Samples.Base
             FrozenSkyApplication.Current.RegisterSingleton(performanceAnalyzisViewModel);
 
             // Query for all sample types
-            m_sampleTypes = new List<Tuple<SampleInfoAttribute, Type>>();
+            m_sampleTypes = new List<Tuple<SampleDescription, Type>>();
             foreach(Type actSampleType in FrozenSkyApplication.Current.TypeQuery
                 .GetTypesByContract(typeof(SampleBase)))
             {
@@ -54,7 +54,7 @@ namespace FrozenSky.Samples.Base
                 if (actInfoAttrib == null) { continue; }
 
                 m_sampleTypes.Add(Tuple.Create(
-                    actInfoAttrib,
+                    new SampleDescription(actInfoAttrib),
                     actSampleType));
             }
         }
@@ -62,7 +62,7 @@ namespace FrozenSky.Samples.Base
         /// <summary>
         /// Gets a collection containing all sample infomration objects.
         /// </summary>
-        public IEnumerable<SampleInfoAttribute> GetSampleInfos()
+        public IEnumerable<SampleDescription> GetSampleInfos()
         {
             return m_sampleTypes.Select((actSampleType) => actSampleType.Item1);
         }
@@ -93,7 +93,7 @@ namespace FrozenSky.Samples.Base
         /// Creates the given sample.
         /// </summary>
         /// <param name="sampleInfo">The sample information.</param>
-        public SampleBase CreateSample(SampleInfoAttribute sampleInfo)
+        public SampleBase CreateSample(SampleDescription sampleInfo)
         {
             sampleInfo.EnsureNotNull("sampleInfo");
 

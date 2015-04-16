@@ -566,6 +566,7 @@ namespace FrozenSky.Multimedia.Views
         }
 
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Scene Scene
         {
             get { return m_renderLoop.Scene; }
@@ -573,6 +574,7 @@ namespace FrozenSky.Multimedia.Views
         }
 
         [Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Camera3DBase Camera
         {
             get { return m_renderLoop.Camera; }

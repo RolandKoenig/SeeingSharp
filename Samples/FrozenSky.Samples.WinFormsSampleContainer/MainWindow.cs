@@ -36,6 +36,7 @@ using FrozenSky.Multimedia.Views;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Infrastructure;
 using FrozenSky.Samples.WinFormsSampleContainer.Views;
+using System.IO;
 
 namespace FrozenSky.Samples.WinFormsSampleContainer
 {
@@ -44,7 +45,7 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
         private SceneViewboxObjectFilter m_viewboxfilter;
 
         private bool m_isChangingSample;
-        private SampleInfoAttribute m_actSampleInfo;
+        private SampleDescription m_actSampleInfo;
         private SampleBase m_actSample;
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
         /// Applies the given sample.
         /// </summary>
         /// <param name="sampleInfo">The sample to be applied.</param>
-        private async void ApplySample(SampleInfoAttribute sampleInfo)
+        private async void ApplySample(SampleDescription sampleInfo)
         {
             m_isChangingSample.EnsureFalse("m_isChangingSample");
 
@@ -175,6 +176,8 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
                     actListView.Activation = ItemActivation.OneClick;
                     actListView.ItemActivate += OnListView_ItemActivate;
                     actListView.MultiSelect = false;
+                    actListView.LargeImageList = m_images;
+                    actListView.SmallImageList = m_images;
                     actTabPage.Controls.Add(actListView);
 
                     generatedTabs.Add(actSampleInfo.Category, actListView);
@@ -189,6 +192,15 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
                 newListItem.Text = actSampleInfo.Name;
                 newListItem.Tag = actSampleInfo;
                 actListView.Items.Add(newListItem);
+
+                // Load the item's image
+                using (Stream inStream = actSampleInfo.ImageLink.OpenInputStream())
+                using (Image imgOriginal = Image.FromStream(inStream))
+                {
+                    Bitmap sizedBitmap = new Bitmap(imgOriginal, m_images.ImageSize);
+                    m_images.Images.Add(sizedBitmap);
+                    newListItem.ImageIndex = m_images.Images.Count - 1;
+                }
             }
 
             // Create main object filter initially
@@ -225,7 +237,7 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             actListView.EnsureNotNull("actListView");
             actListView.FocusedItem.EnsureNotNull("actListView.FocusedItem");
 
-            SampleInfoAttribute sampleInfo = actListView.FocusedItem.Tag as SampleInfoAttribute;
+            SampleDescription sampleInfo = actListView.FocusedItem.Tag as SampleDescription;
             sampleInfo.EnsureNotNull("sampleInfo");
 
             this.ApplySample(sampleInfo);
