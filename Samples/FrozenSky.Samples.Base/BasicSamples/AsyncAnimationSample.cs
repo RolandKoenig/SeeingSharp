@@ -45,8 +45,10 @@ namespace FrozenSky.Samples.Base.BasicSamples
         /// Called when the sample has to startup.
         /// </summary>
         /// <param name="targetRenderLoop">The target render loop.</param>
-        public override async Task OnStartup(RenderLoop targetRenderLoop)
+        public override async Task OnStartupAsync(RenderLoop targetRenderLoop)
         {
+            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+
             // Build dummy scene
             m_renderLoop = targetRenderLoop;
             Scene scene = m_renderLoop.Scene;

@@ -36,14 +36,14 @@
             this.m_cmdCopy = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.m_cmdShowPerformance = new System.Windows.Forms.ToolStripButton();
-            this.m_tabControl = new System.Windows.Forms.TabControl();
+            this.m_tabControlSamples = new System.Windows.Forms.TabControl();
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
             this.m_lblRenderResolution = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblRenderResolutionValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblCountObjects = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblCountObjectsValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.m_menuMain = new System.Windows.Forms.MenuStrip();
             this.renderingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.changeRenderResolutionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toBigWindowToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -52,9 +52,10 @@
             this.to1024x768ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.to1280x1024ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.to1600x1200ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
-            this.menuStrip1.SuspendLayout();
+            this.m_menuMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // m_barTools
@@ -95,7 +96,7 @@
             this.m_cmdCopy.Name = "m_cmdCopy";
             this.m_cmdCopy.Size = new System.Drawing.Size(24, 24);
             this.m_cmdCopy.Text = "Copy";
-            this.m_cmdCopy.Click += new System.EventHandler(this.OnCmdCopyClick);
+            this.m_cmdCopy.Click += new System.EventHandler(this.OnCmdCopy_Click);
             // 
             // toolStripSeparator3
             // 
@@ -110,18 +111,17 @@
             this.m_cmdShowPerformance.Name = "m_cmdShowPerformance";
             this.m_cmdShowPerformance.Size = new System.Drawing.Size(24, 24);
             this.m_cmdShowPerformance.Text = "toolStripButton1";
-            this.m_cmdShowPerformance.Click += new System.EventHandler(this.OnCmdShowPerformanceClick);
+            this.m_cmdShowPerformance.Click += new System.EventHandler(this.OnCmdShowPerformance_Click);
             // 
-            // m_tabControl
+            // m_tabControlSamples
             // 
-            this.m_tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_tabControl.Location = new System.Drawing.Point(0, 55);
-            this.m_tabControl.Margin = new System.Windows.Forms.Padding(0);
-            this.m_tabControl.Name = "m_tabControl";
-            this.m_tabControl.SelectedIndex = 0;
-            this.m_tabControl.Size = new System.Drawing.Size(762, 438);
-            this.m_tabControl.TabIndex = 3;
-            this.m_tabControl.SelectedIndexChanged += new System.EventHandler(this.OnTabControlSelectedIndexChanged);
+            this.m_tabControlSamples.Dock = System.Windows.Forms.DockStyle.Top;
+            this.m_tabControlSamples.Location = new System.Drawing.Point(0, 55);
+            this.m_tabControlSamples.Margin = new System.Windows.Forms.Padding(0);
+            this.m_tabControlSamples.Name = "m_tabControlSamples";
+            this.m_tabControlSamples.SelectedIndex = 0;
+            this.m_tabControlSamples.Size = new System.Drawing.Size(762, 102);
+            this.m_tabControlSamples.TabIndex = 3;
             // 
             // m_barStatus
             // 
@@ -165,18 +165,18 @@
             // 
             this.m_refreshTimer.Enabled = true;
             this.m_refreshTimer.Interval = 500;
-            this.m_refreshTimer.Tick += new System.EventHandler(this.OnRefreshTimerTick);
+            this.m_refreshTimer.Tick += new System.EventHandler(this.OnRefreshTimer_Tick);
             // 
-            // menuStrip1
+            // m_menuMain
             // 
-            this.menuStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_menuMain.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.m_menuMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.renderingToolStripMenuItem});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(762, 28);
-            this.menuStrip1.TabIndex = 5;
-            this.menuStrip1.Text = "m_mainMenu";
+            this.m_menuMain.Location = new System.Drawing.Point(0, 0);
+            this.m_menuMain.Name = "m_menuMain";
+            this.m_menuMain.Size = new System.Drawing.Size(762, 28);
+            this.m_menuMain.TabIndex = 5;
+            this.m_menuMain.Text = "m_mainMenu";
             // 
             // renderingToolStripMenuItem
             // 
@@ -204,7 +204,7 @@
             this.toBigWindowToolStripMenuItem.Name = "toBigWindowToolStripMenuItem";
             this.toBigWindowToolStripMenuItem.Size = new System.Drawing.Size(184, 24);
             this.toBigWindowToolStripMenuItem.Text = ".. to big window";
-            this.toBigWindowToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolutionToBigWindow);
+            this.toBigWindowToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolutionToBigWindow_Click);
             // 
             // toolStripSeparator2
             // 
@@ -217,7 +217,7 @@
             this.to800x600ToolStripMenuItem.Size = new System.Drawing.Size(184, 24);
             this.to800x600ToolStripMenuItem.Tag = "800x600";
             this.to800x600ToolStripMenuItem.Text = ".. to 800x600";
-            this.to800x600ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolutionClick);
+            this.to800x600ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
             // 
             // to1024x768ToolStripMenuItem
             // 
@@ -225,7 +225,7 @@
             this.to1024x768ToolStripMenuItem.Size = new System.Drawing.Size(184, 24);
             this.to1024x768ToolStripMenuItem.Tag = "1024x768";
             this.to1024x768ToolStripMenuItem.Text = ".. to 1024x768";
-            this.to1024x768ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolutionClick);
+            this.to1024x768ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
             // 
             // to1280x1024ToolStripMenuItem
             // 
@@ -233,7 +233,7 @@
             this.to1280x1024ToolStripMenuItem.Size = new System.Drawing.Size(184, 24);
             this.to1280x1024ToolStripMenuItem.Tag = "1280x1024";
             this.to1280x1024ToolStripMenuItem.Text = ".. to 1280x1024";
-            this.to1280x1024ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolutionClick);
+            this.to1280x1024ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
             // 
             // to1600x1200ToolStripMenuItem
             // 
@@ -241,27 +241,50 @@
             this.to1600x1200ToolStripMenuItem.Size = new System.Drawing.Size(184, 24);
             this.to1600x1200ToolStripMenuItem.Tag = "1600x1200";
             this.to1600x1200ToolStripMenuItem.Text = ".. to 1600x1200";
-            this.to1600x1200ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolutionClick);
+            this.to1600x1200ToolStripMenuItem.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
+            // 
+            // m_ctrlRenderer
+            // 
+            this.m_ctrlRenderer.Camera = null;
+            this.m_ctrlRenderer.DiscardRendering = true;
+            this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 157);
+            this.m_ctrlRenderer.Name = "m_ctrlRenderer";
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 336);
+            this.m_ctrlRenderer.TabIndex = 6;
+            this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
+            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.2F;
+            this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
+            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = FrozenSky.Multimedia.Core.AntialiasingQualityLevel.Medium;
+            this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
+            this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
+            this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
+            this.m_ctrlRenderer.ViewConfiguration.Overlay2DEnabled = true;
+            this.m_ctrlRenderer.ViewConfiguration.ShowTextures = true;
+            this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
+            this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
             // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(762, 522);
-            this.Controls.Add(this.m_tabControl);
+            this.Controls.Add(this.m_ctrlRenderer);
+            this.Controls.Add(this.m_tabControlSamples);
             this.Controls.Add(this.m_barStatus);
             this.Controls.Add(this.m_barTools);
-            this.Controls.Add(this.menuStrip1);
+            this.Controls.Add(this.m_menuMain);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MainMenuStrip = this.menuStrip1;
+            this.MainMenuStrip = this.m_menuMain;
             this.Name = "MainWindow";
             this.Text = "FrozenSky Win.Forms Samples";
             this.m_barTools.ResumeLayout(false);
             this.m_barTools.PerformLayout();
             this.m_barStatus.ResumeLayout(false);
             this.m_barStatus.PerformLayout();
-            this.menuStrip1.ResumeLayout(false);
-            this.menuStrip1.PerformLayout();
+            this.m_menuMain.ResumeLayout(false);
+            this.m_menuMain.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -270,7 +293,7 @@
         #endregion
 
         private System.Windows.Forms.ToolStrip m_barTools;
-        private System.Windows.Forms.TabControl m_tabControl;
+        private System.Windows.Forms.TabControl m_tabControlSamples;
         private System.Windows.Forms.ToolStripDropDownButton m_cboDevice;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripButton m_cmdShowPerformance;
@@ -278,7 +301,7 @@
         private System.Windows.Forms.ToolStripStatusLabel m_lblRenderResolution;
         private System.Windows.Forms.ToolStripStatusLabel m_lblRenderResolutionValue;
         private System.Windows.Forms.Timer m_refreshTimer;
-        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.MenuStrip m_menuMain;
         private System.Windows.Forms.ToolStripMenuItem renderingToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem changeRenderResolutionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem to800x600ToolStripMenuItem;
@@ -291,6 +314,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.ToolStripStatusLabel m_lblCountObjects;
         private System.Windows.Forms.ToolStripStatusLabel m_lblCountObjectsValue;
+        private Multimedia.Views.FrozenSkyRendererControl m_ctrlRenderer;
     }
 }
 

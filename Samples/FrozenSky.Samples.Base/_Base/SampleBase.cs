@@ -50,7 +50,7 @@ namespace FrozenSky.Samples.Base
         /// Called when the sample has to startup.
         /// </summary>
         /// <param name="targetRenderLoop">The target render loop.</param>
-        public abstract Task OnStartup(RenderLoop targetRenderLoop);
+        public abstract Task OnStartupAsync(RenderLoop targetRenderLoop);
 
         /// <summary>
         /// Called when the sample is closed.

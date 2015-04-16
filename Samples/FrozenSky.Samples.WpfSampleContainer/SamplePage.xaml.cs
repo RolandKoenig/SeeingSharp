@@ -55,7 +55,7 @@ namespace FrozenSky.Samples.WpfSampleContainer
             m_ctrl3DView2.Camera = m_cameraPerspective;
 
             // Apply the sample
-            SampleManager.Current.ApplySample(
+            SampleFactory.Current.ApplySample(
                 m_ctrl3DView2.RenderLoop,
                 sampleName);
         }

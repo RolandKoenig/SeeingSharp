@@ -58,7 +58,7 @@ namespace FrozenSky.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultResources" /> class.
         /// </summary>
-        internal DefaultResources()
+        public DefaultResources()
         {
         }
 

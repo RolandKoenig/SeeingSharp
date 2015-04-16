@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrozenSky;
 using FrozenSky.Util;
+using FrozenSky.Checking;
 using FrozenSky.Samples.Base;
 using FrozenSky.Multimedia.Views;
 using FrozenSky.Multimedia.Core;
@@ -42,6 +43,10 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
     {
         private SceneViewboxObjectFilter m_viewboxfilter;
 
+        private bool m_isChangingSample;
+        private SampleInfoAttribute m_actSampleInfo;
+        private SampleBase m_actSample;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
@@ -51,62 +56,13 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
         }
 
         /// <summary>
-        /// Gets a collection containing all render controls.
+        /// Changes the render resolution to given width and height.
         /// </summary>
-        private IEnumerable<RenderLoop> GetAllRenderLoops()
-        {
-            foreach(TabPage actTabPage in m_tabControl.TabPages)
-            {
-                FrozenSkyRendererControl actRenderControl = actTabPage.Controls
-                    .Cast<Control>()
-                    .Where((actControl) => actControl is FrozenSkyRendererControl)
-                    .FirstOrDefault() as FrozenSkyRendererControl;
-                if (actRenderControl == null) { continue; }
-
-                yield return actRenderControl.RenderLoop;
-            }
-        }
-
-        /// <summary>
-        /// Loads the engine demo for the currently selected tab control.
-        /// </summary>
-        private void UpdateCurrentTabControl()
-        {
-            // Get current render control
-            TabPage actTabPage = m_tabControl.SelectedTab;
-            FrozenSkyRendererControl rendererControl = actTabPage.Controls
-                .Cast<Control>()
-                .Where((actControl) => actControl is FrozenSkyRendererControl)
-                .FirstOrDefault() as FrozenSkyRendererControl;
-            if (rendererControl == null) { return; }
-
-            // Ensure that this one is the initial call
-            if (rendererControl.RenderLoop.Scene.CountObjects > 0) { return; }
-
-            // Initialize demo
-            SampleManager.Current.ApplySample(
-                rendererControl.RenderLoop,
-                actTabPage.Tag as string);
-        }
-
-        /// <summary>
-        /// Gets the currently selected render control.
-        /// </summary>
-        private FrozenSkyRendererControl GetCurrentRenderControl()
-        {
-            if (m_tabControl.TabCount <= 0) { return null; }
-
-            // Get current render control
-            TabPage actTabPage = m_tabControl.SelectedTab;
-            return actTabPage.Controls
-                .Cast<Control>()
-                .Where((actControl) => actControl is FrozenSkyRendererControl)
-                .FirstOrDefault() as FrozenSkyRendererControl;
-        }
-
+        /// <param name="width">The width in pixels.</param>
+        /// <param name="height">The height in pixels.</param>
         private void ChangeRenderResolution(int width, int height)
         {
-            FrozenSkyRendererControl renderControl = GetCurrentRenderControl();
+            FrozenSkyRendererControl renderControl = m_ctrlRenderer;
             if (renderControl == null) { return; }
 
             Size2 currentViewSize = renderControl.RenderLoop.CurrentViewSize;
@@ -122,11 +78,59 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
         }
 
         /// <summary>
+        /// Applies the given sample.
+        /// </summary>
+        /// <param name="sampleInfo">The sample to be applied.</param>
+        private async void ApplySample(SampleInfoAttribute sampleInfo)
+        {
+            m_isChangingSample.EnsureFalse("m_isChangingSample");
+
+            m_isChangingSample = true;
+            try
+            {
+                this.UpdateControlState();
+
+                if (m_actSampleInfo == sampleInfo) { return; }
+
+                // Clear previous sample 
+                if (m_actSample != null)
+                {
+                    m_actSample.SetClosed();
+
+                    await m_ctrlRenderer.RenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
+                    {
+                        manipulator.Clear(true);
+                    });
+                }
+
+                // Reset members
+                m_actSample = null;
+                m_actSampleInfo = null;
+
+                // Apply new sample
+                if (sampleInfo != null)
+                {
+                    SampleBase sampleObject = SampleFactory.Current.CreateSample(sampleInfo);
+                    await sampleObject.OnStartupAsync(m_ctrlRenderer.RenderLoop);
+
+                    m_actSample = sampleObject;
+                    m_actSampleInfo = sampleInfo;
+                }
+            }
+            finally
+            {
+                m_isChangingSample = false;
+            }
+
+            this.UpdateControlState();
+        }
+
+        /// <summary>
         /// Updates the current control state.
         /// </summary>
         private void UpdateControlState()
         {
-            FrozenSkyRendererControl actRenderControl = GetCurrentRenderControl();
+            FrozenSkyRendererControl actRenderControl = m_ctrlRenderer;
 
             // Update state values
             m_lblRenderResolutionValue.Text = actRenderControl != null ?
@@ -135,6 +139,9 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             m_lblCountObjectsValue.Text = actRenderControl != null ?
                 actRenderControl.RenderLoop.VisibleObjectCount.ToString() :
                 "-";
+
+            // Update sample tab
+            m_tabControlSamples.Enabled = !m_isChangingSample;
 
             // Update enabled states
             m_cmdShowPerformance.Enabled = actRenderControl != null;
@@ -151,27 +158,43 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
 
             // Just a dummy call to trigger initialization
             Assembly test = System.Windows.Application.ResourceAssembly;
-  
 
             // Add all sample pages
-            foreach(string actSampleName in SampleManager.Current.GetSampleNames())
+            Dictionary<string, ListView> generatedTabs = new Dictionary<string, ListView>();
+            foreach(var actSampleInfo in SampleFactory.Current.GetSampleInfos())
             {
-                var actRenderControl = new FrozenSkyRendererControl() { Dock = DockStyle.Fill };
-                //actRenderControl.Camera = new FrozenSky.Multimedia.Drawing3D.OrthographicCamera3D(100, 100);
+                // Find the ListView of the current category
+                ListView actListView = null;
+                if(!generatedTabs.ContainsKey(actSampleInfo.Category))
+                {
+                    TabPage actTabPage = new TabPage(actSampleInfo.Category);
+                    m_tabControlSamples.TabPages.Add(actTabPage);
 
-                TabPage actTabPage = new TabPage(actSampleName);
-                actTabPage.Controls.Add(actRenderControl);
-                actTabPage.Tag = actSampleName;
-                m_tabControl.TabPages.Add(actTabPage);
+                    actListView = new ListView();
+                    actListView.Dock = DockStyle.Fill;
+                    actListView.Activation = ItemActivation.OneClick;
+                    actListView.ItemActivate += OnListView_ItemActivate;
+                    actListView.MultiSelect = false;
+                    actTabPage.Controls.Add(actListView);
+
+                    generatedTabs.Add(actSampleInfo.Category, actListView);
+                }
+                else
+                {
+                    actListView = generatedTabs[actSampleInfo.Category];
+                }
+
+                // Generate the new list entry for the current sample
+                ListViewItem newListItem = new ListViewItem();
+                newListItem.Text = actSampleInfo.Name;
+                newListItem.Tag = actSampleInfo;
+                actListView.Items.Add(newListItem);
             }
 
             // Create main object filter initially
             m_viewboxfilter = new SceneViewboxObjectFilter();
             m_viewboxfilter.EnableYFilter = false;
-            foreach (RenderLoop actRenderLoop in GetAllRenderLoops())
-            {
-                actRenderLoop.ManipulateFilterList += OnRenderLoopManipulateFilterList;
-            }
+            m_ctrlRenderer.RenderLoop.ManipulateFilterList += OnRenderLoop_ManipulateFilterList;
 
             // Handle device combobox
             m_cboDevice.Text = GraphicsCore.Current.DefaultDevice.AdapterDescription;
@@ -183,16 +206,29 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
                     null,
                     (sender, eArgs) =>
                     {
-                        foreach(RenderLoop actRenderLoop in GetAllRenderLoops())
-                        {
-                            actRenderLoop.SetRenderingDevice(actDeviceInner);
-                        }
+                        m_ctrlRenderer.RenderLoop.SetRenderingDevice(actDeviceInner);
                         m_cboDevice.Text = actDeviceInner.AdapterDescription;
                     });
             }
 
-            this.UpdateCurrentTabControl();
             this.UpdateControlState();
+        }
+
+        /// <summary>
+        /// Called when the user activates a link in the top ListView object.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnListView_ItemActivate(object sender, EventArgs e)
+        {
+            ListView actListView = sender as ListView;
+            actListView.EnsureNotNull("actListView");
+            actListView.FocusedItem.EnsureNotNull("actListView.FocusedItem");
+
+            SampleInfoAttribute sampleInfo = actListView.FocusedItem.Tag as SampleInfoAttribute;
+            sampleInfo.EnsureNotNull("sampleInfo");
+
+            this.ApplySample(sampleInfo);
         }
 
         /// <summary>
@@ -200,7 +236,7 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The e.</param>
-        private void OnRenderLoopManipulateFilterList(object sender, ManipulateFilterListArgs e)
+        private void OnRenderLoop_ManipulateFilterList(object sender, ManipulateFilterListArgs e)
         {
             if (!e.FilterList.Contains(m_viewboxfilter))
             {
@@ -218,30 +254,19 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             this.UpdateControlState();
         }
 
-        /// <summary>
-        /// Initialize all tab pages when we move to them.
-        /// </summary>
-        private void OnTabControlSelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (this.DesignMode) { return; }
-
-            this.UpdateCurrentTabControl();
-            this.UpdateControlState();
-        }
-
-        private void OnCmdShowPerformanceClick(object sender, EventArgs e)
+        private void OnCmdShowPerformance_Click(object sender, EventArgs e)
         {
             this.ShowChildForm(new PerformanceMeasureForm());
 
             this.UpdateControlState();
         }
 
-        private void OnRefreshTimerTick(object sender, EventArgs e)
+        private void OnRefreshTimer_Tick(object sender, EventArgs e)
         {
             this.UpdateControlState();
         }
 
-        private void OnCmdChangeResolutionClick(object sender, EventArgs e)
+        private void OnCmdChangeResolution_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem callerItem = sender as ToolStripMenuItem;
             if (callerItem == null) { return; }
@@ -261,18 +286,18 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             ChangeRenderResolution(width, height);
         }
 
-        private void OnCmdChangeResolutionToBigWindow(object sender, EventArgs e)
+        private void OnCmdChangeResolutionToBigWindow_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Maximized;
         }
 
-        private async void OnCmdCopyClick(object sender, EventArgs e)
+        private async void OnCmdCopy_Click(object sender, EventArgs e)
         {
-            FrozenSkyRendererControl renderControl = GetCurrentRenderControl();
+            FrozenSkyRendererControl renderControl = m_ctrlRenderer;
             if (renderControl == null) { return; }
 
             using(Bitmap screenshot = await renderControl.RenderLoop.GetScreenshotGdiAsync())
-            using (Bitmap rescaledScreenshot = new Bitmap(screenshot, new Size(300, 225)))
+            using(Bitmap rescaledScreenshot = new Bitmap(screenshot, new Size(300, 225)))
             {
                 Clipboard.SetImage(rescaledScreenshot);
             }

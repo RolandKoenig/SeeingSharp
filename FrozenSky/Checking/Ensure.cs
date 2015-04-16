@@ -54,6 +54,38 @@ namespace FrozenSky.Checking
         }
 
         [Conditional("DEBUG")]
+        public static void EnsureFalse(
+            this bool boolValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (boolValue)
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Boolean {0} within method {1} must be false!",
+                    checkedVariableName, callerMethod));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureTrue(
+            this bool boolValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (!boolValue)
+            {
+                throw new FrozenSkyCheckException(string.Format(
+                    "Boolean {0} within method {1} must be true!",
+                    checkedVariableName, callerMethod));
+            }
+        }
+
+        [Conditional("DEBUG")]
         public static void EnsureNotNullOrEmpty<T>(
             this T[] array, string checkedVariableName,
             [CallerMemberName]

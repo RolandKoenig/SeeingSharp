@@ -18,6 +18,7 @@
 */
 #endregion
 using FrozenSky.Infrastructure;
+using FrozenSky.Checking;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
@@ -43,8 +44,10 @@ namespace FrozenSky.Samples.Base.BasicSamples
         /// </summary>
         /// <param name="targetRenderLoop">The target render loop.</param>
         /// <returns></returns>
-        public override async Task OnStartup(RenderLoop targetRenderLoop)
+        public override async Task OnStartupAsync(RenderLoop targetRenderLoop)
         {
+            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+
             // Build dummy scene
             Scene scene = targetRenderLoop.Scene;
             Camera3DBase camera = targetRenderLoop.Camera as Camera3DBase;

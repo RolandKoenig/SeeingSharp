@@ -196,6 +196,7 @@ namespace FrozenSky.Multimedia.Core
             //Clear specialized collections
             m_sceneObjectsNotSpacial.Clear();
             m_sceneObjectsSpacial.Clear();
+            m_sceneObjectsNotStatic.Clear();
         }
 
         /// <summary>

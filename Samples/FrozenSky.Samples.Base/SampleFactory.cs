@@ -20,6 +20,7 @@
 
 using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
+using FrozenSky.Checking;
 using System;
 using System.Reflection;
 using System.Collections.Generic;
@@ -29,16 +30,16 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base
 {
-    public class SampleManager
+    public class SampleFactory
     {
-        private static SampleManager s_current;
+        private static SampleFactory s_current;
 
         private List<Tuple<SampleInfoAttribute, Type>> m_sampleTypes;
 
         /// <summary>
-        /// Prevents a default instance of the <see cref="SampleManager"/> class from being created.
+        /// Prevents a default instance of the <see cref="SampleFactory"/> class from being created.
         /// </summary>
-        private SampleManager()
+        private SampleFactory()
         {
             // Create and register viewmodel for performance analyziation
             PerformanceAnalysisViewModel performanceAnalyzisViewModel = new PerformanceAnalysisViewModel();
@@ -59,11 +60,45 @@ namespace FrozenSky.Samples.Base
         }
 
         /// <summary>
-        /// Gets the Names of all implemented samples.
+        /// Gets a collection containing all sample infomration objects.
         /// </summary>
-        public IEnumerable<string> GetSampleNames()
+        public IEnumerable<SampleInfoAttribute> GetSampleInfos()
         {
-            return m_sampleTypes.Select((actSampleType) => actSampleType.Item1.Name);
+            return m_sampleTypes.Select((actSampleType) => actSampleType.Item1);
+        }
+
+        /// <summary>
+        /// Creates the given sample.
+        /// </summary>
+        /// <param name="categoryName">Name of the category.</param>
+        /// <param name="sampleName">Name of the sample.</param>
+        public SampleBase CreateSample(string categoryName, string sampleName)
+        {
+            foreach(var actSample in m_sampleTypes)
+            {
+                if((actSample.Item1.Category == categoryName) &&
+                   (actSample.Item1.Name == sampleName))
+                {
+                    return Activator.CreateInstance(actSample.Item2) as SampleBase;
+                }
+            }
+
+            throw new FrozenSkyException(
+                string.Format(
+                "Sample {0} in category {1} not found!", 
+                sampleName, categoryName));
+        }
+
+        /// <summary>
+        /// Creates the given sample.
+        /// </summary>
+        /// <param name="sampleInfo">The sample information.</param>
+        public SampleBase CreateSample(SampleInfoAttribute sampleInfo)
+        {
+            sampleInfo.EnsureNotNull("sampleInfo");
+
+            var actSample = m_sampleTypes.First((actTuple) => actTuple.Item1 == sampleInfo);
+            return Activator.CreateInstance(actSample.Item2) as SampleBase;
         }
 
         /// <summary>
@@ -80,14 +115,14 @@ namespace FrozenSky.Samples.Base
             if (sampleType == null) { throw new FrozenSkyException(string.Format("Unable to find sample {0}!", sampleName)); }
 
             SampleBase sample = Activator.CreateInstance(sampleType) as SampleBase;
-            sample.OnStartup(renderLoop);
+            sample.OnStartupAsync(renderLoop);
         }
 
-        public static SampleManager Current
+        public static SampleFactory Current
         {
             get
             {
-                if (s_current == null) { s_current = new SampleManager(); }
+                if (s_current == null) { s_current = new SampleFactory(); }
                 return s_current;
             }
         }

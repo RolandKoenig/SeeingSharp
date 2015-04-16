@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 namespace FrozenSky.Samples.Base
 {
     [AttributeUsage(AttributeTargets.Class)]
-    class SampleInfoAttribute : Attribute
+    public class SampleInfoAttribute : Attribute
     {
         public SampleInfoAttribute(string category, string name)
         {
