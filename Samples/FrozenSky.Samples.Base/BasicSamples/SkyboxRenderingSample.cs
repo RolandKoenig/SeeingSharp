@@ -21,6 +21,7 @@ using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
+using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -75,11 +76,10 @@ namespace FrozenSky.Samples.Base.BasicSamples
                         .CallAction(() => palletObject.RotationEuler = Vector3.Zero)
                         .ApplyAndRewind();
 
-#if DESKTOP
-                    var resSkyboxTexture = manipulator.AddTexture(new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Skybox.dds", UriKind.Relative));
-#else
-                    var resSkyboxTexture = manipulator.AddTexture(new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/SkyBox.dds"));
-#endif
+                    var resSkyboxTexture = manipulator.AddTexture(
+                        new AssemblyResourceUriBuilder(
+                            "FrozenSky.Samples.Base", false,
+                            "Assets/Textures/Skybox.dds"));
 
                     // Create the skybox on a new layer
                     manipulator.AddLayer("Skybox");

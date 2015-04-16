@@ -100,13 +100,10 @@ namespace FrozenSky.Samples.Base.BasicSamples
             {
                 await scene.ManipulateSceneAsync((manipulator) =>
                 {
-#if DESKTOP
                     NamedOrGenericKey resMaterialLogo = manipulator.AddSimpleColoredMaterial(
-                        new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/LogoTexture.png", UriKind.Relative));
-#else
-                    NamedOrGenericKey resMaterialLogo = manipulator.AddSimpleColoredMaterial(
-                        new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/LogoTexture.png"));
-#endif
+                        new AssemblyResourceUriBuilder(
+                            "FrozenSky.Samples.Base", false, 
+                            "Textures/LogoTexture.png"));
 
                     // Create pallet geometry resource
                     SingleMaterialPalletType pType = new SingleMaterialPalletType();
@@ -171,14 +168,12 @@ namespace FrozenSky.Samples.Base.BasicSamples
 
         private static void PalletsAppendWallObjectToScene(SceneManipulator manipulator, int sideLength)
         {
-            //Define wall object (define geometry and create object for the scene).
-#if DESKTOP
-            var resWallTexture = manipulator.AddTexture(new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Wall.png", UriKind.Relative));
+            // Define wall object (define geometry and create object for the scene).
+            var resWallTexture = manipulator.AddTexture(
+                new AssemblyResourceUriBuilder(
+                    "FrozenSky.Samples.Base", false,
+                    "Assets/Textures/Wall.png"));
             var resWallMaterial = manipulator.AddSimpleColoredMaterial(resWallTexture);
-#else
-            var resWallTexture = manipulator.AddTexture(new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/Wall.png"));
-            var resWallMaterial = manipulator.AddSimpleColoredMaterial(resWallTexture);
-#endif
 
             VertexStructure wallStructure = new VertexStructure();
             wallStructure.EnableTextureTileMode(new Vector2(2f, 2f));

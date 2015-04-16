@@ -21,6 +21,7 @@ using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
+using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -57,14 +58,12 @@ namespace FrozenSky.Samples.Base.BasicSamples
                         manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Load model resource
-#if DESKTOP
                     ObjectType modelType = ACFileLoader.ImportObjectType(
-                        new Uri("/FrozenSky.Samples.Base;component/Assets/Models/Penguin.ac", UriKind.Relative));
+                        new AssemblyResourceUriBuilder(
+                            "FrozenSky.Samples.Base", false,
+                            "Assets/Models/Penguin.ac"));
                     var resModel = manipulator.AddResource(() => new GeometryResource(modelType));
-#else
-                    ObjectType modelType = ACFileLoader.ImportObjectType(new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Models/Penguin.ac"));
-                    var resModel = manipulator.AddResource(() => new GeometryResource(modelType));
-#endif
+                    
                     // Create and add an instance to the scene
                     GenericObject modelObject = new GenericObject(resModel);
                     modelObject.Scaling = new Vector3(10f, 10f, 10f);

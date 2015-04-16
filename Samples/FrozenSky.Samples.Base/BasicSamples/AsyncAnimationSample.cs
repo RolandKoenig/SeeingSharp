@@ -65,9 +65,9 @@ namespace FrozenSky.Samples.Base.BasicSamples
 
                     // Define banana object
                     ObjectType bananaType = ACFileLoader.ImportObjectType(
-                        new UriResourceLink(new AssemblyResourceUriBuilder(
+                        new AssemblyResourceUriBuilder(
                             "FrozenSky.Samples.Base", false, 
-                            "Assets/Models/Banana.ac")));
+                            "Assets/Models/Banana.ac"));
                     resGeometry = manipulator.AddGeometry(bananaType);
                 });
 

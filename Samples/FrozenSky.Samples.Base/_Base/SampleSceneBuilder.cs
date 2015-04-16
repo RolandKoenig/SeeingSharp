@@ -43,13 +43,12 @@ namespace FrozenSky.Samples.Base
             manipulator.SetLayerOrderID(bgLayer, 0);
             manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 1);
 
-#if DESKTOP
-            ResourceLink sourceWallTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Background.dds", UriKind.Relative);
-            ResourceLink sourceTileTexture = new Uri("/FrozenSky.Samples.Base;component/Assets/Textures/Floor.dds", UriKind.Relative);
-#else
-            ResourceLink sourceWallTexture = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/Background.png");
-            ResourceLink sourceTileTexture = new Uri("ms-appx:///FrozenSky.Samples.Base/Assets/Textures/Floor.png");
-#endif
+            ResourceLink sourceWallTexture = new AssemblyResourceUriBuilder(
+                "FrozenSky.Samples.Base", false,
+                "Assets/Textures/Background.dds");
+            ResourceLink sourceTileTexture = new AssemblyResourceUriBuilder(
+                "FrozenSky.Samples.Base", false,
+                "Assets/Textures/Floor.dds");
 
             var resBackgroundTexture = manipulator.AddTexture(sourceWallTexture);
             manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
