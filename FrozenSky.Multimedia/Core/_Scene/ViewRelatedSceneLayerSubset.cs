@@ -33,33 +33,40 @@ namespace FrozenSky.Multimedia.Core
     {
         private const int DEFAULT_PASS_SUBSCRIPTION_LENGTH = 1024;
 
-        // State members
+        #region State members
         private bool m_disposed;
+        #endregion
 
-        // Configuration member
+        #region Configuration member
         private Scene m_scene;
         private SceneLayer m_sceneLayer;
         private ViewInformation m_viewInformation;
         private EngineDevice m_device;
         private ResourceDictionary m_resources;
+        #endregion
 
-        // Temporary collections
+        #region Temporary collections
         private List<Tuple<SceneObject, bool, bool>> m_tmpChangedVisibilities;
+        #endregion
 
-        // Special members for subscribe/unsubscribe pass logic
+        #region Special members for subscribe/unsubscribe pass logic
         private bool m_isSubscribeUnsubscribeAllowed;
         private Action m_changedVisibilitiesAction;
+        #endregion
 
-        // Objects that raises exceptions during render
+        #region Objects that raises exceptions during render
         private Dictionary<SceneObject, object> m_invalidObjects;
         private Queue<SceneObject> m_invalidObjectsToDeregister;
+        #endregion
 
-        // Resources for rendering
+        #region Resources for rendering
         private RenderPassLineRender m_renderPassLineRender;
         private RenderPassDefaultTransparent m_renderPassTransparent;
         private RenderPass2DOverlay m_renderPass2DOverlay;
         private ViewRenderParameters m_renderParameters;
+        #endregion
 
+        #region Subscription collections
         // All collections needed to link all scene objects to corresponding render passes
         // => This collections are updated using UpdateForView logic
         private Dictionary<RenderPassInfo, PassSubscribionProperties> m_objectsPerPassDict;
@@ -70,6 +77,7 @@ namespace FrozenSky.Multimedia.Core
         private PassSubscribionProperties m_objectsPassSpriteBatchRender;
         private PassSubscribionProperties m_objectsPass2DOverlay;
         private bool m_anythingUnsubscribed;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewRelatedSceneLayerSubset" /> class.
@@ -110,15 +118,7 @@ namespace FrozenSky.Multimedia.Core
             m_anythingUnsubscribed = false;
 
             // Create and load all render pass relevant resources
-            m_renderPassTransparent = m_resources.GetResourceAndEnsureLoaded(
-                new NamedOrGenericKey(typeof(RenderPassDefaultTransparent)),
-                () => new RenderPassDefaultTransparent());
-            m_renderPassLineRender = m_resources.GetResourceAndEnsureLoaded(
-                new NamedOrGenericKey(typeof(RenderPassLineRender)),
-                () => new RenderPassLineRender());
-            m_renderPass2DOverlay = m_resources.GetResourceAndEnsureLoaded(
-                new NamedOrGenericKey(typeof(RenderPass2DOverlay)),
-                () => new RenderPass2DOverlay());
+            RefreshDeviceDependentResources();
         }
 
         /// <summary>
@@ -162,6 +162,9 @@ namespace FrozenSky.Multimedia.Core
         internal void ClearResources()
         {
             m_renderParameters = null;
+            m_renderPass2DOverlay = null;
+            m_renderPassLineRender = null;
+            m_renderPassTransparent = null;
         }
 
         /// <summary>
@@ -452,13 +455,8 @@ namespace FrozenSky.Multimedia.Core
             // Get current view configuration
             GraphicsViewConfiguration viewConfiguration = m_viewInformation.ViewConfiguration;
 
-            // Create resource for local render parameters
-            if(m_renderParameters == null)
-            {
-                m_renderParameters = m_resources.AddAndLoadResource(
-                    GraphicsCore.GetNextGenericResourceKey(),
-                    new ViewRenderParameters());
-            }
+            // Update device dependent resources here
+            RefreshDeviceDependentResources();
 
             // Update render parameters
             CBPerView cbPerView = new CBPerView();
@@ -674,6 +672,44 @@ namespace FrozenSky.Multimedia.Core
             {
                 // Deregister this object completely from the local layer subset
                 sceneObject.UnsubsribeFromAllPasses(this);
+            }
+        }
+
+        /// <summary>
+        /// Refreshes device dependent resources of this class.
+        /// </summary>
+        private void RefreshDeviceDependentResources()
+        {
+            if ((m_renderParameters == null) ||
+                (!m_renderParameters.IsLoaded))
+            {
+                m_renderParameters = m_resources.AddAndLoadResource(
+                    GraphicsCore.GetNextGenericResourceKey(),
+                    new ViewRenderParameters());
+            }
+
+            if ((m_renderPassTransparent == null) ||
+                (!m_renderPassTransparent.IsLoaded))
+            {
+                m_renderPassTransparent = m_resources.GetResourceAndEnsureLoaded(
+                    new NamedOrGenericKey(typeof(RenderPassDefaultTransparent)),
+                    () => new RenderPassDefaultTransparent());
+            }
+
+            if ((m_renderPassLineRender == null) ||
+                (!m_renderPassLineRender.IsLoaded))
+            {
+                m_renderPassLineRender = m_resources.GetResourceAndEnsureLoaded(
+                    new NamedOrGenericKey(typeof(RenderPassLineRender)),
+                    () => new RenderPassLineRender());
+            }
+
+            if ((m_renderPass2DOverlay == null) ||
+                (!m_renderPass2DOverlay.IsLoaded))
+            {
+                m_renderPass2DOverlay = m_resources.GetResourceAndEnsureLoaded(
+                    new NamedOrGenericKey(typeof(RenderPass2DOverlay)),
+                    () => new RenderPass2DOverlay());
             }
         }
 
