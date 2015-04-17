@@ -60,7 +60,10 @@ namespace FrozenSky.Samples.Base
             {
                 return new AssemblyResourceUriBuilder(
                     "FrozenSky.Samples.Base", false,
-                    string.Format("Assets/SampleImages/{0}_{1}.png", this.Category, this.Name));
+                    string.Format(
+                        "Assets/SampleImages/{0}_{1}.png", 
+                        this.Category.Replace(' ', '_'), 
+                        this.Name.Replace(' ', '_')));
             }
         }
     }

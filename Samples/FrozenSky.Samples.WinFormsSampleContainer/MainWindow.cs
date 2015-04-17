@@ -141,6 +141,10 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
                 actRenderControl.RenderLoop.VisibleObjectCount.ToString() :
                 "-";
 
+            // Update progress bar
+            m_lblWorking.Visible = m_isChangingSample;
+            m_barProgress.Visible = m_isChangingSample;
+
             // Update sample tab
             m_tabControlSamples.Enabled = !m_isChangingSample;
 
@@ -174,7 +178,7 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
                     actListView = new ListView();
                     actListView.Dock = DockStyle.Fill;
                     actListView.Activation = ItemActivation.OneClick;
-                    actListView.ItemActivate += OnListView_ItemActivate;
+                    actListView.ItemSelectionChanged += OnListView_ItemSelectionChanged;
                     actListView.MultiSelect = false;
                     actListView.LargeImageList = m_images;
                     actListView.SmallImageList = m_images;
@@ -227,17 +231,19 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
         }
 
         /// <summary>
-        /// Called when the user activates a link in the top ListView object.
+        /// Called when the selection of the top ListView has changed.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void OnListView_ItemActivate(object sender, EventArgs e)
+        /// <param name="e">The <see cref="ListViewItemSelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void OnListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
+            if (!e.IsSelected) { return; }
+            
             ListView actListView = sender as ListView;
             actListView.EnsureNotNull("actListView");
-            actListView.FocusedItem.EnsureNotNull("actListView.FocusedItem");
+            e.Item.EnsureNotNull("e.Item");
 
-            SampleDescription sampleInfo = actListView.FocusedItem.Tag as SampleDescription;
+            SampleDescription sampleInfo = e.Item.Tag as SampleDescription;
             sampleInfo.EnsureNotNull("sampleInfo");
 
             this.ApplySample(sampleInfo);

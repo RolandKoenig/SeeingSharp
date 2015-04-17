@@ -39,12 +39,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="BasicSamples\AsyncAnimationSample.cs" />
-    <Compile Include="BasicSamples\PalletsSample.cs" />
-    <Compile Include="BasicSamples\RotatingPalletSample.cs" />
-    <Compile Include="BasicSamples\SingleModelSample.cs" />
-    <Compile Include="BasicSamples\SkyboxRenderingSample.cs" />
-    <Compile Include="BasicSamples\TransparentPalletsSample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleFactory.cs" />
     <Compile Include="_Base\SampleBase.cs" />
@@ -54,6 +48,13 @@
     <Compile Include="_Performance\PerformanceAnalysisViewModel.cs" />
     <Compile Include="_Performance\PerformanceSnapshot.cs" />
     <Compile Include="_Performance\PerformanceSnapshotItem.cs" />
+    <Compile Include="_Samples\BasicSamples\AsyncAnimationSample.cs" />
+    <Compile Include="_Samples\BasicSamples\PalletsSample.cs" />
+    <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
+    <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
+    <Compile Include="_Samples\BasicSamples\SkyboxRenderingSample.cs" />
+    <Compile Include="_Samples\BasicSamples\TransparentPalletsSample.cs" />
+    <Compile Include="_Samples\MFSamples\VideoTextureSample.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Textures\Background.dds" />
@@ -67,6 +68,7 @@
     <Content Include="Assets\Textures\Tile3.png" />
     <Content Include="Assets\Textures\Wall.png" />
     <Content Include="Assets\Textures\White.png" />
+    <Resource Include="Assets\Videos\DummyVideo.mp4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FrozenSky.Multimedia\FrozenSky.Multimedia_UNIVERSAL.csproj">

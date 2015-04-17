@@ -28,5 +28,6 @@ namespace FrozenSky.Samples.Base
     internal static class Constants
     {
         public const string SAMPLEGROUP_BASIC = "Basics";
+        public const string SAMPLEGROUP_MF = "Media Foundation";
     }
 }

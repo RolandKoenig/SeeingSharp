@@ -43,6 +43,8 @@
             this.m_lblRenderResolutionValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblCountObjects = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblCountObjectsValue = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblWorking = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_barProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.m_menuMain = new System.Windows.Forms.MenuStrip();
             this.renderingToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -122,6 +124,7 @@
             // m_tabControlSamples
             // 
             this.m_tabControlSamples.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_tabControlSamples.HotTrack = true;
             this.m_tabControlSamples.ImageList = this.m_images;
             this.m_tabControlSamples.ItemSize = new System.Drawing.Size(0, 21);
             this.m_tabControlSamples.Location = new System.Drawing.Point(0, 0);
@@ -144,7 +147,9 @@
             this.m_lblRenderResolution,
             this.m_lblRenderResolutionValue,
             this.m_lblCountObjects,
-            this.m_lblCountObjectsValue});
+            this.m_lblCountObjectsValue,
+            this.m_lblWorking,
+            this.m_barProgress});
             this.m_barStatus.Location = new System.Drawing.Point(0, 493);
             this.m_barStatus.Name = "m_barStatus";
             this.m_barStatus.Size = new System.Drawing.Size(762, 29);
@@ -174,6 +179,22 @@
             this.m_lblCountObjectsValue.Name = "m_lblCountObjectsValue";
             this.m_lblCountObjectsValue.Size = new System.Drawing.Size(68, 24);
             this.m_lblCountObjectsValue.Text = "<Count>";
+            // 
+            // m_lblWorking
+            // 
+            this.m_lblWorking.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.m_lblWorking.Name = "m_lblWorking";
+            this.m_lblWorking.Size = new System.Drawing.Size(75, 24);
+            this.m_lblWorking.Text = "Working..";
+            this.m_lblWorking.Visible = false;
+            // 
+            // m_barProgress
+            // 
+            this.m_barProgress.MarqueeAnimationSpeed = 20;
+            this.m_barProgress.Name = "m_barProgress";
+            this.m_barProgress.Size = new System.Drawing.Size(150, 23);
+            this.m_barProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.m_barProgress.Visible = false;
             // 
             // m_refreshTimer
             // 
@@ -259,7 +280,6 @@
             // 
             // m_ctrlRenderer
             // 
-            this.m_ctrlRenderer.Camera = null;
             this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
@@ -353,6 +373,8 @@
         private Multimedia.Views.FrozenSkyRendererControl m_ctrlRenderer;
         private System.Windows.Forms.ImageList m_images;
         private System.Windows.Forms.SplitContainer m_splitter;
+        private System.Windows.Forms.ToolStripStatusLabel m_lblWorking;
+        private System.Windows.Forms.ToolStripProgressBar m_barProgress;
     }
 }
 
