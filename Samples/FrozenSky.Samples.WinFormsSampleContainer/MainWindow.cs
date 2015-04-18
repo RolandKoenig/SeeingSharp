@@ -244,7 +244,15 @@ namespace WinFormsSampleContainer
         /// <param name="e">The <see cref="ListViewItemSelectionChangedEventArgs"/> instance containing the event data.</param>
         private void OnListView_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
         {
-            if (!e.IsSelected) { return; }
+            if (!e.IsSelected) 
+            {
+                e.Item.BackColor = System.Drawing.Color.Transparent;
+                return; 
+            }
+            else
+            {
+                e.Item.BackColor = System.Drawing.Color.LightBlue;
+            }
             
             ListView actListView = sender as ListView;
             actListView.EnsureNotNull("actListView");
