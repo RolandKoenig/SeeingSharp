@@ -44,6 +44,11 @@ namespace FrozenSky.Samples.Base
             m_attrib = attrib;        
         }
 
+        public override string ToString()
+        {
+            return string.Format("{0} - {1}", this.Category, this.Name);
+        }
+
         public string Category
         {
             get { return m_attrib.Category; }

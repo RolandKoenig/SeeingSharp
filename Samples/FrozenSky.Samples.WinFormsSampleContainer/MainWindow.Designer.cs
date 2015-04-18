@@ -1,4 +1,5 @@
-﻿namespace FrozenSky.Samples.WinFormsSampleContainer
+﻿using FrozenSky.Multimedia.Views;
+namespace WinFormsSampleContainer
 {
     partial class MainWindow
     {
@@ -213,7 +214,7 @@
             // 
             // m_cboDevice
             // 
-            this.m_cboDevice.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.Adapter16x16;
+            this.m_cboDevice.Image = global::WinFormsSampleContainer.Properties.Resources.Adapter16x16;
             this.m_cboDevice.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.m_cboDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cboDevice.Name = "m_cboDevice";
@@ -228,7 +229,7 @@
             this.to1024x768ToolStripMenuItem1,
             this.to1280x1024ToolStripMenuItem1,
             this.to1600x1200ToolStripMenuItem1});
-            this.m_cboRenderResolution.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.Output16x16;
+            this.m_cboRenderResolution.Image = global::WinFormsSampleContainer.Properties.Resources.Output16x16;
             this.m_cboRenderResolution.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cboRenderResolution.Name = "m_cboRenderResolution";
             this.m_cboRenderResolution.Size = new System.Drawing.Size(167, 24);
@@ -270,7 +271,7 @@
             // m_cmdCopy
             // 
             this.m_cmdCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.m_cmdCopy.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.Camera16x16;
+            this.m_cmdCopy.Image = global::WinFormsSampleContainer.Properties.Resources.Camera16x16;
             this.m_cmdCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdCopy.Name = "m_cmdCopy";
             this.m_cmdCopy.Size = new System.Drawing.Size(24, 24);
@@ -281,7 +282,7 @@
             // m_cmdShowPerformance
             // 
             this.m_cmdShowPerformance.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.m_cmdShowPerformance.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.PerformanceMeasure16x16;
+            this.m_cmdShowPerformance.Image = global::WinFormsSampleContainer.Properties.Resources.PerformanceMeasure16x16;
             this.m_cmdShowPerformance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdShowPerformance.Name = "m_cmdShowPerformance";
             this.m_cmdShowPerformance.Size = new System.Drawing.Size(24, 24);
@@ -292,7 +293,7 @@
             // m_cmdShowSource
             // 
             this.m_cmdShowSource.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.m_cmdShowSource.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.PageCSharp16x16;
+            this.m_cmdShowSource.Image = global::WinFormsSampleContainer.Properties.Resources.PageCSharp16x16;
             this.m_cmdShowSource.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdShowSource.Name = "m_cmdShowSource";
             this.m_cmdShowSource.Size = new System.Drawing.Size(24, 24);
@@ -337,7 +338,7 @@
         private System.Windows.Forms.ToolStripButton m_cmdCopy;
         private System.Windows.Forms.ToolStripStatusLabel m_lblCountObjects;
         private System.Windows.Forms.ToolStripStatusLabel m_lblCountObjectsValue;
-        private Multimedia.Views.FrozenSkyRendererControl m_ctrlRenderer;
+        private FrozenSkyRendererControl m_ctrlRenderer;
         private System.Windows.Forms.ImageList m_images;
         private System.Windows.Forms.SplitContainer m_splitter;
         private System.Windows.Forms.ToolStripStatusLabel m_lblWorking;

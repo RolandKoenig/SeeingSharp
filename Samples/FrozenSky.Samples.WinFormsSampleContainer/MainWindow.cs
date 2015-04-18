@@ -35,11 +35,11 @@ using FrozenSky.Samples.Base;
 using FrozenSky.Multimedia.Views;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Infrastructure;
-using FrozenSky.Samples.WinFormsSampleContainer.Views;
+using WinFormsSampleContainer.Views;
 using System.IO;
 using System.Diagnostics;
 
-namespace FrozenSky.Samples.WinFormsSampleContainer
+namespace WinFormsSampleContainer
 {
     public partial class MainWindow : Form
     {

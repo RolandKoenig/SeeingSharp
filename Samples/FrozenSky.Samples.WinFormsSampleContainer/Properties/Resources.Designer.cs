@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace FrozenSky.Samples.WinFormsSampleContainer.Properties {
+namespace WinFormsSampleContainer.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace FrozenSky.Samples.WinFormsSampleContainer.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("WinFormsSampleContainer.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

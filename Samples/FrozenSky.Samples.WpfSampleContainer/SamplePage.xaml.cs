@@ -17,7 +17,7 @@ using PropertyTools.Wpf;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 
-namespace FrozenSky.Samples.WpfSampleContainer
+namespace WpfSampleContainer
 {
     /// <summary>
     /// Interaktionslogik für EmptyPage.xaml
@@ -42,13 +42,6 @@ namespace FrozenSky.Samples.WpfSampleContainer
         /// </summary>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Query for the sample name
-            string sampleName = this.SampleName;
-            if(string.IsNullOrEmpty(sampleName))
-            {
-                return;
-            }
-                
             // Create all cameras and apply default one
             m_cameraOrthogonal = new OrthographicCamera3D();
             m_cameraPerspective = new PerspectiveCamera3D();
@@ -57,7 +50,7 @@ namespace FrozenSky.Samples.WpfSampleContainer
             // Apply the sample
             SampleFactory.Current.ApplySample(
                 m_ctrl3DView2.RenderLoop,
-                sampleName);
+                this.Sample.Name);
         }
 
         private void OnCmdUseOrthogonalCamera_Click(object sender, RoutedEventArgs e)
@@ -82,16 +75,6 @@ namespace FrozenSky.Samples.WpfSampleContainer
             m_ctrl3DView2.Camera = newCamera;
         }
 
-        /// <summary>
-        /// Gets or sets the name of the sample which is to be displayed.
-        /// </summary>
-        /// <value>
-        /// The name of the sample.
-        /// </value>
-        public string SampleName
-        {
-            get;
-            set;
-        }
+        public SampleDescription Sample { get; set; }
     }
 }

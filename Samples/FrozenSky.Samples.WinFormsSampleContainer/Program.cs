@@ -28,7 +28,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace FrozenSky.Samples.WinFormsSampleContainer
+namespace WinFormsSampleContainer
 {
     static class Program
     {

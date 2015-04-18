@@ -7,8 +7,8 @@
     <ProjectGuid>{D79B307C-6E8B-43EE-9A81-BC791546D33B}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>FrozenSky.Samples.WinFormsSampleContainer</RootNamespace>
-    <AssemblyName>FrozenSky.Samples.WinFormsSampleContainer</AssemblyName>
+    <RootNamespace>WinFormsSampleContainer</RootNamespace>
+    <AssemblyName>WinFormsSampleContainer</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <SccProjectName>SAK</SccProjectName>

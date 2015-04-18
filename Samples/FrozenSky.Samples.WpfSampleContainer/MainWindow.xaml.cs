@@ -13,15 +13,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace FrozenSky.Samples.WpfSampleContainer
+namespace WpfSampleContainer
 {
     /// <summary>
     /// Interaktionslogik für MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Dictionary<string, SamplePage> m_loadedSamples;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
@@ -29,12 +27,10 @@ namespace FrozenSky.Samples.WpfSampleContainer
         {
             InitializeComponent();
 
-            m_loadedSamples = new Dictionary<string, SamplePage>();
-
             // Build the menu bar
-            foreach (string actSample in SampleFactory.Current.GetSampleNames())
+            foreach (SampleDescription actSample in SampleFactory.Current.GetSampleInfos())
             {
-                string actSampleInner = actSample;
+                SampleDescription actSampleInner = actSample;
 
                 MenuItem actItem = new MenuItem();
                 actItem.Header = actSample;
@@ -49,18 +45,11 @@ namespace FrozenSky.Samples.WpfSampleContainer
         /// <summary>
         /// Switches the currently displayed sample to the given one.
         /// </summary>
-        /// <param name="sampleName">Name of the sample.</param>
-        private void SwitchSampleTo(string sampleName)
+        /// <param name="sampleDesc">The description of the sample to be switched to</param>
+        private void SwitchSampleTo(SampleDescription sampleDesc)
         {
-            // Get/Create the requested sample page
-            SamplePage samplePage = null;
-            if(!m_loadedSamples.TryGetValue(sampleName, out samplePage))
-            {
-                samplePage = new SamplePage();
-                samplePage.SampleName = sampleName;
-
-                m_loadedSamples.Add(sampleName, samplePage);
-            }
+            SamplePage samplePage = new SamplePage();
+            samplePage.Sample = sampleDesc;
 
             // Attach the sample page to the screen
             if (!this.CurrentSampleContainer.Children.Contains(samplePage))

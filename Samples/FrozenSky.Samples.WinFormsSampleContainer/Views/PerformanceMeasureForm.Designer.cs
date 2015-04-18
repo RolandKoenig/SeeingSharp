@@ -1,4 +1,4 @@
-﻿namespace FrozenSky.Samples.WinFormsSampleContainer.Views
+﻿namespace WinFormsSampleContainer.Views
 {
     partial class PerformanceMeasureForm
     {
@@ -80,7 +80,7 @@
             // m_cmdCopy
             // 
             this.m_cmdCopy.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.m_cmdCopy.Image = global::FrozenSky.Samples.WinFormsSampleContainer.Properties.Resources.Copy16x16;
+            this.m_cmdCopy.Image = global::WinFormsSampleContainer.Properties.Resources.Copy16x16;
             this.m_cmdCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdCopy.Name = "m_cmdCopy";
             this.m_cmdCopy.Size = new System.Drawing.Size(23, 22);

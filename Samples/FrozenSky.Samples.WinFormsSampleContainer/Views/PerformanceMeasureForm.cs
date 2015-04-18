@@ -30,7 +30,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using FrozenSky.Util;
 
-namespace FrozenSky.Samples.WinFormsSampleContainer.Views
+namespace WinFormsSampleContainer.Views
 {
     public partial class PerformanceMeasureForm : Form
     {

@@ -11,7 +11,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace FrozenSky.Samples.WpfSampleContainer
+namespace WpfSampleContainer
 {
     /// <summary>
     /// Interaktionslogik für "App.xaml"

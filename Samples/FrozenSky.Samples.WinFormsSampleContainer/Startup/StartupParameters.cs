@@ -26,7 +26,7 @@ using System.Threading.Tasks;
 using System.Xml.Serialization;
 using FrozenSky.Multimedia.Core;
 
-namespace FrozenSky.Samples.WinFormsSampleContainer.Startup
+namespace WinFormsSampleContainer.Startup
 {
     [XmlType]
     public class StartupParameters
