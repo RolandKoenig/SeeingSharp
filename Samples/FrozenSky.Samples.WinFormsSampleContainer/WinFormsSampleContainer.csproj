@@ -17,7 +17,7 @@
     <SccProvider>SAK</SccProvider>
     <TargetFrameworkProfile />
     <IsWebBootstrapper>true</IsWebBootstrapper>
-    <PublishUrl>ftp://ftp.strato.com/mainpage/files/frozensky.samples/</PublishUrl>
+    <PublishUrl>ftp://ftp.strato.com/mainpage/files/frozensky.samples/winforms/</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Web</InstallFrom>
     <UpdateEnabled>true</UpdateEnabled>
@@ -27,7 +27,7 @@
     <UpdatePeriodically>false</UpdatePeriodically>
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
-    <InstallUrl>http://www.rolandk.de/files/frozensky.samples/</InstallUrl>
+    <InstallUrl>http://www.rolandk.de/files/frozensky.samples/winforms/</InstallUrl>
     <SupportUrl>http://www.rolandk.de</SupportUrl>
     <ErrorReportUrl>http://www.rolandk.de</ErrorReportUrl>
     <TargetCulture>en</TargetCulture>
@@ -37,7 +37,7 @@
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationRevision>1</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
