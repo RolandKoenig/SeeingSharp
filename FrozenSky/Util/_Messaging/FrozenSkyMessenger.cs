@@ -538,7 +538,7 @@ namespace FrozenSky.Util
                 // Check whether publich is possible
                 if(m_checkBehavior == FrozenSkyMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls)
                 {
-                    if(SynchronizationContext.Current != m_syncContext)
+                    if (!CompareSynchronizationContexts())
                     {
                         throw new FrozenSkyException(
                             "Unable to perform a synchronous publish call because current " +
@@ -651,6 +651,25 @@ namespace FrozenSky.Util
                 // Raise the exception to inform caller about it
                 if (doRaise) { throw; }
             }
+        }
+
+        private bool CompareSynchronizationContexts()
+        {
+            if (SynchronizationContext.Current == m_syncContext) { return true; }
+
+            System.Windows.Threading.DispatcherSynchronizationContext left =
+                SynchronizationContext.Current as System.Windows.Threading.DispatcherSynchronizationContext;
+            System.Windows.Threading.DispatcherSynchronizationContext right =
+                m_syncContext as System.Windows.Threading.DispatcherSynchronizationContext;
+            if (left == null) { return false; }
+            if (right == null) { return false; }
+
+            var leftDispatcher = CommonTools.ReadPrivateMember<System.Windows.Threading.Dispatcher, System.Windows.Threading.DispatcherSynchronizationContext>(
+                left, "_dispatcher");
+            var rightDispatcher = CommonTools.ReadPrivateMember<System.Windows.Threading.Dispatcher, System.Windows.Threading.DispatcherSynchronizationContext>(
+                right, "_dispatcher");
+
+            return leftDispatcher == rightDispatcher;
         }
 
         /// <summary>

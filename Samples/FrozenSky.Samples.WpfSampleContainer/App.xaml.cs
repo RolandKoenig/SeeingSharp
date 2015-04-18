@@ -30,6 +30,7 @@ namespace WpfSampleContainer
                     typeof(SampleBase).Assembly
                 },
                 new string[0]).Wait();
+            FrozenSkyApplication.Current.InitializeUIEnvironment();
             GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
         }
 

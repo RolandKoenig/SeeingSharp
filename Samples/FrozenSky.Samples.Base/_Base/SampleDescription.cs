@@ -29,19 +29,25 @@ namespace FrozenSky.Samples.Base
 {
     public class SampleDescription
     {
+        #region data sources
         private SampleInfoAttribute m_attrib;
+        private Type m_sampleClass;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SampleDescription"/> class.
         /// </summary>
         /// <param name="attrib">The attribute.</param>
-        public SampleDescription(SampleInfoAttribute attrib)
+        /// <param name="sampleClass">The class behind the sample.</param>
+        public SampleDescription(SampleInfoAttribute attrib, Type sampleClass)
         {
             attrib.EnsureNotNull("attrib");
             attrib.Category.EnsureNotNullOrEmpty("attrib.Category");
             attrib.Name.EnsureNotNullOrEmpty("attrib.Name");
+            sampleClass.EnsureNotNull("sampleType");
 
-            m_attrib = attrib;        
+            m_attrib = attrib;
+            m_sampleClass = sampleClass;
         }
 
         public override string ToString()
@@ -67,6 +73,11 @@ namespace FrozenSky.Samples.Base
         public string CodeUrl
         {
             get { return m_attrib.CodeUrl; }
+        }
+
+        public Type SampleClass
+        {
+            get { return m_sampleClass; }
         }
 
         public ResourceLink ImageLink

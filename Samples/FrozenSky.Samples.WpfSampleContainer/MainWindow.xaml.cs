@@ -27,36 +27,19 @@ namespace WpfSampleContainer
         {
             InitializeComponent();
 
-            // Build the menu bar
-            foreach (SampleDescription actSample in SampleFactory.Current.GetSampleInfos())
-            {
-                SampleDescription actSampleInner = actSample;
+            //// Build the menu bar
+            //foreach (SampleDescription actSample in SampleFactory.Current.GetSampleInfos())
+            //{
+            //    SampleDescription actSampleInner = actSample;
 
-                MenuItem actItem = new MenuItem();
-                actItem.Header = actSample;
-                actItem.Click += (sender, eArgs) =>
-                {
-                    SwitchSampleTo(actSampleInner);
-                };
-                this.MainMenuBar.Items.Add(actItem);
-            }
-        }
-
-        /// <summary>
-        /// Switches the currently displayed sample to the given one.
-        /// </summary>
-        /// <param name="sampleDesc">The description of the sample to be switched to</param>
-        private void SwitchSampleTo(SampleDescription sampleDesc)
-        {
-            SamplePage samplePage = new SamplePage();
-            samplePage.Sample = sampleDesc;
-
-            // Attach the sample page to the screen
-            if (!this.CurrentSampleContainer.Children.Contains(samplePage))
-            {
-                this.CurrentSampleContainer.Children.Clear();
-                this.CurrentSampleContainer.Children.Add(samplePage);
-            }
+            //    MenuItem actItem = new MenuItem();
+            //    actItem.Header = actSample;
+            //    actItem.Click += (sender, eArgs) =>
+            //    {
+            //        SwitchSampleTo(actSampleInner);
+            //    };
+            //    this.MainMenuBar.Items.Add(actItem);
+            //}
         }
     }
 }

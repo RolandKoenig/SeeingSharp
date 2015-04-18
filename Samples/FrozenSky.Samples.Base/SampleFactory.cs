@@ -58,7 +58,7 @@ namespace FrozenSky.Samples.Base
                 if (actInfoAttrib == null) { continue; }
 
                 m_sampleTypes.Add(Tuple.Create(
-                    new SampleDescription(actInfoAttrib),
+                    new SampleDescription(actInfoAttrib, actSampleType),
                     actSampleType));
             }
             m_sampleTypes.Sort(new Comparison<Tuple<SampleDescription, Type>>(
@@ -108,20 +108,18 @@ namespace FrozenSky.Samples.Base
         }
 
         /// <summary>
-        /// Applies the sample with the given name to the given RenderLoop.
+        /// Applies the given sample to the given RenderLoop.
         /// </summary>
         /// <param name="renderLoop">The render loop.</param>
-        /// <param name="sampleName">Name of the sample.</param>
-        public void ApplySample(RenderLoop renderLoop, string sampleName)
+        /// <param name="sampleDesc">The sample to be applied.</param>
+        public SampleBase ApplySample(RenderLoop renderLoop, SampleDescription sampleDesc)
         {
-            var sampleType = m_sampleTypes
-                .Where((actSampleType) => actSampleType.Item1.Name == sampleName)
-                .Select((actTuple) => actTuple.Item2)
-                .FirstOrDefault();
-            if (sampleType == null) { throw new FrozenSkyException(string.Format("Unable to find sample {0}!", sampleName)); }
+            renderLoop.EnsureNotNull("renderLoop");
+            sampleDesc.EnsureNotNull("sampleDesc");
 
-            SampleBase sample = Activator.CreateInstance(sampleType) as SampleBase;
+            SampleBase sample = Activator.CreateInstance(sampleDesc.SampleClass) as SampleBase;
             sample.OnStartupAsync(renderLoop);
+            return sample;
         }
 
         public static SampleFactory Current
