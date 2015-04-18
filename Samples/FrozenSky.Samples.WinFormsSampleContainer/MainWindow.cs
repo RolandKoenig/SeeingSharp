@@ -350,5 +350,10 @@ namespace WinFormsSampleContainer
 
             Process.Start(m_actSampleInfo.CodeUrl);
         }
+
+        private void OnCmdHelp_Click(object sender, EventArgs e)
+        {
+            Process.Start("https://github.com/RolandKoenig/FrozenSky");
+        }
     }
 }
