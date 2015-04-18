@@ -25,9 +25,29 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base
 {
+    /// <summary>
+    /// Some constants parameters for the sample collection
+    /// located in this assembly.
+    /// </summary>
     internal static class Constants
     {
+        #region Group parameters
         public const string SAMPLEGROUP_BASIC = "Basics";
         public const string SAMPLEGROUP_MF = "Media Foundation";
+        #endregion
+
+        #region parameters for Basic samples
+        public const int SAMPLE_BASICS_ROTATINGPALLET_ORDER = 1;
+        public const int SAMPLE_BASICS_SKYBOX_ORDER = 2;
+        public const int SAMPLE_BASCIS_SINGLEMODEL_ORDER = 3;
+        public const int SAMPLE_BASICS_ASYNCANIM_ORDER = 4;
+        public const int SAMPLE_BASICS_TRANSPARENTPALLETS_ORDER = 5;
+        public const int SAMPLE_BASICS_PALLETS_ORDER = 6;
+        #endregion
+
+        #region parameters for Media Foundation samples
+        public const int SAMPLE_MF_VIDEOTEXTURE_ORDER = 100;
+        #endregion
+
     }
 }

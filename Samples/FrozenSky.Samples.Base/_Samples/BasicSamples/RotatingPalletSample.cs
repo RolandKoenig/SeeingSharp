@@ -35,7 +35,10 @@ using FrozenSky.Infrastructure;
 
 namespace FrozenSky.Samples.Base.BasicSamples
 {
-    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "RotatingPallet")]
+    [SampleInfo(
+        Constants.SAMPLEGROUP_BASIC, "RotatingPallet",
+        Constants.SAMPLE_BASICS_ROTATINGPALLET_ORDER,
+        "https://github.com/RolandKoenig/FrozenSky/blob/master/Samples/FrozenSky.Samples.Base/_Samples/BasicSamples/RotatingPalletSample.cs")]
     public class RotatingPalletSample : SampleBase
     {
         /// <summary>

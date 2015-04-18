@@ -36,7 +36,10 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base.BasicSamples
 {
-    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "SkyboxRendering")]
+    [SampleInfo(
+        Constants.SAMPLEGROUP_BASIC, "SkyboxRendering",
+        Constants.SAMPLE_BASICS_SKYBOX_ORDER,
+        "https://github.com/RolandKoenig/FrozenSky/blob/master/Samples/FrozenSky.Samples.Base/_Samples/BasicSamples/SkyboxRenderingSample.cs")]
     public class SkyboxRenderingSample : SampleBase
     {
         /// <summary>

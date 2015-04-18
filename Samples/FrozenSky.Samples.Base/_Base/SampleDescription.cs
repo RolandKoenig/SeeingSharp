@@ -54,6 +54,16 @@ namespace FrozenSky.Samples.Base
             get { return m_attrib.Name; }
         }
 
+        public int OrderID
+        {
+            get { return m_attrib.OrderID; }
+        }
+
+        public string CodeUrl
+        {
+            get { return m_attrib.CodeUrl; }
+        }
+
         public ResourceLink ImageLink
         {
             get

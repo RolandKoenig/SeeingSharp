@@ -30,6 +30,10 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base
 {
+    /// <summary>
+    /// This singleton class holds all information of available 
+    /// samples and can instanciate them.
+    /// </summary>
     public class SampleFactory
     {
         private static SampleFactory s_current;
@@ -47,8 +51,8 @@ namespace FrozenSky.Samples.Base
 
             // Query for all sample types
             m_sampleTypes = new List<Tuple<SampleDescription, Type>>();
-            foreach(Type actSampleType in FrozenSkyApplication.Current.TypeQuery
-                .GetTypesByContract(typeof(SampleBase)))
+            foreach (Type actSampleType in FrozenSkyApplication.Current.TypeQuery
+                .GetTypesByContract(typeof(SampleBase))) 
             {
                 SampleInfoAttribute actInfoAttrib = actSampleType.GetTypeInfo().GetCustomAttribute<SampleInfoAttribute>();
                 if (actInfoAttrib == null) { continue; }
@@ -57,6 +61,8 @@ namespace FrozenSky.Samples.Base
                     new SampleDescription(actInfoAttrib),
                     actSampleType));
             }
+            m_sampleTypes.Sort(new Comparison<Tuple<SampleDescription, Type>>(
+                (left, right) => left.Item1.OrderID.CompareTo(right.Item1.OrderID)));
         }
 
         /// <summary>

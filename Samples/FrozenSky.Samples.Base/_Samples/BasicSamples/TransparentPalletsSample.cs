@@ -36,7 +36,10 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base.BasicSamples
 {
-    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "TransparentPallets")]
+    [SampleInfo(
+        Constants.SAMPLEGROUP_BASIC, "TransparentPallets",
+        Constants.SAMPLE_BASICS_TRANSPARENTPALLETS_ORDER,
+        "https://github.com/RolandKoenig/FrozenSky/blob/master/Samples/FrozenSky.Samples.Base/_Samples/BasicSamples/TransparentPalletsSample.cs")]
     public class TransparentPalletsSample : SampleBase
     {
         /// <summary>

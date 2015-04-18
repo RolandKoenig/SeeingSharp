@@ -36,7 +36,10 @@ using FrozenSky.Util;
 
 namespace FrozenSky.Samples.Base.MFSamples
 {
-    [SampleInfo(Constants.SAMPLEGROUP_MF, "VideoTexture")]
+    [SampleInfo(
+        Constants.SAMPLEGROUP_MF, "VideoTexture",
+        Constants.SAMPLE_MF_VIDEOTEXTURE_ORDER,
+        "https://github.com/RolandKoenig/FrozenSky/blob/master/Samples/FrozenSky.Samples.Base/_Samples/MFSamples/VideoTextureSample.cs")]
     public class VideoTextureSample : SampleBase
     {
         /// <summary>

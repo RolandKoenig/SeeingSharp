@@ -36,7 +36,10 @@ using FrozenSky.Infrastructure;
 
 namespace FrozenSky.Samples.Base.BasicSamples
 {
-    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "AsyncAnimation")]
+    [SampleInfo(
+        Constants.SAMPLEGROUP_BASIC, "AsyncAnimation", 
+        Constants.SAMPLE_BASICS_ASYNCANIM_ORDER,
+        "https://github.com/RolandKoenig/FrozenSky/blob/master/Samples/FrozenSky.Samples.Base/_Samples/BasicSamples/AsyncAnimationSample.cs")]
     public class AsyncAnimationPalletSample : SampleBase
     {
         private RenderLoop m_renderLoop;

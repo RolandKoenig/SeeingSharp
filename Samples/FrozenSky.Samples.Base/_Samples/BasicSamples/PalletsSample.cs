@@ -36,7 +36,10 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base.BasicSamples
 {
-    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "Pallets")]
+    [SampleInfo(
+        Constants.SAMPLEGROUP_BASIC, "Pallets",
+        Constants.SAMPLE_BASICS_PALLETS_ORDER,
+        "https://github.com/RolandKoenig/FrozenSky/blob/master/Samples/FrozenSky.Samples.Base/_Samples/BasicSamples/PalletsSample.cs")]
     public class PalletsSample : SampleBase
     {
         private const int SIDE_LENGTH = 20;

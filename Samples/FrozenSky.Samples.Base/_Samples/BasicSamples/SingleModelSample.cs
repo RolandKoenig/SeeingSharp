@@ -36,7 +36,10 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Samples.Base.BasicSamples
 {
-    [SampleInfo(Constants.SAMPLEGROUP_BASIC, "SingleModel")]
+    [SampleInfo(
+        Constants.SAMPLEGROUP_BASIC, "SingleModel",
+        Constants.SAMPLE_BASCIS_SINGLEMODEL_ORDER,
+        "https://github.com/RolandKoenig/FrozenSky/blob/master/Samples/FrozenSky.Samples.Base/_Samples/BasicSamples/SingleModelSample.cs")]
     public class SingleModelSample : SampleBase
     {
         /// <summary>

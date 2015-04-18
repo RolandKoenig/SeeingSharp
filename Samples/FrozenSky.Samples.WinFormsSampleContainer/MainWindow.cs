@@ -37,6 +37,7 @@ using FrozenSky.Multimedia.Core;
 using FrozenSky.Infrastructure;
 using FrozenSky.Samples.WinFormsSampleContainer.Views;
 using System.IO;
+using System.Diagnostics;
 
 namespace FrozenSky.Samples.WinFormsSampleContainer
 {
@@ -319,6 +320,13 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             {
                 Clipboard.SetImage(rescaledScreenshot);
             }
+        }
+
+        private void OnCmdShowSource_Click(object sender, EventArgs e)
+        {
+            if (m_actSampleInfo == null) { return; }
+
+            Process.Start(m_actSampleInfo.CodeUrl);
         }
     }
 }

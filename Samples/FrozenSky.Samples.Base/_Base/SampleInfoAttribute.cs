@@ -28,10 +28,12 @@ namespace FrozenSky.Samples.Base
     [AttributeUsage(AttributeTargets.Class)]
     public class SampleInfoAttribute : Attribute
     {
-        public SampleInfoAttribute(string category, string name)
+        public SampleInfoAttribute(string category, string name, int orderID, string codeUrl)
         {
             this.Category = category;
             this.Name = name;
+            this.OrderID = orderID;
+            this.CodeUrl = codeUrl;
         }
 
         public string Category
@@ -41,6 +43,18 @@ namespace FrozenSky.Samples.Base
         }
 
         public string Name
+        {
+            get;
+            private set;
+        }
+
+        public int OrderID
+        {
+            get;
+            private set;
+        }
+
+        public string CodeUrl
         {
             get;
             private set;
