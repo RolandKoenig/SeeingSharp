@@ -71,8 +71,8 @@ namespace FrozenSky.Samples.Base
                 return new AssemblyResourceUriBuilder(
                     "FrozenSky.Samples.Base", false,
                     string.Format(
-                        "Assets/SampleImages/{0}_{1}.png", 
-                        this.Category.Replace(' ', '_'), 
+                        "Assets/SampleImages/{0}_{1}.png",
+                        this.Category.Replace(' ', '_'),
                         this.Name.Replace(' ', '_')));
             }
         }

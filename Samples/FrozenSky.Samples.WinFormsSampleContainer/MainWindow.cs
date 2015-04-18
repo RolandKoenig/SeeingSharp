@@ -45,6 +45,7 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
     {
         private SceneViewboxObjectFilter m_viewboxfilter;
 
+        private List<ListView> m_generatedListViews;
         private bool m_isChangingSample;
         private SampleDescription m_actSampleInfo;
         private SampleBase m_actSample;
@@ -55,6 +56,8 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
         public MainWindow()
         {
             InitializeComponent();
+
+            m_generatedListViews = new List<ListView>();
         }
 
         /// <summary>
@@ -118,6 +121,10 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
                     m_actSample = sampleObject;
                     m_actSampleInfo = sampleInfo;
                 }
+
+                // Wait for next finished rendering
+                await m_ctrlRenderer.RenderLoop.WaitForNextFinishedRenderAsync();
+                await m_ctrlRenderer.RenderLoop.WaitForNextFinishedRenderAsync();
             }
             finally
             {
@@ -200,13 +207,12 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
 
                 // Load the item's image
                 using (Stream inStream = actSampleInfo.ImageLink.OpenInputStream())
-                using (Image imgOriginal = Image.FromStream(inStream))
                 {
-                    Bitmap sizedBitmap = new Bitmap(imgOriginal, m_images.ImageSize);
-                    m_images.Images.Add(sizedBitmap);
+                    m_images.Images.Add(Image.FromStream(inStream));
                     newListItem.ImageIndex = m_images.Images.Count - 1;
                 }
             }
+            m_generatedListViews.AddRange(generatedTabs.Values);
 
             // Create main object filter initially
             m_viewboxfilter = new SceneViewboxObjectFilter();
@@ -247,6 +253,14 @@ namespace FrozenSky.Samples.WinFormsSampleContainer
             SampleDescription sampleInfo = e.Item.Tag as SampleDescription;
             sampleInfo.EnsureNotNull("sampleInfo");
 
+            // Clear selection on other ListViews
+            foreach (ListView actOtherListView in m_generatedListViews)
+            {
+                if (actOtherListView == actListView) { continue; }
+                actOtherListView.SelectedItems.Clear();
+            }
+
+            // Now apply the sample
             this.ApplySample(sampleInfo);
         }
 

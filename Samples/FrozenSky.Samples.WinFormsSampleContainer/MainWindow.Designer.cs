@@ -100,7 +100,7 @@
             // 
             // m_images
             // 
-            this.m_images.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.m_images.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit;
             this.m_images.ImageSize = new System.Drawing.Size(64, 64);
             this.m_images.TransparentColor = System.Drawing.Color.Transparent;
             // 
