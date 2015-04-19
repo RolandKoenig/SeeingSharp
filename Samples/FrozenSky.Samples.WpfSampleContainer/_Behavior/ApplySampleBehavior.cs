@@ -26,14 +26,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Interactivity;
 
 namespace WpfSampleContainer
 {
     public class ApplySampleBehavior : Behavior<FrozenSkyRendererElement>
     {
+        public static readonly DependencyProperty BottomStatusBarProperty =
+            DependencyProperty.Register("BottomStatusBar", typeof(FrameworkElement), typeof(ApplySampleBehavior), new PropertyMetadata(null));
+        public static readonly DependencyProperty MainContentGridProperty =
+            DependencyProperty.Register("MainContentGrid", typeof(FrameworkElement), typeof(ApplySampleBehavior), new PropertyMetadata(null));
+
         private IEnumerable<MessageSubscription> m_subscriptions;
         private SampleBase m_appliedSample;
+        private bool m_isChangingSample;
 
         protected override void OnAttached()
         {
@@ -56,27 +63,58 @@ namespace WpfSampleContainer
         {
             FrozenSkyRendererElement renderElement = base.AssociatedObject;
             if(renderElement == null){ return; }
+            if (m_isChangingSample) { return; }
 
-            if (message.NewSample != null)
+            m_isChangingSample = true;
+            try
             {
-                // Sets closed state on currently applied sample
-                if(m_appliedSample != null)
+                if (MainContentGrid != null) { MainContentGrid.IsEnabled = false; }
+                if (BottomStatusBar != null) { BottomStatusBar.Visibility = Visibility.Visible; }
+
+                if (message.NewSample != null)
                 {
-                    m_appliedSample.SetClosed();
-                    m_appliedSample = null;
-                }
-
-                // Clear previous scene first
-                await renderElement.RenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
+                    // Sets closed state on currently applied sample
+                    if (m_appliedSample != null)
                     {
-                        manipulator.Clear(true);
-                    });
+                        m_appliedSample.SetClosed();
+                        m_appliedSample = null;
+                    }
 
-                // Apply new scene
-                m_appliedSample = SampleFactory.Current.ApplySample(
-                    renderElement.RenderLoop,
-                    message.NewSample.SampleDescription);
+                    // Clear previous scene first
+                    await renderElement.RenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
+                        {
+                            manipulator.Clear(true);
+                        });
+
+                    // Apply new scene
+                    m_appliedSample = SampleFactory.Current.ApplySample(
+                        renderElement.RenderLoop,
+                        message.NewSample.SampleDescription);
+
+                    // Ensure that we see all objects of the newly loaded sample
+                    await renderElement.RenderLoop.WaitForNextFinishedRenderAsync();
+                    await renderElement.RenderLoop.WaitForNextFinishedRenderAsync();
+                }
             }
+            finally
+            {
+                m_isChangingSample = false;
+                if (MainContentGrid != null) { MainContentGrid.IsEnabled = true; }
+                if (BottomStatusBar != null) { BottomStatusBar.Visibility = Visibility.Collapsed; }
+            }
+        }
+
+        public FrameworkElement MainContentGrid
+        {
+            get { return (FrameworkElement)GetValue(MainContentGridProperty); }
+            set { SetValue(MainContentGridProperty, value); }
+        }
+
+
+        public FrameworkElement BottomStatusBar
+        {
+            get { return (FrameworkElement)GetValue(BottomStatusBarProperty); }
+            set { SetValue(BottomStatusBarProperty, value); }
         }
     }
 }

@@ -26,20 +26,6 @@ namespace WpfSampleContainer
         public MainWindow()
         {
             InitializeComponent();
-
-            //// Build the menu bar
-            //foreach (SampleDescription actSample in SampleFactory.Current.GetSampleInfos())
-            //{
-            //    SampleDescription actSampleInner = actSample;
-
-            //    MenuItem actItem = new MenuItem();
-            //    actItem.Header = actSample;
-            //    actItem.Click += (sender, eArgs) =>
-            //    {
-            //        SwitchSampleTo(actSampleInner);
-            //    };
-            //    this.MainMenuBar.Items.Add(actItem);
-            //}
         }
     }
 }

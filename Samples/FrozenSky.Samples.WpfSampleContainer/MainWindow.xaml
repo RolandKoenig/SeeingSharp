@@ -29,17 +29,26 @@
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
-        
-        
-        <Grid>
+
+        <Grid Name="MainContentGrid">
             <!-- Define 3D view-->
             <frozensky:FrozenSkyRendererElement>
                 <blend:Interaction.Behaviors>
-                    <local:ApplySampleBehavior />
+                    <local:ApplySampleBehavior BottomStatusBar="{Binding ElementName=BottomStatusBar}" 
+                                               MainContentGrid="{Binding ElementName=MainContentGrid}"/>
                 </blend:Interaction.Behaviors>
             </frozensky:FrozenSkyRendererElement>
-            
-            
+
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
+                    Orientation="Horizontal"
+                    Background="#00CCFF" Visibility="Collapsed"
+                    Name="BottomStatusBar">
+                <TextBlock Text="Loading..."
+                       Margin="3"/>
+                <ProgressBar Width="200" IsIndeterminate="True"
+                         Margin="3"/>
+            </StackPanel>
+
             <!-- Define listbox containing all samples within the currently selected category -->
             <ListBox VerticalAlignment="Top" HorizontalAlignment="Stretch"
                  Background="#BBD3D3D3" Foreground="Black" BorderThickness="0"
