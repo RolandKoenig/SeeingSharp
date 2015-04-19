@@ -24,6 +24,7 @@ using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,6 +68,15 @@ namespace WpfSampleContainer
             {
                 Handle_SelectedCategoryChanged(m_selectedCategory);
             }
+
+            // Initialize commands
+            this.CommandShowSource = new DelegateCommand(() =>
+            {
+                if(m_selectedSample != null)
+                {
+                    Process.Start(m_selectedSample.SampleDescription.CodeUrl);
+                }
+            });
         }
 
         /// <summary>
@@ -121,6 +131,12 @@ namespace WpfSampleContainer
                     Handle_SelectedCategoryChanged(m_selectedCategory);
                 }
             }
+        }
+
+        public DelegateCommand CommandShowSource
+        {
+            get;
+            private set;
         }
     }
 }

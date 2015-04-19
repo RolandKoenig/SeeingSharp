@@ -50,29 +50,43 @@
             </StackPanel>
 
             <!-- Define listbox containing all samples within the currently selected category -->
-            <ListBox VerticalAlignment="Top" HorizontalAlignment="Stretch"
+            <StackPanel Orientation="Vertical"
+                        VerticalAlignment="Top" HorizontalAlignment="Stretch">
+                <ListBox 
                  Background="#BBD3D3D3" Foreground="Black" BorderThickness="0"
                  ItemsSource="{Binding Path=VisibleSamples}"
                  SelectedItem="{Binding Path=SelectedSample, Mode=TwoWay}">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical"
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical"
                                 Margin="5" Cursor="Hand">
-                            <Image Source="{Binding Path=Bitmap}"
+                                <Image Source="{Binding Path=Bitmap}"
                                Width="64" Height="64" 
                                RenderOptions.BitmapScalingMode="Fant"
                                Margin="5"/>
-                            <TextBlock Text="{Binding Path=Name}"
+                                <TextBlock Text="{Binding Path=Name}"
                                    HorizontalAlignment="Center"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <StackPanel Orientation="Vertical" Margin="5"
+                            VerticalAlignment="Top" HorizontalAlignment="Left">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Width" Value="100" />
+                        </Style>
+                    </StackPanel.Resources>
+                    
+                    <Button Content="Show Source" Command="{Binding Path=CommandShowSource}" />
+                </StackPanel>
+            </StackPanel>
         </Grid>
     </DockPanel>
 </Window>
