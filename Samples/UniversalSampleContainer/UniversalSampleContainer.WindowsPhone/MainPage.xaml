@@ -8,6 +8,10 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
+    <Page.DataContext>
+        <local:MainWindowViewModel />
+    </Page.DataContext>
+    
     <Grid>
 
     </Grid>

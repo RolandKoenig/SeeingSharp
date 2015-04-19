@@ -15,6 +15,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)MainWindowViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Behavior\ApplySampleBehavior.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Messages\MessageSampleChanged.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_ViewModel\SampleViewModel.cs" />
   </ItemGroup>
 </Project>

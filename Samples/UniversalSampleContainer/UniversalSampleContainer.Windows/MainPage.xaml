@@ -4,10 +4,84 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:UniversalSampleContainer"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.DataContext>
+        <local:MainWindowViewModel />
+    </Page.DataContext>
+    
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <!-- Define the page's header -->
+        <Grid Height="140"
+              HorizontalAlignment="Stretch" VerticalAlignment="Top"
+              Background="#00CCFF">
+            <TextBlock HorizontalAlignment="Left"
+                       VerticalAlignment="Top"
+                       Margin="120,60,0,0"
+                       Style="{StaticResource HeaderTextBlockStyle}"
+                       Text="FrozenSky WinRT Samples" />
+        </Grid>
+        
+        <!-- Define the main drawing error for FrozenSky -->
+        <SwapChainPanel Margin="0,140,0,0">
+            <i:Interaction.Behaviors>
+                <local:ApplySampleBehavior />
+            </i:Interaction.Behaviors>
+        </SwapChainPanel>
+
+
+        <!-- Define listbox which shows all categories -->
+        <StackPanel Orientation="Vertical"
+                    Margin="120,140,0,0"
+                    VerticalAlignment="Top" HorizontalAlignment="Stretch" >
+            
+            <!-- Show and select categories -->
+            <ListBox 
+                 Style="{StaticResource SampleListBoxStyle}"
+                 FontWeight="Bold" BorderThickness="0"
+                 Background="#CC7D7E82" Foreground="White"
+                 ItemsSource="{Binding Path=Categories}"
+                 SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay}">
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="5,2,5,2" />
+                    </Style>
+                </ListBox.Resources>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+            
+            <!-- Show and select samples -->
+            <ListBox 
+                 Style="{StaticResource SampleListBoxStyle}" 
+                 Background="#99D3D3D3" Foreground="Black" BorderThickness="0"
+                 ItemsSource="{Binding Path=VisibleSamples}"
+                 SelectedItem="{Binding Path=SelectedSample, Mode=TwoWay}">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical"
+                                Margin="5">
+                            <Image Source="{Binding Path=Bitmap}"
+                               Width="64" Height="64" 
+                               Margin="5"/>
+                            <TextBlock Text="{Binding Path=Name}"
+                                   HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </StackPanel>
 
     </Grid>
 </Page>

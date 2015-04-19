@@ -64,7 +64,14 @@ namespace FrozenSky.Util
         public Uri GetUri()
         {
 #if UNIVERSAL
-            return new Uri(string.Format("ms-appx:///{0}", m_filePath));
+            if(m_isMainAssembly)
+            {
+                return new Uri(string.Format("ms-appx:///{0}", m_filePath));
+            }
+            else
+            {
+                return new Uri(string.Format("ms-appx:///{0}/{1}", m_assemblyName, m_filePath));
+            }
 #elif DESKTOP
             return new Uri(string.Format("/{0};component/{1}", m_assemblyName, m_filePath), UriKind.Relative);
 #else 

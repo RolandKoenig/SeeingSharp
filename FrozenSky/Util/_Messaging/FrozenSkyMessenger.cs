@@ -653,8 +653,12 @@ namespace FrozenSky.Util
             }
         }
 
+        /// <summary>
+        /// Compares the SynchronizationContext of the current thread and of this messenger instance.
+        /// </summary>
         private bool CompareSynchronizationContexts()
         {
+#if DESKTOP
             if (SynchronizationContext.Current == m_syncContext) { return true; }
 
             System.Windows.Threading.DispatcherSynchronizationContext left =
@@ -670,6 +674,9 @@ namespace FrozenSky.Util
                 right, "_dispatcher");
 
             return leftDispatcher == rightDispatcher;
+#else
+            return SynchronizationContext.Current == m_syncContext;
+#endif
         }
 
         /// <summary>

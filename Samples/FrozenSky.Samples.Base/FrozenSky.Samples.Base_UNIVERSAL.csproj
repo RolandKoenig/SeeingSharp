@@ -58,25 +58,25 @@
     <Compile Include="_Samples\MFSamples\VideoTextureSample.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\SampleImages\Basics_AsyncAnimation.png" />
-    <Resource Include="Assets\SampleImages\Basics_Pallets.png" />
-    <Resource Include="Assets\SampleImages\Basics_RotatingPallet.png" />
-    <Resource Include="Assets\SampleImages\Basics_SingleModel.png" />
-    <Resource Include="Assets\SampleImages\Basics_SkyboxRendering.png" />
-    <Resource Include="Assets\SampleImages\Basics_TransparentPallets.png" />
-    <Resource Include="Assets\SampleImages\Media_Foundation_VideoTexture.png" />
-    <Resource Include="Assets\Textures\Background.dds" />
-    <Resource Include="Assets\Textures\Background.png" />
-    <Resource Include="Assets\Textures\Floor.dds" />
-    <Resource Include="Assets\Textures\Floor.png" />
-    <Resource Include="Assets\Textures\LogoTexture.png" />
-    <Resource Include="Assets\Textures\SkyBox.dds" />
-    <Resource Include="Assets\Textures\Tile1.png" />
-    <Resource Include="Assets\Textures\Tile2.png" />
-    <Resource Include="Assets\Textures\Tile3.png" />
-    <Resource Include="Assets\Textures\Wall.png" />
-    <Resource Include="Assets\Textures\White.png" />
-    <Resource Include="Assets\Videos\DummyVideo.mp4" />
+    <Content Include="Assets\SampleImages\Basics_AsyncAnimation.png" />
+    <Content Include="Assets\SampleImages\Basics_Pallets.png" />
+    <Content Include="Assets\SampleImages\Basics_RotatingPallet.png" />
+    <Content Include="Assets\SampleImages\Basics_SingleModel.png" />
+    <Content Include="Assets\SampleImages\Basics_SkyboxRendering.png" />
+    <Content Include="Assets\SampleImages\Basics_TransparentPallets.png" />
+    <Content Include="Assets\SampleImages\Media_Foundation_VideoTexture.png" />
+    <Content Include="Assets\Textures\Background.dds" />
+    <Content Include="Assets\Textures\Background.png" />
+    <Content Include="Assets\Textures\Floor.dds" />
+    <Content Include="Assets\Textures\Floor.png" />
+    <Content Include="Assets\Textures\LogoTexture.png" />
+    <Content Include="Assets\Textures\SkyBox.dds" />
+    <Content Include="Assets\Textures\Tile1.png" />
+    <Content Include="Assets\Textures\Tile2.png" />
+    <Content Include="Assets\Textures\Tile3.png" />
+    <Content Include="Assets\Textures\Wall.png" />
+    <Content Include="Assets\Textures\White.png" />
+    <Content Include="Assets\Videos\DummyVideo.mp4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\FrozenSky.Multimedia\FrozenSky.Multimedia_UNIVERSAL.csproj">
@@ -89,16 +89,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Models\Banana.ac" />
+    <Content Include="Assets\Models\Banana.ac" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Models\CartoonHead.ac" />
+    <Content Include="Assets\Models\CartoonHead.ac" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Models\Forklift.ac" />
+    <Content Include="Assets\Models\Forklift.ac" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Models\Penguin.ac" />
+    <Content Include="Assets\Models\Penguin.ac" />
   </ItemGroup>
   <ItemGroup>
     <TargetPlatform Include="Windows, Version=8.1" />

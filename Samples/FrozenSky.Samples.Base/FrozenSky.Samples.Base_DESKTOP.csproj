@@ -86,7 +86,7 @@
     <Resource Include="Assets\Models\Penguin.ac" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Assets\Textures\Background.png" />
+    <Content Include="Assets\Textures\Background.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Textures\Floor.png" />
