@@ -28,7 +28,7 @@
         <!-- Define the main drawing error for FrozenSky -->
         <SwapChainPanel Margin="0,140,0,0">
             <i:Interaction.Behaviors>
-                <local:ApplySampleBehavior />
+                <local:ApplySampleBehavior ClearColor="LightGray" />
             </i:Interaction.Behaviors>
         </SwapChainPanel>
 

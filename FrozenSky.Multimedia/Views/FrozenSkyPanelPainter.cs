@@ -46,23 +46,26 @@ namespace FrozenSky.Multimedia.Views
         private double MIN_PIXEL_SIZE_WIDTH = 100.0;
         private double MIN_PIXEL_SIZE_HEIGHT = 100.0;
 
-        // Global members
+        #region Global members
         private RenderLoop m_renderLoop;
         private bool m_detachOnUnload;
+        #endregion
 
-        // SwapChainBackgroundPanel local members
+        #region SwapChainBackgroundPanel local members
         private SwapChainPanelWrapper m_targetPanel;
         private float m_currentDpi;
         private Size m_lastRefreshTargetSize;
         private IDisposable m_observerSizeChanged;
+        #endregion
 
-        //Resources from Direct3D 11
+        #region Resources from Direct3D 11
         private DXGI.SwapChain1 m_swapChain;
         private D3D11.Texture2D m_backBuffer;
         private D3D11.Texture2D m_backBufferMultisampled;
         private D3D11.Texture2D m_depthBuffer;
         private D3D11.RenderTargetView m_renderTargetView;
         private D3D11.DepthStencilView m_renderTargetDepth;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FrozenSkyPanelPainter" /> class.
@@ -475,6 +478,22 @@ namespace FrozenSky.Multimedia.Views
             get
             {
                 return (int)(m_targetPanel.RenderSize.Height * m_currentDpi / 96.0);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the clear color for the 3D view.
+        /// </summary>
+        public Windows.UI.Color ClearColor
+        {
+            get
+            {
+                return m_renderLoop.ClearColor.ToWindowsColor();
+            }
+            set
+            {
+                m_renderLoop.ClearColor = new Color4(
+                    value.R, value.G, value.B, value.A);
             }
         }
 

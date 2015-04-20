@@ -29,6 +29,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -150,6 +151,12 @@ namespace UniversalSampleContainer
         public DependencyObject AssociatedObject
         {
             get { return m_associatedObject; }
+        }
+
+        public Color ClearColor
+        {
+            get { return m_painter.ClearColor; }
+            set { m_painter.ClearColor = value; }
         }
     }
 }

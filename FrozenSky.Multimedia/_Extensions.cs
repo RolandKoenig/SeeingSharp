@@ -28,6 +28,19 @@ namespace FrozenSky.Multimedia
 {
     internal static class Extensions
     {
+#if UNIVERSAL
+        internal static Windows.UI.Color ToWindowsColor(this Color4 color)
+        {
+            return new Windows.UI.Color()
+            {
+                A = (byte)(color.Alpha * 255),
+                R = (byte)(color.Red * 255),
+                G = (byte)(color.Green * 255),
+                B = (byte)(color.Blue * 255)
+            };
+        }
+#endif
+
         internal static SharpDX.Color4 ToDXColor(this Color4 color)
         {
             return new SharpDX.Color4(color.Red, color.Green, color.Blue, color.Alpha);
