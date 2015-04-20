@@ -37,11 +37,11 @@ using GDI = System.Drawing;
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
     targetType: typeof(FrozenSky.Multimedia.Input.WinFormsKeyAndMouseInputHandler),
-    contractType: typeof(FrozenSky.Multimedia.Input.IFrozenSkyFreeCameraInputHandler))]
+    contractType: typeof(FrozenSky.Multimedia.Input.IFrozenSkyInputHandler))]
 
 namespace FrozenSky.Multimedia.Input
 {
-    class WinFormsKeyAndMouseInputHandler : IFrozenSkyFreeCameraInputHandler
+    class WinFormsKeyAndMouseInputHandler : IFrozenSkyInputHandler
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;

@@ -29,17 +29,17 @@ using FrozenSky.Multimedia.Core;
 
 namespace FrozenSky.Multimedia.Input
 {
-    public class InputHandlerContainer
+    public class InputHandlerFactory
     {
-        private List<IFrozenSkyFreeCameraInputHandler> m_inputHandlers;
+        private List<IFrozenSkyInputHandler> m_inputHandlers;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="InputHandlerContainer"/> class.
+        /// Initializes a new instance of the <see cref="InputHandlerFactory"/> class.
         /// </summary>
-        internal InputHandlerContainer()
+        internal InputHandlerFactory()
         {
             m_inputHandlers = FrozenSkyApplication.Current.TypeQuery
-                .GetAndInstanciateByContract<IFrozenSkyFreeCameraInputHandler>();
+                .GetAndInstanciateByContract<IFrozenSkyInputHandler>();
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace FrozenSky.Multimedia.Input
         /// <param name="currentlyDispsoing">Is the view currently disposing?</param>
         internal static void UpdateInputHandlerList(
             object viewObject,
-            List<IFrozenSkyFreeCameraInputHandler> inputHandlers,
+            List<IFrozenSkyInputHandler> inputHandlers,
             RenderLoop renderLoop,
             bool currentlyDispsoing)
         {
@@ -92,7 +92,7 @@ namespace FrozenSky.Multimedia.Input
         /// </summary>
         /// <typeparam name="ViewType">Gets the type of the view.</typeparam>
         /// <typeparam name="CameraType">Gets the type of the camera.</typeparam>
-        public List<IFrozenSkyFreeCameraInputHandler> GetInputHandler<ViewType, CameraType>()
+        public List<IFrozenSkyInputHandler> GetInputHandler<ViewType, CameraType>()
             where ViewType : class
             where CameraType : class
         {
@@ -107,9 +107,9 @@ namespace FrozenSky.Multimedia.Input
         /// </summary>
         /// <param name="givenCameraType">The type of the view.</param>
         /// <param name="givenViewType">The type of the camera.</param>
-        public List<IFrozenSkyFreeCameraInputHandler> GetInputHandler(Type givenViewType, Type givenCameraType)
+        public List<IFrozenSkyInputHandler> GetInputHandler(Type givenViewType, Type givenCameraType)
         {
-            List<IFrozenSkyFreeCameraInputHandler> result = new List<IFrozenSkyFreeCameraInputHandler>();
+            List<IFrozenSkyInputHandler> result = new List<IFrozenSkyInputHandler>();
             foreach(var actInputHandler in m_inputHandlers)
             {
                 // Query for the input handler's information
@@ -140,7 +140,7 @@ namespace FrozenSky.Multimedia.Input
                 if ((!cameraTypeSupported) || (!viewTypeSupported)) { continue; }
 
                 // Create a new input handler 
-                result.Add(Activator.CreateInstance(actInputHandler.GetType()) as IFrozenSkyFreeCameraInputHandler);
+                result.Add(Activator.CreateInstance(actInputHandler.GetType()) as IFrozenSkyInputHandler);
             }
             return result;
         }

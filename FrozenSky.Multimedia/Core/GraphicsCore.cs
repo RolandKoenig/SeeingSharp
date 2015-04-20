@@ -65,7 +65,7 @@ namespace FrozenSky.Multimedia.Core
         private GraphicsCoreConfiguration m_configuration;
         private UniqueGenericKeyGenerator m_resourceKeyGenerator;
         private PerformanceAnalyzer m_performanceCalculator;
-        private InputHandlerContainer m_inputHandlers;
+        private InputHandlerFactory m_inputHandlers;
         private ImportExportHandler m_importExporters;
         #endregion
 
@@ -109,7 +109,7 @@ namespace FrozenSky.Multimedia.Core
                 m_configuration.DebugEnabled = debugEnabled;
 
                 // Create container object for all input handlers
-                m_inputHandlers = new InputHandlerContainer();
+                m_inputHandlers = new InputHandlerFactory();
                 m_importExporters = new ImportExportHandler();
 
                 // Try to initialize global api factories (mostly for 2D rendering / operations)
@@ -421,7 +421,7 @@ namespace FrozenSky.Multimedia.Core
         /// <summary>
         /// Gets a list containing all input handlers.
         /// </summary>
-        public InputHandlerContainer InputHandlers
+        public InputHandlerFactory InputHandlers
         {
             get { return m_inputHandlers; }
         }

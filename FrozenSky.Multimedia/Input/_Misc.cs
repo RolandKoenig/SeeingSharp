@@ -17,8 +17,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
-using FrozenSky.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,33 +25,16 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Multimedia.Input
 {
-    public interface IFrozenSkyFreeCameraInputHandler
+    public enum FrozenSkyInputMode
     {
         /// <summary>
-        /// Gets a list containing all supported view types.
+        /// Free camera movement, e. g with keyboard an mouse.
         /// </summary>
-        Type[] GetSupportedViewTypes();
+        FreeCameraMovement,
 
         /// <summary>
-        /// Gets a list containing all supported camera types.
+        /// No default input processing at all.
         /// </summary>
-        Type[] GetSupportedCameraTypes();
-
-        /// <summary>
-        /// Starts input handling.
-        /// </summary>
-        /// <param name="cameraObject">The camera object (e. g. PerspectiveCamera3D).</param>
-        /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        void Start(object viewObject, object cameraObject);
-
-        /// <summary>
-        /// Generic method thet gets iteratively after this handler was started.
-        /// </summary>
-        void UpdateMovement();
-
-        /// <summary>
-        /// Stops input handling.
-        /// </summary>
-        void Stop();
+        NoInput,
     }
 }

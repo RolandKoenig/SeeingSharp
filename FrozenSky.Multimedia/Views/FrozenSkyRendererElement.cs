@@ -59,29 +59,34 @@ namespace FrozenSky.Multimedia.Views
 
         private static Duration MAX_IMAGE_LOCK_DURATION = new Duration(TimeSpan.FromMilliseconds(100.0));
 
-        //Some members..
+        #region Some members..
         private RenderLoop m_renderLoop;
         private HigherD3DImageSource m_d3dImageSource;
         private int m_lastRecreateWidth;
         private int m_lastRecreateHeight;
         private IDisposable m_controlObserver;
+        #endregion
 
-        // Members for input handling
-        private List<IFrozenSkyFreeCameraInputHandler> m_inputHandlers;
+        #region Members for input handling
+        private List<IFrozenSkyInputHandler> m_inputHandlers;
+        private FrozenSkyInputMode m_inputMode;
+        #endregion
 
-        //All needed direct3d resources
+        #region All needed direct3d resources
         private D3D11.Texture2D m_backBufferForWpf;
         private D3D11.Texture2D m_backBufferD3D11;
         private D3D11.Texture2D m_depthBuffer;
         private D3D11.RenderTargetView m_renderTarget;
         private D3D11.DepthStencilView m_renderTargetDepth;
         private DXGI.Surface m_renderTarget2DDxgi;
+        #endregion
 
-        //Some size related properties
+        #region Some size related properties
         private int m_renderTargetHeight;
         private int m_renderTargetWidth;
         private int m_viewportHeight;
         private int m_viewportWidth;
+        #endregion
 
         private int m_isDirtyCount = 0;
         private BitmapSource m_dummyBitmap;
@@ -91,7 +96,7 @@ namespace FrozenSky.Multimedia.Views
         /// </summary>
         public FrozenSkyRendererElement()
         {
-            m_inputHandlers = new List<IFrozenSkyFreeCameraInputHandler>();
+            m_inputHandlers = new List<IFrozenSkyInputHandler>();
 
             this.Loaded += OnLoaded;
             this.Unloaded += OnUnloaded;
@@ -143,7 +148,7 @@ namespace FrozenSky.Multimedia.Views
                     if (m_controlObserver == null)
                     {
                         // Updates currently active input handlers
-                        InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+                        InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
 
                         m_controlObserver = CommonTools.DisposeObject(m_controlObserver);
                         m_controlObserver = Observable.FromEventPattern<EventArgs>(this, "SizeChanged")
@@ -162,7 +167,7 @@ namespace FrozenSky.Multimedia.Views
                         SystemEvents.SessionSwitch -= OnSystemEvents_SessionSwitch;
 
                         // Updates currently active input handlers
-                        InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
+                        InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
 
                         m_controlObserver = CommonTools.DisposeObject(m_controlObserver);
                     }
@@ -392,7 +397,7 @@ namespace FrozenSky.Multimedia.Views
             // Updates currently active input handlers
             if (this.IsLoaded)
             {
-                InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
             }
         }
 
@@ -538,6 +543,26 @@ namespace FrozenSky.Multimedia.Views
         public bool Focused
         {
             get { return this.IsFocused; }
+        }
+
+
+        public FrozenSkyInputMode InputMode
+        {
+            get { return m_inputMode; }
+            set
+            {
+                if((m_inputMode != value) &&
+                   (m_inputHandlers.Count > 0))
+                {
+                    m_inputMode = value;
+                    InputHandlerFactory.UpdateInputHandlerList(
+                        this, m_inputHandlers, m_renderLoop, false);
+                }
+                else
+                {
+                    m_inputMode = value;
+                }
+            }
         }
     }
 }

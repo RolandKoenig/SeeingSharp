@@ -18,6 +18,7 @@
 */
 #endregion
 
+#if DESKTOP
 using FrozenSky.Infrastructure;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Views;
@@ -32,11 +33,11 @@ using System.Windows.Input;
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
     targetType: typeof(FrozenSky.Multimedia.Input.WpfKeyAndMouseInputHandler),
-    contractType: typeof(FrozenSky.Multimedia.Input.IFrozenSkyFreeCameraInputHandler))]
+    contractType: typeof(FrozenSky.Multimedia.Input.IFrozenSkyInputHandler))]
 
 namespace FrozenSky.Multimedia.Input
 {
-    class WpfKeyAndMouseInputHandler : IFrozenSkyFreeCameraInputHandler
+    class WpfKeyAndMouseInputHandler : IFrozenSkyInputHandler
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
@@ -287,3 +288,4 @@ namespace FrozenSky.Multimedia.Input
         }
     }
 }
+#endif

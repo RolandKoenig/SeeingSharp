@@ -202,9 +202,13 @@
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
     <Compile Include="FrozenSkyGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
-    <Compile Include="Input\IFrozenSkyFreeCameraInputHandler.cs" />
+    <Compile Include="Input\IFrozenSkyInputHandler.cs" />
     <Compile Include="Input\IInputEnabledView.cs" />
-    <Compile Include="Input\InputHandlerContainer.cs" />
+    <Compile Include="Input\InputHandlerFactory.cs" />
+    <Compile Include="Input\_Misc.cs" />
+    <Compile Include="Input\_WinForms\WinFormsKeyAndMouseInputHandler.cs" />
+    <Compile Include="Input\_WinRT\WinRTKeyAndMouseInputHandler.cs" />
+    <Compile Include="Input\_Wpf\WpfKeyAndMouseInputHandler.cs" />
     <Compile Include="Objects\GenericObject.cs" />
     <Compile Include="Objects\Overlay2DLineObject.cs" />
     <Compile Include="Objects\SkyboxObject.cs" />
@@ -251,7 +255,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceKeys.cs" />
     <Compile Include="Views\FrozenSkyPanelPainter.cs" />
-    <Compile Include="Views\FrozenSkyPanelPainter.Mouse.cs" />
     <Compile Include="Views\IFrozenSkyPainter.cs" />
     <Compile Include="Views\_Util\SwapChainPanelWrapper.cs" />
     <Compile Include="_Constants.cs" />
@@ -339,7 +342,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input\_Generic\" />
-    <Folder Include="Input\_WinRT\" />
     <Folder Include="Resources\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

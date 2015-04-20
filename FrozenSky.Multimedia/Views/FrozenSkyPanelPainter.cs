@@ -36,6 +36,7 @@ using FrozenSky.Util;
 //Some namespace mappings
 using DXGI = SharpDX.DXGI;
 using D3D11 = SharpDX.Direct3D11;
+using System.Collections.Generic;
 
 namespace FrozenSky.Multimedia.Views
 {
@@ -58,6 +59,11 @@ namespace FrozenSky.Multimedia.Views
         private IDisposable m_observerSizeChanged;
         #endregion
 
+        #region Members for input handling
+        private List<IFrozenSkyInputHandler> m_inputHandlers;
+        private FrozenSkyInputMode m_inputMode;
+        #endregion
+
         #region Resources from Direct3D 11
         private DXGI.SwapChain1 m_swapChain;
         private D3D11.Texture2D m_backBuffer;
@@ -73,6 +79,8 @@ namespace FrozenSky.Multimedia.Views
         /// <param name="targetPanel">The target panel.</param>
         public FrozenSkyPanelPainter()
         {
+            m_inputHandlers = new List<IFrozenSkyInputHandler>();
+
             // Create the RenderLoop object
             m_renderLoop = new Core.RenderLoop(
                 SynchronizationContext.Current,
@@ -135,12 +143,12 @@ namespace FrozenSky.Multimedia.Views
             {
                 if (m_targetPanel == null) { return; }
 
-                // Deregister simple mouse movement
-                UnloadMouseMovement();
-
                 // Clear view resources
                 m_renderLoop.UnloadViewResources();
                 m_renderLoop.DeregisterRenderLoop();
+
+                // Updates currently active input handlers
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
 
                 // Clear event registrations
                 m_targetPanel.SizeChanged -= OnTargetPanelSizeChanged;
@@ -198,10 +206,10 @@ namespace FrozenSky.Multimedia.Views
             if (VisualTreeHelper.GetParent(m_targetPanel.Panel) != null)
             {
                 m_renderLoop.RegisterRenderLoop();
-            }
 
-            // Register simple mouse movement
-            InitializeMouseMovement();
+                // Updates currently active input handlers
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+            }
         }
 
         /// <summary>
@@ -238,6 +246,9 @@ namespace FrozenSky.Multimedia.Views
         {
             m_renderLoop.DeregisterRenderLoop();
 
+            // Updates currently active input handlers
+            InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
+
             // Trigger detach if requested
             if(m_detachOnUnload)
             {
@@ -252,7 +263,13 @@ namespace FrozenSky.Multimedia.Views
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void OnTargetPanelLoaded(object sender, RoutedEventArgs e)
         {
-            m_renderLoop.RegisterRenderLoop();
+            if (!m_renderLoop.IsRegisteredOnMainLoop)
+            {
+                m_renderLoop.RegisterRenderLoop();
+
+                // Updates currently active input handlers
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+            }
         }
 
         /// <summary>
@@ -504,6 +521,35 @@ namespace FrozenSky.Multimedia.Views
         bool IInputEnabledView.Focused
         {
             get { return m_renderLoop.IsRegisteredOnMainLoop; }
+        }
+
+        public Panel TargetPanel
+        {
+            get 
+            {
+                if (m_targetPanel == null) { return null; }
+                return m_targetPanel.Panel; 
+            }
+        }
+
+
+        public FrozenSkyInputMode InputMode
+        {
+            get { return m_inputMode; }
+            set
+            {
+                if((m_inputMode != value) &&
+                   (m_inputHandlers.Count > 0))
+                {
+                    m_inputMode = value;
+                    InputHandlerFactory.UpdateInputHandlerList(
+                        this, m_inputHandlers, m_renderLoop, false);
+                }
+                else
+                {
+                    m_inputMode = value;
+                }
+            }
         }
     }
 }

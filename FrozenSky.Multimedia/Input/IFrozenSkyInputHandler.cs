@@ -27,21 +27,33 @@ using System.Threading.Tasks;
 
 namespace FrozenSky.Multimedia.Input
 {
-    public interface IInputEnabledView
+    public interface IFrozenSkyInputHandler
     {
         /// <summary>
-        /// Gets the RenderLoop that is currently in use.
+        /// Gets a list containing all supported view types.
         /// </summary>
-        RenderLoop RenderLoop { get; }
+        Type[] GetSupportedViewTypes();
 
         /// <summary>
-        /// Does the target control have focus?
+        /// Gets a list containing all supported camera types.
         /// </summary>
-        bool Focused { get; }
+        Type[] GetSupportedCameraTypes();
 
         /// <summary>
-        /// Gets the input mode requested by this view.
+        /// Starts input handling.
         /// </summary>
-        FrozenSkyInputMode InputMode { get; }
+        /// <param name="cameraObject">The camera object (e. g. PerspectiveCamera3D).</param>
+        /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
+        void Start(object viewObject, object cameraObject);
+
+        /// <summary>
+        /// Generic method thet gets iteratively after this handler was started.
+        /// </summary>
+        void UpdateMovement();
+
+        /// <summary>
+        /// Stops input handling.
+        /// </summary>
+        void Stop();
     }
 }

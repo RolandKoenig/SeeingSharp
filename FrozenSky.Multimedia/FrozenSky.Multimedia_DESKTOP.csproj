@@ -282,9 +282,10 @@
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
     <Compile Include="FrozenSkyGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
-    <Compile Include="Input\IFrozenSkyFreeCameraInputHandler.cs" />
+    <Compile Include="Input\IFrozenSkyInputHandler.cs" />
     <Compile Include="Input\IInputEnabledView.cs" />
-    <Compile Include="Input\InputHandlerContainer.cs" />
+    <Compile Include="Input\InputHandlerFactory.cs" />
+    <Compile Include="Input\_Misc.cs" />
     <Compile Include="Input\_WinForms\WinFormsKeyAndMouseInputHandler.cs" />
     <Compile Include="Input\_Wpf\WpfKeyAndMouseInputHandler.cs" />
     <Compile Include="Objects\GenericObject.cs" />

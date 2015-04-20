@@ -45,10 +45,11 @@ namespace FrozenSky.Multimedia.Views
     {
         private const string TEXT_GRAPHICS_NOT_INITIALIZED = "Graphics not initialized!";
 
-        // Main reference to 3D-Engine
+        #region Main reference to 3D-Engine
         private RenderLoop m_renderLoop;
+        #endregion
 
-        // Resources for Direct3D 11
+        #region Resources for Direct3D 11
         private DXGI.Factory m_factory;
         private DXGI.SwapChain m_swapChain;
         private D3D11.Device m_renderDevice;
@@ -57,17 +58,20 @@ namespace FrozenSky.Multimedia.Views
         private D3D11.DepthStencilView m_renderTargetDepth;
         private D3D11.Texture2D m_backBuffer;
         private D3D11.Texture2D m_depthBuffer;
+        #endregion
 
-        // Members for input handling
-        private List<IFrozenSkyFreeCameraInputHandler> m_inputHandlers;
+        #region Members for input handling
+        private List<IFrozenSkyInputHandler> m_inputHandlers;
+        private FrozenSkyInputMode m_inputMode;
+        private bool m_isMouseInside;
+        #endregion
 
-        // Generic members
+        #region Generic members
         private Brush m_backBrush;
         private Brush m_foreBrushText;
         private Brush m_backBrushText;
         private Pen m_borderPen;
-
-        private bool m_isMouseInside;
+        #endregion
 
         /// <summary>
         /// Raised when it is possible for the UI thread to manipulate current filter list.
@@ -86,7 +90,7 @@ namespace FrozenSky.Multimedia.Views
         /// </summary>
         public FrozenSkyRendererControl()
         {
-            m_inputHandlers = new List<IFrozenSkyFreeCameraInputHandler>();
+            m_inputHandlers = new List<IFrozenSkyInputHandler>();
 
             //Set style parameters for this control
             base.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -120,7 +124,7 @@ namespace FrozenSky.Multimedia.Views
                 m_renderLoop.Camera = new PerspectiveCamera3D();
 
                 // Updates currently active input handlers
-                InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
 
                 //Observe resize event and throttle them
                 this.HandleCreateDisposeOnControl(
@@ -275,7 +279,7 @@ namespace FrozenSky.Multimedia.Views
                 m_renderLoop.RegisterRenderLoop();
 
                 // Updates currently active input handlers
-                InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
             }
         }
 
@@ -293,7 +297,7 @@ namespace FrozenSky.Multimedia.Views
                 m_renderLoop.DeregisterRenderLoop();
 
                 // Updates currently active input handlers
-                InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
             }
         }
 
@@ -386,7 +390,7 @@ namespace FrozenSky.Multimedia.Views
             if(!this.DesignMode)
             {
                 // Updates currently active input handlers
-                InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
 
                 m_renderLoop.Dispose();
                 m_renderLoop = null;
@@ -505,7 +509,7 @@ namespace FrozenSky.Multimedia.Views
         private void OnRenderLoopCameraChanged(object sender, EventArgs e)
         {
             // Updates currently active input handlers
-            InputHandlerContainer.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+            InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
         }
 
         /// <summary>
@@ -624,6 +628,26 @@ namespace FrozenSky.Multimedia.Views
             {
                 if (m_renderLoop != null) { return m_renderLoop.Device; }
                 else { return null; }
+            }
+        }
+
+
+        public FrozenSkyInputMode InputMode
+        {
+            get { return m_inputMode; }
+            set
+            {
+                if((m_inputMode != value) &&
+                   (m_inputHandlers.Count > 0))
+                {
+                    m_inputMode = value;
+                    InputHandlerFactory.UpdateInputHandlerList(
+                        this, m_inputHandlers, m_renderLoop, false);
+                }
+                else
+                {
+                    m_inputMode = value;
+                }
             }
         }
     }
