@@ -36,7 +36,7 @@
     <PublisherName>Roland König</PublisherName>
     <SuiteName>FrozenSky</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>1</ApplicationRevision>
+    <ApplicationRevision>2</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -76,10 +76,10 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>B96AD40D2AF8CB4EC10B714AD08A661EFFC6CA30</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2F9632A76E14176CF4C9B2F17673116AD105BACB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WpfSampleContainer_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Open Source Developer, Roland König.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>true</SignManifests>
@@ -158,6 +158,7 @@
     <None Include="..\..\Misc\_FrozenSky.Multimedia.licenseheader">
       <Link>_FrozenSky.Multimedia.licenseheader</Link>
     </None>
+    <None Include="Open Source Developer, Roland König.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -165,7 +166,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="WpfSampleContainer_TemporaryKey.pfx" />
     <Resource Include="Resources\Models\Penguin.ac" />
     <Resource Include="Resources\Models\Banana.ac" />
     <Resource Include="Resources\Models\CartoonHead.ac" />

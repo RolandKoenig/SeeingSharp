@@ -36,7 +36,7 @@
     <SuiteName>FrozenSky</SuiteName>
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationRevision>3</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -71,10 +71,10 @@
     <SignManifests>true</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>27DCE18043E1B2EF403029F05C7C77762457B7A4</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2F9632A76E14176CF4C9B2F17673116AD105BACB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>WinFormsSampleContainer_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Open Source Developer, Roland König.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -147,6 +147,7 @@
     <None Include="..\..\Misc\_FrozenSky.Multimedia.licenseheader">
       <Link>_FrozenSky.Multimedia.licenseheader</Link>
     </None>
+    <None Include="Open Source Developer, Roland König.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\FrozenSky.Util.ActivityPerformanceValueContainer.datasource" />
