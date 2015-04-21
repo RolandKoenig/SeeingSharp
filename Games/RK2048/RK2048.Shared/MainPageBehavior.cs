@@ -19,6 +19,7 @@
 #endregion
 
 using FrozenSky.Infrastructure;
+using FrozenSky.Multimedia.Input;
 using FrozenSky.Multimedia.Views;
 using FrozenSky.Util;
 using Microsoft.Xaml.Interactivity;
@@ -43,6 +44,7 @@ namespace RK2048
         public MainPageBehavior()
         {
             m_painter = new FrozenSkyPanelPainter();
+            m_painter.InputMode = FrozenSkyInputMode.NoInput;
         }
 
         public void Attach(DependencyObject associatedObject)

@@ -40,6 +40,11 @@ namespace FrozenSky.Multimedia.Input
         Type[] GetSupportedCameraTypes();
 
         /// <summary>
+        /// Gets an array containing all supported input modes.
+        /// </summary>
+        FrozenSkyInputMode[] GetSupportedInputModes();
+
+        /// <summary>
         /// Starts input handling.
         /// </summary>
         /// <param name="cameraObject">The camera object (e. g. PerspectiveCamera3D).</param>

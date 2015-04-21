@@ -74,6 +74,17 @@ namespace FrozenSky.Multimedia.Input
         }
 
         /// <summary>
+        /// Gets an array containing all supported input modes.
+        /// </summary>
+        public FrozenSkyInputMode[] GetSupportedInputModes()
+        {
+            return new[]
+            {
+                FrozenSkyInputMode.FreeCameraMovement
+            };
+        }
+
+        /// <summary>
         /// Starts input handling.
         /// </summary>
         /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>

@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrozenSky.Multimedia.Core;
+using FrozenSky.Checking;
 
 namespace FrozenSky.Multimedia.Input
 {
@@ -50,11 +51,15 @@ namespace FrozenSky.Multimedia.Input
         /// <param name="renderLoop">The renderloop used by the view object.</param>
         /// <param name="currentlyDispsoing">Is the view currently disposing?</param>
         internal static void UpdateInputHandlerList(
-            object viewObject,
+            IInputEnabledView viewObject,
             List<IFrozenSkyInputHandler> inputHandlers,
             RenderLoop renderLoop,
             bool currentlyDispsoing)
         {
+            viewObject.EnsureNotNull("viewObject");
+            inputHandlers.EnsureNotNull("inputHandlers");
+            renderLoop.EnsureNotNull("renderLoop");
+
             // Clear previous input handlers
             if(inputHandlers.Count > 0)
             {
@@ -77,6 +82,7 @@ namespace FrozenSky.Multimedia.Input
 
             // Get all possible input handlers
             inputHandlers.AddRange(GraphicsCore.Current.InputHandlers.GetInputHandler(
+                viewObject,
                 viewObject.GetType(),
                 renderLoop.Camera.GetType()));
             
@@ -92,22 +98,24 @@ namespace FrozenSky.Multimedia.Input
         /// </summary>
         /// <typeparam name="ViewType">Gets the type of the view.</typeparam>
         /// <typeparam name="CameraType">Gets the type of the camera.</typeparam>
-        public List<IFrozenSkyInputHandler> GetInputHandler<ViewType, CameraType>()
+        /// <param name="viewObject">The view for which to the input handlers.</param>
+        public List<IFrozenSkyInputHandler> GetInputHandler<ViewType, CameraType>(IInputEnabledView viewObject)
             where ViewType : class
             where CameraType : class
         {
             Type givenViewType = typeof(ViewType);
             Type givenCameraType = typeof(CameraType);
 
-            return GetInputHandler(givenViewType, givenCameraType);
+            return GetInputHandler(viewObject, givenViewType, givenCameraType);
         }
 
         /// <summary>
         /// Gets all possible GraphicsInputHandlers for the given view and camera types.
         /// </summary>
+        /// <param name="viewObject">The view for which to query the input object.</param>
         /// <param name="givenCameraType">The type of the view.</param>
         /// <param name="givenViewType">The type of the camera.</param>
-        public List<IFrozenSkyInputHandler> GetInputHandler(Type givenViewType, Type givenCameraType)
+        public List<IFrozenSkyInputHandler> GetInputHandler(IInputEnabledView viewObject, Type givenViewType, Type givenCameraType)
         {
             List<IFrozenSkyInputHandler> result = new List<IFrozenSkyInputHandler>();
             foreach(var actInputHandler in m_inputHandlers)
@@ -115,8 +123,10 @@ namespace FrozenSky.Multimedia.Input
                 // Query for the input handler's information
                 Type[] actSupportedViewTypes = actInputHandler.GetSupportedViewTypes();
                 Type[] actSupportedCameraTypes = actInputHandler.GetSupportedCameraTypes();
+                FrozenSkyInputMode[] actSupportedInputModes = actInputHandler.GetSupportedInputModes();
                 bool viewTypeSupported = false;
                 bool cameraTypeSupported = false;
+                bool inputModeSupported = false;
                
                 // Check for type support
                 foreach(Type actViewType in actSupportedViewTypes)
@@ -127,6 +137,8 @@ namespace FrozenSky.Multimedia.Input
                         break;
                     }
                 }
+                if (!viewTypeSupported) { continue; }
+
                 foreach(Type actCameraType in actSupportedCameraTypes)
                 {
                     if(actCameraType.GetTypeInfo().IsAssignableFrom(givenCameraType.GetTypeInfo()))
@@ -135,9 +147,17 @@ namespace FrozenSky.Multimedia.Input
                         break;
                     }
                 }
+                if (!cameraTypeSupported) { continue; }
 
-                // Cancel if given types are not supported
-                if ((!cameraTypeSupported) || (!viewTypeSupported)) { continue; }
+                foreach(FrozenSkyInputMode actInputMode in actSupportedInputModes)
+                {
+                    if(actInputMode == viewObject.InputMode)
+                    {
+                        inputModeSupported = true;
+                        break;
+                    }
+                }
+                if (!inputModeSupported) { continue; }
 
                 // Create a new input handler 
                 result.Add(Activator.CreateInstance(actInputHandler.GetType()) as IFrozenSkyInputHandler);

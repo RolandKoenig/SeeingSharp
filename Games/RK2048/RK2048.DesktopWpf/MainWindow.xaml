@@ -71,6 +71,7 @@
             
             <!-- Define 3D rendering part-->
             <view:FrozenSkyRendererElement Name="m_rendererElement" 
+                                           InputMode="NoInput"
                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                            Stretch="Fill"
                                            Focusable="False" IsHitTestVisible="False"/>

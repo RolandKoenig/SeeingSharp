@@ -287,6 +287,7 @@
     <Compile Include="Input\InputHandlerFactory.cs" />
     <Compile Include="Input\_Misc.cs" />
     <Compile Include="Input\_WinForms\WinFormsKeyAndMouseInputHandler.cs" />
+    <Compile Include="Input\_WinRT\WinRTKeyAndMouseInputHandler.cs" />
     <Compile Include="Input\_Wpf\WpfKeyAndMouseInputHandler.cs" />
     <Compile Include="Objects\GenericObject.cs" />
     <Compile Include="Objects\Overlay2DLineObject.cs" />
@@ -365,7 +366,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input\_Generic\" />
-    <Folder Include="Input\_WinRT\" />
     <Folder Include="Resources\Models\" />
   </ItemGroup>
   <ItemGroup>
