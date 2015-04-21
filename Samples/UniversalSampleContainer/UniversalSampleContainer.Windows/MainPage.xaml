@@ -12,7 +12,8 @@
         <local:MainWindowViewModel />
     </Page.DataContext>
     
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+          Name="MainContentGrid">
 
         <!-- Define the page's header -->
         <Grid Height="140"
@@ -28,7 +29,9 @@
         <!-- Define the main drawing error for FrozenSky -->
         <SwapChainPanel Margin="0,140,0,0">
             <i:Interaction.Behaviors>
-                <local:ApplySampleBehavior ClearColor="LightGray" />
+                <local:ApplySampleBehavior ClearColor="LightGray" 
+                                           MainContentGrid="{Binding ElementName=MainContentGrid}"
+                                           BottomStatusBar="{Binding ElementName=MainStatusBar}"/>
             </i:Interaction.Behaviors>
         </SwapChainPanel>
 
@@ -81,6 +84,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <ProgressBar Name="MainStatusBar"
+                         HorizontalAlignment="Stretch"
+                         IsIndeterminate="True"
+                         Visibility="Collapsed"/>
         </StackPanel>
 
     </Grid>
