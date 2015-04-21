@@ -33,6 +33,7 @@ namespace FrozenSky.Multimedia.Views
         RenderLoop RenderLoop { get; }
 
         Scene Scene { get; set; }
+
         Camera3DBase Camera { get; set; }
     }
 }

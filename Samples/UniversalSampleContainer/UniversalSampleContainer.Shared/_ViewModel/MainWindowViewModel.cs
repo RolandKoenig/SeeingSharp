@@ -70,11 +70,12 @@ namespace UniversalSampleContainer
             }
 
             // Initialize commands
-            this.CommandShowSource = new DelegateCommand(() =>
+            this.CommandShowSource = new DelegateCommand(async () =>
             {
                 if(m_selectedSample != null)
                 {
-                    //Process.Start(m_selectedSample.SampleDescription.CodeUrl);
+                    await Windows.System.Launcher.LaunchUriAsync(
+                        new Uri(m_selectedSample.SampleDescription.CodeUrl));
                 }
             });
         }

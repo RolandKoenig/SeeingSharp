@@ -27,7 +27,7 @@ using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
 
-//Some namespace mappings
+// Namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 
 namespace FrozenSky.Multimedia.Views
@@ -36,15 +36,17 @@ namespace FrozenSky.Multimedia.Views
     // http://msdn.microsoft.com/en-us/library/windows/desktop/ff476259(v=vs.85).aspx
     public class MemoryRenderTarget : IDisposable, IFrozenSkyPainter
     {
-        //Configuration
+        #region Configuration
         private int m_pixelWidth;
         private int m_pixelHeight;
+        #endregion
 
-        //Reference to the render loop
+        #region Reference to the render loop
         private RenderLoop m_renderLoop;
         private ThreadSaveQueue<TaskCompletionSource<object>> m_renderAwaitors;
+        #endregion
 
-        //All needed direct3d resources
+        #region All needed direct3d resources
         private D3D11.Device m_device;
         private D3D11.DeviceContext m_deviceContext;
         private D3D11.Texture2D m_copyHelperTextureStaging;
@@ -52,6 +54,7 @@ namespace FrozenSky.Multimedia.Views
         private D3D11.Texture2D m_renderTargetDepth;
         private D3D11.RenderTargetView m_renderTargetView;
         private D3D11.DepthStencilView m_renderTargetDepthView;
+        #endregion
 
         /// <summary>
         /// Raises before the render target starts rendering.

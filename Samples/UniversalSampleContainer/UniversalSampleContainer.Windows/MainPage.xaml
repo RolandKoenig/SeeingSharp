@@ -89,6 +89,18 @@
                          HorizontalAlignment="Stretch"
                          IsIndeterminate="True"
                          Visibility="Collapsed"/>
+
+            <StackPanel Orientation="Vertical" Margin="0,5,5,5"
+                        VerticalAlignment="Top" HorizontalAlignment="Left">
+                <StackPanel.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Width" Value="200" />
+                        <Setter Property="Background" Value="#CC7D7E82" />
+                    </Style>
+                </StackPanel.Resources>
+
+                <Button Content="Show Source" Command="{Binding Path=CommandShowSource}" />
+            </StackPanel>
         </StackPanel>
 
     </Grid>
