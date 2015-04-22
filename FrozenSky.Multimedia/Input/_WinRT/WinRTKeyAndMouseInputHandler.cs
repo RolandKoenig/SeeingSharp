@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.System;
 using Windows.UI.Input;
 using Windows.UI.Xaml.Input;
 
@@ -39,6 +40,9 @@ namespace FrozenSky.Multimedia.Input
 {
     class WinRTKeyAndMouseInputHandler : IFrozenSkyInputHandler
     {
+        private const float MOVEMENT = 0.3f;
+        private const float ROTATION = 0.01f;
+
         #region objects from outside
         private FrozenSkyPanelPainter m_painter;
         private IInputEnabledView m_focusHandler;
@@ -49,7 +53,16 @@ namespace FrozenSky.Multimedia.Input
         #region state variables for camera movement
         private bool m_isDragging;
         private PointerPoint m_lastDragPoint;
+        private List<VirtualKey> m_pressedKeys;
         #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="WinRTKeyAndMouseInputHandler"/> class.
+        /// </summary>
+        public WinRTKeyAndMouseInputHandler()
+        {
+            m_pressedKeys = new List<VirtualKey>();
+        }
 
         /// <summary>
         /// Gets a list containing all supported view types.
@@ -104,19 +117,13 @@ namespace FrozenSky.Multimedia.Input
             if (m_camera == null) { throw new ArgumentException("Unable to handle given camera object!"); }
 
             // Register all events
-            m_painter.TargetPanel.PointerExited += OnTargetPanelPointerExited;
-            m_painter.TargetPanel.PointerWheelChanged += OnTargetPanelPointerWheelChanged;
-            m_painter.TargetPanel.PointerPressed += OnTargetPanelPointerPressed;
-            m_painter.TargetPanel.PointerReleased += OnTargetPanelPointerReleased;
-            m_painter.TargetPanel.PointerMoved += OnTargetPanelPointerMoved;
-        }
-
-        /// <summary>
-        /// Generic method thet gets iteratively after this handler was started.
-        /// </summary>
-        public void UpdateMovement()
-        {
-
+            m_painter.TargetPanel.PointerExited += OnTargetPanel_PointerExited;
+            m_painter.TargetPanel.PointerWheelChanged += OnTargetPanel_PointerWheelChanged;
+            m_painter.TargetPanel.PointerPressed += OnTargetPanel_PointerPressed;
+            m_painter.TargetPanel.PointerReleased += OnTargetPanel_PointerReleased;
+            m_painter.TargetPanel.PointerMoved += OnTargetPanel_PointerMoved;
+            m_painter.TargetPanel.KeyUp += OnTargetPanel_KeyUp;
+            m_painter.TargetPanel.KeyDown += OnTargetPanel_KeyDown;
         }
 
         /// <summary>
@@ -125,11 +132,82 @@ namespace FrozenSky.Multimedia.Input
         public void Stop()
         {
             // Deregister all events
-            m_painter.TargetPanel.PointerExited -= OnTargetPanelPointerExited;
-            m_painter.TargetPanel.PointerWheelChanged -= OnTargetPanelPointerWheelChanged;
-            m_painter.TargetPanel.PointerPressed -= OnTargetPanelPointerPressed;
-            m_painter.TargetPanel.PointerReleased -= OnTargetPanelPointerReleased;
-            m_painter.TargetPanel.PointerMoved -= OnTargetPanelPointerMoved;
+            m_painter.TargetPanel.PointerExited -= OnTargetPanel_PointerExited;
+            m_painter.TargetPanel.PointerWheelChanged -= OnTargetPanel_PointerWheelChanged;
+            m_painter.TargetPanel.PointerPressed -= OnTargetPanel_PointerPressed;
+            m_painter.TargetPanel.PointerReleased -= OnTargetPanel_PointerReleased;
+            m_painter.TargetPanel.PointerMoved -= OnTargetPanel_PointerMoved;
+            m_painter.TargetPanel.KeyUp -= OnTargetPanel_KeyUp;
+            m_painter.TargetPanel.KeyDown -= OnTargetPanel_KeyDown;
+        }
+
+        /// <summary>
+        /// Generic method thet gets iteratively after this handler was started.
+        /// </summary>
+        public void UpdateMovement()
+        {
+            //if (!m_painter.TargetPanel.)
+            //{
+            //    m_pressedKeys.Clear();
+            //    m_controlDown = false;
+            //    return;
+            //}
+
+            // Define multiplyer
+            float multiplyer = 1f;
+
+            // Perform moving bassed on keyboard
+            foreach (VirtualKey actKey in m_pressedKeys)
+            {
+                switch (actKey)
+                {
+                    case VirtualKey.Up:
+                    case VirtualKey.W:
+                        m_camera.Zoom(MOVEMENT * multiplyer);
+                        break;
+
+                    case VirtualKey.Down:
+                    case VirtualKey.S:
+                        m_camera.Zoom(-MOVEMENT * multiplyer);
+                        break;
+
+                    case VirtualKey.Left:
+                    case VirtualKey.A:
+                        m_camera.Strave(-MOVEMENT * multiplyer);
+                        break;
+
+                    case VirtualKey.Right:
+                    case VirtualKey.D:
+                        m_camera.Strave(MOVEMENT * multiplyer);
+                        break;
+
+                    case VirtualKey.Q:
+                    case VirtualKey.NumberPad3:
+                        m_camera.Move(new Vector3(0f, -MOVEMENT * multiplyer, 0f));
+                        break;
+
+                    case VirtualKey.E:
+                    case VirtualKey.NumberPad9:
+                        m_camera.Move(new Vector3(0f, MOVEMENT * multiplyer, 0f));
+                        break;
+
+                    case VirtualKey.NumberPad4:
+                        m_camera.Rotate(ROTATION, 0f);
+                        break;
+
+                    case VirtualKey.NumberPad2:
+                        m_camera.Rotate(0f, -ROTATION);
+                        break;
+
+                    case VirtualKey.NumberPad6:
+                        m_camera.Rotate(-ROTATION, 0f);
+                        break;
+
+                    case VirtualKey.NumberPad8:
+                        m_camera.Rotate(0f, ROTATION);
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -150,17 +228,27 @@ namespace FrozenSky.Multimedia.Input
             m_isDragging = false;
         }
 
-        private void OnTargetPanelPointerReleased(object sender, PointerRoutedEventArgs e)
+        private void OnTargetPanel_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (!m_pressedKeys.Contains(e.Key)) { m_pressedKeys.Add(e.Key); }
+        }
+
+        private void OnTargetPanel_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            while (m_pressedKeys.Remove(e.Key)) { }
+        }
+
+        private void OnTargetPanel_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             StopCameraDragging();
         }
 
-        private void OnTargetPanelPointerPressed(object sender, PointerRoutedEventArgs e)
+        private void OnTargetPanel_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             StartCameraDragging(e.GetCurrentPoint(m_painter.TargetPanel));
         }
 
-        private void OnTargetPanelPointerMoved(object sender, PointerRoutedEventArgs e)
+        private void OnTargetPanel_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             Camera3DBase camera = m_renderLoop.Camera;
             if ((camera != null) &&
@@ -188,7 +276,7 @@ namespace FrozenSky.Multimedia.Input
             }
         }
 
-        private void OnTargetPanelPointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        private void OnTargetPanel_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
             Camera3DBase camera = m_renderLoop.Camera;
             if (camera != null)
@@ -200,7 +288,7 @@ namespace FrozenSky.Multimedia.Input
         /// <summary>
         /// Called when mouse leaves the target panel.
         /// </summary>
-        private void OnTargetPanelPointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void OnTargetPanel_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             StopCameraDragging();
         }

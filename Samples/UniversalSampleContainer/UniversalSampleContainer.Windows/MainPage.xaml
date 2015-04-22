@@ -30,11 +30,10 @@
         <SwapChainPanel Margin="0,140,0,0">
             <i:Interaction.Behaviors>
                 <local:ApplySampleBehavior ClearColor="LightGray" 
-                                           MainContentGrid="{Binding ElementName=MainContentGrid}"
-                                           BottomStatusBar="{Binding ElementName=MainStatusBar}"/>
+                                               MainContentGrid="{Binding ElementName=MainContentGrid}"
+                                               BottomStatusBar="{Binding ElementName=MainStatusBar}"/>
             </i:Interaction.Behaviors>
         </SwapChainPanel>
-
 
         <!-- Define listbox which shows all categories -->
         <StackPanel Orientation="Vertical"

@@ -21,6 +21,7 @@
 using System;
 using System.Reactive.Linq;
 using System.Threading;
+using System.Collections.Generic;
 using SharpDX;
 using Windows.Foundation;
 using Windows.Graphics.Display;
@@ -36,7 +37,6 @@ using FrozenSky.Util;
 //Some namespace mappings
 using DXGI = SharpDX.DXGI;
 using D3D11 = SharpDX.Direct3D11;
-using System.Collections.Generic;
 
 namespace FrozenSky.Multimedia.Views
 {
@@ -388,7 +388,15 @@ namespace FrozenSky.Multimedia.Views
 
         private void OnRenderLoopPrepareRendering(EngineDevice engineDevice)
         {
-
+            if ((m_renderLoop != null) &&
+                (m_renderLoop.Camera != null))
+            {
+                // Update movement for all running input handlers
+                foreach (var actInputHandler in m_inputHandlers)
+                {
+                    actInputHandler.UpdateMovement();
+                }
+            }
         }
 
         /// <summary>

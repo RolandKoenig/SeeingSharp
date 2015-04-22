@@ -42,15 +42,16 @@ namespace FrozenSky.Multimedia.Input
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
 
-        // Target objects
+        #region Target objects
         private FrozenSkyRendererElement m_rendererElement;
         private Camera3DBase m_camera;
+        #endregion
 
-        // Current movement state
+        #region Current movement state
         private bool m_isDragging;
-        private bool m_controlDown;
         private System.Windows.Point m_lastDragPoint;
         private List<Key> m_pressedKeys;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WpfKeyAndMouseInputHandler"/> class.
@@ -126,13 +127,11 @@ namespace FrozenSky.Multimedia.Input
             if (!m_rendererElement.IsFocused)
             {
                 m_pressedKeys.Clear();
-                m_controlDown = false;
                 return;
             }
 
             // Define multiplyer
             float multiplyer = 1f;
-            if (m_controlDown) { multiplyer = 2f; }
 
             // Perform moving bassed on keyboard
             foreach (Key actKey in m_pressedKeys)
@@ -234,7 +233,10 @@ namespace FrozenSky.Multimedia.Input
 
         private void OnRendererElement_KeyUp(object sender, KeyEventArgs e)
         {
-            m_pressedKeys.Remove(e.Key);
+            while(m_pressedKeys.Remove(e.Key))
+            {
+
+            }
         }
 
         /// <summary>
