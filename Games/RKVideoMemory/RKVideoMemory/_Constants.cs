@@ -34,5 +34,14 @@ namespace RKVideoMemory
 
         public static readonly string[] SUPPORTED_IMAGE_FORMATS = new string[] { ".jpg", ".jpeg", ".png", ".bmp" };
         public const string TITLE_IMAGE_NAME = "_Title";
+
+        #region parameters for the tilemap
+        public const int TILEMAP_X_COUNT = 5;
+        public const int TILEMAP_Y_COUNT = 5;
+        public const float TILE_WIDTH = 1.6f;
+        public const float TILE_HEIGHT = 1f;
+        public const float TILE_DISTANCE_X = 2f;
+        public const float TILE_DISTANCE_Y = 1.5f;
+        #endregion
     }
 }

@@ -44,7 +44,7 @@ namespace RKVideoMemory.Graphics
                 var resBackgroundTexture = manipulator.AddTexture(
                     new AssemblyResourceLink(
                         typeof(Textures),
-                        "Background.png"));
+                        "MemoryBackground.jpg"));
                 manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_BACKGROUND);
             });
         }

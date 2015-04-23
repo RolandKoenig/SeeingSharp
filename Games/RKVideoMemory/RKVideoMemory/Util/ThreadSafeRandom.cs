@@ -19,16 +19,28 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace RKVideoMemory.Assets.Textures
+namespace RKVideoMemory.Util
 {
-    /// <summary>
-    /// Dummy class for simpler resource link creation.
-    /// </summary>
-    internal static class Textures
-    { 
+    internal static class ThreadSafeRandom
+    {
+        private static Random s_random;
+        private static object s_randomLock;
+
+        static ThreadSafeRandom()
+        {
+            s_random = new Random(Environment.TickCount);
+            s_randomLock = new object();
+        }
+
+        public static int Next(int min, int max)
+        {
+            lock(s_randomLock)
+            {
+                return s_random.Next(min, max);
+            }
+        }
+        
     }
 }

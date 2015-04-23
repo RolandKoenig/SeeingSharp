@@ -20,6 +20,7 @@
 using FrozenSky;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
+using FrozenSky.Checking;
 using FrozenSky.Util;
 using RKVideoMemory.Assets.Textures;
 using RKVideoMemory.Data;
@@ -40,45 +41,81 @@ namespace RKVideoMemory.Game
         private List<CardPair> m_cardPairs;
 
         /// <summary>
+        /// Clears the current map from the given scene.
+        /// </summary>
+        /// <param name="scene">The scene to be cleard..</param>
+        internal async Task ClearAsync(Scene scene)
+        {
+            m_cardPairs.EnsureNotNull("m_cardPairs");
+
+            await scene.ManipulateSceneAsync((manipulator) =>
+            {
+                foreach(CardPair actPair in m_cardPairs)
+                {
+                    foreach (Card actCard in actPair.Cards)
+                    {
+                        manipulator.Remove(actCard);
+                    }
+                    manipulator.Remove(actPair);
+                }
+            });
+        }
+
+        /// <summary>
         /// Builds all game objects for the given level.
         /// </summary>
         /// <param name="currentLevel">The current level.</param>
         /// <param name="scene">The scene to which to add all objects.</param>
         internal async Task BuildLevelAsync(LevelData currentLevel, Scene scene)
         {
-            m_cardMap = new Card[5, 5];
+            int tilesX = Constants.TILEMAP_X_COUNT;
+            int tilesY = Constants.TILEMAP_Y_COUNT;
+            float tileDistX = Constants.TILE_DISTANCE_X;
+            float tileDistY = Constants.TILE_DISTANCE_Y;
+            Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, (tilesY - 1) * tileDistY/ 2f);
+
+            m_cardMap = new Card[tilesX, tilesY];
             m_cardPairs = new List<CardPair>();
             Random randomizer = new Random(Environment.TickCount);
 
             await scene.ManipulateSceneAsync((manipulator) =>
             {
-                var resBackgroundMaterial= manipulator.AddSimpleColoredMaterial(
+                var resBackgroundMaterial1= manipulator.AddSimpleColoredMaterial(
                     new AssemblyResourceLink(
                         typeof(Textures),
-                        "CardBackground.png"));
+                        "Tile1.png"));
+                var resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
+                    new AssemblyResourceLink(
+                        typeof(Textures),
+                        "Tile2.png"));
                 foreach (MemoryPairData actPairData in currentLevel.MemoryPairs)
                 {
                     CardPair actCardPair = new CardPair(actPairData);
 
                     // Define all resources needed for a card for this pair
                     var resTitleMaterial = manipulator.AddSimpleColoredMaterial(actPairData.TitleFile);
-                    var resGeometry = manipulator.AddGeometry(new CardObjectType()
+                    var resGeometry1 = manipulator.AddGeometry(new CardObjectType()
                         {
                             FrontMaterial = resTitleMaterial,
-                            BackMaterial = resBackgroundMaterial
+                            BackMaterial = resBackgroundMaterial1
                         });
+                    var resGeometry2 = manipulator.AddGeometry(new CardObjectType()
+                    {
+                        FrontMaterial = resTitleMaterial,
+                        BackMaterial = resBackgroundMaterial2
+                    });
 
                     // Create both cards for this pair
-                    Card cardA = new Card(resGeometry, actCardPair);
-                    Card cardB = new Card(resGeometry, actCardPair);
+                    Card cardA = new Card(resGeometry1, actCardPair);
+                    Card cardB = new Card(resGeometry2, actCardPair);
                     Tuple<int, int> slotA = SearchFreeCardSlot(m_cardMap, randomizer);
                     m_cardMap[slotA.Item1, slotA.Item2] = cardA;
                     Tuple<int, int> slotB = SearchFreeCardSlot(m_cardMap, randomizer);
                     m_cardMap[slotB.Item1, slotB.Item2] = cardB;
 
                     // Add both cards to the scene
-                    cardA.Position = new Vector3(slotA.Item1 * 1.5f, 0f, slotA.Item2 * 1.5f);
-                    cardB.Position = new Vector3(slotB.Item1 * 1.5f, 0f, slotB.Item2 * 1.5f);
+                    cardA.Position = new Vector3(slotA.Item1 * tileDistX, 0f, slotA.Item2 * tileDistY) - midPoint;
+                    cardB.Position = new Vector3(slotB.Item1 * tileDistX, 0f, slotB.Item2 * tileDistY) - midPoint;
                     manipulator.Add(cardA);
                     manipulator.Add(cardB);
 
@@ -110,6 +147,18 @@ namespace RKVideoMemory.Game
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Gets the total count of pairs on the map.
+        /// </summary>
+        public int CountPairs
+        {
+            get
+            {
+                if (m_cardPairs == null) { return 0; }
+                return m_cardPairs.Count;
+            }
         }
     }
 }

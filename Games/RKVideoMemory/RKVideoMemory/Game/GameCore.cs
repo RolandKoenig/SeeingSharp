@@ -78,11 +78,16 @@ namespace RKVideoMemory.Game
             m_currentLevel = await LevelData.FromDirectory(sourceDirectory);
 
             // Load graphics for this level
+            if(m_gameMap != null)
+            {
+                await m_gameMap.ClearAsync(m_scene);
+            }
             m_gameMap = new GameMap();
+
             await m_gameMap.BuildLevelAsync(m_currentLevel, m_scene);
 
-            m_camera.Position = new Vector3(1f, 3f, -2f);
-            m_camera.Target = new Vector3(3f, 0f, 3f);
+            m_camera.Position = new Vector3(0, 12f, 0f);
+            m_camera.Target = new Vector3(0f, 0f, 0.1f);
             m_camera.UpdateCamera();
 
             Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();

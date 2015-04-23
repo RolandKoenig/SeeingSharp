@@ -59,6 +59,7 @@
     <Compile Include="Game\_Messages\LevelLoadedMessage.cs" />
     <Compile Include="Game\_Messages\LevelUnloadedMessage.cs" />
     <Compile Include="Game\_Messages\MainMemoryScreenEnteredMessage.cs" />
+    <Compile Include="Graphics\CardAnimations.cs" />
     <Compile Include="Graphics\CardObjectType.cs" />
     <Compile Include="Graphics\GenericGraphics.cs" />
     <Compile Include="MainWindow.cs">
@@ -69,6 +70,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\ThreadSafeRandom.cs" />
     <Compile Include="_Constants.cs" />
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
@@ -85,6 +87,7 @@
     <None Include="..\..\..\Misc\_FrozenSky.Multimedia.licenseheader">
       <Link>_FrozenSky.Multimedia.licenseheader</Link>
     </None>
+    <None Include="Assets\Textures\_Readme.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -111,17 +114,9 @@
   <ItemGroup>
     <Resource Include="Assets\Icon.ico" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\Background.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\Floor.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\LogoTexture.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\SkyBox.dds" />
@@ -143,6 +138,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\CardBackground.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Assets\Textures\MemoryBackground.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

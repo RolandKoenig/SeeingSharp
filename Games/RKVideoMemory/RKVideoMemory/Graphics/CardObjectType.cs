@@ -32,22 +32,25 @@ namespace RKVideoMemory.Graphics
     {
         public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
         {
+            float halfWidth = Constants.TILE_WIDTH / 2f;
+            float halfHeight = Constants.TILE_HEIGHT / 2f;
+
             VertexStructure[] result = new VertexStructure[2];
-            
+
             result[0] = new VertexStructure();
             result[0].BuildRect4V(
-                new Vector3(-0.5f, 0f, -0.5f),
-                new Vector3(0.5f, 0f, -0.5f),
-                new Vector3(0.5f, 0f, 0.5f),
-                new Vector3(-0.5f, 0f, 0.5f));
+                new Vector3(-halfWidth, 0f, -halfHeight),
+                new Vector3(halfWidth, 0f, -halfHeight),
+                new Vector3(halfWidth, 0f, halfHeight),
+                new Vector3(-halfWidth, 0f, halfHeight));
             result[0].Material = this.FrontMaterial;
 
             result[1] = new VertexStructure();
             result[1].BuildRect4V(
-                new Vector3(-0.5f, 0f, 0.5f),
-                new Vector3(0.5f, 0f, 0.5f),
-                new Vector3(0.5f, 0f, -0.5f),
-                new Vector3(-0.5f, 0f, -0.5f));
+                new Vector3(-halfWidth, 0f, halfHeight),
+                new Vector3(halfWidth, 0f, halfHeight),
+                new Vector3(halfWidth, 0f, -halfHeight),
+                new Vector3(-halfWidth, 0f, -halfHeight));
             result[1].Material = this.BackMaterial;
 
             return result;

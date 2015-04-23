@@ -20,6 +20,8 @@
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using RKVideoMemory.Data;
+using RKVideoMemory.Util;
+using RKVideoMemory.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,7 @@ namespace RKVideoMemory.Game
     public class CardPair : SceneLogicalObject
     {
         private MemoryPairData m_pairData;
+        private bool m_isUncovered;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPair"/> class.
@@ -39,6 +42,7 @@ namespace RKVideoMemory.Game
         public CardPair(MemoryPairData pairData)
         {
             m_pairData = pairData;
+            m_isUncovered = false;
         }
 
         /// <summary>
@@ -51,8 +55,19 @@ namespace RKVideoMemory.Game
                 Card actCard = this.Cards[loop];
 
                 actCard.AnimationHandler.CancelAnimations();
-                //actCard.BuildAnimationSequence()
-                //    .Rot
+
+                if(m_isUncovered)
+                {
+                    actCard.BuildAnimationSequence()
+                        .MainScreen_WhenUncovered()
+                        .Apply();  
+                }
+                else
+                {
+                    actCard.BuildAnimationSequence()
+                        .MainScreen_WhenCovered()
+                        .Apply();  
+                }
             }
         }
 
@@ -66,6 +81,12 @@ namespace RKVideoMemory.Game
         }
 
         public Card[] Cards
+        {
+            get;
+            set;
+        }
+
+        public bool IsUncovered
         {
             get;
             set;
