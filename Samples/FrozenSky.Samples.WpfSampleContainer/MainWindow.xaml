@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:frozensky="clr-namespace:FrozenSky.Multimedia.Views;assembly=FrozenSky.Multimedia"
         xmlns:local="clr-namespace:WpfSampleContainer"
-        Title="FrozenSky WPF Samples" Height="300" Width="300"
+        Title="FrozenSky Wpf Samples" Height="300" Width="300"
         Icon="/Resources/Logo.ico">
     <Window.DataContext>
         <local:MainWindowViewModel />

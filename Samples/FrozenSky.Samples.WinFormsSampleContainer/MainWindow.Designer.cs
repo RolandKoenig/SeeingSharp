@@ -277,6 +277,7 @@ namespace WinFormsSampleContainer
             // 
             this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_ctrlRenderer.InputMode = FrozenSky.Multimedia.Input.FrozenSkyInputMode.FreeCameraMovement;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
             this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 334);
