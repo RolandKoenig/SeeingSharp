@@ -56,9 +56,12 @@
     <Compile Include="Game\GameCore.cs" />
     <Compile Include="Game\GameMap.cs" />
     <Compile Include="Game\_Messages\GameInitializedMessage.cs" />
+    <Compile Include="Game\_Messages\GameTriggerMessage.cs" />
     <Compile Include="Game\_Messages\LevelLoadedMessage.cs" />
     <Compile Include="Game\_Messages\LevelUnloadedMessage.cs" />
     <Compile Include="Game\_Messages\MainMemoryScreenEnteredMessage.cs" />
+    <Compile Include="Game\_Messages\HoveredObjectsChangedMessage.cs" />
+    <Compile Include="Game\_Messages\ObjectsClickedMessage.cs" />
     <Compile Include="Graphics\CardAnimations.cs" />
     <Compile Include="Graphics\CardObjectType.cs" />
     <Compile Include="Graphics\GenericGraphics.cs" />
@@ -114,7 +117,6 @@
   <ItemGroup>
     <Resource Include="Assets\Icon.ico" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\Background.png" />
   </ItemGroup>
@@ -135,9 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\White.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\CardBackground.png" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\MemoryBackground.jpg" />

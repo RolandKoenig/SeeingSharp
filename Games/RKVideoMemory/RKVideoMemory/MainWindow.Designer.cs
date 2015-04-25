@@ -28,35 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
             this.m_mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_cmdLoadLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
+            this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
+            this.m_timerPicking = new System.Windows.Forms.Timer(this.components);
+            this.m_timerTrigger = new System.Windows.Forms.Timer(this.components);
             this.m_mainMenu.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // m_ctrlRenderer
-            // 
-            this.m_ctrlRenderer.DiscardRendering = true;
-            this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
-            this.m_ctrlRenderer.Name = "m_ctrlRenderer";
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 371);
-            this.m_ctrlRenderer.TabIndex = 0;
-            this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
-            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
-            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.5F;
-            this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
-            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = FrozenSky.Multimedia.Core.AntialiasingQualityLevel.Medium;
-            this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
-            this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
-            this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
-            this.m_ctrlRenderer.ViewConfiguration.Overlay2DEnabled = true;
-            this.m_ctrlRenderer.ViewConfiguration.ShowTextures = true;
-            this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
-            this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
             // 
             // m_mainMenu
             // 
@@ -80,9 +62,44 @@
             // m_cmdLoadLevel
             // 
             this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
-            this.m_cmdLoadLevel.Size = new System.Drawing.Size(156, 24);
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(175, 24);
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
+            // 
+            // m_ctrlRenderer
+            // 
+            this.m_ctrlRenderer.DiscardRendering = true;
+            this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_ctrlRenderer.InputMode = FrozenSky.Multimedia.Input.FrozenSkyInputMode.FreeCameraMovement;
+            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
+            this.m_ctrlRenderer.Name = "m_ctrlRenderer";
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 371);
+            this.m_ctrlRenderer.TabIndex = 0;
+            this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
+            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.5F;
+            this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
+            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = FrozenSky.Multimedia.Core.AntialiasingQualityLevel.Medium;
+            this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
+            this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
+            this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
+            this.m_ctrlRenderer.ViewConfiguration.Overlay2DEnabled = true;
+            this.m_ctrlRenderer.ViewConfiguration.ShowTextures = true;
+            this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
+            this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
+            this.m_ctrlRenderer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnCtrlRenderer_MouseClick);
+            // 
+            // m_timerPicking
+            // 
+            this.m_timerPicking.Enabled = true;
+            this.m_timerPicking.Interval = 200;
+            this.m_timerPicking.Tick += new System.EventHandler(this.OnTimerPicking_Tick);
+            // 
+            // m_timerTrigger
+            // 
+            this.m_timerTrigger.Enabled = true;
+            this.m_timerTrigger.Interval = 1000;
+            this.m_timerTrigger.Tick += new System.EventHandler(this.OnTimerTrigger_Tick);
             // 
             // MainWindow
             // 
@@ -109,6 +126,8 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem m_cmdLoadLevel;
         private System.Windows.Forms.FolderBrowserDialog m_dlgOpenDir;
+        private System.Windows.Forms.Timer m_timerPicking;
+        private System.Windows.Forms.Timer m_timerTrigger;
     }
 }
 

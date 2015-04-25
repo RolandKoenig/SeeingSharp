@@ -455,19 +455,18 @@ namespace FrozenSky.Multimedia.Core
         public SceneLayer GetLayer(string layerName)
         {
             CheckValid();
-
             return m_owner.GetLayer(layerName);
         }
 
-        /// <summary>
-        /// Gets the layer with the given name.
-        /// Returns null if the layer is not available.
-        /// </summary>
-        /// <param name="layerName">Name of the layer.</param>
+        public bool ContainsLayer(string layerName)
+        {
+            CheckValid();
+            return m_owner.TryGetLayer(layerName) != null;
+        }
+
         public SceneLayer TryGetLayer(string layerName)
         {
             CheckValid();
-
             return m_owner.TryGetLayer(layerName);
         }
 

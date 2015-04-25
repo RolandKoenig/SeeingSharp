@@ -31,7 +31,7 @@ using FrozenSky;
 
 namespace RKVideoMemory.Game
 {
-    public class GameCore
+    public class GameCore : SceneLogicalObject
     {
         #region Game related members
         private LevelData m_currentLevel; 
@@ -60,7 +60,10 @@ namespace RKVideoMemory.Game
         /// </summary>
         public async Task InitializeAsync()
         {
-            await m_scene.BuildBackgroundAsync();
+            await m_scene.ManipulateSceneAsync((manipulator) =>
+            {
+                manipulator.Add(this);
+            });
 
             m_initialized = true;
             Messenger.BeginPublish<GameInitializedMessage>();
@@ -84,6 +87,8 @@ namespace RKVideoMemory.Game
             }
             m_gameMap = new GameMap();
 
+            await m_scene.BuildBackgroundAsync(sourceDirectory);
+
             await m_gameMap.BuildLevelAsync(m_currentLevel, m_scene);
 
             m_camera.Position = new Vector3(0, 12f, 0f);
@@ -105,6 +110,14 @@ namespace RKVideoMemory.Game
             await Task.Delay(100);
 
             Messenger.BeginPublish<LevelUnloadedMessage>();
+        }
+
+        /// <summary>
+        /// Called when an object was clicked.
+        /// </summary>
+        private void OnMessage_Received(ObjectsClickedMessage message)
+        {
+
         }
        
         public bool IsInitialized

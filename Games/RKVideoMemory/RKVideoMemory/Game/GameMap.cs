@@ -121,6 +121,7 @@ namespace RKVideoMemory.Game
 
                     // Assigns the cards to the pair object
                     actCardPair.Cards = new Card[] { cardA, cardB };
+                    manipulator.Add(actCardPair);
 
                     m_cardPairs.Add(actCardPair);
                 }

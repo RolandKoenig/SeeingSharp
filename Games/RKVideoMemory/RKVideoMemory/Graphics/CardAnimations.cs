@@ -38,9 +38,11 @@ namespace RKVideoMemory.Graphics
             return sequenceBuilder
                 .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new FrozenSky.Vector3(0f, 0f, EngineMath.RAD_180DEG))
                 .WaitFinished()
-                .Delay(TimeSpan.FromSeconds(2))
+                .Delay(TimeSpan.FromSeconds(Constants.INITIAL_UNCOVER_SECONDS_MAX))
                 .WaitFinished()
-                .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(200, 500)))
+                .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
+                    Constants.ROTATE_ANIM_DELAY_MILLIS_MIN,
+                    Constants.ROTATE_ANIM_DELAY_MILLIS_MAX)))
                 .WaitFinished()
                 .RotateEulerAnglesTo(
                     new Vector3(0f, 0f, 0f),
@@ -54,13 +56,17 @@ namespace RKVideoMemory.Graphics
             return sequenceBuilder
                 .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new FrozenSky.Vector3(0f, 0f, EngineMath.RAD_180DEG))
                 .WaitFinished()
-                .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(200, 500)))
+                .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
+                    Constants.ROTATE_ANIM_DELAY_MILLIS_MIN, 
+                    Constants.ROTATE_ANIM_DELAY_MILLIS_MAX)))
                 .WaitFinished()
                 .RotateEulerAnglesTo(
                     new Vector3(0f, 0f, 0f),
                     TimeSpan.FromMilliseconds(300))
                 .WaitFinished()
-                .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(1000, 1500)))
+                .Delay(TimeSpan.FromSeconds(ThreadSafeRandom.Next(
+                    Constants.INITIAL_UNCOVER_SECONDS_MIN, 
+                    Constants.INITIAL_UNCOVER_SECONDS_MAX)))
                 .WaitFinished()
                 .RotateEulerAnglesTo(
                     new Vector3(0f, 0f, EngineMath.RAD_180DEG),

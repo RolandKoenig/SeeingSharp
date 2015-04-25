@@ -37,6 +37,9 @@ namespace RKVideoMemory
     public partial class MainWindow : Form
     {
         private GameCore m_game;
+        private bool m_onTickProcessing;
+
+        List<SceneObject> m_pickedObjects;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -44,6 +47,8 @@ namespace RKVideoMemory
         public MainWindow()
         {
             InitializeComponent();
+
+            m_pickedObjects = new List<SceneObject>();
         }
 
         /// <summary>
@@ -88,6 +93,67 @@ namespace RKVideoMemory
         private void OnMessage_Received(LevelUnloadedMessage message)
         {
             this.UpdateDialogStates();
+        }
+
+        private void OnCtrlRenderer_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (m_pickedObjects.Count > 0)
+            {
+                FrozenSkyApplication.Current.UIMessenger.Publish(
+                    new ObjectsClickedMessage(m_pickedObjects.ToList()));
+            }
+        }
+
+        private void OnTimerTrigger_Tick(object sender, EventArgs e)
+        {
+            FrozenSkyApplication.Current.UIMessenger.Publish<GameTriggerMessage>();
+        }
+
+        private async void OnTimerPicking_Tick(object sender, EventArgs e)
+        {
+            if (m_onTickProcessing) { return; }
+
+            m_onTickProcessing = true;
+            try
+            {
+                // Perform simple picking test
+                System.Drawing.Point cursorPosition = this.PointToClient(Cursor.Position);
+                List<SceneObject> objectsBelowCursor = await m_ctrlRenderer.RenderLoop.PickObjectAsync(
+                    new FrozenSky.Point(cursorPosition.X, cursorPosition.Y),
+                    new PickingOptions());
+                if (this.IsDisposed) { return; }
+
+                // Look, what is new and what is old
+                List<SceneObject> removedObjects = new List<SceneObject>(m_pickedObjects.Count);
+                List<SceneObject> addedObjects = new List<SceneObject>(objectsBelowCursor.Count);
+                foreach(var actPickedObject in m_pickedObjects)
+                {
+                    if(!objectsBelowCursor.Contains(actPickedObject))
+                    {
+                        removedObjects.Add(actPickedObject);
+                    }
+                }
+                foreach(var actObjectBelowCurser in objectsBelowCursor)
+                {
+                    if(!m_pickedObjects.Contains(actObjectBelowCurser))
+                    {
+                        addedObjects.Add(actObjectBelowCurser);
+                    }
+                }
+
+                // Update local collection
+                foreach (var actRemovedObject in removedObjects) { m_pickedObjects.Remove(actRemovedObject); }
+                foreach (var actAddedObject in addedObjects) { m_pickedObjects.Add(actAddedObject); }
+
+                // Notify changes to game system
+                HoveredObjectsChangedMessage hoveredChangedMessage = new HoveredObjectsChangedMessage(
+                    removedObjects, addedObjects);
+                FrozenSkyApplication.Current.UIMessenger.Publish(hoveredChangedMessage);
+            }
+            finally
+            {
+                m_onTickProcessing = false;
+            }
         }
 
         private async void OnCmdLoadLevel_Click(object sender, EventArgs e)

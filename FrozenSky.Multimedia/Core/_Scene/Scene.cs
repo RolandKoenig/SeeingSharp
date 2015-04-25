@@ -440,7 +440,14 @@ namespace FrozenSky.Multimedia.Core
             InitializeResourceDictionaries(true);
 
             SceneLayer layerObject = GetLayer(layer);
-            layerObject.AddObject(sceneObject);
+            if(layerObject.AddObject(sceneObject))
+            {
+                // Register all 
+                if(m_messenger != null)
+                {
+                    m_messenger.SubscribeAll(sceneObject);
+                }
+            }
 
             return sceneObject;
         }

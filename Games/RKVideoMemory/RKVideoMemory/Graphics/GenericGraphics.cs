@@ -20,10 +20,12 @@
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using FrozenSky.Multimedia.Objects;
+using FrozenSky.Checking;
 using FrozenSky.Util;
 using RKVideoMemory.Assets.Textures;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,19 +34,34 @@ namespace RKVideoMemory.Graphics
 {
     public static class GenericGraphics
     {
-        public static Task BuildBackgroundAsync(this Scene sceneObject)
+        /// <summary>
+        /// Builds the background for the given scene.
+        /// </summary>
+        /// <param name="sceneObject">The scene object.</param>
+        /// <param name="sourceDirectory">The source directory.</param>
+        public static async Task BuildBackgroundAsync(this Scene sceneObject, string sourceDirectory)
         {
-            return sceneObject.ManipulateSceneAsync((manipulator) =>
-            {
-                SceneLayer bgLayer = manipulator.AddLayer(Constants.GFX_LAYER_BACKGROUND);
-                manipulator.SetLayerOrderID(
-                    bgLayer, 
-                    Constants.GFX_LAYER_BACKGROUND_ORDERID);
+            sourceDirectory.EnsureNotNullOrEmptyOrWhiteSpace("sourceDirectory");
 
-                var resBackgroundTexture = manipulator.AddTexture(
-                    new AssemblyResourceLink(
-                        typeof(Textures),
-                        "MemoryBackground.jpg"));
+            // Search the background file
+            string backgroundFile = Directory.GetFiles(sourceDirectory, "Background.*")
+                .FirstOrDefault();
+            if (string.IsNullOrWhiteSpace(backgroundFile)) { return; }
+
+            // Trigger scene manipulator for building the background
+            await sceneObject.ManipulateSceneAsync((manipulator) =>
+            {
+                // Create the background layer (if necessary)
+                if (!manipulator.ContainsLayer(Constants.GFX_LAYER_BACKGROUND))
+                {
+                    SceneLayer bgLayer = manipulator.AddLayer(Constants.GFX_LAYER_BACKGROUND);
+                    manipulator.SetLayerOrderID(
+                        bgLayer,
+                        Constants.GFX_LAYER_BACKGROUND_ORDERID);
+                }
+
+                // Load the background
+                var resBackgroundTexture = manipulator.AddTexture(backgroundFile);
                 manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_BACKGROUND);
             });
         }

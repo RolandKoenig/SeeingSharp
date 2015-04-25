@@ -134,13 +134,13 @@ namespace FrozenSky.Multimedia.Core
         /// Adds the given object to the layer.
         /// </summary>
         /// <param name="sceneObject">Object to add.</param>
-        internal void AddObject(SceneObject sceneObject)
+        internal bool AddObject(SceneObject sceneObject)
         {
             if (m_isInUpdate || m_isInUpdateBeside) { throw new InvalidOperationException("Unable to manipulate object list while SceneLayout is on updating!"); }
             if (sceneObject == null) { throw new ArgumentNullException("sceneObject"); }
-            if (sceneObject.Scene == m_scene) { return; }
+            if (sceneObject.Scene == m_scene) { return false; }
             if (sceneObject.Scene != null) { throw new ArgumentException("Given object does already belong to another scene!", "sceneObject"); }
-            if (sceneObject.SceneLayer == this) { return; }
+            if (sceneObject.SceneLayer == this) { return false; }
             if (sceneObject.SceneLayer != null) { throw new ArgumentException("Given object does already belong to another scene layer!", "sceneObject"); }
 
             m_sceneObjects.Add(sceneObject);
@@ -173,6 +173,8 @@ namespace FrozenSky.Multimedia.Core
             {
                 actViewSubset.RegisterObjectRange(sceneObject);
             }
+
+            return true;
         }
 
         /// <summary>

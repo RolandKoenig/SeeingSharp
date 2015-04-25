@@ -72,6 +72,15 @@ namespace RKVideoMemory.Game
         }
 
         /// <summary>
+        /// Called when the main game loop sends a cyclic trigger.
+        /// This one should start some shaking animation as long as nothin else happens on the screen.
+        /// </summary>
+        private void OnMessage_Received(GameTriggerMessage message)
+        {
+
+        }
+
+        /// <summary>
         /// Was this cardpair found previously?
         /// </summary>
         public bool WasFound
