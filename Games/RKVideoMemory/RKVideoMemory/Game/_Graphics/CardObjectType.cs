@@ -26,7 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RKVideoMemory.Graphics
+namespace RKVideoMemory.Game
 {
     public class CardObjectType : ObjectType
     {

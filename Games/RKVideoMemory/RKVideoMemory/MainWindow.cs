@@ -38,8 +38,7 @@ namespace RKVideoMemory
     {
         private GameCore m_game;
         private bool m_onTickProcessing;
-
-        List<SceneObject> m_pickedObjects;
+        private List<SceneObject> m_objectsBelowCursor;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -48,7 +47,7 @@ namespace RKVideoMemory
         {
             InitializeComponent();
 
-            m_pickedObjects = new List<SceneObject>();
+            m_objectsBelowCursor = new List<SceneObject>();
         }
 
         /// <summary>
@@ -97,10 +96,10 @@ namespace RKVideoMemory
 
         private void OnCtrlRenderer_MouseClick(object sender, MouseEventArgs e)
         {
-            if (m_pickedObjects.Count > 0)
+            if (m_objectsBelowCursor.Count > 0)
             {
                 FrozenSkyApplication.Current.UIMessenger.Publish(
-                    new ObjectsClickedMessage(m_pickedObjects.ToList()));
+                    new ObjectsClickedMessage(m_objectsBelowCursor.ToList()));
             }
         }
 
@@ -124,9 +123,9 @@ namespace RKVideoMemory
                 if (this.IsDisposed) { return; }
 
                 // Look, what is new and what is old
-                List<SceneObject> removedObjects = new List<SceneObject>(m_pickedObjects.Count);
+                List<SceneObject> removedObjects = new List<SceneObject>(m_objectsBelowCursor.Count);
                 List<SceneObject> addedObjects = new List<SceneObject>(objectsBelowCursor.Count);
-                foreach(var actPickedObject in m_pickedObjects)
+                foreach(var actPickedObject in m_objectsBelowCursor)
                 {
                     if(!objectsBelowCursor.Contains(actPickedObject))
                     {
@@ -135,15 +134,15 @@ namespace RKVideoMemory
                 }
                 foreach(var actObjectBelowCurser in objectsBelowCursor)
                 {
-                    if(!m_pickedObjects.Contains(actObjectBelowCurser))
+                    if(!m_objectsBelowCursor.Contains(actObjectBelowCurser))
                     {
                         addedObjects.Add(actObjectBelowCurser);
                     }
                 }
 
                 // Update local collection
-                foreach (var actRemovedObject in removedObjects) { m_pickedObjects.Remove(actRemovedObject); }
-                foreach (var actAddedObject in addedObjects) { m_pickedObjects.Add(actAddedObject); }
+                foreach (var actRemovedObject in removedObjects) { m_objectsBelowCursor.Remove(actRemovedObject); }
+                foreach (var actAddedObject in addedObjects) { m_objectsBelowCursor.Add(actAddedObject); }
 
                 // Notify changes to game system
                 HoveredObjectsChangedMessage hoveredChangedMessage = new HoveredObjectsChangedMessage(

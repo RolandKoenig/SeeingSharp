@@ -20,7 +20,6 @@
 using FrozenSky;
 using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
-using RKVideoMemory.Game;
 using RKVideoMemory.Util;
 using System;
 using System.Collections.Generic;
@@ -28,7 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RKVideoMemory.Graphics
+namespace RKVideoMemory.Game
 {
     internal static class CardAnimations
     {

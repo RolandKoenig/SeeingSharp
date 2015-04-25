@@ -62,7 +62,7 @@
             // m_cmdLoadLevel
             // 
             this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
-            this.m_cmdLoadLevel.Size = new System.Drawing.Size(175, 24);
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(156, 24);
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
             // 
@@ -92,7 +92,6 @@
             // m_timerPicking
             // 
             this.m_timerPicking.Enabled = true;
-            this.m_timerPicking.Interval = 200;
             this.m_timerPicking.Tick += new System.EventHandler(this.OnTimerPicking_Tick);
             // 
             // m_timerTrigger

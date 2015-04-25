@@ -24,7 +24,6 @@ using FrozenSky.Checking;
 using FrozenSky.Util;
 using RKVideoMemory.Assets.Textures;
 using RKVideoMemory.Data;
-using RKVideoMemory.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -25,7 +25,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FrozenSky.Util;
-using RKVideoMemory.Graphics;
 using RKVideoMemory.Data;
 using FrozenSky;
 

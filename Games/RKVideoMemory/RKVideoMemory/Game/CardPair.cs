@@ -21,7 +21,6 @@ using FrozenSky.Multimedia.Core;
 using FrozenSky.Multimedia.Drawing3D;
 using RKVideoMemory.Data;
 using RKVideoMemory.Util;
-using RKVideoMemory.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -77,7 +76,17 @@ namespace RKVideoMemory.Game
         /// </summary>
         private void OnMessage_Received(GameTriggerMessage message)
         {
+            for (int loop = 0; loop < this.Cards.Length; loop++)
+            {
+                Card actCard = this.Cards[loop];
+                if (actCard.AnimationHandler.CountRunningAnimations > 0) { continue; }
 
+                // Trigger 'shaking' animation
+                if (ThreadSafeRandom.Next(0, 100) < 10)
+                {
+
+                }
+            }
         }
 
         /// <summary>
