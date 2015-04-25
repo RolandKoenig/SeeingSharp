@@ -92,7 +92,7 @@
     <Compile Include="Assets\Textures\_Textures.cs" />
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Data\MainTextureData.cs" />
-    <Compile Include="Data\MemoryPairData.cs" />
+    <Compile Include="Data\CardPairData.cs" />
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\CardPair.cs" />
     <Compile Include="Game\GameCore.cs" />

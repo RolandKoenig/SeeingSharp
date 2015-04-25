@@ -479,6 +479,15 @@ namespace FrozenSky.Multimedia.Core
         }
 
         /// <summary>
+        /// Clear the depth buffer before rendering?
+        /// </summary>
+        public bool ClearDepthBufferBefreRendering
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets a collection containing all objects.
         /// </summary>
         public ReadOnlyCollection<SceneObject> Objects

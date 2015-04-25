@@ -39,10 +39,10 @@ namespace RKVideoMemory.Data
             this.MainTextures = new MainTextureData(directoryName);
 
             // Search and process all memory pairs
-            this.MemoryPairs = new List<MemoryPairData>();
+            this.MemoryPairs = new List<CardPairData>();
             foreach(string actSubdirectory in Directory.GetDirectories(directoryName))
             {
-                MemoryPairData actMemoryPair = new MemoryPairData(
+                CardPairData actMemoryPair = new CardPairData(
                     Path.GetFileName(actSubdirectory));
 
                 // Select all file names within the directory (order by filename)
@@ -58,6 +58,14 @@ namespace RKVideoMemory.Data
                     if(Constants.SUPPORTED_IMAGE_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
                     {
                         actMemoryPair.ProcessImageFile(actFilePath);
+                        continue;
+                    }
+
+                    // Handle video files
+                    if(Constants.SUPPORTED_VIDEO_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
+                    {
+                        actMemoryPair.ProcessVideoFile(actFilePath);
+                        continue;
                     }
                 }
 
@@ -83,7 +91,7 @@ namespace RKVideoMemory.Data
         /// <summary>
         /// Gets a collection containing all found MemoryPairs.
         /// </summary>
-        public List<MemoryPairData> MemoryPairs
+        public List<CardPairData> MemoryPairs
         {
             get;
             private set;

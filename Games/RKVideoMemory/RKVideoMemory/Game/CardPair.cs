@@ -31,14 +31,14 @@ namespace RKVideoMemory.Game
 {
     public class CardPair : SceneLogicalObject
     {
-        private MemoryPairData m_pairData;
+        private CardPairData m_pairData;
         private bool m_isUncovered;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPair"/> class.
         /// </summary>
         /// <param name="pairData">The pair data.</param>
-        public CardPair(MemoryPairData pairData)
+        public CardPair(CardPairData pairData)
         {
             m_pairData = pairData;
             m_isUncovered = false;
@@ -108,6 +108,11 @@ namespace RKVideoMemory.Game
         {
             get;
             set;
+        }
+
+        public CardPairData PairData
+        {
+            get { return m_pairData; }
         }
     }
 }

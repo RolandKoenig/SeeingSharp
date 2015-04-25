@@ -28,19 +28,21 @@ using System.Threading.Tasks;
 
 namespace RKVideoMemory.Data
 {
-    public class MemoryPairData 
+    public class CardPairData 
     {
         private List<ResourceLink> m_childImageFiles;
+        private List<ResourceLink> m_childVideoFiles;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="MemoryPairData"/> class.
+        /// Initializes a new instance of the <see cref="CardPairData"/> class.
         /// </summary>
         /// <param name="title">The title of this pari.</param>
-        internal MemoryPairData(string title)
+        internal CardPairData(string title)
         {
             this.Title = title;
 
             m_childImageFiles = new List<ResourceLink>();
+            m_childVideoFiles = new List<ResourceLink>();
         }
 
         public override string ToString()
@@ -54,9 +56,7 @@ namespace RKVideoMemory.Data
         /// </summary>
         internal bool IsValidPair()
         {
-            return
-                (this.TitleFile != null) &&
-                (m_childImageFiles.Count > 0);
+            return this.TitleFile != null;
         }
 
         /// <summary>
@@ -77,6 +77,15 @@ namespace RKVideoMemory.Data
             }
         }
 
+        /// <summary>
+        /// Processes the given video file.
+        /// </summary>
+        /// <param name="filePath">The path to the vide file.</param>
+        internal void ProcessVideoFile(string filePath)
+        {
+            m_childVideoFiles.Add(filePath);
+        }
+
         public string Title
         {
             get;
@@ -92,6 +101,11 @@ namespace RKVideoMemory.Data
         public List<ResourceLink> ChildImages
         {
             get { return m_childImageFiles; }
+        }
+
+        public List<ResourceLink> ChildVideos
+        {
+            get { return m_childVideoFiles; }
         }
     }
 }

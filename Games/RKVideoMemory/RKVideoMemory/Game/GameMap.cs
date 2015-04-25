@@ -87,7 +87,7 @@ namespace RKVideoMemory.Game
                     currentLevel.MainTextures.Tile1TextureLink);
                 var resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile2TextureLink);
-                foreach (MemoryPairData actPairData in currentLevel.MemoryPairs)
+                foreach (CardPairData actPairData in currentLevel.MemoryPairs)
                 {
                     CardPair actCardPair = new CardPair(actPairData);
 

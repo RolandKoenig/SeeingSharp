@@ -476,6 +476,12 @@ namespace FrozenSky.Multimedia.Core
                 m_sceneLayer.PostprocessEffectKey,
                 resources);
 
+            // Clear current depth buffer
+            if (m_sceneLayer.ClearDepthBufferBefreRendering)
+            {
+                renderState.ClearCurrentDepthBuffer();
+            }
+
             // Perform main renderpass logic
             using (m_renderParameters.Apply(renderState))
             {

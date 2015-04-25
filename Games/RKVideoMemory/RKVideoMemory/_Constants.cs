@@ -29,16 +29,23 @@ namespace RKVideoMemory
     {
         public const string GAME_SCENE_NAME = "VideoMemoryScene";
 
+        #region file extensions
+        public static readonly string[] SUPPORTED_IMAGE_FORMATS = new string[] { ".jpg", ".jpeg", ".png", ".bmp" };
+        public static readonly string[] SUPPORTED_VIDEO_FORMATS = new string[] { ".mp4", ".wmv" };
+        #endregion
+
+        #region graphics layer settings
         public const string GFX_LAYER_BACKGROUND = "Background";
         public const int GFX_LAYER_BACKGROUND_ORDERID = -100;
-
-        public static readonly string[] SUPPORTED_IMAGE_FORMATS = new string[] { ".jpg", ".jpeg", ".png", ".bmp" };
-        public const string TITLE_IMAGE_NAME = "_Title";
+        public const string GFX_LAYER_VIDEO_FOREGROUND = "VideoForeground";
+        public const int GFX_LAYER_VIDEO_FOREGROUND_ORDERID = 100;
+        #endregion
 
         #region file patterns
         public const string FILE_PATTERN_BACKGROUND = "Background.*";
         public const string FILE_PATTERN_TILE1 = "Tile1.*";
         public const string FILE_PATTERN_TILE2 = "Tile2.*";
+        public const string TITLE_IMAGE_NAME = "_Title";
         #endregion
 
         #region timing parameters
