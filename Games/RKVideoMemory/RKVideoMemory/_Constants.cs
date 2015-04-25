@@ -35,6 +35,12 @@ namespace RKVideoMemory
         public static readonly string[] SUPPORTED_IMAGE_FORMATS = new string[] { ".jpg", ".jpeg", ".png", ".bmp" };
         public const string TITLE_IMAGE_NAME = "_Title";
 
+        #region file patterns
+        public const string FILE_PATTERN_BACKGROUND = "Background.*";
+        public const string FILE_PATTERN_TILE1 = "Tile1.*";
+        public const string FILE_PATTERN_TILE2 = "Tile2.*";
+        #endregion
+
         #region timing parameters
         public const int INITIAL_UNCOVER_SECONDS_MAX = 5;
         public const int INITIAL_UNCOVER_SECONDS_MIN = 4;

@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="Assets\Textures\_Textures.cs" />
     <Compile Include="Data\LevelData.cs" />
+    <Compile Include="Data\MainTextureData.cs" />
     <Compile Include="Data\MemoryPairData.cs" />
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\CardPair.cs" />
@@ -90,7 +91,6 @@
     <None Include="..\..\..\Misc\_FrozenSky.Multimedia.licenseheader">
       <Link>_FrozenSky.Multimedia.licenseheader</Link>
     </None>
-    <None Include="Assets\Textures\_Readme.md" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -119,27 +119,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Assets\Textures\Background.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\SkyBox.dds" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\Tile1.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\Tile2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\Tile3.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\Wall.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\White.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Assets\Textures\MemoryBackground.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

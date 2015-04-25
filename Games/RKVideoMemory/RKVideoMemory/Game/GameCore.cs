@@ -87,8 +87,6 @@ namespace RKVideoMemory.Game
             }
             m_gameMap = new GameMap();
 
-            await m_scene.BuildBackgroundAsync(sourceDirectory);
-
             await m_gameMap.BuildLevelAsync(m_currentLevel, m_scene);
 
             m_camera.Position = new Vector3(0, 12f, 0f);

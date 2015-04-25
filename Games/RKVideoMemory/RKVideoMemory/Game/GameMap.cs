@@ -58,6 +58,8 @@ namespace RKVideoMemory.Game
                     }
                     manipulator.Remove(actPair);
                 }
+
+                manipulator.Clear(true);
             });
         }
 
@@ -80,14 +82,12 @@ namespace RKVideoMemory.Game
 
             await scene.ManipulateSceneAsync((manipulator) =>
             {
+                manipulator.BuildBackground(currentLevel.MainTextures.BackgroundTextureLink);
+
                 var resBackgroundMaterial1= manipulator.AddSimpleColoredMaterial(
-                    new AssemblyResourceLink(
-                        typeof(Textures),
-                        "Tile1.png"));
+                    currentLevel.MainTextures.Tile1TextureLink);
                 var resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
-                    new AssemblyResourceLink(
-                        typeof(Textures),
-                        "Tile2.png"));
+                    currentLevel.MainTextures.Tile2TextureLink);
                 foreach (MemoryPairData actPairData in currentLevel.MemoryPairs)
                 {
                     CardPair actCardPair = new CardPair(actPairData);

@@ -17,6 +17,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using FrozenSky.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -29,7 +30,7 @@ namespace RKVideoMemory.Data
 {
     public class MemoryPairData 
     {
-        private List<string> m_childImageFiles;
+        private List<ResourceLink> m_childImageFiles;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MemoryPairData"/> class.
@@ -39,7 +40,7 @@ namespace RKVideoMemory.Data
         {
             this.Title = title;
 
-            m_childImageFiles = new List<string>();
+            m_childImageFiles = new List<ResourceLink>();
         }
 
         public override string ToString()
@@ -54,7 +55,7 @@ namespace RKVideoMemory.Data
         internal bool IsValidPair()
         {
             return
-                (!string.IsNullOrEmpty(this.TitleFile)) &&
+                (this.TitleFile != null) &&
                 (m_childImageFiles.Count > 0);
         }
 
@@ -62,7 +63,7 @@ namespace RKVideoMemory.Data
         /// Processes the given image file.
         /// </summary>
         /// <param name="filePath">The path to the image file.</param>
-        public void ProcessImageFile(string filePath)
+        internal void ProcessImageFile(string filePath)
         {
             if (Path.GetFileNameWithoutExtension(filePath).Equals(Constants.TITLE_IMAGE_NAME, StringComparison.OrdinalIgnoreCase))
             {
@@ -82,13 +83,13 @@ namespace RKVideoMemory.Data
             private set;
         }
 
-        public string TitleFile
+        public ResourceLink TitleFile
         {
             get;
             private set;
         }
 
-        public List<string> ChildImageFilePaths
+        public List<ResourceLink> ChildImages
         {
             get { return m_childImageFiles; }
         }

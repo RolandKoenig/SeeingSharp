@@ -37,33 +37,24 @@ namespace RKVideoMemory.Graphics
         /// <summary>
         /// Builds the background for the given scene.
         /// </summary>
-        /// <param name="sceneObject">The scene object.</param>
-        /// <param name="sourceDirectory">The source directory.</param>
-        public static async Task BuildBackgroundAsync(this Scene sceneObject, string sourceDirectory)
+        /// <param name="manipulator">The current scene manipulator.</param>
+        /// <param name="backgroundTexture">The link to the background texture file.</param>
+        public static void BuildBackground(this SceneManipulator manipulator, ResourceLink backgroundTexture)
         {
-            sourceDirectory.EnsureNotNullOrEmptyOrWhiteSpace("sourceDirectory");
+            backgroundTexture.EnsureNotNull("backgroundTexture");
 
-            // Search the background file
-            string backgroundFile = Directory.GetFiles(sourceDirectory, "Background.*")
-                .FirstOrDefault();
-            if (string.IsNullOrWhiteSpace(backgroundFile)) { return; }
-
-            // Trigger scene manipulator for building the background
-            await sceneObject.ManipulateSceneAsync((manipulator) =>
+            // Create the background layer (if necessary)
+            if (!manipulator.ContainsLayer(Constants.GFX_LAYER_BACKGROUND))
             {
-                // Create the background layer (if necessary)
-                if (!manipulator.ContainsLayer(Constants.GFX_LAYER_BACKGROUND))
-                {
-                    SceneLayer bgLayer = manipulator.AddLayer(Constants.GFX_LAYER_BACKGROUND);
-                    manipulator.SetLayerOrderID(
-                        bgLayer,
-                        Constants.GFX_LAYER_BACKGROUND_ORDERID);
-                }
+                SceneLayer bgLayer = manipulator.AddLayer(Constants.GFX_LAYER_BACKGROUND);
+                manipulator.SetLayerOrderID(
+                    bgLayer,
+                    Constants.GFX_LAYER_BACKGROUND_ORDERID);
+            }
 
-                // Load the background
-                var resBackgroundTexture = manipulator.AddTexture(backgroundFile);
-                manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_BACKGROUND);
-            });
+            // Load the background
+            var resBackgroundTexture = manipulator.AddTexture(backgroundTexture);
+            manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_BACKGROUND);
         }
     }
 }

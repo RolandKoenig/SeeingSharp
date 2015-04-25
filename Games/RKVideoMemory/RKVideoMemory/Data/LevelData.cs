@@ -29,15 +29,17 @@ namespace RKVideoMemory.Data
 {
     public class LevelData
     {
-        private List<MemoryPairData> m_memoryPairs;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="LevelData"/> class.
         /// </summary>
         /// <param name="directoryName">Name of the directory.</param>
         private LevelData(string directoryName)
         {
-            m_memoryPairs = new List<MemoryPairData>();
+            // Search all main textures
+            this.MainTextures = new MainTextureData(directoryName);
+
+            // Search and process all memory pairs
+            this.MemoryPairs = new List<MemoryPairData>();
             foreach(string actSubdirectory in Directory.GetDirectories(directoryName))
             {
                 MemoryPairData actMemoryPair = new MemoryPairData(
@@ -62,7 +64,7 @@ namespace RKVideoMemory.Data
                 // Add the pair to the new object
                 if(actMemoryPair.IsValidPair())
                 {
-                    m_memoryPairs.Add(actMemoryPair);
+                    this.MemoryPairs.Add(actMemoryPair);
                 }
             }
         }
@@ -83,7 +85,14 @@ namespace RKVideoMemory.Data
         /// </summary>
         public List<MemoryPairData> MemoryPairs
         {
-            get { return m_memoryPairs; }
+            get;
+            private set;
+        }
+
+        public MainTextureData MainTextures
+        {
+            get;
+            private set;
         }
     }
 }
