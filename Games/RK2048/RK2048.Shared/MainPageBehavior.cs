@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -18,10 +18,10 @@
 */
 #endregion
 
-using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Input;
-using FrozenSky.Multimedia.Views;
-using FrozenSky.Util;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Input;
+using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Util;
 using Microsoft.Xaml.Interactivity;
 using RK2048.Logic;
 using System;
@@ -36,15 +36,15 @@ namespace RK2048
 {
     public class MainPageBehavior : DependencyObject, IBehavior
     {
-        private FrozenSkyPanelPainter m_painter;
+        private SeeingSharpPanelPainter m_painter;
         private SwapChainBackgroundPanel m_currentTarget;
         private UIGestureCatcher m_gestureCatcher;
         private GameCore m_gameCore;
 
         public MainPageBehavior()
         {
-            m_painter = new FrozenSkyPanelPainter();
-            m_painter.InputMode = FrozenSkyInputMode.NoInput;
+            m_painter = new SeeingSharpPanelPainter();
+            m_painter.InputMode = SeeingSharpInputMode.NoInput;
         }
 
         public void Attach(DependencyObject associatedObject)
@@ -64,7 +64,7 @@ namespace RK2048
         private async void TriggerInitialize(SwapChainBackgroundPanel backgroundPanel)
         {
             // Check whether we are in design mode..
-            if (!FrozenSkyApplication.IsInitialized) { return; }
+            if (!SeeingSharpApplication.IsInitialized) { return; }
 
             // Create new GameCore object
             m_gameCore = m_currentTarget.DataContext as GameCore;

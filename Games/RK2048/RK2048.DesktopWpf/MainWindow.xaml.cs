@@ -1,4 +1,4 @@
-﻿using FrozenSky.Infrastructure;
+﻿using SeeingSharp.Infrastructure;
 using RK2048.Logic;
 using System;
 using System.Collections.Generic;
@@ -83,11 +83,11 @@ namespace RK2048.DesktopWpf
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private async void OnLoad(object sender, RoutedEventArgs e)
         {
-            if (!FrozenSkyApplication.IsInitialized) { return; }
+            if (!SeeingSharpApplication.IsInitialized) { return; }
 
             // Apply correct window title
             string windowTitle = this.Title;
-            this.Title = string.Format(Translatables.TITLE_VERSION, windowTitle, FrozenSkyApplication.Current.ProductVersion);
+            this.Title = string.Format(Translatables.TITLE_VERSION, windowTitle, SeeingSharpApplication.Current.ProductVersion);
 
             // Set this window to maximized mode
             this.WindowState = System.Windows.WindowState.Maximized;

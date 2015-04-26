@@ -1,6 +1,6 @@
 # Introduction
 These tutorials are ment to be a fast and simple introduction into the main 
-functionalities of the FrozenSky Multimedia component. All tutorial provied
+functionalities of the SeeingSharp Multimedia component. All tutorial provied
 in this folder are build for Windows Store Apps. Here you find a short list
 with descriptions for each tutorial-project.
 

@@ -34,7 +34,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_cmdLoadLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
-            this.m_ctrlRenderer = new FrozenSky.Multimedia.Views.FrozenSkyRendererControl();
+            this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_timerPicking = new System.Windows.Forms.Timer(this.components);
             this.m_timerTrigger = new System.Windows.Forms.Timer(this.components);
             this.m_mainMenu.SuspendLayout();
@@ -70,7 +70,7 @@
             // 
             this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_ctrlRenderer.InputMode = FrozenSky.Multimedia.Input.FrozenSkyInputMode.FreeCameraMovement;
+            this.m_ctrlRenderer.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
             this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 371);
@@ -79,7 +79,7 @@
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
             this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.5F;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
-            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = FrozenSky.Multimedia.Core.AntialiasingQualityLevel.Medium;
+            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
             this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
             this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
             this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
@@ -120,7 +120,7 @@
 
         #endregion
 
-        private FrozenSky.Multimedia.Views.FrozenSkyRendererControl m_ctrlRenderer;
+        private SeeingSharp.Multimedia.Views.SeeingSharpRendererControl m_ctrlRenderer;
         private System.Windows.Forms.MenuStrip m_mainMenu;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem m_cmdLoadLevel;

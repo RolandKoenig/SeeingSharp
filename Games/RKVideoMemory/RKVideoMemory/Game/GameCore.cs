@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,17 +17,17 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using FrozenSky.Util;
+using SeeingSharp.Util;
 using RKVideoMemory.Data;
-using FrozenSky;
-using FrozenSky.Multimedia.Objects;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Objects;
 
 namespace RKVideoMemory.Game
 {
@@ -158,7 +158,7 @@ namespace RKVideoMemory.Game
             get { return m_currentLevel; }
         }
 
-        public FrozenSkyMessenger Messenger
+        public SeeingSharpMessenger Messenger
         {
             get { return m_scene.Messenger; }
         }

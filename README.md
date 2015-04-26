@@ -1,18 +1,18 @@
-# FrozenSky
-FrozenSky is an application framework including a DirectX based graphics engine which I'am using for most of my hobby projects. 
+# SeeingSharp
+SeeingSharp is an application framework including a DirectX based graphics engine which I'am using for most of my hobby projects. 
 The base library is separated into the following projects:
- - FrozenSky
- - FrozenSky.Multimedia
- - FrozenSky.BuildTasks
+ - SeeingSharp
+ - SeeingSharp.Multimedia
+ - SeeingSharp.BuildTasks
  
 All libraries are optimized to work on most current Windows platforms containing Windows tablets (also ARM based), Desktop and Server Systems and Windows Phone (starting 8.1). The libraries are separated in 
  - a "DESKTOP" version optimized for Windows.Forms and WPF.
  - a "UNIVERSAL" version optimized for Windows Store and Windows Phone Store.
  
-### Library FrozenSky
+### Library SeeingSharp
 This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
 
-### Library FrozenSky.Multimedia
+### Library SeeingSharp.Multimedia
 This one is the most complex library in this project. It contains the graphics engine with the following features.
  - Full integration into Windows.Forms, WPF and WinRT
  - Heavy multithreading (all calculations and rendering is done in background threads)

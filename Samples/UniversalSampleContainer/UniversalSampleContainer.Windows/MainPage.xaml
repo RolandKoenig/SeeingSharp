@@ -23,10 +23,10 @@
                        VerticalAlignment="Top"
                        Margin="120,60,0,0"
                        Style="{StaticResource HeaderTextBlockStyle}"
-                       Text="FrozenSky WinRT Samples" />
+                       Text="Seeing# WinRT Samples" />
         </Grid>
         
-        <!-- Define the main drawing error for FrozenSky -->
+        <!-- Define the main drawing error for SeeingSharp -->
         <SwapChainPanel Margin="0,140,0,0">
             <i:Interaction.Behaviors>
                 <local:ApplySampleBehavior ClearColor="LightGray" 

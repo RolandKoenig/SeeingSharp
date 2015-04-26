@@ -112,13 +112,13 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\..\FrozenSky.Multimedia\FrozenSky.Multimedia_UNIVERSAL.csproj">
+    <ProjectReference Include="..\..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_UNIVERSAL.csproj">
       <Project>{b2985a80-5ca6-41e0-b96a-6b4625365f08}</Project>
-      <Name>FrozenSky.Multimedia_UNIVERSAL</Name>
+      <Name>SeeingSharp.Multimedia_UNIVERSAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FrozenSky\FrozenSky_UNIVERSAL.csproj">
+    <ProjectReference Include="..\..\..\SeeingSharp\SeeingSharp_UNIVERSAL.csproj">
       <Project>{b077159e-8a45-42d2-896e-131eb2f8b9d0}</Project>
-      <Name>FrozenSky_UNIVERSAL</Name>
+      <Name>SeeingSharp_UNIVERSAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -131,8 +131,8 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="..\..\..\Misc\_FrozenSky.Multimedia.licenseheader">
-      <Link>_FrozenSky.Multimedia.licenseheader</Link>
+    <None Include="..\..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
     <None Include="RK2048.Windows_StoreKey.pfx" />
     <None Include="RK2048.Windows_TemporaryKey.pfx" />

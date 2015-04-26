@@ -63,9 +63,9 @@
             <!--Now the real files-->
             <Component Id="MainFiles" Guid="{9F06BC69-FFAB-4CB6-9BFF-CE5A9B3371E2}">
               
-              <!-- FrozenSky and game exe -->
-              <File Id="FrozenSky.dll" Name="FrozenSky.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\FrozenSky.dll" />
-              <File Id="FrozenSky.Multimedia.dll" Name="FrozenSky.Multimedia.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\FrozenSky.Multimedia.dll" />
+              <!-- SeeingSharp and game exe -->
+              <File Id="SeeingSharp.dll" Name="SeeingSharp.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SeeingSharp.dll" />
+              <File Id="SeeingSharp.Multimedia.dll" Name="SeeingSharp.Multimedia.dll" Source="$(var.SolutionDir)\$(var.DllSourcePath)\SeeingSharp.Multimedia.dll" />
               <File Id="RK2048.exe" Name="RK2048.exe" Source="$(var.SolutionDir)\$(var.DllSourcePath)\RK2048.exe" KeyPath="yes">
                 <Shortcut Advertise="yes" Id="RK2048.exe" Directory="DesktopFolder" Name="RK 2048" WorkingDirectory="INSTALLLOCATION" Description="Start RK 2048" Icon="RK2048.ico">
                   <Icon Id="RK2048.ico" SourceFile="Icons\Icon.ico" />

@@ -7,7 +7,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ms-appx:///FrozenSky/Resources/FrozenSkyWinRTStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///SeeingSharp/Resources/SeeingSharpWinRTStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

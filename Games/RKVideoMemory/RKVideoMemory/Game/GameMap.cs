@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,11 +17,11 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using FrozenSky;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
-using FrozenSky.Checking;
-using FrozenSky.Util;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Checking;
+using SeeingSharp.Util;
 using RKVideoMemory.Assets.Textures;
 using RKVideoMemory.Data;
 using System;

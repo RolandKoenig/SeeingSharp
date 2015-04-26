@@ -1,6 +1,6 @@
-﻿using FrozenSky;
-using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Core;
+﻿using SeeingSharp;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,13 +48,13 @@ namespace RK2048
         {
             // Initialize application and graphics
             Exception initException = null;
-            if (!FrozenSkyApplication.IsInitialized)
+            if (!SeeingSharpApplication.IsInitialized)
             {
-                await FrozenSkyApplication.InitializeAsync(
+                await SeeingSharpApplication.InitializeAsync(
                     this.GetType().GetTypeInfo().Assembly,
                     new Assembly[]
                     {
-                        typeof(FrozenSkyApplication).GetTypeInfo().Assembly,
+                        typeof(SeeingSharpApplication).GetTypeInfo().Assembly,
                         typeof(GraphicsCore).GetTypeInfo().Assembly
                     },
                     new string[] { e.Arguments });

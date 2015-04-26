@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -18,11 +18,11 @@
 */
 #endregion
 
-using FrozenSky;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
-using FrozenSky.Multimedia.Objects;
-using FrozenSky.Util;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Util;
 using System.Linq;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ namespace RK2048.Graphics
         /// <param name="manipulator"></param>
         public static void DefineTileResoures(this SceneManipulator manipulator)
         {
-            // NOTE: For later versions of FrozenSky: We should be able to change the texture per object
+            // NOTE: For later versions of SeeingSharp: We should be able to change the texture per object
             //       Currently we have to create one VertexStructure per texture - very inefficient for this case!
 
             float tileWidth = Constants.TILE_WIDTH;

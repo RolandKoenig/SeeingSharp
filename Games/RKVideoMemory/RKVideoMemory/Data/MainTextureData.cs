@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using FrozenSky;
-using FrozenSky.Util;
+using SeeingSharp;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,9 +36,9 @@ namespace RKVideoMemory.Data
             string pathTile1 = Directory.GetFiles(directoryPath, Constants.FILE_PATTERN_TILE1).FirstOrDefault();
             string pathTile2 = Directory.GetFiles(directoryPath, Constants.FILE_PATTERN_TILE2).FirstOrDefault();
 
-            if (string.IsNullOrWhiteSpace(pathBackground)) { throw new FrozenSkyException("Unable to find file " + Constants.FILE_PATTERN_BACKGROUND + "!"); }
-            if (string.IsNullOrWhiteSpace(pathTile1)) { throw new FrozenSkyException("Unable to find file " + Constants.FILE_PATTERN_TILE1 + "!"); }
-            if (string.IsNullOrWhiteSpace(pathTile2)) { throw new FrozenSkyException("Unable to find file " + Constants.FILE_PATTERN_TILE2 + "!"); }
+            if (string.IsNullOrWhiteSpace(pathBackground)) { throw new SeeingSharpException("Unable to find file " + Constants.FILE_PATTERN_BACKGROUND + "!"); }
+            if (string.IsNullOrWhiteSpace(pathTile1)) { throw new SeeingSharpException("Unable to find file " + Constants.FILE_PATTERN_TILE1 + "!"); }
+            if (string.IsNullOrWhiteSpace(pathTile2)) { throw new SeeingSharpException("Unable to find file " + Constants.FILE_PATTERN_TILE2 + "!"); }
 
             this.BackgroundTextureLink = pathBackground;
             this.Tile1TextureLink = pathTile1;

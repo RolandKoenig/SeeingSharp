@@ -138,8 +138,8 @@
     <EmbeddedResource Include="..\rk2048.shared\resources\rk2048.lang-DE.langXml">
       <Link>Resources\rk2048.lang-DE.langXml</Link>
     </EmbeddedResource>
-    <None Include="..\..\..\Misc\_FrozenSky.Multimedia.licenseheader">
-      <Link>_FrozenSky.Multimedia.licenseheader</Link>
+    <None Include="..\..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -237,13 +237,13 @@
     <Folder Include="Assets\Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\FrozenSky.Multimedia\FrozenSky.Multimedia_DESKTOP.csproj">
+    <ProjectReference Include="..\..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_DESKTOP.csproj">
       <Project>{bd9d021a-85db-4d43-ac49-560987e3339f}</Project>
-      <Name>FrozenSky.Multimedia_DESKTOP</Name>
+      <Name>SeeingSharp.Multimedia_DESKTOP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FrozenSky\FrozenSky_DESKTOP.csproj">
+    <ProjectReference Include="..\..\..\SeeingSharp\SeeingSharp_DESKTOP.csproj">
       <Project>{c2a4856d-600e-4fff-bcbf-ca3f7ed6fe57}</Project>
-      <Name>FrozenSky_DESKTOP</Name>
+      <Name>SeeingSharp_DESKTOP</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

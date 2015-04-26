@@ -81,17 +81,17 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <ProjectReference Include="..\..\..\FrozenSky.Multimedia\FrozenSky.Multimedia_UNIVERSAL.csproj">
+    <ProjectReference Include="..\..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_UNIVERSAL.csproj">
       <Project>{b2985a80-5ca6-41e0-b96a-6b4625365f08}</Project>
-      <Name>FrozenSky.Multimedia_UNIVERSAL</Name>
+      <Name>SeeingSharp.Multimedia_UNIVERSAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\FrozenSky\FrozenSky_UNIVERSAL.csproj">
+    <ProjectReference Include="..\..\..\SeeingSharp\SeeingSharp_UNIVERSAL.csproj">
       <Project>{b077159e-8a45-42d2-896e-131eb2f8b9d0}</Project>
-      <Name>FrozenSky_UNIVERSAL</Name>
+      <Name>SeeingSharp_UNIVERSAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\FrozenSky.Samples.Base\FrozenSky.Samples.Base_UNIVERSAL.csproj">
+    <ProjectReference Include="..\..\SeeingSharp.Samples.Base\SeeingSharp.Samples.Base_UNIVERSAL.csproj">
       <Project>{ae60bd43-2526-4930-94d0-1335b5831f92}</Project>
-      <Name>FrozenSky.Samples.Base_UNIVERSAL</Name>
+      <Name>SeeingSharp.Samples.Base_UNIVERSAL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

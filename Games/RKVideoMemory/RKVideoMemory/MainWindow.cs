@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
 using RKVideoMemory.Data;
 using RKVideoMemory.Game;
 using System;
@@ -64,10 +64,10 @@ namespace RKVideoMemory
         {
             base.OnLoad(e);
 
-            if (!FrozenSkyApplication.IsInitialized) { return; }
+            if (!SeeingSharpApplication.IsInitialized) { return; }
 
             // Subscribe all handlers to the UIMessenger
-            FrozenSkyApplication.Current.UIMessenger
+            SeeingSharpApplication.Current.UIMessenger
                 .SubscribeAllOnControl(this);
 
             // Associate game logic to UI
@@ -98,14 +98,14 @@ namespace RKVideoMemory
         {
             if (m_objectsBelowCursor.Count > 0)
             {
-                FrozenSkyApplication.Current.UIMessenger.Publish(
+                SeeingSharpApplication.Current.UIMessenger.Publish(
                     new ObjectsClickedMessage(m_objectsBelowCursor.ToList()));
             }
         }
 
         private void OnTimerTrigger_Tick(object sender, EventArgs e)
         {
-            FrozenSkyApplication.Current.UIMessenger.Publish<GameTriggerMessage>();
+            SeeingSharpApplication.Current.UIMessenger.Publish<GameTriggerMessage>();
         }
 
         private async void OnTimerPicking_Tick(object sender, EventArgs e)
@@ -118,7 +118,7 @@ namespace RKVideoMemory
                 // Perform simple picking test
                 System.Drawing.Point cursorPosition = this.PointToClient(Cursor.Position);
                 List<SceneObject> objectsBelowCursor = await m_ctrlRenderer.RenderLoop.PickObjectAsync(
-                    new FrozenSky.Point(cursorPosition.X, cursorPosition.Y),
+                    new SeeingSharp.Point(cursorPosition.X, cursorPosition.Y),
                     new PickingOptions());
                 if (this.IsDisposed) { return; }
 
@@ -147,7 +147,7 @@ namespace RKVideoMemory
                 // Notify changes to game system
                 HoveredObjectsChangedMessage hoveredChangedMessage = new HoveredObjectsChangedMessage(
                     removedObjects, addedObjects);
-                FrozenSkyApplication.Current.UIMessenger.Publish(hoveredChangedMessage);
+                SeeingSharpApplication.Current.UIMessenger.Publish(hoveredChangedMessage);
             }
             finally
             {

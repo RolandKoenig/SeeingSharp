@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,9 +17,9 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using FrozenSky;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
 using RKVideoMemory.Util;
 using System;
 using System.Collections.Generic;
@@ -35,7 +35,7 @@ namespace RKVideoMemory.Game
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
             return sequenceBuilder
-                .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new FrozenSky.Vector3(0f, 0f, EngineMath.RAD_180DEG))
+                .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG))
                 .WaitFinished()
                 .Delay(TimeSpan.FromSeconds(Constants.INITIAL_UNCOVER_SECONDS_MAX))
                 .WaitFinished()
@@ -53,7 +53,7 @@ namespace RKVideoMemory.Game
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
             return sequenceBuilder
-                .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new FrozenSky.Vector3(0f, 0f, EngineMath.RAD_180DEG))
+                .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG))
                 .WaitFinished()
                 .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
                     Constants.ROTATE_ANIM_DELAY_MILLIS_MIN, 

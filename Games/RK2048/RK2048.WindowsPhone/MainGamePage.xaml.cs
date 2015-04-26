@@ -12,18 +12,18 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using FrozenSky.Multimedia;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Views;
-using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Objects;
-using FrozenSky;
-using FrozenSky.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Objects;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Drawing3D;
 using RK2048.Graphics;
 using RK2048.Logic;
 using Windows.System;
 using Windows.UI.Input;
-using FrozenSky.Util;
+using SeeingSharp.Util;
 using System.Threading.Tasks;
 
 namespace RK2048

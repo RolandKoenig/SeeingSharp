@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,11 +17,11 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Drawing3D;
-using FrozenSky.Multimedia.Views;
-using FrozenSky.Samples.Base;
-using FrozenSky.Util;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Samples.Base;
+using SeeingSharp.Util;
 using Microsoft.Xaml.Interactivity;
 using System;
 using System.Collections.Generic;
@@ -43,7 +43,7 @@ namespace UniversalSampleContainer
             DependencyProperty.Register("MainContentGrid", typeof(FrameworkElement), typeof(ApplySampleBehavior), new PropertyMetadata(null));
 
         private DependencyObject m_associatedObject;
-        private FrozenSkyPanelPainter m_painter;
+        private SeeingSharpPanelPainter m_painter;
         private IEnumerable<MessageSubscription> m_subscriptions;
         private SampleBase m_appliedSample;
         private bool m_isChangingSample;
@@ -53,7 +53,7 @@ namespace UniversalSampleContainer
         /// </summary>
         public ApplySampleBehavior()
         {
-            m_painter = new FrozenSkyPanelPainter();
+            m_painter = new SeeingSharpPanelPainter();
             m_painter.Camera = new PerspectiveCamera3D();
         }
 
@@ -65,7 +65,7 @@ namespace UniversalSampleContainer
         {
             m_associatedObject = associatedObject;
             m_appliedSample = null;
-            m_subscriptions = FrozenSkyApplication.Current.UIMessenger.SubscribeAll(this);
+            m_subscriptions = SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
 
             SwapChainPanel renderElement = m_associatedObject as SwapChainPanel;
             if(renderElement != null)

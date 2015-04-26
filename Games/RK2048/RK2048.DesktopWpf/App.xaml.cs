@@ -1,6 +1,6 @@
-﻿using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Util;
+﻿using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -23,13 +23,13 @@ namespace RK2048.DesktopWpf
         public App()
         {
             // Initialize application and graphics
-            if (!FrozenSkyApplication.IsInitialized)
+            if (!SeeingSharpApplication.IsInitialized)
             {
-                FrozenSkyApplication.InitializeAsync(
+                SeeingSharpApplication.InitializeAsync(
                     typeof(App).GetTypeInfo().Assembly,
                     new Assembly[]
                     {
-                        typeof(FrozenSkyApplication).GetTypeInfo().Assembly,
+                        typeof(SeeingSharpApplication).GetTypeInfo().Assembly,
                         typeof(GraphicsCore).GetTypeInfo().Assembly
                     },
                     new string[] { })

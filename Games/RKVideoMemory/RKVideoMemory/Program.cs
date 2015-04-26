@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,8 +17,8 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Core;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,7 +40,7 @@ namespace RKVideoMemory
             Application.SetCompatibleTextRenderingDefault(false);
 
             // Default initializations
-            FrozenSkyApplication.InitializeAsync(
+            SeeingSharpApplication.InitializeAsync(
                 Assembly.GetExecutingAssembly(),
                 new Assembly[]{
                     typeof(GraphicsCore).Assembly
@@ -50,7 +50,7 @@ namespace RKVideoMemory
 
             // Run the application
             MainWindow mainWindow = new MainWindow();
-            FrozenSkyApplication.Current.InitializeUIEnvironment();
+            SeeingSharpApplication.Current.InitializeUIEnvironment();
             Application.Run(mainWindow);
         }
     }

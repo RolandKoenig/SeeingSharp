@@ -1,6 +1,6 @@
-﻿using FrozenSky.Infrastructure;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Samples.Base;
+﻿using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Samples.Base;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -48,13 +48,13 @@ namespace UniversalSampleContainer
         {
             // Initialize application and graphics
             Exception initException = null;
-            if (!FrozenSkyApplication.IsInitialized)
+            if (!SeeingSharpApplication.IsInitialized)
             {
-                await FrozenSkyApplication.InitializeAsync(
+                await SeeingSharpApplication.InitializeAsync(
                     this.GetType().GetTypeInfo().Assembly,
                     new Assembly[]
                     {
-                        typeof(FrozenSkyApplication).GetTypeInfo().Assembly,
+                        typeof(SeeingSharpApplication).GetTypeInfo().Assembly,
                         typeof(GraphicsCore).GetTypeInfo().Assembly,
                         typeof(SampleFactory).GetTypeInfo().Assembly
                     },
@@ -75,7 +75,7 @@ namespace UniversalSampleContainer
 #endif
 
                     // Initialize the UI environment
-                    FrozenSkyApplication.Current.InitializeUIEnvironment();
+                    SeeingSharpApplication.Current.InitializeUIEnvironment();
                 }
                 catch (Exception ex)
                 {

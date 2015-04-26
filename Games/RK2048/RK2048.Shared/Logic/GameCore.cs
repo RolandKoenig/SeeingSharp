@@ -1,6 +1,6 @@
-﻿#region License information (FrozenSky and all based games/applications)
+﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    FrozenSky and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -23,14 +23,14 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using System.Threading.Tasks;
-using FrozenSky.Util;
-using FrozenSky.Multimedia.Views;
-using FrozenSky.Multimedia.Core;
-using FrozenSky.Multimedia.Drawing3D;
-using FrozenSky;
+using SeeingSharp.Util;
+using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp;
 using RK2048.Graphics;
-using FrozenSky.Multimedia.Objects;
-using FrozenSky.Gaming;
+using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Gaming;
 
 #if UNIVERSAL
 using Windows.ApplicationModel;
@@ -120,7 +120,7 @@ namespace RK2048.Logic
         /// <summary>
         /// Initializes the game.
         /// </summary>
-        internal async Task InitializeAsync(IFrozenSkyPainter view)
+        internal async Task InitializeAsync(ISeeingSharpPainter view)
         {
             // Set scene and camera
             view.Scene = m_scene;

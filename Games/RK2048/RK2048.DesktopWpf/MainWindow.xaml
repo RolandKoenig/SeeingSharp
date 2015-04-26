@@ -1,10 +1,10 @@
 ﻿<Window x:Class="RK2048.DesktopWpf.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:view="clr-namespace:FrozenSky.Multimedia.Views;assembly=FrozenSky.Multimedia"
+        xmlns:view="clr-namespace:SeeingSharp.Multimedia.Views;assembly=SeeingSharp.Multimedia"
         xmlns:main="clr-namespace:RK2048"
         xmlns:prop="http://propertytools.org/wpf"
-        xmlns:fsbehaviors="clr-namespace:FrozenSky.Behaviors;assembly=FrozenSky"
+        xmlns:fsbehaviors="clr-namespace:SeeingSharp.Behaviors;assembly=SeeingSharp"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="RK 2048"  Width="800" Height="600" MinWidth="800" MinHeight="600"
         Icon="/Assets/Icon.ico">
@@ -47,7 +47,7 @@
                                 <prop:PropertyGrid SelectedObject="{Binding RenderLoop.ViewConfiguration, ElementName=m_rendererElement}"
 				                                 TabVisibility="Collapsed">
                                     <i:Interaction.Behaviors>
-                                        <fsbehaviors:FrozenSkyPropertyGridBehavior />
+                                        <fsbehaviors:SeeingSharpPropertyGridBehavior />
                                     </i:Interaction.Behaviors>
                                 </prop:PropertyGrid>
                             </ControlTemplate>
@@ -70,7 +70,7 @@
         <Grid Background="DarkGray">
             
             <!-- Define 3D rendering part-->
-            <view:FrozenSkyRendererElement Name="m_rendererElement" 
+            <view:SeeingSharpRendererElement Name="m_rendererElement" 
                                            InputMode="NoInput"
                                            HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                            Stretch="Fill"
