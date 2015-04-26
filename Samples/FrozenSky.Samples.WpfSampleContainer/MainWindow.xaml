@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:frozensky="clr-namespace:FrozenSky.Multimedia.Views;assembly=FrozenSky.Multimedia"
         xmlns:local="clr-namespace:WpfSampleContainer"
-        Title="FrozenSky Wpf Samples" Height="300" Width="300"
+        Title="FrozenSky Wpf Samples" Height="600" Width="800"
         Icon="/Resources/Logo.ico">
     <Window.DataContext>
         <local:MainWindowViewModel />
@@ -43,7 +43,7 @@
                     Orientation="Horizontal"
                     Background="#00CCFF" Visibility="Collapsed"
                     Name="BottomStatusBar">
-                <TextBlock Text="Loading..."
+                <TextBlock Text="Loading..." Foreground="White"
                        Margin="3"/>
                 <ProgressBar Width="200" IsIndeterminate="True"
                          Margin="3"/>

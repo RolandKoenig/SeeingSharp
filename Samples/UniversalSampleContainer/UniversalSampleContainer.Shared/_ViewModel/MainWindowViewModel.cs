@@ -59,25 +59,24 @@ namespace UniversalSampleContainer
                 (from actSample in m_allSamples
                  select actSample.Category).Distinct());
 
-            // Set initial selection
-            m_selectedCategory = m_categories.FirstOrDefault();
-            m_selectedSample = m_allSamples.FirstOrDefault();
-
-            // Apply category
-            if(!string.IsNullOrEmpty(m_selectedCategory))
-            {
-                Handle_SelectedCategoryChanged(m_selectedCategory);
-            }
-
             // Initialize commands
             this.CommandShowSource = new DelegateCommand(async () =>
             {
-                if(m_selectedSample != null)
+                if (m_selectedSample != null)
                 {
                     await Windows.System.Launcher.LaunchUriAsync(
                         new Uri(m_selectedSample.SampleDescription.CodeUrl));
                 }
             });
+
+            // Set initial selection
+            CommonTools.InvokeDelayed(
+                () =>
+                {
+                    this.SelectedCategory = this.Categories.FirstOrDefault();
+                    this.SelectedSample = this.VisibleSamples.FirstOrDefault();
+                },
+                TimeSpan.FromMilliseconds(500));
         }
 
         /// <summary>

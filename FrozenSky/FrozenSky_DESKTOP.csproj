@@ -135,6 +135,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Util\BitmapComparison.cs" />
+    <Compile Include="Util\CommonTools.Threading.cs" />
     <Compile Include="Util\CommonTools.UI.cs" />
     <Compile Include="Util\CommonTools.Cloning.cs" />
     <Compile Include="Util\CommonTools.cs" />
