@@ -1,0 +1,13 @@
+﻿<UserControl x:Class="SeeingSharp.RKKinectLounge.Modules.Kinect.SceneView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:view3D="clr-namespace:SeeingSharp.Multimedia.Views;assembly=SeeingSharp.Multimedia">
+    
+    <Grid>
+        <view3D:SeeingSharpRendererElement 
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+            Stretch="Fill"
+            Scene="{Binding Path=Scene}"/>
+    </Grid>
+    
+</UserControl>

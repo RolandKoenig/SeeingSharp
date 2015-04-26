@@ -1,0 +1,24 @@
+﻿<UserControl x:Class="SeeingSharp.RKKinectLounge.Modules.Kinect.KinectDashboardView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:inf="clr-namespace:SeeingSharp.Infrastructure;assembly=SeeingSharp"
+             xmlns:commonUtil="clr-namespace:SeeingSharp.Util;assembly=SeeingSharp"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid DataContext="{inf:Singleton Type=commonUtil:PerformanceAnalyzer,Name=KinectPerformance}">
+        <DataGrid ItemsSource="{Binding Path=UIFlowRateKpisCurrents}"
+                  AutoGenerateColumns="False"
+                  Margin="30,50,30,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=CalculatorName}" Header="Name" Width="200" />
+                <DataGridTextColumn Binding="{Binding Path=Value}" Header="Frames/Sek" Width="100" />
+            </DataGrid.Columns>
+            
+            <DataGrid.LayoutTransform>
+                <ScaleTransform ScaleX="2" ScaleY="2" />
+            </DataGrid.LayoutTransform>
+        </DataGrid>
+    </Grid>
+</UserControl>
