@@ -98,6 +98,7 @@
     <Compile Include="Game\PairUncoverLogic.cs" />
     <Compile Include="Game\GameCore.cs" />
     <Compile Include="Game\GameMap.cs" />
+    <Compile Include="Game\VideoPlayLogic.cs" />
     <Compile Include="Game\_Messages\CardPairUncoveredByPlayerMessage.cs" />
     <Compile Include="Game\_Messages\CardUncoveredByPlayerMessage.cs" />
     <Compile Include="Game\_Messages\GameInitializedMessage.cs" />

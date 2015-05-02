@@ -127,6 +127,7 @@ namespace RKVideoMemory.Game
 
                 // Add uncover logic component
                 manipulator.Add(new PairUncoverLogic());
+                manipulator.Add(new VideoPlayLogic());
             });
         }
 
