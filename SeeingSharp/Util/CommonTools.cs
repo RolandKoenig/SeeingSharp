@@ -23,8 +23,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading.Tasks;
 using System.IO;
+using System.Linq;
 using System.Xml.Serialization;
 using System.Reflection;
+using System.Collections;
 using SeeingSharp.Infrastructure;
 
 #if UNIVERSAL
@@ -122,6 +124,30 @@ namespace SeeingSharp.Util
             using(var waitHandle = new System.Threading.ManualResetEvent(false))
             {
                 waitHandle.WaitOne((int)delayMilliseconds);
+            }
+        }
+
+        /// <summary>
+        /// Gets the total count of items within the given collection.
+        /// </summary>
+        public static int GetCollectionCount<T>(IEnumerable<T> collection)
+        {
+            IReadOnlyCollection<T> readonlyCollection = collection as IReadOnlyCollection<T>;
+            if (readonlyCollection != null)
+            {
+                return readonlyCollection.Count;
+            }
+            else
+            {
+                ICollection simpleCollection = collection as ICollection;
+                if (simpleCollection != null)
+                {
+                    return simpleCollection.Count;
+                }
+                else
+                {
+                    return collection.Count();
+                }
             }
         }
 

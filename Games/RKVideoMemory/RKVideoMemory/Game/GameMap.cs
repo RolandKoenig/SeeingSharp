@@ -124,6 +124,9 @@ namespace RKVideoMemory.Game
 
                     m_cardPairs.Add(actCardPair);
                 }
+
+                // Add uncover logic component
+                manipulator.Add(new PairUncoverLogic());
             });
         }
 

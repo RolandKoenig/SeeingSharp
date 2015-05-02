@@ -58,13 +58,13 @@ namespace RKVideoMemory.Game
                 if(m_isUncovered)
                 {
                     actCard.BuildAnimationSequence()
-                        .MainScreen_WhenUncovered()
+                        .MainScreenStart_WhenUncovered()
                         .Apply();  
                 }
                 else
                 {
                     actCard.BuildAnimationSequence()
-                        .MainScreen_WhenCovered()
+                        .MainScreenStart_WhenCovered()
                         .Apply();  
                 }
             }

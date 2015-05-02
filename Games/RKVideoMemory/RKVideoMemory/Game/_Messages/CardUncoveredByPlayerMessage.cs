@@ -17,7 +17,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
@@ -27,37 +26,17 @@ using System.Threading.Tasks;
 
 namespace RKVideoMemory.Game
 {
-    public class Card : GenericObject
+    public class CardUncoveredByPlayerMessage : SeeingSharpMessage
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Card"/> class.
-        /// </summary>
-        /// <param name="resGeometry">The key of the GeometryResource.</param>
-        /// <param name="cardPair">The pair this card belongs to.</param>
-        public Card(NamedOrGenericKey resGeometry, CardPair cardPair)
-            : base(resGeometry)
+        public CardUncoveredByPlayerMessage(Card card)
         {
-            this.Pair = cardPair;
+            this.Card = card;
         }
 
-        /// <summary>
-        /// Indicates whether this single card is uncovered or not.
-        /// </summary>
-        public bool IsCardUncovered
-        {
-            get;
-            set;
-        }
-
-        public CardPair Pair
+        public Card Card
         {
             get;
             private set;
-        }
-
-        public int CountRunningAnimations
-        {
-            get { return base.AnimationHandler.CountRunningAnimations; }
         }
     }
 }

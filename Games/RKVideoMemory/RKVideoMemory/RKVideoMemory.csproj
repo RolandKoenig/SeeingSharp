@@ -95,8 +95,11 @@
     <Compile Include="Data\CardPairData.cs" />
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\CardPair.cs" />
+    <Compile Include="Game\PairUncoverLogic.cs" />
     <Compile Include="Game\GameCore.cs" />
     <Compile Include="Game\GameMap.cs" />
+    <Compile Include="Game\_Messages\CardPairUncoveredByPlayerMessage.cs" />
+    <Compile Include="Game\_Messages\CardUncoveredByPlayerMessage.cs" />
     <Compile Include="Game\_Messages\GameInitializedMessage.cs" />
     <Compile Include="Game\_Messages\GameTriggerMessage.cs" />
     <Compile Include="Game\_Messages\LevelLoadedMessage.cs" />

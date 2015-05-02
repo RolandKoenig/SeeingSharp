@@ -110,37 +110,37 @@ namespace RKVideoMemory.Game
             Messenger.BeginPublish<LevelUnloadedMessage>();
         }
 
-        /// <summary>
-        /// Called when an object was clicked.
-        /// </summary>
-        private async void OnMessage_Received(ObjectsClickedMessage message)
-        {
-            Card selectedCard = message.ClickedObjects
-                .FirstOrDefault() as Card;
-            if (selectedCard == null) { return; }
-            if (selectedCard.Pair.IsUncovered) { return; }
+        ///// <summary>
+        ///// Called when an object was clicked.
+        ///// </summary>
+        //private async void OnMessage_Received(ObjectsClickedMessage message)
+        //{
+        //    Card selectedCard = message.ClickedObjects
+        //        .FirstOrDefault() as Card;
+        //    if (selectedCard == null) { return; }
+        //    if (selectedCard.Pair.IsUncovered) { return; }
 
-            ResourceLink firstVideo =
-                selectedCard.Pair.PairData.ChildVideos.FirstOrDefault();
-            if (firstVideo == null) { return; }
+        //    ResourceLink firstVideo =
+        //        selectedCard.Pair.PairData.ChildVideos.FirstOrDefault();
+        //    if (firstVideo == null) { return; }
 
-            await m_scene.ManipulateSceneAsync((manipulator) =>
-            {
-                // Create the layer (if necessary)
-                if (!manipulator.ContainsLayer(Constants.GFX_LAYER_VIDEO_FOREGROUND))
-                {
-                    SceneLayer bgLayer = manipulator.AddLayer(Constants.GFX_LAYER_VIDEO_FOREGROUND);
-                    bgLayer.ClearDepthBufferBefreRendering = true;
-                    manipulator.SetLayerOrderID(
-                        bgLayer,
-                        Constants.GFX_LAYER_VIDEO_FOREGROUND_ORDERID);
-                }
+        //    await m_scene.ManipulateSceneAsync((manipulator) =>
+        //    {
+        //        // Create the layer (if necessary)
+        //        if (!manipulator.ContainsLayer(Constants.GFX_LAYER_VIDEO_FOREGROUND))
+        //        {
+        //            SceneLayer bgLayer = manipulator.AddLayer(Constants.GFX_LAYER_VIDEO_FOREGROUND);
+        //            bgLayer.ClearDepthBufferBefreRendering = true;
+        //            manipulator.SetLayerOrderID(
+        //                bgLayer,
+        //                Constants.GFX_LAYER_VIDEO_FOREGROUND_ORDERID);
+        //        }
 
-                // Load the texture painter
-                var resBackgroundTexture = manipulator.AddResource(() => new VideoTextureResource(firstVideo));
-                manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_VIDEO_FOREGROUND);
-            });
-        }
+        //        // Load the texture painter
+        //        var resBackgroundTexture = manipulator.AddResource(() => new VideoTextureResource(firstVideo));
+        //        manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_VIDEO_FOREGROUND);
+        //    });
+        //}
        
         public bool IsInitialized
         {

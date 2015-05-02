@@ -31,7 +31,25 @@ namespace RKVideoMemory.Game
 {
     internal static class CardAnimations
     {
-        public static IAnimationSequenceBuilder<Card> MainScreen_WhenUncovered(
+        public static IAnimationSequenceBuilder<Card> MainScreen_PerformCover(
+            this IAnimationSequenceBuilder<Card> sequenceBuilder)
+        {
+            return sequenceBuilder
+                .RotateEulerAnglesTo(
+                    new Vector3(0f, 0f, EngineMath.RAD_180DEG),
+                    TimeSpan.FromMilliseconds(300));
+        }
+
+        public static IAnimationSequenceBuilder<Card> MainScreen_PerformUncover(
+            this IAnimationSequenceBuilder<Card> sequenceBuilder)
+        {
+            return sequenceBuilder
+                .RotateEulerAnglesTo(
+                    new Vector3(0f, 0f, 0f),
+                    TimeSpan.FromMilliseconds(300));
+        }
+
+        public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenUncovered(
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
             return sequenceBuilder
@@ -49,7 +67,7 @@ namespace RKVideoMemory.Game
                 .WaitFinished();
         }
 
-        public static IAnimationSequenceBuilder<Card> MainScreen_WhenCovered(
+        public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenCovered(
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
             return sequenceBuilder
