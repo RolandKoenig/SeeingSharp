@@ -95,6 +95,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalSampleContainer.Wi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalSampleContainer.WindowsPhone", "Samples\UniversalSampleContainer\UniversalSampleContainer.WindowsPhone\UniversalSampleContainer.WindowsPhone.csproj", "{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{35D8B3B6-C45B-4CB0-BB24-D6498D9651A5}"
+	ProjectSection(SolutionItems) = preProject
+		Performance1.psess = Performance1.psess
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{431f8f6a-aa43-4de1-8ec3-744a0396af02}*SharedItemsImports = 4
@@ -242,5 +247,8 @@ Global
 		{A189873D-4436-48E6-8F18-52EA7050DAAD} = {23A48827-7645-4BC8-96F0-B88C76AF5B58}
 		{EDDFE984-EA36-456A-9614-722734755CE8} = {23A48827-7645-4BC8-96F0-B88C76AF5B58}
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02} = {23A48827-7645-4BC8-96F0-B88C76AF5B58}
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
 	EndGlobalSection
 EndGlobal

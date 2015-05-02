@@ -194,13 +194,21 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                 // Copy pixel data into target buffer
                 if (nextSample.BufferCount > 0)
                 {
-                    using (MF.MediaBuffer mediaBuffer = nextSample.ConvertToContiguousBuffer())
+                    using (MF.MediaBuffer mediaBuffer = nextSample.GetBufferByIndex(0))
                     {
                         int cbMaxLength;
                         int cbCurrentLenght;
                         IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
                         try
                         {
+#if DESKTOP
+                            // Performance optimization using MemCopy
+                            //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
+                            NativeMethods.MemCopy(
+                                targetBuffer.Pointer,
+                                mediaBufferPointer,
+                                new UIntPtr((uint)(m_frameSize.Width * m_frameSize.Height * 4)));
+#else
                             unsafe
                             {
                                 int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
@@ -214,6 +222,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                                     }
                                 }
                             }
+#endif
                         }
                         finally
                         {
