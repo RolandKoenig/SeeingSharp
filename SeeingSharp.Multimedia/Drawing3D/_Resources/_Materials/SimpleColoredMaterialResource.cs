@@ -32,23 +32,27 @@ namespace SeeingSharp.Multimedia.Drawing3D
     {
         internal NamedOrGenericKey KEY_CONSTANT_BUFFER = GraphicsCore.GetNextGenericResourceKey();
 
-        //Resource keys
+        #region Resource keys
         private static readonly NamedOrGenericKey RES_KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
-        //Some configuration
+        #region Some configuration
         private NamedOrGenericKey m_textureKey;
         private float m_clipFactor;
         private float m_maxClipDistance;
+        private float m_addToAlpha;
         private bool m_adjustTextureCoordinates;
         private bool m_cbPerMaterialDataChanged;
+        #endregion
 
-        //Resource members
+        #region Resource members
         private TextureResource m_textureResource;
         private VertexShaderResource m_vertexShader;
         private PixelShaderResource m_pixelShader;
         private TypeSafeConstantBufferResource<CBPerMaterial> m_cbPerMaterial;
         private DefaultResources m_defaultResources;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SimpleColoredMaterialResource"/> class.
@@ -60,6 +64,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             m_clipFactor = 0f;
             m_maxClipDistance = 1000f;
             m_adjustTextureCoordinates = false;
+            m_addToAlpha = 0f;
         }
 
         /// <summary>
@@ -145,7 +150,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
                         ClipFactor = m_clipFactor,
                         MaxClipDistance = m_maxClipDistance,
                         Texture0Factor = m_textureResource != null ? 1f : 0f,
-                        AdjustTextureCoordinates = m_adjustTextureCoordinates ? 1f : 0f
+                        AdjustTextureCoordinates = m_adjustTextureCoordinates ? 1f : 0f,
+                        AddToAlpha = m_addToAlpha
                     });
                 m_cbPerMaterialDataChanged = false;
             }
@@ -226,6 +232,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
             }
         }
 
+        /// <summary>
+        /// Interpolate texture coordinate based on xy-scaling.
+        /// </value>
         public bool AdjustTextureCoordinates
         {
             get { return m_adjustTextureCoordinates; }
@@ -234,6 +243,22 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 if (m_adjustTextureCoordinates != value)
                 {
                     m_adjustTextureCoordinates = value;
+                    m_cbPerMaterialDataChanged = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Needed for video rendering (Frames from the MF SourceReader have alpha always to zero).
+        /// </value>
+        public float AddToAlpha
+        {
+            get { return m_addToAlpha; }
+            set
+            {
+                if(m_addToAlpha != value)
+                {
+                    m_addToAlpha = value;
                     m_cbPerMaterialDataChanged = true;
                 }
             }

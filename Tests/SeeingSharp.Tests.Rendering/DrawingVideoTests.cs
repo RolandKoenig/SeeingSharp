@@ -57,6 +57,9 @@ namespace SeeingSharp.Tests.Rendering
             {
                 videoReader.SetCurrentPosition(TimeSpan.FromSeconds(2.0));
                 videoReader.ReadFrame(actFrameBuffer);
+
+                actFrameBuffer.SetAllAlphaValuesToOne();
+
                 using (bitmapFrame = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer))
                 {
                     Assert.NotNull(bitmapFrame);
@@ -90,6 +93,8 @@ namespace SeeingSharp.Tests.Rendering
                 {
                     if (videoReader.ReadFrame(actFrameBuffer))
                     {
+                        actFrameBuffer.SetAllAlphaValuesToOne();
+
                         frameIndex++;
                         if (frameIndex != 10) { continue; }
 
@@ -126,6 +131,8 @@ namespace SeeingSharp.Tests.Rendering
                 {
                     if (videoReader.ReadFrame(actFrameBuffer))
                     {
+                        actFrameBuffer.SetAllAlphaValuesToOne();
+
                         frameIndex++;
                         if (frameIndex != 10) { continue; }
 
@@ -254,7 +261,7 @@ namespace SeeingSharp.Tests.Rendering
                 {
                     var resVideoTexture = manipulator.AddResource<VideoTextureResource>(
                         () => new VideoTextureResource(videoLink));
-                    var resVideoMaterial = manipulator.AddSimpleColoredMaterial(resVideoTexture);
+                    var resVideoMaterial = manipulator.AddSimpleColoredMaterial(resVideoTexture, addToAlpha: 1f);
                     var geoResource = manipulator.AddResource<GeometryResource>(
                         () => new GeometryResource(new PalletType(
                             palletMaterial: NamedOrGenericKey.Empty,

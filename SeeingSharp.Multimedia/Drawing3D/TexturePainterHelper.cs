@@ -34,20 +34,24 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     internal class TexturePainterHelper
     {
+        #region Resource keys
         private NamedOrGenericKey KEY_GEOMETRY = GraphicsCore.GetNextGenericResourceKey();
         private NamedOrGenericKey KEY_RENDER_PARAMETERS = GraphicsCore.GetNextGenericResourceKey();
         private NamedOrGenericKey KEY_MATERIAL = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
-        //Configuration
+        #region Configuration
         private NamedOrGenericKey m_texture;
         private float m_scaling;
+        #endregion
 
-        // Used resources
+        #region Used resources
         private TextureResource m_textureResource;
         private GeometryResource m_geometryResource;
         private SpriteMaterialResource m_materialResource;
         private DefaultResources m_defaultResources;
         private ObjectRenderParameters m_renderParameters;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TexturePainterHelper"/> class.

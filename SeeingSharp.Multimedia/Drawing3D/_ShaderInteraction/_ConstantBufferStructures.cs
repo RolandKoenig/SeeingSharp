@@ -106,5 +106,12 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public float ClipFactor;
 
         public float AdjustTextureCoordinates;
+
+        /// <summary>
+        /// Needed for video rendering (Frames from the MF SourceReader have alpha always to zero)
+        /// </summary>
+        public float AddToAlpha;
+
+        public Vector3 Dummy;
     }
 }

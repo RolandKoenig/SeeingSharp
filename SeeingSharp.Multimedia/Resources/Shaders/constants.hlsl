@@ -53,6 +53,8 @@ cbuffer cbPerMaterial : register ( b3 )
 	float     MaxClipDistance;
 	float     ClipFactor;
 	float     AdjustTextureCoordinatesFactor;
+	float     AddToAlpha;    // Needed for video rendering (Frames from the MF SourceReader have alpha always to zero)
+	float3    Dummy2;
 }
 
 // Buffer with per line data

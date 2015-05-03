@@ -69,9 +69,25 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// </summary>
         /// <param name="sceneManipulator">The manipulator of the scene.</param>
         /// <param name="textureKey">The resource key of the texture to be used.</param>
-        public static NamedOrGenericKey AddSimpleColoredMaterial(this SceneManipulator sceneManipulator, NamedOrGenericKey textureKey)
+        /// <param name="clipFactor">Pixel are clipped up to an alpha value defined by this Clipfactor within the pixel shader.</param>
+        /// <param name="maxClipDistance">The maximum distance on which to apply pixel clipping (defined by ClipFactor property).</param>
+        /// <param name="adjustTextureCoordinates">Interpolate texture coordinate based on xy-scaling.</param>
+        /// <param name="addToAlpha">Needed for video rendering (Frames from the MF SourceReader have alpha always to zero).</param>
+        public static NamedOrGenericKey AddSimpleColoredMaterial(
+            this SceneManipulator sceneManipulator, NamedOrGenericKey textureKey,
+            float clipFactor = 0f, 
+            float maxClipDistance = 1000f, 
+            bool adjustTextureCoordinates = false,
+            float addToAlpha = 0f)
         {
-            return sceneManipulator.AddResource<SimpleColoredMaterialResource>(() => new SimpleColoredMaterialResource(textureKey));
+            return sceneManipulator.AddResource<SimpleColoredMaterialResource>(
+                () => new SimpleColoredMaterialResource(textureKey)
+                {
+                    AdjustTextureCoordinates = adjustTextureCoordinates,
+                    MaxClipDistance = maxClipDistance,
+                    ClipFactor = clipFactor,
+                    AddToAlpha = addToAlpha
+                });
         }
 
         /// <summary>

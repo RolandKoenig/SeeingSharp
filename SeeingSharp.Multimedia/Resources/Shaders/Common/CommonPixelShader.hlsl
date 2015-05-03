@@ -13,7 +13,7 @@ PSOutput main(PSInputStandard input)
 		textureColor = ObjectTexture.Sample(ObjectTextureSampler, input.tex.xy);
 	}
 	float initialTextureA = textureColor.a;
-	textureColor.a = textureColor.a * Texture0Factor;
+	textureColor.a = clamp(textureColor.a * Texture0Factor + AddToAlpha, 0.0, 1.0);
 
     //// Calculate the pixel color based on vertex colors and border logic
     float distanceToCamera = distance(CameraPosition, input.pos3D);

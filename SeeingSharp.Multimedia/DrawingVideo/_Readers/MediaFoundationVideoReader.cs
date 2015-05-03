@@ -229,9 +229,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                             mediaBuffer.Unlock();
                         }
 
-                        // Apply 1 to all alpha values (these are not changed by the video frame!)
-                        targetBuffer.SetAllAlphaValuesToOne();
-
                         return true;
                     }
                 }

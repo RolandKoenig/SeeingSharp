@@ -71,7 +71,7 @@ namespace SeeingSharp.Samples.Base.MFSamples
                 // Define texture and resource
                 var resVideoTexture = manipulator.AddResource<VideoTextureResource>(
                     () => new VideoTextureResource(videoLink));
-                var resVideoMaterial = manipulator.AddSimpleColoredMaterial(resVideoTexture);
+                var resVideoMaterial = manipulator.AddSimpleColoredMaterial(resVideoTexture, addToAlpha: 1f);
                 var geoResource = manipulator.AddResource<GeometryResource>(
                     () => new GeometryResource(new PalletType(
                         palletMaterial: NamedOrGenericKey.Empty,
@@ -82,6 +82,17 @@ namespace SeeingSharp.Samples.Base.MFSamples
                 newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
                 newObject.Scaling = new Vector3(2f, 2f, 2f);
                 newObject.EnableShaderGeneratedBorder();
+
+                // Start pallet rotating animation
+                newObject.BuildAnimationSequence()
+                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_180DEG, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_360DEG, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .RotateEulerAnglesTo(new Vector3(0f, 0f, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .CallAction(() => newObject.RotationEuler = Vector3.Zero)
+                    .ApplyAndRewind();
             });
         }
     }
