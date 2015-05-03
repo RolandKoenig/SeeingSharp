@@ -1,6 +1,9 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    SeeingSharp and all games/applications based on it (more info at http://www.rolandk.de/wp)
+    Seeing# and all games/applications distributed together with it. 
+    More info at 
+     - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
+     - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
 
     This program is free software: you can redistribute it and/or modify
@@ -17,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Checking;
 using System;

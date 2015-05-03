@@ -127,6 +127,9 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="..\..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
     <None Include="UniversalSampleContainer.Windows_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
