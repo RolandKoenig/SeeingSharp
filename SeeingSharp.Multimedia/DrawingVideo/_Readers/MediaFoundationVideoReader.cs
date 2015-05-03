@@ -38,7 +38,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
     /// This object reads video streams from a file source using the MediaFoundation.
     /// See https://msdn.microsoft.com/de-de/library/windows/desktop/dd389281(v=vs.85).aspx
     /// </summary>
-    public class MediaFoundationVideoReader : IDisposable, ICheckDisposed
+    public abstract class MediaFoundationVideoReader : IDisposable, ICheckDisposed
     {
         #region Configuration
         private ResourceLink m_videoSource;
@@ -129,93 +129,10 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         }
 
         /// <summary>
-        /// Reads the next frame and puts it into a newly generated buffer.
-        /// </summary>
-        public MemoryMappedTexture32bpp ReadFrame()
-        {
-            this.EnsureNotNullOrDisposed("this");
-
-            MemoryMappedTexture32bpp result = new MemoryMappedTexture32bpp(m_frameSize);
-            try
-            {
-                if (this.ReadFrame(result)) { return result; }
-                else 
-                {
-                    result.Dispose();
-                    return null;
-                }
-            }
-            catch(Exception)
-            {
-                result.Dispose();
-                throw;
-            }
-        }
-
-        /// <summary>
-        /// Reads the next frame and puts it into the provided buffer.
-        /// </summary>
-        /// <param name="targetBuffer">The target buffer to write to.</param>
-        public bool ReadFrame(MemoryMappedTexture32bpp targetBuffer)
-        {
-            this.EnsureNotNullOrDisposed("this");
-            targetBuffer.EnsureNotNull("targetBuffer");
-            if ((targetBuffer.Width != m_frameSize.Width) ||
-               (targetBuffer.Height != m_frameSize.Height))
-            {
-                throw new SeeingSharpGraphicsException("Size of the given buffer does not match the video size!");
-            }
-
-            // Read the frame
-            SeeingSharpMediaBuffer mediaSharpManaged = this.ReadFrameNative();
-            if (mediaSharpManaged == null) { return false; }
-
-            // Process the frame
-            try
-            {
-                MF.MediaBuffer mediaBuffer = mediaSharpManaged.GetBuffer();
-
-                int cbMaxLength;
-                int cbCurrentLenght;
-                IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
-
-#if DESKTOP
-                // Performance optimization using MemCopy
-                //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
-                NativeMethods.MemCopy(
-                    targetBuffer.Pointer,
-                    mediaBufferPointer,
-                    new UIntPtr((uint)(m_frameSize.Width * m_frameSize.Height * 4)));
-#else
-                // TODO: Search a more performant way on WinRT platform (MemCopy not allowed there)
-                unsafe
-                {
-                    int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
-                    int* targetBufferPointerNative = (int*)targetBuffer.Pointer.ToPointer();
-                    for (int loopY = 0; loopY < m_frameSize.Height; loopY++)
-                    {
-                        for (int loopX = 0; loopX < m_frameSize.Width; loopX++)
-                        {
-                            int actIndex = loopX + (loopY * m_frameSize.Width);
-                            targetBufferPointerNative[actIndex] = mediaBufferPointerNative[actIndex];
-                        }
-                    }
-                }
-#endif
-
-                return true;
-            }
-            finally
-            {
-                mediaSharpManaged.Dispose();
-            }
-        }
-
-        /// <summary>
         /// Reads the next frame and returns the corresponding buffer.
         /// Null is returned if there was nothing to read.
         /// </summary>
-        public SeeingSharpMediaBuffer ReadFrameNative()
+        protected SeeingSharpMediaBuffer ReadFrameInternal()
         {
             if (m_endReached) { return null; }
 

@@ -51,7 +51,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         #endregion
 
         #region Media foundation resources
-        private MediaFoundationVideoReader m_videoReader;
+        private FrameByFrameVideoReader m_videoReader;
         private MemoryMappedTexture32bpp m_videoFrameBuffer;
         private bool m_newFrameArrived;
         #endregion
@@ -61,7 +61,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             videoSource.EnsureNotNull("videoSource");
 
             m_videoSource = videoSource;
-            m_videoReader = new MediaFoundationVideoReader(m_videoSource);
+            m_videoReader = new FrameByFrameVideoReader(m_videoSource);
             m_videoFrameBuffer = new MemoryMappedTexture32bpp(m_videoReader.FrameSize);
 
             m_currentWidth = m_videoReader.FrameSize.Width;

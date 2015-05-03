@@ -52,7 +52,7 @@ namespace SeeingSharp.Tests.Rendering
                 "SeeingSharp.Tests.Rendering.Ressources.Videos",
                 "DummyVideo.wmv");
             GDI.Bitmap bitmapFrame = null;
-            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader(videoLink))
+            using (FrameByFrameVideoReader videoReader = new FrameByFrameVideoReader(videoLink))
             using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
             {
                 videoReader.SetCurrentPosition(TimeSpan.FromSeconds(2.0));
@@ -85,7 +85,7 @@ namespace SeeingSharp.Tests.Rendering
                 "SeeingSharp.Tests.Rendering.Ressources.Videos",
                 "DummyVideo.wmv");
             GDI.Bitmap bitmapFrame10 = null;
-            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader(videoLink))
+            using (FrameByFrameVideoReader videoReader = new FrameByFrameVideoReader(videoLink))
             using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
             {
                 int frameIndex = 0;
@@ -123,7 +123,7 @@ namespace SeeingSharp.Tests.Rendering
                 "SeeingSharp.Tests.Rendering.Ressources.Videos",
                 "DummyVideo.mp4");
             GDI.Bitmap bitmapFrame10 = null;
-            using (MediaFoundationVideoReader videoReader = new MediaFoundationVideoReader(videoLink))
+            using (FrameByFrameVideoReader videoReader = new FrameByFrameVideoReader(videoLink))
             using (MemoryMappedTexture32bpp actFrameBuffer = new MemoryMappedTexture32bpp(videoReader.FrameSize))
             {
                 int frameIndex = 0;

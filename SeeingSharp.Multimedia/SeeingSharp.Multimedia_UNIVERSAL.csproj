@@ -198,6 +198,8 @@
     <Compile Include="DrawingVideo\SeeingSharpMediaBuffer.cs" />
     <Compile Include="DrawingVideo\SeeingSharpVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Misc.cs" />
+    <Compile Include="DrawingVideo\_Readers\AsyncRealtimeVideoReader.cs" />
+    <Compile Include="DrawingVideo\_Readers\FrameByFrameVideoReader.cs" />
     <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
