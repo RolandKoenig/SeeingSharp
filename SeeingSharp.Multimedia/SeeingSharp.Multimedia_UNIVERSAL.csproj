@@ -195,6 +195,7 @@
     <Compile Include="Drawing3D\_ShaderInteraction\LineVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\StandardVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />
+    <Compile Include="DrawingVideo\SeeingSharpMediaBuffer.cs" />
     <Compile Include="DrawingVideo\SeeingSharpVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Misc.cs" />
     <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />

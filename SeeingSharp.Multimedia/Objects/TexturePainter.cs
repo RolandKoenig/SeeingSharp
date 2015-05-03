@@ -29,10 +29,15 @@ namespace SeeingSharp.Multimedia.Objects
 {
     public class TexturePainter : SceneObject
     {
+        #region Configuration
         private NamedOrGenericKey m_resTexture;
+        private TexturePainterAlphaBlendMode m_alphaMode;
         private float m_scaling;
+        #endregion
 
+        #region Device dependent resources
         private IndexBasedDynamicCollection<TexturePainterHelper> m_texturePainterHelpers;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TexturePainter"/> class.
@@ -41,8 +46,8 @@ namespace SeeingSharp.Multimedia.Objects
         public TexturePainter(NamedOrGenericKey texture)
         {
             m_resTexture = texture;
-
             m_scaling = 1f;
+            m_alphaMode = TexturePainterAlphaBlendMode.AlphaBlend;
 
             m_texturePainterHelpers = new IndexBasedDynamicCollection<TexturePainterHelper>();
         }
@@ -104,6 +109,7 @@ namespace SeeingSharp.Multimedia.Objects
         {
             TexturePainterHelper actHelper = m_texturePainterHelpers[renderState.DeviceIndex];
             actHelper.Scaling = m_scaling;
+            actHelper.AlphaBlendMode = m_alphaMode;
             actHelper.RenderPlain(renderState);
         }
 
@@ -129,6 +135,15 @@ namespace SeeingSharp.Multimedia.Objects
         {
             get { return m_scaling; }
             set { m_scaling = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the alpha blend mode.
+        /// </summary>
+        public TexturePainterAlphaBlendMode AlphaBlendMode
+        {
+            get { return m_alphaMode; }
+            set { m_alphaMode = value; }
         }
     }
 }

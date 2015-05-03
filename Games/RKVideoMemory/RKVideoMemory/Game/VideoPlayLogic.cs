@@ -57,7 +57,12 @@ namespace RKVideoMemory.Game
 
                 // Load the texture painter
                 var resBackgroundTexture = manipulator.AddResource(() => new VideoTextureResource(firstVideo));
-                manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_VIDEO_FOREGROUND);
+                manipulator.Add(
+                    new TexturePainter(resBackgroundTexture)
+                    {
+                        AlphaBlendMode = TexturePainterAlphaBlendMode.NoAlphaBlend
+                    },
+                    Constants.GFX_LAYER_VIDEO_FOREGROUND);
             });
         }
     }

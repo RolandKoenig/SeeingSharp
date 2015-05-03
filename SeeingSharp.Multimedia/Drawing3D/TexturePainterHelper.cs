@@ -149,11 +149,17 @@ namespace SeeingSharp.Multimedia.Drawing3D
             using (m_renderParameters.Apply(renderState))
             {
                 deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZWrites;
-                deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
+                if (this.AlphaBlendMode == TexturePainterAlphaBlendMode.AlphaBlend)
+                {
+                    deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
+                }
 
                 m_geometryResource.Render(renderState);
 
-                deviceContext.OutputMerger.BlendState = m_defaultResources.DefaultBlendState;
+                if(this.AlphaBlendMode == TexturePainterAlphaBlendMode.AlphaBlend)
+                {
+                    deviceContext.OutputMerger.BlendState = m_defaultResources.DefaultBlendState;
+                }
                 deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
             }
         }
@@ -173,6 +179,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public bool IsLoaded
         {
             get { return (m_geometryResource != null) && (m_texture != null); }
+        }
+
+        /// <summary>
+        /// Gets or sets the alpha blend mode.
+        /// </summary>
+        public TexturePainterAlphaBlendMode AlphaBlendMode 
+        { 
+            get; set; 
         }
     }
 }

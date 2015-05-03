@@ -160,11 +160,64 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         {
             this.EnsureNotNullOrDisposed("this");
             targetBuffer.EnsureNotNull("targetBuffer");
-            if((targetBuffer.Width != m_frameSize.Width) ||
+            if ((targetBuffer.Width != m_frameSize.Width) ||
                (targetBuffer.Height != m_frameSize.Height))
             {
                 throw new SeeingSharpGraphicsException("Size of the given buffer does not match the video size!");
             }
+
+            // Read the frame
+            SeeingSharpMediaBuffer mediaSharpManaged = this.ReadFrameNative();
+            if (mediaSharpManaged == null) { return false; }
+
+            // Process the frame
+            try
+            {
+                MF.MediaBuffer mediaBuffer = mediaSharpManaged.GetBuffer();
+
+                int cbMaxLength;
+                int cbCurrentLenght;
+                IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
+
+#if DESKTOP
+                // Performance optimization using MemCopy
+                //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
+                NativeMethods.MemCopy(
+                    targetBuffer.Pointer,
+                    mediaBufferPointer,
+                    new UIntPtr((uint)(m_frameSize.Width * m_frameSize.Height * 4)));
+#else
+                // TODO: Search a more performant way on WinRT platform (MemCopy not allowed there)
+                unsafe
+                {
+                    int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
+                    int* targetBufferPointerNative = (int*)targetBuffer.Pointer.ToPointer();
+                    for (int loopY = 0; loopY < m_frameSize.Height; loopY++)
+                    {
+                        for (int loopX = 0; loopX < m_frameSize.Width; loopX++)
+                        {
+                            int actIndex = loopX + (loopY * m_frameSize.Width);
+                            targetBufferPointerNative[actIndex] = mediaBufferPointerNative[actIndex];
+                        }
+                    }
+                }
+#endif
+
+                return true;
+            }
+            finally
+            {
+                mediaSharpManaged.Dispose();
+            }
+        }
+
+        /// <summary>
+        /// Reads the next frame and returns the corresponding buffer.
+        /// Null is returned if there was nothing to read.
+        /// </summary>
+        public SeeingSharpMediaBuffer ReadFrameNative()
+        {
+            if (m_endReached) { return null; }
 
             MF.SourceReaderFlags readerFlags;
             int dummyStreamIndex;
@@ -179,13 +232,13 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                 if (readerFlags == MF.SourceReaderFlags.Endofstream)
                 {
                     m_endReached = true;
-                    return false;
+                    return null;
                 }
 
                 // No sample received
-                if(nextSample == null)
+                if (nextSample == null)
                 {
-                    return false;
+                    return null;
                 }
 
                 // Reset end-reached flag (maybe the user called SetPosition again..)
@@ -194,47 +247,11 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                 // Copy pixel data into target buffer
                 if (nextSample.BufferCount > 0)
                 {
-                    using (MF.MediaBuffer mediaBuffer = nextSample.GetBufferByIndex(0))
-                    {
-                        int cbMaxLength;
-                        int cbCurrentLenght;
-                        IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
-                        try
-                        {
-#if DESKTOP
-                            // Performance optimization using MemCopy
-                            //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
-                            NativeMethods.MemCopy(
-                                targetBuffer.Pointer,
-                                mediaBufferPointer,
-                                new UIntPtr((uint)(m_frameSize.Width * m_frameSize.Height * 4)));
-#else
-                            unsafe
-                            {
-                                int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
-                                int* targetBufferPointerNative = (int*)targetBuffer.Pointer.ToPointer();
-                                for (int loopY = 0; loopY < m_frameSize.Height; loopY++)
-                                {
-                                    for (int loopX = 0; loopX < m_frameSize.Width; loopX++)
-                                    {
-                                        int actIndex = loopX + (loopY * m_frameSize.Width);
-                                        targetBufferPointerNative[actIndex] = mediaBufferPointerNative[actIndex];
-                                    }
-                                }
-                            }
-#endif
-                        }
-                        finally
-                        {
-                            mediaBuffer.Unlock();
-                        }
-
-                        return true;
-                    }
+                    return new SeeingSharpMediaBuffer(nextSample.GetBufferByIndex(0));
                 }
             }
 
-            return false;
+            return null;
         }
 
         /// <summary>

@@ -66,6 +66,22 @@ namespace SeeingSharp.Multimedia.Drawing3D
     }
 
     /// <summary>
+    /// Describes the alpha blending mode of the texture painter.
+    /// </summary>
+    public enum TexturePainterAlphaBlendMode
+    {
+        /// <summary>
+        /// Use alpha blending (draw pixels transparent).
+        /// </summary>
+        AlphaBlend,
+
+        /// <summary>
+        /// Ignore the alpha value.
+        /// </summary>
+        NoAlphaBlend
+    }
+
+    /// <summary>
     /// Describes the mode how a RenderTargetTexture pushes itself on the rendering stack.
     /// </summary>
     [Flags]
