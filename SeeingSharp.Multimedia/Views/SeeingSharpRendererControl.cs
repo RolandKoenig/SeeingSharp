@@ -634,7 +634,8 @@ namespace SeeingSharp.Multimedia.Views
             }
         }
 
-
+        [Browsable(true)]
+        [Category("Rendering")]
         public SeeingSharpInputMode InputMode
         {
             get { return m_inputMode; }
