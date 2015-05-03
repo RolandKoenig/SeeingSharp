@@ -187,7 +187,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// Disposes all native resources.
         /// </summary>
-        public void Dispose()
+        public virtual void Dispose()
         {
             GraphicsHelper.SafeDispose(ref m_sourceReader);
             GraphicsHelper.SafeDispose(ref m_videoSourceStream);

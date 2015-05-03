@@ -77,7 +77,11 @@ namespace SeeingSharp.BuildTasks
                     }
 
                     // Get output directory (same directory as source file)
-                    string outputDirectory = Path.Combine(Path.GetDirectoryName(actShaderFile.ItemSpec));
+                    string outputDirectory = Path.Combine(Path.GetDirectoryName(actShaderFile.ItemSpec), "bin");
+                    if(!Directory.Exists(outputDirectory))
+                    {
+                        Directory.CreateDirectory(outputDirectory);
+                    }
 
                     // Generate output task (pointer to output file) and other output paths
                     string additionalExtension = !string.IsNullOrEmpty(this.OutputAdditionalExtension) ? "." + this.OutputAdditionalExtension : "";

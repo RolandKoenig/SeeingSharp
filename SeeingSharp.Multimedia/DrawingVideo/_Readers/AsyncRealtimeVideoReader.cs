@@ -39,8 +39,8 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         #region Video processing resources
         private Task m_processingTask;
         private CancellationTokenSource m_processingCancelSource;
-        //private SeeingSharpMediaBuffer m_currentBuffer;
-        //private object m_currentBufferLock;
+        private SeeingSharpMediaBuffer m_currentBuffer;
+        private object m_currentBufferLock;
         #endregion
 
         /// <summary>
@@ -52,12 +52,33 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             : base(videoSource)
         {
             // Start immediately if requested
-            //m_currentBufferLock = new object();
-            //m_currentBuffer = null;
-            if (immediateStart)
+            m_currentBufferLock = new object();
+            m_currentBuffer = null;
+
+            if (immediateStart) { this.Start(); }
+        }
+
+        /// <summary>
+        /// Start video reading.
+        /// </summary>
+        public void Start()
+        {
+            if (this.IsStarted) { throw new SeeingSharpGraphicsException("Unable to start video reading more than one time!"); }
+
+            m_processingCancelSource = new CancellationTokenSource();
+            m_processingTask = this.PerformVideoReadingAsync(m_processingCancelSource.Token);
+        }
+
+        /// <summary>
+        /// Gets the current video frame.
+        /// Null is returned if there is still no frame available.
+        /// </summary>
+        public SeeingSharpMediaBuffer GetCurrentFrame()
+        {
+            lock(m_currentBufferLock)
             {
-                m_processingCancelSource = new CancellationTokenSource();
-                m_processingTask = this.PerformVideoReadingAsync(m_processingCancelSource.Token);
+                if (m_currentBuffer != null) { return m_currentBuffer.CopyPointer(); }
+                else { return null; }
             }
         }
 
@@ -71,24 +92,43 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             //  => Thread.CurrentThread.IsThreadPoolThread not possible on WinRT platform
             await Task.Delay(100).ConfigureAwait(false);
 
-            //Stopwatch stopWatch = new Stopwatch();
-            //stopWatch.Start();
+            bool doContinue = true;
+            while (doContinue && (!cancelToken.IsCancellationRequested))
+            {
+                // Read next frame
+                bool currentBufferChanged = false;
+                lock (m_currentBufferLock)
+                {
+                    SeeingSharpMediaBuffer mediaBuffer = this.ReadFrameInternal();
+                    if(mediaBuffer != null)
+                    {
+                        GraphicsHelper.SafeDispose(ref m_currentBuffer);
+                        m_currentBuffer = mediaBuffer;
+                        currentBufferChanged = true;
+                    }
+                }
 
-            //bool doContinue = true;
-            //while(doContinue && (!cancelToken.IsCancellationRequested))
-            //{
-            //    lock(m_currentBufferLock)
-            //    {
-            //        SeeingSharpMediaBuffer mediaBuffer = this.ReadFrameInternal();
+                // Wait some time because we could no read the last frame
+                if(currentBufferChanged)
+                {
+                    await Task.Delay(200);
+                }
+            }
+        }
 
-            //    }
-            //}
+        public override void Dispose()
+        {
+            m_processingCancelSource.Cancel();
+            m_processingCancelSource = null;
+            m_processingTask = null;
+
+            base.Dispose();
         }
 
         /// <summary>
         /// Did we start this reader previously?
         /// </summary>
-        public bool WasStarted
+        public bool IsStarted
         {
             get { return m_processingTask != null; }
         }

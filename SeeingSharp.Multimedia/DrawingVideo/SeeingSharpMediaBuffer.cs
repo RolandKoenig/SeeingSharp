@@ -39,6 +39,16 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             m_buffer = buffer;
         }
 
+        /// <summary>
+        /// Creates a new object targeting the the same underlying COM object.
+        /// </summary>
+        public SeeingSharpMediaBuffer CopyPointer()
+        {
+            return new SeeingSharpMediaBuffer(
+                new MF.MediaBuffer(m_buffer.NativePointer));
+        }
+
+
         internal MF.MediaBuffer GetBuffer()
         {
             return m_buffer;

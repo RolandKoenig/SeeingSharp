@@ -30,7 +30,7 @@ namespace SeeingSharp.Multimedia
     public static class ResourceKeys
     {
         public static readonly NamedOrGenericKey RES_VERTEX_SHADER_SKYBOX = new NamedOrGenericKey(
-            "ResourceKeys.RES_VERTEX_SHADER_SKYBOX");
+            "ResourceKeys.RES_VERTEX_SHADER_SKYBOX"); 
         public static readonly NamedOrGenericKey RES_PIXEL_SHADER_SKYBOX = new NamedOrGenericKey(
             "ResourceKeys.RES_PIXEL_SHADER_SKYBOX");
     }

@@ -1161,6 +1161,7 @@ namespace SeeingSharp.Multimedia.Core
             StringBuilder resultBuilderNamespace = new StringBuilder(100);
             resultBuilderNamespace.Append("SeeingSharp.Multimedia.Resources.Shaders.");
             resultBuilderNamespace.Append(subdirectory);
+            resultBuilderNamespace.Append(".bin");
 
             // Append shader name itself
             StringBuilder resultBuilderFileName = new StringBuilder(100);
