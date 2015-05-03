@@ -49,9 +49,8 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         public SeeingSharpMediaBuffer CopyPointer()
         {
             return new SeeingSharpMediaBuffer(
-                new MF.MediaBuffer(m_buffer.NativePointer));
+                m_buffer.QueryInterface<MF.MediaBuffer>());
         }
-
 
         internal MF.MediaBuffer GetBuffer()
         {

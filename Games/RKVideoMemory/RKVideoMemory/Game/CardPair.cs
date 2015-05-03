@@ -36,7 +36,6 @@ namespace RKVideoMemory.Game
     public class CardPair : SceneLogicalObject
     {
         private CardPairData m_pairData;
-        private bool m_isUncovered;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CardPair"/> class.
@@ -45,7 +44,7 @@ namespace RKVideoMemory.Game
         public CardPair(CardPairData pairData)
         {
             m_pairData = pairData;
-            m_isUncovered = false;
+            this.IsUncovered = false;
         }
 
         /// <summary>
@@ -59,7 +58,7 @@ namespace RKVideoMemory.Game
 
                 actCard.AnimationHandler.CancelAnimations();
 
-                if(m_isUncovered)
+                if(this.IsUncovered)
                 {
                     actCard.BuildAnimationSequence()
                         .MainScreenStart_WhenUncovered()

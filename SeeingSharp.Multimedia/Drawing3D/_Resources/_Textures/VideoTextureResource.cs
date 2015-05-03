@@ -34,6 +34,7 @@ using System.Threading.Tasks;
 
 // Namespace mappings
 using D3D11 = SharpDX.Direct3D11;
+using MF = SharpDX.MediaFoundation;
 
 namespace SeeingSharp.Multimedia.Drawing3D
 {
@@ -43,9 +44,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
     /// </summary>
     public class VideoTextureResource : TextureResource, IRenderableResource
     {
-        #region Configuration
-        private ResourceLink m_videoSource;
-        #endregion
+        //#region Configuration
+        //private ResourceLink m_videoSource;
+        //#endregion
 
         #region Direct3D resources
         private D3D11.Texture2D m_texture;
@@ -55,23 +56,47 @@ namespace SeeingSharp.Multimedia.Drawing3D
         #endregion
 
         #region Media foundation resources
-        private FrameByFrameVideoReader m_videoReader;
-        private MemoryMappedTexture32bpp m_videoFrameBuffer;
-        private bool m_newFrameArrived;
+        private AsyncRealtimeVideoReader m_videoReader;
+        private DateTime m_lastFrameTimestamp;
         #endregion
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VideoTextureResource"/> class.
+        /// </summary>
+        /// <param name="videoSource">The video source.</param>
         public VideoTextureResource(ResourceLink videoSource)
         {
             videoSource.EnsureNotNull("videoSource");
 
-            m_videoSource = videoSource;
-            m_videoReader = new FrameByFrameVideoReader(m_videoSource);
-            m_videoFrameBuffer = new MemoryMappedTexture32bpp(m_videoReader.FrameSize);
+            m_videoReader = new AsyncRealtimeVideoReader(videoSource, immediateStart: true);
 
             m_currentWidth = m_videoReader.FrameSize.Width;
             m_currentHeight = m_videoReader.FrameSize.Height;
+
+            m_lastFrameTimestamp = DateTime.MinValue;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="VideoTextureResource"/> class.
+        /// </summary>
+        /// <param name="videoReader">The video reader.</param>
+        public VideoTextureResource(AsyncRealtimeVideoReader videoReader)
+        {
+            videoReader.EnsureNotNull("videoReader");
+
+            m_videoReader = videoReader;
+
+            m_currentWidth = m_videoReader.FrameSize.Width;
+            m_currentHeight = m_videoReader.FrameSize.Height;
+
+            m_lastFrameTimestamp = DateTime.MinValue;
+        }
+
+        /// <summary>
+        /// Loads all resource.
+        /// </summary>
+        /// <param name="device">The device on which to load all resources.</param>
+        /// <param name="resources">The current ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_texture = GraphicsHelper.CreateCpuWritableTexture(
@@ -79,9 +104,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
             m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
         }
 
+        /// <summary>
+        /// Unloads all resources.
+        /// </summary>
+        /// <param name="device">The device on which the resources where loaded.</param>
+        /// <param name="resources">The current ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            GraphicsHelper.SafeDispose(ref m_videoFrameBuffer);
             GraphicsHelper.SafeDispose(ref m_videoReader);
 
             GraphicsHelper.SafeDispose(ref m_textureView);
@@ -94,24 +123,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="updateState">Current state of update process.</param>
         public void Update(UpdateState updateState)
         {
-            if (m_videoReader.EndReached && (!m_videoReader.IsSeekable)) { return; }
 
-            int countTries = 0;
-            while(!m_videoReader.ReadFrame(m_videoFrameBuffer))
-            {
-                countTries++;
-
-                // Handle End-Reached event
-                if (m_videoReader.EndReached) 
-                {
-                    if (!m_videoReader.IsSeekable) { return; }
-                    m_videoReader.SetCurrentPosition(TimeSpan.Zero);
-                }
-
-                if (countTries > 3) { return; }
-            }
-
-            m_newFrameArrived = true;
         }
 
         /// <summary>
@@ -122,38 +134,54 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
 
-            // Upload the last read video frame to texture buffer on the graphics device
-            if (m_newFrameArrived)
+            // Do nothing here if we have no new frame to render
+            if (m_lastFrameTimestamp >= m_videoReader.CurrentFrameTimestamp)
             {
-                m_newFrameArrived = false;
+                return;
+            }
+
+            // Upload the last read video frame to texture buffer on the graphics device
+            using(SeeingSharpMediaBuffer mediaBuffer = m_videoReader.GetCurrentFrame())
+            {
+                MF.MediaBuffer mediaBufferNative = mediaBuffer.GetBuffer();  
                 SharpDX.DataBox dataBox = deviceContext.MapSubresource(m_texture, 0, D3D11.MapMode.WriteDiscard, D3D11.MapFlags.None);
                 try
                 {
-                    unsafe
+                    int cbMaxLength;
+                    int cbCurrentLenght;
+                    IntPtr mediaBufferPointer = mediaBufferNative.Lock(out cbMaxLength, out cbCurrentLenght);
+                    try
                     {
-                        int* frameBufferPointerNative = (int*)m_videoFrameBuffer.Pointer.ToPointer();
-                        int* textureBufferPointerNative = (int*)dataBox.DataPointer.ToPointer();
+                        unsafe
+                        {
+                            int* frameBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
+                            int* textureBufferPointerNative = (int*)dataBox.DataPointer.ToPointer();
 #if DESKTOP
-                        // Performance optimization using MemCopy
-                        //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
-                        for (int loopY = 0; loopY < m_currentHeight; loopY++)
-                        {
-                            IntPtr rowStartTexture = new IntPtr(textureBufferPointerNative + (dataBox.RowPitch / 4) * loopY);
-                            IntPtr rowStartSource = new IntPtr(frameBufferPointerNative + (m_currentWidth) * loopY);
-                            NativeMethods.MemCopy(rowStartTexture, rowStartSource, new UIntPtr((uint)dataBox.RowPitch));
-                        }
-#else
-                        int textureBufferRowPixels = dataBox.RowPitch / 4;
-                        for (int loopX = 0; loopX < m_currentWidth; loopX++)
-                        {
+                            // Performance optimization using MemCopy
+                            //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
                             for (int loopY = 0; loopY < m_currentHeight; loopY++)
                             {
-                                int actIndexVideo = loopX + (loopY * m_currentWidth);
-                                int actIndexTexture = loopX + (loopY * textureBufferRowPixels);
-                                textureBufferPointerNative[actIndexTexture] = frameBufferPointerNative[actIndexVideo];
+                                IntPtr rowStartTexture = new IntPtr(textureBufferPointerNative + (dataBox.RowPitch / 4) * loopY);
+                                IntPtr rowStartSource = new IntPtr(frameBufferPointerNative + (m_currentWidth) * loopY);
+                                NativeMethods.MemCopy(rowStartTexture, rowStartSource, new UIntPtr((uint)dataBox.RowPitch));
                             }
-                        }
+#else
+                            int textureBufferRowPixels = dataBox.RowPitch / 4;
+                            for (int loopX = 0; loopX < m_currentWidth; loopX++)
+                            {
+                                for (int loopY = 0; loopY < m_currentHeight; loopY++)
+                                {
+                                    int actIndexVideo = loopX + (loopY * m_currentWidth);
+                                    int actIndexTexture = loopX + (loopY * textureBufferRowPixels);
+                                    textureBufferPointerNative[actIndexTexture] = frameBufferPointerNative[actIndexVideo];
+                                }
+                            }
 #endif
+                        }
+                    }
+                    finally
+                    {
+                        mediaBufferNative.Unlock();
                     }
                 }
                 finally

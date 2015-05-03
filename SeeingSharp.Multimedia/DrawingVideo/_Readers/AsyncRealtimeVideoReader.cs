@@ -43,9 +43,16 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         #region Video processing resources
         private Task m_processingTask;
         private CancellationTokenSource m_processingCancelSource;
+        #endregion
+
+        #region Members regarding current frame
+        private volatile int m_processedFrameCount;
+        private DateTime m_currentBufferTimestamp;
         private SeeingSharpMediaBuffer m_currentBuffer;
         private object m_currentBufferLock;
         #endregion
+
+        public event EventHandler VideoReachedEnd;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncRealtimeVideoReader"/> class.
@@ -58,6 +65,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             // Start immediately if requested
             m_currentBufferLock = new object();
             m_currentBuffer = null;
+            m_currentBufferTimestamp = DateTime.MinValue;
 
             if (immediateStart) { this.Start(); }
         }
@@ -97,34 +105,61 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             await Task.Delay(100).ConfigureAwait(false);
 
             bool doContinue = true;
-            while (doContinue && (!cancelToken.IsCancellationRequested))
+            bool endReached = false;
+            while (doContinue && (!cancelToken.IsCancellationRequested) && (!this.IsDisposed))
             {
-                // Read next frame
                 bool currentBufferChanged = false;
-                lock (m_currentBufferLock)
+
+                // Read next frame
+                SeeingSharpMediaBuffer mediaBuffer = this.ReadFrameInternal();
+                if (mediaBuffer != null)
                 {
-                    SeeingSharpMediaBuffer mediaBuffer = this.ReadFrameInternal();
-                    if(mediaBuffer != null)
+                    lock (m_currentBufferLock)
                     {
                         GraphicsHelper.SafeDispose(ref m_currentBuffer);
                         m_currentBuffer = mediaBuffer;
+                        m_currentBufferTimestamp = DateTime.UtcNow;
+                        m_processedFrameCount++;
                         currentBufferChanged = true;
                     }
                 }
 
+                // Fire VideoReachedEnd event
+                if (base.EndReached && (!endReached))
+                {
+                    endReached = true;
+
+                    try { VideoReachedEnd.Raise(this, EventArgs.Empty); }
+                    catch 
+                    { 
+                        // TODO: Raise an alert or something here
+                    }
+                }
+
                 // Wait some time because we could no read the last frame
-                if(currentBufferChanged)
+                if(!currentBufferChanged)
                 {
                     await Task.Delay(200);
                 }
             }
         }
 
+        /// <summary>
+        /// Disposes all native resources.
+        /// </summary>
         public override void Dispose()
         {
-            m_processingCancelSource.Cancel();
+            if (m_processingCancelSource != null)
+            {
+                m_processingCancelSource.Cancel();
+            }
             m_processingCancelSource = null;
             m_processingTask = null;
+
+            lock(m_currentBufferLock)
+            {
+                GraphicsHelper.SafeDispose(ref m_currentBuffer);
+            }
 
             base.Dispose();
         }
@@ -135,6 +170,16 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         public bool IsStarted
         {
             get { return m_processingTask != null; }
+        }
+
+        public DateTime CurrentFrameTimestamp
+        {
+            get { return m_currentBufferTimestamp; }
+        }
+
+        public int ProcessedFrameCount
+        {
+            get { return m_processedFrameCount; }
         }
     }
 }

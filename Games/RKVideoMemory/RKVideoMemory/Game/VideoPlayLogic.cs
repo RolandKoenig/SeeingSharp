@@ -23,6 +23,7 @@
 
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.DrawingVideo;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
 using System;
@@ -43,10 +44,34 @@ namespace RKVideoMemory.Game
         /// </summary>
         private async void OnMessage_Received(CardPairUncoveredByPlayerMessage message)
         {
+            // Define 'global' variables
+            TexturePainter objVideoPainter = null;
+            NamedOrGenericKey resVideoTexture = NamedOrGenericKey.Empty;
+
+            // Get the link to the video file
             ResourceLink firstVideo =
                 message.CardPair.PairData.ChildVideos.FirstOrDefault();
             if (firstVideo == null) { return; }
 
+            // Start the video reader and define logic at the video's end
+            AsyncRealtimeVideoReader videoReader = new AsyncRealtimeVideoReader(firstVideo, true);
+            videoReader.VideoReachedEnd += async (sender, eArgs) =>
+            {
+                // Clear created resources/objects
+                await base.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    manipulator.Remove(objVideoPainter);
+                    manipulator.RemoveResource(resVideoTexture);
+                });
+
+                // Dispose the video reader
+                videoReader.Dispose();
+
+                // Trigger 'MainScreenEntered' message
+                base.Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();
+            };
+
+            // Attach the video texture to the scene
             await base.Scene.ManipulateSceneAsync((manipulator) =>
             {
                 // Create the layer (if necessary)
@@ -60,12 +85,11 @@ namespace RKVideoMemory.Game
                 }
 
                 // Load the texture painter
-                var resBackgroundTexture = manipulator.AddResource(() => new VideoTextureResource(firstVideo));
+                resVideoTexture = manipulator.AddResource(() => new VideoTextureResource(videoReader));
+                objVideoPainter = new TexturePainter(resVideoTexture);
+                objVideoPainter.AlphaBlendMode = TexturePainterAlphaBlendMode.NoAlphaBlend;
                 manipulator.Add(
-                    new TexturePainter(resBackgroundTexture)
-                    {
-                        AlphaBlendMode = TexturePainterAlphaBlendMode.NoAlphaBlend
-                    },
+                    objVideoPainter,
                     Constants.GFX_LAYER_VIDEO_FOREGROUND);
             });
         }

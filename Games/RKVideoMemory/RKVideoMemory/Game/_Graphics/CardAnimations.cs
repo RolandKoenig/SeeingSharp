@@ -59,8 +59,6 @@ namespace RKVideoMemory.Game
             return sequenceBuilder
                 .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG))
                 .WaitFinished()
-                .Delay(TimeSpan.FromSeconds(Constants.INITIAL_UNCOVER_SECONDS_MAX))
-                .WaitFinished()
                 .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
                     Constants.ROTATE_ANIM_DELAY_MILLIS_MIN,
                     Constants.ROTATE_ANIM_DELAY_MILLIS_MAX)))
