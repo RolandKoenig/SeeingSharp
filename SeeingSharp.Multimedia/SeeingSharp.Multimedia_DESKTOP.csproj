@@ -281,6 +281,7 @@
     <Compile Include="DrawingVideo\_Readers\AsyncRealtimeVideoReader.cs" />
     <Compile Include="DrawingVideo\_Readers\FrameByFrameVideoReader.cs" />
     <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />
+    <Compile Include="DrawingVideo\_Util\MFSessionEventListener.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
@@ -348,6 +349,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResourceKeys.cs" />
+    <Compile Include="Views\_Misc.cs" />
+    <Compile Include="Views\_Video\MediaPlayerComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="_OtherNamespaces\Checking\Ensure.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
     <Compile Include="_Translatables.cs" />

@@ -201,6 +201,7 @@
     <Compile Include="DrawingVideo\_Readers\AsyncRealtimeVideoReader.cs" />
     <Compile Include="DrawingVideo\_Readers\FrameByFrameVideoReader.cs" />
     <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />
+    <Compile Include="DrawingVideo\_Util\MFSessionEventListener.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
@@ -259,7 +260,9 @@
     <Compile Include="ResourceKeys.cs" />
     <Compile Include="Views\SeeingSharpPanelPainter.cs" />
     <Compile Include="Views\ISeeingSharpPainter.cs" />
+    <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Util\SwapChainPanelWrapper.cs" />
+    <Compile Include="Views\_Video\MediaPlayerComponent.cs" />
     <Compile Include="_Constants.cs" />
     <Compile Include="_Extensions.cs" />
     <Compile Include="_Misc.cs" />

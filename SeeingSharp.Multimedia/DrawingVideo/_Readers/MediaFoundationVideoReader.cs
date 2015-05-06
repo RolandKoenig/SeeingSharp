@@ -79,7 +79,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                     // We need the 'EnableVideoProcessing' attribute because of the RGB32 format
                     // see (lowest post): http://msdn.developer-works.com/article/11388495/How+to+use+SourceReader+(for+H.264+to+RGB+conversion)%3F
                     mediaAttributes.Set(MF.SourceReaderAttributeKeys.EnableVideoProcessing, 1);
-                    mediaAttributes.Set(MF.SourceReaderAttributeKeys.DisableDxva, 1);
 
                     // Wrap the .net stream to a MF Bytestream
                     m_videoSourceStreamNet = m_videoSource.OpenInputStream();
