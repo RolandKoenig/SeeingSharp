@@ -62,7 +62,7 @@
             // m_cmdLoadLevel
             // 
             this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
-            this.m_cmdLoadLevel.Size = new System.Drawing.Size(156, 24);
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(175, 24);
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
             // 

@@ -263,8 +263,8 @@ namespace SeeingSharp.Tests.Rendering
                 // Define scene
                 await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
                 {
-                    var resVideoTexture = manipulator.AddResource<VideoTextureResource>(
-                        () => new VideoTextureResource(videoLink));
+                    var resVideoTexture = manipulator.AddResource<VideoThumbnailTextureResource>(
+                        () => new VideoThumbnailTextureResource(videoLink, TimeSpan.FromMilliseconds(300.0)));
                     var resVideoMaterial = manipulator.AddSimpleColoredMaterial(resVideoTexture, addToAlpha: 1f);
                     var geoResource = manipulator.AddResource<GeometryResource>(
                         () => new GeometryResource(new PalletType(
@@ -275,9 +275,6 @@ namespace SeeingSharp.Tests.Rendering
                     newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
                     newObject.Scaling = new Vector3(2f, 2f, 2f);
                 });
-
-                await memRenderTarget.RenderLoop.WaitForNextFinishedRenderAsync();
-                await memRenderTarget.RenderLoop.WaitForNextFinishedRenderAsync();
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();

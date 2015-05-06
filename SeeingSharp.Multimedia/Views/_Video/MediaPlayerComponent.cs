@@ -37,9 +37,9 @@ using System.Windows.Forms;
 using SDX = SharpDX;
 using MF = SharpDX.MediaFoundation;
 
-namespace SeeingSharp.Multimedia.Views._Video
+namespace SeeingSharp.Multimedia.Views
 {
-    public class MFMediaPlayer : Component, IDisposable
+    public class MediaPlayerComponent : Component, IDisposable
     {
         private const string CATEGORY_NAME = "Video Player";
 
@@ -70,18 +70,9 @@ namespace SeeingSharp.Multimedia.Views._Video
         public event EventHandler IsPausedChanged;
 
         /// <summary>
-        /// Initializes the <see cref="MFMediaPlayer"/> class.
+        /// Initializes a new instance of the <see cref="MediaPlayerComponent"/> class.
         /// </summary>
-        static MFMediaPlayer()
-        {
-            // Very important: Initialize MF library..
-            MF.MediaFactory.Startup(MF.MediaFactory.Version, 0);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MFMediaPlayer"/> class.
-        /// </summary>
-        public MFMediaPlayer()
+        public MediaPlayerComponent()
         {
             m_currentVideoFile = string.Empty;
         }

@@ -53,23 +53,23 @@ namespace RKVideoMemory.Game
                 message.CardPair.PairData.ChildVideos.FirstOrDefault();
             if (firstVideo == null) { return; }
 
-            // Start the video reader and define logic at the video's end
-            AsyncRealtimeVideoReader videoReader = new AsyncRealtimeVideoReader(firstVideo, true);
-            videoReader.VideoReachedEnd += async (sender, eArgs) =>
-            {
-                // Clear created resources/objects
-                await base.Scene.ManipulateSceneAsync((manipulator) =>
-                {
-                    manipulator.Remove(objVideoPainter);
-                    manipulator.RemoveResource(resVideoTexture);
-                });
+            //// Start the video reader and define logic at the video's end
+            //AsyncRealtimeVideoReader videoReader = new AsyncRealtimeVideoReader(firstVideo, true);
+            //videoReader.VideoReachedEnd += async (sender, eArgs) =>
+            //{
+            //    // Clear created resources/objects
+            //    await base.Scene.ManipulateSceneAsync((manipulator) =>
+            //    {
+            //        manipulator.Remove(objVideoPainter);
+            //        manipulator.RemoveResource(resVideoTexture);
+            //    });
 
-                // Dispose the video reader
-                videoReader.Dispose();
+            //    // Dispose the video reader
+            //    videoReader.Dispose();
 
-                // Trigger 'MainScreenEntered' message
-                base.Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();
-            };
+            //    // Trigger 'MainScreenEntered' message
+            //    base.Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();
+            //};
 
             // Attach the video texture to the scene
             await base.Scene.ManipulateSceneAsync((manipulator) =>
@@ -85,7 +85,7 @@ namespace RKVideoMemory.Game
                 }
 
                 // Load the texture painter
-                resVideoTexture = manipulator.AddResource(() => new VideoTextureResource(videoReader));
+                resVideoTexture = manipulator.AddResource(() => new VideoThumbnailTextureResource(firstVideo, TimeSpan.Zero));
                 objVideoPainter = new TexturePainter(resVideoTexture);
                 objVideoPainter.AlphaBlendMode = TexturePainterAlphaBlendMode.NoAlphaBlend;
                 manipulator.Add(
