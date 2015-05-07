@@ -53,25 +53,8 @@ namespace RKVideoMemory.Game
                 message.CardPair.PairData.ChildVideos.FirstOrDefault();
             if (firstVideo == null) { return; }
 
-            //// Start the video reader and define logic at the video's end
-            //AsyncRealtimeVideoReader videoReader = new AsyncRealtimeVideoReader(firstVideo, true);
-            //videoReader.VideoReachedEnd += async (sender, eArgs) =>
-            //{
-            //    // Clear created resources/objects
-            //    await base.Scene.ManipulateSceneAsync((manipulator) =>
-            //    {
-            //        manipulator.Remove(objVideoPainter);
-            //        manipulator.RemoveResource(resVideoTexture);
-            //    });
-
-            //    // Dispose the video reader
-            //    videoReader.Dispose();
-
-            //    // Trigger 'MainScreenEntered' message
-            //    base.Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();
-            //};
-
             // Attach the video texture to the scene
+            Task startAnimationTask = null;
             await base.Scene.ManipulateSceneAsync((manipulator) =>
             {
                 // Create the layer (if necessary)
@@ -87,11 +70,22 @@ namespace RKVideoMemory.Game
                 // Load the texture painter
                 resVideoTexture = manipulator.AddResource(() => new VideoThumbnailTextureResource(firstVideo, TimeSpan.Zero));
                 objVideoPainter = new TexturePainter(resVideoTexture);
+                objVideoPainter.Scaling = 0.6f;
                 objVideoPainter.AlphaBlendMode = TexturePainterAlphaBlendMode.NoAlphaBlend;
+                startAnimationTask = objVideoPainter.BuildAnimationSequence()
+                    .ScaleTo(1f, TimeSpan.FromMilliseconds(300))
+                    .ApplyAsync();
+              
                 manipulator.Add(
                     objVideoPainter,
                     Constants.GFX_LAYER_VIDEO_FOREGROUND);
             });
+
+            // Wait until start animation has finished
+            await startAnimationTask;
+
+            // Trigger start of video playing
+            this.Messenger.Publish(new PlayMovieRequestMessage(firstVideo));
         }
     }
 }

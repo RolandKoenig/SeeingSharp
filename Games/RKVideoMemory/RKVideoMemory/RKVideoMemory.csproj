@@ -111,6 +111,8 @@
     <Compile Include="Game\_Graphics\CardAnimations.cs" />
     <Compile Include="Game\_Graphics\CardObjectType.cs" />
     <Compile Include="Game\_Graphics\GenericGraphics.cs" />
+    <Compile Include="Game\_Messages\PlayMovieFinishedMessage.cs" />
+    <Compile Include="Game\_Messages\PlayMovieRequestMessage.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

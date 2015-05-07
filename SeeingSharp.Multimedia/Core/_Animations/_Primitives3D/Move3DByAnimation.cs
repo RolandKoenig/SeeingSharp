@@ -27,14 +27,16 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class Move3DByAnimation : AnimationBase
     {
-        // Parameters
+        #region Parameters
         private IAnimatableObjectPosition m_targetObject;
         private Vector3 m_moveVector;
         private MovementAnimationHelper m_moveHelper;
+        #endregion
 
-        // Runtime values
+        #region Runtime values
         private Vector3 m_targetVector;
         private Vector3 m_startVector;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Move3DByAnimation" /> class.

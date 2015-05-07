@@ -155,7 +155,7 @@
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectPosition.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectQuaternion.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectScaling.cs" />
-    <Compile Include="Core\_Animations\_Primitives3D\AcceleratedMove3DByAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\ScaleSpriteToAnimation.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\ChangeOpacityToAnimation.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\Move3DByAnimation.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\Move3DToAnimation.cs" />
@@ -164,6 +164,7 @@
     <Compile Include="Core\_Animations\_Primitives3D\Scale3DToAnimation.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Move.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Rotate.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Scale.cs" />
     <Compile Include="Core\_Animations\_Standard\CallActionAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\ChangeFloatByAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\DelayAnimation.cs" />

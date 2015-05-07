@@ -32,11 +32,13 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class ChangeOpacityToAnimation : AnimationBase
     {
+        #region Parameters
         private float m_startOpacity;
         private TimeSpan m_duration;
         private float m_moveOpacity;
         private float m_targetOpacity;
         private GenericObject m_targetObject;
+        #endregion
 
         /// <summary>
         /// Initialize a new Instance of the <see cref="Move3DByAnimation" /> class.

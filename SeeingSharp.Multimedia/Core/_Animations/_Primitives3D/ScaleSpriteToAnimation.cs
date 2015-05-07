@@ -22,32 +22,45 @@
 #endregion
 
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using SeeingSharp.Multimedia.Objects;
 
 namespace SeeingSharp.Multimedia.Core
 {
-    public class AcceleratedMove3DByAnimation : AnimationBase
+    public class ScaleSpriteToAnimation : AnimationBase
     {
-        // Parameters
-        private SceneSpacialObject m_targetObject;
-        private Vector3 m_moveNormal;
-        private float m_acceleration;               //measured in m/s²
-        private float m_initialSpeed;               //measured in m/s
+        #region Parameters
+        private TexturePainter m_targetObject;
         private TimeSpan m_duration;
+        private float m_targetScaling;
+        #endregion
 
-        // Runtime values
-        private Vector3 m_startPosition;
+        #region Runtime
+        private float m_startScaling;
+        private float m_moveScaling;
+        #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AcceleratedMove3DByAnimation" /> class.
+        /// Initialize a new Instance of the <see cref="ScaleSpriteToAnimation" /> class.
         /// </summary>
-        public AcceleratedMove3DByAnimation(SceneSpacialObject targetObject, Vector3 moveNormal, float acceleration, float initialSpeed, TimeSpan duration)
+        /// <param name="targetObject">The target object.</param>
+        /// <param name="targetScaling">The target scaling factor.</param>
+        /// <param name="duration">The duration.</param>
+        /// <exception cref="System.Exception">Opacity value can be between 0 and 1, not greater than 1 and not lower than 0!</exception>
+        public ScaleSpriteToAnimation(TexturePainter targetObject, float targetScaling, TimeSpan duration)
             : base(targetObject, AnimationType.FixedTime, duration)
         {
             m_targetObject = targetObject;
-            m_moveNormal = moveNormal;
-            m_acceleration = acceleration;
-            m_initialSpeed = initialSpeed;
             m_duration = duration;
+            m_targetScaling = targetScaling;
+
+            if (targetScaling < 0f || targetScaling > 1f)
+            {
+                throw new Exception("Opacity value can be between 0 and 1, not greater than 1 and not lower than 0!");
+            }
         }
 
         /// <summary>
@@ -55,7 +68,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected override void OnStartAnimation()
         {
-            m_startPosition = m_targetObject.Position;
+            m_startScaling = m_targetObject.Scaling;
+            m_moveScaling = m_targetScaling - m_startScaling;
         }
 
         /// <summary>
@@ -63,35 +77,20 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected override void OnCurrentTimeUpdated(UpdateState updateState, AnimationState animationState)
         {
-            float currentSeconds = (float)base.CurrentTime.TotalSeconds;
-
-            Vector3 moveVector = CalculateMoveVector(currentSeconds);
-            m_targetObject.Position = m_startPosition + moveVector;
+            float changeFactor = (float)base.CurrentTime.Ticks / (float)base.FixedTime.Ticks;
+            m_targetObject.Scaling = m_startScaling + m_moveScaling * changeFactor;
         }
 
         /// <summary>
         /// Called when the FixedTime animation has finished.
+        /// (Sets final state to the target object and clears all runtime values).
         /// </summary>
         protected override void OnFixedTimeAnimationFinished()
         {
-            float currentSeconds = (float)base.FixedTime.TotalSeconds;
+            m_targetObject.Scaling = m_targetScaling;
 
-            Vector3 moveVector = CalculateMoveVector(currentSeconds);
-            m_targetObject.Position = m_startPosition + moveVector;
-        }
-
-        /// <summary>
-        /// Calculates the move vector for the given count of passed seconds.
-        /// </summary>
-        /// <param name="passedSeconds"></param>
-        private Vector3 CalculateMoveVector(float passedSeconds)
-        {
-            if (passedSeconds <= 0f) { return Vector3.Zero; }
-
-            float passedDistance = 0.5f * m_acceleration * (passedSeconds * passedSeconds) +
-                                   m_initialSpeed * passedSeconds;
-
-            return m_moveNormal * passedDistance;
+            m_moveScaling = 0;
+            m_startScaling = 1;
         }
     }
 }

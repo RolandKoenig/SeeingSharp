@@ -34,9 +34,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_cmdLoadLevel = new System.Windows.Forms.ToolStripMenuItem();
             this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
-            this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_timerPicking = new System.Windows.Forms.Timer(this.components);
             this.m_timerTrigger = new System.Windows.Forms.Timer(this.components);
+            this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
+            this.m_mediaPlayer = new SeeingSharp.Multimedia.Views.MediaPlayerComponent();
             this.m_mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -62,9 +63,20 @@
             // m_cmdLoadLevel
             // 
             this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
-            this.m_cmdLoadLevel.Size = new System.Drawing.Size(175, 24);
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(156, 24);
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
+            // 
+            // m_timerPicking
+            // 
+            this.m_timerPicking.Enabled = true;
+            this.m_timerPicking.Tick += new System.EventHandler(this.OnTimerPicking_Tick);
+            // 
+            // m_timerTrigger
+            // 
+            this.m_timerTrigger.Enabled = true;
+            this.m_timerTrigger.Interval = 1000;
+            this.m_timerTrigger.Tick += new System.EventHandler(this.OnTimerTrigger_Tick);
             // 
             // m_ctrlRenderer
             // 
@@ -89,16 +101,11 @@
             this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
             this.m_ctrlRenderer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnCtrlRenderer_MouseClick);
             // 
-            // m_timerPicking
+            // m_mediaPlayer
             // 
-            this.m_timerPicking.Enabled = true;
-            this.m_timerPicking.Tick += new System.EventHandler(this.OnTimerPicking_Tick);
-            // 
-            // m_timerTrigger
-            // 
-            this.m_timerTrigger.Enabled = true;
-            this.m_timerTrigger.Interval = 1000;
-            this.m_timerTrigger.Tick += new System.EventHandler(this.OnTimerTrigger_Tick);
+            this.m_mediaPlayer.RestartVideoWhenFinished = false;
+            this.m_mediaPlayer.TargetControl = this.m_ctrlRenderer;
+            this.m_mediaPlayer.VideoFinished += new System.EventHandler(this.OnMediaPlayer_VideoFinished);
             // 
             // MainWindow
             // 
@@ -127,6 +134,7 @@
         private System.Windows.Forms.FolderBrowserDialog m_dlgOpenDir;
         private System.Windows.Forms.Timer m_timerPicking;
         private System.Windows.Forms.Timer m_timerTrigger;
+        private SeeingSharp.Multimedia.Views.MediaPlayerComponent m_mediaPlayer;
     }
 }
 

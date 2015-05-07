@@ -27,9 +27,11 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class RotateQuaternionToAnimation : AnimationBase
     {
+        #region Parameters
         private IAnimatableObjectQuaternion m_targetObject;
         private Quaternion m_startQuaternion;
         private Quaternion m_targetQuaternion;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RotateQuaternionToAnimation" /> class.

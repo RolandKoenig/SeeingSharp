@@ -36,6 +36,8 @@ using System.Windows.Forms;
 // Namespace mappings
 using SDX = SharpDX;
 using MF = SharpDX.MediaFoundation;
+using SeeingSharp.Util;
+using System.IO;
 
 namespace SeeingSharp.Multimedia.Views
 {
@@ -46,12 +48,14 @@ namespace SeeingSharp.Multimedia.Views
         #region Own properties
         private MediaPlayerState m_state;
         private Control m_targetControl;
-        private string m_currentVideoFile;
+        private ResourceLink m_currentVideoLink;
         private TimeSpan m_currentVideoDuration;
         private bool m_isPaused;
         #endregion
 
         #region References to Media Foundation
+        private Stream m_videoSourceStreamNet;
+        private MF.ByteStream m_videoSourceStream;
         private MF.MediaSession m_mediaSession;
         private MF.VideoDisplayControl m_displayControl;
         private MFSessionEventListener m_sessionEventHandler;
@@ -64,17 +68,20 @@ namespace SeeingSharp.Multimedia.Views
         public event EventHandler StateChanged;
 
         /// <summary>
-        /// Raises when the paused flag has changed.
+        /// Raised when the paused flag has changed.
         /// </summary>
         [Category(CATEGORY_NAME)]
         public event EventHandler IsPausedChanged;
+
+        [Category(CATEGORY_NAME)]
+        public event EventHandler VideoFinished;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaPlayerComponent"/> class.
         /// </summary>
         public MediaPlayerComponent()
         {
-            m_currentVideoFile = string.Empty;
+            m_currentVideoLink = null;
         }
 
         /// <summary>
@@ -124,8 +131,8 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Opens the given video file and plays it directly.
         /// </summary>
-        /// <param name="sourceVideoFile">The source video file.</param>
-        public async Task OpenAndShowVideoFileAsync(string sourceVideoFile)
+        /// <param name="videoLink">The link to the video file.</param>
+        public async Task OpenAndShowVideoFileAsync(ResourceLink videoLink)
         {
             // Check for correct state
             if (this.State != MediaPlayerState.NothingToDo)
@@ -146,10 +153,12 @@ namespace SeeingSharp.Multimedia.Views
                 // Create source object
                 MF.SourceResolver sourceResolver = new MF.SourceResolver();
                 MF.ObjectType objType = MF.ObjectType.Invalid;
-                SharpDX.ComObject objSource = sourceResolver.CreateObjectFromURL(
-                    sourceVideoFile,
+                m_videoSourceStreamNet = videoLink.OpenInputStream();
+                m_videoSourceStream = new MF.ByteStream(m_videoSourceStreamNet);
+                SharpDX.ComObject objSource = sourceResolver.CreateObjectFromStream(
+                    m_videoSourceStream,
+                    "Dummy." + videoLink.FileExtension,
                     MF.SourceResolverFlags.MediaSource,
-                    null,
                     out objType);
                 MF.MediaSource mediaSource = objSource.QueryInterface<MF.MediaSource>();
                 GraphicsHelper.SafeDispose(ref objSource);
@@ -243,7 +252,7 @@ namespace SeeingSharp.Multimedia.Views
                 await StartSessionInternalAsync(true);
 
                 // Video opened successfully
-                m_currentVideoFile = sourceVideoFile;
+                m_currentVideoLink = videoLink;
                 this.State = MediaPlayerState.Playing;
             }
             catch (Exception)
@@ -307,6 +316,8 @@ namespace SeeingSharp.Multimedia.Views
                 // Disposes all resources
                 this.DisposeResources();
             }
+
+            VideoFinished.Raise(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -372,11 +383,14 @@ namespace SeeingSharp.Multimedia.Views
             }
 
             // Clear all references
-            m_currentVideoFile = string.Empty;
+            m_currentVideoLink = null;
             m_currentVideoDuration = TimeSpan.Zero;
             GraphicsHelper.SafeDispose(ref m_displayControl);
             GraphicsHelper.SafeDispose(ref m_mediaSession);
             m_sessionEventHandler = null;
+
+            GraphicsHelper.SafeDispose(ref m_videoSourceStream);
+            GraphicsHelper.SafeDispose(ref m_videoSourceStreamNet);
 
             // Apply new state
             this.IsPaused = false;
@@ -404,9 +418,9 @@ namespace SeeingSharp.Multimedia.Views
         /// Gets a reference to the current displayed video.
         /// </summary>
         [Browsable(false)]
-        public string CurrentVideoFile
+        public ResourceLink CurrentVideoFile
         {
-            get { return m_currentVideoFile; }
+            get { return m_currentVideoLink; }
         }
 
         /// <summary>

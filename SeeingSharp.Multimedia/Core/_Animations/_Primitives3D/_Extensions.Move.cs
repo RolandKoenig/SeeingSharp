@@ -286,21 +286,5 @@ namespace SeeingSharp.Multimedia.Core
                 new Move3DToAnimation(targetObject, targetVector, new MovementSpeed(speed, acceleration, deceleration)));
             return sequenceBuilder;
         }
-
-        /// <summary>
-        /// Scales current object by the given move vector.
-        /// </summary>
-        /// <typeparam name="TargetObject">The type of the arget object.</typeparam>
-        /// <param name="sequenceBuilder">AnimationSequenceBuilder building the animation.</param>
-        /// <param name="scaleVector">The scale vector.</param>
-        /// <param name="animationTime">Total time for the animation.</param>
-        /// <returns></returns>
-        public static IAnimationSequenceBuilder<TargetObject> Scale3DTo<TargetObject>(this IAnimationSequenceBuilder<TargetObject> sequenceBuilder, Vector3 scaleVector, TimeSpan animationTime)
-            where TargetObject : SceneSpacialObject
-        {
-            sequenceBuilder.Add(
-                new Scale3DToAnimation(sequenceBuilder.TargetObject, scaleVector, animationTime));
-            return sequenceBuilder;
-        }
     }
 }

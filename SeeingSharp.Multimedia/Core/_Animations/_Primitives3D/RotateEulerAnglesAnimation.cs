@@ -27,17 +27,19 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class RotateEulerAnglesAnimation : AnimationBase
     {
-        // Parameters
+        #region Parameters
         private IAnimatableObjectEulerRotation m_targetObject;
         private RotationCalculationComponent m_calculationComponents;
         private AnimationStateChangeMode m_stateChangeMode;
         private Vector3 m_paramRotation;
         private TimeSpan m_duration;
+        #endregion
 
-        // Runtime values
+        #region Runtime values
         private Vector3 m_startRotation;
         private Vector3 m_targetRotation;
         private Vector3 m_changeRotation;
+        #endregion
 
         /// <summary>
         /// Rotates the object to the target rotation vector.

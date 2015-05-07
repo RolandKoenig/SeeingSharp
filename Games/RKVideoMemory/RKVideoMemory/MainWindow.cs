@@ -98,6 +98,34 @@ namespace RKVideoMemory
             this.UpdateDialogStates();
         }
 
+        /// <summary>
+        /// Called when the game requests to display a video.
+        /// </summary>
+        private async void OnMessage_Received(PlayMovieRequestMessage message)
+        {
+            m_ctrlRenderer.DiscardRendering = true;
+            try
+            {
+                // Perform rendering here
+                await m_mediaPlayer.OpenAndShowVideoFileAsync(message.VideoLink);
+            }
+            catch(Exception)
+            {
+                m_ctrlRenderer.DiscardRendering = false;
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Called when video playing is completed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void OnMediaPlayer_VideoFinished(object sender, EventArgs e)
+        {
+            m_ctrlRenderer.DiscardRendering = false;
+        }
+
         private void OnCtrlRenderer_MouseClick(object sender, MouseEventArgs e)
         {
             if (m_objectsBelowCursor.Count > 0)
