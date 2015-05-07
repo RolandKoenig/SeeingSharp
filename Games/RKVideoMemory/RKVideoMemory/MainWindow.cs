@@ -124,6 +124,10 @@ namespace RKVideoMemory
         private void OnMediaPlayer_VideoFinished(object sender, EventArgs e)
         {
             m_ctrlRenderer.DiscardRendering = false;
+
+            // Raise video-play finished message
+            SeeingSharpApplication.Current.UIMessenger
+                .Publish<PlayMovieFinishedMessage>();
         }
 
         private void OnCtrlRenderer_MouseClick(object sender, MouseEventArgs e)

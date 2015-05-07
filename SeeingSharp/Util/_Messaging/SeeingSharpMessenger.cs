@@ -189,6 +189,27 @@ namespace SeeingSharp.Util
             return result;
         }
 
+        /// <summary>
+        /// Waits for the given message.
+        /// </summary>
+        public Task<T> WaitForMessageAsync<T>()
+            where T : SeeingSharpMessage
+        {
+            TaskCompletionSource<T> taskComplSource = new TaskCompletionSource<T>();
+
+            MessageSubscription subscription = null;
+            subscription = this.Subscribe<T>((message) =>
+            {
+                // Unsubscribe first
+                subscription.Unsubscribe();
+
+                // Set the task's result
+                taskComplSource.SetResult(message);
+            });
+
+            return taskComplSource.Task;
+        }
+
 #if DESKTOP
         /// <summary>
         /// Subscribes all receiver-methods of the given target object to this Messenger.

@@ -86,6 +86,19 @@ namespace RKVideoMemory.Game
 
             // Trigger start of video playing
             this.Messenger.Publish(new PlayMovieRequestMessage(firstVideo));
+
+            // Wait for finished video rendering
+            await this.Messenger.WaitForMessageAsync<PlayMovieFinishedMessage>();
+
+            // Remove video resources again
+            await base.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                manipulator.Remove(objVideoPainter);
+                manipulator.RemoveResource(resVideoTexture);
+            });
+
+            // Tell the system that we are back on the mainscreen
+            this.Messenger.Publish<MainMemoryScreenEnteredMessage>();
         }
     }
 }
