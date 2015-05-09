@@ -113,23 +113,27 @@ namespace RKVideoMemory.Game
         public static IAnimationSequenceBuilder<Card> ResetCard_BeforeStart(
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
-            return sequenceBuilder.CallAction(() =>
-            {
-                sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG);
-                sequenceBuilder.TargetObject.Opacity = 0f;
-                sequenceBuilder.TargetObject.AccentuationFactor = 1f;
-                sequenceBuilder.TargetObject.Scaling = Vector3.One;
-            });
+            return sequenceBuilder
+                .CallAction(() =>
+                {
+                    sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG);
+                    sequenceBuilder.TargetObject.Opacity = 0f;
+                    sequenceBuilder.TargetObject.AccentuationFactor = 1f;
+                    sequenceBuilder.TargetObject.Scaling = Vector3.One;
+                })
+                .WaitFinished();
         }
 
         public static IAnimationSequenceBuilder<Card> ResetCard_BeforeLeave(
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
-            return sequenceBuilder.CallAction(() =>
+            return sequenceBuilder
+                .CallAction(() =>
                 {
                     sequenceBuilder.TargetObject.Opacity = 1f;
                     sequenceBuilder.TargetObject.Scaling = Vector3.One;
-                });
+                })
+                .WaitFinished();
         }
     }
 }

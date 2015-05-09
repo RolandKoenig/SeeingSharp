@@ -57,7 +57,7 @@ namespace RKVideoMemory.Game
                 Card actCard = this.Cards[loop];
                 actCard.AnimationHandler.CancelAnimations();
                 actCard.BuildAnimationSequence()
-                    .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(300))
+                    .MainScreenLeave()
                     .Apply();
             }
         }
