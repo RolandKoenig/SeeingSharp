@@ -32,13 +32,15 @@ namespace SeeingSharp.Multimedia.Core
         SceneObject,
         IAnimatableObjectEulerRotation, IAnimatableObjectPosition, IAnimatableObjectQuaternion, IAnimatableObjectScaling
     {
-        // Resource keys
+        #region Resource keys
         private NamedOrGenericKey KEY_SCENE_RENDER_PARAMETERS = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
-        // Resources for rendering
+        #region Resources for rendering
         private IndexBasedDynamicCollection<ObjectRenderParameters> m_renderParameters;
+        #endregion
 
-        // Spacial parameters
+        #region Spacial parameters
         private SpacialTransformationType m_transformationType;
         private Vector3 m_position;
         private Vector3 m_rotation;
@@ -51,13 +53,15 @@ namespace SeeingSharp.Multimedia.Core
         private SceneSpacialObject m_transformSourceObject;
         private bool m_transformParamsChanged;
         private bool m_forceTransformUpdateOnChilds;
+        #endregion
 
-        // Rendering parameters
+        #region Rendering parameters
         private Color4 m_color;
         private float m_accentuationFactor;
         private float m_opacity;
         private float m_borderPart;
         private float m_borderMultiplyer;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneSpacialObject"/> class.

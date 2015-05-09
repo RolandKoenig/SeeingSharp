@@ -31,37 +31,37 @@ using SeeingSharp.Checking;
 
 namespace SeeingSharp.Multimedia.Core
 {
-    public class ChangeOpacityToAnimation : AnimationBase
+    public class ChangeAccentuationToAnimation : AnimationBase
     {
         #region Parameters
-        private float m_startOpacity;
+        private float m_startAccentuation;
         private TimeSpan m_duration;
-        private float m_moveOpacity;
-        private float m_targetOpacity;
+        private float m_moveAccentuation;
+        private float m_targetAccentuation;
         private SceneSpacialObject m_targetObject;
         #endregion
 
         /// <summary>
-        /// Initialize a new Instance of the <see cref="Move3DByAnimation" /> class.
+        /// Initialize a new Instance of the <see cref="ChangeAccentuationToAnimation" /> class.
         /// </summary>
         /// <param name="targetObject">The target object.</param>
-        /// <param name="targetOpacity">The target opacity.</param>
+        /// <param name="targetAccentuation">The target accentuation.</param>
         /// <param name="duration">The duration.</param>
-        /// <exception cref="System.Exception">Opacity value can be between 0 and 1, not greater than 1 and not lower than 0!</exception>
-        public ChangeOpacityToAnimation(SceneSpacialObject targetObject, float targetOpacity, TimeSpan duration)
+        /// <exception cref="System.Exception">Accentuation value can be between 0 and 1, not greater than 1 and not lower than 0!</exception>
+        public ChangeAccentuationToAnimation(SceneSpacialObject targetObject, float targetAccentuation, TimeSpan duration)
             : base(targetObject, AnimationType.FixedTime, duration)
         {
             targetObject.EnsureNotNull("targetObject");
-            targetOpacity.EnsureInRange(0f, 1f, "targetOpacity");
+            targetAccentuation.EnsureInRange(0f, 1f, "targetAccentuation");
             duration.EnsureLongerThanZero("duration");
 
             m_targetObject = targetObject;
             m_duration = duration;
-            m_targetOpacity = targetOpacity;
+            m_targetAccentuation = targetAccentuation;
 
-            if (targetOpacity < 0f || targetOpacity > 1f)
+            if (targetAccentuation < 0f || targetAccentuation > 1f)
             {
-                throw new Exception("Opacity value can be between 0 and 1, not greater than 1 and not lower than 0!");
+                throw new Exception("Accentuation value can be between 0 and 1, not greater than 1 and not lower than 0!");
             }
         }
 
@@ -70,8 +70,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected override void OnStartAnimation()
         {
-            m_startOpacity = m_targetObject.Opacity;
-            m_moveOpacity = m_targetOpacity - m_startOpacity;
+            m_startAccentuation = m_targetObject.Opacity;
+            m_moveAccentuation = m_targetAccentuation - m_startAccentuation;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace SeeingSharp.Multimedia.Core
         protected override void OnCurrentTimeUpdated(UpdateState updateState, AnimationState animationState)
         {
             float changeFactor = (float)base.CurrentTime.Ticks / (float)base.FixedTime.Ticks;
-            m_targetObject.Opacity = m_startOpacity + m_moveOpacity * changeFactor;
+            m_targetObject.AccentuationFactor = m_startAccentuation + m_moveAccentuation * changeFactor;
         }
 
         /// <summary>
@@ -89,10 +89,10 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected override void OnFixedTimeAnimationFinished()
         {
-            m_targetObject.Opacity = m_targetOpacity;
+            m_targetObject.AccentuationFactor = m_targetAccentuation;
 
-            m_moveOpacity = 0;
-            m_startOpacity = 1;
+            m_moveAccentuation = 0;
+            m_startAccentuation = 1;
         }
     }
 }
