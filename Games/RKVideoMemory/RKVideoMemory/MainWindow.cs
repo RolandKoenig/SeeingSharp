@@ -35,6 +35,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace RKVideoMemory
 {
@@ -81,6 +82,15 @@ namespace RKVideoMemory
 
             // Initialize game logic
             await m_game.InitializeAsync();
+
+            // Try to load the default level
+            string defaultFolder = Path.Combine(
+                Path.GetDirectoryName(this.GetType().Assembly.Location),
+                Constants.DEFAULT_FOLDER_INITIAL_LEVEL);
+            if(Directory.Exists(defaultFolder))
+            {
+                await m_game.LoadLevelAsync(defaultFolder);
+            }
         }
 
         private void OnMessage_Received(GameInitializedMessage message)
@@ -152,10 +162,7 @@ namespace RKVideoMemory
             try
             {
                 // Perform simple picking test
-                System.Drawing.Point cursorPosition = this.PointToClient(Cursor.Position);
-                List<SceneObject> objectsBelowCursor = await m_ctrlRenderer.RenderLoop.PickObjectAsync(
-                    new SeeingSharp.Point(cursorPosition.X, cursorPosition.Y),
-                    new PickingOptions());
+                List<SceneObject> objectsBelowCursor = await m_ctrlRenderer.GetObjectsBelowCursorAsync();
                 if (this.IsDisposed) { return; }
 
                 // Look, what is new and what is old

@@ -428,7 +428,6 @@ namespace SeeingSharp.Multimedia.Core
                 Matrix worldMatrix = Matrix.Identity;
                 Matrix viewWorld = m_camera.View * worldMatrix;
                 Matrix inversionViewWorld = Matrix.Invert(viewWorld); 
-
                 Vector3 rayDirection = Vector3.Normalize(new Vector3(
                     pickingVector.X * inversionViewWorld.M11 + pickingVector.Y * inversionViewWorld.M21 + pickingVector.Z * inversionViewWorld.M31,
                     pickingVector.X * inversionViewWorld.M12 + pickingVector.Y * inversionViewWorld.M22 + pickingVector.Z * inversionViewWorld.M32,

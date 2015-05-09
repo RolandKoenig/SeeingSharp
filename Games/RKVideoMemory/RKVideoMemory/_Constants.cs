@@ -33,6 +33,10 @@ namespace RKVideoMemory
     {
         public const string GAME_SCENE_NAME = "VideoMemoryScene";
 
+        #region folder names
+        public const string DEFAULT_FOLDER_INITIAL_LEVEL = "MemoryData";
+        #endregion
+
         #region file extensions
         public static readonly string[] SUPPORTED_IMAGE_FORMATS = new string[] { ".jpg", ".jpeg", ".png", ".bmp" };
         public static readonly string[] SUPPORTED_VIDEO_FORMATS = new string[] { ".mp4", ".wmv" };
