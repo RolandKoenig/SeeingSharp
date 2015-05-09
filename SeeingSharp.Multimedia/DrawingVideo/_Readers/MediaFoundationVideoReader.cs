@@ -34,6 +34,7 @@ using System.Threading.Tasks;
 
 // Namespace mappings
 using MF = SharpDX.MediaFoundation;
+using SharpDX;
 
 namespace SeeingSharp.Multimedia.DrawingVideo
 {
@@ -79,13 +80,22 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                     // We need the 'EnableVideoProcessing' attribute because of the RGB32 format
                     // see (lowest post): http://msdn.developer-works.com/article/11388495/How+to+use+SourceReader+(for+H.264+to+RGB+conversion)%3F
                     mediaAttributes.Set(MF.SourceReaderAttributeKeys.EnableVideoProcessing, 1);
+                    mediaAttributes.Set(MF.SourceReaderAttributeKeys.DisableDxva, 1);
 
                     // Wrap the .net stream to a MF Bytestream
                     m_videoSourceStreamNet = m_videoSource.OpenInputStream();
                     m_videoSourceStream = new MF.ByteStream(m_videoSourceStreamNet);
-                    using(MF.MediaAttributes byteStreamAttributes = m_videoSourceStream.QueryInterface<MF.MediaAttributes>())
+                    try
                     {
-                        byteStreamAttributes.Set(MF.ByteStreamAttributeKeys.OriginName, "Dummy." + videoSource.FileExtension);
+                        using (MF.MediaAttributes byteStreamAttributes = m_videoSourceStream.QueryInterface<MF.MediaAttributes>())
+                        {
+                            byteStreamAttributes.Set(MF.ByteStreamAttributeKeys.OriginName, "Dummy." + videoSource.FileExtension);
+                        }
+                    }
+                    catch (SharpDXException)
+                    {
+                        // The interface MF.MediaAttributes is not available on some platforms
+                        // (occured during tests on Windows 7 without Platform Update)
                     }
 
                     // Create the sourcereader by custom native method (needed because of the ByteStream arg)
