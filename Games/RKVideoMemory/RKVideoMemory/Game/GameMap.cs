@@ -118,7 +118,9 @@ namespace RKVideoMemory.Game
 
                     // Add both cards to the scene
                     cardA.Position = new Vector3(slotA.Item1 * tileDistX, 0f, slotA.Item2 * tileDistY) - midPoint;
+                    cardA.AccentuationFactor = 1f;
                     cardB.Position = new Vector3(slotB.Item1 * tileDistX, 0f, slotB.Item2 * tileDistY) - midPoint;
+                    cardB.AccentuationFactor = 1f;
                     manipulator.Add(cardA);
                     manipulator.Add(cardB);
 

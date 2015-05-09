@@ -71,9 +71,12 @@ namespace RKVideoMemory.Game
                 resVideoTexture = manipulator.AddResource(() => new VideoThumbnailTextureResource(firstVideo, TimeSpan.Zero));
                 objVideoPainter = new TexturePainter(resVideoTexture);
                 objVideoPainter.Scaling = 0.6f;
-                objVideoPainter.AlphaBlendMode = TexturePainterAlphaBlendMode.NoAlphaBlend;
+                objVideoPainter.AccentuationFactor = 1f;
+                objVideoPainter.Opacity = 0.0f;
                 startAnimationTask = objVideoPainter.BuildAnimationSequence()
-                    .ScaleTo(1f, TimeSpan.FromMilliseconds(300))
+                    .Delay(200)
+                    .ScaleTo(1f, TimeSpan.FromMilliseconds(500))
+                    .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(500))
                     .ApplyAsync();
               
                 manipulator.Add(

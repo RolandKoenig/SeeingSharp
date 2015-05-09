@@ -101,6 +101,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             // Read the thumbnail
             m_videoReader.SetCurrentPosition(m_thumbnailTimestamp);
             m_thumbnailFrame = m_videoReader.ReadFrame();
+            m_thumbnailFrame.SetAllAlphaValuesToOne();
         }
 
         /// <summary>

@@ -58,7 +58,12 @@ namespace RKVideoMemory.Game
 
             // Load the background
             var resBackgroundTexture = manipulator.AddTexture(backgroundTexture);
-            manipulator.Add(new TexturePainter(resBackgroundTexture), Constants.GFX_LAYER_BACKGROUND);
+            manipulator.Add(
+                new TexturePainter(resBackgroundTexture)
+                {
+                    AccentuationFactor = 1f
+                }, 
+                Constants.GFX_LAYER_BACKGROUND);
         }
     }
 }

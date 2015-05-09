@@ -20,7 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
+using SeeingSharp;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using RKVideoMemory.Data;
@@ -48,6 +48,21 @@ namespace RKVideoMemory.Game
         }
 
         /// <summary>
+        /// Called when [message_ received].
+        /// </summary>
+        private void OnMessage_Received(CardPairUncoveredByPlayerMessage message)
+        {
+            for (int loop = 0; loop < this.Cards.Length; loop++)
+            {
+                Card actCard = this.Cards[loop];
+                actCard.AnimationHandler.CancelAnimations();
+                actCard.BuildAnimationSequence()
+                    .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(300))
+                    .Apply();
+            }
+        }
+
+        /// <summary>
         /// Called when the main screen was entered.
         /// </summary>
         private void OnMessage_Received(MainMemoryScreenEnteredMessage message)
@@ -56,6 +71,7 @@ namespace RKVideoMemory.Game
             {
                 Card actCard = this.Cards[loop];
 
+                // Cancel current animations
                 actCard.AnimationHandler.CancelAnimations();
 
                 if(this.IsUncovered)

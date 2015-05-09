@@ -105,6 +105,7 @@
     <EmbeddedResource Include="Ressources\Videos\DummyVideo.wmv" />
     <Resource Include="Ressources\Textures\SkyBox.dds" />
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
+    <Content Include="Ressources\ReferenceRenderings\SimpleObject_Transparent.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleObject_VideoTexture.png" />
     <Content Include="Ressources\ReferenceRenderings\VideoFrameWmv_Seek.png" />
     <Content Include="Ressources\ReferenceRenderings\VideoFrameMp4.png" />

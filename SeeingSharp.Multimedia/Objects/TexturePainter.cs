@@ -105,6 +105,9 @@ namespace SeeingSharp.Multimedia.Objects
                 base.SubscribeToPass(
                     RenderPassInfo.PASS_PLAIN_RENDER,
                     layerViewSubset, OnRenderPlain);
+                base.SubscribeToPass(
+                    RenderPassInfo.PASS_TRANSPARENT_RENDER,
+                    layerViewSubset, OnRenderTransparent);
             }
         }
 
@@ -114,15 +117,38 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="renderState">Current render state.</param>
         private void OnRenderPlain(RenderState renderState)
         {
-            // Get and configure helper object
-            TexturePainterHelper actHelper = m_texturePainterHelpers[renderState.DeviceIndex];
-            actHelper.Scaling = m_scaling;
-            actHelper.Opacity = m_opacity;
-            actHelper.AccentuationFactor = m_accentuationFactor;
-            actHelper.AlphaBlendMode = m_alphaMode;
+            if (m_opacity >= 1f)
+            {
+                // Get and configure helper object
+                TexturePainterHelper actHelper = m_texturePainterHelpers[renderState.DeviceIndex];
+                actHelper.Scaling = m_scaling;
+                actHelper.Opacity = m_opacity;
+                actHelper.AccentuationFactor = m_accentuationFactor;
+                actHelper.AlphaBlendMode = m_alphaMode;
 
-            // Render the object
-            actHelper.RenderPlain(renderState);
+                // Render the object
+                actHelper.RenderPlain(renderState);
+            }
+        }
+
+        /// <summary>
+        /// Renders the object.
+        /// </summary>
+        /// <param name="renderState">Current render state.</param>
+        private void OnRenderTransparent(RenderState renderState)
+        {
+            if (m_opacity < 1f)
+            {
+                // Get and configure helper object
+                TexturePainterHelper actHelper = m_texturePainterHelpers[renderState.DeviceIndex];
+                actHelper.Scaling = m_scaling;
+                actHelper.Opacity = m_opacity;
+                actHelper.AccentuationFactor = m_accentuationFactor;
+                actHelper.AlphaBlendMode = m_alphaMode;
+
+                // Render the object
+                actHelper.RenderPlain(renderState);
+            }
         }
 
         /// <summary>

@@ -170,6 +170,50 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
+        public async Task Render_SimpleObject_Transparent()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                // Get and configure the camera
+                PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
+                camera.Position = new Vector3(0f, 5f, -7f);
+                camera.Target = new Vector3(0f, 0f, 0f);
+                camera.UpdateCamera();
+
+                // Define scene
+                await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    NamedOrGenericKey geoResource = manipulator.AddResource<GeometryResource>(
+                        () => new GeometryResource(new PalletType()));
+
+                    GenericObject newObject = manipulator.AddGeneric(geoResource);
+                    newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
+                    newObject.Scaling = new Vector3(2f, 2f, 2f);
+                    newObject.Opacity = 0.5f;
+                });
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                bool isNearEqual = BitmapComparison.IsNearEqual(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleObject_Transparent);
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
+            }
+
+            // Finishing checks
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_SimpleObject_Orthographic()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();

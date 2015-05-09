@@ -53,11 +53,20 @@ namespace RKVideoMemory.Game
                     TimeSpan.FromMilliseconds(300));
         }
 
+        public static IAnimationSequenceBuilder<Card> MainScreenLeave(
+            this IAnimationSequenceBuilder<Card> sequenceBuilder)
+        {
+            return sequenceBuilder
+                .ResetCard_BeforeLeave()
+                .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(300));
+        }
+
         public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenUncovered(
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
             return sequenceBuilder
-                .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG))
+                .ResetCard_BeforeStart()
+                .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(300))
                 .WaitFinished()
                 .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
                     Constants.ROTATE_ANIM_DELAY_MILLIS_MIN,
@@ -68,18 +77,20 @@ namespace RKVideoMemory.Game
                     TimeSpan.FromMilliseconds(300))
                 .WaitFinished()
                 .Delay(TimeSpan.FromSeconds(ThreadSafeRandom.Next(
-                    Constants.INITIAL_UNCOVER_SECONDS_MIN, 
+                    Constants.INITIAL_UNCOVER_SECONDS_MIN,
                     Constants.INITIAL_UNCOVER_SECONDS_MAX)))
                 .WaitFinished()
                 .Scale3DTo(new Vector3(0.8f, 0.8f, 0.8f), TimeSpan.FromMilliseconds(300))
-                .ChangeOpacityTo(0.5f, TimeSpan.FromMilliseconds(300));
+                .ChangeOpacityTo(0.5f, TimeSpan.FromMilliseconds(300))
+                .ChangeAccentuationFactorTo(0.5f, TimeSpan.FromMilliseconds(300));
         }
 
         public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenCovered(
             this IAnimationSequenceBuilder<Card> sequenceBuilder)
         {
             return sequenceBuilder
-                .CallAction(() => sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG))
+                .ResetCard_BeforeStart()
+                .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(300))
                 .WaitFinished()
                 .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
                     Constants.ROTATE_ANIM_DELAY_MILLIS_MIN, 
@@ -97,6 +108,28 @@ namespace RKVideoMemory.Game
                     new Vector3(0f, 0f, EngineMath.RAD_180DEG),
                     TimeSpan.FromMilliseconds(300))
                 .WaitFinished();
+        }
+
+        public static IAnimationSequenceBuilder<Card> ResetCard_BeforeStart(
+            this IAnimationSequenceBuilder<Card> sequenceBuilder)
+        {
+            return sequenceBuilder.CallAction(() =>
+            {
+                sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG);
+                sequenceBuilder.TargetObject.Opacity = 0f;
+                sequenceBuilder.TargetObject.AccentuationFactor = 1f;
+                sequenceBuilder.TargetObject.Scaling = Vector3.One;
+            });
+        }
+
+        public static IAnimationSequenceBuilder<Card> ResetCard_BeforeLeave(
+            this IAnimationSequenceBuilder<Card> sequenceBuilder)
+        {
+            return sequenceBuilder.CallAction(() =>
+                {
+                    sequenceBuilder.TargetObject.Opacity = 1f;
+                    sequenceBuilder.TargetObject.Scaling = Vector3.One;
+                });
         }
     }
 }
