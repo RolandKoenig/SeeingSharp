@@ -73,8 +73,10 @@
     <Compile Include="Core\_Animations\_Extensions.cs" />
     <Compile Include="Core\_Animations\_Misc.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectEulerRotation.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectAccentuation.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectPosition.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectQuaternion.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectOpacity.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectScaling.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\ChangeAccentuationToAnimation.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\ChangeOpacityToAnimation.cs" />

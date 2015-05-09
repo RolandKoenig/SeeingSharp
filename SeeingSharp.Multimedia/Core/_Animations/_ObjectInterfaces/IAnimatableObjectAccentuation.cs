@@ -23,25 +23,18 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Core
 {
-    public static partial class Drawing3DAnimationExtensions
+    public interface IAnimatableObjectAccentuation
     {
-        public static IAnimationSequenceBuilder<TargetObject> ChangeOpacityTo<TargetObject>(this IAnimationSequenceBuilder<TargetObject> sequenceBuilder, float targetOpacity, TimeSpan animationTime)
-            where TargetObject : class, IAnimatableObjectOpacity
+        float AccentuationFactor
         {
-            sequenceBuilder.Add(
-                new ChangeOpacityToAnimation(sequenceBuilder.TargetObject, targetOpacity, animationTime));
-            return sequenceBuilder;
-        }
-
-        public static IAnimationSequenceBuilder<TargetObject> ChangeAccentuationFactorTo<TargetObject>(this IAnimationSequenceBuilder<TargetObject> sequenceBuilder, float targetAccentuation, TimeSpan animationTime)
-            where TargetObject : class, IAnimatableObjectAccentuation
-        {
-            sequenceBuilder.Add(
-                new ChangeAccentuationToAnimation(sequenceBuilder.TargetObject, targetAccentuation, animationTime));
-            return sequenceBuilder;
+            get;
+            set;
         }
     }
 }

@@ -38,7 +38,7 @@ namespace SeeingSharp.Multimedia.Core
         private TimeSpan m_duration;
         private float m_moveOpacity;
         private float m_targetOpacity;
-        private SceneSpacialObject m_targetObject;
+        private IAnimatableObjectOpacity m_targetObject;
         #endregion
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="targetOpacity">The target opacity.</param>
         /// <param name="duration">The duration.</param>
         /// <exception cref="System.Exception">Opacity value can be between 0 and 1, not greater than 1 and not lower than 0!</exception>
-        public ChangeOpacityToAnimation(SceneSpacialObject targetObject, float targetOpacity, TimeSpan duration)
+        public ChangeOpacityToAnimation(IAnimatableObjectOpacity targetObject, float targetOpacity, TimeSpan duration)
             : base(targetObject, AnimationType.FixedTime, duration)
         {
             targetObject.EnsureNotNull("targetObject");

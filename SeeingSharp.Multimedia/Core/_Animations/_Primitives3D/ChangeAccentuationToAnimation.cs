@@ -38,7 +38,7 @@ namespace SeeingSharp.Multimedia.Core
         private TimeSpan m_duration;
         private float m_moveAccentuation;
         private float m_targetAccentuation;
-        private SceneSpacialObject m_targetObject;
+        private IAnimatableObjectAccentuation m_targetObject;
         #endregion
 
         /// <summary>
@@ -48,7 +48,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="targetAccentuation">The target accentuation.</param>
         /// <param name="duration">The duration.</param>
         /// <exception cref="System.Exception">Accentuation value can be between 0 and 1, not greater than 1 and not lower than 0!</exception>
-        public ChangeAccentuationToAnimation(SceneSpacialObject targetObject, float targetAccentuation, TimeSpan duration)
+        public ChangeAccentuationToAnimation(IAnimatableObjectAccentuation targetObject, float targetAccentuation, TimeSpan duration)
             : base(targetObject, AnimationType.FixedTime, duration)
         {
             targetObject.EnsureNotNull("targetObject");
@@ -70,7 +70,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected override void OnStartAnimation()
         {
-            m_startAccentuation = m_targetObject.Opacity;
+            m_startAccentuation = m_targetObject.AccentuationFactor;
             m_moveAccentuation = m_targetAccentuation - m_startAccentuation;
         }
 

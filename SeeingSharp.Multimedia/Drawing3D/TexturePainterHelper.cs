@@ -46,6 +46,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
         #region Configuration
         private NamedOrGenericKey m_texture;
         private float m_scaling;
+        private float m_opacity;
+        private float m_accentuationFactor;
         #endregion
 
         #region Used resources
@@ -64,6 +66,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             m_texture = textureKey;
             m_scaling = 1f;
+            m_opacity = 1f;
+            m_accentuationFactor = 0f;
         }
 
         /// <summary>
@@ -127,11 +131,11 @@ namespace SeeingSharp.Multimedia.Drawing3D
             // Apply rendering parameters
             m_renderParameters.UpdateValues(renderState, new CBPerObject()
             {
-                AccentuationFactor = 0f,
+                AccentuationFactor = m_accentuationFactor,
                 BorderMultiplyer = 0f,
                 BorderPart = 0f,
                 Color = Vector4.Zero,
-                Opacity = 1f,
+                Opacity = m_opacity,
                 SpriteScaling = m_scaling,
                 World = Matrix.Identity
             });
@@ -174,6 +178,18 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             get { return m_scaling; }
             set { m_scaling = value; }
+        }
+
+        public float AccentuationFactor
+        {
+            get { return m_accentuationFactor; }
+            set { m_accentuationFactor = value; }
+        }
+
+        public float Opacity
+        {
+            get { return m_opacity; }
+            set { m_opacity = value; }
         }
 
         /// <summary>

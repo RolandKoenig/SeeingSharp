@@ -66,7 +66,13 @@ namespace RKVideoMemory.Game
                 .RotateEulerAnglesTo(
                     new Vector3(0f, 0f, 0f),
                     TimeSpan.FromMilliseconds(300))
-                .WaitFinished();
+                .WaitFinished()
+                .Delay(TimeSpan.FromSeconds(ThreadSafeRandom.Next(
+                    Constants.INITIAL_UNCOVER_SECONDS_MIN, 
+                    Constants.INITIAL_UNCOVER_SECONDS_MAX)))
+                .WaitFinished()
+                .Scale3DTo(new Vector3(0.8f, 0.8f, 0.8f), TimeSpan.FromMilliseconds(300))
+                .ChangeOpacityTo(0.5f, TimeSpan.FromMilliseconds(300));
         }
 
         public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenCovered(

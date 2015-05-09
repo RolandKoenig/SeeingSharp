@@ -30,7 +30,8 @@ namespace SeeingSharp.Multimedia.Core
 {
     public abstract class SceneSpacialObject : 
         SceneObject,
-        IAnimatableObjectEulerRotation, IAnimatableObjectPosition, IAnimatableObjectQuaternion, IAnimatableObjectScaling
+        IAnimatableObjectEulerRotation, IAnimatableObjectPosition, IAnimatableObjectQuaternion, IAnimatableObjectScaling,
+        IAnimatableObjectOpacity, IAnimatableObjectAccentuation
     {
         #region Resource keys
         private NamedOrGenericKey KEY_SCENE_RENDER_PARAMETERS = GraphicsCore.GetNextGenericResourceKey();

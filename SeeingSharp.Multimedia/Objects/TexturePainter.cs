@@ -30,12 +30,14 @@ using D3D11 = SharpDX.Direct3D11;
 
 namespace SeeingSharp.Multimedia.Objects
 {
-    public class TexturePainter : SceneObject
+    public class TexturePainter : SceneObject, IAnimatableObjectAccentuation, IAnimatableObjectOpacity
     {
         #region Configuration
         private NamedOrGenericKey m_resTexture;
         private TexturePainterAlphaBlendMode m_alphaMode;
         private float m_scaling;
+        private float m_accentuationFactor;
+        private float m_opacity;
         #endregion
 
         #region Device dependent resources
@@ -50,6 +52,8 @@ namespace SeeingSharp.Multimedia.Objects
         {
             m_resTexture = texture;
             m_scaling = 1f;
+            m_opacity = 1f;
+            m_accentuationFactor = 0f;
             m_alphaMode = TexturePainterAlphaBlendMode.AlphaBlend;
 
             m_texturePainterHelpers = new IndexBasedDynamicCollection<TexturePainterHelper>();
@@ -110,9 +114,14 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="renderState">Current render state.</param>
         private void OnRenderPlain(RenderState renderState)
         {
+            // Get and configure helper object
             TexturePainterHelper actHelper = m_texturePainterHelpers[renderState.DeviceIndex];
             actHelper.Scaling = m_scaling;
+            actHelper.Opacity = m_opacity;
+            actHelper.AccentuationFactor = m_accentuationFactor;
             actHelper.AlphaBlendMode = m_alphaMode;
+
+            // Render the object
             actHelper.RenderPlain(renderState);
         }
 
@@ -138,6 +147,18 @@ namespace SeeingSharp.Multimedia.Objects
         {
             get { return m_scaling; }
             set { m_scaling = value; }
+        }
+
+        public float AccentuationFactor
+        {
+            get { return m_accentuationFactor; }
+            set { m_accentuationFactor = value; }
+        }
+
+        public float Opacity
+        {
+            get { return m_opacity; }
+            set { m_opacity = value; }
         }
 
         /// <summary>

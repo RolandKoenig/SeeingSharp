@@ -88,7 +88,7 @@
             this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 371);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
-            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 1F;
             this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.5F;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
