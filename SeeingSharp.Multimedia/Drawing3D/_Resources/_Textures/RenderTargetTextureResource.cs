@@ -35,35 +35,42 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     internal class RenderTargetTextureResource : TextureResource
     {
+        #region Configuration
         private RenderTargetCreationMode m_creationMode;
         private int m_width;
         private int m_heigth;
         private bool m_antialiasingEnabled;
         private AntialiasingQualityLevel m_antialiasingQuality;
         private SharpDX.ViewportF m_viewportF;
+        #endregion
 
-        // Resources for depth buffer
+        #region Resources for depth buffer
         private D3D11.Texture2D m_depthBuffer;
         private D3D11.DepthStencilView m_depthBufferView;
+        #endregion
 
-        // Resources for color buffer
+        #region Resources for color buffer
         private D3D11.Texture2D m_colorBuffer;
         private D3D11.RenderTargetView m_colorBufferRenderTargetView;
         private D3D11.Texture2D m_colorBufferShaderResource;
         private D3D11.ShaderResourceView m_colorBufferShaderResourceView;
+        #endregion
 
-        // Resources for ObjectID buffer
+        #region Resources for ObjectID buffer
         private D3D11.Texture2D m_objectIDBuffer;
         private D3D11.RenderTargetView m_objectIDBufferRenderTargetView;
+        #endregion
 
-        // Resources for normal/depth buffer
+        #region Resources for normal/depth buffer
         private D3D11.Texture2D m_normalDepthBuffer;
         private D3D11.RenderTargetView m_normalDepthBufferRenderTargetView;
         private D3D11.Texture2D m_normalDepthBufferShaderResource;
         private D3D11.ShaderResourceView m_normalDepthBufferShaderResourceView;
+        #endregion
 
-        // Runtime variables
+        #region Runtime variables
         private bool m_shaderResourceCreated;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderTargetTextureResource" /> class.

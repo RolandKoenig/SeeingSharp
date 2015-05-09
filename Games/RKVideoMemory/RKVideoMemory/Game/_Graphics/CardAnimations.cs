@@ -131,7 +131,6 @@ namespace RKVideoMemory.Game
                 .CallAction(() =>
                 {
                     sequenceBuilder.TargetObject.Opacity = 1f;
-                    sequenceBuilder.TargetObject.Scaling = Vector3.One;
                 })
                 .WaitFinished();
         }

@@ -44,10 +44,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
     /// </summary>
     public class VideoTextureResource : TextureResource, IRenderableResource
     {
-        //#region Configuration
-        //private ResourceLink m_videoSource;
-        //#endregion
-
         #region Direct3D resources
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;

@@ -68,13 +68,15 @@ namespace RKVideoMemory.Game
                 }
 
                 // Load the texture painter
-                resVideoTexture = manipulator.AddResource(() => new VideoThumbnailTextureResource(firstVideo, TimeSpan.Zero));
+                resVideoTexture = manipulator.AddResource(
+                    () => new BitmapTextureResource(message.CardPair.PairData.FirstVideoFrame));
                 objVideoPainter = new TexturePainter(resVideoTexture);
                 objVideoPainter.Scaling = 0.6f;
                 objVideoPainter.AccentuationFactor = 1f;
                 objVideoPainter.Opacity = 0.0f;
                 startAnimationTask = objVideoPainter.BuildAnimationSequence()
-                    .Delay(200)
+                    .Delay(300)
+                    .WaitFinished()
                     .ScaleTo(1f, TimeSpan.FromMilliseconds(500))
                     .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(500))
                     .ApplyAsync();

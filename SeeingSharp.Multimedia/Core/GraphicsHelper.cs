@@ -400,6 +400,36 @@ namespace SeeingSharp.Multimedia.Core
             return formatConverter;
         }
 
+        internal static D3D11.Texture2D LoadTexture2DFromMappedTexture(EngineDevice device, MemoryMappedTexture32bpp m_mappedTexture)
+        {
+            //Create the texture
+            var dataRectangle = new SharpDX.DataRectangle(
+                m_mappedTexture.Pointer, 
+                m_mappedTexture.Width * 4);
+            D3D11.Texture2D result = new D3D11.Texture2D(device.DeviceD3D11, new SharpDX.Direct3D11.Texture2DDescription()
+            {
+                Width = m_mappedTexture.Width,
+                Height = m_mappedTexture.Height,
+                ArraySize = 1,
+                BindFlags = SharpDX.Direct3D11.BindFlags.ShaderResource | D3D11.BindFlags.RenderTarget,
+                Usage = SharpDX.Direct3D11.ResourceUsage.Default,
+                CpuAccessFlags = SharpDX.Direct3D11.CpuAccessFlags.None,
+                Format = DEFAULT_TEXTURE_FORMAT,
+                MipLevels = 0,
+                OptionFlags = SharpDX.Direct3D11.ResourceOptionFlags.None | D3D11.ResourceOptionFlags.GenerateMipMaps,
+                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
+            }, new DataRectangle[] { dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle });
+
+            //Workaround for now... auto generate mip-levels
+            // TODO: Dispatch this call to render-thread..
+            using (D3D11.ShaderResourceView shaderResourceView = new D3D11.ShaderResourceView(device.DeviceD3D11, result))
+            {
+                device.DeviceImmediateContextD3D11.GenerateMips(shaderResourceView);
+            }
+
+            return result;
+        }
+
         /// <summary>
         /// Creates a <see cref="SharpDX.Direct3D11.Texture2D"/> from a WIC <see cref="SharpDX.WIC.BitmapSource"/>
         /// </summary>

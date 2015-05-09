@@ -21,11 +21,13 @@
 */
 #endregion
 
-#if DESKTOP
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Checking;
 using System;
-using System.Drawing;
 using System.IO;
+#if DESKTOP
+using System.Drawing;
+#endif
 
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
@@ -35,13 +37,19 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class BitmapTextureResource : TextureResource
     {
-        //Member for Direct3D 11 rendering
+        #region Member for Direct3D 11 rendering
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;
+        #endregion
 
-        //Generic members
+        #region Generic members
+#if DESKTOP
         private Bitmap m_bitmap;
+#endif
+        private MemoryMappedTexture32bpp m_mappedTexture;
+        #endregion
 
+#if DESKTOP
         /// <summary>
         /// Initializes a new instance of the <see cref="BitmapTextureResource"/> class.
         /// </summary>
@@ -49,7 +57,21 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="bitmap">The bitmap source object.</param>
         public BitmapTextureResource(Bitmap bitmap)
         {
+            m_bitmap.EnsureNotNull("bitmap");
+
             m_bitmap = bitmap;
+        }
+#endif
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BitmapTextureResource"/> class.
+        /// </summary>
+        /// <param name="mappedTexture">The mapped texture.</param>
+        public BitmapTextureResource(MemoryMappedTexture32bpp mappedTexture)
+        {
+            mappedTexture.EnsureNotNull("mappedTexture");
+
+            m_mappedTexture = mappedTexture;
         }
 
         /// <summary>
@@ -60,12 +82,31 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             if (m_texture == null)
             {
-                //Get source bitmap
-                Bitmap bitmap = m_bitmap;
-                m_texture = GraphicsHelper.LoadTextureFromBitmap(device, bitmap, 0);
+#if DESKTOP
+                // Load from GDI bitmap
+                if (m_bitmap != null)
+                {
+                    //Get source bitmap
+                    Bitmap bitmap = m_bitmap;
+                    m_texture = GraphicsHelper.LoadTextureFromBitmap(device, bitmap, 0);
 
-                //Create the view targeting the texture
-                m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
+                    //Create the view targeting the texture
+                    m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
+
+                    return;
+                }
+#endif
+
+                // Load from mapped texture
+                if(m_mappedTexture != null)
+                {
+                    m_texture = GraphicsHelper.LoadTexture2DFromMappedTexture(device, m_mappedTexture);
+                    m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
+
+                    return;
+                }
+
+                throw new SeeingSharpException("Unable to load BitmapTextureResource: No resource loader implemented!");
             }
         }
 
@@ -82,6 +123,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             }
         }
 
+#if DESKTOP
         /// <summary>
         /// Sets the bitmap to be displayed.
         /// </summary>
@@ -90,9 +132,11 @@ namespace SeeingSharp.Multimedia.Drawing3D
             if (bitmap == null) { throw new ArgumentNullException("bitmap"); }
 
             m_bitmap = bitmap;
+            m_mappedTexture = null;
 
             base.ReloadResource();
         }
+#endif
 
         /// <summary>
         /// Is the resource loaded?
@@ -129,4 +173,3 @@ namespace SeeingSharp.Multimedia.Drawing3D
         }
     }
 }
-#endif

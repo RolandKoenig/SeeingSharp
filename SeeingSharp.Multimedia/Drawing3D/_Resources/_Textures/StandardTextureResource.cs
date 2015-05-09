@@ -37,16 +37,20 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class StandardTextureResource : TextureResource
     {
-        // Given configuration
+        #region Given configuration
         private ResourceLink m_resourceLinkHighQuality;
         private ResourceLink m_resourceLinkLowQuality;
+        #endregion
 
-        // Loaded resources
+        #region Loaded resources
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;
+        #endregion
 
+        #region Runtime
         private bool m_isCubeTexture;
         private bool m_isRenderTarget;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardTextureResource" /> class.

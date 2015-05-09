@@ -37,9 +37,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     internal class ChangeableTextureResource : TextureResource
     {
-        // Loaded resources
+        #region Loaded resources
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardTextureResource" /> class.

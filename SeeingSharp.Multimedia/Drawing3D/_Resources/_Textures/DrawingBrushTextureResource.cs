@@ -33,14 +33,16 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class DrawingBrushTextureResource : TextureResource
     {
-        //Direct3D 11 Resources
+        #region Direct3D 11 Resources
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;
+        #endregion
 
-        //Standard members
+        #region Standard members
         private Brush m_drawingBrush;
         private int m_width;
         private int m_height;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawingBrushTextureResource"/> class.

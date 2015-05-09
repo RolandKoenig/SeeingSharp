@@ -21,6 +21,8 @@
 */
 #endregion
 
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.DrawingVideo;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
@@ -88,6 +90,18 @@ namespace RKVideoMemory.Data
         internal void ProcessVideoFile(string filePath)
         {
             m_childVideoFiles.Add(filePath);
+
+            using(FrameByFrameVideoReader videoReader = new FrameByFrameVideoReader(filePath))
+            {
+                // Read the first frame
+                this.FirstVideoFrame = videoReader.ReadFrame();
+                this.FirstVideoFrame.SetAllAlphaValuesToOne();
+
+                // Read the last frame
+                videoReader.SetCurrentPosition(videoReader.Duration);
+                this.LastVideoFrame = videoReader.ReadFrame();
+                this.LastVideoFrame.SetAllAlphaValuesToOne();
+            }
         }
 
         public string Title
@@ -110,6 +124,18 @@ namespace RKVideoMemory.Data
         public List<ResourceLink> ChildVideos
         {
             get { return m_childVideoFiles; }
+        }
+
+        public MemoryMappedTexture32bpp FirstVideoFrame
+        {
+            get;
+            private set;
+        }
+
+        public MemoryMappedTexture32bpp LastVideoFrame
+        {
+            get;
+            private set;
         }
     }
 }
