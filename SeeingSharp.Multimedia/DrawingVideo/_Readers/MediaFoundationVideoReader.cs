@@ -194,6 +194,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             this.EnsureSeekable("self");
 
             m_sourceReader.SetCurrentPosition(position.Ticks);
+            m_endReached = position >= this.Duration;
         }
 
         /// <summary>

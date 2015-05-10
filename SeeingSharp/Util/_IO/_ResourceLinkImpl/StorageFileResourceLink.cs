@@ -113,7 +113,12 @@ namespace SeeingSharp.Util
         /// </summary>
         public override Stream OpenOutputStream()
         {
-            return m_storageFile.OpenStreamForWriteAsync().Result;
+            // Bad construct to map asynchronous API to synchronous OpenInputStream function
+            // .. but it works for now and don't create a Deadlock on the UI
+            return Task.Factory.StartNew(async () =>
+            {
+                return await this.OpenInputStreamAsync().ConfigureAwait(false);
+            }).Result.Result;
         }
 
         /// <summary>

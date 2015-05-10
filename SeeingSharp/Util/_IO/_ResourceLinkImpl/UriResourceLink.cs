@@ -146,7 +146,7 @@ namespace SeeingSharp.Util
             return await Task.Factory.StartNew<Stream>(() => OpenInputStream());
 #else
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(m_resourceUri);
-            return await storageFile.OpenStreamForReadAsync();
+            return await storageFile.OpenStreamForReadAsync().ConfigureAwait(false);
 #endif
         }
 
@@ -158,7 +158,12 @@ namespace SeeingSharp.Util
 #if DESKTOP
             return Application.GetResourceStream(m_resourceUri).Stream;
 #else
-            return OpenInputStreamAsync().Result;
+            // Bad construct to map asynchronous API to synchronous OpenInputStream function
+            // .. but it works for now and don't create a Deadlock on the UI
+            return Task.Factory.StartNew(async () =>
+            {
+                return await this.OpenInputStreamAsync().ConfigureAwait(false);
+            }).Result.Result;
 #endif
         }
 

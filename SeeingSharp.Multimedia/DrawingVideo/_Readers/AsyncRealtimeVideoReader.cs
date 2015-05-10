@@ -52,6 +52,9 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         private object m_currentBufferLock;
         #endregion
 
+        /// <summary>
+        /// Occurs when the end of the video is reached.
+        /// </summary>
         public event EventHandler VideoReachedEnd;
 
         /// <summary>
@@ -121,6 +124,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                         m_currentBufferTimestamp = DateTime.UtcNow;
                         m_processedFrameCount++;
                         currentBufferChanged = true;
+                        endReached = false;
                     }
                 }
 

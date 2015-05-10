@@ -65,6 +65,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
             videoSource.EnsureNotNull("videoSource");
 
             m_videoReader = new AsyncRealtimeVideoReader(videoSource, immediateStart: true);
+            m_videoReader.VideoReachedEnd += (sender, eArgs) =>
+            {
+                m_videoReader.SetCurrentPosition(TimeSpan.Zero);
+            };
 
             m_currentWidth = m_videoReader.FrameSize.Width;
             m_currentHeight = m_videoReader.FrameSize.Height;

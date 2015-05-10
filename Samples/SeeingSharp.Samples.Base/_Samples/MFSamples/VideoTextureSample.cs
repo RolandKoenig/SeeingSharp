@@ -32,6 +32,7 @@ using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Checking;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Util;
+using SeeingSharp.Multimedia.DrawingVideo;
 
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
@@ -46,6 +47,8 @@ namespace SeeingSharp.Samples.Base.MFSamples
         "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/MFSamples/VideoTextureSample.cs")]
     public class VideoTextureSample : SampleBase
     {
+        private AsyncRealtimeVideoReader m_videoReader;
+
         /// <summary>
         /// Called when the sample has to startup.
         /// </summary>
@@ -60,10 +63,15 @@ namespace SeeingSharp.Samples.Base.MFSamples
             camera.Target = new Vector3(0f, 0f, 0f);
             camera.UpdateCamera();
 
-            // Configure the link to the video file
+            // Open the video file
             ResourceLink videoLink = new AssemblyResourceUriBuilder(
                 "SeeingSharp.Samples.Base", false,
                 "Assets/Videos/DummyVideo.mp4");
+            m_videoReader = new AsyncRealtimeVideoReader(videoLink);
+            m_videoReader.VideoReachedEnd += (sender, eArgs) =>
+            {
+                m_videoReader.SetCurrentPosition(TimeSpan.Zero);
+            };
 
             // Define scene
             await targetRenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
@@ -74,7 +82,7 @@ namespace SeeingSharp.Samples.Base.MFSamples
 
                 // Define texture and resource
                 var resVideoTexture = manipulator.AddResource<VideoTextureResource>(
-                    () => new VideoTextureResource(videoLink));
+                    () => new VideoTextureResource(m_videoReader));
                 var resVideoMaterial = manipulator.AddSimpleColoredMaterial(resVideoTexture, addToAlpha: 1f);
                 var geoResource = manipulator.AddResource<GeometryResource>(
                     () => new GeometryResource(new PalletType(
@@ -98,6 +106,18 @@ namespace SeeingSharp.Samples.Base.MFSamples
                     .CallAction(() => newObject.RotationEuler = Vector3.Zero)
                     .ApplyAndRewind();
             });
+        }
+
+        /// <summary>
+        /// Called when the sample is closed.
+        /// Scene objects and resources are automatically removed, no need to do it
+        /// manually in this method's implementation.
+        /// </summary>
+        public override void OnClosed()
+        {
+            base.OnClosed();
+
+            CommonTools.SafeDispose(ref m_videoReader);
         }
     }
 }
