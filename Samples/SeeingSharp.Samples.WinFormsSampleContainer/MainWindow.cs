@@ -103,12 +103,12 @@ namespace WinFormsSampleContainer
                 // Clear previous sample 
                 if (m_actSample != null)
                 {
-                    m_actSample.SetClosed();
-
                     await m_ctrlRenderer.RenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
                     {
                         manipulator.Clear(true);
                     });
+
+                    m_actSample.SetClosed();
                 }
 
                 // Reset members

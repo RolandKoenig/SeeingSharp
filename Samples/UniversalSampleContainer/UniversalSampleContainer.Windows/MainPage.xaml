@@ -64,7 +64,9 @@
                  Style="{StaticResource SampleListBoxStyle}" 
                  Background="#99D3D3D3" Foreground="Black" BorderThickness="0"
                  ItemsSource="{Binding Path=VisibleSamples}"
-                 SelectedItem="{Binding Path=SelectedSample, Mode=TwoWay}">
+                 SelectedItem="{Binding Path=SelectedSample, Mode=TwoWay}"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollMode="Enabled">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
                         <StackPanel Orientation="Horizontal" />

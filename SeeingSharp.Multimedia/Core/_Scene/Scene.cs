@@ -692,7 +692,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="clearResources">Clear all resources too?</param>
         internal void Clear(bool clearResources)
         {
-            //Clear all layers
+            // Clear all layers
             for (int loop = 0; loop < m_sceneLayers.Count; loop++)
             {
                 SceneLayer actLayer = m_sceneLayers[loop];
@@ -705,7 +705,10 @@ namespace SeeingSharp.Multimedia.Core
                 }
             }
 
-            //Clear all resources
+            // Clears all 2D drawing layers
+            m_drawing2DLayers.Clear();
+
+            // Clear all resources
             if (clearResources)
             {
                 foreach (ResourceDictionary actDictionary in m_registeredResourceDicts)

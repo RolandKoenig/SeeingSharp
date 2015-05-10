@@ -77,18 +77,18 @@ namespace WpfSampleContainer
 
                 if (message.NewSample != null)
                 {
+                    // Clear previous scene first
+                    await renderElement.RenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
+                    {
+                        manipulator.Clear(true);
+                    });
+
                     // Sets closed state on currently applied sample
                     if (m_appliedSample != null)
                     {
                         m_appliedSample.SetClosed();
                         m_appliedSample = null;
                     }
-
-                    // Clear previous scene first
-                    await renderElement.RenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
-                        {
-                            manipulator.Clear(true);
-                        });
 
                     // Apply new scene
                     m_appliedSample = SampleFactory.Current.ApplySample(

@@ -38,6 +38,7 @@ namespace SeeingSharp.Samples.Base
         #region Group parameters
         public const string SAMPLEGROUP_BASIC = "Basics";
         public const string SAMPLEGROUP_MF = "Media Foundation";
+        public const string SAMPLEGROUP_DIRECT2D = "Direct2D";
         #endregion
 
         #region parameters for Basic samples
@@ -50,7 +51,12 @@ namespace SeeingSharp.Samples.Base
         #endregion
 
         #region parameters for Media Foundation samples
-        public const int SAMPLE_MF_VIDEOTEXTURE_ORDER = 100;
+        public const int SAMPLE_MF_VIDEOTEXTURE_ORDER = 200;
+        #endregion
+
+        #region parameters for Direct2D samples
+        public const int SAMPLE_DIRECT2D_D2DTEXTURE_ORDER = 101;
+        public const int SAMPLE_DIRECT2D_SCREEN_OVERLAY_ORDER = 102;
         #endregion
 
     }
