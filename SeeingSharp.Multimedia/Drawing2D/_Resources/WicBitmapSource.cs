@@ -37,7 +37,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class WicBitmapSource : IDisposable
     {
+        #region Native resources
         private WIC.BitmapSource m_wicBitmapSource;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WicBitmapSource"/> class.

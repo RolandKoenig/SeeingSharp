@@ -32,9 +32,11 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class DebugDrawingLayer : Custom2DDrawingLayer, IDisposable
     {
+        #region Drawing resources
         private TextFormatResource m_textFormat;
         private SolidBrushResource m_solidBrushForeground;
         private SolidBrushResource m_solidBrushBackground;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DebugDrawingLayer"/> class.

@@ -22,6 +22,7 @@
 #endregion
 
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,11 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public abstract class Drawing2DResourceBase : IDisposable
+    public abstract class Drawing2DResourceBase : IDisposable, ICheckDisposed
     {
+        #region Helper flags
         private bool m_isDisposed;
+        #endregion
 
         /// <summary>
         /// Disposes this object.

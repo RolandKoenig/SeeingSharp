@@ -52,17 +52,20 @@ namespace SeeingSharp.Multimedia.Core
     {
         private static readonly NamedOrGenericKey RES_KEY_FALLBACK_TEXTURE = GraphicsCore.GetNextGenericResourceKey();
 
-        // Graphics object
+        #region Graphics object
         private Graphics2D m_graphics2D;
+        #endregion
 
-        // Given resources
+        #region Given resources
         private EngineDevice m_device;
         private D3D11.Texture2D m_renderTarget3D;
+        #endregion
 
-        // Own 2D render target resource
+        #region Own 2D render target resource
         private D2D.RenderTarget m_renderTarget2D;
+        #endregion
 
-        // Only set if we need it (e. g. Win7, Win 2008 platforms)
+        #region Only set if we need it (e. g. Win7, Win 2008 platforms)
         private ResourceDictionary m_resourceDict;
 #if DESKTOP
         private ChangeableTextureResource m_changeableTexture;
@@ -72,6 +75,7 @@ namespace SeeingSharp.Multimedia.Core
         private D3D11.ShaderResourceView m_renderTarget3DShared11View;
         private DXGI.Resource m_renderTarget3DSharedDxgi;
 #endif
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Direct2DOverlayRenderer"/> class.

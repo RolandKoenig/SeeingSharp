@@ -38,9 +38,11 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class Graphics2D
     {
+        #region Main view related properties
         private EngineDevice m_device;
         private D2D.RenderTarget m_renderTarget;
         private Size2F m_screenSize;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Graphics2D"/> class.

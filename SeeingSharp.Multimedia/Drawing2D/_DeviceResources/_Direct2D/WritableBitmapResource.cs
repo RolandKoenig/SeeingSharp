@@ -36,9 +36,11 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class WriteableBitmapResource : BitmapResource
     {
+        #region Native resources and configuration
         private D2D.Bitmap[] m_loadedBitmaps;
         private Size2 m_bitmapSize;
         private D2D.PixelFormat m_pixelFormat;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WriteableBitmapResource"/> class.

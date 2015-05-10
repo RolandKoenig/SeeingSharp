@@ -37,8 +37,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class TextFormatResource : Drawing2DResourceBase
     {
-        // Fixed resource parameters (passed on constructor)
-        #region
+        #region Fixed resource parameters (passed on constructor)
         private DWrite.TextFormat[] m_loadedTextFormats;
         private string m_fontFamilyName;
         private float m_fontSize;

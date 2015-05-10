@@ -35,8 +35,10 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class SolidBrushResource : BrushResource
     {
+        #region Native resources and configuration
         private D2D.SolidColorBrush[] m_loadedBrushes;
         private Color4 m_singleColor;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SolidBrushResource" /> class.
