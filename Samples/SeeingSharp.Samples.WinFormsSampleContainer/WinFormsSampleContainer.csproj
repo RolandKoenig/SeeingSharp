@@ -30,8 +30,7 @@
     <InstallUrl>http://www.rolandk.de/files/frozensky.samples/winforms/</InstallUrl>
     <SupportUrl>http://www.rolandk.de</SupportUrl>
     <ErrorReportUrl>http://www.rolandk.de</ErrorReportUrl>
-    <TargetCulture>en</TargetCulture>
-    <ProductName>Seeing# Win.Forms Samples</ProductName>
+    <ProductName>Seeing# Win.Forms SampleContainer</ProductName>
     <PublisherName>Roland König</PublisherName>
     <SuiteName>Seeing#</SuiteName>
     <MinimumRequiredVersion>1.0.0.0</MinimumRequiredVersion>
@@ -141,7 +140,6 @@
     <None Include="..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
-    <None Include="Open Source Developer, Roland König.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\SeeingSharp.Util.ActivityPerformanceValueContainer.datasource" />
@@ -198,11 +196,4 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)Build\SeeingSharp.Common.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
 </Project>

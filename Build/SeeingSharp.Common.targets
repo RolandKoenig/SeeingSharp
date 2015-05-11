@@ -29,6 +29,11 @@
 
   <!-- Custom Task references -->
   <UsingTask AssemblyFile="$(SolutionDir)Build\Tasks\SeeingSharp.BuildTasks.dll" TaskName="ShaderBuildTask" />
+  <UsingTask AssemblyFile="$(SolutionDir)Build\Tasks\SeeingSharp.BuildTasks.dll" TaskName="ClickonceSignTask" />
+  
+  <Target Name="AfterPublish" AfterTargets="Publish">
+    <ClickonceSignTask PublishDirectory="$(ProjectDir)publish" />
+  </Target>
   
   <!-- Configure shader compilation -->
   <Target Name="BeforeBuild">
