@@ -182,6 +182,9 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+# Certificate information
+Cert/
+
 # HLSL-Shader files
 *.cso
 *.ps_*.Debug.cso

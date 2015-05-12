@@ -32,7 +32,7 @@
   <UsingTask AssemblyFile="$(SolutionDir)Build\Tasks\SeeingSharp.BuildTasks.dll" TaskName="ClickonceSignTask" />
   
   <Target Name="AfterPublish" AfterTargets="Publish">
-    <ClickonceSignTask PublishDirectory="$(ProjectDir)publish" />
+    <ClickonceSignTask PublishDirectory="$(TargetDir)app.publish" CertInformationDirectory="$(SolutionDir)Misc\Cert" />
   </Target>
   
   <!-- Configure shader compilation -->

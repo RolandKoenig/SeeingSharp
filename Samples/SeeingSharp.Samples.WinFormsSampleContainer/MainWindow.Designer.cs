@@ -324,7 +324,7 @@ namespace WinFormsSampleContainer
             this.Controls.Add(this.m_barTools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "MainWindow";
-            this.Text = "Seeing# Win.Forms Samples";
+            this.Text = "Seeing# Win.Forms SampleContainer";
             this.m_barTools.ResumeLayout(false);
             this.m_barTools.PerformLayout();
             this.m_barStatus.ResumeLayout(false);

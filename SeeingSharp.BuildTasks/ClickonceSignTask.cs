@@ -42,7 +42,6 @@ namespace SeeingSharp.BuildTasks
     {
         #region Constants
         private const string SUBDIRECTORY_APPFILES = "Application Files";
-        private const string SUBDIRECTORY_CERT = "Cert";
         private const string FILE_PASSWORD = "Password.txt";
         private const string EXTENSION_DEPLOY = ".deploy";
         #endregion
@@ -58,6 +57,11 @@ namespace SeeingSharp.BuildTasks
             if (string.IsNullOrEmpty(PublishDirectory))
             {
                 this.Log.LogError("No publish path given!");
+                return false;
+            }
+            if(string.IsNullOrEmpty(CertInformationDirectory))
+            {
+                this.Log.LogError("Certification information path not given!");
                 return false;
             }
 
@@ -76,7 +80,7 @@ namespace SeeingSharp.BuildTasks
             string signToolPath = Path.Combine(winSdkPath, "Bin\\signtool.exe");
 
             // Get the directory with certificate information
-            string certDirectory = Path.Combine(this.PublishDirectory, SUBDIRECTORY_CERT);
+            string certDirectory = this.CertInformationDirectory;
             if(!Directory.Exists(certDirectory))
             {
                 this.Log.LogError("No certificate informatin found in publish directory!");
@@ -345,6 +349,13 @@ namespace SeeingSharp.BuildTasks
 
         [Required]
         public string PublishDirectory
+        {
+            get;
+            set;
+        }
+
+        [Required]
+        public string CertInformationDirectory
         {
             get;
             set;

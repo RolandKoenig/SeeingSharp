@@ -4,7 +4,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:frozensky="clr-namespace:SeeingSharp.Multimedia.Views;assembly=SeeingSharp.Multimedia"
         xmlns:local="clr-namespace:WpfSampleContainer"
-        Title="Seeing# Wpf Samples" Height="600" Width="800"
+        Title="Seeing# Wpf SampleContainer" Height="600" Width="800"
         Icon="/Resources/Logo.ico">
     <Window.DataContext>
         <local:MainWindowViewModel />
