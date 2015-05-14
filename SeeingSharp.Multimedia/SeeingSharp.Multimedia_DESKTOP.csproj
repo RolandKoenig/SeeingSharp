@@ -378,6 +378,7 @@
     <Compile Include="_Native.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Behaviors\" />
     <Folder Include="Input\_Generic\" />
     <Folder Include="Resources\Models\" />
   </ItemGroup>

@@ -32,7 +32,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.System;
+using Windows.UI.Core;
 using Windows.UI.Input;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 
 // Define assembly attributes for type that is defined in this file
@@ -52,6 +55,11 @@ namespace SeeingSharp.Multimedia.Input
         private IInputEnabledView m_focusHandler;
         private RenderLoop m_renderLoop;
         private Camera3DBase m_camera;
+        #endregion
+
+        #region local resources
+        private Button m_dummyButtonForFocus;
+        private bool m_hasFocus;
         #endregion
 
         #region state variables for camera movement
@@ -128,6 +136,23 @@ namespace SeeingSharp.Multimedia.Input
             m_painter.TargetPanel.PointerMoved += OnTargetPanel_PointerMoved;
             m_painter.TargetPanel.KeyUp += OnTargetPanel_KeyUp;
             m_painter.TargetPanel.KeyDown += OnTargetPanel_KeyDown;
+
+            // Create the dummy button for focus management
+            //  see posts on: https://social.msdn.microsoft.com/Forums/en-US/54e4820d-d782-45d9-a2b1-4e3a13340788/set-focus-on-swapchainpanel-control?forum=winappswithcsharp
+            m_dummyButtonForFocus = new Button();
+            m_dummyButtonForFocus.Content = "Button";
+            m_dummyButtonForFocus.Width = 0;
+            m_dummyButtonForFocus.Height = 0;
+            m_dummyButtonForFocus.HorizontalAlignment = HorizontalAlignment.Left;
+            m_dummyButtonForFocus.VerticalAlignment = VerticalAlignment.Top;
+            m_dummyButtonForFocus.KeyDown += OnDummyButtonForFocus_KeyDown;
+            m_dummyButtonForFocus.KeyUp += OnDummyButtonForFocus_KeyUp;
+            m_dummyButtonForFocus.LostFocus += OnDummyButtonForFocus_LostFocus;
+            m_dummyButtonForFocus.GotFocus += OnDummyButtonForFocus_GotFocus;
+            m_painter.TargetPanel.Children.Add(m_dummyButtonForFocus);
+
+            // Set focus on the target 
+            m_dummyButtonForFocus.Focus(FocusState.Programmatic);
         }
 
         /// <summary>
@@ -135,6 +160,19 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public void Stop()
         {
+            m_hasFocus = false;
+
+            // Remove the dummy button
+            if (m_dummyButtonForFocus != null)
+            {
+                m_dummyButtonForFocus.KeyDown -= OnDummyButtonForFocus_KeyDown;
+                m_dummyButtonForFocus.KeyUp -= OnDummyButtonForFocus_KeyUp;
+                m_dummyButtonForFocus.LostFocus -= OnDummyButtonForFocus_LostFocus;
+                m_dummyButtonForFocus.GotFocus -= OnDummyButtonForFocus_GotFocus;
+
+                m_painter.TargetPanel.Children.Remove(m_dummyButtonForFocus);
+            }
+
             // Deregister all events
             m_painter.TargetPanel.PointerExited -= OnTargetPanel_PointerExited;
             m_painter.TargetPanel.PointerWheelChanged -= OnTargetPanel_PointerWheelChanged;
@@ -150,13 +188,6 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public void UpdateMovement()
         {
-            //if (!m_painter.TargetPanel.)
-            //{
-            //    m_pressedKeys.Clear();
-            //    m_controlDown = false;
-            //    return;
-            //}
-
             // Define multiplyer
             float multiplyer = 1f;
 
@@ -242,14 +273,56 @@ namespace SeeingSharp.Multimedia.Input
             while (m_pressedKeys.Remove(e.Key)) { }
         }
 
+        private void OnDummyButtonForFocus_KeyUp(object sender, KeyRoutedEventArgs e)
+        {
+            // This enables bubbling of the keyboard event
+            e.Handled = false;
+        }
+
+        private void OnDummyButtonForFocus_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            // This enables bubbling of the keyboard event
+            e.Handled = false;
+        }
+
+        private void OnDummyButtonForFocus_LostFocus(object sender, RoutedEventArgs e)
+        {
+            m_pressedKeys.Clear();
+
+            m_hasFocus = false;
+        }
+
+        private void OnDummyButtonForFocus_GotFocus(object sender, RoutedEventArgs e)
+        {
+            m_hasFocus = true;
+        }
+
         private void OnTargetPanel_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            // Set focus on target
+            if (m_dummyButtonForFocus != null)
+            {
+                m_dummyButtonForFocus.Focus(FocusState.Programmatic);
+            }
+
             StopCameraDragging();
+
+            // Needed here because we loose focus again by default on left mouse button
+            e.Handled = true;
         }
 
         private void OnTargetPanel_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
+            // Set focus on target
+            if(m_dummyButtonForFocus != null)
+            {
+                m_dummyButtonForFocus.Focus(FocusState.Programmatic);
+            }
+
             StartCameraDragging(e.GetCurrentPoint(m_painter.TargetPanel));
+
+            // Needed here because we loose focus again by default on left mouse button
+            e.Handled = true;
         }
 
         private void OnTargetPanel_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -258,8 +331,14 @@ namespace SeeingSharp.Multimedia.Input
             if ((camera != null) &&
                 (m_isDragging))
             {
-                PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+                // Set focus on target
+                if (m_dummyButtonForFocus != null)
+                {
+                    m_dummyButtonForFocus.Focus(FocusState.Programmatic);
+                }
 
+                // Calculate move distance
+                PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
                 Vector2 moveDistance = new Vector2(
                     (float)(currentPoint.Position.X - m_lastDragPoint.Position.X),
                     (float)(currentPoint.Position.Y - m_lastDragPoint.Position.Y));
@@ -282,6 +361,8 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnTargetPanel_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
+            if (!m_hasFocus) { return; }
+
             Camera3DBase camera = m_renderLoop.Camera;
             if (camera != null)
             {

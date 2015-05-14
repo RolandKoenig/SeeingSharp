@@ -352,6 +352,7 @@
     <Content Include="Resources\Shaders\_mainInclude.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Behaviors\" />
     <Folder Include="Input\_Generic\" />
     <Folder Include="Resources\Models\" />
   </ItemGroup>

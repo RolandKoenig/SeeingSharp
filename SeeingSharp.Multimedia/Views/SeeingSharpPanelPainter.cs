@@ -40,6 +40,7 @@ using SeeingSharp.Util;
 //Some namespace mappings
 using DXGI = SharpDX.DXGI;
 using D3D11 = SharpDX.Direct3D11;
+using SeeingSharp.Multimedia.Drawing2D;
 
 namespace SeeingSharp.Multimedia.Views
 {
@@ -542,7 +543,6 @@ namespace SeeingSharp.Multimedia.Views
                 return m_targetPanel.Panel; 
             }
         }
-
 
         public SeeingSharpInputMode InputMode
         {
