@@ -20,7 +20,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,48 +28,16 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Samples.Base
 {
-    [AttributeUsage(AttributeTargets.Class)]
-    public class SampleInfoAttribute : Attribute
+    [Flags]
+    public enum SampleTargetPlatform : int
     {
-        public SampleInfoAttribute(
-            string category, string name, int orderID, string codeUrl, 
-            SampleTargetPlatform targetPlatform = SampleTargetPlatform.All)
-        {
-            this.Category = category;
-            this.Name = name;
-            this.OrderID = orderID;
-            this.CodeUrl = codeUrl;
-            this.TargetPlatform = targetPlatform;
-        }
+        All = Desktop | Tablet | WindowsPhone,
+        DesktopAndTablet = Desktop | Tablet,
 
-        public string Category
-        {
-            get;
-            private set;
-        }
+        Desktop = 1,
 
-        public string Name
-        {
-            get;
-            private set;
-        }
+        Tablet = 2,
 
-        public int OrderID
-        {
-            get;
-            private set;
-        }
-
-        public string CodeUrl
-        {
-            get;
-            private set;
-        }
-
-        public SampleTargetPlatform TargetPlatform
-        {
-            get;
-            private set;
-        }
+        WindowsPhone = 4
     }
 }

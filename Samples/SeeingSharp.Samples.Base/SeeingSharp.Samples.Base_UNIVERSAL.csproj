@@ -45,6 +45,7 @@
     <Compile Include="_Base\SampleDescription.cs" />
     <Compile Include="_Base\SampleInfoAttribute.cs" />
     <Compile Include="_Base\SampleSceneBuilder.cs" />
+    <Compile Include="_Base\_Misc.cs" />
     <Compile Include="_Constants.cs" />
     <Compile Include="_Performance\PerformanceAnalysisViewModel.cs" />
     <Compile Include="_Performance\PerformanceSnapshot.cs" />
