@@ -30,6 +30,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using DXGI = SharpDX.DXGI;
@@ -43,15 +44,27 @@ namespace SeeingSharp.Multimedia.Views
         private SwapChainPanel m_panel;
         private DXGI.ISwapChainPanelNative m_panelNative;
 
+        private float m_currentDpiX;
+        private float m_currentDpiY;
+
         public event EventHandler<RoutedEventArgs> Unloaded;
         public event EventHandler<RoutedEventArgs> Loaded;
         public event EventHandler<SizeChangedEventArgs> SizeChanged;
+        public event EventHandler CompositionScaleChanged;
+
+        public SwapChainPanelWrapper()
+        {
+            DisplayInformation displayInfo = DisplayInformation.GetForCurrentView();
+            m_currentDpiX = displayInfo.LogicalDpi;
+            m_currentDpiY = displayInfo.LogicalDpi;
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwapChainPanelWrapper"/> class.
         /// </summary>
         /// <param name="bgPanel">The panel for which to create the wrapper.</param>
         public SwapChainPanelWrapper(SwapChainBackgroundPanel bgPanel)
+            : this()
         {
             m_bgPanel = bgPanel;
             m_bgPanelNative = ComObject.As<DXGI.ISwapChainBackgroundPanelNative>(m_bgPanel);
@@ -66,6 +79,7 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         /// <param name="panel">The panel for which to create the wrapper.</param>
         public SwapChainPanelWrapper(SwapChainPanel panel)
+            : this()
         {
             m_panel = panel;
             m_panelNative = ComObject.As<DXGI.ISwapChainPanelNative>(m_panel);
@@ -73,6 +87,7 @@ namespace SeeingSharp.Multimedia.Views
             m_panel.SizeChanged += OnAnyPanel_SizeChanged;
             m_panel.Loaded += OnAnyPanel_Loaded;
             m_panel.Unloaded += OnAnyPanel_Unloaded;
+            m_panel.CompositionScaleChanged += OnPanelCompositionScaleChanged;
         }
 
         /// <summary>
@@ -99,9 +114,19 @@ namespace SeeingSharp.Multimedia.Views
             this.SizeChanged.Raise(sender, e);
         }
 
+        private void OnPanelCompositionScaleChanged(SwapChainPanel sender, object args)
+        {
+            this.CompositionScaleChanged.Raise(this, EventArgs.Empty);
+        }
+
         public Size RenderSize
         {
             get { return this.Panel.RenderSize; }
+        }
+
+        public Size ActualSize
+        {
+            get { return new Size(this.Panel.ActualWidth, this.Panel.ActualHeight); }
         }
 
         public double ActualWidth
@@ -140,6 +165,29 @@ namespace SeeingSharp.Multimedia.Views
                 {
                     throw new ObjectDisposedException("SwapChainPanelWrapper");
                 }
+            }
+        }
+
+        public bool CompositionRescalingNeeded
+        {
+            get { return m_panel != null; }
+        }
+
+        public double CompositionScaleX
+        {
+            get
+            {
+                if (m_panel != null) { return m_panel.CompositionScaleX; }
+                return m_currentDpiX / 96.0;
+            }
+        }
+
+        public double CompositionScaleY
+        {
+            get
+            {
+                if (m_panel != null) { return m_panel.CompositionScaleY; }
+                return m_currentDpiY / 96.0;
             }
         }
     }

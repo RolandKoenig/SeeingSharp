@@ -255,8 +255,9 @@ namespace SeeingSharp.Multimedia.Core
                 Scaling = SharpDX.DXGI.Scaling.Stretch,
                 SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,
             };
-            
+
             //Creates the swap chain for XAML composition
+            
             return new DXGI.SwapChain1(device.FactoryDxgi, device.DeviceD3D11, ref desc);
         }
 #endif

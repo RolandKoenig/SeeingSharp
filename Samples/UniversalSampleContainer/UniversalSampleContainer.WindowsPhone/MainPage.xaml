@@ -12,8 +12,8 @@
     <Page.DataContext>
         <local:MainWindowViewModel />
     </Page.DataContext>
-    
-    <Grid>
+
+    <Grid Name="MainContentGrid">
         <!-- Define the main drawing error for SeeingSharp -->
         <SwapChainPanel>
             <i:Interaction.Behaviors>
@@ -70,6 +70,11 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
+
+            <ProgressBar Name="MainStatusBar"
+                         HorizontalAlignment="Stretch"
+                         IsIndeterminate="True"
+                         Visibility="Collapsed"/>
         </StackPanel>
     </Grid>
 </Page>
