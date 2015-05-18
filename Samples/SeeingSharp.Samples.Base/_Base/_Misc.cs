@@ -31,13 +31,11 @@ namespace SeeingSharp.Samples.Base
     [Flags]
     public enum SampleTargetPlatform : int
     {
-        All = Desktop | Tablet | WindowsPhone,
-        DesktopAndTablet = Desktop | Tablet,
+        All = WindowsPhone | ModernPCOrTabletApp | Desktop,
+        AllExcludingSmartphone = ModernPCOrTabletApp | Desktop,
 
-        Desktop = 1,
-
-        Tablet = 2,
-
-        WindowsPhone = 4
+        WindowsPhone = 1,
+        ModernPCOrTabletApp = 2,
+        Desktop = 4
     }
 }

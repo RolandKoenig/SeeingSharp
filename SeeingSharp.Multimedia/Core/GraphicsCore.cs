@@ -90,6 +90,7 @@ namespace SeeingSharp.Multimedia.Core
         #region
         private bool m_debugEnabled;
         private TargetHardware m_targetHardware;
+        private SeeingSharpPlatform m_platform;
         #endregion
 
         /// <summary>
@@ -102,6 +103,7 @@ namespace SeeingSharp.Multimedia.Core
                 // Upate RK.Common members
                 m_debugEnabled = debugEnabled;
                 m_targetHardware = targetHardware;
+                m_platform = PlatformDetector.DetectPlatform();
                 m_devices = new List<EngineDevice>();
                 m_performanceCalculator = new PerformanceAnalyzer(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(2.0));
                 m_performanceCalculator.SyncContext = SynchronizationContext.Current; // <-- TODO
@@ -360,6 +362,14 @@ namespace SeeingSharp.Multimedia.Core
         public TargetHardware TargetHardware
         {
             get { return m_targetHardware; }
+        }
+
+        /// <summary>
+        /// Gets the platform on which this application is running currently.
+        /// </summary>
+        public SeeingSharpPlatform CurrentPlatform
+        {
+            get { return m_platform; }
         }
 
         /// <summary>

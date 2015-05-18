@@ -898,6 +898,33 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Performs some resource handling actions before rendering the frame.
+        /// The main point here is executing Render on renderable resources.
+        /// </summary>
+        /// <param name="renderState">State of the render.</param>
+        internal void HandleRenderResources(RenderState renderState)
+        {
+            renderState.LastRenderBlockID = -1;
+
+            // Get current resource dictionary
+            ResourceDictionary resources = m_registeredResourceDicts[renderState.DeviceIndex];
+            if (resources == null) { throw new SeeingSharpGraphicsException("Unable to render scene: Resource dictionary for current device not found!"); }
+
+            // Unload all resources that are marked for unloading
+            resources.UnloadAllMarkedResources();
+
+            // Render all renderable resources first
+            // (ensure here that we don't corrup device state)
+            foreach (IRenderableResource actRenderableResource in resources.RenderableResources)
+            {
+                if (actRenderableResource.IsLoaded)
+                {
+                    actRenderableResource.Render(renderState);
+                }
+            }
+        }
+
+        /// <summary>
         /// Renders the scene to the given context.
         /// </summary>
         /// <param name="renderState">The current render state.</param>
@@ -908,9 +935,6 @@ namespace SeeingSharp.Multimedia.Core
             // Get current resource dictionary
             ResourceDictionary resources = m_registeredResourceDicts[renderState.DeviceIndex];
             if (resources == null) { throw new SeeingSharpGraphicsException("Unable to render scene: Resource dictionary for current device not found!"); }
-
-            // Unload all resources that are marked for unloading
-            resources.UnloadAllMarkedResources();
 
             // Apply default states on the device
             DefaultResources defaultResource = resources.DefaultResources;
@@ -943,15 +967,6 @@ namespace SeeingSharp.Multimedia.Core
                 foreach (SceneLayer actLayer in m_sceneLayers)
                 {
                     actLayer.PrepareRendering(renderState);
-                }
-
-                //Render all renderable resources
-                foreach (IRenderableResource actRenderableResource in resources.RenderableResources)
-                {
-                    if (actRenderableResource.IsLoaded)
-                    {
-                        actRenderableResource.Render(renderState);
-                    }
                 }
 
                 //Render all layers in current order

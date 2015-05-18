@@ -132,6 +132,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
                             Type = D2D.RenderTargetType.Default, 
                             Usage = D2D.RenderTargetUsage.ForceBitmapRemoting,
                             PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, D2D.AlphaMode.Premultiplied),
+                            DpiX = EngineMath.DEFAULT_DPI_X,
+                            DpiY = EngineMath.DEFAULT_DPI_Y
                         });
                     m_graphics2D = new Graphics2D(device, m_renderTarget2D, new Size2F(m_width, m_height));
                     return;

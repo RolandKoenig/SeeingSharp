@@ -37,6 +37,9 @@ namespace SeeingSharp
         public const float RAD_315DEG = (float)Math.PI * 1.75f;
         public const float RAD_360DEG = (float)Math.PI * 2f;
 
+        public const float DEFAULT_DPI_X = 96f;
+        public const float DEFAULT_DPI_Y = DEFAULT_DPI_X;
+
         public const float TOLERANCE_FLOAT_POSITIVE = 0.00001f;
         public const float TOLERANCE_FLOAT_NEGATIVE = -0.00001f;
         public const double TOLERANCE_DOUBLE_POSITIVE = 0.00001;

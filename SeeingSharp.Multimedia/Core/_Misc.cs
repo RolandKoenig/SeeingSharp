@@ -228,6 +228,27 @@ namespace SeeingSharp.Multimedia.Core
     }
 
     /// <summary>
+    /// Describes the platform Seeing# runs on.
+    /// </summary>
+    public enum SeeingSharpPlatform
+    {
+        /// <summary>
+        /// The engine runs currently on Windows Phone.
+        /// </summary>
+        WindowsPhone,
+
+        /// <summary>
+        /// The engine runs currently as modern PC or tablet app (= Windows Store App).
+        /// </summary>
+        ModernPCOrTabletApp,
+
+        /// <summary>
+        /// The engine runs currently in Windows desktop environment.
+        /// </summary>
+        Desktop
+    }
+
+    /// <summary>
     /// Describes the used coordinate system.
     /// Frozen Sky uses LeftHanded_UpY by default, all other systems need to be mapped.
     ///  see http://www.scratchapixel.com/lessons/3d-basic-lessons/lesson-4-geometry/coordinate-systems/

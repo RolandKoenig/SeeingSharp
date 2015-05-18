@@ -900,6 +900,15 @@ namespace SeeingSharp.Multimedia.Core
                 string.Format(Constants.PERF_RENDERLOOP_RENDER, m_currentDevice.DeviceIndex, m_viewInformation.ViewIndex + 1));
             try
             {
+                // Handle all resources within the scene
+                if ((m_currentScene != null) &&
+                    (m_camera != null) &&
+                    (m_currentScene.IsViewRegistered(m_viewInformation)))
+                {
+                    // Renders current scene on this view
+                    m_currentScene.HandleRenderResources(m_renderState);
+                }
+
                 // Set default rastarization state
                 D3D11.RasterizerState rasterState = null;
                 bool isWireframeEnabled = m_viewConfiguration.WireframeEnabled;
