@@ -43,7 +43,8 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "SingleModel",
         Constants.SAMPLE_BASCIS_SINGLEMODEL_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/SingleModelSample.cs")]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/SingleModelSample.cs",
+        SampleTargetPlatform.AllExcludingSmartphone)]
     public class SingleModelSample : SampleBase
     {
         /// <summary>

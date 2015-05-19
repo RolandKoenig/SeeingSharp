@@ -60,6 +60,11 @@ namespace SeeingSharp.Samples.Base
                 SampleInfoAttribute actInfoAttrib = actSampleType.GetTypeInfo().GetCustomAttribute<SampleInfoAttribute>();
                 if (actInfoAttrib == null) { continue; }
 
+                if(!DoesSampleSupportCurrentPlatform(actInfoAttrib))
+                {
+                    continue;
+                }
+
                 m_sampleTypes.Add(Tuple.Create(
                     new SampleDescription(actInfoAttrib, actSampleType),
                     actSampleType));
@@ -123,6 +128,24 @@ namespace SeeingSharp.Samples.Base
             SampleBase sample = Activator.CreateInstance(sampleDesc.SampleClass) as SampleBase;
             sample.OnStartupAsync(renderLoop);
             return sample;
+        }
+
+        private bool DoesSampleSupportCurrentPlatform(SampleInfoAttribute sampleAttrib)
+        {
+            switch(GraphicsCore.Current.CurrentPlatform)
+            {
+                case SeeingSharpPlatform.Desktop:
+                    return sampleAttrib.TargetPlatform.HasFlag(SampleTargetPlatform.Desktop);
+
+                case SeeingSharpPlatform.ModernPCOrTabletApp:
+                    return sampleAttrib.TargetPlatform.HasFlag(SampleTargetPlatform.ModernPCOrTabletApp);
+
+                case SeeingSharpPlatform.WindowsPhone:
+                    return sampleAttrib.TargetPlatform.HasFlag(SampleTargetPlatform.WindowsPhone);
+
+                default:
+                    throw new SeeingSharpException("Unable to handle platform " + GraphicsCore.Current.CurrentPlatform);
+            }
         }
 
         public static SampleFactory Current

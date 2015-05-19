@@ -44,7 +44,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
         Constants.SAMPLEGROUP_BASIC, "Pallets",
         Constants.SAMPLE_BASICS_PALLETS_ORDER,
         "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/PalletsSample.cs",
-        SampleTargetPlatform.Desktop)]
+        SampleTargetPlatform.AllExcludingSmartphone)]
     public class PalletsSample : SampleBase
     {
         private const int SIDE_LENGTH = 20;
