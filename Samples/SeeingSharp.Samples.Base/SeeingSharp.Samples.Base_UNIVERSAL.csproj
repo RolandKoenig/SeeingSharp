@@ -55,6 +55,7 @@
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
     <Compile Include="_Samples\BasicSamples\SkyboxRenderingSample.cs" />
+    <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\TransparentPalletsSample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
@@ -63,6 +64,7 @@
   <ItemGroup>
     <Content Include="Assets\SampleImages\Basics_AsyncAnimation.png" />
     <Content Include="Assets\SampleImages\Basics_Pallets.png" />
+    <Content Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture.png" />
     <Content Include="Assets\SampleImages\Basics_RotatingPallet.png" />
     <Content Include="Assets\SampleImages\Basics_SingleModel.png" />
@@ -75,6 +77,7 @@
     <Content Include="Assets\Textures\Floor.dds" />
     <Content Include="Assets\Textures\Floor.png" />
     <Content Include="Assets\Textures\LogoTexture.png" />
+    <Content Include="Assets\Textures\SimpleTexture.png" />
     <Content Include="Assets\Textures\SkyBox.dds" />
     <Content Include="Assets\Textures\Tile1.png" />
     <Content Include="Assets\Textures\Tile2.png" />

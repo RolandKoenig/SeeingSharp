@@ -58,6 +58,7 @@
     <Compile Include="_Base\_Misc.cs" />
     <Compile Include="_Samples\BasicSamples\AsyncAnimationSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsSample.cs" />
+    <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
     <Compile Include="_Samples\BasicSamples\SkyboxRenderingSample.cs" />
@@ -89,8 +90,10 @@
     <Resource Include="Assets\Models\Penguin.ac" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Textures\SimpleTexture.png" />
     <Resource Include="Assets\SampleImages\Direct2D_Draw_to_Texture.png" />
     <Resource Include="Assets\SampleImages\Direct2D_Screen_Overlay.png" />
+    <Resource Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Content Include="Assets\Textures\Background.png" />
   </ItemGroup>
   <ItemGroup>
