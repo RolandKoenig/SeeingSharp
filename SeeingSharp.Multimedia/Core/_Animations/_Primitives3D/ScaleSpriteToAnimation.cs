@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 using System;
 using System.Collections.Generic;
@@ -36,12 +36,12 @@ namespace SeeingSharp.Multimedia.Core
         private TexturePainter m_targetObject;
         private TimeSpan m_duration;
         private float m_targetScaling;
-        #endregion
+        #endregion Parameters
 
         #region Runtime
         private float m_startScaling;
         private float m_moveScaling;
-        #endregion
+        #endregion Runtime
 
         /// <summary>
         /// Initialize a new Instance of the <see cref="ScaleSpriteToAnimation" /> class.
@@ -57,9 +57,9 @@ namespace SeeingSharp.Multimedia.Core
             m_duration = duration;
             m_targetScaling = targetScaling;
 
-            if (targetScaling < 0f || targetScaling > 1f)
+            if (targetScaling < 0f)
             {
-                throw new Exception("Opacity value can be between 0 and 1, not greater than 1 and not lower than 0!");
+                throw new Exception("Scaling value can be less than 0!");
             }
         }
 

@@ -115,7 +115,7 @@ namespace RKVideoMemory.Game
 
             // Hide the video again
             await objVideoPainter.BuildAnimationSequence()
-                .ScaleTo(0.6f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                .ScaleTo(1.4f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
                 .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
                 .ApplyAsync();
 

@@ -62,7 +62,7 @@ namespace RKVideoMemory
         public const int INITIAL_UNCOVER_SECONDS_MIN = 3;
         public const int ROTATE_ANIM_DELAY_MILLIS_MAX = 600;
         public const int ROTATE_ANIM_DELAY_MILLIS_MIN = 200;
-        public const int FADE_INOUT_ANIM_TIME = 300;
+        public const int FADE_INOUT_ANIM_TIME = 400;
         #endregion timing parameters
 
         #region parameters for the tilemap
