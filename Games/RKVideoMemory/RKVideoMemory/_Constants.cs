@@ -54,6 +54,7 @@ namespace RKVideoMemory
         public const string FILE_PATTERN_TILE1 = "Tile1.*";
         public const string FILE_PATTERN_TILE2 = "Tile2.*";
         public const string TITLE_IMAGE_NAME = "_Title";
+        public const string TILEMAP_FILENAME = "Tilemap.txt";
         #endregion file patterns
 
         #region timing parameters
@@ -65,12 +66,14 @@ namespace RKVideoMemory
         #endregion timing parameters
 
         #region parameters for the tilemap
-        public const int TILEMAP_X_COUNT = 5;
-        public const int TILEMAP_Y_COUNT = 5;
+        public const int TILEMAP_DEFAULT_X_COUNT = 5;
+        public const int TILEMAP_DEFAULT_Y_COUNT = 5;
         public const float TILE_WIDTH = 1.9f;
         public const float TILE_HEIGHT = 1.4f;
-        public const float TILE_DISTANCE_X = 2f;
-        public const float TILE_DISTANCE_Y = 1.5f;
+        public const float TILE_DISTANCE_X = 2.2f;
+        public const float TILE_DISTANCE_Y = 1.6f;
+        public const char TILE_CHAR_UNALLOWED = '_';
+        public const char TILE_CHAR_ALLOWED = 'X';
         #endregion parameters for the tilemap
     }
 }

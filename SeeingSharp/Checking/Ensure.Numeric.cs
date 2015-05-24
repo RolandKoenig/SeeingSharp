@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 using System;
 using System.Collections.Generic;
@@ -36,6 +36,7 @@ namespace SeeingSharp.Checking
         //---------------------------------------------------------------------
         // Method 'EnsureInRange' for all common numeric variables
         #region
+
         [Conditional("DEBUG")]
         public static void EnsureInRange(
             this byte numValue, byte min, byte max, string checkedVariableName,
@@ -203,6 +204,7 @@ namespace SeeingSharp.Checking
         //---------------------------------------------------------------------
         // Method 'EnsurePositive' for all common numeric variables
         #region
+
         [Conditional("DEBUG")]
         public static void EnsurePositive(
             this int numValue, string checkedVariableName,
@@ -298,6 +300,109 @@ namespace SeeingSharp.Checking
                     checkedVariableName, callerMethod, numValue));
             }
         }
+
+        #endregion
+
+        //---------------------------------------------------------------------
+        // Method 'EnsurePositiveAndNotZero' for all common numeric variables
+        #region
+
+        [Conditional("DEBUG")]
+        public static void EnsurePositiveAndNotZero(
+            this int numValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (numValue <= 0)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Value {0} within method {1} must be positive and not zero (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsurePositiveAndNotZero(
+            this short numValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (numValue <= 0)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Value {0} within method {1} must be positive and not zero (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsurePositiveAndNotZero(
+            this long numValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (numValue <= 0)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Value {0} within method {1} must be positive and not zero (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsurePositiveAndNotZero(
+            this float numValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (numValue <= 0)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Value {0} within method {1} must be positive and not zero (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsurePositiveAndNotZero(
+            this double numValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (numValue <= 0)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Value {0} within method {1} must be positive and not zero (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsurePositiveAndNotZero(
+            this decimal numValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (numValue <= 0)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Value {0} within method {1} must be positive and not zero (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
+            }
+        }
+
         #endregion
     }
 }
