@@ -259,5 +259,10 @@ namespace RKVideoMemory
             m_isFullscreen = !m_isFullscreen;
             this.UpdateDialogStates();
         }
+
+        private void OnCmdClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -134,6 +134,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="..\..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
@@ -185,6 +186,11 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Icons\Adapter16x16.png" />
+    <Content Include="Assets\Icons\Open16x16.png" />
+    <Content Include="Assets\Icons\Output16x16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

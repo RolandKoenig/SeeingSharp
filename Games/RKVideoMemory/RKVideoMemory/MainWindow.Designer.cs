@@ -33,13 +33,15 @@
             this.m_mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_cmdLoadLevel = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.m_chkFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
             this.m_timerPicking = new System.Windows.Forms.Timer(this.components);
             this.m_timerTrigger = new System.Windows.Forms.Timer(this.components);
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_mediaPlayer = new SeeingSharp.Multimedia.Views.MediaPlayerComponent();
+            this.konfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_cmdClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.m_chkFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,7 +49,8 @@
             // 
             this.m_mainMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_mainMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.konfigurationToolStripMenuItem});
             this.m_mainMenu.Location = new System.Drawing.Point(0, 0);
             this.m_mainMenu.Name = "m_mainMenu";
             this.m_mainMenu.Size = new System.Drawing.Size(668, 28);
@@ -59,29 +62,18 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_cmdLoadLevel,
             this.toolStripSeparator1,
-            this.m_chkFullscreen});
+            this.m_cmdClose});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(57, 24);
             this.fileToolStripMenuItem.Text = "Datei";
             // 
             // m_cmdLoadLevel
             // 
+            this.m_cmdLoadLevel.Image = global::RKVideoMemory.Properties.Resources.Icon_Open16x16;
             this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
-            this.m_cmdLoadLevel.Size = new System.Drawing.Size(156, 24);
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(179, 26);
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(153, 6);
-            // 
-            // m_chkFullscreen
-            // 
-            this.m_chkFullscreen.Name = "m_chkFullscreen";
-            this.m_chkFullscreen.Size = new System.Drawing.Size(156, 24);
-            this.m_chkFullscreen.Text = "Vollbild";
-            this.m_chkFullscreen.Click += new System.EventHandler(this.OnChkFullscreen_Click);
             // 
             // m_timerPicking
             // 
@@ -124,6 +116,34 @@
             this.m_mediaPlayer.TargetControl = this.m_ctrlRenderer;
             this.m_mediaPlayer.VideoFinished += new System.EventHandler(this.OnMediaPlayer_VideoFinished);
             // 
+            // konfigurationToolStripMenuItem
+            // 
+            this.konfigurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_chkFullscreen});
+            this.konfigurationToolStripMenuItem.Name = "konfigurationToolStripMenuItem";
+            this.konfigurationToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
+            this.konfigurationToolStripMenuItem.Text = "Konfiguration";
+            // 
+            // m_cmdClose
+            // 
+            this.m_cmdClose.Name = "m_cmdClose";
+            this.m_cmdClose.Size = new System.Drawing.Size(179, 26);
+            this.m_cmdClose.Text = "Beenden";
+            this.m_cmdClose.Click += new System.EventHandler(this.OnCmdClose_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            // 
+            // m_chkFullscreen
+            // 
+            this.m_chkFullscreen.Image = global::RKVideoMemory.Properties.Resources.Icon_Output16x16;
+            this.m_chkFullscreen.Name = "m_chkFullscreen";
+            this.m_chkFullscreen.Size = new System.Drawing.Size(179, 26);
+            this.m_chkFullscreen.Text = "Vollbild";
+            this.m_chkFullscreen.Click += new System.EventHandler(this.OnChkFullscreen_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -152,8 +172,10 @@
         private System.Windows.Forms.Timer m_timerPicking;
         private System.Windows.Forms.Timer m_timerTrigger;
         private SeeingSharp.Multimedia.Views.MediaPlayerComponent m_mediaPlayer;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripMenuItem m_cmdClose;
+        private System.Windows.Forms.ToolStripMenuItem konfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem m_chkFullscreen;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 
