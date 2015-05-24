@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,20 +19,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp;
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing3D;
-using SeeingSharp.Checking;
-using SeeingSharp.Util;
-using RKVideoMemory.Assets.Textures;
-using RKVideoMemory.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RKVideoMemory.Assets.Textures;
+using RKVideoMemory.Data;
+using SeeingSharp;
+using SeeingSharp.Checking;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Util;
 
 namespace RKVideoMemory.Game
 {
@@ -53,7 +53,7 @@ namespace RKVideoMemory.Game
 
             await scene.ManipulateSceneAsync((manipulator) =>
             {
-                foreach(CardPair actPair in m_cardPairs)
+                foreach (CardPair actPair in m_cardPairs)
                 {
                     foreach (Card actCard in actPair.Cards)
                     {
@@ -77,7 +77,7 @@ namespace RKVideoMemory.Game
             int tilesY = Constants.TILEMAP_Y_COUNT;
             float tileDistX = Constants.TILE_DISTANCE_X;
             float tileDistY = Constants.TILE_DISTANCE_Y;
-            Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, (tilesY - 1) * tileDistY/ 2f);
+            Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, (tilesY - 1) * tileDistY / 2f);
 
             m_cardMap = new Card[tilesX, tilesY];
             m_cardPairs = new List<CardPair>();
@@ -87,7 +87,7 @@ namespace RKVideoMemory.Game
             {
                 manipulator.BuildBackground(currentLevel.MainTextures.BackgroundTextureLink);
 
-                var resBackgroundMaterial1= manipulator.AddSimpleColoredMaterial(
+                var resBackgroundMaterial1 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile1TextureLink);
                 var resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile2TextureLink);
@@ -146,11 +146,11 @@ namespace RKVideoMemory.Game
         {
             Tuple<int, int> result = null;
 
-            while(result == null)
+            while (result == null)
             {
                 int xPos = randomizer.Next(0, cardMap.GetLength(0));
                 int yPos = randomizer.Next(0, cardMap.GetLength(1));
-                if(cardMap[xPos, yPos] == null)
+                if (cardMap[xPos, yPos] == null)
                 {
                     result = Tuple.Create(xPos, yPos);
                 }

@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,11 +19,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.DrawingVideo;
-using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,10 +28,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.DrawingVideo;
+using SeeingSharp.Util;
 
 namespace RKVideoMemory.Data
 {
-    public class CardPairData 
+    public class CardPairData
     {
         private List<ResourceLink> m_childImageFiles;
         private List<ResourceLink> m_childVideoFiles;
@@ -62,7 +62,10 @@ namespace RKVideoMemory.Data
         /// </summary>
         internal bool IsValidPair()
         {
-            return this.TitleFile != null;
+            return
+                (this.TitleFile != null) &&
+                (this.ChildVideos != null) &&
+                (this.ChildVideos.Count > 0);
         }
 
         /// <summary>
@@ -91,14 +94,15 @@ namespace RKVideoMemory.Data
         {
             m_childVideoFiles.Add(filePath);
 
-            using(FrameByFrameVideoReader videoReader = new FrameByFrameVideoReader(filePath))
+            using (FrameByFrameVideoReader videoReader = new FrameByFrameVideoReader(filePath))
             {
                 // Read the first frame
                 this.FirstVideoFrame = videoReader.ReadFrame();
                 this.FirstVideoFrame.SetAllAlphaValuesToOne();
 
                 // Read the last frame
-                videoReader.SetCurrentPosition(videoReader.Duration);
+                videoReader.SetCurrentPosition(videoReader.Duration, false);
+
                 this.LastVideoFrame = videoReader.ReadFrame();
                 this.LastVideoFrame.SetAllAlphaValuesToOne();
             }

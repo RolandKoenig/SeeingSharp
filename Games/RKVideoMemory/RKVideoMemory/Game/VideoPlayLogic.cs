@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,18 +19,18 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing3D;
-using SeeingSharp.Multimedia.DrawingVideo;
-using SeeingSharp.Multimedia.Objects;
-using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.DrawingVideo;
+using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Util;
 
 namespace RKVideoMemory.Game
 {
@@ -46,7 +46,8 @@ namespace RKVideoMemory.Game
         {
             // Define 'global' variables
             TexturePainter objVideoPainter = null;
-            NamedOrGenericKey resVideoTexture = NamedOrGenericKey.Empty;
+            NamedOrGenericKey resVideoTextureFirstFrame = NamedOrGenericKey.Empty;
+            NamedOrGenericKey resVideoTextureLastFrame = NamedOrGenericKey.Empty;
 
             // Get the link to the video file
             ResourceLink firstVideo =
@@ -68,19 +69,19 @@ namespace RKVideoMemory.Game
                 }
 
                 // Load the texture painter
-                resVideoTexture = manipulator.AddResource(
+                resVideoTextureFirstFrame = manipulator.AddResource(
                     () => new BitmapTextureResource(message.CardPair.PairData.FirstVideoFrame));
-                objVideoPainter = new TexturePainter(resVideoTexture);
+                objVideoPainter = new TexturePainter(resVideoTextureFirstFrame);
                 objVideoPainter.Scaling = 0.6f;
                 objVideoPainter.AccentuationFactor = 1f;
                 objVideoPainter.Opacity = 0.0f;
                 startAnimationTask = objVideoPainter.BuildAnimationSequence()
                     .Delay(300)
                     .WaitFinished()
-                    .ScaleTo(1f, TimeSpan.FromMilliseconds(500))
-                    .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(500))
+                    .ScaleTo(1f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                    .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
                     .ApplyAsync();
-              
+
                 manipulator.Add(
                     objVideoPainter,
                     Constants.GFX_LAYER_VIDEO_FOREGROUND);
@@ -92,14 +93,37 @@ namespace RKVideoMemory.Game
             // Trigger start of video playing
             this.Messenger.Publish(new PlayMovieRequestMessage(firstVideo));
 
-            // Wait for finished video rendering
-            await this.Messenger.WaitForMessageAsync<PlayMovieFinishedMessage>();
-
-            // Remove video resources again
+            // Change the content of the fullscreen texture to match the last video frame
+            await Task.Delay(500);
             await base.Scene.ManipulateSceneAsync((manipulator) =>
             {
                 manipulator.Remove(objVideoPainter);
-                manipulator.RemoveResource(resVideoTexture);
+                manipulator.RemoveResource(resVideoTextureFirstFrame);
+
+                resVideoTextureLastFrame = manipulator.AddResource(
+                    () => new BitmapTextureResource(message.CardPair.PairData.LastVideoFrame));
+                objVideoPainter = new TexturePainter(resVideoTextureLastFrame);
+                objVideoPainter.AccentuationFactor = 1f;
+
+                manipulator.Add(
+                    objVideoPainter,
+                    Constants.GFX_LAYER_VIDEO_FOREGROUND);
+            });
+
+            // Wait for finished video rendering
+            await this.Messenger.WaitForMessageAsync<PlayMovieFinishedMessage>();
+
+            // Hide the video again
+            await objVideoPainter.BuildAnimationSequence()
+                .ScaleTo(0.6f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                .ApplyAsync();
+
+            // Remove the texture painter
+            await base.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                manipulator.Remove(objVideoPainter);
+                manipulator.RemoveResource(resVideoTextureLastFrame);
             });
 
             // Tell the system that we are back on the mainscreen
