@@ -8,10 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-// Define assembly attributes for the type that is defined in this file
-[assembly: AssemblyQueryableType(
-    targetType: typeof(SeeingSharp.RKKinectLounge.Modules.Kinect.KinectModule),
-    contractType: typeof(SeeingSharp.RKKinectLounge.Base.IKinectLoungeModule))]
+//// Define assembly attributes for the type that is defined in this file
+//[assembly: AssemblyQueryableType(
+//    targetType: typeof(SeeingSharp.RKKinectLounge.Modules.Kinect.KinectModule),
+//    contractType: typeof(SeeingSharp.RKKinectLounge.Base.IKinectLoungeModule))]
 
 namespace SeeingSharp.RKKinectLounge.Modules.Kinect
 {
