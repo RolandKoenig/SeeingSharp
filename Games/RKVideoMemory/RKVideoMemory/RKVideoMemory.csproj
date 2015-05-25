@@ -90,6 +90,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Textures\_Textures.cs" />
+    <Compile Include="Behaviors\HideControlOnInactivityBehavior.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Data\MainTextureData.cs" />
     <Compile Include="Data\CardPairData.cs" />

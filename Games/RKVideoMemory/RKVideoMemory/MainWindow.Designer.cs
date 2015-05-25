@@ -33,15 +33,16 @@
             this.m_mainMenu = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.m_cmdLoadLevel = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.m_cmdClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.konfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_chkFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
             this.m_timerPicking = new System.Windows.Forms.Timer(this.components);
             this.m_timerTrigger = new System.Windows.Forms.Timer(this.components);
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_mediaPlayer = new SeeingSharp.Multimedia.Views.MediaPlayerComponent();
-            this.konfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.m_cmdClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.m_chkFullscreen = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_behaviorHideMenubar = new RKVideoMemory.Behaviors.HideControlOnInactivityBehavior(this.components);
             this.m_mainMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,6 +76,34 @@
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
             // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            // 
+            // m_cmdClose
+            // 
+            this.m_cmdClose.Name = "m_cmdClose";
+            this.m_cmdClose.Size = new System.Drawing.Size(179, 26);
+            this.m_cmdClose.Text = "Beenden";
+            this.m_cmdClose.Click += new System.EventHandler(this.OnCmdClose_Click);
+            // 
+            // konfigurationToolStripMenuItem
+            // 
+            this.konfigurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_chkFullscreen});
+            this.konfigurationToolStripMenuItem.Name = "konfigurationToolStripMenuItem";
+            this.konfigurationToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
+            this.konfigurationToolStripMenuItem.Text = "Konfiguration";
+            // 
+            // m_chkFullscreen
+            // 
+            this.m_chkFullscreen.Image = global::RKVideoMemory.Properties.Resources.Icon_Output16x16;
+            this.m_chkFullscreen.Name = "m_chkFullscreen";
+            this.m_chkFullscreen.Size = new System.Drawing.Size(134, 26);
+            this.m_chkFullscreen.Text = "Vollbild";
+            this.m_chkFullscreen.Click += new System.EventHandler(this.OnChkFullscreen_Click);
+            // 
             // m_timerPicking
             // 
             this.m_timerPicking.Enabled = true;
@@ -88,7 +117,7 @@
             // 
             // m_ctrlRenderer
             // 
-            this.m_ctrlRenderer.BackColor = System.Drawing.Color.Gray;
+            this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.NoInput;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
@@ -108,7 +137,6 @@
             this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
             this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
             this.m_ctrlRenderer.MouseClick += new System.Windows.Forms.MouseEventHandler(this.OnCtrlRenderer_MouseClick);
-            this.m_ctrlRenderer.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnCtrlRenderer_MouseMove);
             // 
             // m_mediaPlayer
             // 
@@ -116,33 +144,11 @@
             this.m_mediaPlayer.TargetControl = this.m_ctrlRenderer;
             this.m_mediaPlayer.VideoFinished += new System.EventHandler(this.OnMediaPlayer_VideoFinished);
             // 
-            // konfigurationToolStripMenuItem
+            // m_behaviorHideMenubar
             // 
-            this.konfigurationToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.m_chkFullscreen});
-            this.konfigurationToolStripMenuItem.Name = "konfigurationToolStripMenuItem";
-            this.konfigurationToolStripMenuItem.Size = new System.Drawing.Size(112, 24);
-            this.konfigurationToolStripMenuItem.Text = "Konfiguration";
-            // 
-            // m_cmdClose
-            // 
-            this.m_cmdClose.Name = "m_cmdClose";
-            this.m_cmdClose.Size = new System.Drawing.Size(179, 26);
-            this.m_cmdClose.Text = "Beenden";
-            this.m_cmdClose.Click += new System.EventHandler(this.OnCmdClose_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
-            // 
-            // m_chkFullscreen
-            // 
-            this.m_chkFullscreen.Image = global::RKVideoMemory.Properties.Resources.Icon_Output16x16;
-            this.m_chkFullscreen.Name = "m_chkFullscreen";
-            this.m_chkFullscreen.Size = new System.Drawing.Size(179, 26);
-            this.m_chkFullscreen.Text = "Vollbild";
-            this.m_chkFullscreen.Click += new System.EventHandler(this.OnChkFullscreen_Click);
+            this.m_behaviorHideMenubar.ControlToHide = this.m_mainMenu;
+            this.m_behaviorHideMenubar.InactivitySecs = 5D;
+            this.m_behaviorHideMenubar.ObservedControl = this.m_ctrlRenderer;
             // 
             // MainWindow
             // 
@@ -176,6 +182,7 @@
         private System.Windows.Forms.ToolStripMenuItem konfigurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem m_chkFullscreen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private Behaviors.HideControlOnInactivityBehavior m_behaviorHideMenubar;
     }
 }
 

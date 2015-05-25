@@ -47,8 +47,6 @@ namespace RKVideoMemory
 
         private bool m_isFullscreen;
         private bool m_lastFullscreenState;
-        private Point m_lastMousePoint;
-        private DateTime m_lastMouseMove;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -71,11 +69,6 @@ namespace RKVideoMemory
 
             // Handle fullscreen mode
             m_chkFullscreen.Checked = m_isFullscreen;
-            if (m_isFullscreen)
-            {
-                TimeSpan lastMouseMoveTime = DateTime.UtcNow - m_lastMouseMove;
-                m_mainMenu.Visible = lastMouseMoveTime < TimeSpan.FromSeconds(3.0);
-            }
 
             // Handle changed state
             if (m_lastFullscreenState != m_isFullscreen)
@@ -180,19 +173,6 @@ namespace RKVideoMemory
                 SeeingSharpApplication.Current.UIMessenger.Publish(
                     new ObjectsClickedMessage(m_objectsBelowCursor.ToList()));
             }
-        }
-
-        private void OnCtrlRenderer_MouseMove(object sender, MouseEventArgs e)
-        {
-            if ((Math.Abs(e.Location.X - m_lastMousePoint.X) < 50) &&
-                (Math.Abs(e.Location.Y - m_lastMousePoint.Y) < 50))
-            {
-                return;
-            }
-            m_lastMousePoint = e.Location;
-
-            m_lastMouseMove = DateTime.UtcNow;
-            this.UpdateDialogStates();
         }
 
         private void OnTimerTrigger_Tick(object sender, EventArgs e)
