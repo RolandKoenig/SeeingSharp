@@ -1,15 +1,38 @@
-﻿using System;
+﻿#region License information (SeeingSharp and all based games/applications)
+/*
+    Seeing# and all games/applications distributed together with it.
+    More info at
+     - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
+     - http://www.rolandk.de/wp (the autors homepage, german)
+    Copyright (C) 2015 Roland König (RolandK)
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see http://www.gnu.org/licenses/.
+*/
+#endregion License information (SeeingSharp and all based games/applications)
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using SeeingSharp.Infrastructure;
-using SeeingSharp.Util;
 using Microsoft.Kinect;
 using Microsoft.Kinect.Input;
 using Microsoft.Kinect.Toolkit.Input;
+using SeeingSharp.Infrastructure;
 using SeeingSharp.RKKinectLounge.Base;
+using SeeingSharp.Util;
 
 namespace SeeingSharp.RKKinectLounge.Modules.Kinect
 {
@@ -122,7 +145,7 @@ namespace SeeingSharp.RKKinectLounge.Modules.Kinect
         {
             this.m_engagementPeopleHaveChanged = false;
             var currentlyEngagedHands = KinectCoreWindow.KinectManualEngagedHands;
-            
+
             this.m_handsToEngage.Clear();
 
             // Check to see if anybody who is currently engaged should be disengaged
@@ -145,8 +168,8 @@ namespace SeeingSharp.RKKinectLounge.Modules.Kinect
                     }
 
                     // Perform disengagement if needed
-                    if (toBeDisengaged){ this.m_engagementPeopleHaveChanged = true; }
-                    else{ this.m_handsToEngage.Add(bodyHandPair); }
+                    if (toBeDisengaged) { this.m_engagementPeopleHaveChanged = true; }
+                    else { this.m_handsToEngage.Add(bodyHandPair); }
                 }
             }
 
@@ -167,11 +190,9 @@ namespace SeeingSharp.RKKinectLounge.Modules.Kinect
                         m_handsToEngage.Add(
                             new BodyHandPair(body.TrackingId, HandType.LEFT));
                         m_engagementPeopleHaveChanged = true;
-
                     }
                     else if (BodyChecks.IsHandOverhead(JointType.HandRight, body))
                     {
-
                         // Engage the right hand
                         m_handsToEngage.Add(
                             new BodyHandPair(body.TrackingId, HandType.RIGHT));
@@ -181,9 +202,9 @@ namespace SeeingSharp.RKKinectLounge.Modules.Kinect
             }
 
             // Handle engagement and disengagement
-            if(m_engagementPeopleHaveChanged)
+            if (m_engagementPeopleHaveChanged)
             {
-                if(m_handsToEngage.Count > 0)
+                if (m_handsToEngage.Count > 0)
                 {
                     // Set current hand engagement
                     BodyHandPair firstPersonToEngage = this.m_handsToEngage[0]; ;
