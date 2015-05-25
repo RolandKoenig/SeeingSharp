@@ -7,10 +7,10 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-// Define assembly attributes for the type that is defined in this file
-[assembly: AssemblyQueryableType(
-    targetType: typeof(SeeingSharp.RKKinectLounge.Modules.Kinect.KinectFolderViewModelExtension),
-    contractType: typeof(SeeingSharp.RKKinectLounge.Base.INavigateableViewModelExtension))]
+//// Define assembly attributes for the type that is defined in this file
+//[assembly: AssemblyQueryableType(
+//    targetType: typeof(SeeingSharp.RKKinectLounge.Modules.Kinect.KinectFolderViewModelExtension),
+//    contractType: typeof(SeeingSharp.RKKinectLounge.Base.INavigateableViewModelExtension))]
 
 namespace SeeingSharp.RKKinectLounge.Modules.Kinect
 {
