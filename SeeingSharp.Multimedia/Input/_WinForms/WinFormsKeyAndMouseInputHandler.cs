@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,11 +19,10 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 #if DESKTOP
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing3D;
+
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -32,10 +31,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
 
+using GDI = System.Drawing;
 // Some namespace mapings
 using WinForms = System.Windows.Forms;
-using GDI = System.Drawing;
 
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
@@ -44,22 +45,24 @@ using GDI = System.Drawing;
 
 namespace SeeingSharp.Multimedia.Input
 {
-    class WinFormsKeyAndMouseInputHandler : ISeeingSharpInputHandler
+    internal class WinFormsKeyAndMouseInputHandler : ISeeingSharpInputHandler
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
 
-        // References to the view
+        #region References to the view
         private Control m_currentControl;
         private RenderLoop m_renderLoop;
         private Camera3DBase m_camera;
         private IInputEnabledView m_focusHandler;
+        #endregion References to the view
 
-        // Some helper variables
+        #region Some helper variables
         private GDI.Point m_lastMousePoint;
         private bool m_isMouseInside;
         private bool m_controlDown;
         private List<Keys> m_pressedKeys;
+        #endregion Some helper variables
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WinFormsKeyAndMouseInputHandler"/> class.
@@ -201,7 +204,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public void Stop()
         {
-            if(m_currentControl != null)
+            if (m_currentControl != null)
             {
                 m_currentControl.MouseEnter -= OnMouseEnter;
                 m_currentControl.MouseClick -= OnMouseClick;
@@ -323,4 +326,5 @@ namespace SeeingSharp.Multimedia.Input
         }
     }
 }
+
 #endif

@@ -210,6 +210,7 @@
     <Compile Include="DrawingVideo\_Util\MFSessionEventListener.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
+    <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
     <Compile Include="Input\ISeeingSharpInputHandler.cs" />
@@ -305,6 +306,9 @@
     <Reference Include="SharpDX.Toolkit.Graphics">
       <HintPath>$(SharpDXPackageBinDir)\SharpDX.Toolkit.Graphics.dll</HintPath>
     </Reference>
+    <Reference Include="SharpDX.XInput">
+      <HintPath>$(SharpDXPackageBinDir)\SharpDX.XInput.dll</HintPath>
+    </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.2.5\lib\portable-win81+wpa81\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -354,7 +358,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Input\_Generic\" />
     <Folder Include="Resources\Models\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

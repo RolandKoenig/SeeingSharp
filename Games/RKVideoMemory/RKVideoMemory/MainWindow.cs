@@ -76,14 +76,12 @@ namespace RKVideoMemory
                 m_lastFullscreenState = m_isFullscreen;
                 if (m_isFullscreen)
                 {
-                    m_mainMenu.Visible = true;
                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
                     this.WindowState = FormWindowState.Maximized;
                     this.TopMost = true;
                 }
                 else
                 {
-                    m_mainMenu.Visible = true;
                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
                     this.WindowState = FormWindowState.Normal;
                     this.TopMost = false;

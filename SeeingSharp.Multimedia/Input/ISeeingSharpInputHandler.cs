@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,14 +19,14 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Multimedia.Core;
 
 namespace SeeingSharp.Multimedia.Input
 {
@@ -34,16 +34,19 @@ namespace SeeingSharp.Multimedia.Input
     {
         /// <summary>
         /// Gets a list containing all supported view types.
+        /// Null means that all types are supported.
         /// </summary>
         Type[] GetSupportedViewTypes();
 
         /// <summary>
         /// Gets a list containing all supported camera types.
+        /// Null means that all types are supported.
         /// </summary>
         Type[] GetSupportedCameraTypes();
 
         /// <summary>
         /// Gets an array containing all supported input modes.
+        /// Null means that all modes are supported.
         /// </summary>
         SeeingSharpInputMode[] GetSupportedInputModes();
 
