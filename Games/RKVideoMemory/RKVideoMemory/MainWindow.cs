@@ -228,7 +228,15 @@ namespace RKVideoMemory
         {
             if (m_dlgOpenDir.ShowDialog(this) == DialogResult.OK)
             {
-                await m_game.LoadLevelAsync(m_dlgOpenDir.SelectedPath);
+                m_barStatus.Visible = true;
+                try
+                {
+                    await m_game.LoadLevelAsync(m_dlgOpenDir.SelectedPath);
+                }
+                finally
+                {
+                    m_barStatus.Visible = false;
+                }
             }
         }
 

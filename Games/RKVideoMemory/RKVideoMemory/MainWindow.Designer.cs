@@ -40,10 +40,14 @@
             this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
             this.m_timerPicking = new System.Windows.Forms.Timer(this.components);
             this.m_timerTrigger = new System.Windows.Forms.Timer(this.components);
+            this.m_barStatus = new System.Windows.Forms.StatusStrip();
+            this.m_lblLoading = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_prgLoading = new System.Windows.Forms.ToolStripProgressBar();
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_mediaPlayer = new SeeingSharp.Multimedia.Views.MediaPlayerComponent();
             this.m_behaviorHideMenubar = new RKVideoMemory.Behaviors.HideControlOnInactivityBehavior(this.components);
             this.m_mainMenu.SuspendLayout();
+            this.m_barStatus.SuspendLayout();
             this.SuspendLayout();
             // 
             // m_mainMenu
@@ -72,19 +76,19 @@
             // 
             this.m_cmdLoadLevel.Image = global::RKVideoMemory.Properties.Resources.Icon_Open16x16;
             this.m_cmdLoadLevel.Name = "m_cmdLoadLevel";
-            this.m_cmdLoadLevel.Size = new System.Drawing.Size(179, 26);
+            this.m_cmdLoadLevel.Size = new System.Drawing.Size(160, 26);
             this.m_cmdLoadLevel.Text = "Level Laden";
             this.m_cmdLoadLevel.Click += new System.EventHandler(this.OnCmdLoadLevel_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(157, 6);
             // 
             // m_cmdClose
             // 
             this.m_cmdClose.Name = "m_cmdClose";
-            this.m_cmdClose.Size = new System.Drawing.Size(179, 26);
+            this.m_cmdClose.Size = new System.Drawing.Size(160, 26);
             this.m_cmdClose.Text = "Beenden";
             this.m_cmdClose.Click += new System.EventHandler(this.OnCmdClose_Click);
             // 
@@ -114,6 +118,31 @@
             this.m_timerTrigger.Enabled = true;
             this.m_timerTrigger.Interval = 1000;
             this.m_timerTrigger.Tick += new System.EventHandler(this.OnTimerTrigger_Tick);
+            // 
+            // m_barStatus
+            // 
+            this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.m_barStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_lblLoading,
+            this.m_prgLoading});
+            this.m_barStatus.Location = new System.Drawing.Point(0, 374);
+            this.m_barStatus.Name = "m_barStatus";
+            this.m_barStatus.Size = new System.Drawing.Size(668, 25);
+            this.m_barStatus.TabIndex = 2;
+            this.m_barStatus.Visible = false;
+            // 
+            // m_lblLoading
+            // 
+            this.m_lblLoading.Name = "m_lblLoading";
+            this.m_lblLoading.Size = new System.Drawing.Size(50, 20);
+            this.m_lblLoading.Text = "Lade...";
+            // 
+            // m_prgLoading
+            // 
+            this.m_prgLoading.MarqueeAnimationSpeed = 20;
+            this.m_prgLoading.Name = "m_prgLoading";
+            this.m_prgLoading.Size = new System.Drawing.Size(200, 19);
+            this.m_prgLoading.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // m_ctrlRenderer
             // 
@@ -155,6 +184,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 399);
+            this.Controls.Add(this.m_barStatus);
             this.Controls.Add(this.m_ctrlRenderer);
             this.Controls.Add(this.m_mainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -163,6 +193,8 @@
             this.Text = "RK Video Memory";
             this.m_mainMenu.ResumeLayout(false);
             this.m_mainMenu.PerformLayout();
+            this.m_barStatus.ResumeLayout(false);
+            this.m_barStatus.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,6 +215,9 @@
         private System.Windows.Forms.ToolStripMenuItem m_chkFullscreen;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private Behaviors.HideControlOnInactivityBehavior m_behaviorHideMenubar;
+        private System.Windows.Forms.StatusStrip m_barStatus;
+        private System.Windows.Forms.ToolStripStatusLabel m_lblLoading;
+        private System.Windows.Forms.ToolStripProgressBar m_prgLoading;
     }
 }
 
