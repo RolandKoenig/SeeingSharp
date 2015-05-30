@@ -1,5 +1,26 @@
-﻿using SeeingSharp.Infrastructure;
-using SeeingSharp.Util;
+﻿#region License information (SeeingSharp and all based games/applications)
+/*
+    Seeing# and all games/applications distributed together with it.
+    More info at
+     - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
+     - http://www.rolandk.de/wp (the autors homepage, german)
+    Copyright (C) 2015 Roland König (RolandK)
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see http://www.gnu.org/licenses/.
+*/
+#endregion License information (SeeingSharp and all based games/applications)
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +28,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Util;
 
 namespace SeeingSharp.RKKinectLounge.Base
 {
@@ -34,9 +57,9 @@ namespace SeeingSharp.RKKinectLounge.Base
 
             // Get all ViewModel extensions
             m_vmExtensions = SeeingSharpApplication.Current.TypeQuery.GetAndInstanciateByContract<INavigateableViewModelExtension>();
-            for(int loop=0; loop<m_vmExtensions.Count; loop++)
+            for (int loop = 0; loop < m_vmExtensions.Count; loop++)
             {
-                if(!m_vmExtensions[loop].ExtendsViewModelType(this))
+                if (!m_vmExtensions[loop].ExtendsViewModelType(this))
                 {
                     m_vmExtensions.RemoveAt(loop);
                     loop--;
@@ -72,11 +95,11 @@ namespace SeeingSharp.RKKinectLounge.Base
 
             // Create the extension object
             result = new T();
-            if (!result.ExtendsViewModelType(this)) 
-            { 
+            if (!result.ExtendsViewModelType(this))
+            {
                 throw new ApplicationException(string.Format(
                     "Invalid extension of type {0} for this ViewModel of type {1}!",
-                    typeof(T).FullName, this.GetType().FullName)); 
+                    typeof(T).FullName, this.GetType().FullName));
             }
             m_vmExtensions.Add(result);
 
@@ -106,7 +129,7 @@ namespace SeeingSharp.RKKinectLounge.Base
                 await m_loadPreviewContentTask;
 
                 // Load content on all extensions
-                foreach(INavigateableViewModelExtension actExtension in m_vmExtensions)
+                foreach (INavigateableViewModelExtension actExtension in m_vmExtensions)
                 {
                     await actExtension.LoadPreviewContentAsync(this, cancelToken);
                 }
@@ -125,7 +148,7 @@ namespace SeeingSharp.RKKinectLounge.Base
         /// <param name="cancelToken">The cancellation token.</param>
         public async Task LoadDetailContentAsync(CancellationToken cancelToken)
         {
-            if(m_loadDetailContentTask == null)
+            if (m_loadDetailContentTask == null)
             {
                 m_loadDetailContentTask = LoadDetailContentInternalAsync(cancelToken);
                 await m_loadDetailContentTask;

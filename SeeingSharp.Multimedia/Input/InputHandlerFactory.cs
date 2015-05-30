@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,17 +19,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Infrastructure;
 using System;
-using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Checking;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
 
 namespace SeeingSharp.Multimedia.Input
 {
@@ -64,7 +64,7 @@ namespace SeeingSharp.Multimedia.Input
             renderLoop.EnsureNotNull("renderLoop");
 
             // Clear previous input handlers
-            if(inputHandlers.Count > 0)
+            if (inputHandlers.Count > 0)
             {
                 foreach (var actHandler in inputHandlers)
                 {
@@ -88,9 +88,9 @@ namespace SeeingSharp.Multimedia.Input
                 viewObject,
                 viewObject.GetType(),
                 renderLoop.Camera.GetType()));
-            
+
             // Start them all
-            foreach(var actInputHandler in inputHandlers)
+            foreach (var actInputHandler in inputHandlers)
             {
                 actInputHandler.Start(viewObject, renderLoop.Camera);
             }
@@ -121,7 +121,7 @@ namespace SeeingSharp.Multimedia.Input
         public List<ISeeingSharpInputHandler> GetInputHandler(IInputEnabledView viewObject, Type givenViewType, Type givenCameraType)
         {
             List<ISeeingSharpInputHandler> result = new List<ISeeingSharpInputHandler>();
-            foreach(var actInputHandler in m_inputHandlers)
+            foreach (var actInputHandler in m_inputHandlers)
             {
                 // Query for the input handler's information
                 Type[] actSupportedViewTypes = actInputHandler.GetSupportedViewTypes();
@@ -130,39 +130,53 @@ namespace SeeingSharp.Multimedia.Input
                 bool viewTypeSupported = false;
                 bool cameraTypeSupported = false;
                 bool inputModeSupported = false;
-               
-                // Check for type support
-                foreach(Type actViewType in actSupportedViewTypes)
+
+                // Check for view-type support
+                if (actSupportedViewTypes == null) { viewTypeSupported = true; }
+                else
                 {
-                    if(actViewType.GetTypeInfo().IsAssignableFrom(givenViewType.GetTypeInfo()))
+                    foreach (Type actViewType in actSupportedViewTypes)
                     {
-                        viewTypeSupported = true;
-                        break;
+                        if (actViewType.GetTypeInfo().IsAssignableFrom(givenViewType.GetTypeInfo()))
+                        {
+                            viewTypeSupported = true;
+                            break;
+                        }
                     }
                 }
                 if (!viewTypeSupported) { continue; }
 
-                foreach(Type actCameraType in actSupportedCameraTypes)
+                // Check for camera-type support
+                if (actSupportedCameraTypes == null) { cameraTypeSupported = true; }
+                else
                 {
-                    if(actCameraType.GetTypeInfo().IsAssignableFrom(givenCameraType.GetTypeInfo()))
+                    foreach (Type actCameraType in actSupportedCameraTypes)
                     {
-                        cameraTypeSupported = true;
-                        break;
+                        if (actCameraType.GetTypeInfo().IsAssignableFrom(givenCameraType.GetTypeInfo()))
+                        {
+                            cameraTypeSupported = true;
+                            break;
+                        }
                     }
                 }
                 if (!cameraTypeSupported) { continue; }
 
-                foreach(SeeingSharpInputMode actInputMode in actSupportedInputModes)
+                // Check for input-mode support
+                if (actSupportedInputModes == null) { inputModeSupported = true; }
+                else
                 {
-                    if(actInputMode == viewObject.InputMode)
+                    foreach (SeeingSharpInputMode actInputMode in actSupportedInputModes)
                     {
-                        inputModeSupported = true;
-                        break;
+                        if (actInputMode == viewObject.InputMode)
+                        {
+                            inputModeSupported = true;
+                            break;
+                        }
                     }
                 }
                 if (!inputModeSupported) { continue; }
 
-                // Create a new input handler 
+                // Create a new input handler
                 result.Add(Activator.CreateInstance(actInputHandler.GetType()) as ISeeingSharpInputHandler);
             }
             return result;

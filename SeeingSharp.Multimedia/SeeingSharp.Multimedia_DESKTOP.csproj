@@ -292,6 +292,7 @@
     <Compile Include="DrawingVideo\_Util\MFSessionEventListener.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
+    <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />
     <Compile Include="Input\ISeeingSharpInputHandler.cs" />
@@ -382,7 +383,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
-    <Folder Include="Input\_Generic\" />
     <Folder Include="Resources\Models\" />
   </ItemGroup>
   <ItemGroup>

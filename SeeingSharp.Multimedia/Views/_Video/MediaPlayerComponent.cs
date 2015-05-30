@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,25 +19,26 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 #if DESKTOP
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.DrawingVideo;
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.DrawingVideo;
+using SeeingSharp.Util;
+using MF = SharpDX.MediaFoundation;
 
 // Namespace mappings
 using SDX = SharpDX;
-using MF = SharpDX.MediaFoundation;
-using SeeingSharp.Util;
-using System.IO;
 
 namespace SeeingSharp.Multimedia.Views
 {
@@ -51,7 +52,7 @@ namespace SeeingSharp.Multimedia.Views
         private ResourceLink m_currentVideoLink;
         private TimeSpan m_currentVideoDuration;
         private bool m_isPaused;
-        #endregion
+        #endregion Own properties
 
         #region References to Media Foundation
         private Stream m_videoSourceStreamNet;
@@ -59,7 +60,7 @@ namespace SeeingSharp.Multimedia.Views
         private MF.MediaSession m_mediaSession;
         private MF.VideoDisplayControl m_displayControl;
         private MFSessionEventListener m_sessionEventHandler;
-        #endregion
+        #endregion References to Media Foundation
 
         /// <summary>
         /// Raised when the current state has changed.
@@ -230,7 +231,7 @@ namespace SeeingSharp.Multimedia.Views
                 // Dispose reference to the presentation descriptor
                 GraphicsHelper.SafeDispose(ref presentationDescriptor);
 
-                // Apply build topology to the session 
+                // Apply build topology to the session
                 Task<MF.MediaEvent> topologyReadyWaiter = m_sessionEventHandler.WaitForEventAsync(
                     MF.MediaEventTypes.SessionTopologyStatus,
                     (eventData) => eventData.Get<MF.TopologyStatus>(MF.EventAttributeKeys.TopologyStatus) == MF.TopologyStatus.Ready,
@@ -317,7 +318,7 @@ namespace SeeingSharp.Multimedia.Views
                 this.DisposeResources();
             }
 
-            VideoFinished.Raise(this, EventArgs.Empty);
+            //VideoFinished.Raise(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -336,6 +337,8 @@ namespace SeeingSharp.Multimedia.Views
             }
             else
             {
+                VideoFinished.Raise(this, EventArgs.Empty);
+
                 // Close current video
                 await CloseVideoAsync();
             }
@@ -493,4 +496,5 @@ namespace SeeingSharp.Multimedia.Views
         }
     }
 }
+
 #endif

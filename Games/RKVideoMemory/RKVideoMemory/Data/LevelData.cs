@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 using System;
 using System.Collections.Generic;
@@ -42,9 +42,20 @@ namespace RKVideoMemory.Data
             // Search all main textures
             this.MainTextures = new MainTextureData(directoryName);
 
+            // Handle tilemap file
+            string tilemapPath = Path.Combine(directoryName, Constants.TILEMAP_FILENAME);
+            if (File.Exists(tilemapPath))
+            {
+                this.Tilemap = TilemapData.FromFile(tilemapPath);
+            }
+            else
+            {
+                this.Tilemap = new TilemapData();
+            }
+
             // Search and process all memory pairs
             this.MemoryPairs = new List<CardPairData>();
-            foreach(string actSubdirectory in Directory.GetDirectories(directoryName))
+            foreach (string actSubdirectory in Directory.GetDirectories(directoryName))
             {
                 CardPairData actMemoryPair = new CardPairData(
                     Path.GetFileName(actSubdirectory));
@@ -54,19 +65,19 @@ namespace RKVideoMemory.Data
                     from actFile in Directory.GetFiles(actSubdirectory)
                     orderby Path.GetFileName(actFile)
                     select actFile;
-                foreach(string actFilePath in fileNames)
+                foreach (string actFilePath in fileNames)
                 {
                     string actFileExtension = Path.GetExtension(actFilePath);
 
                     // Handle image files
-                    if(Constants.SUPPORTED_IMAGE_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
+                    if (Constants.SUPPORTED_IMAGE_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
                     {
                         actMemoryPair.ProcessImageFile(actFilePath);
                         continue;
                     }
 
                     // Handle video files
-                    if(Constants.SUPPORTED_VIDEO_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
+                    if (Constants.SUPPORTED_VIDEO_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
                     {
                         actMemoryPair.ProcessVideoFile(actFilePath);
                         continue;
@@ -74,7 +85,7 @@ namespace RKVideoMemory.Data
                 }
 
                 // Add the pair to the new object
-                if(actMemoryPair.IsValidPair())
+                if (actMemoryPair.IsValidPair())
                 {
                     this.MemoryPairs.Add(actMemoryPair);
                 }
@@ -102,6 +113,12 @@ namespace RKVideoMemory.Data
         }
 
         public MainTextureData MainTextures
+        {
+            get;
+            private set;
+        }
+
+        public TilemapData Tilemap
         {
             get;
             private set;

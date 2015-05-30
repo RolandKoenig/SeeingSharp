@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,22 +19,22 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Util;
-using SeeingSharp.Checking;
 using System;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Checking;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Util;
+using SharpDX;
 
 // Namespace mappings
 using MF = SharpDX.MediaFoundation;
-using SharpDX;
 
 namespace SeeingSharp.Multimedia.DrawingVideo
 {
@@ -46,21 +46,21 @@ namespace SeeingSharp.Multimedia.DrawingVideo
     {
         #region Configuration
         private ResourceLink m_videoSource;
-        #endregion
+        #endregion Configuration
 
         #region Media foundation resources
         private Stream m_videoSourceStreamNet;
         private MF.ByteStream m_videoSourceStream;
         private MF.SourceReader m_sourceReader;
         private bool m_endReached;
-        #endregion
+        #endregion Media foundation resources
 
         #region Video properties
         private Size2 m_frameSize;
         private long m_durationLong;
         private long m_currentPositionLong;
         private MediaSourceCharacteristics_Internal m_characteristics;
-        #endregion
+        #endregion Video properties
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaFoundationVideoReader"/> class.
@@ -109,13 +109,13 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                     m_sourceReader = new MF.SourceReader(sourceReaderPointer);
                 }
 
-                // Apply source configuration 
+                // Apply source configuration
                 using (MF.MediaType mediaType = new MF.MediaType())
                 {
                     mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
                     mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32);
                     m_sourceReader.SetCurrentMediaType(
-                        MF.SourceReaderIndex.FirstVideoStream, 
+                        MF.SourceReaderIndex.FirstVideoStream,
                         mediaType);
                     m_sourceReader.SetStreamSelection(MF.SourceReaderIndex.FirstVideoStream, new SharpDX.Bool(true));
                 }
@@ -133,7 +133,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                 m_characteristics = (MediaSourceCharacteristics_Internal)m_sourceReader.GetPresentationAttribute(
                     MF.SourceReaderIndex.MediaSource, MF.SourceReaderAttributeKeys.MediaSourceCharacteristics);
             }
-            catch(Exception)
+            catch (Exception)
             {
                 this.Dispose();
                 throw;
@@ -187,14 +187,19 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// Sets the current position of this video reader.
         /// </summary>
         /// <param name="position">The position to be set.</param>
-        public void SetCurrentPosition(TimeSpan position)
+        /// <param name="updateEndReached">Do update the EndReached flag?</param>
+        public void SetCurrentPosition(TimeSpan position, bool updateEndReached = true)
         {
             position.EnsureLongerOrEqualZero("position");
             position.EnsureShorterOrEqualThan(this.Duration, "position");
             this.EnsureSeekable("self");
 
             m_sourceReader.SetCurrentPosition(position.Ticks);
-            m_endReached = position >= this.Duration;
+
+            if (updateEndReached)
+            {
+                m_endReached = position >= this.Duration;
+            }
         }
 
         /// <summary>
@@ -249,11 +254,10 @@ namespace SeeingSharp.Multimedia.DrawingVideo
 
         public bool IsSeekable
         {
-            get 
+            get
             {
                 return m_characteristics.HasFlag(MediaSourceCharacteristics_Internal.CanSeek) &&
                        (!m_characteristics.HasFlag(MediaSourceCharacteristics_Internal.HasSlowSeek));
-
             }
         }
     }

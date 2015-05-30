@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,23 +19,23 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Infrastructure;
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing3D;
-using RKVideoMemory.Data;
-using RKVideoMemory.Game;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.IO;
+using RKVideoMemory.Data;
+using RKVideoMemory.Game;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
 
 namespace RKVideoMemory
 {
@@ -44,6 +44,9 @@ namespace RKVideoMemory
         private GameCore m_game;
         private bool m_onTickProcessing;
         private List<SceneObject> m_objectsBelowCursor;
+
+        private bool m_isFullscreen;
+        private bool m_lastFullscreenState;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -63,6 +66,27 @@ namespace RKVideoMemory
             this.Enabled =
                 (m_game != null) &&
                 (m_game.IsInitialized);
+
+            // Handle fullscreen mode
+            m_chkFullscreen.Checked = m_isFullscreen;
+
+            // Handle changed state
+            if (m_lastFullscreenState != m_isFullscreen)
+            {
+                m_lastFullscreenState = m_isFullscreen;
+                if (m_isFullscreen)
+                {
+                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
+                    this.WindowState = FormWindowState.Maximized;
+                    this.TopMost = true;
+                }
+                else
+                {
+                    this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Sizable;
+                    this.WindowState = FormWindowState.Normal;
+                    this.TopMost = false;
+                }
+            }
         }
 
         protected override async void OnLoad(EventArgs e)
@@ -87,7 +111,7 @@ namespace RKVideoMemory
             string defaultFolder = Path.Combine(
                 Path.GetDirectoryName(this.GetType().Assembly.Location),
                 Constants.DEFAULT_FOLDER_INITIAL_LEVEL);
-            if(Directory.Exists(defaultFolder))
+            if (Directory.Exists(defaultFolder))
             {
                 await m_game.LoadLevelAsync(defaultFolder);
             }
@@ -113,15 +137,15 @@ namespace RKVideoMemory
         /// </summary>
         private async void OnMessage_Received(PlayMovieRequestMessage message)
         {
-            m_ctrlRenderer.DiscardRendering = true;
+            m_ctrlRenderer.DiscardPresent = true;
             try
             {
                 // Perform rendering here
                 await m_mediaPlayer.OpenAndShowVideoFileAsync(message.VideoLink);
             }
-            catch(Exception)
+            catch (Exception)
             {
-                m_ctrlRenderer.DiscardRendering = false;
+                m_ctrlRenderer.DiscardPresent = false;
                 throw;
             }
         }
@@ -133,7 +157,7 @@ namespace RKVideoMemory
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnMediaPlayer_VideoFinished(object sender, EventArgs e)
         {
-            m_ctrlRenderer.DiscardRendering = false;
+            m_ctrlRenderer.DiscardPresent = false;
 
             // Raise video-play finished message
             SeeingSharpApplication.Current.UIMessenger
@@ -156,6 +180,8 @@ namespace RKVideoMemory
 
         private async void OnTimerPicking_Tick(object sender, EventArgs e)
         {
+            this.UpdateDialogStates();
+
             if (m_onTickProcessing) { return; }
 
             m_onTickProcessing = true;
@@ -168,16 +194,16 @@ namespace RKVideoMemory
                 // Look, what is new and what is old
                 List<SceneObject> removedObjects = new List<SceneObject>(m_objectsBelowCursor.Count);
                 List<SceneObject> addedObjects = new List<SceneObject>(objectsBelowCursor.Count);
-                foreach(var actPickedObject in m_objectsBelowCursor)
+                foreach (var actPickedObject in m_objectsBelowCursor)
                 {
-                    if(!objectsBelowCursor.Contains(actPickedObject))
+                    if (!objectsBelowCursor.Contains(actPickedObject))
                     {
                         removedObjects.Add(actPickedObject);
                     }
                 }
-                foreach(var actObjectBelowCurser in objectsBelowCursor)
+                foreach (var actObjectBelowCurser in objectsBelowCursor)
                 {
-                    if(!m_objectsBelowCursor.Contains(actObjectBelowCurser))
+                    if (!m_objectsBelowCursor.Contains(actObjectBelowCurser))
                     {
                         addedObjects.Add(actObjectBelowCurser);
                     }
@@ -200,10 +226,29 @@ namespace RKVideoMemory
 
         private async void OnCmdLoadLevel_Click(object sender, EventArgs e)
         {
-            if(m_dlgOpenDir.ShowDialog(this) == DialogResult.OK)
+            if (m_dlgOpenDir.ShowDialog(this) == DialogResult.OK)
             {
-                await m_game.LoadLevelAsync(m_dlgOpenDir.SelectedPath);
+                m_barStatus.Visible = true;
+                try
+                {
+                    await m_game.LoadLevelAsync(m_dlgOpenDir.SelectedPath);
+                }
+                finally
+                {
+                    m_barStatus.Visible = false;
+                }
             }
+        }
+
+        private void OnChkFullscreen_Click(object sender, EventArgs e)
+        {
+            m_isFullscreen = !m_isFullscreen;
+            this.UpdateDialogStates();
+        }
+
+        private void OnCmdClose_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

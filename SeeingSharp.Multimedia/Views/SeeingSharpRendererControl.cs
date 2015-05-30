@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,27 +19,28 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Drawing;
+using System.Linq;
+using System.Reactive.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using SeeingSharp;
+using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Util;
-using SeeingSharp.Infrastructure;
-using SeeingSharp;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Reactive.Linq;
-using System.Windows.Forms;
-using System.Linq;
 
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
+
 using GDI = System.Drawing;
 
 namespace SeeingSharp.Multimedia.Views
@@ -50,7 +51,7 @@ namespace SeeingSharp.Multimedia.Views
 
         #region Main reference to 3D-Engine
         private RenderLoop m_renderLoop;
-        #endregion
+        #endregion Main reference to 3D-Engine
 
         #region Resources for Direct3D 11
         private DXGI.Factory m_factory;
@@ -61,20 +62,20 @@ namespace SeeingSharp.Multimedia.Views
         private D3D11.DepthStencilView m_renderTargetDepth;
         private D3D11.Texture2D m_backBuffer;
         private D3D11.Texture2D m_depthBuffer;
-        #endregion
+        #endregion Resources for Direct3D 11
 
         #region Members for input handling
         private List<ISeeingSharpInputHandler> m_inputHandlers;
         private SeeingSharpInputMode m_inputMode;
         private bool m_isMouseInside;
-        #endregion
+        #endregion Members for input handling
 
         #region Generic members
         private Brush m_backBrush;
         private Brush m_foreBrushText;
         private Brush m_backBrushText;
         private Pen m_borderPen;
-        #endregion
+        #endregion Generic members
 
         /// <summary>
         /// Raised when it is possible for the UI thread to manipulate current filter list.
@@ -226,7 +227,7 @@ namespace SeeingSharp.Multimedia.Views
         {
             base.OnPaint(e);
 
-            if((!m_renderLoop.ViewResourcesLoaded) ||
+            if ((!m_renderLoop.ViewResourcesLoaded) ||
                (!m_renderLoop.IsRegisteredOnMainLoop))
             {
                 // Paint using System.Drawing
@@ -261,7 +262,7 @@ namespace SeeingSharp.Multimedia.Views
         private void UpdateMovement()
         {
             // Update movement for all running input handlers
-            foreach(var actInputHandler in m_inputHandlers)
+            foreach (var actInputHandler in m_inputHandlers)
             {
                 actInputHandler.UpdateMovement();
             }
@@ -379,8 +380,8 @@ namespace SeeingSharp.Multimedia.Views
         {
             base.OnVisibleChanged(e);
 
-            if(this.Visible){ StartRendering(); }
-            else if(!this.Visible){ StopRendering(); }
+            if (this.Visible) { StartRendering(); }
+            else if (!this.Visible) { StopRendering(); }
         }
 
         /// <summary>
@@ -390,7 +391,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnDisposed(object sender, EventArgs e)
         {
-            if(!this.DesignMode)
+            if (!this.DesignMode)
             {
                 // Updates currently active input handlers
                 InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
@@ -476,7 +477,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <param name="device">The current rendering device.</param>
         private void OnRenderLoopPrepareRendering(EngineDevice device)
         {
-            if((m_renderLoop != null) &&
+            if ((m_renderLoop != null) &&
                (m_renderLoop.Camera != null))
             {
                 this.UpdateMovement();
@@ -498,7 +499,7 @@ namespace SeeingSharp.Multimedia.Views
         private void OnRenderLoopAfterRendering(EngineDevice device)
         {
             //m_isOnRendering = false;
-            if(!this.Visible)
+            if (!this.Visible)
             {
                 StopRendering();
             }
@@ -572,6 +573,17 @@ namespace SeeingSharp.Multimedia.Views
             set { m_renderLoop.DiscardRendering = value; }
         }
 
+        /// <summary>
+        /// Discard present of rendering results on the screen?
+        /// </summary>
+        [Category("Rendering")]
+        [DefaultValue(false)]
+        public bool DiscardPresent
+        {
+            get { return m_renderLoop.DiscardPresent; }
+            set { m_renderLoop.DiscardPresent = value; }
+        }
+
         [Browsable(false)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public Scene Scene
@@ -641,7 +653,7 @@ namespace SeeingSharp.Multimedia.Views
             get { return m_inputMode; }
             set
             {
-                if((m_inputMode != value) &&
+                if ((m_inputMode != value) &&
                    (m_inputHandlers.Count > 0))
                 {
                     m_inputMode = value;

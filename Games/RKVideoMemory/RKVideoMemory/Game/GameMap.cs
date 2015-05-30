@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,20 +19,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp;
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing3D;
-using SeeingSharp.Checking;
-using SeeingSharp.Util;
-using RKVideoMemory.Assets.Textures;
-using RKVideoMemory.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RKVideoMemory.Assets.Textures;
+using RKVideoMemory.Data;
+using SeeingSharp;
+using SeeingSharp.Checking;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Util;
 
 namespace RKVideoMemory.Game
 {
@@ -53,7 +53,7 @@ namespace RKVideoMemory.Game
 
             await scene.ManipulateSceneAsync((manipulator) =>
             {
-                foreach(CardPair actPair in m_cardPairs)
+                foreach (CardPair actPair in m_cardPairs)
                 {
                     foreach (Card actCard in actPair.Cards)
                     {
@@ -73,11 +73,11 @@ namespace RKVideoMemory.Game
         /// <param name="scene">The scene to which to add all objects.</param>
         internal async Task BuildLevelAsync(LevelData currentLevel, Scene scene)
         {
-            int tilesX = Constants.TILEMAP_X_COUNT;
-            int tilesY = Constants.TILEMAP_Y_COUNT;
+            int tilesX = currentLevel.Tilemap.TilesX;
+            int tilesY = currentLevel.Tilemap.TilesY;
             float tileDistX = Constants.TILE_DISTANCE_X;
-            float tileDistY = Constants.TILE_DISTANCE_Y;
-            Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, (tilesY - 1) * tileDistY/ 2f);
+            float tileDistY = -Constants.TILE_DISTANCE_Y;
+            Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, ((tilesY - 1) * tileDistY / 2f));
 
             m_cardMap = new Card[tilesX, tilesY];
             m_cardPairs = new List<CardPair>();
@@ -87,7 +87,7 @@ namespace RKVideoMemory.Game
             {
                 manipulator.BuildBackground(currentLevel.MainTextures.BackgroundTextureLink);
 
-                var resBackgroundMaterial1= manipulator.AddSimpleColoredMaterial(
+                var resBackgroundMaterial1 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile1TextureLink);
                 var resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile2TextureLink);
@@ -111,9 +111,9 @@ namespace RKVideoMemory.Game
                     // Create both cards for this pair
                     Card cardA = new Card(resGeometry1, actCardPair);
                     Card cardB = new Card(resGeometry2, actCardPair);
-                    Tuple<int, int> slotA = SearchFreeCardSlot(m_cardMap, randomizer);
+                    Tuple<int, int> slotA = SearchFreeCardSlot(currentLevel, m_cardMap, randomizer);
                     m_cardMap[slotA.Item1, slotA.Item2] = cardA;
-                    Tuple<int, int> slotB = SearchFreeCardSlot(m_cardMap, randomizer);
+                    Tuple<int, int> slotB = SearchFreeCardSlot(currentLevel, m_cardMap, randomizer);
                     m_cardMap[slotB.Item1, slotB.Item2] = cardB;
 
                     // Add both cards to the scene
@@ -140,20 +140,25 @@ namespace RKVideoMemory.Game
         /// <summary>
         /// Searches the next free slot in the card map.
         /// </summary>
+        /// <param name="currentLevel">The current leveldata.</param>
         /// <param name="cardMap">The card map.</param>
         /// <param name="randomizer">The randomizer.</param>
-        private static Tuple<int, int> SearchFreeCardSlot(Card[,] cardMap, Random randomizer)
+        private static Tuple<int, int> SearchFreeCardSlot(LevelData currentLevel, Card[,] cardMap, Random randomizer)
         {
             Tuple<int, int> result = null;
 
-            while(result == null)
+            while (result == null)
             {
                 int xPos = randomizer.Next(0, cardMap.GetLength(0));
                 int yPos = randomizer.Next(0, cardMap.GetLength(1));
-                if(cardMap[xPos, yPos] == null)
-                {
-                    result = Tuple.Create(xPos, yPos);
-                }
+
+                // Check whether the tile position is allowed
+                if (!currentLevel.Tilemap[xPos, yPos]) { continue; }
+
+                // Check whether the tile position is used already
+                if (cardMap[xPos, yPos] != null) { continue; }
+
+                result = Tuple.Create(xPos, yPos);
             }
 
             return result;

@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,17 +19,17 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp;
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing3D;
-using RKVideoMemory.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RKVideoMemory.Util;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
 
 namespace RKVideoMemory.Game
 {
@@ -58,7 +58,7 @@ namespace RKVideoMemory.Game
         {
             return sequenceBuilder
                 .ResetCard_BeforeLeave()
-                .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(300));
+                .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME));
         }
 
         public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenUncovered(
@@ -66,7 +66,26 @@ namespace RKVideoMemory.Game
         {
             return sequenceBuilder
                 .ResetCard_BeforeStart()
-                .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(300))
+                .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                .WaitFinished()
+                .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
+                    Constants.ROTATE_ANIM_DELAY_MILLIS_MIN,
+                    Constants.ROTATE_ANIM_DELAY_MILLIS_MAX)))
+                .WaitFinished()
+                .RotateEulerAnglesTo(
+                    new Vector3(0f, 0f, 0f),
+                    TimeSpan.FromMilliseconds(300))
+                .Scale3DTo(new Vector3(0.8f, 0.8f, 0.8f), TimeSpan.FromMilliseconds(300))
+                .ChangeOpacityTo(0.5f, TimeSpan.FromMilliseconds(300))
+                .ChangeAccentuationFactorTo(0.5f, TimeSpan.FromMilliseconds(300));
+        }
+
+        public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenCovered(
+            this IAnimationSequenceBuilder<Card> sequenceBuilder)
+        {
+            return sequenceBuilder
+                .ResetCard_BeforeStart()
+                .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
                 .WaitFinished()
                 .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
                     Constants.ROTATE_ANIM_DELAY_MILLIS_MIN,
@@ -78,30 +97,6 @@ namespace RKVideoMemory.Game
                 .WaitFinished()
                 .Delay(TimeSpan.FromSeconds(ThreadSafeRandom.Next(
                     Constants.INITIAL_UNCOVER_SECONDS_MIN,
-                    Constants.INITIAL_UNCOVER_SECONDS_MAX)))
-                .WaitFinished()
-                .Scale3DTo(new Vector3(0.8f, 0.8f, 0.8f), TimeSpan.FromMilliseconds(300))
-                .ChangeOpacityTo(0.5f, TimeSpan.FromMilliseconds(300))
-                .ChangeAccentuationFactorTo(0.5f, TimeSpan.FromMilliseconds(300));
-        }
-
-        public static IAnimationSequenceBuilder<Card> MainScreenStart_WhenCovered(
-            this IAnimationSequenceBuilder<Card> sequenceBuilder)
-        {
-            return sequenceBuilder
-                .ResetCard_BeforeStart()
-                .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(300))
-                .WaitFinished()
-                .Delay(TimeSpan.FromMilliseconds(ThreadSafeRandom.Next(
-                    Constants.ROTATE_ANIM_DELAY_MILLIS_MIN, 
-                    Constants.ROTATE_ANIM_DELAY_MILLIS_MAX)))
-                .WaitFinished()
-                .RotateEulerAnglesTo(
-                    new Vector3(0f, 0f, 0f),
-                    TimeSpan.FromMilliseconds(300))
-                .WaitFinished()
-                .Delay(TimeSpan.FromSeconds(ThreadSafeRandom.Next(
-                    Constants.INITIAL_UNCOVER_SECONDS_MIN, 
                     Constants.INITIAL_UNCOVER_SECONDS_MAX)))
                 .WaitFinished()
                 .RotateEulerAnglesTo(

@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,20 +19,20 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 using System;
-using System.Linq;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using SeeingSharp.Util;
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Util;
 
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
@@ -51,26 +51,26 @@ namespace SeeingSharp.Multimedia.Core
         private ReadOnlyCollection<SceneLayer> m_sceneLayersPublic;
         private SeeingSharpMessenger m_messenger;
         private SceneSynchronizationContext m_syncContext;
-        #endregion
+        #endregion Standard members
 
         #region Members for 2D rendering
         private List<Custom2DDrawingLayer> m_drawing2DLayers;
-        #endregion
+        #endregion Members for 2D rendering
 
         #region Async update actions
         private ThreadSaveQueue<Action> m_asyncInvokesBeforeUpdate;
         private ThreadSaveQueue<Action> m_asyncInvokesUpdateBesideRendering;
-        #endregion
+        #endregion Async update actions
 
         #region Resource keys
         private NamedOrGenericKey KEY_SCENE_RENDER_PARAMETERS = GraphicsCore.GetNextGenericResourceKey();
-        #endregion
+        #endregion Resource keys
 
         #region Some runtime values
         private IndexBasedDynamicCollection<ResourceDictionary> m_registeredResourceDicts;
         private IndexBasedDynamicCollection<ViewInformation> m_registeredViews;
         private IndexBasedDynamicCollection<SceneRenderParameters> m_renderParameters;
-        #endregion
+        #endregion Some runtime values
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Scene" /> class.
@@ -78,7 +78,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="name">The global name of this scene.</param>
         /// <param name="registerOnMessenger">
         /// Do register this scene for application messaging?
-        /// If true, then the caller has to ensure that the name is only used once 
+        /// If true, then the caller has to ensure that the name is only used once
         /// across the currently executed application.
         /// </param>
         public Scene(
@@ -105,7 +105,7 @@ namespace SeeingSharp.Multimedia.Core
             InitializeResourceDictionaries(false);
 
             // Register the scene for ApplicationMessaging
-            if(registerOnMessenger)
+            if (registerOnMessenger)
             {
                 m_syncContext = new SceneSynchronizationContext(this);
                 m_messenger = new SeeingSharpMessenger();
@@ -199,7 +199,7 @@ namespace SeeingSharp.Multimedia.Core
             sceneObjects.EnsureNotNull("sceneObjects");
             viewInfo.EnsureNotNull("viewInfo");
 
-            foreach(var actObject in sceneObjects)
+            foreach (var actObject in sceneObjects)
             {
                 if (!actObject.IsVisible(viewInfo)) { return false; }
             }
@@ -210,14 +210,14 @@ namespace SeeingSharp.Multimedia.Core
         /// Triggers transition logic from the current scene state to another one.
         /// The given action gets processed directly before scene update process and is responsible
         /// to define the target state.
-        /// 
+        ///
         /// Be carefull: The action is called by worker-threads of SeeingSharp!
-        /// 
+        ///
         /// The given transition effect gets executed to visually swap between current
         /// to target state.
         /// </summary>
         /// <param name="defineNewStateAction">
-        /// The action which is able to manipulate the scene. 
+        /// The action which is able to manipulate the scene.
         /// This one defines the target state of the transition
         /// </param>
         /// <param name="transissionEffectRessource">The transission effect ressource.</param>
@@ -237,14 +237,14 @@ namespace SeeingSharp.Multimedia.Core
         /// Triggers transition logic from the current scene state to another one.
         /// The given action gets processed directly before scene update process and is responsible
         /// to define the target state.
-        /// 
+        ///
         /// Be carefull: The action is called by worker-threads of SeeingSharp!
-        /// 
+        ///
         /// The given transition effect gets executed to visually swap between current
         /// to target state.
         /// </summary>
         /// <param name="defineNewStateAction">
-        /// The action which is able to manipulate the scene. 
+        /// The action which is able to manipulate the scene.
         /// This one defines the target state of the transition
         /// </param>
         /// <param name="transissionEffectRessource">The transission effect ressource.</param>
@@ -260,7 +260,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Triggers scene manipulation using the given lambda action.
         /// The action gets processed directly before scene update process.
-        /// 
+        ///
         /// Be carefull: The action is called by worker-threads of SeeingSharp!
         /// </summary>
         /// <param name="manipulatorAction">The action which is able to manipulate the scene.</param>
@@ -298,9 +298,9 @@ namespace SeeingSharp.Multimedia.Core
             InitializeResourceDictionaries(true);
 
             if (resourceKey == NamedOrGenericKey.Empty) { resourceKey = GraphicsCore.GetNextGenericResourceKey(); }
-            foreach (ResourceDictionary actResource in m_registeredResourceDicts)
+            foreach (ResourceDictionary actResourceDict in m_registeredResourceDicts)
             {
-                actResource.AddResource(resourceKey, resourceFactory());
+                actResourceDict.AddResource(resourceKey, resourceFactory());
             }
             return resourceKey;
         }
@@ -385,7 +385,7 @@ namespace SeeingSharp.Multimedia.Core
                     }
                 }
             }
-            
+
             // Return all picked object in correct order
             return pickedObjects
                 .OrderBy((actObject) => actObject.Item2)
@@ -443,10 +443,10 @@ namespace SeeingSharp.Multimedia.Core
             InitializeResourceDictionaries(true);
 
             SceneLayer layerObject = GetLayer(layer);
-            if(layerObject.AddObject(sceneObject))
+            if (layerObject.AddObject(sceneObject))
             {
-                // Register all 
-                if(m_messenger != null)
+                // Register all
+                if (m_messenger != null)
                 {
                     m_messenger.SubscribeAll(sceneObject);
                 }
@@ -491,7 +491,7 @@ namespace SeeingSharp.Multimedia.Core
             }
             viewInformation.ViewIndex = viewIndex;
 
-            // Mark this scene for deletion if we don't have any other view registered 
+            // Mark this scene for deletion if we don't have any other view registered
             if (isFirstView)
             {
                 EngineMainLoop.Current.DeregisterSceneForUnload(this);
@@ -536,8 +536,8 @@ namespace SeeingSharp.Multimedia.Core
             // Clear view index
             viewInformation.ViewIndex = -1;
 
-            // Mark this scene for deletion if we don't have any other view registered 
-            if(m_registeredViews.Count <= 0)
+            // Mark this scene for deletion if we don't have any other view registered
+            if (m_registeredViews.Count <= 0)
             {
                 EngineMainLoop.Current.RegisterSceneForUnload(this);
             }
@@ -553,7 +553,7 @@ namespace SeeingSharp.Multimedia.Core
 
             SceneLayer currentLayer = TryGetLayer(name);
             if (currentLayer != null) { throw new ArgumentException("There is already a SceneLayer with the given name!", "name"); }
-            
+
             // Create the new layer
             SceneLayer newLayer = new SceneLayer(name, this);
             newLayer.OrderID = m_sceneLayers.Max((actLayer) => actLayer.OrderID) + 1;
@@ -816,8 +816,8 @@ namespace SeeingSharp.Multimedia.Core
         internal void Update(UpdateState updateState)
         {
             // Apply local SynchronizationContext if configured so
-            SynchronizationContext previousSyncContext = null; 
-            if(m_syncContext != null)
+            SynchronizationContext previousSyncContext = null;
+            if (m_syncContext != null)
             {
                 previousSyncContext = SynchronizationContext.Current;
                 SynchronizationContext.SetSynchronizationContext(m_syncContext);
@@ -860,7 +860,7 @@ namespace SeeingSharp.Multimedia.Core
             finally
             {
                 // Discard local SynchronizationContext
-                if(m_syncContext != null)
+                if (m_syncContext != null)
                 {
                     SynchronizationContext.SetSynchronizationContext(previousSyncContext);
                 }
@@ -881,9 +881,9 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Reset all filter flags before continue to next step
-            foreach(var actView in m_registeredViews)
+            foreach (var actView in m_registeredViews)
             {
-                foreach(SceneObjectFilter actFilter in actView.Filters)
+                foreach (SceneObjectFilter actFilter in actView.Filters)
                 {
                     actFilter.ConfigurationChanged = actFilter.ConfigurationChangedUI;
                     actFilter.ConfigurationChangedUI = false;
@@ -1004,7 +1004,7 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Render drawing layers
-            foreach(Custom2DDrawingLayer actDrawingLayer in m_drawing2DLayers)
+            foreach (Custom2DDrawingLayer actDrawingLayer in m_drawing2DLayers)
             {
                 actDrawingLayer.Draw2DInternal(renderState.Graphics2D);
             }
@@ -1093,7 +1093,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public int CountResources
         {
-            get 
+            get
             {
                 ResourceDictionary firstResourceDict = m_registeredResourceDicts.FirstOrDefault();
                 if (firstResourceDict != null) { return firstResourceDict.Count; }

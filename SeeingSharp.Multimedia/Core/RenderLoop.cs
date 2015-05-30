@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 using System;
 using System.Threading;
@@ -37,9 +37,12 @@ using SeeingSharp.Util;
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
 using D2D = SharpDX.Direct2D1;
+
 #if DESKTOP
+
 using GDI = System.Drawing;
 using WinForms = System.Windows.Forms;
+
 #endif
 
 namespace SeeingSharp.Multimedia.Core
@@ -54,6 +57,7 @@ namespace SeeingSharp.Multimedia.Core
         private SynchronizationContext m_guiSyncContext;
         private GraphicsViewConfiguration m_viewConfiguration;
         private bool m_discardRendering;
+        private bool m_discardPresent;
         private Color4 m_clearColor;
         private Camera3DBase m_camera;
         #endregion
@@ -415,7 +419,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             List<SceneObject> result = null;
 
-            if ((m_currentScene != null) && 
+            if ((m_currentScene != null) &&
                 (m_camera != null))
             {
                 Matrix projectionMatrix = m_camera.Projection;
@@ -427,7 +431,7 @@ namespace SeeingSharp.Multimedia.Core
 
                 Matrix worldMatrix = Matrix.Identity;
                 Matrix viewWorld = m_camera.View * worldMatrix;
-                Matrix inversionViewWorld = Matrix.Invert(viewWorld); 
+                Matrix inversionViewWorld = Matrix.Invert(viewWorld);
                 Vector3 rayDirection = Vector3.Normalize(new Vector3(
                     pickingVector.X * inversionViewWorld.M11 + pickingVector.Y * inversionViewWorld.M21 + pickingVector.Z * inversionViewWorld.M31,
                     pickingVector.X * inversionViewWorld.M12 + pickingVector.Y * inversionViewWorld.M22 + pickingVector.Z * inversionViewWorld.M32,
@@ -481,6 +485,7 @@ namespace SeeingSharp.Multimedia.Core
         }
 
 #if DESKTOP
+
         /// <summary>
         /// Takes a screenshot and returns it as a gdi bitmap.
         /// </summary>
@@ -530,6 +535,7 @@ namespace SeeingSharp.Multimedia.Core
             GDI.Bitmap resultBitmap = GraphicsHelper.LoadBitmapFromStagingTexture(m_currentDevice, m_copyHelperTextureStaging, width, height);
             return resultBitmap;
         }
+
 #endif
 
         /// <summary>
@@ -582,7 +588,7 @@ namespace SeeingSharp.Multimedia.Core
                 (m_renderState.Device != m_currentDevice))
             {
                 m_renderState = new RenderState(
-                    m_currentDevice, 
+                    m_currentDevice,
                     GraphicsCore.Current.PerformanceCalculator,
                     new RenderTargets(m_renderTargetView, m_renderTargetDepthView),
                     m_viewport, m_camera, m_viewInformation);
@@ -652,9 +658,9 @@ namespace SeeingSharp.Multimedia.Core
             bool writeVideoFrames = m_lastRenderSuccessfully;
 
             // Call present from Threadpool (if configured)
-            if(!CallPresentInUIThread)
+            if (!CallPresentInUIThread)
             {
-                PresentFrameInternal();
+                if (!m_discardPresent) { PresentFrameInternal(); }
                 m_lastRenderSuccessfully = false;
             }
 
@@ -663,7 +669,7 @@ namespace SeeingSharp.Multimedia.Core
                 // Call present from UI thread (if configured)
                 if (CallPresentInUIThread)
                 {
-                    PresentFrameInternal();
+                    if (!m_discardPresent) { PresentFrameInternal(); }
                     m_lastRenderSuccessfully = false;
                 }
 
@@ -762,7 +768,7 @@ namespace SeeingSharp.Multimedia.Core
                     }
                 }
                 // Ensure that this loop is registered on the current view
-                else if((m_currentScene != null) && 
+                else if ((m_currentScene != null) &&
                         (!m_currentScene.IsViewRegistered(m_viewInformation)))
                 {
                     Scene localScene = m_currentScene;
@@ -941,8 +947,8 @@ namespace SeeingSharp.Multimedia.Core
                 m_currentDevice.DeviceImmediateContextD3D11.ClearDepthStencilView(m_renderTargetDepthView, D3D11.DepthStencilClearFlags.Depth | D3D11.DepthStencilClearFlags.Stencil, 1f, 0);
 
                 // Render currently configured scene
-                if ((m_currentScene != null) && 
-                    (m_camera != null) && 
+                if ((m_currentScene != null) &&
+                    (m_camera != null) &&
                     (m_currentScene.IsViewRegistered(m_viewInformation)))
                 {
                     // Renders current scene on this view
@@ -1067,10 +1073,10 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public Scene Scene
         {
-            get 
+            get
             {
                 if (m_targetScene != null) { return m_targetScene; }
-                return m_currentScene; 
+                return m_currentScene;
             }
         }
 
@@ -1102,6 +1108,12 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_discardRendering; }
             set { m_discardRendering = value; }
+        }
+
+        public bool DiscardPresent
+        {
+            get { return m_discardPresent; }
+            set { m_discardPresent = value; }
         }
 
         /// <summary>

@@ -1,6 +1,26 @@
-﻿using SeeingSharp.Infrastructure;
-using SeeingSharp.RKKinectLounge.Base;
-using SeeingSharp.Util;
+﻿#region License information (SeeingSharp and all based games/applications)
+/*
+    Seeing# and all games/applications distributed together with it.
+    More info at
+     - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
+     - http://www.rolandk.de/wp (the autors homepage, german)
+    Copyright (C) 2015 Roland König (RolandK)
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see http://www.gnu.org/licenses/.
+*/
+#endregion License information (SeeingSharp and all based games/applications)
+
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +33,9 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.RKKinectLounge.Base;
+using SeeingSharp.Util;
 
 namespace SeeingSharp.RKKinectLounge.Base
 {
@@ -99,13 +122,13 @@ namespace SeeingSharp.RKKinectLounge.Base
             // Load all subfolders folder-by-folder
             // Trigger loading of the description (image, displayname, ...) before coninuing with next one
             List<FolderViewModel> foundSubdirectories = new List<FolderViewModel>();
-            foreach(string actSubdirectory in Directory.GetDirectories(m_basePath))
+            foreach (string actSubdirectory in Directory.GetDirectories(m_basePath))
             {
                 FolderViewModel actSubdirVM = new FolderViewModel(this, actSubdirectory);
                 foundSubdirectories.Add(actSubdirVM);
 
                 await actSubdirVM.LoadPreviewContentAsync(cancelToken);
-                await Task.Delay(Constants.BROWSING_DELAY_TIME_PER_FOLDER_LOAD_MS); 
+                await Task.Delay(Constants.BROWSING_DELAY_TIME_PER_FOLDER_LOAD_MS);
 
                 base.SubViewModels.Add(actSubdirVM);
 
@@ -119,7 +142,6 @@ namespace SeeingSharp.RKKinectLounge.Base
         /// </summary>
         protected override void UnloadDetailContentInternal()
         {
-
         }
 
         /// <summary>
@@ -146,12 +168,12 @@ namespace SeeingSharp.RKKinectLounge.Base
         /// <summary>
         /// Gets the folder path that belongs to this ViewModel.
         /// </summary>
-        public string BasePath 
-        { 
+        public string BasePath
+        {
             get
-            { 
+            {
                 return m_basePath;
-            } 
+            }
         }
     }
 }
