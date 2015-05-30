@@ -123,7 +123,6 @@ namespace SeeingSharp.Multimedia.Core
                     m_factoryHandlerWIC = new FactoryHandlerWIC();
                     m_factoryHandlerD2D = new FactoryHandlerD2D(this);
                     m_factoryHandlerDWrite = new FactoryHandlerDWrite(this);
-                    m_factoryHandlerMF = new FactoryHandlerMF();
                 }
                 catch (Exception)
                 {
@@ -131,12 +130,22 @@ namespace SeeingSharp.Multimedia.Core
                     m_factoryHandlerWIC = null;
                     m_factoryHandlerD2D = null;
                     m_factoryHandlerDWrite = null;
-                    m_factoryHandlerMF = null;
                     return;
                 }
                 this.FactoryD2D = m_factoryHandlerD2D.Factory;
                 this.FactoryDWrite = m_factoryHandlerDWrite.Factory;
                 this.FactoryWIC = m_factoryHandlerWIC.Factory;
+
+                // Try to initialize Media Foundation interface
+                // (This is a separated init step because MF may not be available on some systems, e. g. Servers)
+                try
+                {
+                    m_factoryHandlerMF = new FactoryHandlerMF();
+                }
+                catch(Exception)
+                {
+                    m_factoryHandlerMF = null;
+                }
 
                 // Create the object containing all hardware information
                 m_hardwareInfo = new EngineHardwareInfo();
@@ -346,6 +355,11 @@ namespace SeeingSharp.Multimedia.Core
         public bool IsDebugEnabled
         {
             get { return m_debugEnabled; }
+        }
+
+        public bool IsMediaFoundationEnabled
+        {
+            get { return m_factoryHandlerMF != null; }
         }
 
         /// <summary>
