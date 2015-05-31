@@ -46,6 +46,24 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                 MF.CaptureDeviceAttributeKeys.FriendlyName);
         }
 
+        public override string ToString()
+        {
+            return this.FriendlyName;
+        }
+
+        /// <summary>
+        /// Creates a media source pointing to this CaptureDevice.
+        /// </summary>
+        internal MF.MediaSource CreateMediaSource()
+        {
+            // Create the MediaSource object by given capture device
+            IntPtr mediaSourcePtr = IntPtr.Zero;
+            this.DeviceSourceActivate.ActivateObject(
+                new Guid("279a808d-aec7-40c8-9c6b-a6b492c78a66"),
+                out mediaSourcePtr);
+            return new MF.MediaSource(mediaSourcePtr);
+        }
+
         public void Dispose()
         {
             this.DeviceSourceActivate =

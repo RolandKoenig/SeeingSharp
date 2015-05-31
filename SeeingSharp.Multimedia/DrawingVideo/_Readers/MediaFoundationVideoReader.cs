@@ -82,11 +82,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                     mediaAttributes.Set(MF.SourceReaderAttributeKeys.DisableDxva, 1);
 
                     // Create the MediaSource object by given capture device
-                    IntPtr mediaSourcePtr = IntPtr.Zero;
-                    captureDevice.DeviceSourceActivate.ActivateObject(
-                        new Guid("279a808d-aec7-40c8-9c6b-a6b492c78a66"),
-                        out mediaSourcePtr);
-                    using (MF.MediaSource mediaSource = new MF.MediaSource(mediaSourcePtr))
+                    using (MF.MediaSource mediaSource = captureDevice.CreateMediaSource())
                     {
                         // Create the source reader
                         m_sourceReader = new MF.SourceReader(mediaSource, mediaAttributes);

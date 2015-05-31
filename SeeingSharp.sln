@@ -100,6 +100,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Performance1.psess = Performance1.psess
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKWebcamCapture", "Tools\RKWebcamCapture\RKWebcamCapture.csproj", "{B36CB835-2FFC-4F03-A5AF-40C246344EF9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{431f8f6a-aa43-4de1-8ec3-744a0396af02}*SharedItemsImports = 4
@@ -218,6 +220,10 @@ Global
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}.Release|Any CPU.Build.0 = Release|Any CPU
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -248,5 +254,6 @@ Global
 		{A189873D-4436-48E6-8F18-52EA7050DAAD} = {23A48827-7645-4BC8-96F0-B88C76AF5B58}
 		{EDDFE984-EA36-456A-9614-722734755CE8} = {23A48827-7645-4BC8-96F0-B88C76AF5B58}
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02} = {23A48827-7645-4BC8-96F0-B88C76AF5B58}
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9} = {B0619BB7-B709-4C27-8D6F-1C54090C1320}
 	EndGlobalSection
 EndGlobal
