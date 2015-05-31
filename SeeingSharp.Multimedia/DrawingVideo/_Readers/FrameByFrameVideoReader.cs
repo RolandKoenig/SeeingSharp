@@ -37,6 +37,18 @@ namespace SeeingSharp.Multimedia.DrawingVideo
 {
     public class FrameByFrameVideoReader : MediaFoundationVideoReader
     {
+#if DESKTOP
+        /// <summary>
+        /// Initializes a new instance of the <see cref="FrameByFrameVideoReader"/> class.
+        /// </summary>
+        /// <param name="videoSource">The capture device.</param>
+        public FrameByFrameVideoReader(CaptureDeviceInfo captureDevice)
+            : base(captureDevice)
+        {
+
+        }
+#endif
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FrameByFrameVideoReader"/> class.
         /// </summary>

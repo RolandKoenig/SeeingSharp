@@ -62,6 +62,68 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         private MediaSourceCharacteristics_Internal m_characteristics;
         #endregion Video properties
 
+#if DESKTOP
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MediaFoundationVideoReader"/> class.
+        /// </summary>
+        /// <param name="captureDevice">The capture device.</param>
+        public MediaFoundationVideoReader(CaptureDeviceInfo captureDevice)
+        {
+            captureDevice.EnsureNotNullOrDisposed("captureDevice");
+
+            try
+            {
+                // Create the source reader
+                using (MF.MediaAttributes mediaAttributes = new MF.MediaAttributes(1))
+                {
+                    // We need the 'EnableVideoProcessing' attribute because of the RGB32 format
+                    // see (lowest post): http://msdn.developer-works.com/article/11388495/How+to+use+SourceReader+(for+H.264+to+RGB+conversion)%3F
+                    mediaAttributes.Set(MF.SourceReaderAttributeKeys.EnableVideoProcessing, 1);
+                    mediaAttributes.Set(MF.SourceReaderAttributeKeys.DisableDxva, 1);
+
+                    // Create the MediaSource object by given capture device
+                    IntPtr mediaSourcePtr = IntPtr.Zero;
+                    captureDevice.DeviceSourceActivate.ActivateObject(
+                        new Guid("279a808d-aec7-40c8-9c6b-a6b492c78a66"),
+                        out mediaSourcePtr);
+                    using (MF.MediaSource mediaSource = new MF.MediaSource(mediaSourcePtr))
+                    {
+                        // Create the source reader
+                        m_sourceReader = new MF.SourceReader(mediaSource, mediaAttributes);
+                    }
+                }
+
+
+                // Apply source configuration
+                using (MF.MediaType mediaType = new MF.MediaType())
+                {
+                    mediaType.Set(MF.MediaTypeAttributeKeys.MajorType, MF.MediaTypeGuids.Video);
+                    mediaType.Set(MF.MediaTypeAttributeKeys.Subtype, MF.VideoFormatGuids.Rgb32);
+                    m_sourceReader.SetCurrentMediaType(
+                        MF.SourceReaderIndex.FirstVideoStream,
+                        mediaType);
+                    m_sourceReader.SetStreamSelection(MF.SourceReaderIndex.FirstVideoStream, new SharpDX.Bool(true));
+                }
+                // Read some information about the source
+                using (MF.MediaType mediaType = m_sourceReader.GetCurrentMediaType(MF.SourceReaderIndex.FirstVideoStream))
+                {
+                    long frameSizeLong = mediaType.Get(MF.MediaTypeAttributeKeys.FrameSize);
+                    m_frameSize = new Size2(MFHelper.GetValuesByMFEncodedInts(frameSizeLong));
+                }
+
+                // Get additional properties
+                m_durationLong = 0;
+                m_characteristics = (MediaSourceCharacteristics_Internal)m_sourceReader.GetPresentationAttribute(
+                    MF.SourceReaderIndex.MediaSource, MF.SourceReaderAttributeKeys.MediaSourceCharacteristics);
+            }
+            catch(Exception)
+            {
+                this.Dispose();
+                throw;
+            }
+        }
+#endif
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaFoundationVideoReader"/> class.
         /// </summary>
@@ -241,7 +303,11 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// </summary>
         public TimeSpan Duration
         {
-            get { return TimeSpan.FromMilliseconds((double)(m_durationLong / 10000)); }
+            get 
+            {
+                if (m_durationLong <= 0) { return TimeSpan.MaxValue; }
+                return TimeSpan.FromMilliseconds((double)(m_durationLong / 10000));
+            }
         }
 
         /// <summary>

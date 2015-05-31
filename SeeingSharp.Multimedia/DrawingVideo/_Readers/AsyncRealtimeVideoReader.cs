@@ -57,6 +57,24 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// </summary>
         public event EventHandler VideoReachedEnd;
 
+#if DESKTOP
+        /// <summary>
+        /// Initializes a new instance of the <see cref="AsyncRealtimeVideoReader"/> class.
+        /// </summary>
+        /// <param name="captureDevice">The capture device.</param>
+        /// <param name="immediateStart">True to start video reading immediately.</param>
+        public AsyncRealtimeVideoReader(CaptureDeviceInfo captureDevice, bool immediateStart = true)
+            : base(captureDevice)
+        {
+            // Start immediately if requested
+            m_currentBufferLock = new object();
+            m_currentBuffer = null;
+            m_currentBufferTimestamp = DateTime.MinValue;
+
+            if (immediateStart) { this.Start(); }
+        }
+#endif
+
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncRealtimeVideoReader"/> class.
         /// </summary>

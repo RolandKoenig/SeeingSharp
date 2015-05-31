@@ -59,6 +59,7 @@
     <Compile Include="_Samples\BasicSamples\TransparentPalletsSample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
+    <Compile Include="_Samples\MFSamples\CameraCaptureSample.cs" />
     <Compile Include="_Samples\MFSamples\VideoTextureSample.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -71,6 +72,7 @@
     <Content Include="Assets\SampleImages\Basics_SkyboxRendering.png" />
     <Content Include="Assets\SampleImages\Basics_TransparentPallets.png" />
     <Content Include="Assets\SampleImages\Direct2D_Screen_Overlay.png" />
+    <Content Include="Assets\SampleImages\Media_Foundation_Camera_Capture.png" />
     <Content Include="Assets\SampleImages\Media_Foundation_VideoTexture.png" />
     <Content Include="Assets\Textures\Background.dds" />
     <Content Include="Assets\Textures\Background.png" />

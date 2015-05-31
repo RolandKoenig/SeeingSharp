@@ -53,6 +53,7 @@ namespace SeeingSharp.Samples.Base
 
         #region parameters for Media Foundation samples
         public const int SAMPLE_MF_VIDEOTEXTURE_ORDER = 200;
+        public const int SAMPLE_MF_CAMERACAPTURE_ORDER = 201;
         #endregion
 
         #region parameters for Direct2D samples

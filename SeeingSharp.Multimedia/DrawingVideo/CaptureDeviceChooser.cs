@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+#if DESKTOP
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SeeingSharp.Checking;
 using SeeingSharp.Util;
+using SeeingSharp.Multimedia.Core;
 
 // Namespace mappings
 using MF = SharpDX.MediaFoundation;
@@ -48,9 +50,9 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                 // Guid value taken from mfidl.h
                 attributes.Set<Guid>(
                     MF.CaptureDeviceAttributeKeys.SourceType,
-                    new Guid(0x8ac3587a, 0x4ae7, 0x42d8, 0x99, 0xe0, 0x0a, 0x60, 0x13, 0xee, 0xf9, 0x0f));
+                    new Guid("8ac3587a-4ae7-42d8-99e0-0a6013eef90f"));
 
-                // Query for all devices
+                // Query for all device
                 mediaSourceActivates = MF.MediaFactory.EnumDeviceSources(attributes);
             }
             if (mediaSourceActivates == null) { mediaSourceActivates = new MF.Activate[0]; }
@@ -61,37 +63,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             {
                 m_captureDeviceInfos[loop] = new CaptureDeviceInfo(mediaSourceActivates[loop]);
             }
-            
-
-            //HRESULT hr = S_OK;
-            //ChooseDeviceParam param = { 0 };
-
-            //UINT iDevice = 0;   // Index into the array of devices
-            //BOOL bCancel = FALSE;
-
-            //IMFAttributes* pAttributes = NULL;
-
-            //// Initialize an attribute store to specify enumeration parameters.
-
-            //hr = MFCreateAttributes(&pAttributes, 1);
-
-            //if (FAILED(hr)) { goto done; }
-
-            //// Ask for source type = video capture devices.
-
-            //hr = pAttributes->SetGUID(
-            //    MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE,
-            //    MF_DEVSOURCE_ATTRIBUTE_SOURCE_TYPE_VIDCAP_GUID
-            //    );
-
-            //if (FAILED(hr)) { goto done; }
-
-            //// Enumerate devices.
-            //hr = MFEnumDeviceSources(pAttributes, &param.ppDevices, &param.count);
-
         }
-
-
 
         public void Dispose()
         {
@@ -99,8 +71,9 @@ namespace SeeingSharp.Multimedia.DrawingVideo
 
             foreach(var actDeviceInfo in m_captureDeviceInfos)
             {
-
+                GraphicsHelper.DisposeObject(actDeviceInfo);
             }
+            m_captureDeviceInfos = null;
         }
 
         public IEnumerable<CaptureDeviceInfo> DeviceInfos
@@ -114,3 +87,4 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         }
     }
 }
+#endif
