@@ -58,7 +58,15 @@ namespace SeeingSharp.Samples.Base.MFSamples
         {
             targetRenderLoop.EnsureNotNull("targetRenderLoop");
 
+            // Start the device chooser
             m_deviceChooser = new CaptureDeviceChooser();
+
+            // Show fallback-scene if we don't have a capture device
+            if(m_deviceChooser.DeviceCount <= 0)
+            {
+                await OnStartupAsync_Fallback(targetRenderLoop);
+                return;
+            }
 
             // Get and configure the camera
             Camera3DBase camera = targetRenderLoop.Camera as PerspectiveCamera3D;
@@ -108,6 +116,54 @@ namespace SeeingSharp.Samples.Base.MFSamples
             });
         }
 
+        private async Task OnStartupAsync_Fallback(RenderLoop targetRenderLoop)
+        {
+            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+
+            // Build dummy scene
+            Scene scene = targetRenderLoop.Scene;
+            Camera3DBase camera = targetRenderLoop.Camera as Camera3DBase;
+
+            await targetRenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                // Create floor
+                SampleSceneBuilder.BuildStandardConveyorFloor(
+                    manipulator, Scene.DEFAULT_LAYER_NAME);
+
+                // Define texture and material resource
+                var resTexture = manipulator.AddTexture(
+                    new AssemblyResourceUriBuilder(
+                        "SeeingSharp.Samples.Base", false,
+                        "Assets/Textures/NoCaptureDevice.png"));
+                var resMaterial = manipulator.AddSimpleColoredMaterial(resTexture);
+
+                // Create pallet geometry resource
+                PalletType pType = new PalletType();
+                pType.ContentMaterial = resMaterial;
+                var resPalletGeometry = manipulator.AddResource<GeometryResource>(
+                    () => new GeometryResource(pType));
+
+                // Create pallet object
+                GenericObject palletObject = manipulator.AddGeneric(resPalletGeometry);
+                palletObject.Color = Color4.GreenColor;
+                palletObject.EnableShaderGeneratedBorder();
+                palletObject.BuildAnimationSequence()
+                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_180DEG, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_360DEG, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .RotateEulerAnglesTo(new Vector3(0f, 0f, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .CallAction(() => palletObject.RotationEuler = Vector3.Zero)
+                    .ApplyAndRewind();
+            });
+
+            // Configure camera
+            camera.Position = new Vector3(2f, 2f, 2f);
+            camera.Target = new Vector3(0f, 0.5f, 0f);
+            camera.UpdateCamera();
+        }
+
         /// <summary>
         /// Called when the sample is closed.
         /// Scene objects and resources are automatically removed, no need to do it
@@ -116,6 +172,9 @@ namespace SeeingSharp.Samples.Base.MFSamples
         public override void OnClosed()
         {
             base.OnClosed();
+
+            CommonTools.SafeDispose(ref m_videoReader);
+            CommonTools.SafeDispose(ref m_deviceChooser);
         }
     }
 }

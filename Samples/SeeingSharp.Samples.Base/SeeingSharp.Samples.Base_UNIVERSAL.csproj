@@ -79,6 +79,7 @@
     <Content Include="Assets\Textures\Floor.dds" />
     <Content Include="Assets\Textures\Floor.png" />
     <Content Include="Assets\Textures\LogoTexture.png" />
+    <Content Include="Assets\Textures\NoCaptureDevice.png" />
     <Content Include="Assets\Textures\SimpleTexture.png" />
     <Content Include="Assets\Textures\SkyBox.dds" />
     <Content Include="Assets\Textures\Tile1.png" />

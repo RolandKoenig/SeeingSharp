@@ -81,6 +81,11 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             get { return m_captureDeviceInfos; }
         }
 
+        public int DeviceCount
+        {
+            get { return m_captureDeviceInfos.Length; }
+        }
+
         public bool IsDisposed
         {
             get { return m_captureDeviceInfos == null; }
