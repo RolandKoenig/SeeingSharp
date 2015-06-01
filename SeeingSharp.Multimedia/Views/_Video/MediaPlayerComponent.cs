@@ -285,8 +285,15 @@ namespace SeeingSharp.Multimedia.Views
 
             // Get the total duration of the video
             long durationLong = 0;
-            presentationDescriptor.Get<long>(MF.PresentationDescriptionAttributeKeys.Duration);
-            m_currentVideoDuration = TimeSpan.FromTicks(durationLong);
+            try
+            {
+                durationLong = presentationDescriptor.Get<long>(MF.PresentationDescriptionAttributeKeys.Duration);
+                m_currentVideoDuration = TimeSpan.FromTicks(durationLong);
+            }
+            catch(SharpDX.SharpDXException)
+            {
+                m_currentVideoDuration = TimeSpan.MaxValue;
+            }
 
             // Dispose reference to the presentation descriptor
             GraphicsHelper.SafeDispose(ref presentationDescriptor);
