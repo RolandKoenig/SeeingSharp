@@ -149,9 +149,9 @@
             this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.NoInput;
-            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 28);
+            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 371);
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(668, 399);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 1F;
@@ -176,7 +176,7 @@
             // m_behaviorHideMenubar
             // 
             this.m_behaviorHideMenubar.ControlToHide = this.m_mainMenu;
-            this.m_behaviorHideMenubar.InactivitySecs = 5D;
+            this.m_behaviorHideMenubar.InactivitySecs = 2D;
             this.m_behaviorHideMenubar.ObservedControl = this.m_ctrlRenderer;
             // 
             // MainWindow

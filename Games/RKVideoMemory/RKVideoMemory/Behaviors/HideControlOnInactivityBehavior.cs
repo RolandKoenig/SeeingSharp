@@ -43,7 +43,8 @@ namespace RKVideoMemory.Behaviors
         private const string CATEGORY_BEHAVIOR = "Behavior";
         private const int INACTIVITY_SECS_DEFAULT = 2;
         private const int TIMER_INTERVAL_MS = 300;
-        private const int MIN_MOUSE_MOVE_PIXELS = 30;
+        private const int MIN_MOUSE_MOVE_PIXELS = 10;
+        private const int MIN_MOUSE_Y_POS = 75;
 
         #region Associated controls and configuration
         private Control m_observedControl;
@@ -58,8 +59,6 @@ namespace RKVideoMemory.Behaviors
         #region State variables
         private DateTime m_lastMouseMove;
         private Point m_lastMouseLocation;
-        private bool m_focused;
-        private bool m_isMouseInside;
         #endregion State variables
 
         /// <summary>
@@ -74,6 +73,8 @@ namespace RKVideoMemory.Behaviors
             m_refreshTimer = new Timer(container);
             m_refreshTimer.Interval = TIMER_INTERVAL_MS;
             m_refreshTimer.Tick += OnRefreshTimer_Tick;
+
+            m_lastMouseMove = DateTime.UtcNow;
         }
 
         /// <summary>
@@ -84,6 +85,20 @@ namespace RKVideoMemory.Behaviors
             m_refreshTimer = new Timer();
             m_refreshTimer.Interval = TIMER_INTERVAL_MS;
             m_refreshTimer.Tick += OnRefreshTimer_Tick;
+
+            m_lastMouseMove = DateTime.UtcNow;
+        }
+
+        private void UpdateTargetControlVisibility()
+        {
+            if (DateTime.UtcNow - m_lastMouseMove > TimeSpan.FromSeconds(m_inactivitySeconds))
+            {
+                m_controlToHide.Visible = false;
+            }
+            else
+            {
+                m_controlToHide.Visible = true;
+            }
         }
 
         /// <summary>
@@ -111,47 +126,23 @@ namespace RKVideoMemory.Behaviors
             if (m_observedControl == null) { return; }
             if (m_controlToHide == null) { return; }
 
-            if ((m_focused) && (m_isMouseInside) &&
-                (DateTime.UtcNow - m_lastMouseMove > TimeSpan.FromSeconds(m_inactivitySeconds)))
-            {
-                m_controlToHide.Visible = false;
-            }
-            else
-            {
-                m_controlToHide.Visible = true;
-            }
-        }
-
-        private void OnObservedControl_LostFocus(object sender, EventArgs e)
-        {
-            m_focused = false;
-        }
-
-        private void OnObservedControl_GotFocus(object sender, EventArgs e)
-        {
-            m_focused = true;
+            UpdateTargetControlVisibility();
         }
 
         private void OnObservedControl_MouseMove(object sender, MouseEventArgs e)
         {
+            if (e.Location.Y > MIN_MOUSE_Y_POS) { return; }
+
             if ((Math.Abs(e.Location.X - m_lastMouseLocation.X) < MIN_MOUSE_MOVE_PIXELS) ||
-               (Math.Abs(e.Location.Y - m_lastMouseLocation.Y) < MIN_MOUSE_MOVE_PIXELS))
+                (Math.Abs(e.Location.Y - m_lastMouseLocation.Y) < MIN_MOUSE_MOVE_PIXELS))
             {
                 return;
             }
 
             m_lastMouseLocation = e.Location;
             m_lastMouseMove = DateTime.UtcNow;
-        }
 
-        private void OnObservedControl_MouseLeave(object sender, EventArgs e)
-        {
-            m_isMouseInside = false;
-        }
-
-        private void OnObservedControl_MouseEnter(object sender, EventArgs e)
-        {
-            m_isMouseInside = true;
+            UpdateTargetControlVisibility();
         }
 
         [Category(CATEGORY_BEHAVIOR)]
@@ -164,18 +155,12 @@ namespace RKVideoMemory.Behaviors
                 if (m_observedControl != null)
                 {
                     m_observedControl.MouseMove -= OnObservedControl_MouseMove;
-                    m_observedControl.GotFocus -= OnObservedControl_GotFocus;
-                    m_observedControl.LostFocus -= OnObservedControl_LostFocus;
                     m_refreshTimer.Stop();
                 }
                 m_observedControl = value;
                 if (m_observedControl != null)
                 {
                     m_observedControl.MouseMove += OnObservedControl_MouseMove;
-                    m_observedControl.GotFocus += OnObservedControl_GotFocus;
-                    m_observedControl.LostFocus += OnObservedControl_LostFocus;
-                    m_observedControl.MouseEnter += OnObservedControl_MouseEnter;
-                    m_observedControl.MouseLeave += OnObservedControl_MouseLeave;
                     m_refreshTimer.Start();
                 }
 
@@ -183,8 +168,7 @@ namespace RKVideoMemory.Behaviors
                 if (m_observedControl == null)
                 {
                     m_lastMouseLocation = Point.Empty;
-                    m_focused = false;
-                    m_lastMouseMove = DateTime.MinValue;
+                    m_lastMouseMove = DateTime.UtcNow;
                 }
             }
         }

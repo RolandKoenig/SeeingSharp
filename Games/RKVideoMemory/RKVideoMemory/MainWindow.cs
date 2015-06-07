@@ -76,6 +76,8 @@ namespace RKVideoMemory
                 m_lastFullscreenState = m_isFullscreen;
                 if (m_isFullscreen)
                 {
+                    this.WindowState = FormWindowState.Normal;
+
                     this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
                     this.WindowState = FormWindowState.Maximized;
                     this.TopMost = true;
