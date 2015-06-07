@@ -125,9 +125,6 @@ namespace RKVideoMemory.Game
                 manipulator.Remove(objVideoPainter);
                 manipulator.RemoveResource(resVideoTextureLastFrame);
             });
-
-            // Tell the system that we are back on the mainscreen
-            this.Messenger.Publish<MainMemoryScreenEnteredMessage>();
         }
     }
 }

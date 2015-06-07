@@ -362,6 +362,21 @@ namespace SeeingSharp.Multimedia.Core
             m_owner.Remove(sceneObject, layerName);
         }
 
+        public void RemoveRange(IEnumerable<SceneObject> sceneObjects)
+        {
+            CheckValid();
+
+            m_owner.RemoveRange(sceneObjects);
+        }
+
+        public void RemoveRange(IEnumerable<SceneObject> sceneObjects, string layerName)
+        {
+            CheckValid();
+
+            m_owner.RemoveRange(sceneObjects, layerName);
+        }
+
+
         /// <summary>
         /// Adds a new layer with the given name.
         /// </summary>

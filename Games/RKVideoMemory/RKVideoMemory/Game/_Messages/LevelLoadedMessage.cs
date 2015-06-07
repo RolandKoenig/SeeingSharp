@@ -20,7 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
+using RKVideoMemory.Data;
 using SeeingSharp;
 using SeeingSharp.Util;
 using System;
@@ -35,6 +35,15 @@ namespace RKVideoMemory.Game
     [MessageAsyncRoutingTargets(SeeingSharpConstants.THREAD_NAME_GUI)]
     public class LevelLoadedMessage : SeeingSharpMessage
     {
-        
+        public LevelLoadedMessage(LevelData loadedLevel)
+        {
+            this.LoadedLevel = loadedLevel;
+        }
+
+        public LevelData LoadedLevel
+        {
+            get;
+            private set;
+        }
     }
 }

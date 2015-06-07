@@ -108,7 +108,6 @@
     <Compile Include="Game\_Messages\CardUncoveredByPlayerMessage.cs" />
     <Compile Include="Game\_Messages\GameInitializedMessage.cs" />
     <Compile Include="Game\_Messages\LevelLoadedMessage.cs" />
-    <Compile Include="Game\_Messages\LevelUnloadedMessage.cs" />
     <Compile Include="Game\_Messages\MainMemoryScreenEnteredMessage.cs" />
     <Compile Include="Game\_Messages\HoveredObjectsChangedMessage.cs" />
     <Compile Include="Game\_Messages\ObjectsClickedMessage.cs" />

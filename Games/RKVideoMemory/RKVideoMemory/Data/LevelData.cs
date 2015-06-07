@@ -53,6 +53,13 @@ namespace RKVideoMemory.Data
                 this.Tilemap = new TilemapData();
             }
 
+            // Set reference to the main icon
+            string appIconPath = Path.Combine(directoryName, Constants.APPICON_FILENAME);
+            if(File.Exists(appIconPath))
+            {
+                this.AppIconPath = appIconPath;
+            }
+
             // Load all screens
             IEnumerable<string> screenDirectories =
                 from actScreenDirectory in Directory.GetDirectories(directoryName)
@@ -78,6 +85,12 @@ namespace RKVideoMemory.Data
             LevelData result = null;
             await Task.Factory.StartNew(() => result = new LevelData(directoryName));
             return result;
+        }
+
+        public string AppIconPath
+        {
+            get;
+            private set;
         }
 
         public MainTextureData MainTextures

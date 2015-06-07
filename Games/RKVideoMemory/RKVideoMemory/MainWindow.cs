@@ -41,9 +41,12 @@ namespace RKVideoMemory
 {
     public partial class MainWindow : Form
     {
+        private Icon m_initialIcon;
+
         private GameCore m_game;
         private bool m_onTickProcessing;
         private List<SceneObject> m_objectsBelowCursor;
+
 
         private bool m_isFullscreen;
         private bool m_lastFullscreenState;
@@ -54,6 +57,8 @@ namespace RKVideoMemory
         public MainWindow()
         {
             InitializeComponent();
+
+            m_initialIcon = this.Icon;
 
             m_objectsBelowCursor = new List<SceneObject>();
         }
@@ -124,16 +129,6 @@ namespace RKVideoMemory
             this.UpdateDialogStates();
         }
 
-        private void OnMessage_Received(LevelLoadedMessage message)
-        {
-            this.UpdateDialogStates();
-        }
-
-        private void OnMessage_Received(LevelUnloadedMessage message)
-        {
-            this.UpdateDialogStates();
-        }
-
         /// <summary>
         /// Called when the game requests to display a video.
         /// </summary>
@@ -149,6 +144,18 @@ namespace RKVideoMemory
             {
                 m_ctrlRenderer.DiscardPresent = false;
                 throw;
+            }
+        }
+
+        private void OnMessage_Received(LevelLoadedMessage message)
+        {
+            if (!string.IsNullOrEmpty(message.LoadedLevel.AppIconPath))
+            {
+                this.Icon = new Icon(message.LoadedLevel.AppIconPath);
+            }
+            else
+            {
+                this.Icon = m_initialIcon;
             }
         }
 

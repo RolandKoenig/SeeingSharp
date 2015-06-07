@@ -718,6 +718,26 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        internal void RemoveRange(IEnumerable<SceneObject> sceneObjects)
+        {
+            sceneObjects.EnsureNotNull("sceneObjects");
+
+            foreach(SceneObject actObject in sceneObjects)
+            {
+                this.Remove(actObject);
+            }
+        }
+
+        internal void RemoveRange(IEnumerable<SceneObject> sceneObjects, string layerName)
+        {
+            sceneObjects.EnsureNotNull("sceneObjects");
+
+            foreach (SceneObject actObject in sceneObjects)
+            {
+                this.Remove(actObject, layerName);
+            }
+        }
+
         /// <summary>
         /// Removes the given object from the scene.
         /// </summary>

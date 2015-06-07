@@ -28,6 +28,7 @@ using System.Text;
 using System.Threading.Tasks;
 using RKVideoMemory.Assets.Textures;
 using RKVideoMemory.Data;
+using RKVideoMemory.Util;
 using SeeingSharp;
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
@@ -45,9 +46,15 @@ namespace RKVideoMemory.Game
         #endregion
 
         #region Members describing the current screen
-        private Card[,] m_cardMap;
+        private Card[,] m_cardMapOnScreen;
         private List<CardPair> m_cardPairsOnScreen;
         private int m_actScreenIndex;
+        #endregion
+
+        #region Graphics resource keys
+        private Scene m_scene;
+        private NamedOrGenericKey m_resBackgroundMaterial1;
+        private NamedOrGenericKey m_resBackgroundMaterial2;
         #endregion
 
         /// <summary>
@@ -80,6 +87,7 @@ namespace RKVideoMemory.Game
         /// <param name="scene">The scene to which to add all objects.</param>
         internal async Task BuildFirstScreenAsync(LevelData currentLevel, Scene scene)
         {
+            m_scene = scene;
             m_currentLevel = currentLevel;
 
             int tilesX = currentLevel.Tilemap.TilesX;
@@ -88,63 +96,106 @@ namespace RKVideoMemory.Game
             float tileDistY = -Constants.TILE_DISTANCE_Y;
             Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, ((tilesY - 1) * tileDistY / 2f));
 
-            m_cardMap = new Card[tilesX, tilesY];
+            m_cardMapOnScreen = new Card[tilesX, tilesY];
             m_cardPairsOnScreen = new List<CardPair>();
-            Random randomizer = new Random(Environment.TickCount);
+
+            ScreenData currentScreen = currentLevel.Screens[0];
+            m_actScreenIndex = 0;
 
             await scene.ManipulateSceneAsync((manipulator) =>
             {
+                // Build background and define level-wide resources
                 manipulator.BuildBackground(currentLevel.MainTextures.BackgroundTextureLink);
-
-                var resBackgroundMaterial1 = manipulator.AddSimpleColoredMaterial(
+                m_resBackgroundMaterial1 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile1TextureLink);
-                var resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
+                m_resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile2TextureLink);
-                foreach (CardPairData actPairData in currentLevel.Screens.First().MemoryPairs)
-                {
-                    CardPair actCardPair = new CardPair(actPairData);
 
-                    // Define all resources needed for a card for this pair
-                    var resTitleMaterial = manipulator.AddSimpleColoredMaterial(actPairData.TitleFile);
-                    var resGeometry1 = manipulator.AddGeometry(new CardObjectType()
-                        {
-                            FrontMaterial = resTitleMaterial,
-                            BackMaterial = resBackgroundMaterial1
-                        });
-                    var resGeometry2 = manipulator.AddGeometry(new CardObjectType()
-                    {
-                        FrontMaterial = resTitleMaterial,
-                        BackMaterial = resBackgroundMaterial2
-                    });
-
-                    // Create both cards for this pair
-                    Card cardA = new Card(resGeometry1, actCardPair);
-                    Card cardB = new Card(resGeometry2, actCardPair);
-                    Tuple<int, int> slotA = SearchFreeCardSlot(currentLevel, m_cardMap, randomizer);
-                    m_cardMap[slotA.Item1, slotA.Item2] = cardA;
-                    Tuple<int, int> slotB = SearchFreeCardSlot(currentLevel, m_cardMap, randomizer);
-                    m_cardMap[slotB.Item1, slotB.Item2] = cardB;
-
-                    // Add both cards to the scene
-                    cardA.Position = new Vector3(slotA.Item1 * tileDistX, 0f, slotA.Item2 * tileDistY) - midPoint;
-                    cardA.AccentuationFactor = 1f;
-                    cardB.Position = new Vector3(slotB.Item1 * tileDistX, 0f, slotB.Item2 * tileDistY) - midPoint;
-                    cardB.AccentuationFactor = 1f;
-                    manipulator.Add(cardA);
-                    manipulator.Add(cardB);
-
-                    // Assigns the cards to the pair object
-                    actCardPair.Cards = new Card[] { cardA, cardB };
-                    manipulator.Add(actCardPair);
-
-                    m_cardPairsOnScreen.Add(actCardPair);
-                }
+                // Build the current screen
+                BuildScreen(manipulator, currentScreen);
 
                 // Add all logic components to the scene
                 manipulator.Add(new PairUncoverLogic());
                 manipulator.Add(new VideoPlayLogic());
                 manipulator.Add(this);
             });
+
+            Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();
+        }
+
+        /// <summary>
+        /// Builds up the given screen on the given SceneManipulator.
+        /// </summary>
+        /// <param name="manipulator">The manipulator.</param>
+        /// <param name="currentScreen">The screen to be build.</param>
+        private void BuildScreen(SceneManipulator manipulator, ScreenData currentScreen)
+        {
+            int tilesX = m_currentLevel.Tilemap.TilesX;
+            int tilesY = m_currentLevel.Tilemap.TilesY;
+            float tileDistX = Constants.TILE_DISTANCE_X;
+            float tileDistY = -Constants.TILE_DISTANCE_Y;
+            Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, ((tilesY - 1) * tileDistY / 2f));
+
+            foreach (CardPairData actPairData in currentScreen.MemoryPairs)
+            {
+                CardPair actCardPair = new CardPair(actPairData);
+
+                // Define all resources needed for a card for this pair
+                var resTitleMaterial = manipulator.AddSimpleColoredMaterial(actPairData.TitleFile);
+                var resGeometry1 = manipulator.AddGeometry(new CardObjectType()
+                {
+                    FrontMaterial = resTitleMaterial,
+                    BackMaterial = m_resBackgroundMaterial1
+                });
+                var resGeometry2 = manipulator.AddGeometry(new CardObjectType()
+                {
+                    FrontMaterial = resTitleMaterial,
+                    BackMaterial = m_resBackgroundMaterial2
+                });
+
+                // Create both cards for this pair
+                Card cardA = new Card(resGeometry1, actCardPair);
+                Card cardB = new Card(resGeometry2, actCardPair);
+                Tuple<int, int> slotA = SearchFreeCardSlot(m_currentLevel, m_cardMapOnScreen);
+                m_cardMapOnScreen[slotA.Item1, slotA.Item2] = cardA;
+                Tuple<int, int> slotB = SearchFreeCardSlot(m_currentLevel, m_cardMapOnScreen);
+                m_cardMapOnScreen[slotB.Item1, slotB.Item2] = cardB;
+
+                // Add both cards to the scene
+                cardA.Position = new Vector3(slotA.Item1 * tileDistX, 0f, slotA.Item2 * tileDistY) - midPoint;
+                cardA.AccentuationFactor = 1f;
+                cardB.Position = new Vector3(slotB.Item1 * tileDistX, 0f, slotB.Item2 * tileDistY) - midPoint;
+                cardB.AccentuationFactor = 1f;
+                manipulator.Add(cardA);
+                manipulator.Add(cardB);
+
+                // Assigns the cards to the pair object
+                actCardPair.Cards = new Card[] { cardA, cardB };
+                manipulator.Add(actCardPair);
+
+                m_cardPairsOnScreen.Add(actCardPair);
+            }
+        }
+
+        /// <summary>
+        /// Frees the current screen.
+        /// </summary>
+        /// <param name="manipulator">The manipulator.</param>
+        private void FreeCurrentScreen(SceneManipulator manipulator)
+        {
+            foreach (CardPair actCardPair in m_cardPairsOnScreen)
+            {
+                manipulator.Remove(actCardPair);
+                manipulator.RemoveRange(actCardPair.Cards);
+            }
+
+            for (int loopX = 0; loopX < m_cardMapOnScreen.GetLength(0); loopX++)
+            {
+                for (int loopY = 0; loopY < m_cardMapOnScreen.GetLength(1); loopY++)
+                {
+                    m_cardMapOnScreen[loopX, loopY] = null;
+                }
+            }
         }
 
         /// <summary>
@@ -152,15 +203,14 @@ namespace RKVideoMemory.Game
         /// </summary>
         /// <param name="currentLevel">The current leveldata.</param>
         /// <param name="cardMap">The card map.</param>
-        /// <param name="randomizer">The randomizer.</param>
-        private static Tuple<int, int> SearchFreeCardSlot(LevelData currentLevel, Card[,] cardMap, Random randomizer)
+        private static Tuple<int, int> SearchFreeCardSlot(LevelData currentLevel, Card[,] cardMap)
         {
             Tuple<int, int> result = null;
 
             while (result == null)
             {
-                int xPos = randomizer.Next(0, cardMap.GetLength(0));
-                int yPos = randomizer.Next(0, cardMap.GetLength(1));
+                int xPos = ThreadSafeRandom.Next(0, cardMap.GetLength(0));
+                int yPos = ThreadSafeRandom.Next(0, cardMap.GetLength(1));
 
                 // Check whether the tile position is allowed
                 if (!currentLevel.Tilemap[xPos, yPos]) { continue; }
@@ -172,6 +222,51 @@ namespace RKVideoMemory.Game
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Called when a movie has finished playing.
+        /// </summary>
+        /// <param name="movieFinishedMessage">The movie finished message.</param>
+        private async void OnMessage_Received(PlayMovieFinishedMessage movieFinishedMessage)
+        {
+            // Check whether we've finished the current screen
+            bool isCurrentScreenFinished = true;
+            foreach(CardPair actCardPair in m_cardPairsOnScreen)
+            {
+                if(!actCardPair.IsUncovered)
+                {
+                    isCurrentScreenFinished = false;
+                    break;
+                }
+            }
+
+            // Call default screen fade-in if the current one has not finished yet
+            if(!isCurrentScreenFinished)
+            {
+                Messenger.Publish<MainMemoryScreenEnteredMessage>();
+                return;
+            }
+
+            if(m_currentLevel.Screens.Count - 1 <= m_actScreenIndex)
+            {
+                // We have finished with all screens, show ending animation
+
+            }
+            else
+            {
+                // Build the new Screen
+                m_actScreenIndex++;
+                ScreenData nextScreen = m_currentLevel.Screens[m_actScreenIndex];
+                await m_scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    FreeCurrentScreen(manipulator);
+                    BuildScreen(manipulator, nextScreen);
+                });
+
+                // Trigger scree fade-in
+                Messenger.Publish<MainMemoryScreenEnteredMessage>();
+            }
         }
 
         /// <summary>

@@ -79,8 +79,6 @@ namespace RKVideoMemory.Game
         /// <param name="sourceDirectory">The data path.</param>
         public async Task LoadLevelAsync(string sourceDirectory)
         {
-            if (m_currentLevel != null) { await UnloadCurrentLevel(); }
-
             // Load the level
             m_currentLevel = await LevelData.FromDirectoryAsync(sourceDirectory);
 
@@ -99,21 +97,7 @@ namespace RKVideoMemory.Game
             m_camera.Target = new Vector3(0f, 0f, 0.1f);
             m_camera.UpdateCamera();
 
-            Messenger.BeginPublish<MainMemoryScreenEnteredMessage>();
-            Messenger.BeginPublish<LevelLoadedMessage>();
-        }
-
-        /// <summary>
-        /// Unloads the currently loaded level.
-        /// </summary>
-        public async Task UnloadCurrentLevel()
-        {
-            if (m_currentLevel == null) { return; }
-
-            // TODO
-            await Task.Delay(100);
-
-            Messenger.BeginPublish<LevelUnloadedMessage>();
+            m_scene.Messenger.BeginPublish(new LevelLoadedMessage(m_currentLevel));
         }
        
         public bool IsInitialized
