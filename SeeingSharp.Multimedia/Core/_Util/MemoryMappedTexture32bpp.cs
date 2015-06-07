@@ -36,6 +36,7 @@ namespace SeeingSharp.Multimedia.Core
         private IntPtr m_pointer;
         private int* m_pointerNative;
         private Size2 m_size;
+        private int m_countInts;
         #endregion
 
         /// <summary>
@@ -47,6 +48,7 @@ namespace SeeingSharp.Multimedia.Core
             m_pointer = Marshal.AllocHGlobal(size.Width * size.Height * 4);
             m_pointerNative = (int*)m_pointer.ToPointer();
             m_size = size;
+            m_countInts = m_size.Width * m_size.Height;
         }
 
         /// <summary>
@@ -75,15 +77,11 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void SetAllAlphaValuesToOne()
         {
-            byte* pointerNativeByte = (byte*)m_pointerNative;
-            for(int loopX=0 ; loopX<m_size.Width; loopX++)
+            uint alphaByteValue = 0xFF000000;
+            uint* pointerUInt = (uint*)m_pointerNative;
+            for (int loopIndex = 0; loopIndex < m_countInts; loopIndex++)
             {
-                for(int loopY=0 ; loopY<m_size.Height; loopY++)
-                {
-                    // Change alpha byte to 255
-                    int index = loopX * 4 + (loopY * this.Pitch);
-                    pointerNativeByte[index + 3] = 255;  
-                }
+                pointerUInt[loopIndex] |= alphaByteValue;
             }
         }
 
@@ -96,6 +94,11 @@ namespace SeeingSharp.Multimedia.Core
             {
                 return (uint)(m_size.Width * m_size.Height * 4);
             }
+        }
+
+        public int CountInts
+        {
+            get { return m_countInts; }
         }
 
         /// <summary>
