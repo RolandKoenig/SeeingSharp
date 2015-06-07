@@ -37,6 +37,7 @@
     </SuppressXamlWarnings>
     <GenerateLibraryLayout>false</GenerateLibraryLayout>
     <NoWarn>1591</NoWarn>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

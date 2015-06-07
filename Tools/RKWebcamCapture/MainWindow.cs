@@ -33,6 +33,7 @@ namespace RKWebcamCapture
         {
             CaptureDeviceInfo selectedDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
             m_cmdCapture.Enabled = selectedDevice != null;
+            m_cboDevice.Enabled = m_cboDevice.Items.Count > 0;
 
             m_cmdStop.Enabled = m_currentlyPlayingDevice != null;
 

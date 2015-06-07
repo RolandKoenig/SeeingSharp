@@ -34,16 +34,5 @@ namespace SeeingSharp.Multimedia
     {
         [DllImport("Mfreadwrite.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "MFCreateSourceReaderFromByteStream")]
         public static extern int MFCreateSourceReaderFromByteStream_Native(IntPtr pByteStream, IntPtr pAttributes, out IntPtr pSourceReader);
-
-#if !UNIVERSAL
-        /// <summary>
-        /// Copies unmanaged memory from given source location to given target. 
-        /// </summary>
-        /// <param name="dest">The desitination address.</param>
-        /// <param name="src">The source address.</param>
-        /// <param name="count">Total count of bytes.</param>
-        [DllImport("msvcrt.dll", EntryPoint = "memcpy", CallingConvention = CallingConvention.Cdecl, SetLastError = false)]
-        public static extern IntPtr MemCopy(IntPtr dest, IntPtr src, UIntPtr count);
-#endif
     }
 }

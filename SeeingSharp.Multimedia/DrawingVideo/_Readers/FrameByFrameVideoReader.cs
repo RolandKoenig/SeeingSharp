@@ -110,30 +110,11 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                 int cbCurrentLenght;
                 IntPtr mediaBufferPointer = mediaBuffer.Lock(out cbMaxLength, out cbCurrentLenght);
 
-#if DESKTOP
-                // Performance optimization using MemCopy
-                //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
-                NativeMethods.MemCopy(
-                    targetBuffer.Pointer,
-                    mediaBufferPointer,
-                    new UIntPtr((uint)(base.FrameSize.Width * base.FrameSize.Height * 4)));
-#else
-                // TODO: Search a more performant way on WinRT platform (MemCopy not allowed there)
-                unsafe
-                {
-                    Size2 frameSize = base.FrameSize;
-                    int* mediaBufferPointerNative = (int*)mediaBufferPointer.ToPointer();
-                    int* targetBufferPointerNative = (int*)targetBuffer.Pointer.ToPointer();
-                    for (int loopY = 0; loopY < frameSize.Height; loopY++)
-                    {
-                        for (int loopX = 0; loopX < frameSize.Width; loopX++)
-                        {
-                            int actIndex = loopX + (loopY * frameSize.Width);
-                            targetBufferPointerNative[actIndex] = mediaBufferPointerNative[actIndex];
-                        }
-                    }
-                }
-#endif
+                // Performance optimization using CopyMemory method
+                //  see http://www.rolandk.de/wp/2015/05/wie-schnell-man-speicher-falsch-kopieren-kann/
+                CommonTools.CopyMemory(
+                    mediaBufferPointer, targetBuffer.Pointer, 
+                    (ulong)(base.FrameSize.Width * base.FrameSize.Height * 4));
 
                 return true;
             }

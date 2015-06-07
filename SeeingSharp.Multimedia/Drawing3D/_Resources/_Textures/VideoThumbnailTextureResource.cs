@@ -144,27 +144,15 @@ namespace SeeingSharp.Multimedia.Drawing3D
                     {
                         int* frameBufferPointerNative = (int*)m_thumbnailFrame.Pointer.ToPointer();
                         int* textureBufferPointerNative = (int*)dataBox.DataPointer.ToPointer();
-#if DESKTOP
+
                         // Performance optimization using MemCopy
-                        //  see http://code4k.blogspot.de/2010/10/high-performance-memcpy-gotchas-in-c.html
+                        //  see http://www.rolandk.de/wp/2015/05/wie-schnell-man-speicher-falsch-kopieren-kann/
                         for (int loopY = 0; loopY < m_videoHeight; loopY++)
                         {
                             IntPtr rowStartTexture = new IntPtr(textureBufferPointerNative + (dataBox.RowPitch / 4) * loopY);
                             IntPtr rowStartSource = new IntPtr(frameBufferPointerNative + (m_videoWidth) * loopY);
-                            NativeMethods.MemCopy(rowStartTexture, rowStartSource, new UIntPtr((uint)dataBox.RowPitch));
+                            CommonTools.CopyMemory(rowStartSource, rowStartTexture, (ulong)dataBox.RowPitch);
                         }
-#else
-                        int textureBufferRowPixels = dataBox.RowPitch / 4;
-                        for (int loopX = 0; loopX < m_videoWidth; loopX++)
-                        {
-                            for (int loopY = 0; loopY < m_videoHeight; loopY++)
-                            {
-                                int actIndexVideo = loopX + (loopY * m_videoWidth);
-                                int actIndexTexture = loopX + (loopY * textureBufferRowPixels);
-                                textureBufferPointerNative[actIndexTexture] = frameBufferPointerNative[actIndexVideo];
-                            }
-                        }
-#endif
                     }
 
                 }

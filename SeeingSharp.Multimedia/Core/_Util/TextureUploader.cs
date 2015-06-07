@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Util;
 #if DESKTOP
 using System.Windows.Media.Imaging;
 #endif
@@ -124,29 +125,15 @@ namespace SeeingSharp.Multimedia.Core
             {
                 int rowPitchSource = dataBox.RowPitch;
                 int rowPitchDestination = intBuffer.Width * 4;
-
-#if !DESKTOP
-                float* sourcePointer = (float*)dataBox.DataPointer.ToPointer();
-                float* destPointer = (float*)intBuffer.Pointer.ToPointer();
-#endif
                 if ((rowPitchSource > 0) && (rowPitchSource < 20000) &&
                     (rowPitchDestination > 0) && (rowPitchDestination < 20000))
                 {
                     for (int loopY = 0; loopY < m_height; loopY++)
                     {
-#if DESKTOP
-                        NativeMethods.MemCopy(
-                            intBuffer.Pointer + loopY * rowPitchDestination,
+                        CommonTools.CopyMemory(
                             dataBox.DataPointer + loopY * rowPitchSource,
-                            new UIntPtr((uint)rowPitchDestination));
-#else
-                        float* memLocSource = sourcePointer + loopY * rowPitchSource;
-                        float* memLocDest = destPointer + loopY * rowPitchDestination;
-                        for(int loopX=0; loopX < m_width; loopX++)
-                        {
-                            memLocDest[loopX] = memLocSource[loopX];
-                        }
-#endif
+                            intBuffer.Pointer + loopY * rowPitchDestination,
+                            (ulong)rowPitchDestination);
                     }
                 }
             }
@@ -194,28 +181,15 @@ namespace SeeingSharp.Multimedia.Core
 
                 int rowPitchSource = dataBox.RowPitch;
                 int rowPitchDestination = floatBuffer.Width * 4;
-#if !DESKTOP
-                float* sourcePointer = (float*)dataBox.DataPointer.ToPointer();
-                float* destPointer = (float*)floatBuffer.Pointer.ToPointer();
-#endif
                 if ((rowPitchSource > 0) && (rowPitchSource < 20000) &&
                     (rowPitchDestination > 0) && (rowPitchDestination < 20000))
                 {
                     for (int loopY = 0; loopY < m_height; loopY++)
                     {
-#if DESKTOP
-                        NativeMethods.MemCopy(
-                            floatBuffer.Pointer + loopY * rowPitchDestination,
+                        CommonTools.CopyMemory(
                             dataBox.DataPointer + loopY * rowPitchSource,
-                            new UIntPtr((uint)rowPitchDestination));
-#else
-                        float* memLocSource = sourcePointer + loopY * rowPitchSource;
-                        float* memLocDest = destPointer + loopY * rowPitchDestination;
-                        for(int loopX=0; loopX < m_width; loopX++)
-                        {
-                            memLocDest[loopX] = memLocSource[loopX];
-                        }
-#endif
+                            floatBuffer.Pointer + loopY * rowPitchDestination,
+                            (ulong)rowPitchDestination);
                     }
                 }
             }

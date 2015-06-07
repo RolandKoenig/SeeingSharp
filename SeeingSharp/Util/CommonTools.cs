@@ -87,6 +87,48 @@ namespace SeeingSharp.Util
         }
 
         /// <summary>
+        /// Copies memory from given source to given target pointer.
+        /// </summary>
+        /// <param name="sourcePointer">The source pointer.</param>
+        /// <param name="targetPointer">The target pointer.</param>
+        /// <param name="byteCount">The total count of bytes to be copied.</param>
+        public static unsafe void CopyMemory(IntPtr sourcePointer, IntPtr targetPointer, ulong byteCount)
+        {
+            CopyMemory(sourcePointer.ToPointer(), targetPointer.ToPointer(), byteCount);
+        }
+
+        /// <summary>
+        /// Copies memory from given source to given target pointer.
+        /// </summary>
+        /// <param name="sourcePointer">The source pointer.</param>
+        /// <param name="targetPointer">The target pointer.</param>
+        /// <param name="byteCount">The total count of bytes to be copied.</param>
+        public static unsafe void CopyMemory(void* sourcePointer, void* targetPointer, ulong byteCount)
+        {
+            ulong longCount = byteCount / 8;
+            ulong byteScrap = byteCount % 8;
+
+            // Copy using long pointers
+            ulong* sourcePointerLong = (ulong*)sourcePointer;
+            ulong* targetPointerLong = (ulong*)targetPointer;
+            for (ulong actIndexLong = 0; actIndexLong < longCount; actIndexLong++)
+            {
+                targetPointerLong[actIndexLong] = sourcePointerLong[actIndexLong];
+            }
+
+            // Copy remaining bytes
+            if (byteScrap > 0)
+            {
+                byte* sourcePointerByte = (byte*)sourcePointer;
+                byte* targetPointerByte = (byte*)targetPointer;
+                for (ulong actIndexByte = byteCount - byteScrap; actIndexByte < byteCount; actIndexByte++)
+                {
+                    targetPointerByte[actIndexByte] = sourcePointerByte[actIndexByte];
+                }
+            }
+        }
+
+        /// <summary>
         /// Formats the given timespan to a compact string.
         /// </summary>
         /// <param name="timespan">The Tiemspan value to be formated.</param>

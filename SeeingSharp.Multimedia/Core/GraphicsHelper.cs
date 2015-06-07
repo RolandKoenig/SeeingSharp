@@ -203,15 +203,15 @@ namespace SeeingSharp.Multimedia.Core
                 {
                     //Copy data row by row
                     // => Rows form datasource may have more pixels because driver changes the size of textures
-                    UIntPtr rowPitch = new UIntPtr((uint)(width * 4));
+                    ulong rowPitch = (ulong)(width * 4);
                     for (int loopRow = 0; loopRow < height; loopRow++)
                     {
                         // Copy bitmap data
                         int rowPitchSource = dataBox.RowPitch;
                         int rowPitchDestination = width * 4;
-                        NativeMethods.MemCopy(
-                            bitmapData.Scan0 + loopRow * rowPitchDestination,
+                        CommonTools.CopyMemory(
                             dataBox.DataPointer + loopRow * rowPitchSource,
+                            bitmapData.Scan0 + loopRow * rowPitchDestination,
                             rowPitch);
                     }
                 }
@@ -496,15 +496,16 @@ namespace SeeingSharp.Multimedia.Core
             {
                 //Copy data row by row
                 // => Rows form datasource may have more pixels because driver changes the size of textures
-                UIntPtr rowPitch = new UIntPtr((uint)(mappedTexture.Width * 4));
+                ulong rowPitch = (ulong)(mappedTexture.Width * 4);
                 for (int loopRow = 0; loopRow < mappedTexture.Height; loopRow++)
                 {
                     // Copy bitmap data
                     int rowPitchSource = mappedTexture.Pitch;
                     int rowPitchDestination = mappedTexture.Width * 4;
-                    NativeMethods.MemCopy(
-                        bitmapData.Scan0 + loopRow * rowPitchDestination,
+
+                    CommonTools.CopyMemory(
                         mappedTexture.Pointer + loopRow * rowPitchSource,
+                        bitmapData.Scan0 + loopRow * rowPitchDestination,
                         rowPitch);
                 }
             }
