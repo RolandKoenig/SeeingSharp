@@ -96,6 +96,7 @@
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Data\MainTextureData.cs" />
     <Compile Include="Data\CardPairData.cs" />
+    <Compile Include="Data\ScreenData.cs" />
     <Compile Include="Data\TilemapData.cs" />
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\CardPair.cs" />
@@ -106,7 +107,6 @@
     <Compile Include="Game\_Messages\CardPairUncoveredByPlayerMessage.cs" />
     <Compile Include="Game\_Messages\CardUncoveredByPlayerMessage.cs" />
     <Compile Include="Game\_Messages\GameInitializedMessage.cs" />
-    <Compile Include="Game\_Messages\GameTriggerMessage.cs" />
     <Compile Include="Game\_Messages\LevelLoadedMessage.cs" />
     <Compile Include="Game\_Messages\LevelUnloadedMessage.cs" />
     <Compile Include="Game\_Messages\MainMemoryScreenEnteredMessage.cs" />
@@ -143,6 +143,9 @@
     <None Include="..\..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
+    <None Include="Data\_DataClasses.cd" />
+    <None Include="Game\_GameClasses.cd" />
+    <None Include="Game\_Messages\_MessageClasses.cd" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -443,14 +443,7 @@ namespace SeeingSharp.Multimedia.Core
             InitializeResourceDictionaries(true);
 
             SceneLayer layerObject = GetLayer(layer);
-            if (layerObject.AddObject(sceneObject))
-            {
-                // Register all
-                if (m_messenger != null)
-                {
-                    m_messenger.SubscribeAll(sceneObject);
-                }
-            }
+            if (!layerObject.AddObject(sceneObject)) { return null; }
 
             return sceneObject;
         }

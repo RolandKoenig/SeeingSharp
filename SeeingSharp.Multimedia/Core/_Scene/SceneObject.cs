@@ -22,6 +22,7 @@
 #endregion
 
 using SeeingSharp.Util;
+using SeeingSharp.Checking;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -47,6 +48,7 @@ namespace SeeingSharp.Multimedia.Core
         #region Some information about parent containers
         private Scene m_scene;
         private SceneLayer m_sceneLayer;
+        private IEnumerable<MessageSubscription> m_sceneMessageSubscriptions;
         #endregion
 
         #region Members for behaviors
@@ -81,6 +83,48 @@ namespace SeeingSharp.Multimedia.Core
 
             this.TransormationChanged = true;
             this.IsPickingTestVisible = true;
+        }
+
+        /// <summary>
+        /// Registers the given scene and layer on this object.
+        /// </summary>
+        /// <param name="scene">The scene.</param>
+        /// <param name="sceneLayer">The scene layer.</param>
+        internal void SetSceneAndLayer(Scene scene, SceneLayer sceneLayer)
+        {
+            scene.EnsureNotNull("scene");
+            sceneLayer.EnsureNotNull("sceneLayer");
+            m_scene.EnsureNull("m_scene");
+            m_sceneLayer.EnsureNull("m_sceneLayer");
+
+            m_scene = scene;
+            m_sceneLayer = sceneLayer;
+
+            if(m_scene.Messenger != null)
+            {
+                m_sceneMessageSubscriptions = m_scene.Messenger.SubscribeAll(this);
+            }
+        }
+
+        /// <summary>
+        /// Deregisters the current scene and layer from this object.
+        /// </summary>
+        internal void ResetSceneAndLayer()
+        {
+            m_scene.EnsureNotNull("m_scene");
+            m_sceneLayer.EnsureNotNull("m_sceneLayer");
+
+            if (m_sceneMessageSubscriptions != null)
+            {
+                foreach (MessageSubscription actSubscription in m_sceneMessageSubscriptions)
+                {
+                    actSubscription.Unsubscribe();
+                }
+                m_sceneMessageSubscriptions = null;
+            }
+
+            m_scene = null;
+            m_sceneLayer = null;
         }
 
         /// <summary>
@@ -446,7 +490,6 @@ namespace SeeingSharp.Multimedia.Core
         public Scene Scene
         {
             get { return m_scene; }
-            internal set { m_scene = value; }
         }
 
         /// <summary>
@@ -483,7 +526,6 @@ namespace SeeingSharp.Multimedia.Core
         public SceneLayer SceneLayer
         {
             get { return m_sceneLayer; }
-            internal set { m_sceneLayer = value; }
         }
 
         /// <summary>

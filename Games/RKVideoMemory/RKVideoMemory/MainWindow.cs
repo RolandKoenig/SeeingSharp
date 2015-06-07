@@ -175,11 +175,6 @@ namespace RKVideoMemory
             }
         }
 
-        private void OnTimerTrigger_Tick(object sender, EventArgs e)
-        {
-            SeeingSharpApplication.Current.UIMessenger.Publish<GameTriggerMessage>();
-        }
-
         private async void OnTimerPicking_Tick(object sender, EventArgs e)
         {
             this.UpdateDialogStates();

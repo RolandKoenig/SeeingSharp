@@ -186,5 +186,21 @@ namespace SeeingSharp.Checking
                     checkedVariableName, callerMethod));
             }
         }
+
+        [Conditional("DEBUG")]
+        public static void EnsureNull(
+            this object objParam, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (objParam != null)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Object {0} within method {1} must be null!",
+                    checkedVariableName, callerMethod));
+            }
+        }
     }
 }

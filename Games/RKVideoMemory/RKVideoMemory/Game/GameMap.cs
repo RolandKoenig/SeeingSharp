@@ -91,7 +91,7 @@ namespace RKVideoMemory.Game
                     currentLevel.MainTextures.Tile1TextureLink);
                 var resBackgroundMaterial2 = manipulator.AddSimpleColoredMaterial(
                     currentLevel.MainTextures.Tile2TextureLink);
-                foreach (CardPairData actPairData in currentLevel.MemoryPairs)
+                foreach (CardPairData actPairData in currentLevel.Screens.First().MemoryPairs)
                 {
                     CardPair actCardPair = new CardPair(actPairData);
 
@@ -174,6 +174,11 @@ namespace RKVideoMemory.Game
                 if (m_cardPairs == null) { return 0; }
                 return m_cardPairs.Count;
             }
+        }
+
+        public List<CardPair> Pairs
+        {
+            get { return m_cardPairs; }
         }
     }
 }

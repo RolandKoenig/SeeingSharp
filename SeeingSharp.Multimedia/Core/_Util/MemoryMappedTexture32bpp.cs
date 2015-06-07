@@ -27,6 +27,8 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Checking;
+using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Core
 {

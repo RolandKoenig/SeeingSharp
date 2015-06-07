@@ -90,25 +90,6 @@ namespace RKVideoMemory.Game
         }
 
         /// <summary>
-        /// Called when the main game loop sends a cyclic trigger.
-        /// This one should start some shaking animation as long as nothin else happens on the screen.
-        /// </summary>
-        private void OnMessage_Received(GameTriggerMessage message)
-        {
-            for (int loop = 0; loop < this.Cards.Length; loop++)
-            {
-                Card actCard = this.Cards[loop];
-                if (actCard.AnimationHandler.CountRunningAnimations > 0) { continue; }
-
-                // Trigger 'shaking' animation
-                if (ThreadSafeRandom.Next(0, 100) < 10)
-                {
-
-                }
-            }
-        }
-
-        /// <summary>
         /// Was this cardpair found previously?
         /// </summary>
         public bool WasFound

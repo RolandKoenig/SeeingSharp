@@ -53,41 +53,18 @@ namespace RKVideoMemory.Data
                 this.Tilemap = new TilemapData();
             }
 
-            // Search and process all memory pairs
-            this.MemoryPairs = new List<CardPairData>();
-            foreach (string actSubdirectory in Directory.GetDirectories(directoryName))
+            // Load all screens
+            IEnumerable<string> screenDirectories =
+                from actScreenDirectory in Directory.GetDirectories(directoryName)
+                orderby Path.GetFileName(actScreenDirectory)
+                select actScreenDirectory;
+            this.Screens = new List<ScreenData>();
+            foreach(string actScreenDirectory in screenDirectories)
             {
-                CardPairData actMemoryPair = new CardPairData(
-                    Path.GetFileName(actSubdirectory));
-
-                // Select all file names within the directory (order by filename)
-                IEnumerable<string> fileNames =
-                    from actFile in Directory.GetFiles(actSubdirectory)
-                    orderby Path.GetFileName(actFile)
-                    select actFile;
-                foreach (string actFilePath in fileNames)
+                ScreenData actScreen = new ScreenData(actScreenDirectory);
+                if(actScreen.MemoryPairs.Count > 0)
                 {
-                    string actFileExtension = Path.GetExtension(actFilePath);
-
-                    // Handle image files
-                    if (Constants.SUPPORTED_IMAGE_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
-                    {
-                        actMemoryPair.ProcessImageFile(actFilePath);
-                        continue;
-                    }
-
-                    // Handle video files
-                    if (Constants.SUPPORTED_VIDEO_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
-                    {
-                        actMemoryPair.ProcessVideoFile(actFilePath);
-                        continue;
-                    }
-                }
-
-                // Add the pair to the new object
-                if (actMemoryPair.IsValidPair())
-                {
-                    this.MemoryPairs.Add(actMemoryPair);
+                    this.Screens.Add(actScreen);
                 }
             }
         }
@@ -96,20 +73,11 @@ namespace RKVideoMemory.Data
         /// Loads the level from the given directory.
         /// </summary>
         /// <param name="directoryName">Name of the directory.</param>
-        public static async Task<LevelData> FromDirectory(string directoryName)
+        public static async Task<LevelData> FromDirectoryAsync(string directoryName)
         {
             LevelData result = null;
             await Task.Factory.StartNew(() => result = new LevelData(directoryName));
             return result;
-        }
-
-        /// <summary>
-        /// Gets a collection containing all found MemoryPairs.
-        /// </summary>
-        public List<CardPairData> MemoryPairs
-        {
-            get;
-            private set;
         }
 
         public MainTextureData MainTextures
@@ -119,6 +87,12 @@ namespace RKVideoMemory.Data
         }
 
         public TilemapData Tilemap
+        {
+            get;
+            private set;
+        }
+
+        public List<ScreenData> Screens
         {
             get;
             private set;

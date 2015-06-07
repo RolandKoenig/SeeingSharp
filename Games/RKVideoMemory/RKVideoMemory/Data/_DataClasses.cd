@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="RKVideoMemory.Data.LevelData" Collapsed="true">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAACAAACEAAAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>Data\LevelData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="MainTextures" />
+      <Property Name="Tilemap" />
+    </ShowAsAssociation>
+    <ShowAsCollectionAssociation>
+      <Property Name="Screens" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RKVideoMemory.Data.ScreenData" Collapsed="true">
+    <Position X="3.5" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\ScreenData.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsCollectionAssociation>
+      <Property Name="MemoryPairs" />
+    </ShowAsCollectionAssociation>
+  </Class>
+  <Class Name="RKVideoMemory.Data.MainTextureData" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAAAAAAABAAAAAAAAAAIAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\MainTextureData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RKVideoMemory.Data.TilemapData" Collapsed="true">
+    <Position X="3.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAAAAAAAAACAAAAAAAAAAAAAIEAAAAAAAAAAA=</HashCode>
+      <FileName>Data\TilemapData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RKVideoMemory.Data.CardPairData">
+    <Position X="6.25" Y="2" Width="1.5" />
+    <Members>
+      <Method Name="CardPairData" Hidden="true" />
+      <Method Name="IsValidPair" Hidden="true" />
+      <Field Name="m_childImageFiles" Hidden="true" />
+      <Field Name="m_childVideoFiles" Hidden="true" />
+      <Method Name="ProcessImageFile" Hidden="true" />
+      <Method Name="ProcessVideoFile" Hidden="true" />
+      <Method Name="ToString" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Fields" Collapsed="true" />
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>BCBAAAACAAAAAEEEAAYAAAAAAAAAAAQJAAAAAAAAAAA=</HashCode>
+      <FileName>Data\CardPairData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

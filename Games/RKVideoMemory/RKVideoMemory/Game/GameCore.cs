@@ -82,7 +82,7 @@ namespace RKVideoMemory.Game
             if (m_currentLevel != null) { await UnloadCurrentLevel(); }
 
             // Load the level
-            m_currentLevel = await LevelData.FromDirectory(sourceDirectory);
+            m_currentLevel = await LevelData.FromDirectoryAsync(sourceDirectory);
 
             // Load graphics for this level
             if(m_gameMap != null)
@@ -128,6 +128,11 @@ namespace RKVideoMemory.Game
         public LevelData CurrentLevel
         {
             get { return m_currentLevel; }
+        }
+
+        public GameMap CurrentMap
+        {
+            get { return m_gameMap; }
         }
 
         public SeeingSharpMessenger Messenger

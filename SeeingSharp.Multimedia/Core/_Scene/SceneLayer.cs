@@ -24,17 +24,17 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using SeeingSharp.Util;
 
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
-using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Core
 {
     public class SceneLayer
     {
-        //All generic members
+        #region All generic members
         private Queue<SceneObject> m_sceneObjectsForSingleUpdateCall;
         private List<SceneObject> m_sceneObjectsNotStatic;
         private List<SceneObject> m_sceneObjects;
@@ -45,9 +45,11 @@ namespace SeeingSharp.Multimedia.Core
         private string m_name;
         private bool m_isInUpdate;
         private bool m_isInUpdateBeside;
+        #endregion
 
-        //View related members
+        #region View related members
         private IndexBasedDynamicCollection<ViewRelatedSceneLayerSubset> m_viewSubsets;
+        #endregion
 
         /// <summary>
         /// Creates a new SceneLayer object for the given scene.
@@ -147,8 +149,7 @@ namespace SeeingSharp.Multimedia.Core
             if (sceneObject.SceneLayer != null) { throw new ArgumentException("Given object does already belong to another scene layer!", "sceneObject"); }
 
             m_sceneObjects.Add(sceneObject);
-            sceneObject.Scene = m_scene;
-            sceneObject.SceneLayer = this;
+            sceneObject.SetSceneAndLayer(m_scene, this);
 
             //Append object to specialized collections
             SceneSpacialObject spacialObject = sceneObject as SceneSpacialObject;
@@ -194,11 +195,11 @@ namespace SeeingSharp.Multimedia.Core
             foreach (SceneObject actObject in m_sceneObjects)
             {
                 actObject.UnloadResources();
-                actObject.Scene = null;
+                actObject.ResetSceneAndLayer();
             }
             m_sceneObjects.Clear();
 
-            //Clear specialized collections
+            // Clear specialized collections
             m_sceneObjectsNotSpacial.Clear();
             m_sceneObjectsSpacial.Clear();
             m_sceneObjectsNotStatic.Clear();
@@ -229,8 +230,7 @@ namespace SeeingSharp.Multimedia.Core
                 sceneObject.UnloadResources();
 
                 m_sceneObjects.Remove(sceneObject);
-                sceneObject.Scene = null;
-                sceneObject.SceneLayer = null;
+                sceneObject.ResetSceneAndLayer();
 
                 // Remove object from specialized collections
                 SceneSpacialObject spacialObject = sceneObject as SceneSpacialObject;

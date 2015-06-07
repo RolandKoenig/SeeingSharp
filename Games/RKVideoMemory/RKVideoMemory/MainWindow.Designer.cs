@@ -39,7 +39,6 @@
             this.m_chkFullscreen = new System.Windows.Forms.ToolStripMenuItem();
             this.m_dlgOpenDir = new System.Windows.Forms.FolderBrowserDialog();
             this.m_timerPicking = new System.Windows.Forms.Timer(this.components);
-            this.m_timerTrigger = new System.Windows.Forms.Timer(this.components);
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
             this.m_lblLoading = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_prgLoading = new System.Windows.Forms.ToolStripProgressBar();
@@ -113,12 +112,6 @@
             this.m_timerPicking.Enabled = true;
             this.m_timerPicking.Tick += new System.EventHandler(this.OnTimerPicking_Tick);
             // 
-            // m_timerTrigger
-            // 
-            this.m_timerTrigger.Enabled = true;
-            this.m_timerTrigger.Interval = 1000;
-            this.m_timerTrigger.Tick += new System.EventHandler(this.OnTimerTrigger_Tick);
-            // 
             // m_barStatus
             // 
             this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -185,8 +178,8 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(668, 399);
             this.Controls.Add(this.m_barStatus);
-            this.Controls.Add(this.m_ctrlRenderer);
             this.Controls.Add(this.m_mainMenu);
+            this.Controls.Add(this.m_ctrlRenderer);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.m_mainMenu;
             this.Name = "MainWindow";
@@ -208,7 +201,6 @@
         private System.Windows.Forms.ToolStripMenuItem m_cmdLoadLevel;
         private System.Windows.Forms.FolderBrowserDialog m_dlgOpenDir;
         private System.Windows.Forms.Timer m_timerPicking;
-        private System.Windows.Forms.Timer m_timerTrigger;
         private SeeingSharp.Multimedia.Views.MediaPlayerComponent m_mediaPlayer;
         private System.Windows.Forms.ToolStripMenuItem m_cmdClose;
         private System.Windows.Forms.ToolStripMenuItem konfigurationToolStripMenuItem;
