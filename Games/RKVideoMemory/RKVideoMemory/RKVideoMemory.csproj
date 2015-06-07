@@ -94,6 +94,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Data\LevelData.cs" />
+    <Compile Include="Data\LevelSettings.cs" />
     <Compile Include="Data\MainTextureData.cs" />
     <Compile Include="Data\CardPairData.cs" />
     <Compile Include="Data\ScreenData.cs" />

@@ -56,6 +56,7 @@ namespace RKVideoMemory
         public const string TITLE_IMAGE_NAME = "_Title";
         public const string TILEMAP_FILENAME = "Tilemap.txt";
         public const string APPICON_FILENAME = "AppIcon.ico";
+        public const string LEVELSETTINGS_FILENAME = "LevelSettings.xml";
         #endregion file patterns
 
         #region timing parameters

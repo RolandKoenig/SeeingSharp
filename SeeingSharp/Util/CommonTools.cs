@@ -310,8 +310,33 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Deserializes an object of the given type from the given storage file.
         /// </summary>
+        /// <param name="filePath">The file to deserialize from.</param>
+        public static T DeserializeFromXmlFile<T>(string filePath)
+            where T : class
+        {
+            try
+            {
+                //Open file for reading
+                using (Stream inStream = File.OpenRead(filePath))
+                {
+                    //Create the serializer
+                    XmlSerializer serializer = SerializerRepository.Current.GetSerializer<T>();
+
+                    //Deserialize the object and return the result
+                    return serializer.Deserialize(inStream) as T;
+                }
+            }
+            catch (FileNotFoundException) { }
+
+            //Return default value if something went wrong
+            return default(T);
+        }
+
+        /// <summary>
+        /// Deserializes an object of the given type from the given storage file.
+        /// </summary>
         /// <param name="storagefile">The file to deserialize from.</param>
-        public static async Task<T> DeserializeFromXmlFile<T>(string storagefile)
+        public static async Task<T> DeserializeFromXmlFileAsync<T>(string storagefile)
             where T : class
         {
             try
@@ -338,7 +363,7 @@ namespace SeeingSharp.Util
         /// <typeparam name="T">The type of the object to serialize.</typeparam>
         /// <param name="storageFile">The target file.</param>
         /// <param name="objectToSerialize">The object to serialize.</param>
-        public static async Task SerializeToXmlFile<T>(string storageFile, T objectToSerialize)
+        public static async Task SerializeToXmlFileAsync<T>(string storageFile, T objectToSerialize)
         {
             using (Stream outStream = new FileStream(storageFile, FileMode.Create, FileAccess.Write))
             {

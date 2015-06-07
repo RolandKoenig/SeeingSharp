@@ -117,7 +117,7 @@ namespace SeeingSharp.Gaming
             string filePath = Path.Combine(roamingFolder, "GameData.RK2048.xml");
 
             // Save updated highscore to file again
-            await CommonTools.SerializeToXmlFile(filePath, this);
+            await CommonTools.SerializeToXmlFileAsync(filePath, this);
 #endif
         }
 
@@ -168,7 +168,7 @@ namespace SeeingSharp.Gaming
                 try
                 {
                     //Try to load current score from roaming file
-                    GameDataContainer highScore = await CommonTools.DeserializeFromXmlFile<GameDataContainer>(filePath);
+                    GameDataContainer highScore = await CommonTools.DeserializeFromXmlFileAsync<GameDataContainer>(filePath);
                     if (highScore == null) { highScore = new GameDataContainer(); }
                     loadedContainer = highScore;
                 }

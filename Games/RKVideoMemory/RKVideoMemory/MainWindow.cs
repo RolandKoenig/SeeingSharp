@@ -41,15 +41,21 @@ namespace RKVideoMemory
 {
     public partial class MainWindow : Form
     {
+        #region initial state
         private Icon m_initialIcon;
+        private string m_initialTitel;
+        #endregion
 
+        #region game container
         private GameCore m_game;
+        #endregion
+
+        #region state variables
         private bool m_onTickProcessing;
         private List<SceneObject> m_objectsBelowCursor;
-
-
         private bool m_isFullscreen;
         private bool m_lastFullscreenState;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -58,7 +64,9 @@ namespace RKVideoMemory
         {
             InitializeComponent();
 
+            // Remember initial state
             m_initialIcon = this.Icon;
+            m_initialTitel = this.Text;
 
             m_objectsBelowCursor = new List<SceneObject>();
         }
@@ -149,6 +157,7 @@ namespace RKVideoMemory
 
         private void OnMessage_Received(LevelLoadedMessage message)
         {
+            // Replace icon
             if (!string.IsNullOrEmpty(message.LoadedLevel.AppIconPath))
             {
                 this.Icon = new Icon(message.LoadedLevel.AppIconPath);
@@ -156,6 +165,16 @@ namespace RKVideoMemory
             else
             {
                 this.Icon = m_initialIcon;
+            }
+
+            // Replace titel
+            if(!string.IsNullOrEmpty(message.LoadedLevel.LevelSettings.AppName))
+            {
+                this.Text = message.LoadedLevel.LevelSettings.AppName;
+            }
+            else
+            {
+                this.Text = m_initialTitel;
             }
         }
 

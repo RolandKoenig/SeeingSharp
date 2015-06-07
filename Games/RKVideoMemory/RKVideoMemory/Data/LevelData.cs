@@ -60,6 +60,16 @@ namespace RKVideoMemory.Data
                 this.AppIconPath = appIconPath;
             }
 
+            string levelSettingsPath = Path.Combine(directoryName, Constants.LEVELSETTINGS_FILENAME);
+            if(File.Exists(levelSettingsPath))
+            {
+                this.LevelSettings = CommonTools.DeserializeFromXmlFile<LevelSettings>(levelSettingsPath);
+            }
+            else
+            {
+                this.LevelSettings = LevelSettings.Default;
+            }
+
             // Load all screens
             IEnumerable<string> screenDirectories =
                 from actScreenDirectory in Directory.GetDirectories(directoryName)
@@ -88,6 +98,12 @@ namespace RKVideoMemory.Data
         }
 
         public string AppIconPath
+        {
+            get;
+            private set;
+        }
+
+        public LevelSettings LevelSettings
         {
             get;
             private set;
