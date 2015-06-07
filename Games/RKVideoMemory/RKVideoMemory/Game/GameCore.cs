@@ -39,7 +39,7 @@ namespace RKVideoMemory.Game
     {
         #region Game related members
         private LevelData m_currentLevel; 
-        private GameMap m_gameMap;
+        private GameScreenManagerLogic m_gameScreenManager;
         #endregion
 
         #region Graphics related members
@@ -85,13 +85,15 @@ namespace RKVideoMemory.Game
             m_currentLevel = await LevelData.FromDirectoryAsync(sourceDirectory);
 
             // Load graphics for this level
-            if(m_gameMap != null)
+            if(m_gameScreenManager != null)
             {
-                await m_gameMap.ClearAsync(m_scene);
+                await m_gameScreenManager.ClearAsync(m_scene);
             }
-            m_gameMap = new GameMap();
 
-            await m_gameMap.BuildLevelAsync(m_currentLevel, m_scene);
+            m_gameScreenManager = new GameScreenManagerLogic();
+
+            // Build the first screen
+            await m_gameScreenManager.BuildFirstScreenAsync(m_currentLevel, m_scene);
 
             m_camera.Position = new Vector3(0, 12f, 0f);
             m_camera.Target = new Vector3(0f, 0f, 0.1f);
@@ -130,9 +132,9 @@ namespace RKVideoMemory.Game
             get { return m_currentLevel; }
         }
 
-        public GameMap CurrentMap
+        public GameScreenManagerLogic CurrentMap
         {
-            get { return m_gameMap; }
+            get { return m_gameScreenManager; }
         }
 
         public SeeingSharpMessenger Messenger

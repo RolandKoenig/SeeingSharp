@@ -103,7 +103,7 @@
             // 
             this.m_chkFullscreen.Image = global::RKVideoMemory.Properties.Resources.Icon_Output16x16;
             this.m_chkFullscreen.Name = "m_chkFullscreen";
-            this.m_chkFullscreen.Size = new System.Drawing.Size(134, 26);
+            this.m_chkFullscreen.Size = new System.Drawing.Size(179, 26);
             this.m_chkFullscreen.Text = "Vollbild";
             this.m_chkFullscreen.Click += new System.EventHandler(this.OnChkFullscreen_Click);
             // 

@@ -36,12 +36,19 @@ using SeeingSharp.Util;
 
 namespace RKVideoMemory.Game
 {
-    public class GameMap
+    public class GameScreenManagerLogic : SceneLogicalObject
     {
         private const int CARDMAP_WIDTH = 5;
 
+        #region all needed level data
+        private LevelData m_currentLevel;
+        #endregion
+
+        #region Members describing the current screen
         private Card[,] m_cardMap;
-        private List<CardPair> m_cardPairs;
+        private List<CardPair> m_cardPairsOnScreen;
+        private int m_actScreenIndex;
+        #endregion
 
         /// <summary>
         /// Clears the current map from the given scene.
@@ -49,11 +56,11 @@ namespace RKVideoMemory.Game
         /// <param name="scene">The scene to be cleard..</param>
         internal async Task ClearAsync(Scene scene)
         {
-            m_cardPairs.EnsureNotNull("m_cardPairs");
+            m_cardPairsOnScreen.EnsureNotNull("m_cardPairs");
 
             await scene.ManipulateSceneAsync((manipulator) =>
             {
-                foreach (CardPair actPair in m_cardPairs)
+                foreach (CardPair actPair in m_cardPairsOnScreen)
                 {
                     foreach (Card actCard in actPair.Cards)
                     {
@@ -71,8 +78,10 @@ namespace RKVideoMemory.Game
         /// </summary>
         /// <param name="currentLevel">The current level.</param>
         /// <param name="scene">The scene to which to add all objects.</param>
-        internal async Task BuildLevelAsync(LevelData currentLevel, Scene scene)
+        internal async Task BuildFirstScreenAsync(LevelData currentLevel, Scene scene)
         {
+            m_currentLevel = currentLevel;
+
             int tilesX = currentLevel.Tilemap.TilesX;
             int tilesY = currentLevel.Tilemap.TilesY;
             float tileDistX = Constants.TILE_DISTANCE_X;
@@ -80,7 +89,7 @@ namespace RKVideoMemory.Game
             Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, ((tilesY - 1) * tileDistY / 2f));
 
             m_cardMap = new Card[tilesX, tilesY];
-            m_cardPairs = new List<CardPair>();
+            m_cardPairsOnScreen = new List<CardPair>();
             Random randomizer = new Random(Environment.TickCount);
 
             await scene.ManipulateSceneAsync((manipulator) =>
@@ -128,12 +137,13 @@ namespace RKVideoMemory.Game
                     actCardPair.Cards = new Card[] { cardA, cardB };
                     manipulator.Add(actCardPair);
 
-                    m_cardPairs.Add(actCardPair);
+                    m_cardPairsOnScreen.Add(actCardPair);
                 }
 
-                // Add uncover logic component
+                // Add all logic components to the scene
                 manipulator.Add(new PairUncoverLogic());
                 manipulator.Add(new VideoPlayLogic());
+                manipulator.Add(this);
             });
         }
 
@@ -171,14 +181,14 @@ namespace RKVideoMemory.Game
         {
             get
             {
-                if (m_cardPairs == null) { return 0; }
-                return m_cardPairs.Count;
+                if (m_cardPairsOnScreen == null) { return 0; }
+                return m_cardPairsOnScreen.Count;
             }
         }
 
         public List<CardPair> Pairs
         {
-            get { return m_cardPairs; }
+            get { return m_cardPairsOnScreen; }
         }
     }
 }
