@@ -44,11 +44,11 @@ namespace RKVideoMemory
         #region initial state
         private Icon m_initialIcon;
         private string m_initialTitel;
-        #endregion
+        #endregion initial state
 
         #region game container
         private GameCore m_game;
-        #endregion
+        #endregion game container
 
         #region state variables
         private bool m_onTickProcessing;
@@ -56,7 +56,7 @@ namespace RKVideoMemory
         private bool m_isFullscreen;
         private bool m_lastFullscreenState;
         private bool m_isLoading;
-        #endregion
+        #endregion state variables
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -164,6 +164,12 @@ namespace RKVideoMemory
             catch (Exception)
             {
                 m_ctrlRenderer.DiscardPresent = false;
+
+                // Trigger MovieFinished message to ensure correct game logic
+                SeeingSharpApplication.Current.UIMessenger
+                    .Publish<PlayMovieFinishedMessage>();
+
+                // Rethrow exception
                 throw;
             }
         }
@@ -181,7 +187,7 @@ namespace RKVideoMemory
             }
 
             // Replace titel
-            if(!string.IsNullOrEmpty(message.LoadedLevel.LevelSettings.AppName))
+            if (!string.IsNullOrEmpty(message.LoadedLevel.LevelSettings.AppName))
             {
                 this.Text = "RK Video Memory - " + message.LoadedLevel.LevelSettings.AppName;
             }
