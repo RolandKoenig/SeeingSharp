@@ -50,6 +50,7 @@ namespace RKVideoMemory.Behaviors
         private Control m_observedControl;
         private Control m_controlToHide;
         private double m_inactivitySeconds = INACTIVITY_SECS_DEFAULT;
+        private bool m_isHidingActive;
         #endregion Associated controls and configuration
 
         #region Local resources
@@ -75,6 +76,7 @@ namespace RKVideoMemory.Behaviors
             m_refreshTimer.Tick += OnRefreshTimer_Tick;
 
             m_lastMouseMove = DateTime.UtcNow;
+            m_isHidingActive = true;
         }
 
         /// <summary>
@@ -91,6 +93,12 @@ namespace RKVideoMemory.Behaviors
 
         private void UpdateTargetControlVisibility()
         {
+            if(!m_isHidingActive)
+            {
+                m_controlToHide.Visible = true;
+                return;
+            }
+
             if (DateTime.UtcNow - m_lastMouseMove > TimeSpan.FromSeconds(m_inactivitySeconds))
             {
                 m_controlToHide.Visible = false;
@@ -190,6 +198,21 @@ namespace RKVideoMemory.Behaviors
             {
                 value.EnsurePositiveAndNotZero("value");
                 m_inactivitySeconds = value;
+            }
+        }
+
+        [Browsable(false)]
+        public bool IsHidingActive
+        {
+            get { return m_isHidingActive; }
+            set
+            {
+                if(m_isHidingActive != value)
+                {
+                    m_isHidingActive = value;
+                    m_lastMouseMove = DateTime.UtcNow;
+                    this.UpdateTargetControlVisibility();
+                }
             }
         }
     }

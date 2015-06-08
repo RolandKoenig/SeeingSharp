@@ -55,6 +55,7 @@ namespace RKVideoMemory
         private List<SceneObject> m_objectsBelowCursor;
         private bool m_isFullscreen;
         private bool m_lastFullscreenState;
+        private bool m_isLoading;
         #endregion
 
         /// <summary>
@@ -79,6 +80,8 @@ namespace RKVideoMemory
             this.Enabled =
                 (m_game != null) &&
                 (m_game.IsInitialized);
+
+            m_barStatus.Visible = m_isLoading;
 
             // Handle fullscreen mode
             m_chkFullscreen.Checked = m_isFullscreen;
@@ -128,7 +131,17 @@ namespace RKVideoMemory
                 Constants.DEFAULT_FOLDER_INITIAL_LEVEL);
             if (Directory.Exists(defaultFolder))
             {
-                await m_game.LoadLevelAsync(defaultFolder);
+                m_isLoading = true;
+                try
+                {
+                    this.UpdateDialogStates();
+                    await m_game.LoadLevelAsync(defaultFolder);
+                }
+                finally
+                {
+                    m_isLoading = false;
+                    this.UpdateDialogStates();
+                }
             }
         }
 
@@ -170,7 +183,7 @@ namespace RKVideoMemory
             // Replace titel
             if(!string.IsNullOrEmpty(message.LoadedLevel.LevelSettings.AppName))
             {
-                this.Text = message.LoadedLevel.LevelSettings.AppName;
+                this.Text = "RK Video Memory - " + message.LoadedLevel.LevelSettings.AppName;
             }
             else
             {
@@ -251,14 +264,16 @@ namespace RKVideoMemory
         {
             if (m_dlgOpenDir.ShowDialog(this) == DialogResult.OK)
             {
-                m_barStatus.Visible = true;
+                m_isLoading = true;
                 try
                 {
+                    this.UpdateDialogStates();
                     await m_game.LoadLevelAsync(m_dlgOpenDir.SelectedPath);
                 }
                 finally
                 {
-                    m_barStatus.Visible = false;
+                    m_isLoading = false;
+                    this.UpdateDialogStates();
                 }
             }
         }
@@ -272,6 +287,16 @@ namespace RKVideoMemory
         private void OnCmdClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void OnMainMenu_MenuActivate(object sender, EventArgs e)
+        {
+            m_behaviorHideMenubar.IsHidingActive = false;
+        }
+
+        private void OnMainMenu_MenuDeactivate(object sender, EventArgs e)
+        {
+            m_behaviorHideMenubar.IsHidingActive = true;
         }
     }
 }
