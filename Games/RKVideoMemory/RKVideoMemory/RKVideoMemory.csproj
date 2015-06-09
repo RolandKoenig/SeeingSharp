@@ -99,6 +99,7 @@
     <Compile Include="Data\CardPairData.cs" />
     <Compile Include="Data\ScreenData.cs" />
     <Compile Include="Data\TilemapData.cs" />
+    <Compile Include="Game\BackgroundMusicLogic.cs" />
     <Compile Include="Game\Card.cs" />
     <Compile Include="Game\CardPair.cs" />
     <Compile Include="Game\PairUncoverLogic.cs" />

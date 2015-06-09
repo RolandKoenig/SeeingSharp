@@ -232,6 +232,8 @@ namespace SeeingSharp.Multimedia.Views
             MF.MediaFactory.CreateTopology(out topology);
             mediaSource.CreatePresentationDescriptor(out presentationDescriptor);
             int streamDescriptorCount = presentationDescriptor.StreamDescriptorCount;
+
+            bool containsVideoStream = false;
             for (int loop = 0; loop < streamDescriptorCount; loop++)
             {
                 SDX.Bool selected = false;
@@ -260,6 +262,12 @@ namespace SeeingSharp.Multimedia.Views
                     }
                     else if (MF.MediaTypeGuids.Video == majorType)
                     {
+                        if (m_targetControl == null)
+                        {
+                            throw new SeeingSharpException("Unable to display vido when MediaPlayerComponent is not bound to a target control!");
+                        }
+
+                        containsVideoStream = true;
                         MF.Activate videoRenderer;
                         MF.MediaFactory.CreateVideoRendererActivate(
                             m_targetControl.Handle,
@@ -290,7 +298,7 @@ namespace SeeingSharp.Multimedia.Views
                 durationLong = presentationDescriptor.Get<long>(MF.PresentationDescriptionAttributeKeys.Duration);
                 m_currentVideoDuration = TimeSpan.FromTicks(durationLong);
             }
-            catch(SharpDX.SharpDXException)
+            catch (SharpDX.SharpDXException)
             {
                 m_currentVideoDuration = TimeSpan.MaxValue;
             }
@@ -310,10 +318,13 @@ namespace SeeingSharp.Multimedia.Views
             GraphicsHelper.SafeDispose(ref topology);
 
             // Query for display control service
-            using (MF.ServiceProvider serviceProvider = m_mediaSession.QueryInterface<MF.ServiceProvider>())
+            if (containsVideoStream)
             {
-                m_displayControl = serviceProvider.GetService<MF.VideoDisplayControl>(
-                    new Guid("{0x1092a86c, 0xab1a, 0x459a,{0xa3, 0x36, 0x83, 0x1f, 0xbc, 0x4d, 0x11, 0xff}}"));
+                using (MF.ServiceProvider serviceProvider = m_mediaSession.QueryInterface<MF.ServiceProvider>())
+                {
+                    m_displayControl = serviceProvider.GetService<MF.VideoDisplayControl>(
+                        new Guid("{0x1092a86c, 0xab1a, 0x459a,{0xa3, 0x36, 0x83, 0x1f, 0xbc, 0x4d, 0x11, 0xff}}"));
+                }
             }
 
             // Start playing the video
@@ -407,7 +418,7 @@ namespace SeeingSharp.Multimedia.Views
         private void OnTargetControlResize(object sender, EventArgs e)
         {
             if ((m_displayControl != null) &&
-               (m_targetControl != null))
+                (m_targetControl != null))
             {
                 m_displayControl.SetVideoPosition(
                     null,
@@ -423,7 +434,7 @@ namespace SeeingSharp.Multimedia.Views
         private void OnTargetControlPaint(object sender, PaintEventArgs e)
         {
             if ((m_displayControl != null) &&
-               (m_targetControl != null))
+                (m_targetControl != null))
             {
                 m_displayControl.RepaintVideo();
             }

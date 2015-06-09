@@ -43,19 +43,19 @@ namespace RKVideoMemory.Game
 
         #region all needed level data
         private LevelData m_currentLevel;
-        #endregion
+        #endregion all needed level data
 
         #region Members describing the current screen
         private Card[,] m_cardMapOnScreen;
         private List<CardPair> m_cardPairsOnScreen;
         private int m_actScreenIndex;
-        #endregion
+        #endregion Members describing the current screen
 
         #region Graphics resource keys
         private Scene m_scene;
         private NamedOrGenericKey m_resBackgroundMaterial1;
         private NamedOrGenericKey m_resBackgroundMaterial2;
-        #endregion
+        #endregion Graphics resource keys
 
         /// <summary>
         /// Clears the current map from the given scene.
@@ -117,6 +117,7 @@ namespace RKVideoMemory.Game
                 // Add all logic components to the scene
                 manipulator.Add(new PairUncoverLogic());
                 manipulator.Add(new VideoPlayLogic());
+                manipulator.Add(new BackgroundMusicLogic(currentLevel));
                 manipulator.Add(this);
             });
 
@@ -232,9 +233,9 @@ namespace RKVideoMemory.Game
         {
             // Check whether we've finished the current screen
             bool isCurrentScreenFinished = true;
-            foreach(CardPair actCardPair in m_cardPairsOnScreen)
+            foreach (CardPair actCardPair in m_cardPairsOnScreen)
             {
-                if(!actCardPair.IsUncovered)
+                if (!actCardPair.IsUncovered)
                 {
                     isCurrentScreenFinished = false;
                     break;
@@ -242,16 +243,15 @@ namespace RKVideoMemory.Game
             }
 
             // Call default screen fade-in if the current one has not finished yet
-            if(!isCurrentScreenFinished)
+            if (!isCurrentScreenFinished)
             {
                 Messenger.Publish<MainMemoryScreenEnteredMessage>();
                 return;
             }
 
-            if(m_currentLevel.Screens.Count - 1 <= m_actScreenIndex)
+            if (m_currentLevel.Screens.Count - 1 <= m_actScreenIndex)
             {
                 // We have finished with all screens, show ending animation
-
             }
             else
             {

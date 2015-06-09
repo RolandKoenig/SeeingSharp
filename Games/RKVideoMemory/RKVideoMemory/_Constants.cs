@@ -35,11 +35,23 @@ namespace RKVideoMemory
 
         #region folder names
         public const string DEFAULT_FOLDER_INITIAL_LEVEL = "MemoryData";
+        public const string FOLDERNAME_MUSIC = "Music";
         #endregion folder names
+
+        #region file patterns
+        public const string FILE_PATTERN_BACKGROUND = "Background.*";
+        public const string FILE_PATTERN_TILE1 = "Tile1.*";
+        public const string FILE_PATTERN_TILE2 = "Tile2.*";
+        public const string FILENAME_TITLE_IMAGE = "_Title";
+        public const string FILENAME_TILEMAP = "Tilemap.txt";
+        public const string FILENAME_APPICON = "AppIcon.ico";
+        public const string FILENAME_LEVELSETTINGS = "LevelSettings.xml";
+        #endregion file patterns
 
         #region file extensions
         public static readonly string[] SUPPORTED_IMAGE_FORMATS = new string[] { ".jpg", ".jpeg", ".png", ".bmp" };
         public static readonly string[] SUPPORTED_VIDEO_FORMATS = new string[] { ".mp4", ".wmv" };
+        public static readonly string[] SUPPORTED_MUSIC_FORMATS = new string[] { ".mp3", ".wav" };
         #endregion file extensions
 
         #region graphics layer settings
@@ -48,16 +60,6 @@ namespace RKVideoMemory
         public const string GFX_LAYER_VIDEO_FOREGROUND = "VideoForeground";
         public const int GFX_LAYER_VIDEO_FOREGROUND_ORDERID = 100;
         #endregion graphics layer settings
-
-        #region file patterns
-        public const string FILE_PATTERN_BACKGROUND = "Background.*";
-        public const string FILE_PATTERN_TILE1 = "Tile1.*";
-        public const string FILE_PATTERN_TILE2 = "Tile2.*";
-        public const string TITLE_IMAGE_NAME = "_Title";
-        public const string TILEMAP_FILENAME = "Tilemap.txt";
-        public const string APPICON_FILENAME = "AppIcon.ico";
-        public const string LEVELSETTINGS_FILENAME = "LevelSettings.xml";
-        #endregion file patterns
 
         #region timing parameters
         public const int INITIAL_UNCOVER_SECONDS_MAX = 4;

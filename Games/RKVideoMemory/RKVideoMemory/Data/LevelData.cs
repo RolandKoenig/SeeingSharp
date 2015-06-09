@@ -33,17 +33,21 @@ namespace RKVideoMemory.Data
 {
     public class LevelData
     {
+        private List<string> m_musicFilePaths;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LevelData"/> class.
         /// </summary>
         /// <param name="directoryName">Name of the directory.</param>
         private LevelData(string directoryName)
         {
+            m_musicFilePaths = new List<string>();
+
             // Search all main textures
             this.MainTextures = new MainTextureData(directoryName);
 
             // Handle tilemap file
-            string tilemapPath = Path.Combine(directoryName, Constants.TILEMAP_FILENAME);
+            string tilemapPath = Path.Combine(directoryName, Constants.FILENAME_TILEMAP);
             if (File.Exists(tilemapPath))
             {
                 this.Tilemap = TilemapData.FromFile(tilemapPath);
@@ -54,14 +58,15 @@ namespace RKVideoMemory.Data
             }
 
             // Set reference to the main icon
-            string appIconPath = Path.Combine(directoryName, Constants.APPICON_FILENAME);
-            if(File.Exists(appIconPath))
+            string appIconPath = Path.Combine(directoryName, Constants.FILENAME_APPICON);
+            if (File.Exists(appIconPath))
             {
                 this.AppIconPath = appIconPath;
             }
 
-            string levelSettingsPath = Path.Combine(directoryName, Constants.LEVELSETTINGS_FILENAME);
-            if(File.Exists(levelSettingsPath))
+            // Load common level settings
+            string levelSettingsPath = Path.Combine(directoryName, Constants.FILENAME_LEVELSETTINGS);
+            if (File.Exists(levelSettingsPath))
             {
                 this.LevelSettings = CommonTools.DeserializeFromXmlFile<LevelSettings>(levelSettingsPath);
             }
@@ -70,16 +75,33 @@ namespace RKVideoMemory.Data
                 this.LevelSettings = LevelSettings.Default;
             }
 
+            // Load music folder
+            string musicFolder = Path.Combine(directoryName, Constants.FOLDERNAME_MUSIC);
+            if (Directory.Exists(musicFolder))
+            {
+                foreach (string actFileName in Directory.GetFiles(musicFolder))
+                {
+                    string actFileExtension = Path.GetExtension(actFileName);
+                    if (!Constants.SUPPORTED_MUSIC_FORMATS.ContainsString(actFileExtension, StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+
+                    m_musicFilePaths.Add(actFileName);
+                }
+            }
+
             // Load all screens
             IEnumerable<string> screenDirectories =
                 from actScreenDirectory in Directory.GetDirectories(directoryName)
+                where Path.GetFileName(actScreenDirectory).StartsWith("Screen", StringComparison.OrdinalIgnoreCase)
                 orderby Path.GetFileName(actScreenDirectory)
                 select actScreenDirectory;
             this.Screens = new List<ScreenData>();
-            foreach(string actScreenDirectory in screenDirectories)
+            foreach (string actScreenDirectory in screenDirectories)
             {
                 ScreenData actScreen = new ScreenData(actScreenDirectory);
-                if(actScreen.MemoryPairs.Count > 0)
+                if (actScreen.MemoryPairs.Count > 0)
                 {
                     this.Screens.Add(actScreen);
                 }
@@ -101,6 +123,11 @@ namespace RKVideoMemory.Data
         {
             get;
             private set;
+        }
+
+        public IEnumerable<string> MusicFilePaths
+        {
+            get { return m_musicFilePaths; }
         }
 
         public LevelSettings LevelSettings

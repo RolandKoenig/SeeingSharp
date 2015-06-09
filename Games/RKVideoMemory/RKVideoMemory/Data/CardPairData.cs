@@ -74,7 +74,7 @@ namespace RKVideoMemory.Data
         /// <param name="filePath">The path to the image file.</param>
         internal void ProcessImageFile(string filePath)
         {
-            if (Path.GetFileNameWithoutExtension(filePath).Equals(Constants.TITLE_IMAGE_NAME, StringComparison.OrdinalIgnoreCase))
+            if (Path.GetFileNameWithoutExtension(filePath).Equals(Constants.FILENAME_TITLE_IMAGE, StringComparison.OrdinalIgnoreCase))
             {
                 // We are loading the title image
                 this.TitleFile = filePath;
