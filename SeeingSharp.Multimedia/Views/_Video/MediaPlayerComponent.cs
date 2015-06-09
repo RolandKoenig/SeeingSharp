@@ -52,14 +52,17 @@ namespace SeeingSharp.Multimedia.Views
         private ResourceLink m_currentVideoLink;
         private CaptureDeviceInfo m_currentCaptureDevice;
         private TimeSpan m_currentVideoDuration;
+        private float m_lastAudioVolume;
         private bool m_isPaused;
         #endregion Own properties
 
         #region References to Media Foundation
         private Stream m_videoSourceStreamNet;
+        private object m_mfResourceLock;
         private MF.ByteStream m_videoSourceStream;
         private MF.MediaSession m_mediaSession;
         private MF.VideoDisplayControl m_displayControl;
+        private MF.AudioStreamVolume m_audioStreamVolume;
         private MFSessionEventListener m_sessionEventHandler;
         #endregion References to Media Foundation
 
@@ -78,13 +81,18 @@ namespace SeeingSharp.Multimedia.Views
         [Category(CATEGORY_NAME)]
         public event EventHandler VideoFinished;
 
+        [Category(CATEGORY_NAME)]
+        public event EventHandler VideoClosed;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MediaPlayerComponent"/> class.
         /// </summary>
         public MediaPlayerComponent()
         {
+            m_mfResourceLock = new object();
             m_currentVideoLink = null;
             m_currentCaptureDevice = null;
+            m_lastAudioVolume = 1f;
         }
 
         /// <summary>
@@ -226,81 +234,85 @@ namespace SeeingSharp.Multimedia.Views
 
         private async Task ShowVideoAsync(MF.MediaSource mediaSource)
         {
-            // Create topology
             MF.Topology topology;
             MF.PresentationDescriptor presentationDescriptor;
-            MF.MediaFactory.CreateTopology(out topology);
-            mediaSource.CreatePresentationDescriptor(out presentationDescriptor);
-            int streamDescriptorCount = presentationDescriptor.StreamDescriptorCount;
-
             bool containsVideoStream = false;
-            for (int loop = 0; loop < streamDescriptorCount; loop++)
+            bool containsAudioStream = false;
+            lock (m_mfResourceLock)
             {
-                SDX.Bool selected = false;
-                MF.StreamDescriptor streamDescriptor;
-                presentationDescriptor.GetStreamDescriptorByIndex(loop, out selected, out streamDescriptor);
-                if (selected)
+                // Create topology
+                MF.MediaFactory.CreateTopology(out topology);
+                mediaSource.CreatePresentationDescriptor(out presentationDescriptor);
+                int streamDescriptorCount = presentationDescriptor.StreamDescriptorCount;
+                for (int loop = 0; loop < streamDescriptorCount; loop++)
                 {
-                    // Create source node
-                    MF.TopologyNode sourceNode = null;
-                    MF.MediaFactory.CreateTopologyNode(MF.TopologyType.SourceStreamNode, out sourceNode);
-                    sourceNode.Set(MF.TopologyNodeAttributeKeys.Source, mediaSource);
-                    sourceNode.Set(MF.TopologyNodeAttributeKeys.PresentationDescriptor, presentationDescriptor);
-                    sourceNode.Set(MF.TopologyNodeAttributeKeys.StreamDescriptor, streamDescriptor);
+                    SDX.Bool selected = false;
+                    MF.StreamDescriptor streamDescriptor;
+                    presentationDescriptor.GetStreamDescriptorByIndex(loop, out selected, out streamDescriptor);
+                    if (selected)
+                    {
+                        // Create source node
+                        MF.TopologyNode sourceNode = null;
+                        MF.MediaFactory.CreateTopologyNode(MF.TopologyType.SourceStreamNode, out sourceNode);
+                        sourceNode.Set(MF.TopologyNodeAttributeKeys.Source, mediaSource);
+                        sourceNode.Set(MF.TopologyNodeAttributeKeys.PresentationDescriptor, presentationDescriptor);
+                        sourceNode.Set(MF.TopologyNodeAttributeKeys.StreamDescriptor, streamDescriptor);
 
-                    // Create output node
-                    MF.TopologyNode outputNode = null;
-                    MF.MediaTypeHandler mediaTypeHandler = streamDescriptor.MediaTypeHandler;
-                    Guid majorType = mediaTypeHandler.MajorType;
-                    MF.MediaFactory.CreateTopologyNode(MF.TopologyType.OutputNode, out outputNode);
-                    if (MF.MediaTypeGuids.Audio == majorType)
-                    {
-                        MF.Activate audioRenderer;
-                        MF.MediaFactory.CreateAudioRendererActivate(out audioRenderer);
-                        outputNode.Object = audioRenderer;
-                        GraphicsHelper.SafeDispose(ref audioRenderer);
-                    }
-                    else if (MF.MediaTypeGuids.Video == majorType)
-                    {
-                        if (m_targetControl == null)
+                        // Create output node
+                        MF.TopologyNode outputNode = null;
+                        MF.MediaTypeHandler mediaTypeHandler = streamDescriptor.MediaTypeHandler;
+                        Guid majorType = mediaTypeHandler.MajorType;
+                        MF.MediaFactory.CreateTopologyNode(MF.TopologyType.OutputNode, out outputNode);
+                        if (MF.MediaTypeGuids.Audio == majorType)
                         {
-                            throw new SeeingSharpException("Unable to display vido when MediaPlayerComponent is not bound to a target control!");
+                            containsAudioStream = true;
+                            MF.Activate audioRenderer;
+                            MF.MediaFactory.CreateAudioRendererActivate(out audioRenderer);
+                            outputNode.Object = audioRenderer;
+                            GraphicsHelper.SafeDispose(ref audioRenderer);
+                        }
+                        else if (MF.MediaTypeGuids.Video == majorType)
+                        {
+                            if (m_targetControl == null)
+                            {
+                                throw new SeeingSharpException("Unable to display vido when MediaPlayerComponent is not bound to a target control!");
+                            }
+
+                            containsVideoStream = true;
+                            MF.Activate videoRenderer;
+                            MF.MediaFactory.CreateVideoRendererActivate(
+                                m_targetControl.Handle,
+                                out videoRenderer);
+                            outputNode.Object = videoRenderer;
+                            GraphicsHelper.SafeDispose(ref videoRenderer);
                         }
 
-                        containsVideoStream = true;
-                        MF.Activate videoRenderer;
-                        MF.MediaFactory.CreateVideoRendererActivate(
-                            m_targetControl.Handle,
-                            out videoRenderer);
-                        outputNode.Object = videoRenderer;
-                        GraphicsHelper.SafeDispose(ref videoRenderer);
+                        // Append nodes to topology
+                        topology.AddNode(sourceNode);
+                        topology.AddNode(outputNode);
+                        sourceNode.ConnectOutput(0, outputNode, 0);
+
+                        // Clear COM references
+                        GraphicsHelper.SafeDispose(ref sourceNode);
+                        GraphicsHelper.SafeDispose(ref outputNode);
+                        GraphicsHelper.SafeDispose(ref mediaTypeHandler);
                     }
 
-                    // Append nodes to topology
-                    topology.AddNode(sourceNode);
-                    topology.AddNode(outputNode);
-                    sourceNode.ConnectOutput(0, outputNode, 0);
-
                     // Clear COM references
-                    GraphicsHelper.SafeDispose(ref sourceNode);
-                    GraphicsHelper.SafeDispose(ref outputNode);
-                    GraphicsHelper.SafeDispose(ref mediaTypeHandler);
+                    GraphicsHelper.SafeDispose(ref streamDescriptor);
                 }
 
-                // Clear COM references
-                GraphicsHelper.SafeDispose(ref streamDescriptor);
-            }
-
-            // Get the total duration of the video
-            long durationLong = 0;
-            try
-            {
-                durationLong = presentationDescriptor.Get<long>(MF.PresentationDescriptionAttributeKeys.Duration);
-                m_currentVideoDuration = TimeSpan.FromTicks(durationLong);
-            }
-            catch (SharpDX.SharpDXException)
-            {
-                m_currentVideoDuration = TimeSpan.MaxValue;
+                // Get the total duration of the video
+                long durationLong = 0;
+                try
+                {
+                    durationLong = presentationDescriptor.Get<long>(MF.PresentationDescriptionAttributeKeys.Duration);
+                    m_currentVideoDuration = TimeSpan.FromTicks(durationLong);
+                }
+                catch (SharpDX.SharpDXException)
+                {
+                    m_currentVideoDuration = TimeSpan.MaxValue;
+                }
             }
 
             // Dispose reference to the presentation descriptor
@@ -317,13 +329,25 @@ namespace SeeingSharp.Multimedia.Views
             // Clear reference to the topology
             GraphicsHelper.SafeDispose(ref topology);
 
-            // Query for display control service
-            if (containsVideoStream)
+            lock (m_mfResourceLock)
             {
                 using (MF.ServiceProvider serviceProvider = m_mediaSession.QueryInterface<MF.ServiceProvider>())
                 {
-                    m_displayControl = serviceProvider.GetService<MF.VideoDisplayControl>(
-                        new Guid("{0x1092a86c, 0xab1a, 0x459a,{0xa3, 0x36, 0x83, 0x1f, 0xbc, 0x4d, 0x11, 0xff}}"));
+                    // Query for display control service
+                    if (containsVideoStream)
+                    {
+                        m_displayControl = serviceProvider.GetService<MF.VideoDisplayControl>(
+                            new Guid("{0x1092a86c, 0xab1a, 0x459a,{0xa3, 0x36, 0x83, 0x1f, 0xbc, 0x4d, 0x11, 0xff}}"));
+                    }
+
+                    // Query for volume control service
+                    if (containsAudioStream)
+                    {
+                        m_audioStreamVolume = serviceProvider.GetService<MF.AudioStreamVolume>(
+                            MF.MediaServiceKeys.StreamVolume);
+
+                        this.AudioVolume = m_lastAudioVolume;
+                    }
                 }
             }
 
@@ -385,6 +409,7 @@ namespace SeeingSharp.Multimedia.Views
             }
 
             //VideoFinished.Raise(this, EventArgs.Empty);
+            VideoClosed.Raise(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -445,22 +470,26 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         private void DisposeResources()
         {
-            // Shutdown current session
-            if (m_mediaSession != null)
+            lock (m_mfResourceLock)
             {
-                m_mediaSession.Shutdown();
+                // Shutdown current session
+                if (m_mediaSession != null)
+                {
+                    m_mediaSession.Shutdown();
+                }
+
+                // Clear all references
+                m_currentVideoLink = null;
+                m_currentCaptureDevice = null;
+                m_currentVideoDuration = TimeSpan.Zero;
+                GraphicsHelper.SafeDispose(ref m_displayControl);
+                GraphicsHelper.SafeDispose(ref m_audioStreamVolume);
+                GraphicsHelper.SafeDispose(ref m_mediaSession);
+                m_sessionEventHandler = null;
+
+                GraphicsHelper.SafeDispose(ref m_videoSourceStream);
+                GraphicsHelper.SafeDispose(ref m_videoSourceStreamNet);
             }
-
-            // Clear all references
-            m_currentVideoLink = null;
-            m_currentCaptureDevice = null;
-            m_currentVideoDuration = TimeSpan.Zero;
-            GraphicsHelper.SafeDispose(ref m_displayControl);
-            GraphicsHelper.SafeDispose(ref m_mediaSession);
-            m_sessionEventHandler = null;
-
-            GraphicsHelper.SafeDispose(ref m_videoSourceStream);
-            GraphicsHelper.SafeDispose(ref m_videoSourceStreamNet);
 
             // Apply new state
             this.IsPaused = false;
@@ -567,6 +596,41 @@ namespace SeeingSharp.Multimedia.Views
                 {
                     m_isPaused = value;
                     if (IsPausedChanged != null) { IsPausedChanged(this, EventArgs.Empty); }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the current MasterVolume for audio rendering.
+        /// </summary>
+        [Browsable(false)]
+        public float AudioVolume
+        {
+            get
+            {
+                lock (m_mfResourceLock)
+                {
+                    float result = 0f;
+                    if (m_audioStreamVolume != null)
+                    {
+                        m_audioStreamVolume.GetChannelVolume(0, out result);
+                    }
+                    return result;
+                }
+            }
+            set
+            {
+                lock (m_mfResourceLock)
+                {
+                    if (m_audioStreamVolume != null)
+                    {
+                        int channelCount = m_audioStreamVolume.ChannelCount;
+                        for (int loop = 0; loop < channelCount; loop++)
+                        {
+                            m_audioStreamVolume.SetChannelVolume(loop, value);
+                        }
+                    }
+                    m_lastAudioVolume = value;
                 }
             }
         }
