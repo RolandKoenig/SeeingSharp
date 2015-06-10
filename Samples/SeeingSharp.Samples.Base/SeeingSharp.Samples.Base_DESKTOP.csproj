@@ -73,6 +73,7 @@
     <Compile Include="_Performance\PerformanceAnalysisViewModel.cs" />
     <Compile Include="_Performance\PerformanceSnapshot.cs" />
     <Compile Include="_Performance\PerformanceSnapshotItem.cs" />
+    <Compile Include="_Samples\Direct2D\Direct2DRemderDxfFile.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
     <Compile Include="_Samples\MFSamples\CameraCaptureSample.cs" />
@@ -97,6 +98,7 @@
     <Resource Include="Assets\SampleImages\Direct2D_Screen_Overlay.png" />
     <Resource Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Resource Include="Assets\SampleImages\Media_Foundation_Camera_Capture.png" />
+    <Resource Include="Assets\SampleImages\Direct2D_Render_Dxf_File.png" />
     <Content Include="Assets\Textures\Background.png" />
   </ItemGroup>
   <ItemGroup>
