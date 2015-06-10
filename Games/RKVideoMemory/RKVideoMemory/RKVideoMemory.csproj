@@ -203,6 +203,13 @@
     <Content Include="Assets\Icons\Output16x16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>mkdir "$(TargetDir)bin"
+copy "$(TargetDir)*.dll" "$(TargetDir)bin\*.dll"
+
+del "$(TargetDir)*.dll"
+del "$(TargetDir)*.xml"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
