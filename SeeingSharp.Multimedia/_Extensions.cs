@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 using System;
 using System.Collections.Generic;
@@ -47,6 +47,11 @@ namespace SeeingSharp.Multimedia
         internal static SharpDX.Color4 ToDXColor(this Color4 color)
         {
             return new SharpDX.Color4(color.Red, color.Green, color.Blue, color.Alpha);
+        }
+
+        internal static SharpDX.Vector2 ToDXVector(this Vector2 vector)
+        {
+            return new SharpDX.Vector2(vector.X, vector.Y);
         }
 
         internal static SharpDX.Rectangle ToDXRectangle(this Rectangle rectangle)

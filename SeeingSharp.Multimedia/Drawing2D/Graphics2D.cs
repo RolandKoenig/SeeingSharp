@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,16 +19,16 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia;
-using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Checking;
+using SeeingSharp.Multimedia;
+using SeeingSharp.Multimedia.Core;
 
 // Some namespace mappings
 using D2D = SharpDX.Direct2D1;
@@ -42,7 +42,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         private EngineDevice m_device;
         private D2D.RenderTarget m_renderTarget;
         private Size2F m_screenSize;
-        #endregion
+        #endregion Main view related properties
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Graphics2D"/> class.
@@ -64,6 +64,32 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public void Clear(Color4 clearColor)
         {
             m_renderTarget.Clear(clearColor.ToDXColor());
+        }
+
+        /// <summary>
+        /// Draws the given line with the given brush.
+        /// </summary>
+        public void DrawLine(Vector2 start, Vector2 end, BrushResource brush)
+        {
+            brush.EnsureNotNull("brush");
+
+            m_renderTarget.DrawLine(
+                start.ToDXVector(), end.ToDXVector(),
+                brush.GetBrush(m_device));
+        }
+
+        /// <summary>
+        /// Draws the given line with the given brush.
+        /// </summary>
+        public void DrawLine(Vector2 start, Vector2 end, BrushResource brush, float strokeWidth)
+        {
+            brush.EnsureNotNull("brush");
+            strokeWidth.EnsurePositiveAndNotZero("strokeWidth");
+
+            m_renderTarget.DrawLine(
+                start.ToDXVector(), end.ToDXVector(),
+                brush.GetBrush(m_device),
+                strokeWidth);
         }
 
         /// <summary>
@@ -141,8 +167,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="opacity">The opacity.</param>
         /// <param name="interpolationMode">The interpolation mode.</param>
         public void DrawBitmap(
-            BitmapResource bitmap, 
-            float opacity = 1f, 
+            BitmapResource bitmap,
+            float opacity = 1f,
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
         {
             bitmap.EnsureNotNull("bitmap");
@@ -161,9 +187,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="opacity">The opacity.</param>
         /// <param name="interpolationMode">The interpolation mode.</param>
         public void DrawBitmap(
-            BitmapResource bitmap, 
+            BitmapResource bitmap,
             RectangleF destinationRectangle,
-            float opacity = 1f, 
+            float opacity = 1f,
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
         {
             bitmap.EnsureNotNull("bitmap");
