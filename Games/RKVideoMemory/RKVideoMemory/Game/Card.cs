@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,15 +19,15 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Multimedia.Objects;
-using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Util;
 
 namespace RKVideoMemory.Game
 {
@@ -38,7 +38,7 @@ namespace RKVideoMemory.Game
         /// </summary>
         /// <param name="resGeometry">The key of the GeometryResource.</param>
         /// <param name="cardPair">The pair this card belongs to.</param>
-        public Card(NamedOrGenericKey resGeometry, CardPair cardPair)
+        public Card(NamedOrGenericKey resGeometry, CardPairLogic cardPair)
             : base(resGeometry)
         {
             this.Pair = cardPair;
@@ -53,7 +53,7 @@ namespace RKVideoMemory.Game
             set;
         }
 
-        public CardPair Pair
+        public CardPairLogic Pair
         {
             get;
             private set;

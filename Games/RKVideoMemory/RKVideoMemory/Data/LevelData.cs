@@ -91,10 +91,36 @@ namespace RKVideoMemory.Data
                 }
             }
 
+            // Load ending folder
+            string endingFolder = Path.Combine(directoryName, Constants.FOLDERNAME_ENDING);
+            if (Directory.Exists(endingFolder))
+            {
+                foreach (string actFileName in Directory.GetFiles(endingFolder))
+                {
+                    if (Constants.SUPPORTED_VIDEO_FORMATS.Contains(Path.GetExtension(actFileName)))
+                    {
+                        this.EndingVideo = actFileName;
+                        continue;
+                    }
+
+                    if (Constants.SUPPORTED_IMAGE_FORMATS.Contains(Path.GetExtension(actFileName)))
+                    {
+                        this.EndingImage = actFileName;
+                        continue;
+                    }
+
+                    if (Constants.SUPPORTED_MUSIC_FORMATS.Contains(Path.GetExtension(actFileName)))
+                    {
+                        this.EndingMusic = actFileName;
+                        continue;
+                    }
+                }
+            }
+
             // Load all screens
             IEnumerable<string> screenDirectories =
                 from actScreenDirectory in Directory.GetDirectories(directoryName)
-                where Path.GetFileName(actScreenDirectory).StartsWith("Screen", StringComparison.OrdinalIgnoreCase)
+                where Path.GetFileName(actScreenDirectory).StartsWith(Constants.FOLDERPREFIX_SCREEN, StringComparison.OrdinalIgnoreCase)
                 orderby Path.GetFileName(actScreenDirectory)
                 select actScreenDirectory;
             this.Screens = new List<ScreenData>();
@@ -120,6 +146,24 @@ namespace RKVideoMemory.Data
         }
 
         public string AppIconPath
+        {
+            get;
+            private set;
+        }
+
+        public string EndingImage
+        {
+            get;
+            private set;
+        }
+
+        public string EndingVideo
+        {
+            get;
+            private set;
+        }
+
+        public string EndingMusic
         {
             get;
             private set;

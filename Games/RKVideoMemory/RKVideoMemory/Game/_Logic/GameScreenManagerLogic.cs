@@ -47,7 +47,7 @@ namespace RKVideoMemory.Game
 
         #region Members describing the current screen
         private Card[,] m_cardMapOnScreen;
-        private List<CardPair> m_cardPairsOnScreen;
+        private List<CardPairLogic> m_cardPairsOnScreen;
         private int m_actScreenIndex;
         #endregion Members describing the current screen
 
@@ -67,7 +67,7 @@ namespace RKVideoMemory.Game
 
             await scene.ManipulateSceneAsync((manipulator) =>
             {
-                foreach (CardPair actPair in m_cardPairsOnScreen)
+                foreach (CardPairLogic actPair in m_cardPairsOnScreen)
                 {
                     foreach (Card actCard in actPair.Cards)
                     {
@@ -97,7 +97,7 @@ namespace RKVideoMemory.Game
             Vector3 midPoint = new Vector3((tilesX - 1) * tileDistX / 2f, 0f, ((tilesY - 1) * tileDistY / 2f));
 
             m_cardMapOnScreen = new Card[tilesX, tilesY];
-            m_cardPairsOnScreen = new List<CardPair>();
+            m_cardPairsOnScreen = new List<CardPairLogic>();
 
             ScreenData currentScreen = currentLevel.Screens[0];
             m_actScreenIndex = 0;
@@ -118,6 +118,7 @@ namespace RKVideoMemory.Game
                 manipulator.Add(new PairUncoverLogic());
                 manipulator.Add(new VideoPlayLogic());
                 manipulator.Add(new BackgroundMusicLogic(currentLevel));
+                manipulator.Add(new EndGameLogic(currentLevel));
                 manipulator.Add(this);
             });
 
@@ -139,7 +140,7 @@ namespace RKVideoMemory.Game
 
             foreach (CardPairData actPairData in currentScreen.MemoryPairs)
             {
-                CardPair actCardPair = new CardPair(actPairData);
+                CardPairLogic actCardPair = new CardPairLogic(actPairData);
 
                 // Define all resources needed for a card for this pair
                 var resTitleMaterial = manipulator.AddSimpleColoredMaterial(actPairData.TitleFile);
@@ -184,7 +185,7 @@ namespace RKVideoMemory.Game
         /// <param name="manipulator">The manipulator.</param>
         private void FreeCurrentScreen(SceneManipulator manipulator)
         {
-            foreach (CardPair actCardPair in m_cardPairsOnScreen)
+            foreach (CardPairLogic actCardPair in m_cardPairsOnScreen)
             {
                 manipulator.Remove(actCardPair);
                 manipulator.RemoveRange(actCardPair.Cards);
@@ -233,7 +234,7 @@ namespace RKVideoMemory.Game
         {
             // Check whether we've finished the current screen
             bool isCurrentScreenFinished = true;
-            foreach (CardPair actCardPair in m_cardPairsOnScreen)
+            foreach (CardPairLogic actCardPair in m_cardPairsOnScreen)
             {
                 if (!actCardPair.IsUncovered)
                 {
@@ -251,7 +252,14 @@ namespace RKVideoMemory.Game
 
             if (m_currentLevel.Screens.Count - 1 <= m_actScreenIndex)
             {
+                // Remove old object from the scene
+                await m_scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    FreeCurrentScreen(manipulator);
+                });
+
                 // We have finished with all screens, show ending animation
+                Messenger.Publish<GameEndReachedMessage>();
             }
             else
             {
@@ -281,7 +289,7 @@ namespace RKVideoMemory.Game
             }
         }
 
-        public List<CardPair> Pairs
+        public List<CardPairLogic> Pairs
         {
             get { return m_cardPairsOnScreen; }
         }

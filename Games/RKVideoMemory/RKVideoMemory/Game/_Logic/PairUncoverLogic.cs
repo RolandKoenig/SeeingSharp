@@ -102,7 +102,7 @@ namespace RKVideoMemory.Game
             if (m_uncoveredCards.Count < 2) { return; }
 
             // Select correspondig pairs of uncovered cards
-            CardPair[] pairs = m_uncoveredCards
+            CardPairLogic[] pairs = m_uncoveredCards
                 .Select((actCard) => actCard.Pair)
                 .Distinct()
                 .ToArray();
@@ -114,7 +114,7 @@ namespace RKVideoMemory.Game
                 if (pairs.Length == 1)
                 {
                     // Yeah, we found a correct pair! Trigger movie
-                    CardPair selectedPair = pairs[0];
+                    CardPairLogic selectedPair = pairs[0];
                     selectedPair.IsUncovered = true;
 
                     this.Messenger.Publish(new CardPairUncoveredByPlayerMessage(selectedPair));

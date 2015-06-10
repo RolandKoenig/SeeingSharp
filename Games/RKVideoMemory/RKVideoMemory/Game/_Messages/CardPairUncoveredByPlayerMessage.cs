@@ -32,12 +32,12 @@ namespace RKVideoMemory.Game
 {
     public class CardPairUncoveredByPlayerMessage : SeeingSharpMessage
     {
-        public CardPairUncoveredByPlayerMessage(CardPair cardPair)
+        public CardPairUncoveredByPlayerMessage(CardPairLogic cardPair)
         {
             this.CardPair = cardPair;
         }
 
-        public CardPair CardPair
+        public CardPairLogic CardPair
         {
             get;
             private set;

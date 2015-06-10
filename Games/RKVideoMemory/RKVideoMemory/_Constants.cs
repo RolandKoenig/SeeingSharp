@@ -36,6 +36,8 @@ namespace RKVideoMemory
         #region folder names
         public const string DEFAULT_FOLDER_INITIAL_LEVEL = "MemoryData";
         public const string FOLDERNAME_MUSIC = "Music";
+        public const string FOLDERPREFIX_SCREEN = "Screen";
+        public const string FOLDERNAME_ENDING = "Ending";
         #endregion folder names
 
         #region file patterns

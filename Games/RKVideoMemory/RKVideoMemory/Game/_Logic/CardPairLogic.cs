@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,29 +19,30 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
-using SeeingSharp;
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing3D;
-using RKVideoMemory.Data;
-using RKVideoMemory.Util;
+#endregion License information (SeeingSharp and all based games/applications)
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using RKVideoMemory.Data;
+using RKVideoMemory.Util;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
 
 namespace RKVideoMemory.Game
 {
-    public class CardPair : SceneLogicalObject
+    public class CardPairLogic : SceneLogicalObject
     {
         private CardPairData m_pairData;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CardPair"/> class.
+        /// Initializes a new instance of the <see cref="CardPairLogic"/> class.
         /// </summary>
         /// <param name="pairData">The pair data.</param>
-        public CardPair(CardPairData pairData)
+        public CardPairLogic(CardPairData pairData)
         {
             m_pairData = pairData;
             this.IsUncovered = false;
@@ -67,24 +68,24 @@ namespace RKVideoMemory.Game
         /// </summary>
         private void OnMessage_Received(MainMemoryScreenEnteredMessage message)
         {
-            for(int loop=0 ; loop<this.Cards.Length; loop++)
+            for (int loop = 0; loop < this.Cards.Length; loop++)
             {
                 Card actCard = this.Cards[loop];
 
                 // Cancel current animations
                 actCard.AnimationHandler.CancelAnimations();
 
-                if(this.IsUncovered)
+                if (this.IsUncovered)
                 {
                     actCard.BuildAnimationSequence()
                         .MainScreenStart_WhenUncovered()
-                        .Apply();  
+                        .Apply();
                 }
                 else
                 {
                     actCard.BuildAnimationSequence()
                         .MainScreenStart_WhenCovered()
-                        .Apply();  
+                        .Apply();
                 }
             }
         }
