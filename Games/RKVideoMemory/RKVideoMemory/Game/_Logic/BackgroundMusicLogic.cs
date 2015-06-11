@@ -56,7 +56,7 @@ namespace RKVideoMemory.Game
                 m_mediaPlayer.VideoClosed += OnMediaPlayer_VideoClosed;
 
                 await m_mediaPlayer.OpenAndShowVideoFileAsync(musicFile);
-                m_mediaPlayer.RestartVideoWhenFinished = false;
+                m_mediaPlayer.RestartWhenFinished = false;
             }
 
             // Fade in the video
