@@ -52,7 +52,7 @@ namespace SeeingSharp.Multimedia.Views
         private ResourceLink m_currentVideoLink;
         private CaptureDeviceInfo m_currentCaptureDevice;
         private TimeSpan m_currentVideoDuration;
-        private float m_lastAudioVolume;
+        private float m_audioVolume;
         private bool m_isPaused;
         #endregion Own properties
 
@@ -92,7 +92,7 @@ namespace SeeingSharp.Multimedia.Views
             m_mfResourceLock = new object();
             m_currentVideoLink = null;
             m_currentCaptureDevice = null;
-            m_lastAudioVolume = 1f;
+            m_audioVolume = 1f;
         }
 
         /// <summary>
@@ -346,7 +346,8 @@ namespace SeeingSharp.Multimedia.Views
                         m_audioStreamVolume = serviceProvider.GetService<MF.AudioStreamVolume>(
                             MF.MediaServiceKeys.StreamVolume);
 
-                        this.AudioVolume = m_lastAudioVolume;
+                        // Set initial volume
+                        this.AudioVolume = m_audioVolume;
                     }
                 }
             }
@@ -421,7 +422,7 @@ namespace SeeingSharp.Multimedia.Views
         {
             if (sender != m_sessionEventHandler) { return; }
 
-            if (this.RestartVideoWhenFinished)
+            if (this.RestartWhenFinished)
             {
                 // Start the session again
                 await StartSessionInternalAsync(true);
@@ -544,7 +545,7 @@ namespace SeeingSharp.Multimedia.Views
         /// Restart the video when playing has finished?
         /// </summary>
         [Category(CATEGORY_NAME)]
-        public bool RestartVideoWhenFinished
+        public bool RestartWhenFinished
         {
             get;
             set;
@@ -630,7 +631,7 @@ namespace SeeingSharp.Multimedia.Views
                             m_audioStreamVolume.SetChannelVolume(loop, value);
                         }
                     }
-                    m_lastAudioVolume = value;
+                    m_audioVolume = value;
                 }
             }
         }

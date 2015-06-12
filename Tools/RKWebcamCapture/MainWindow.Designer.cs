@@ -106,7 +106,7 @@
             // 
             // m_mediaPlayer
             // 
-            this.m_mediaPlayer.RestartVideoWhenFinished = false;
+            this.m_mediaPlayer.RestartWhenFinished = false;
             this.m_mediaPlayer.TargetControl = this.m_panVideoArea;
             // 
             // statusStrip1

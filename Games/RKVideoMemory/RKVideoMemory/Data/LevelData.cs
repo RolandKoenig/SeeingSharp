@@ -28,6 +28,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SeeingSharp.Util;
+using SeeingSharp.Multimedia.DrawingVideo;
+using SeeingSharp.Multimedia.Core;
 
 namespace RKVideoMemory.Data
 {
@@ -100,6 +102,20 @@ namespace RKVideoMemory.Data
                     if (Constants.SUPPORTED_VIDEO_FORMATS.Contains(Path.GetExtension(actFileName)))
                     {
                         this.EndingVideo = actFileName;
+
+                        using (FrameByFrameVideoReader videoReader = new FrameByFrameVideoReader(actFileName))
+                        {
+                            // Read the first frame
+                            this.EndingVideoFirstFrame = videoReader.ReadFrame();
+                            this.EndingVideoFirstFrame.SetAllAlphaValuesToOne();
+
+                            // Read the last frame
+                            videoReader.SetCurrentPosition(videoReader.Duration, false);
+
+                            this.EndingVideoLastFrame = videoReader.ReadFrame();
+                            this.EndingVideoLastFrame.SetAllAlphaValuesToOne();
+                        }
+
                         continue;
                     }
 
@@ -158,6 +174,18 @@ namespace RKVideoMemory.Data
         }
 
         public string EndingVideo
+        {
+            get;
+            private set;
+        }
+
+        public MemoryMappedTexture32bpp EndingVideoFirstFrame
+        {
+            get;
+            private set;
+        }
+
+        public MemoryMappedTexture32bpp EndingVideoLastFrame
         {
             get;
             private set;

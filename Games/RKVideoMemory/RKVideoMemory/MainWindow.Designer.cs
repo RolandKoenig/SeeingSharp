@@ -164,7 +164,7 @@
             // 
             // m_mediaPlayer
             // 
-            this.m_mediaPlayer.RestartVideoWhenFinished = false;
+            this.m_mediaPlayer.RestartWhenFinished = false;
             this.m_mediaPlayer.TargetControl = this.m_ctrlRenderer;
             this.m_mediaPlayer.VideoFinished += new System.EventHandler(this.OnMediaPlayer_VideoFinished);
             // 
