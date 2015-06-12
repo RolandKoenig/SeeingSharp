@@ -64,8 +64,8 @@ namespace RKVideoMemory
         #endregion graphics layer settings
 
         #region timing parameters
-        public const int INITIAL_UNCOVER_SECONDS_MAX = 4;
-        public const int INITIAL_UNCOVER_SECONDS_MIN = 3;
+        public const int INITIAL_UNCOVER_SECONDS_MAX = 3;
+        public const int INITIAL_UNCOVER_SECONDS_MIN = 2;
         public const int ROTATE_ANIM_DELAY_MILLIS_MAX = 600;
         public const int ROTATE_ANIM_DELAY_MILLIS_MIN = 200;
         public const int FADE_INOUT_ANIM_TIME = 400;
