@@ -46,7 +46,88 @@ namespace RKVideoMemory.Game
         /// </summary>
         private async Task ShowEndingVideo()
         {
-            await Task.Delay(100);
+            if (string.IsNullOrEmpty(m_levelData.EndingVideo)) { return; }
+
+            // Define 'global' variables
+            TexturePainter objVideoPainter = null;
+            NamedOrGenericKey resVideoTextureFirstFrame = NamedOrGenericKey.Empty;
+            NamedOrGenericKey resVideoTextureLastFrame = NamedOrGenericKey.Empty;
+
+            // Get the link to the video file
+            ResourceLink firstVideo = m_levelData.EndingVideo;
+            if (firstVideo == null) { return; }
+
+            // Attach the video texture to the scene
+            Task startAnimationTask = null;
+            await base.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                // Create the layer (if necessary)
+                if (!manipulator.ContainsLayer(Constants.GFX_LAYER_VIDEO_FOREGROUND))
+                {
+                    SceneLayer bgLayer = manipulator.AddLayer(Constants.GFX_LAYER_VIDEO_FOREGROUND);
+                    bgLayer.ClearDepthBufferBefreRendering = true;
+                    manipulator.SetLayerOrderID(
+                        bgLayer,
+                        Constants.GFX_LAYER_VIDEO_FOREGROUND_ORDERID);
+                }
+
+                // Load the texture painter
+                resVideoTextureFirstFrame = manipulator.AddResource(
+                    () => new BitmapTextureResource(m_levelData.EndingVideoFirstFrame));
+                objVideoPainter = new TexturePainter(resVideoTextureFirstFrame);
+                objVideoPainter.Scaling = 0.6f;
+                objVideoPainter.AccentuationFactor = 1f;
+                objVideoPainter.Opacity = 0.0f;
+                startAnimationTask = objVideoPainter.BuildAnimationSequence()
+                    .Delay(300)
+                    .WaitFinished()
+                    .ScaleTo(1f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                    .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                    .ApplyAsync();
+
+                manipulator.Add(
+                    objVideoPainter,
+                    Constants.GFX_LAYER_VIDEO_FOREGROUND);
+            });
+
+            // Wait until start animation has finished
+            await startAnimationTask;
+
+            // Trigger start of video playing
+            this.Messenger.Publish(new PlayMovieRequestMessage(firstVideo));
+
+            // Change the content of the fullscreen texture to match the last video frame
+            await Task.Delay(500);
+            await base.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                manipulator.Remove(objVideoPainter);
+                manipulator.RemoveResource(resVideoTextureFirstFrame);
+
+                resVideoTextureLastFrame = manipulator.AddResource(
+                    () => new BitmapTextureResource(m_levelData.EndingVideoLastFrame));
+                objVideoPainter = new TexturePainter(resVideoTextureLastFrame);
+                objVideoPainter.AccentuationFactor = 1f;
+
+                manipulator.Add(
+                    objVideoPainter,
+                    Constants.GFX_LAYER_VIDEO_FOREGROUND);
+            });
+
+            // Wait for finished video rendering
+            await this.Messenger.WaitForMessageAsync<PlayMovieFinishedMessage>();
+
+            // Hide the video again
+            await objVideoPainter.BuildAnimationSequence()
+                .ScaleTo(1.4f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(Constants.FADE_INOUT_ANIM_TIME))
+                .ApplyAsync();
+
+            // Remove the texture painter
+            await base.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                manipulator.Remove(objVideoPainter);
+                manipulator.RemoveResource(resVideoTextureLastFrame);
+            });
         }
 
         /// <summary>
@@ -139,6 +220,8 @@ namespace RKVideoMemory.Game
 
         private async void OnMessage_Received(GameEndReachedMessage message)
         {
+            await Task.Delay(1000);
+
             await ShowEndingVideo();
 
             await ShowEndingImage();

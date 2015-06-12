@@ -49,6 +49,7 @@ namespace RKVideoMemory.Game
         private Card[,] m_cardMapOnScreen;
         private List<CardPairLogic> m_cardPairsOnScreen;
         private int m_actScreenIndex;
+        private bool m_startedEndSequence;
         #endregion Members describing the current screen
 
         #region Graphics resource keys
@@ -232,6 +233,8 @@ namespace RKVideoMemory.Game
         /// <param name="movieFinishedMessage">The movie finished message.</param>
         private async void OnMessage_Received(PlayMovieFinishedMessage movieFinishedMessage)
         {
+            if (m_startedEndSequence) { return; }
+
             // Check whether we've finished the current screen
             bool isCurrentScreenFinished = true;
             foreach (CardPairLogic actCardPair in m_cardPairsOnScreen)
@@ -259,6 +262,7 @@ namespace RKVideoMemory.Game
                 });
 
                 // We have finished with all screens, show ending animation
+                m_startedEndSequence = true;
                 Messenger.Publish<GameEndReachedMessage>();
             }
             else
