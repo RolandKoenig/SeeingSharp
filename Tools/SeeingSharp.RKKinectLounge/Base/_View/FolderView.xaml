@@ -9,6 +9,22 @@
       xmlns:base="clr-namespace:SeeingSharp.RKKinectLounge.Base"
       mc:Ignorable="d" 
       d:DesignHeight="300" d:DesignWidth="300">
+    
+    <UserControl.Resources>
+        <Storyboard x:Key="ResizeThumbnailAnimation" AutoReverse="False">
+            <DoubleAnimation To="350" Duration="0:0:0.5" Storyboard.TargetProperty="(FrameworkElement.Width)" />
+            <DoubleAnimation To="250" Duration="0:0:0.5" Storyboard.TargetProperty="(FrameworkElement.Height)" />
+        </Storyboard>
+        <Style TargetType="Border" x:Key="ResizeThumbnailStyle">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Path=ParentViewModel.HasBigSizeChildren}" Value="false">
+                    <DataTrigger.EnterActions>
+                        <BeginStoryboard Storyboard="{StaticResource ResizeThumbnailAnimation}"/>
+                    </DataTrigger.EnterActions>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+    </UserControl.Resources>
 
     <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Disabled">
         <ItemsControl ItemsSource="{Binding Path=SubViewModels}"
@@ -22,38 +38,40 @@
             
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Margin="20" Style="{DynamicResource KinectTileButton}"
-                            Width="350" Height="250"
-                            k:KinectRegion.IsPressTarget="True">
-                        
-                        <!-- Attach behaviors to all tiles separately-->
-                        <i:Interaction.Behaviors>
-                            <locBehaviors:NavigateForwardToBindingBehavior />
-                        </i:Interaction.Behaviors>
+                    <Border Margin="20" Width="630" Height="450"
+                            Style="{StaticResource ResizeThumbnailStyle}">   
+                        <Button Style="{DynamicResource KinectTileButton}"
+                                k:KinectRegion.IsPressTarget="True">
+                            
+                            <!-- Attach behaviors to all tiles separately-->
+                            <i:Interaction.Behaviors>
+                                <locBehaviors:NavigateForwardToBindingBehavior />
+                            </i:Interaction.Behaviors>
 
-                        <Border BorderThickness="1" BorderBrush="Gray">
-                            <Grid Background="White">
-                                <base:TileContentSliderView ElementCollection="{Binding Path=ThumbnailViewModels}" />
+                            <Border BorderThickness="1" BorderBrush="Gray">
+                                <Grid Background="White">
+                                    <base:TileContentSliderView ElementCollection="{Binding Path=ThumbnailViewModels}" />
 
-                                <TextBlock VerticalAlignment="Bottom" Height="40"
-                                           Margin="20,0,20,0"
-                                           FontSize="26" Foreground="White"
-                                           TextAlignment="Center"
-                                           Text="{Binding Path=DisplayName}">
-                                    <TextBlock.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStop Offset="0" Color="#3300CCFF" />
-                                                <GradientStop Offset="0.05" Color="#FF00CCFF" />
-                                                <GradientStop Offset="0.95" Color="#FF00CCFF" />
-                                                <GradientStop Offset="1" Color="#3300CCFF" />
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </TextBlock.Background>
-                                </TextBlock>
-                            </Grid>
-                        </Border>
-                    </Button>
+                                    <TextBlock VerticalAlignment="Bottom" Height="40"
+                                               Margin="20,0,20,0"
+                                               FontSize="26" Foreground="White"
+                                               TextAlignment="Center"
+                                               Text="{Binding Path=DisplayName}">
+                                        <TextBlock.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStop Offset="0" Color="#3300CCFF" />
+                                                    <GradientStop Offset="0.05" Color="#FF00CCFF" />
+                                                    <GradientStop Offset="0.95" Color="#FF00CCFF" />
+                                                    <GradientStop Offset="1" Color="#3300CCFF" />
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </TextBlock.Background>
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                        </Button>
+                    </Border>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

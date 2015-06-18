@@ -34,9 +34,11 @@ namespace SeeingSharp.RKKinectLounge.Base
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        #region Status variables for the main window
         private KinectWelcomeViewModel m_welcomeViewModel;
         private MainFolderViewModel m_mainFolderViewModel;
         private bool m_isWelcomeViewVisible;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -86,7 +88,8 @@ namespace SeeingSharp.RKKinectLounge.Base
         /// <param name="message">The message.</param>
         private void OnMessagePersonDisengaged(MessagePersonDisengaged message)
         {
-            ActivateWelcomeView();
+            // RK: Don't do this anymore, because we may want to show pictures also when we leave the area
+            // ActivateWelcomeView();
         }
 
         private void OnMessageManualEnter(MessageManualEnter message)
