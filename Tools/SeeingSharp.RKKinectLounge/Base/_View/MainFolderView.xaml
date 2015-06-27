@@ -16,6 +16,9 @@
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
+        <!-- Definition of main content-->
+        <loc:NavigationMainView Grid.Row="1" />
+        
         <!-- Definition of the title bar-->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -48,7 +51,5 @@
             </StackPanel>
         </Grid>
 
-        <!-- Definition of main content-->
-        <loc:NavigationMainView Grid.Row="1" />
     </Grid>
 </UserControl>
