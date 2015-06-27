@@ -166,6 +166,7 @@
     <Compile Include="Util\_Performance\_Duration\DurationPerformanceResult.cs" />
     <Compile Include="Util\_Performance\_FlowRate\FlowRatePerformanceCalculator.cs" />
     <Compile Include="Util\_Performance\_FlowRate\FlowRatePerformanceResult.cs" />
+    <Compile Include="Util\_Threading\LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />

@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="DataPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">C:\_RKKinectLounge</Value>
+      <Value Profile="(Default)">D:\SkyDrive\RKKinectLounge</Value>
     </Setting>
   </Settings>
 </SettingsFile>
