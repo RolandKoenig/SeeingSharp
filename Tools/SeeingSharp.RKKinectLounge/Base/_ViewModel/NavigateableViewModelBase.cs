@@ -30,18 +30,24 @@ using System.Threading;
 using System.Threading.Tasks;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Util;
+using System.Collections.Specialized;
 
 namespace SeeingSharp.RKKinectLounge.Base
 {
     public abstract class NavigateableViewModelBase : ViewModelBase
     {
+        #region Tasks for content loading
         private NavigateableViewModelBase m_parentFolder;
         private Task m_loadPreviewContentTask;
         private Task m_loadDetailContentTask;
+        #endregion
 
+        #region Variables for navigation and content
         private List<INavigateableViewModelExtension> m_vmExtensions;
         private ObservableCollection<NavigateableViewModelBase> m_subViewModels;
         private ObservableCollection<object> m_thumbnailViewModels;
+        private bool m_hasBigSizeChildren;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigateableViewModelBase"/> class.
@@ -49,8 +55,11 @@ namespace SeeingSharp.RKKinectLounge.Base
         /// <param name="parent">The parent of this ViewModel object.</param>
         public NavigateableViewModelBase(NavigateableViewModelBase parent)
         {
+            m_hasBigSizeChildren = true;
+
             m_parentFolder = parent;
             m_subViewModels = new ObservableCollection<NavigateableViewModelBase>();
+            m_subViewModels.CollectionChanged += OnSubViewModels_CollectionChanged;
             m_thumbnailViewModels = new ObservableCollection<object>();
 
             if (!SeeingSharpApplication.IsInitialized) { return; }
@@ -207,6 +216,14 @@ namespace SeeingSharp.RKKinectLounge.Base
         /// </summary>
         protected abstract void UnloadPreviewContentInternal();
 
+        private void OnSubViewModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if(m_subViewModels.Count > Constants.MAX_SUBITEM_COUNT_FOR_BIG_TILES)
+            {
+                this.HasBigSizeChildren = false;
+            }
+        }
+
         /// <summary>
         /// Gets the parent ViewModel.
         /// </summary>
@@ -248,6 +265,19 @@ namespace SeeingSharp.RKKinectLounge.Base
         public virtual string DisplayName
         {
             get { return "(NoName)"; }
+        }
+
+        public bool HasBigSizeChildren
+        {
+            get { return m_hasBigSizeChildren; }
+            set
+            {
+                if(m_hasBigSizeChildren != value)
+                {
+                    m_hasBigSizeChildren = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
     }
 }

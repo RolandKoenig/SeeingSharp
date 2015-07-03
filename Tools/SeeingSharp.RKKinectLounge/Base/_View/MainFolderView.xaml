@@ -7,7 +7,7 @@
              xmlns:k="http://schemas.microsoft.com/kinect/2014"
              xmlns:loc="clr-namespace:SeeingSharp.RKKinectLounge.Base"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="1900">
 
     <Grid Style="{DynamicResource MainBackgroundGrid}">
         <Grid.RowDefinitions>
@@ -16,6 +16,9 @@
             <RowDefinition Height="100" />
         </Grid.RowDefinitions>
 
+        <!-- Definition of main content-->
+        <loc:NavigationMainView Grid.Row="1" />
+        
         <!-- Definition of the title bar-->
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
@@ -35,9 +38,18 @@
                 <TextBlock Margin="30,0,0,0" VerticalAlignment="Center"
                            Text="RK Kinect Lounge" FontSize="48" Foreground="White" />
             </StackPanel>
+            <StackPanel Orientation="Horizontal" Grid.Column="1"
+                        FlowDirection="RightToLeft">
+                <Button FontSize="30" Margin="20,20,20,0"
+                        k:KinectRegion.IsPressTarget="True"
+                        Style="{DynamicResource KinectTileButton}">
+                    <Image Source="/Assets/Images/HomeButton.png" />
+                    <i:Interaction.Behaviors>
+                        <loc:NavigateHomeBehavior />
+                    </i:Interaction.Behaviors>
+                </Button>
+            </StackPanel>
         </Grid>
 
-        <!-- Definition of main content-->
-        <loc:NavigationMainView Grid.Row="1" />
     </Grid>
 </UserControl>

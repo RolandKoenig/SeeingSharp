@@ -33,20 +33,24 @@ namespace SeeingSharp.RKKinectLounge
     {
         public static readonly Random UI_RANDOMIZER = new Random(Environment.TickCount);
 
-        // Image sizes
+        #region Image sizes
         public const int THUMBNAIL_WDITH = 700;
         public const int THUMBNAIL_HEIGHT = 500;
+        #endregion
 
-        // Viewtype names
+        #region Viewtype names
         public const string VIEW_TYPE_BROWSING = "Browsing";
         public const string VIEW_TYPE_KINECT_DASHBOARD = "KinectDashboard";
         public const string VIEW_TYPE_IMAGE_SLIDER = "ImageSlider";
+        #endregion
 
-        // All constants for browsing logic
+        #region All constants for browsing logic
         public const string BROWSING_FOLDER_CONFIG_FILE = "_Configuration.xml";
         public const int BROWSING_DELAY_TIME_PER_FOLDER_LOAD_MS = 100;
+        public const int MAX_SUBITEM_COUNT_FOR_BIG_TILES = 4;
+        #endregion
 
-        // All constants for Kinect handling
+        #region All constants for Kinect handling
         public const string KINECT_THREAD_NAME = "Kinect-Thread";
         public const int KINECT_BOOT_ORDERID = 0;
         public const int KINECT_PERF_HISTORICAL_VALUE_COUNT = 600; // Remember performance values of last 10 minutes
@@ -63,11 +67,13 @@ namespace SeeingSharp.RKKinectLounge
         {
             Color4.LightBlue, Color4.LightGreen, Color4.LightCyan, Color4.LightGoldenrodYellow, Color4.LightYellow
         };
+        #endregion
 
-        // All constants for multimedia handling
+        #region All constants for multimedia handling
         public static readonly string[] SUPPORTED_IMAGE_FORMATS = new string[] { ".jpg", ".jpeg", ".png", ".bmp" };
         public static readonly string[] SUPPORTED_VIDEO_FORMATS = new string[] { ".mpg", ".mpeg", ".avi", ".wmv", ".mp4" };
         public const string BROWSING_SEARCH_PATTERN_THUMBNAIL = "Thumbnail*.*";
         public const string VIEW_MODEL_EXT_MULTIMEDIA = "Multimedia";
+        #endregion
     }
 }

@@ -40,5 +40,14 @@
                 </Grid>
             </Button>
         </Grid>
+        
+        <Button FontSize="30" Margin="20"
+                Width="110" Height="110"
+                HorizontalAlignment="Right" VerticalAlignment="Top"
+                k:KinectRegion.IsPressTarget="True"
+                Style="{DynamicResource KinectTileButton}"
+                Command="{Binding Path=CommandExit}">
+            <Image Source="/Assets/Images/ExitButton.png" />
+        </Button>
     </Grid>
 </UserControl>

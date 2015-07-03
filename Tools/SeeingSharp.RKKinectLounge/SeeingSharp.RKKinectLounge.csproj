@@ -97,6 +97,7 @@
     </ApplicationDefinition>
     <Compile Include="Base\IKinectLoungeModule.cs" />
     <Compile Include="Base\ModuleManager.cs" />
+    <Compile Include="Base\_Behaviors\NavigateHomeBehavior.cs" />
     <Compile Include="Base\_Messages\MessageManualEnter.cs" />
     <Compile Include="Base\_Messages\MessageManualExit.cs" />
     <Compile Include="Base\_Messages\MessagePersonEngaged.cs" />
@@ -165,6 +166,7 @@
       <DependentUpon>SceneView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Modules\Multimedia\MultimediaModule.cs" />
+    <Compile Include="Modules\Multimedia\_Util\ImageUtil.cs" />
     <Compile Include="Modules\Multimedia\_Resources\DesignModeViewModels.cs" />
     <Compile Include="Modules\Multimedia\_ViewModel\MultimediaFolderViewModelExtension.cs" />
     <Compile Include="Modules\Multimedia\_ViewModel\ImageViewModel.cs" />
@@ -362,6 +364,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Images\Logo2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\HomeButton.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\ExitButton.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

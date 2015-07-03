@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -30,16 +31,15 @@ namespace SeeingSharp.RKKinectLounge.Modules.Multimedia
             BitmapImage actBitmapImage = null;
 
             await Task.Factory.StartNew(() =>
-            {
-                actBitmapImage = new BitmapImage();
-                actBitmapImage.BeginInit();
-                actBitmapImage.UriSource = new Uri(m_filePath, UriKind.Absolute);
-                actBitmapImage.CacheOption = BitmapCacheOption.OnLoad;
-                //actBitmapImage.DecodePixelWidth = desiredPixelWidth;
-                actBitmapImage.DecodePixelHeight = desiredPixelHeight;
-                actBitmapImage.EndInit();
-                actBitmapImage.Freeze();
-            });
+                {
+                    actBitmapImage = new BitmapImage();
+                    actBitmapImage.BeginInit();
+                    actBitmapImage.UriSource = new Uri(m_filePath, UriKind.Absolute);
+                    actBitmapImage.CacheOption = BitmapCacheOption.OnLoad;
+                    actBitmapImage.DecodePixelHeight = desiredPixelHeight;
+                    actBitmapImage.EndInit();
+                    actBitmapImage.Freeze();
+                });
 
             this.ImageSoure = actBitmapImage;
         }

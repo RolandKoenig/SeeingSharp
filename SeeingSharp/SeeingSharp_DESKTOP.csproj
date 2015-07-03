@@ -213,6 +213,7 @@
     <Compile Include="Util\_PropertyTools\SeeingSharpPropertyItemFactory.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceUriBuilder.cs" />
     <Compile Include="Util\_IO\ResourceLink.cs" />
+    <Compile Include="Util\_Threading\LimitedConcurrencyLevelTaskScheduler.cs" />
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />

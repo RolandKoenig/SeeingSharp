@@ -54,6 +54,8 @@ namespace SeeingSharp.RKKinectLounge.Base
 
             this.CommandManualEnter = new DelegateCommand(() =>
                 SeeingSharpApplication.Current.UIMessenger.Publish<MessageManualEnter>());
+            this.CommandExit = new DelegateCommand(() =>
+                Environment.Exit(0));
 
             // Load all images for the WelcomeScreen
             string sourceDirectory =
@@ -90,6 +92,12 @@ namespace SeeingSharp.RKKinectLounge.Base
         }
 
         public DelegateCommand CommandManualEnter
+        {
+            get;
+            private set;
+        }
+
+        public DelegateCommand CommandExit
         {
             get;
             private set;

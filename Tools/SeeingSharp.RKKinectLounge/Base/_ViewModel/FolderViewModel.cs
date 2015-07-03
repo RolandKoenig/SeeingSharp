@@ -104,7 +104,7 @@ namespace SeeingSharp.RKKinectLounge.Base
             {
                 try
                 {
-                    m_folderConfig = await CommonTools.DeserializeFromXmlFile<FolderConfiguration>(configFilePath);
+                    m_folderConfig = await CommonTools.DeserializeFromXmlFileAsync<FolderConfiguration>(configFilePath);
                 }
                 catch (Exception) { }
             }
