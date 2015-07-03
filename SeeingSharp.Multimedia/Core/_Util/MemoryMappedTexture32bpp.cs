@@ -54,6 +54,16 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Converts the underlying buffer to a managed byte array.
+        /// </summary>
+        public byte[] ToArray()
+        {
+            byte[] result = new byte[this.SizeInBytes];
+            Marshal.Copy(m_pointer, result, 0, (int)this.SizeInBytes);
+            return result;
+        }
+
+        /// <summary>
         /// Führt anwendungsspezifische Aufgaben aus, die mit dem Freigeben, Zurückgeben oder Zurücksetzen von nicht verwalteten Ressourcen zusammenhängen.
         /// </summary>
         public void Dispose()

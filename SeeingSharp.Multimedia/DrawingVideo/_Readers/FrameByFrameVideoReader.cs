@@ -59,6 +59,15 @@ namespace SeeingSharp.Multimedia.DrawingVideo
 
         }
 
+        ///// <summary>
+        ///// Reads frames from the source until we reach a valid one.
+        ///// </summary>
+        ///// <param name="maxTries">Maximum count of tries.</param>
+        //public MemoryMappedTexture32bpp ReadFramesUntilValid(int maxTries = 50)
+        //{
+            
+        //}
+
         /// <summary>
         /// Reads the next frame and puts it into a newly generated buffer.
         /// </summary>
