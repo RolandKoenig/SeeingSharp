@@ -40,12 +40,17 @@ namespace RKWebcamCapture
         private void UpdateDialogState()
         {
             CaptureDeviceInfo selectedDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
-            m_cmdCapture.Enabled = selectedDevice != null;
+            m_cmdPlay.Enabled = selectedDevice != null;
             m_cboDevice.Enabled = m_cboDevice.Items.Count > 0;
 
             m_cmdStop.Enabled = m_currentlyPlayingDevice != null;
 
-            m_cmdReadQRCode.Enabled = selectedDevice != null;
+            m_cmdReadQRCode.Enabled =
+                (selectedDevice != null) &&
+                (m_currentlyPlayingDevice == null);
+            m_cmdSaveImage.Enabled =
+                (selectedDevice != null) &&
+                (m_currentlyPlayingDevice == null);
 
             m_lblCurrentDeviceLabel.Text = m_currentlyPlayingDevice!= null ? selectedDevice.ToString() : "<None>";
         }
@@ -86,7 +91,7 @@ namespace RKWebcamCapture
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private async void OnCmdCapture_Click(object sender, EventArgs e)
+        private async void OnCmdPlay_Click(object sender, EventArgs e)
         {
             // Close previous stream first
             if(m_mediaPlayer.State == MediaPlayerState.Playing)
