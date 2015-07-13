@@ -24,13 +24,13 @@
 using System;
 using System.Windows;
 using System.Windows.Interop;
+using System.Windows.Media.Imaging;
 using SeeingSharp.Multimedia.Core;
 
 //Some namespace Mappings
 using D3D11 = SharpDX.Direct3D11;
 using D3D9 = SharpDX.Direct3D9;
 using DXGI = SharpDX.DXGI;
-using System.Windows.Media.Imaging;
 
 namespace SeeingSharp.Multimedia.Views
 {
