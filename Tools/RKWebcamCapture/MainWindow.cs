@@ -10,6 +10,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SeeingSharp.Multimedia.Core;
+using ZXing;
+using ZXing.Common;
+using ZXing.QrCode;
 
 namespace RKWebcamCapture
 {
@@ -18,12 +22,16 @@ namespace RKWebcamCapture
         private CaptureDeviceChooser m_deviceChooser;
         private CaptureDeviceInfo m_currentlyPlayingDevice;
 
+        private QRCodeReader m_qrReader;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
         {
             InitializeComponent();
+
+            m_qrReader = new QRCodeReader();
         }
 
         /// <summary>
@@ -32,10 +40,17 @@ namespace RKWebcamCapture
         private void UpdateDialogState()
         {
             CaptureDeviceInfo selectedDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
-            m_cmdCapture.Enabled = selectedDevice != null;
+            m_cmdPlay.Enabled = selectedDevice != null;
             m_cboDevice.Enabled = m_cboDevice.Items.Count > 0;
 
             m_cmdStop.Enabled = m_currentlyPlayingDevice != null;
+
+            m_cmdReadQRCode.Enabled =
+                (selectedDevice != null) &&
+                (m_currentlyPlayingDevice == null);
+            m_cmdSaveImage.Enabled =
+                (selectedDevice != null) &&
+                (m_currentlyPlayingDevice == null);
 
             m_lblCurrentDeviceLabel.Text = m_currentlyPlayingDevice!= null ? selectedDevice.ToString() : "<None>";
         }
@@ -76,7 +91,7 @@ namespace RKWebcamCapture
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private async void OnCmdCapture_Click(object sender, EventArgs e)
+        private async void OnCmdPlay_Click(object sender, EventArgs e)
         {
             // Close previous stream first
             if(m_mediaPlayer.State == MediaPlayerState.Playing)
@@ -112,6 +127,65 @@ namespace RKWebcamCapture
             m_panVideoArea.Invalidate(true);
 
             UpdateDialogState();
+        }
+
+        private void OnCmdReadQRCode_Click(object sender, EventArgs e)
+        {
+            CaptureDeviceInfo selectedDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
+            if(selectedDevice == null){ return;}
+
+            using (FrameByFrameVideoReader frameByFrameReader = new FrameByFrameVideoReader(selectedDevice))
+            using (MemoryMappedTexture32bpp capturedFrame1 = frameByFrameReader.ReadFrame())
+            using (MemoryMappedTexture32bpp capturedFrame2 = frameByFrameReader.ReadFrame())
+            {
+                capturedFrame2.SetAllAlphaValuesToOne();
+
+                // Change current background image
+                Bitmap newBGImage = GraphicsHelper.LoadBitmapFromMappedTexture(capturedFrame2);
+                Bitmap prevBGImage = m_panVideoArea.BackgroundImage as Bitmap;
+                m_panVideoArea.BackgroundImage = newBGImage;
+                if (prevBGImage != null) { prevBGImage.Dispose(); }
+
+                // Load binary data to ZXing format
+                RGBLuminanceSource luminanceSource = new RGBLuminanceSource(
+                    capturedFrame2.ToArray(), capturedFrame2.Width, capturedFrame2.Height,
+                    RGBLuminanceSource.BitmapFormat.BGRA32);
+                BinaryBitmap binBitmap = new BinaryBitmap(new HybridBinarizer(luminanceSource));
+
+                // Perform QR-Code reading
+                Result result = m_qrReader.decode(binBitmap);
+
+                // Store the result
+                if ((result == null) ||
+                    (string.IsNullOrEmpty(result.Text)))
+                {
+                    MessageBox.Show(this, "Nothing found..", "QR-Code Reader", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+                else
+                {
+                    MessageBox.Show(this, "Content: " + result.Text, "QR-Code Reader", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+        }
+
+        private void OnCmdSaveImage_Click(object sender, EventArgs e)
+        {
+            CaptureDeviceInfo selectedDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
+            if(selectedDevice == null){ return;}
+
+            using (FrameByFrameVideoReader frameByFrameReader = new FrameByFrameVideoReader(selectedDevice))
+            using (MemoryMappedTexture32bpp capturedFrame1 = frameByFrameReader.ReadFrame())
+            using (MemoryMappedTexture32bpp capturedFrame2 = frameByFrameReader.ReadFrame())
+            {
+                capturedFrame2.SetAllAlphaValuesToOne();
+                using (Bitmap bitmap = GraphicsHelper.LoadBitmapFromMappedTexture(capturedFrame2))
+                {
+                    if (m_dlgSaveImageFile.ShowDialog() == DialogResult.OK)
+                    {
+                        bitmap.Save(m_dlgSaveImageFile.FileName);
+                    }
+                }
+            }
         }
     }
 }

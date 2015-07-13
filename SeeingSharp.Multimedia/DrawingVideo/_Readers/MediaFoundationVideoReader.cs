@@ -80,6 +80,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                     // see (lowest post): http://msdn.developer-works.com/article/11388495/How+to+use+SourceReader+(for+H.264+to+RGB+conversion)%3F
                     mediaAttributes.Set(MF.SourceReaderAttributeKeys.EnableVideoProcessing, 1);
                     mediaAttributes.Set(MF.SourceReaderAttributeKeys.DisableDxva, 1);
+                    mediaAttributes.Set(MF.SourceReaderAttributeKeys.DisconnectMediasourceOnShutdown, 1);
 
                     // Create the MediaSource object by given capture device
                     using (MF.MediaSource mediaSource = captureDevice.CreateMediaSource())
