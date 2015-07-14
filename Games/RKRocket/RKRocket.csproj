@@ -116,11 +116,17 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Game\Background.cs" />
-    <Compile Include="Game\Block.cs" />
+    <Compile Include="Game\Background.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\Block.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Game\PlayerRocket.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Game\Projectile.cs" />
     <Compile Include="Game\_Base\GameObject2D.cs" />
-    <Compile Include="Game\PlayerRocket.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
