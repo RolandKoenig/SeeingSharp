@@ -20,8 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
-using SeeingSharp.Multimedia.Core;
+using RKRocket.Game;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
@@ -29,39 +28,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeeingSharp.Multimedia.Drawing2D
+namespace RKRocket.View
 {
-    public abstract class Drawing2DResourceBase : IDisposable, ICheckDisposed
+    public class MainUIViewModel : ViewModelBase
     {
-        #region Helper flags
-        private bool m_isDisposed;
-        #endregion
+        private GameCore m_game;
 
         /// <summary>
-        /// Disposes this object.
+        /// Initializes a new instance of the <see cref="MainUIViewModel"/> class.
         /// </summary>
-        public virtual void Dispose()
+        public MainUIViewModel()
         {
-            if (!m_isDisposed)
-            {
-                m_isDisposed = true;
-
-                EngineMainLoop.Current.RegisterForUnload(this);
-            }
+            m_game = new GameCore();
         }
 
-        /// <summary>
-        /// Unloads all resources loaded on the given device.
-        /// </summary>
-        /// <param name="engineDevice">The device for which to unload the resource.</param>
-        internal abstract void UnloadResources(EngineDevice engineDevice);
-
-        /// <summary>
-        /// Is this object disposed?
-        /// </summary>
-        public bool IsDisposed
+        public GameCore Game
         {
-            get { return m_isDisposed; }
+            get { return m_game; }
         }
     }
 }

@@ -333,6 +333,7 @@ namespace SeeingSharp.Multimedia.Core
                 LoadBitmapSource(inStream));
         }
 
+#if DESKTOP
         /// <summary>
         /// Loads a new texture from the given file path.
         /// </summary>
@@ -343,7 +344,20 @@ namespace SeeingSharp.Multimedia.Core
         {
             return LoadTexture2DFromBitmap(
                 device,
-                LoadBitmap(fileName));
+                LoadBitmapSource(fileName));
+        }
+#endif
+
+        /// <summary>
+        /// Loads a bitmap using WIC.
+        /// </summary>
+        /// <param name="inStream">The stream from wich to load the texture file.</param>
+        internal static WIC.BitmapSource LoadBitmapSource(ResourceLink resource)
+        {
+            using(Stream inStream = resource.OpenInputStream())
+            {
+                return LoadBitmapSource(inStream);
+            }
         }
 
         /// <summary>
@@ -373,33 +387,33 @@ namespace SeeingSharp.Multimedia.Core
             return formatConverter;
         }
 
-        /// <summary>
-        /// Loads a bitmap using WIC.
-        /// </summary>
-        /// <param name="inStream">The file from wich to load the texture.</param>
-        internal static WIC.BitmapSource LoadBitmap(string filename)
-        {
-            filename.EnsureNotNullOrEmpty("filename");
-            filename.EnsureFileExists("filename");
+        ///// <summary>
+        ///// Loads a bitmap using WIC.
+        ///// </summary>
+        ///// <param name="inStream">The file from wich to load the texture.</param>
+        //internal static WIC.BitmapSource LoadBitmap(string filename)
+        //{
+        //    filename.EnsureNotNullOrEmpty("filename");
+        //    filename.EnsureFileExists("filename");
 
-            var bitmapDecoder = new SharpDX.WIC.BitmapDecoder(
-                GraphicsCore.Current.FactoryWIC,
-                filename,
-                SharpDX.WIC.DecodeOptions.CacheOnDemand
-                );
+        //    var bitmapDecoder = new SharpDX.WIC.BitmapDecoder(
+        //        GraphicsCore.Current.FactoryWIC,
+        //        filename,
+        //        SharpDX.WIC.DecodeOptions.CacheOnDemand
+        //        );
 
-            var formatConverter = new WIC.FormatConverter(GraphicsCore.Current.FactoryWIC);
+        //    var formatConverter = new WIC.FormatConverter(GraphicsCore.Current.FactoryWIC);
 
-            formatConverter.Initialize(
-                bitmapDecoder.GetFrame(0),
-                DEFAULT_WIC_BITMAP_FORMAT,
-                WIC.BitmapDitherType.None,
-                null,
-                0.0,
-                WIC.BitmapPaletteType.Custom);
+        //    formatConverter.Initialize(
+        //        bitmapDecoder.GetFrame(0),
+        //        DEFAULT_WIC_BITMAP_FORMAT,
+        //        WIC.BitmapDitherType.None,
+        //        null,
+        //        0.0,
+        //        WIC.BitmapPaletteType.Custom);
 
-            return formatConverter;
-        }
+        //    return formatConverter;
+        //}
 
         internal static D3D11.Texture2D LoadTexture2DFromMappedTexture(EngineDevice device, MemoryMappedTexture32bpp m_mappedTexture)
         {

@@ -20,7 +20,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Util;
 using System;
@@ -29,39 +28,51 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Namespace mappings
+using D2D = SharpDX.Direct2D1;
+using WIC = SharpDX.WIC;
+
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public abstract class Drawing2DResourceBase : IDisposable, ICheckDisposed
+    public class StandardBitmapResource : BitmapResource
     {
-        #region Helper flags
-        private bool m_isDisposed;
-        #endregion
+        private WIC.BitmapSource m_bitmapSource;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StandardBitmapResource"/> class.
+        /// </summary>
+        /// <param name="resource">The resource from w.</param>
+        public StandardBitmapResource(ResourceLink resource)
+        {
+            m_bitmapSource = GraphicsHelper.LoadBitmapSource(resource.OpenInputStream());    
+        }
+
+        /// <summary>
+        /// Gets the bitmap.
+        /// </summary>
+        /// <param name="engineDevice">The engine device.</param>
+        internal override D2D.Bitmap GetBitmap(EngineDevice engineDevice)
+        {
+            if (m_bitmapSource == null) { throw new ObjectDisposedException("StandardBitmapResource"); }
+
+            return D2D.Bitmap.FromWicBitmap(
+                engineDevice.FakeRenderTarget2D,
+                m_bitmapSource);
+        }
 
         /// <summary>
         /// Disposes this object.
         /// </summary>
-        public virtual void Dispose()
+        public override void Dispose()
         {
-            if (!m_isDisposed)
-            {
-                m_isDisposed = true;
+            base.Dispose();
 
-                EngineMainLoop.Current.RegisterForUnload(this);
-            }
+            GraphicsHelper.SafeDispose(ref m_bitmapSource);
         }
 
-        /// <summary>
-        /// Unloads all resources loaded on the given device.
-        /// </summary>
-        /// <param name="engineDevice">The device for which to unload the resource.</param>
-        internal abstract void UnloadResources(EngineDevice engineDevice);
-
-        /// <summary>
-        /// Is this object disposed?
-        /// </summary>
-        public bool IsDisposed
+        internal override void UnloadResources(EngineDevice engineDevice)
         {
-            get { return m_isDisposed; }
+            
         }
     }
 }

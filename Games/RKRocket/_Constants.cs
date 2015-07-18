@@ -21,47 +21,16 @@
 */
 #endregion
 
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeeingSharp.Multimedia.Drawing2D
+namespace RKRocket
 {
-    public abstract class Drawing2DResourceBase : IDisposable, ICheckDisposed
+    internal static class Constants
     {
-        #region Helper flags
-        private bool m_isDisposed;
-        #endregion
-
-        /// <summary>
-        /// Disposes this object.
-        /// </summary>
-        public virtual void Dispose()
-        {
-            if (!m_isDisposed)
-            {
-                m_isDisposed = true;
-
-                EngineMainLoop.Current.RegisterForUnload(this);
-            }
-        }
-
-        /// <summary>
-        /// Unloads all resources loaded on the given device.
-        /// </summary>
-        /// <param name="engineDevice">The device for which to unload the resource.</param>
-        internal abstract void UnloadResources(EngineDevice engineDevice);
-
-        /// <summary>
-        /// Is this object disposed?
-        /// </summary>
-        public bool IsDisposed
-        {
-            get { return m_isDisposed; }
-        }
+        public const string GAME_SCENE_NAME = "RocketScene";
     }
 }

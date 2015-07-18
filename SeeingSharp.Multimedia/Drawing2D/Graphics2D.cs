@@ -67,6 +67,16 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
 
         /// <summary>
+        /// Draws a point at the given location.
+        /// </summary>
+        public void DrawPoint(Vector2 point, BrushResource brush)
+        {
+            this.DrawLine(
+                point, new Vector2(point.X + 1f, point.Y),
+                brush);
+        }
+
+        /// <summary>
         /// Draws the given line with the given brush.
         /// </summary>
         public void DrawLine(Vector2 start, Vector2 end, BrushResource brush)
@@ -216,6 +226,22 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public Size2F ScreenSize
         {
             get { return m_screenSize; }
+        }
+
+        /// <summary>
+        /// Gets the width of the screen (already scaled by DPI).
+        /// </summary>
+        public float ScreenWidth
+        {
+            get { return m_screenSize.Width; }
+        }
+
+        /// <summary>
+        /// Gets the height of the screen (already scaled by DPI).
+        /// </summary>
+        public float ScreenHeight
+        {
+            get { return m_screenSize.Height; }
         }
     }
 }

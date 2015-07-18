@@ -1,7 +1,10 @@
-﻿using System;
+﻿using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -23,85 +26,70 @@ namespace RKRocket
     sealed partial class App : Application
     {
         /// <summary>
-        /// Initialisiert das Singletonanwendungsobjekt.  Dies ist die erste Zeile von erstelltem Code
-        /// und daher das logische Äquivalent von main() bzw. WinMain().
+        /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
         public App()
         {
             this.InitializeComponent();
-            this.Suspending += OnSuspending;
         }
 
         /// <summary>
-        /// Wird aufgerufen, wenn die Anwendung durch den Endbenutzer normal gestartet wird.  Weitere Einstiegspunkte
-        /// werden z. B. verwendet, wenn die Anwendung gestartet wird, um eine bestimmte Datei zu öffnen.
+        /// Lounches the SeeingSharp application.
         /// </summary>
-        /// <param name="e">Details über Startanforderung und -prozess.</param>
-        protected override void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
+            // Initialize application and graphics
+            Exception initException = null;
+            if (!SeeingSharpApplication.IsInitialized)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
-
-            Frame rootFrame = Window.Current.Content as Frame;
-
-            // App-Initialisierung nicht wiederholen, wenn das Fenster bereits Inhalte enthält.
-            // Nur sicherstellen, dass das Fenster aktiv ist.
-            if (rootFrame == null)
-            {
-                // Einen Rahmen erstellen, der als Navigationskontext fungiert und zum Parameter der ersten Seite navigieren
-                rootFrame = new Frame();
-                // Standardsprache festlegen
-                rootFrame.Language = Windows.Globalization.ApplicationLanguages.Languages[0];
-
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
+                await SeeingSharpApplication.InitializeAsync(
+                    this.GetType().GetTypeInfo().Assembly,
+                    new Assembly[]
+                    {
+                        typeof(SeeingSharpApplication).GetTypeInfo().Assembly,
+                        typeof(GraphicsCore).GetTypeInfo().Assembly,
+                    },
+                    new string[] { e.Arguments });
+                try
                 {
-                    //TODO: Zustand von zuvor angehaltener Anwendung laden
+                    GraphicsCore.Initialize(
+                        TargetHardware.Direct3D11,
+                        false);
+
+                    // Force high texture quality on tablet devices
+                    foreach (EngineDevice actDevice in GraphicsCore.Current.LoadedDevices)
+                    {
+                        if (actDevice.IsSoftware) { continue; }
+                        actDevice.Configuration.TextureQuality = TextureQuality.Hight;
+                    }
+
+                    // Initialize the UI environment
+                    SeeingSharpApplication.Current.InitializeUIEnvironment();
                 }
-
-                // Den Rahmen im aktuellen Fenster platzieren
-                Window.Current.Content = rootFrame;
+                catch (Exception ex)
+                {
+                    initException = ex;
+                }
             }
 
-            if (rootFrame.Content == null)
+            // Create the main game page and associate it withe the main window
+            if (initException == null)
             {
-                // Wenn der Navigationsstapel nicht wiederhergestellt wird, zur ersten Seite navigieren
-                // und die neue Seite konfigurieren, indem die erforderlichen Informationen als Navigationsparameter
-                // übergeben werden
-                rootFrame.Navigate(typeof(MainPage), e.Arguments);
+                MainPage gamePage = new MainPage();
+                Window.Current.Content = gamePage;
             }
-            // Sicherstellen, dass das aktuelle Fenster aktiv ist
+            else
+            {
+                return;
+                //ExceptionInfo exInfo = new ExceptionInfo(initException);
+
+                //DummyPage exceptionPage = new DummyPage();
+                //exceptionPage.DataContext = exInfo;
+                //Window.Current.Content = exceptionPage;
+            }
+
+            // Ensure that the main window is activated
             Window.Current.Activate();
-        }
-
-        /// <summary>
-        /// Wird aufgerufen, wenn die Navigation auf eine bestimmte Seite fehlschlägt
-        /// </summary>
-        /// <param name="sender">Der Rahmen, bei dem die Navigation fehlgeschlagen ist</param>
-        /// <param name="e">Details über den Navigationsfehler</param>
-        void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
-        {
-            throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
-
-        /// <summary>
-        /// Wird aufgerufen, wenn die Ausführung der Anwendung angehalten wird.  Der Anwendungszustand wird gespeichert,
-        /// ohne zu wissen, ob die Anwendung beendet oder fortgesetzt wird und die Speicherinhalte dabei
-        /// unbeschädigt bleiben.
-        /// </summary>
-        /// <param name="sender">Die Quelle der Anhalteanforderung.</param>
-        /// <param name="e">Details zur Anhalteanforderung.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Anwendungszustand speichern und alle Hintergrundaktivitäten beenden
-            deferral.Complete();
         }
     }
 }

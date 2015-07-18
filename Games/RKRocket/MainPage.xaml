@@ -1,13 +1,24 @@
-﻿<Page
+﻿<SwapChainBackgroundPanel
     x:Class="RKRocket.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:RKRocket"
+    xmlns:localView="using:RKRocket.View"
+    xmlns:localBeh="using:RKRocket.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    
+    <!-- Map main ViewModel to the UI -->
+    <SwapChainBackgroundPanel.DataContext>
+        <localView:MainUIViewModel />
+    </SwapChainBackgroundPanel.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    </Grid>
-</Page>
+    <!-- Map the Game to the UI -->
+    <i:Interaction.Behaviors>
+        <localBeh:ApplyGameSceneBehavior GameCore="{Binding Path=Game}" />
+    </i:Interaction.Behaviors>
+    
+    
+</SwapChainBackgroundPanel>

@@ -20,9 +20,9 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp;
+using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing2D;
+using SeeingSharp.Multimedia.Drawing3D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,38 +31,49 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class Background : GameObject2D
+    public class GameCore : SceneLogicalObject
     {
-        private SolidBrushResource m_blackBrush;
+        //#region Game related members
+        //private LevelData m_currentLevel;
+        //private GameScreenManagerLogic m_gameScreenManager;
+        //#endregion
+
+        #region Graphics related members
+        private bool m_initialized;
+        private PerspectiveCamera3D m_camera;
+        private Scene m_gameScene;
+        #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Background"/> class.
+        /// Initializes a new instance of the <see cref="GameCore"/> class.
         /// </summary>
-        public Background()
+        public GameCore()
         {
-            m_blackBrush = new SolidBrushResource(
-                Color4.Black);
+            // Create  main scene objects
+            m_camera = new PerspectiveCamera3D();
+            m_gameScene = new Scene(
+                name: Constants.GAME_SCENE_NAME,
+                registerOnMessenger: true);
+
+            // Register initial manipulate method
+            m_gameScene.ManipulateSceneAsync(OnInitializeGame)
+                .FireAndForget();
         }
 
-        /// <summary>
-        /// Contains all 2D rendering logic for this object.
-        /// </summary>
-        protected override void OnRender_2DOverlay(RenderState renderState)
+        private void OnInitializeGame(SceneManipulator manipulator)
         {
-            Graphics2D graphics = renderState.Graphics2D;
-
-            graphics.FillRectangle(
-                new RectangleF(0f, 0f, graphics.ScreenSize.Width, graphics.ScreenSize.Height),
-                m_blackBrush);
+            manipulator.Add(this);
+            manipulator.Add(new Background());
         }
 
-        /// <summary>
-        /// Updates the object.
-        /// </summary>
-        /// <param name="updateState">Current update state.</param>
-        protected override void UpdateInternal(UpdateState updateState)
+        public Scene GameScene
         {
+            get { return m_gameScene; }
+        }
 
+        public Camera3DBase Camera
+        {
+            get { return m_camera; }
         }
     }
 }
