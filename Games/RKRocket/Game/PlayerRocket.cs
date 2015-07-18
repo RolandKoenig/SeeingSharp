@@ -21,6 +21,8 @@
 */
 #endregion
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing2D;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,6 +33,19 @@ namespace RKRocket.Game
 {
     public class PlayerRocket : GameObject2D
     {
+        private StandardBitmapResource m_playerBitmap;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PlayerRocket"/> class.
+        /// </summary>
+        public PlayerRocket()
+        {
+            m_playerBitmap = new StandardBitmapResource(
+                new AssemblyResourceUriBuilder(
+                    "RKRocket", true,
+                    "Assets/Bitmaps/Rocket.png"));
+        }
+
 
         protected override void UpdateInternal(UpdateState updateState)
         {
@@ -39,7 +54,11 @@ namespace RKRocket.Game
 
         protected override void OnRender_2DOverlay(RenderState renderState)
         {
-            
+            Graphics2D graphics = renderState.Graphics2D;
+
+            graphics.DrawBitmap(
+                m_playerBitmap,
+                new SeeingSharp.Vector2(100f, 100f));
         }
 
 

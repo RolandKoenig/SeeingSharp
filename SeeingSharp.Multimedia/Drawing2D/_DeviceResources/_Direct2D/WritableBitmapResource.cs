@@ -103,5 +103,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 m_loadedBitmaps[engineDevice.DeviceIndex] = null;
             }
         }
+
+        public override int PixelWidth
+        {
+            get { return m_bitmapSize.Width; }
+        }
+
+        public override int PixelHeight
+        {
+            get { return m_bitmapSize.Height; }
+        }
     }
 }

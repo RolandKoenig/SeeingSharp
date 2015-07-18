@@ -34,9 +34,18 @@ using WIC = SharpDX.WIC;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
+    /// <summary>
+    /// This object represents a inmemory chached bitmap which is 
+    /// loaded from a ResourceLink (e. g. a file).
+    /// </summary>
     public class StandardBitmapResource : BitmapResource
     {
+        #region Bitmap resource and properties
+        private D2D.Bitmap[] m_loadedBitmaps;
         private WIC.BitmapSource m_bitmapSource;
+        private int m_pixelWidth;
+        private int m_pixelHeight;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardBitmapResource"/> class.
@@ -44,7 +53,11 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="resource">The resource from w.</param>
         public StandardBitmapResource(ResourceLink resource)
         {
-            m_bitmapSource = GraphicsHelper.LoadBitmapSource(resource.OpenInputStream());    
+            m_loadedBitmaps = new D2D.Bitmap[GraphicsCore.Current.DeviceCount];
+
+            m_bitmapSource = GraphicsHelper.LoadBitmapSource_D2D(resource.OpenInputStream());
+            m_pixelWidth = m_bitmapSource.Size.Width;
+            m_pixelHeight = m_bitmapSource.Size.Height;
         }
 
         /// <summary>
@@ -54,10 +67,19 @@ namespace SeeingSharp.Multimedia.Drawing2D
         internal override D2D.Bitmap GetBitmap(EngineDevice engineDevice)
         {
             if (m_bitmapSource == null) { throw new ObjectDisposedException("StandardBitmapResource"); }
+            if (base.IsDisposed) { throw new ObjectDisposedException(this.GetType().Name); }
 
-            return D2D.Bitmap.FromWicBitmap(
-                engineDevice.FakeRenderTarget2D,
-                m_bitmapSource);
+            D2D.Bitmap result = m_loadedBitmaps[engineDevice.DeviceIndex];
+            if (result == null)
+            {
+                // Load the bitmap initially
+                result = D2D.Bitmap.FromWicBitmap(
+                    engineDevice.FakeRenderTarget2D,
+                    m_bitmapSource);
+                m_loadedBitmaps[engineDevice.DeviceIndex] = result;
+            }
+
+            return result;
         }
 
         /// <summary>
@@ -70,9 +92,34 @@ namespace SeeingSharp.Multimedia.Drawing2D
             GraphicsHelper.SafeDispose(ref m_bitmapSource);
         }
 
+        /// <summary>
+        /// Unloads all resources loaded on the given device.
+        /// </summary>
+        /// <param name="engineDevice">The device for which to unload the resource.</param>
         internal override void UnloadResources(EngineDevice engineDevice)
         {
-            
+            D2D.Bitmap brush = m_loadedBitmaps[engineDevice.DeviceIndex];
+            if (brush != null)
+            {
+                GraphicsHelper.DisposeObject(brush);
+                m_loadedBitmaps[engineDevice.DeviceIndex] = null;
+            }
+        }
+
+        /// <summary>
+        /// Gets the width of the bitmap in pixel´.
+        /// </summary>
+        public override int PixelWidth
+        {
+            get { return m_pixelWidth; }
+        }
+
+        /// <summary>
+        /// Gets the height of the bitmap in pixel.
+        /// </summary>
+        public override int PixelHeight
+        {
+            get { return m_pixelHeight; }
         }
     }
 }

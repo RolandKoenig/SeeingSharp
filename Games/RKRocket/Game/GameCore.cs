@@ -64,6 +64,7 @@ namespace RKRocket.Game
         {
             manipulator.Add(this);
             manipulator.Add(new Background());
+            manipulator.Add(new PlayerRocket());
         }
 
         public Scene GameScene

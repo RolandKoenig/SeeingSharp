@@ -35,5 +35,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
     public abstract class BitmapResource : Drawing2DResourceBase
     {
         internal abstract D2D.Bitmap GetBitmap(EngineDevice engineDevice);
+
+        public abstract int PixelWidth
+        {
+            get;
+        }
+
+        public abstract int PixelHeight
+        {
+            get;
+        }
     }
 }

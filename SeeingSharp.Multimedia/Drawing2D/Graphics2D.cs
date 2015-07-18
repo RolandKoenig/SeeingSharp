@@ -213,6 +213,30 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
 
         /// <summary>
+        /// Draws the given bitmap.
+        /// </summary>
+        /// <param name="bitmap">The bitmap.</param>
+        /// <param name="destinationRectangle">The target rectangle where to draw the bitmap.</param>
+        /// <param name="opacity">The opacity.</param>
+        /// <param name="interpolationMode">The interpolation mode.</param>
+        public void DrawBitmap(
+            BitmapResource bitmap,
+            Vector2 destinationOrigin,
+            float opacity = 1f,
+            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
+        {
+            bitmap.EnsureNotNull("bitmap");
+            opacity.EnsureInRange(0f, 1f, "opacity");
+
+            m_renderTarget.DrawBitmap(
+                bitmap.GetBitmap(m_device),
+                new SharpDX.RectangleF(
+                    destinationOrigin.X, destinationOrigin.Y,
+                    bitmap.PixelWidth, bitmap.PixelHeight),
+                opacity, (D2D.BitmapInterpolationMode)interpolationMode);
+        }
+
+        /// <summary>
         /// Gets the device which is used for rendering.
         /// </summary>
         public EngineDevice Device
