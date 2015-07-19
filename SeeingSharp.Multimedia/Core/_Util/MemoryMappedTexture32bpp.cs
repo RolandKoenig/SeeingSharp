@@ -87,7 +87,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Sets all alpha values to one.
         /// </summary>
-        public void SetAllAlphaValuesToOne()
+        public void SetAllAlphaValuesToOne_ARGB()
         {
             uint alphaByteValue = 0xFF000000;
             uint* pointerUInt = (uint*)m_pointerNative;
@@ -123,8 +123,18 @@ namespace SeeingSharp.Multimedia.Core
 
         /// <summary>
         /// Gets the pitch of the underlying texture data.
+        /// (pitch = stride, see https://msdn.microsoft.com/en-us/library/windows/desktop/aa473780(v=vs.85).aspx )
         /// </summary>
         public int Pitch
+        {
+            get { return m_size.Width * 4; }
+        }
+
+        /// <summary>
+        /// Gets the pitch of the underlying texture data.
+        /// (pitch = stride, see https://msdn.microsoft.com/en-us/library/windows/desktop/aa473780(v=vs.85).aspx )
+        /// </summary>
+        public int Stride
         {
             get { return m_size.Width * 4; }
         }

@@ -353,7 +353,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Loads a bitmap using WIC.
         /// </summary>
         /// <param name="inStream">The stream from wich to load the texture file.</param>
-        internal static WIC.BitmapSource LoadBitmapSource(ResourceLink resource)
+        internal static WicBitmapSourceInternal LoadBitmapSource(ResourceLink resource)
         {
             using(Stream inStream = resource.OpenInputStream())
             {
@@ -365,7 +365,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Loads a bitmap using WIC.
         /// </summary>
         /// <param name="inStream">The stream from wich to load the texture file.</param>
-        internal static WIC.BitmapSource LoadBitmapSource(Stream inStream)
+        internal static WicBitmapSourceInternal LoadBitmapSource(Stream inStream)
         {
             inStream.EnsureNotNull("inStream");
             inStream.EnsureReadable("inStream");
@@ -384,14 +384,14 @@ namespace SeeingSharp.Multimedia.Core
                 0.0,
                 WIC.BitmapPaletteType.Custom);
 
-            return formatConverter;
+            return new WicBitmapSourceInternal(bitmapDecoder, formatConverter);
         }
 
         /// <summary>
         /// Loads a bitmap using WIC.
         /// </summary>
         /// <param name="inStream">The stream from wich to load the texture file.</param>
-        internal static WIC.BitmapSource LoadBitmapSource_D2D(ResourceLink resource)
+        internal static WicBitmapSourceInternal LoadBitmapSource_D2D(ResourceLink resource)
         {
             using (Stream inStream = resource.OpenInputStream())
             {
@@ -403,19 +403,18 @@ namespace SeeingSharp.Multimedia.Core
         /// Loads a bitmap using WIC.
         /// </summary>
         /// <param name="inStream">The stream from wich to load the texture file.</param>
-        internal static WIC.BitmapSource LoadBitmapSource_D2D(Stream inStream)
+        internal static WicBitmapSourceInternal LoadBitmapSource_D2D(Stream inStream)
         {
             inStream.EnsureNotNull("inStream");
             inStream.EnsureReadable("inStream");
 
-            // Parameter changed to represent this article:
+            // Parameter changed to represent this article (importand is the correct Direct2D format):
             // https://msdn.microsoft.com/en-us/library/windows/desktop/dd756686(v=vs.85).aspx
 
             var bitmapDecoder = new SharpDX.WIC.BitmapDecoder(
                 GraphicsCore.Current.FactoryWIC,
                 inStream,
-                SharpDX.WIC.DecodeOptions.CacheOnLoad
-                );
+                SharpDX.WIC.DecodeOptions.CacheOnLoad);
 
             var formatConverter = new WIC.FormatConverter(GraphicsCore.Current.FactoryWIC);
             formatConverter.Initialize(
@@ -426,36 +425,8 @@ namespace SeeingSharp.Multimedia.Core
                 0.0,
                 WIC.BitmapPaletteType.MedianCut);
 
-            return formatConverter;
+            return new WicBitmapSourceInternal(bitmapDecoder, formatConverter);
         }
-
-        ///// <summary>
-        ///// Loads a bitmap using WIC.
-        ///// </summary>
-        ///// <param name="inStream">The file from wich to load the texture.</param>
-        //internal static WIC.BitmapSource LoadBitmap(string filename)
-        //{
-        //    filename.EnsureNotNullOrEmpty("filename");
-        //    filename.EnsureFileExists("filename");
-
-        //    var bitmapDecoder = new SharpDX.WIC.BitmapDecoder(
-        //        GraphicsCore.Current.FactoryWIC,
-        //        filename,
-        //        SharpDX.WIC.DecodeOptions.CacheOnDemand
-        //        );
-
-        //    var formatConverter = new WIC.FormatConverter(GraphicsCore.Current.FactoryWIC);
-
-        //    formatConverter.Initialize(
-        //        bitmapDecoder.GetFrame(0),
-        //        DEFAULT_WIC_BITMAP_FORMAT,
-        //        WIC.BitmapDitherType.None,
-        //        null,
-        //        0.0,
-        //        WIC.BitmapPaletteType.Custom);
-
-        //    return formatConverter;
-        //}
 
         internal static D3D11.Texture2D LoadTexture2DFromMappedTexture(EngineDevice device, MemoryMappedTexture32bpp m_mappedTexture)
         {
@@ -491,12 +462,14 @@ namespace SeeingSharp.Multimedia.Core
         /// Creates a <see cref="SharpDX.Direct3D11.Texture2D"/> from a WIC <see cref="SharpDX.WIC.BitmapSource"/>
         /// </summary>
         /// <param name="device">The Direct3D11 device</param>
-        /// <param name="bitmapSource">The WIC bitmap source</param>
+        /// <param name="bitmapSourceWrapper">The WIC bitmap source</param>
         /// <returns>A Texture2D</returns>
-        internal static D3D11.Texture2D LoadTexture2DFromBitmap(EngineDevice device, WIC.BitmapSource bitmapSource)
+        internal static D3D11.Texture2D LoadTexture2DFromBitmap(EngineDevice device, WicBitmapSourceInternal bitmapSourceWrapper)
         {
             device.EnsureNotNull("device");
-            bitmapSource.EnsureNotNullOrDisposed("bitmapSource");
+            bitmapSourceWrapper.EnsureNotNullOrDisposed("bitmapSourceWrapper");
+
+            WIC.BitmapSource bitmapSource = bitmapSourceWrapper.Converter;
 
             // Allocate DataStream to receive the WIC image pixels
             int stride = bitmapSource.Size.Width * 4;

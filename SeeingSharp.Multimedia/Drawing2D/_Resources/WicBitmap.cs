@@ -71,10 +71,10 @@ namespace SeeingSharp.Multimedia.Drawing2D
         {
             WIC.Bitmap wicBitmap = null;
             using (Stream inStream = await resourceLink.OpenInputStreamAsync())
-            using (WIC.BitmapSource bitmapSource = await CommonTools.CallAsync(() => GraphicsHelper.LoadBitmapSource(inStream)))
+            using (WicBitmapSourceInternal bitmapSourceWrapper = await CommonTools.CallAsync(() => GraphicsHelper.LoadBitmapSource(inStream)))
             {
                 wicBitmap = new WIC.Bitmap(
-                    GraphicsCore.Current.FactoryWIC, bitmapSource, WIC.BitmapCreateCacheOption.CacheOnLoad);
+                    GraphicsCore.Current.FactoryWIC, bitmapSourceWrapper.Converter, WIC.BitmapCreateCacheOption.CacheOnLoad);
             }
 
             return new WicBitmap(wicBitmap);

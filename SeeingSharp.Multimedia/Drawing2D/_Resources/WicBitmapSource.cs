@@ -38,14 +38,14 @@ namespace SeeingSharp.Multimedia.Drawing2D
     public class WicBitmapSource : IDisposable
     {
         #region Native resources
-        private WIC.BitmapSource m_wicBitmapSource;
+        private WicBitmapSourceInternal m_wicBitmapSource;
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WicBitmapSource"/> class.
         /// </summary>
         /// <param name="bitmapSource">The bitmap source.</param>
-        private WicBitmapSource(WIC.BitmapSource bitmapSource)
+        private WicBitmapSource(WicBitmapSourceInternal bitmapSource)
         {
             m_wicBitmapSource = bitmapSource;
         }
@@ -56,7 +56,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="resourceLink">The source of the resource.</param>
         public static async Task<WicBitmapSource> FromResourceSourceAsync(ResourceLink resourceLink)
         {
-            WIC.BitmapSource wicBitmapSource = null;
+            WicBitmapSourceInternal wicBitmapSource = null;
             using (Stream inStream = await resourceLink.OpenInputStreamAsync())
             {
                 wicBitmapSource = await CommonTools.CallAsync(() => GraphicsHelper.LoadBitmapSource(inStream));
@@ -78,7 +78,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             get 
             {
                 if (m_wicBitmapSource == null) { throw new ObjectDisposedException("WicBitmapSource"); }
-                return m_wicBitmapSource.Size.Width;
+                return m_wicBitmapSource.Converter.Size.Width;
             }
         }
 
@@ -87,13 +87,13 @@ namespace SeeingSharp.Multimedia.Drawing2D
             get
             {
                 if (m_wicBitmapSource == null) { throw new ObjectDisposedException("WicBitmapSource"); }
-                return m_wicBitmapSource.Size.Height;
+                return m_wicBitmapSource.Converter.Size.Height;
             }
         }
 
         internal WIC.BitmapSource BitmapSource
         {
-            get { return m_wicBitmapSource; }
+            get { return m_wicBitmapSource.Converter; }
         }
     }
 }

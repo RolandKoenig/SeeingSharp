@@ -62,7 +62,7 @@ namespace SeeingSharp.Tests.Rendering
                 videoReader.SetCurrentPosition(TimeSpan.FromSeconds(2.0));
                 videoReader.ReadFrame(actFrameBuffer);
 
-                actFrameBuffer.SetAllAlphaValuesToOne();
+                actFrameBuffer.SetAllAlphaValuesToOne_ARGB();
 
                 using (bitmapFrame = GraphicsHelper.LoadBitmapFromMappedTexture(actFrameBuffer))
                 {
@@ -97,7 +97,7 @@ namespace SeeingSharp.Tests.Rendering
                 {
                     if (videoReader.ReadFrame(actFrameBuffer))
                     {
-                        actFrameBuffer.SetAllAlphaValuesToOne();
+                        actFrameBuffer.SetAllAlphaValuesToOne_ARGB();
 
                         frameIndex++;
                         if (frameIndex != 10) { continue; }
@@ -135,7 +135,7 @@ namespace SeeingSharp.Tests.Rendering
                 {
                     if (videoReader.ReadFrame(actFrameBuffer))
                     {
-                        actFrameBuffer.SetAllAlphaValuesToOne();
+                        actFrameBuffer.SetAllAlphaValuesToOne_ARGB();
 
                         frameIndex++;
                         if (frameIndex != 10) { continue; }

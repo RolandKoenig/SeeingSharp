@@ -98,13 +98,13 @@ namespace RKVideoMemory.Data
             {
                 // Read the first frame
                 this.FirstVideoFrame = videoReader.ReadFrame();
-                this.FirstVideoFrame.SetAllAlphaValuesToOne();
+                this.FirstVideoFrame.SetAllAlphaValuesToOne_ARGB();
 
                 // Read the last frame
                 videoReader.SetCurrentPosition(videoReader.Duration, false);
 
                 this.LastVideoFrame = videoReader.ReadFrame();
-                this.LastVideoFrame.SetAllAlphaValuesToOne();
+                this.LastVideoFrame.SetAllAlphaValuesToOne_ARGB();
             }
         }
 
