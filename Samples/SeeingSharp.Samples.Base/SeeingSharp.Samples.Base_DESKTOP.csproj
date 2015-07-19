@@ -73,7 +73,6 @@
     <Compile Include="_Performance\PerformanceAnalysisViewModel.cs" />
     <Compile Include="_Performance\PerformanceSnapshot.cs" />
     <Compile Include="_Performance\PerformanceSnapshotItem.cs" />
-    <Compile Include="_Samples\Direct2D\Direct2DRemderDxfFile.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
     <Compile Include="_Samples\MFSamples\CameraCaptureSample.cs" />

@@ -119,5 +119,21 @@ namespace SeeingSharp.Util
         {
             get { return base.GetExtensionFromFileName(m_fileName); }
         }
+
+        /// <summary>
+        /// Are async operations supported on this ResourceLink?
+        /// </summary>
+        public override bool SupportsAsync
+        {
+            get { return true; }
+        }
+
+        /// <summary>
+        /// Are synchronous operations supported on this ResourceLink?
+        /// </summary>
+        public override bool SupportsSync
+        {
+            get { return true; }
+        }
     }
 }

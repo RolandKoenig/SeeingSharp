@@ -250,5 +250,36 @@ namespace SeeingSharp.Tests.Rendering
             // Finishing checks
             Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Render_SimpleBitmap_WithTransparency()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (SolidBrushResource solidBrush = new SolidBrushResource(Color4.LightGray))
+            using (StandardBitmapResource bitmap = new StandardBitmapResource(new AssemblyResourceLink(this.GetType(), "Ressources.Bitmaps.Logo.png")))
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                // Perform rendering
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+                await memRenderTarget.RenderLoop.Register2DDrawingLayerAsync((graphics) =>
+                {
+                    // 2D rendering is made here
+                    graphics.FillRectangle(graphics.ScreenBounds, solidBrush);
+                    graphics.DrawBitmap(bitmap, new Vector2(100f, 100f));
+                });
+                await memRenderTarget.AwaitRenderAsync();
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                float diff = BitmapComparison.CalculatePercentageDifference(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleBitmap_Transparency);
+                Assert.True(diff < 0.2, "Difference to reference image is to big!");
+            }
+        }
     }
 }

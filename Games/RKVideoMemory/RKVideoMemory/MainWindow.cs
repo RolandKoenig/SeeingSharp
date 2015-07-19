@@ -212,7 +212,7 @@ namespace RKVideoMemory
         }
 
         private void OnCtrlRenderer_MouseClick(object sender, MouseEventArgs e)
-        {www
+        {
             if (m_objectsBelowCursor.Count > 0)
             {
                 SeeingSharpApplication.Current.UIMessenger.Publish(

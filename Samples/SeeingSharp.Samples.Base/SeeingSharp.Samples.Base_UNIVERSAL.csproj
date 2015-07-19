@@ -57,7 +57,6 @@
     <Compile Include="_Samples\BasicSamples\SkyboxRenderingSample.cs" />
     <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\TransparentPalletsSample.cs" />
-    <Compile Include="_Samples\Direct2D\Direct2DRemderDxfFile.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
     <Compile Include="_Samples\MFSamples\CameraCaptureSample.cs" />

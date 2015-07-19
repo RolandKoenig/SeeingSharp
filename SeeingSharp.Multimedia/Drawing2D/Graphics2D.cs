@@ -253,6 +253,19 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
 
         /// <summary>
+        /// Gets the bounds of the screen.
+        /// </summary>
+        public RectangleF ScreenBounds
+        {
+            get
+            {
+                return new RectangleF(
+                    0f, 0f,
+                    m_screenSize.Width, m_screenSize.Height);
+            }
+        }
+
+        /// <summary>
         /// Gets the width of the screen (already scaled by DPI).
         /// </summary>
         public float ScreenWidth

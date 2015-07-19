@@ -122,6 +122,22 @@ namespace SeeingSharp.Util
         {
             get { return m_filePath; }
         }
+
+        /// <summary>
+        /// Are async operations supported on this ResourceLink?
+        /// </summary>
+        public override bool SupportsAsync
+        {
+            get { return true; }
+        }
+
+        /// <summary>
+        /// Are synchronous operations supported on this ResourceLink?
+        /// </summary>
+        public override bool SupportsSync
+        {
+            get { return true; }
+        }
     }
 }
 #endif

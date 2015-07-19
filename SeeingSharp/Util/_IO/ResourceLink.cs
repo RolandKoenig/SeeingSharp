@@ -185,5 +185,21 @@ namespace SeeingSharp.Util
         {
             get;
         }
+
+        /// <summary>
+        /// Are async operations supported on this ResourceLink?
+        /// </summary>
+        public abstract bool SupportsAsync
+        {
+            get;
+        }
+
+        /// <summary>
+        /// Are synchronous operations supported on this ResourceLink?
+        /// </summary>
+        public abstract bool SupportsSync
+        {
+            get;
+        }
     }
 }

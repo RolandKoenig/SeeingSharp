@@ -160,10 +160,8 @@ namespace SeeingSharp.Util
 #else
             // Bad construct to map asynchronous API to synchronous OpenInputStream function
             // .. but it works for now and don't create a Deadlock on the UI
-            return Task.Factory.StartNew(async () =>
-            {
-                return await this.OpenInputStreamAsync().ConfigureAwait(false);
-            }).Result.Result;
+            var storageFile = StorageFile.GetFileFromApplicationUriAsync(m_resourceUri).AsTask().Result;
+            return storageFile.OpenStreamForReadAsync().Result;
 #endif
         }
 
@@ -175,6 +173,29 @@ namespace SeeingSharp.Util
             get
             {
                 return base.GetExtensionFromFileName(m_resourceUri.OriginalString);
+            }
+        }
+
+        /// <summary>
+        /// Are async operations supported on this ResourceLink?
+        /// </summary>
+        public override bool SupportsAsync
+        {
+            get { return true; }
+        }
+
+        /// <summary>
+        /// Are synchronous operations supported on this ResourceLink?
+        /// </summary>
+        public override bool SupportsSync
+        {
+            get 
+            {
+#if DESKTOP
+                return true;
+#else
+                return false;
+#endif
             }
         }
     }
