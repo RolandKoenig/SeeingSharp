@@ -48,6 +48,7 @@
     <TargetPlatform Include="Windows, Version=8.1" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\AsyncResourceLoader.cs" />
     <Compile Include="Core\Direct2DOverlayRenderer.cs" />
     <Compile Include="Core\EngineMainLoop.cs" />
     <Compile Include="Core\GraphicsCore.cs" />

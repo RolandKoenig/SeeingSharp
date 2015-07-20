@@ -42,6 +42,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
     public class StandardBitmapResource : BitmapResource
     {
         #region Bitmap resource and properties
+        private Task<MemoryMappedTexture32bpp> m_loadResourceTask;
         private D2D.Bitmap[] m_loadedBitmaps;
         private MemoryMappedTexture32bpp m_cachedBitmap;
         private int m_pixelWidth;
@@ -58,22 +59,35 @@ namespace SeeingSharp.Multimedia.Drawing2D
         {
             m_loadedBitmaps = new D2D.Bitmap[GraphicsCore.Current.DeviceCount];
 
-            using (Stream inputStream = resource.OpenInputStream())
-            using (WicBitmapSourceInternal bitmapSourceWrapper = GraphicsHelper.LoadBitmapSource_D2D(inputStream))
+            // Set default values
+            m_pixelWidth = 0;
+            m_pixelHeight = 0;
+            m_dpiX = 96.0;
+            m_dpyY = 96.0;
+            m_cachedBitmap = null;
+
+            // Load the resource in a loading task
+            m_loadResourceTask = AsyncResourceLoader.Current.EnqueueResourceLoadingTaskAsync(() =>
             {
-                WIC.BitmapSource bitmapSource = bitmapSourceWrapper.Converter;
+                using (Stream inputStream = resource.OpenInputStream())
+                using (WicBitmapSourceInternal bitmapSourceWrapper = GraphicsHelper.LoadBitmapSource_D2D(inputStream))
+                {
+                    WIC.BitmapSource bitmapSource = bitmapSourceWrapper.Converter;
 
-                m_pixelWidth = bitmapSource.Size.Width;
-                m_pixelHeight = bitmapSource.Size.Height;
+                    m_pixelWidth = bitmapSource.Size.Width;
+                    m_pixelHeight = bitmapSource.Size.Height;
 
-                m_cachedBitmap = new MemoryMappedTexture32bpp(new Size2(
-                    m_pixelWidth, m_pixelHeight));
-                bitmapSource.CopyPixels(
-                    m_cachedBitmap.Pitch,
-                    new SharpDX.DataPointer(m_cachedBitmap.Pointer, (int)m_cachedBitmap.SizeInBytes));
+                    m_cachedBitmap = new MemoryMappedTexture32bpp(new Size2(
+                        m_pixelWidth, m_pixelHeight));
+                    bitmapSource.CopyPixels(
+                        m_cachedBitmap.Pitch,
+                        new SharpDX.DataPointer(m_cachedBitmap.Pointer, (int)m_cachedBitmap.SizeInBytes));
 
-                bitmapSource.GetResolution(out m_dpiX, out m_dpyY);
-            }
+                    bitmapSource.GetResolution(out m_dpiX, out m_dpyY);
+
+                    return m_cachedBitmap;
+                }
+            });
         }
 
         public override string ToString()
@@ -89,6 +103,13 @@ namespace SeeingSharp.Multimedia.Drawing2D
         {
             if (m_cachedBitmap == null) { throw new ObjectDisposedException("StandardBitmapResource"); }
             if (base.IsDisposed) { throw new ObjectDisposedException(this.GetType().Name); }
+
+            // Wait for caching task if it is still running
+            if(m_loadResourceTask != null)
+            {
+                m_loadResourceTask.Wait();
+                m_loadResourceTask = null;
+            }
 
             D2D.Bitmap result = m_loadedBitmaps[engineDevice.DeviceIndex];
             if (result == null)

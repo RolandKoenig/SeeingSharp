@@ -34,6 +34,8 @@ namespace SeeingSharp.Multimedia
         public const float MAX_FOCUS_DISTANCE = 15f;
         public const float MIN_FOCUS_DISTANCE = 3f;
 
+        public const int ASYNC_LOADER_MAX_PRALLEL_TASK_COUNT = 2;
+
         // Constants for time duration measuring
         public const string PERF_GLOBAL_PER_FRAME = "Graphics.Global.OneFrame";
         public const string PERF_GLOBAL_WAIT_TIME = "Graphics.Global.WaitTime";

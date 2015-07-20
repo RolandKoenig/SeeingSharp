@@ -270,6 +270,7 @@ namespace SeeingSharp.Tests.Rendering
                     graphics.DrawBitmap(bitmap, new Vector2(100f, 100f));
                 });
 
+                await AsyncResourceLoader.Current.WaitForAllFinishedAsync();
                 await memRenderTarget.AwaitRenderAsync();
 
                 // Take screenshot
@@ -279,7 +280,7 @@ namespace SeeingSharp.Tests.Rendering
                 // Calculate and check difference
                 float diff = BitmapComparison.CalculatePercentageDifference(
                     screenshot, Properties.Resources.ReferenceImage_SimpleBitmap_Transparency);
-                Assert.True(diff < 0.05, "Difference to reference image is to big!");
+                Assert.True(diff < 0.02, "Difference to reference image is to big!");
 
             }
         }
