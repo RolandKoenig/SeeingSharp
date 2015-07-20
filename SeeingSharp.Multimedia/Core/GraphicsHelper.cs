@@ -329,9 +329,10 @@ namespace SeeingSharp.Multimedia.Core
         /// <returns></returns>
         internal static D3D11.Texture2D LoadTexture2D(EngineDevice device, Stream inStream)
         {
-            return LoadTexture2DFromBitmap(
-                device,
-                LoadBitmapSource(inStream));
+            using (WicBitmapSourceInternal bitmapSourceWrapper = LoadBitmapSource(inStream))
+            {
+                return LoadTexture2DFromBitmap(device, bitmapSourceWrapper);
+            }
         }
 
 #if DESKTOP
@@ -343,9 +344,10 @@ namespace SeeingSharp.Multimedia.Core
         /// <returns></returns>
         internal static D3D11.Texture2D LoadTexture2D(EngineDevice device, string fileName)
         {
-            return LoadTexture2DFromBitmap(
-                device,
-                LoadBitmapSource(fileName));
+            using (WicBitmapSourceInternal bitmapSourceWrapper = LoadBitmapSource(fileName))
+            {
+                return LoadTexture2DFromBitmap(device, bitmapSourceWrapper);
+            }
         }
 #endif
 
