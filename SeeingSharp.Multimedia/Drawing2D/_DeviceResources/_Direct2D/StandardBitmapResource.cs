@@ -139,6 +139,14 @@ namespace SeeingSharp.Multimedia.Drawing2D
         {
             base.Dispose();
 
+            // Wait for caching task if it is still running
+            if (m_loadResourceTask != null)
+            {
+                m_loadResourceTask.Wait();
+                m_loadResourceTask = null;
+            }
+
+            // Dispose all created resources
             GraphicsHelper.SafeDispose(ref m_cachedBitmap);
         }
 
