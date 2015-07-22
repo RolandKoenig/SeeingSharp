@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,19 +19,19 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Checking;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
-using SeeingSharp.Infrastructure;
-using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Util;
 
 // Define assembly attributes for type that is defined in this file
@@ -44,7 +44,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
     [SampleInfo(
         Constants.SAMPLEGROUP_DIRECT2D, "Screen Overlay",
         Constants.SAMPLE_DIRECT2D_SCREEN_OVERLAY_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/RotatingPalletSample.cs")]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/Direct2D/Direct2DScreenOverlaySample.cs")]
     public class Direct2DScreenOverlaySample : SampleBase
     {
         private SolidBrushResource m_solidBrush;

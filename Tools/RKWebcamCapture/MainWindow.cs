@@ -1,16 +1,14 @@
-﻿using SeeingSharp.Multimedia.DrawingVideo;
-using SeeingSharp.Multimedia.Views;
-using SeeingSharp.Util;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.DrawingVideo;
+using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Util;
 using ZXing;
 using ZXing.Common;
 using ZXing.QrCode;
@@ -52,7 +50,7 @@ namespace RKWebcamCapture
                 (selectedDevice != null) &&
                 (m_currentlyPlayingDevice == null);
 
-            m_lblCurrentDeviceLabel.Text = m_currentlyPlayingDevice!= null ? selectedDevice.ToString() : "<None>";
+            m_lblCurrentDeviceLabel.Text = m_currentlyPlayingDevice != null ? selectedDevice.ToString() : "<None>";
         }
 
         /// <summary>
@@ -67,7 +65,7 @@ namespace RKWebcamCapture
 
             m_cboDevice.Items.Clear();
             m_cboDevice.Items.AddRange(m_deviceChooser.DeviceInfos.ToArray());
-            if(m_cboDevice.Items.Count > 0)
+            if (m_cboDevice.Items.Count > 0)
             {
                 m_cboDevice.SelectedIndex = 0;
             }
@@ -94,14 +92,14 @@ namespace RKWebcamCapture
         private async void OnCmdPlay_Click(object sender, EventArgs e)
         {
             // Close previous stream first
-            if(m_mediaPlayer.State == MediaPlayerState.Playing)
+            if (m_mediaPlayer.State == MediaPlayerState.Playing)
             {
                 await m_mediaPlayer.CloseVideoAsync();
             }
 
             // Open the new stream
             var captureDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
-            if(captureDevice != null)
+            if (captureDevice != null)
             {
                 await m_mediaPlayer.ShowCaptureDeviceAsync(captureDevice);
                 m_currentlyPlayingDevice = captureDevice;
@@ -132,13 +130,13 @@ namespace RKWebcamCapture
         private void OnCmdReadQRCode_Click(object sender, EventArgs e)
         {
             CaptureDeviceInfo selectedDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
-            if(selectedDevice == null){ return;}
+            if (selectedDevice == null) { return; }
 
             using (FrameByFrameVideoReader frameByFrameReader = new FrameByFrameVideoReader(selectedDevice))
             using (MemoryMappedTexture32bpp capturedFrame1 = frameByFrameReader.ReadFrame())
             using (MemoryMappedTexture32bpp capturedFrame2 = frameByFrameReader.ReadFrame())
             {
-                capturedFrame2.SetAllAlphaValuesToOne();
+                capturedFrame2.SetAllAlphaValuesToOne_ARGB();
 
                 // Change current background image
                 Bitmap newBGImage = GraphicsHelper.LoadBitmapFromMappedTexture(capturedFrame2);
@@ -171,13 +169,13 @@ namespace RKWebcamCapture
         private void OnCmdSaveImage_Click(object sender, EventArgs e)
         {
             CaptureDeviceInfo selectedDevice = m_cboDevice.SelectedItem as CaptureDeviceInfo;
-            if(selectedDevice == null){ return;}
+            if (selectedDevice == null) { return; }
 
             using (FrameByFrameVideoReader frameByFrameReader = new FrameByFrameVideoReader(selectedDevice))
             using (MemoryMappedTexture32bpp capturedFrame1 = frameByFrameReader.ReadFrame())
             using (MemoryMappedTexture32bpp capturedFrame2 = frameByFrameReader.ReadFrame())
             {
-                capturedFrame2.SetAllAlphaValuesToOne();
+                capturedFrame2.SetAllAlphaValuesToOne_ARGB();
                 using (Bitmap bitmap = GraphicsHelper.LoadBitmapFromMappedTexture(capturedFrame2))
                 {
                     if (m_dlgSaveImageFile.ShowDialog() == DialogResult.OK)

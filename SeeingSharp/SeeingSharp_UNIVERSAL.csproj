@@ -242,6 +242,7 @@
     <Folder Include="Behaviors\_WinRT\" />
     <Folder Include="Util\TableData\_OpenXml\" />
     <Folder Include="View\" />
+    <Folder Include="_Math\_SimdEx\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">
@@ -258,6 +259,10 @@
     </Reference>
     <Reference Include="PropertyTools">
       <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\portable-net40+net45+sl5+wp8+win8\PropertyTools.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics.Vectors, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.0.0\lib\portable-net45+win8+wpa81\System.Numerics.Vectors.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
