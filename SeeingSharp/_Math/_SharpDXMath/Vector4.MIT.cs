@@ -1005,7 +1005,7 @@ namespace SeeingSharp
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="SharpDX.Matrix"/>.</param>
         /// <param name="result">When the method completes, contains the transformed <see cref="SharpDX.Vector4"/>.</param>
-        public static void Transform(ref Vector4 vector, ref Matrix transform, out Vector4 result)
+        public static void Transform(ref Vector4 vector, ref Matrix4x4 transform, out Vector4 result)
         {
             result = new Vector4(
                 (vector.X * transform.M11) + (vector.Y * transform.M21) + (vector.Z * transform.M31) + (vector.W * transform.M41),
@@ -1020,7 +1020,7 @@ namespace SeeingSharp
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="SharpDX.Matrix"/>.</param>
         /// <returns>The transformed <see cref="SharpDX.Vector4"/>.</returns>
-        public static Vector4 Transform(Vector4 vector, Matrix transform)
+        public static Vector4 Transform(Vector4 vector, Matrix4x4 transform)
         {
             Vector4 result;
             Transform(ref vector, ref transform, out result);
@@ -1064,7 +1064,7 @@ namespace SeeingSharp
         /// This array may be the same array as <paramref name="source"/>.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Transform(Vector4[] source, ref Matrix transform, Vector4[] destination)
+        public static void Transform(Vector4[] source, ref Matrix4x4 transform, Vector4[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");

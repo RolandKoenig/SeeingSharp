@@ -147,7 +147,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Calculate transform matrix
-            Matrix viewProj = renderState.ViewProj;
+            Matrix4x4 viewProj = renderState.ViewProj;
             viewProj.Transpose();
 
             // Render all lines finally

@@ -791,7 +791,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="matrix">The rotation matrix.</param>
         /// <param name="result">When the method completes, contains the newly created quaternion.</param>
-        public static void RotationMatrix(ref Matrix matrix, out Quaternion result)
+        public static void RotationMatrix(ref Matrix4x4 matrix, out Quaternion result)
         {
             float sqrt;
             float half;
@@ -844,7 +844,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="matrix">The rotation matrix.</param>
         /// <returns>The newly created quaternion.</returns>
-        public static Quaternion RotationMatrix(Matrix matrix)
+        public static Quaternion RotationMatrix(Matrix4x4 matrix)
         {
             Quaternion result;
             RotationMatrix(ref matrix, out result);

@@ -586,7 +586,7 @@ namespace SeeingSharp.Multimedia.Objects
                                 {
                                     string[] lineData = actLine.Split(' ');
 
-                                    Matrix rotation = Matrix.Identity;
+                                    Matrix4x4 rotation = Matrix4x4.Identity;
                                     rotation.M11 = !string.IsNullOrEmpty(lineData[1]) ? Single.Parse(lineData[1], CultureInfo.InvariantCulture) : 0f;
                                     rotation.M12 = !string.IsNullOrEmpty(lineData[2]) ? Single.Parse(lineData[2], CultureInfo.InvariantCulture) : 0f;
                                     rotation.M13 = !string.IsNullOrEmpty(lineData[3]) ? Single.Parse(lineData[3], CultureInfo.InvariantCulture) : 0f;
@@ -799,7 +799,7 @@ namespace SeeingSharp.Multimedia.Objects
             public string Texture;
             public Vector2 TextureRepeat;
             public Vector3 Translation;
-            public Matrix Rotation;
+            public Matrix4x4 Rotation;
             public string Name;
             public string Url;
             public ACObjectType Type;
@@ -813,7 +813,7 @@ namespace SeeingSharp.Multimedia.Objects
                 this.Childs = new List<ACObjectInfo>();
                 this.Surfaces = new List<ACSurface>();
                 this.Vertices = new List<ACVertex>();
-                this.Rotation = Matrix.Identity;
+                this.Rotation = Matrix4x4.Identity;
             }
 
             /// <summary>

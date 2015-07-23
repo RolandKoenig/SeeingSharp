@@ -977,7 +977,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="matrix">The matrix.</param>
         /// <returns>The result of the conversion.</returns>
-        public static implicit operator Matrix3x2(Matrix matrix)
+        public static implicit operator Matrix3x2(Matrix4x4 matrix)
         {
             return new Matrix3x2
                                    {

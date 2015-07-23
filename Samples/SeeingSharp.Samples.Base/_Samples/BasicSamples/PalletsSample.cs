@@ -95,7 +95,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
 
                 // Configure camera
                 camera.Position = new Vector3(30f, 30f, 30f);
-                camera.Target = new Vector3(0f, 0f, 0f);
+                camera.Target = new Vector3(0f, 10f, 0f);
                 camera.UpdateCamera();
             }
         }

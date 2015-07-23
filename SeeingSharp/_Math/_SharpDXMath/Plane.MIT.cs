@@ -538,15 +538,15 @@ namespace SeeingSharp
         /// <param name="plane">The normalized source plane.</param>
         /// <param name="transformation">The transformation matrix.</param>
         /// <param name="result">When the method completes, contains the transformed plane.</param>
-        public static void Transform(ref Plane plane, ref Matrix transformation, out Plane result)
+        public static void Transform(ref Plane plane, ref Matrix4x4 transformation, out Plane result)
         {
             float x = plane.Normal.X;
             float y = plane.Normal.Y;
             float z = plane.Normal.Z;
             float d = plane.D;
 
-            Matrix inverse;
-            Matrix.Invert(ref transformation, out inverse);
+            Matrix4x4 inverse;
+            Matrix4x4.Invert(ref transformation, out inverse);
 
             result.Normal.X = (((x * inverse.M11) + (y * inverse.M12)) + (z * inverse.M13)) + (d * inverse.M14);
             result.Normal.Y = (((x * inverse.M21) + (y * inverse.M22)) + (z * inverse.M23)) + (d * inverse.M24);
@@ -560,7 +560,7 @@ namespace SeeingSharp
         /// <param name="plane">The normalized source plane.</param>
         /// <param name="transformation">The transformation matrix.</param>
         /// <returns>When the method completes, contains the transformed plane.</returns>
-        public static Plane Transform(Plane plane, Matrix transformation)
+        public static Plane Transform(Plane plane, Matrix4x4 transformation)
         {
             Plane result;
             float x = plane.Normal.X;
@@ -583,13 +583,13 @@ namespace SeeingSharp
         /// <param name="planes">The array of normalized planes to transform.</param>
         /// <param name="transformation">The transformation matrix.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="planes"/> is <c>null</c>.</exception>
-        public static void Transform(Plane[] planes, ref Matrix transformation)
+        public static void Transform(Plane[] planes, ref Matrix4x4 transformation)
         {
             if (planes == null)
                 throw new ArgumentNullException("planes");
 
-            Matrix inverse;
-            Matrix.Invert(ref transformation, out inverse);
+            Matrix4x4 inverse;
+            Matrix4x4.Invert(ref transformation, out inverse);
 
             for (int i = 0; i < planes.Length; ++i)
             {

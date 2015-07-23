@@ -56,7 +56,7 @@ namespace SeeingSharp
     /// Represents a 4x4 mathematical matrix.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    public partial struct Matrix : IEquatable<Matrix>, IFormattable
+    public partial struct Matrix4x4 : IEquatable<Matrix4x4>, IFormattable
     {
         /// <summary>
         /// The size of the <see cref="SharpDX.Matrix"/> type, in bytes.
@@ -66,12 +66,12 @@ namespace SeeingSharp
         /// <summary>
         /// A <see cref="SharpDX.Matrix"/> with all of its components set to zero.
         /// </summary>
-        public static readonly Matrix Zero = new Matrix();
+        public static readonly Matrix4x4 Zero = new Matrix4x4();
 
         /// <summary>
         /// The identity <see cref="SharpDX.Matrix"/>.
         /// </summary>
-        public static readonly Matrix Identity = new Matrix() { M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f };
+        public static readonly Matrix4x4 Identity = new Matrix4x4() { M11 = 1.0f, M22 = 1.0f, M33 = 1.0f, M44 = 1.0f };
 
         /// <summary>
         /// Value at row 1 column 1 of the matrix.
@@ -283,7 +283,7 @@ namespace SeeingSharp
         /// Initializes a new instance of the <see cref="SharpDX.Matrix"/> struct.
         /// </summary>
         /// <param name="value">The value that will be assigned to all components.</param>
-        public Matrix(float value)
+        public Matrix4x4(float value)
         {
             M11 = M12 = M13 = M14 =
             M21 = M22 = M23 = M24 =
@@ -310,7 +310,7 @@ namespace SeeingSharp
         /// <param name="M42">The value to assign at row 4 column 2 of the matrix.</param>
         /// <param name="M43">The value to assign at row 4 column 3 of the matrix.</param>
         /// <param name="M44">The value to assign at row 4 column 4 of the matrix.</param>
-        public Matrix(float M11, float M12, float M13, float M14,
+        public Matrix4x4(float M11, float M12, float M13, float M14,
             float M21, float M22, float M23, float M24,
             float M31, float M32, float M33, float M34,
             float M41, float M42, float M43, float M44)
@@ -327,7 +327,7 @@ namespace SeeingSharp
         /// <param name="values">The values to assign to the components of the matrix. This must be an array with sixteen elements.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="values"/> contains more or less than sixteen elements.</exception>
-        public Matrix(float[] values)
+        public Matrix4x4(float[] values)
         {
             if (values == null)
                 throw new ArgumentNullException("values");
@@ -625,14 +625,14 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="Q">When the method completes, contains the orthonormalized matrix of the decomposition.</param>
         /// <param name="R">When the method completes, contains the right triangular matrix of the decomposition.</param>
-        public void DecomposeQR(out Matrix Q, out Matrix R)
+        public void DecomposeQR(out Matrix4x4 Q, out Matrix4x4 R)
         {
-            Matrix temp = this;
+            Matrix4x4 temp = this;
             temp.Transpose();
             Orthonormalize(ref temp, out Q);
             Q.Transpose();
 
-            R = new Matrix();
+            R = new Matrix4x4();
             R.M11 = Vector4.Dot(Q.Column1, Column1);
             R.M12 = Vector4.Dot(Q.Column1, Column2);
             R.M13 = Vector4.Dot(Q.Column1, Column3);
@@ -653,11 +653,11 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="L">When the method completes, contains the lower triangular matrix of the decomposition.</param>
         /// <param name="Q">When the method completes, contains the orthonormalized matrix of the decomposition.</param>
-        public void DecomposeLQ(out Matrix L, out Matrix Q)
+        public void DecomposeLQ(out Matrix4x4 L, out Matrix4x4 Q)
         {
             Orthonormalize(ref this, out Q);
 
-            L = new Matrix();
+            L = new Matrix4x4();
             L.M11 = Vector4.Dot(Q.Row1, Row1);
             
             L.M21 = Vector4.Dot(Q.Row1, Row2);
@@ -707,7 +707,7 @@ namespace SeeingSharp
             }
 
             //The rotation is the left over matrix after dividing out the scaling.
-            Matrix rotationmatrix = new Matrix();
+            Matrix4x4 rotationmatrix = new Matrix4x4();
             rotationmatrix.M11 = M11 / scale.X;
             rotationmatrix.M12 = M12 / scale.X;
             rotationmatrix.M13 = M13 / scale.X;
@@ -811,7 +811,7 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to add.</param>
         /// <param name="right">The second matrix to add.</param>
         /// <param name="result">When the method completes, contains the sum of the two matrices.</param>
-        public static void Add(ref Matrix left, ref Matrix right, out Matrix result)
+        public static void Add(ref Matrix4x4 left, ref Matrix4x4 right, out Matrix4x4 result)
         {
             result.M11 = left.M11 + right.M11;
             result.M12 = left.M12 + right.M12;
@@ -837,9 +837,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to add.</param>
         /// <param name="right">The second matrix to add.</param>
         /// <returns>The sum of the two matrices.</returns>
-        public static Matrix Add(Matrix left, Matrix right)
+        public static Matrix4x4 Add(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Add(ref left, ref right, out result);
             return result;
         }
@@ -850,7 +850,7 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to subtract.</param>
         /// <param name="right">The second matrix to subtract.</param>
         /// <param name="result">When the method completes, contains the difference between the two matrices.</param>
-        public static void Subtract(ref Matrix left, ref Matrix right, out Matrix result)
+        public static void Subtract(ref Matrix4x4 left, ref Matrix4x4 right, out Matrix4x4 result)
         {
             result.M11 = left.M11 - right.M11;
             result.M12 = left.M12 - right.M12;
@@ -876,9 +876,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to subtract.</param>
         /// <param name="right">The second matrix to subtract.</param>
         /// <returns>The difference between the two matrices.</returns>
-        public static Matrix Subtract(Matrix left, Matrix right)
+        public static Matrix4x4 Subtract(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Subtract(ref left, ref right, out result);
             return result;
         }
@@ -889,7 +889,7 @@ namespace SeeingSharp
         /// <param name="left">The matrix to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
         /// <param name="result">When the method completes, contains the scaled matrix.</param>
-        public static void Multiply(ref Matrix left, float right, out Matrix result)
+        public static void Multiply(ref Matrix4x4 left, float right, out Matrix4x4 result)
         {
             result.M11 = left.M11 * right;
             result.M12 = left.M12 * right;
@@ -915,9 +915,9 @@ namespace SeeingSharp
         /// <param name="left">The matrix to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
         /// <returns>The scaled matrix.</returns>
-        public static Matrix Multiply(Matrix left, float right)
+        public static Matrix4x4 Multiply(Matrix4x4 left, float right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Multiply(ref left, right, out result);
             return result;
         }
@@ -928,9 +928,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to multiply.</param>
         /// <param name="right">The second matrix to multiply.</param>
         /// <param name="result">The product of the two matrices.</param>
-        public static void Multiply(ref Matrix left, ref Matrix right, out Matrix result)
+        public static void Multiply(ref Matrix4x4 left, ref Matrix4x4 right, out Matrix4x4 result)
         {
-            Matrix temp = new Matrix();
+            Matrix4x4 temp = new Matrix4x4();
             temp.M11 = (left.M11 * right.M11) + (left.M12 * right.M21) + (left.M13 * right.M31) + (left.M14 * right.M41);
             temp.M12 = (left.M11 * right.M12) + (left.M12 * right.M22) + (left.M13 * right.M32) + (left.M14 * right.M42);
             temp.M13 = (left.M11 * right.M13) + (left.M12 * right.M23) + (left.M13 * right.M33) + (left.M14 * right.M43);
@@ -956,9 +956,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to multiply.</param>
         /// <param name="right">The second matrix to multiply.</param>
         /// <returns>The product of the two matrices.</returns>
-        public static Matrix Multiply(Matrix left, Matrix right)
+        public static Matrix4x4 Multiply(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Multiply(ref left, ref right, out result);
             return result;
         }
@@ -969,7 +969,7 @@ namespace SeeingSharp
         /// <param name="left">The matrix to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
         /// <param name="result">When the method completes, contains the scaled matrix.</param>
-        public static void Divide(ref Matrix left, float right, out Matrix result)
+        public static void Divide(ref Matrix4x4 left, float right, out Matrix4x4 result)
         {
             float inv = 1.0f / right;
 
@@ -997,9 +997,9 @@ namespace SeeingSharp
         /// <param name="left">The matrix to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
         /// <returns>The scaled matrix.</returns>
-        public static Matrix Divide(Matrix left, float right)
+        public static Matrix4x4 Divide(Matrix4x4 left, float right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Divide(ref left, right, out result);
             return result;
         }
@@ -1010,7 +1010,7 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to divide.</param>
         /// <param name="right">The second matrix to divide.</param>
         /// <param name="result">When the method completes, contains the quotient of the two matrices.</param>
-        public static void Divide(ref Matrix left, ref Matrix right, out Matrix result)
+        public static void Divide(ref Matrix4x4 left, ref Matrix4x4 right, out Matrix4x4 result)
         {
             result.M11 = left.M11 / right.M11;
             result.M12 = left.M12 / right.M12;
@@ -1036,9 +1036,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to divide.</param>
         /// <param name="right">The second matrix to divide.</param>
         /// <returns>The quotient of the two matrices.</returns>
-        public static Matrix Divide(Matrix left, Matrix right)
+        public static Matrix4x4 Divide(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Divide(ref left, ref right, out result);
             return result;
         }
@@ -1050,7 +1050,7 @@ namespace SeeingSharp
         /// <param name="exponent">The exponent to raise the matrix to.</param>
         /// <param name="result">When the method completes, contains the exponential matrix.</param>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <paramref name="exponent"/> is negative.</exception>
-        public static void Exponent(ref Matrix value, int exponent, out Matrix result)
+        public static void Exponent(ref Matrix4x4 value, int exponent, out Matrix4x4 result)
         {
             //Source: http://rosettacode.org
             //Refrence: http://rosettacode.org/wiki/Matrix-exponentiation_operator
@@ -1060,7 +1060,7 @@ namespace SeeingSharp
 
             if (exponent == 0)
             {
-                result = Matrix.Identity;
+                result = Matrix4x4.Identity;
                 return;
             }
 
@@ -1070,8 +1070,8 @@ namespace SeeingSharp
                 return;
             }
 
-            Matrix identity = Matrix.Identity;
-            Matrix temp = value;
+            Matrix4x4 identity = Matrix4x4.Identity;
+            Matrix4x4 temp = value;
 
             while (true)
             {
@@ -1096,9 +1096,9 @@ namespace SeeingSharp
         /// <param name="exponent">The exponent to raise the matrix to.</param>
         /// <returns>The exponential matrix.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <paramref name="exponent"/> is negative.</exception>
-        public static Matrix Exponent(Matrix value, int exponent)
+        public static Matrix4x4 Exponent(Matrix4x4 value, int exponent)
         {
-            Matrix result;
+            Matrix4x4 result;
             Exponent(ref value, exponent, out result);
             return result;
         }
@@ -1108,7 +1108,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix to be negated.</param>
         /// <param name="result">When the method completes, contains the negated matrix.</param>
-        public static void Negate(ref Matrix value, out Matrix result)
+        public static void Negate(ref Matrix4x4 value, out Matrix4x4 result)
         {
             result.M11 = -value.M11;
             result.M12 = -value.M12;
@@ -1133,9 +1133,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix to be negated.</param>
         /// <returns>The negated matrix.</returns>
-        public static Matrix Negate(Matrix value)
+        public static Matrix4x4 Negate(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             Negate(ref value, out result);
             return result;
         }
@@ -1152,7 +1152,7 @@ namespace SeeingSharp
         /// <code>start + (end - start) * amount</code>
         /// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
         /// </remarks>
-        public static void Lerp(ref Matrix start, ref Matrix end, float amount, out Matrix result)
+        public static void Lerp(ref Matrix4x4 start, ref Matrix4x4 end, float amount, out Matrix4x4 result)
         {
             result.M11 = start.M11 + ((end.M11 - start.M11) * amount);
             result.M12 = start.M12 + ((end.M12 - start.M12) * amount);
@@ -1184,9 +1184,9 @@ namespace SeeingSharp
         /// <code>start + (end - start) * amount</code>
         /// Passing <paramref name="amount"/> a value of 0 will cause <paramref name="start"/> to be returned; a value of 1 will cause <paramref name="end"/> to be returned. 
         /// </remarks>
-        public static Matrix Lerp(Matrix start, Matrix end, float amount)
+        public static Matrix4x4 Lerp(Matrix4x4 start, Matrix4x4 end, float amount)
         {
-            Matrix result;
+            Matrix4x4 result;
             Lerp(ref start, ref end, amount, out result);
             return result;
         }
@@ -1198,7 +1198,7 @@ namespace SeeingSharp
         /// <param name="end">End matrix.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
         /// <param name="result">When the method completes, contains the cubic interpolation of the two matrices.</param>
-        public static void SmoothStep(ref Matrix start, ref Matrix end, float amount, out Matrix result)
+        public static void SmoothStep(ref Matrix4x4 start, ref Matrix4x4 end, float amount, out Matrix4x4 result)
         {
             amount = (amount > 1.0f) ? 1.0f : ((amount < 0.0f) ? 0.0f : amount);
             amount = (amount * amount) * (3.0f - (2.0f * amount));
@@ -1228,9 +1228,9 @@ namespace SeeingSharp
         /// <param name="end">End matrix.</param>
         /// <param name="amount">Value between 0 and 1 indicating the weight of <paramref name="end"/>.</param>
         /// <returns>The cubic interpolation of the two matrices.</returns>
-        public static Matrix SmoothStep(Matrix start, Matrix end, float amount)
+        public static Matrix4x4 SmoothStep(Matrix4x4 start, Matrix4x4 end, float amount)
         {
-            Matrix result;
+            Matrix4x4 result;
             SmoothStep(ref start, ref end, amount, out result);
             return result;
         }
@@ -1240,9 +1240,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix whose transpose is to be calculated.</param>
         /// <param name="result">When the method completes, contains the transpose of the specified matrix.</param>
-        public static void Transpose(ref Matrix value, out Matrix result)
+        public static void Transpose(ref Matrix4x4 value, out Matrix4x4 result)
         {
-            Matrix temp = new Matrix();
+            Matrix4x4 temp = new Matrix4x4();
             temp.M11 = value.M11;
             temp.M12 = value.M21;
             temp.M13 = value.M31;
@@ -1268,7 +1268,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix whose transpose is to be calculated.</param>
         /// <param name="result">When the method completes, contains the transpose of the specified matrix.</param>
-        public static void TransposeByRef(ref Matrix value, ref Matrix result)
+        public static void TransposeByRef(ref Matrix4x4 value, ref Matrix4x4 result)
         {
             result.M11 = value.M11;
             result.M12 = value.M21;
@@ -1293,9 +1293,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix whose transpose is to be calculated.</param>
         /// <returns>The transpose of the specified matrix.</returns>
-        public static Matrix Transpose(Matrix value)
+        public static Matrix4x4 Transpose(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             Transpose(ref value, out result);
             return result;
         }
@@ -1305,7 +1305,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix whose inverse is to be calculated.</param>
         /// <param name="result">When the method completes, contains the inverse of the specified matrix.</param>
-        public static void Invert(ref Matrix value, out Matrix result)
+        public static void Invert(ref Matrix4x4 value, out Matrix4x4 result)
         {
             float b0 = (value.M31 * value.M42) - (value.M32 * value.M41);
             float b1 = (value.M31 * value.M43) - (value.M33 * value.M41);
@@ -1322,7 +1322,7 @@ namespace SeeingSharp
             float det = value.M11 * d11 - value.M12 * d12 + value.M13 * d13 - value.M14 * d14;
             if (Math.Abs(det) == 0.0f)
             {
-                result = Matrix.Zero;
+                result = Matrix4x4.Zero;
                 return;
             }
 
@@ -1361,7 +1361,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix whose inverse is to be calculated.</param>
         /// <returns>The inverse of the specified matrix.</returns>
-        public static Matrix Invert(Matrix value)
+        public static Matrix4x4 Invert(Matrix4x4 value)
         {
             value.Invert();
             return value;
@@ -1383,7 +1383,7 @@ namespace SeeingSharp
         /// If you wish for this operation to be performed on the columns, first transpose the
         /// input and than transpose the output.</para>
         /// </remarks>
-        public static void Orthogonalize(ref Matrix value, out Matrix result)
+        public static void Orthogonalize(ref Matrix4x4 value, out Matrix4x4 result)
         {
             //Uses the modified Gram-Schmidt process.
             //q1 = m1
@@ -1420,9 +1420,9 @@ namespace SeeingSharp
         /// If you wish for this operation to be performed on the columns, first transpose the
         /// input and than transpose the output.</para>
         /// </remarks>
-        public static Matrix Orthogonalize(Matrix value)
+        public static Matrix4x4 Orthogonalize(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             Orthogonalize(ref value, out result);
             return result;
         }
@@ -1445,7 +1445,7 @@ namespace SeeingSharp
         /// If you wish for this operation to be performed on the columns, first transpose the
         /// input and than transpose the output.</para>
         /// </remarks>
-        public static void Orthonormalize(ref Matrix value, out Matrix result)
+        public static void Orthonormalize(ref Matrix4x4 value, out Matrix4x4 result)
         {
             //Uses the modified Gram-Schmidt process.
             //Because we are making unit vectors, we can optimize the math for orthogonalization
@@ -1491,9 +1491,9 @@ namespace SeeingSharp
         /// If you wish for this operation to be performed on the columns, first transpose the
         /// input and than transpose the output.</para>
         /// </remarks>
-        public static Matrix Orthonormalize(Matrix value)
+        public static Matrix4x4 Orthonormalize(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             Orthonormalize(ref value, out result);
             return result;
         }
@@ -1509,7 +1509,7 @@ namespace SeeingSharp
         /// of linear equations, than this often means that either no solution exists or an infinite
         /// number of solutions exist.
         /// </remarks>
-        public static void UpperTriangularForm(ref Matrix value, out Matrix result)
+        public static void UpperTriangularForm(ref Matrix4x4 value, out Matrix4x4 result)
         {
             //Adapted from the row echelon code.
             result = value;
@@ -1571,9 +1571,9 @@ namespace SeeingSharp
         /// of linear equations, than this often means that either no solution exists or an infinite
         /// number of solutions exist.
         /// </remarks>
-        public static Matrix UpperTriangularForm(Matrix value)
+        public static Matrix4x4 UpperTriangularForm(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             UpperTriangularForm(ref value, out result);
             return result;
         }
@@ -1589,11 +1589,11 @@ namespace SeeingSharp
         /// of linear equations, than this often means that either no solution exists or an infinite
         /// number of solutions exist.
         /// </remarks>
-        public static void LowerTriangularForm(ref Matrix value, out Matrix result)
+        public static void LowerTriangularForm(ref Matrix4x4 value, out Matrix4x4 result)
         {
             //Adapted from the row echelon code.
-            Matrix temp = value;
-            Matrix.Transpose(ref temp, out result);
+            Matrix4x4 temp = value;
+            Matrix4x4.Transpose(ref temp, out result);
 
             int lead = 0;
             int rowcount = 4;
@@ -1641,7 +1641,7 @@ namespace SeeingSharp
                 lead++;
             }
 
-            Matrix.Transpose(ref result, out result);
+            Matrix4x4.Transpose(ref result, out result);
         }
 
         /// <summary>
@@ -1655,9 +1655,9 @@ namespace SeeingSharp
         /// of linear equations, than this often means that either no solution exists or an infinite
         /// number of solutions exist.
         /// </remarks>
-        public static Matrix LowerTriangularForm(Matrix value)
+        public static Matrix4x4 LowerTriangularForm(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             LowerTriangularForm(ref value, out result);
             return result;
         }
@@ -1667,7 +1667,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix to put into row echelon form.</param>
         /// <param name="result">When the method completes, contains the row echelon form of the matrix.</param>
-        public static void RowEchelonForm(ref Matrix value, out Matrix result)
+        public static void RowEchelonForm(ref Matrix4x4 value, out Matrix4x4 result)
         {
             //Source: Wikipedia psuedo code
             //Reference: http://en.wikipedia.org/wiki/Row_echelon_form#Pseudocode
@@ -1729,9 +1729,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix to put into row echelon form.</param>
         /// <returns>When the method completes, contains the row echelon form of the matrix.</returns>
-        public static Matrix RowEchelonForm(Matrix value)
+        public static Matrix4x4 RowEchelonForm(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             RowEchelonForm(ref value, out result);
             return result;
         }
@@ -1753,7 +1753,7 @@ namespace SeeingSharp
         /// the <paramref name="augmentResult"/> will contain the solution for the system. It is up to the user
         /// to analyze both the input and the result to determine if a solution really exists.</para>
         /// </remarks>
-        public static void ReducedRowEchelonForm(ref Matrix value, ref Vector4 augment, out Matrix result, out Vector4 augmentResult)
+        public static void ReducedRowEchelonForm(ref Matrix4x4 value, ref Vector4 augment, out Matrix4x4 result, out Vector4 augmentResult)
         {
             //Source: http://rosettacode.org
             //Reference: http://rosettacode.org/wiki/Reduced_row_echelon_form
@@ -1869,7 +1869,7 @@ namespace SeeingSharp
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <param name="result">When the method completes, contains the created billboard matrix.</param>
-        public static void Billboard(ref Vector3 objectPosition, ref Vector3 cameraPosition, ref Vector3 cameraUpVector, ref Vector3 cameraForwardVector, out Matrix result)
+        public static void Billboard(ref Vector3 objectPosition, ref Vector3 cameraPosition, ref Vector3 cameraUpVector, ref Vector3 cameraForwardVector, out Matrix4x4 result)
         {
             Vector3 crossed;
             Vector3 final;
@@ -1911,9 +1911,9 @@ namespace SeeingSharp
         /// <param name="cameraUpVector">The up vector of the camera.</param>
         /// <param name="cameraForwardVector">The forward vector of the camera.</param>
         /// <returns>The created billboard matrix.</returns>
-        public static Matrix Billboard(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
+        public static Matrix4x4 Billboard(Vector3 objectPosition, Vector3 cameraPosition, Vector3 cameraUpVector, Vector3 cameraForwardVector)
         {
-            Matrix result;
+            Matrix4x4 result;
             Billboard(ref objectPosition, ref cameraPosition, ref cameraUpVector, ref cameraForwardVector, out result);
             return result;
         }
@@ -1925,14 +1925,14 @@ namespace SeeingSharp
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <param name="result">When the method completes, contains the created look-at matrix.</param>
-        public static void LookAtLH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Matrix result)
+        public static void LookAtLH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Matrix4x4 result)
         {
             Vector3 xaxis, yaxis, zaxis;
             Vector3.Subtract(ref target, ref eye, out zaxis); zaxis.Normalize();
             Vector3.Cross(ref up, ref zaxis, out xaxis); xaxis.Normalize();
             Vector3.Cross(ref zaxis, ref xaxis, out yaxis);
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = xaxis.X; result.M21 = xaxis.Y; result.M31 = xaxis.Z;
             result.M12 = yaxis.X; result.M22 = yaxis.Y; result.M32 = yaxis.Z;
             result.M13 = zaxis.X; result.M23 = zaxis.Y; result.M33 = zaxis.Z;
@@ -1953,9 +1953,9 @@ namespace SeeingSharp
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <returns>The created look-at matrix.</returns>
-        public static Matrix LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
+        public static Matrix4x4 LookAtLH(Vector3 eye, Vector3 target, Vector3 up)
         {
-            Matrix result;
+            Matrix4x4 result;
             LookAtLH(ref eye, ref target, ref up, out result);
             return result;
         }
@@ -1967,14 +1967,14 @@ namespace SeeingSharp
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <param name="result">When the method completes, contains the created look-at matrix.</param>
-        public static void LookAtRH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Matrix result)
+        public static void LookAtRH(ref Vector3 eye, ref Vector3 target, ref Vector3 up, out Matrix4x4 result)
         {
             Vector3 xaxis, yaxis, zaxis;
             Vector3.Subtract(ref eye, ref target, out zaxis); zaxis.Normalize();
             Vector3.Cross(ref up, ref zaxis, out xaxis); xaxis.Normalize();
             Vector3.Cross(ref zaxis, ref xaxis, out yaxis);
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = xaxis.X; result.M21 = xaxis.Y; result.M31 = xaxis.Z;
             result.M12 = yaxis.X; result.M22 = yaxis.Y; result.M32 = yaxis.Z;
             result.M13 = zaxis.X; result.M23 = zaxis.Y; result.M33 = zaxis.Z;
@@ -1995,9 +1995,9 @@ namespace SeeingSharp
         /// <param name="target">The camera look-at target.</param>
         /// <param name="up">The camera's up vector.</param>
         /// <returns>The created look-at matrix.</returns>
-        public static Matrix LookAtRH(Vector3 eye, Vector3 target, Vector3 up)
+        public static Matrix4x4 LookAtRH(Vector3 eye, Vector3 target, Vector3 up)
         {
-            Matrix result;
+            Matrix4x4 result;
             LookAtRH(ref eye, ref target, ref up, out result);
             return result;
         }
@@ -2010,7 +2010,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void OrthoLH(float width, float height, float znear, float zfar, out Matrix result)
+        public static void OrthoLH(float width, float height, float znear, float zfar, out Matrix4x4 result)
         {
             float halfWidth = width * 0.5f;
             float halfHeight = height * 0.5f;
@@ -2026,9 +2026,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix OrthoLH(float width, float height, float znear, float zfar)
+        public static Matrix4x4 OrthoLH(float width, float height, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             OrthoLH(width, height, znear, zfar, out result);
             return result;
         }
@@ -2041,7 +2041,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void OrthoRH(float width, float height, float znear, float zfar, out Matrix result)
+        public static void OrthoRH(float width, float height, float znear, float zfar, out Matrix4x4 result)
         {
             float halfWidth = width * 0.5f;
             float halfHeight = height * 0.5f;
@@ -2057,9 +2057,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix OrthoRH(float width, float height, float znear, float zfar)
+        public static Matrix4x4 OrthoRH(float width, float height, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             OrthoRH(width, height, znear, zfar, out result);
             return result;
         }
@@ -2074,11 +2074,11 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix result)
+        public static void OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
         {
             float zRange = 1.0f / (zfar - znear);
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = 2.0f / (right - left);
             result.M22 = 2.0f / (top - bottom);
             result.M33 = zRange;
@@ -2097,9 +2097,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 OrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             OrthoOffCenterLH(left, right, bottom, top, znear, zfar, out result);
             return result;
         }
@@ -2114,7 +2114,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix result)
+        public static void OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
         {
             OrthoOffCenterLH(left, right, bottom, top, znear, zfar, out result);
             result.M33 *= -1.0f;
@@ -2130,9 +2130,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 OrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             OrthoOffCenterRH(left, right, bottom, top, znear, zfar, out result);
             return result;
         }
@@ -2145,7 +2145,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveLH(float width, float height, float znear, float zfar, out Matrix result)
+        public static void PerspectiveLH(float width, float height, float znear, float zfar, out Matrix4x4 result)
         {
             float halfWidth = width * 0.5f;
             float halfHeight = height * 0.5f;
@@ -2161,9 +2161,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix PerspectiveLH(float width, float height, float znear, float zfar)
+        public static Matrix4x4 PerspectiveLH(float width, float height, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             PerspectiveLH(width, height, znear, zfar, out result);
             return result;
         }
@@ -2176,7 +2176,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveRH(float width, float height, float znear, float zfar, out Matrix result)
+        public static void PerspectiveRH(float width, float height, float znear, float zfar, out Matrix4x4 result)
         {
             float halfWidth = width * 0.5f;
             float halfHeight = height * 0.5f;
@@ -2192,9 +2192,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix PerspectiveRH(float width, float height, float znear, float zfar)
+        public static Matrix4x4 PerspectiveRH(float width, float height, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             PerspectiveRH(width, height, znear, zfar, out result);
             return result;
         }
@@ -2207,7 +2207,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveFovLH(float fov, float aspect, float znear, float zfar, out Matrix result)
+        public static void PerspectiveFovLH(float fov, float aspect, float znear, float zfar, out Matrix4x4 result)
         {
             float yScale = (float)(1.0 / Math.Tan(fov * 0.5f));
             float xScale = yScale / aspect;
@@ -2226,9 +2226,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix PerspectiveFovLH(float fov, float aspect, float znear, float zfar)
+        public static Matrix4x4 PerspectiveFovLH(float fov, float aspect, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             PerspectiveFovLH(fov, aspect, znear, zfar, out result);
             return result;
         }
@@ -2241,7 +2241,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveFovRH(float fov, float aspect, float znear, float zfar, out Matrix result)
+        public static void PerspectiveFovRH(float fov, float aspect, float znear, float zfar, out Matrix4x4 result)
         {
             float yScale = (float)(1.0 / Math.Tan(fov * 0.5f));
             float xScale = yScale / aspect;
@@ -2260,9 +2260,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix PerspectiveFovRH(float fov, float aspect, float znear, float zfar)
+        public static Matrix4x4 PerspectiveFovRH(float fov, float aspect, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             PerspectiveFovRH(fov, aspect, znear, zfar, out result);
             return result;
         }
@@ -2277,11 +2277,11 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix result)
+        public static void PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
         {
             float zRange = zfar / (zfar - znear);
 
-            result = new Matrix();
+            result = new Matrix4x4();
             result.M11 = 2.0f * znear / (right - left);
             result.M22 = 2.0f * znear / (top - bottom);
             result.M31 = (left + right) / (left - right);
@@ -2301,9 +2301,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 PerspectiveOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             PerspectiveOffCenterLH(left, right, bottom, top, znear, zfar, out result);
             return result;
         }
@@ -2318,7 +2318,7 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <param name="result">When the method completes, contains the created projection matrix.</param>
-        public static void PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix result)
+        public static void PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
         {
             PerspectiveOffCenterLH(left, right, bottom, top, znear, zfar, out result);
             result.M31 *= -1.0f;
@@ -2337,9 +2337,9 @@ namespace SeeingSharp
         /// <param name="znear">Minimum z-value of the viewing volume.</param>
         /// <param name="zfar">Maximum z-value of the viewing volume.</param>
         /// <returns>The created projection matrix.</returns>
-        public static Matrix PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
+        public static Matrix4x4 PerspectiveOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
         {
-            Matrix result;
+            Matrix4x4 result;
             PerspectiveOffCenterRH(left, right, bottom, top, znear, zfar, out result);
             return result;
         }
@@ -2349,7 +2349,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="plane">The plane for which the reflection occurs. This parameter is assumed to be normalized.</param>
         /// <param name="result">When the method completes, contains the reflection matrix.</param>
-        public static void Reflection(ref Plane plane, out Matrix result)
+        public static void Reflection(ref Plane plane, out Matrix4x4 result)
         {
             float x = plane.Normal.X;
             float y = plane.Normal.Y;
@@ -2381,9 +2381,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="plane">The plane for which the reflection occurs. This parameter is assumed to be normalized.</param>
         /// <returns>The reflection matrix.</returns>
-        public static Matrix Reflection(Plane plane)
+        public static Matrix4x4 Reflection(Plane plane)
         {
-            Matrix result;
+            Matrix4x4 result;
             Reflection(ref plane, out result);
             return result;
         }
@@ -2395,7 +2395,7 @@ namespace SeeingSharp
         /// W component is 1, the light is a point light.</param>
         /// <param name="plane">The plane onto which to project the geometry as a shadow. This parameter is assumed to be normalized.</param>
         /// <param name="result">When the method completes, contains the shadow matrix.</param>
-        public static void Shadow(ref Vector4 light, ref Plane plane, out Matrix result)
+        public static void Shadow(ref Vector4 light, ref Plane plane, out Matrix4x4 result)
         {        
             float dot = (plane.Normal.X * light.X) + (plane.Normal.Y * light.Y) + (plane.Normal.Z * light.Z) + (plane.D * light.W);
             float x = -plane.Normal.X;
@@ -2428,9 +2428,9 @@ namespace SeeingSharp
         /// W component is 1, the light is a point light.</param>
         /// <param name="plane">The plane onto which to project the geometry as a shadow. This parameter is assumed to be normalized.</param>
         /// <returns>The shadow matrix.</returns>
-        public static Matrix Shadow(Vector4 light, Plane plane)
+        public static Matrix4x4 Shadow(Vector4 light, Plane plane)
         {
-            Matrix result;
+            Matrix4x4 result;
             Shadow(ref light, ref plane, out result);
             return result;
         }
@@ -2440,7 +2440,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="scale">Scaling factor for all three axes.</param>
         /// <param name="result">When the method completes, contains the created scaling matrix.</param>
-        public static void Scaling(ref Vector3 scale, out Matrix result)
+        public static void Scaling(ref Vector3 scale, out Matrix4x4 result)
         {
             Scaling(scale.X, scale.Y, scale.Z, out result);
         }
@@ -2450,9 +2450,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="scale">Scaling factor for all three axes.</param>
         /// <returns>The created scaling matrix.</returns>
-        public static Matrix Scaling(Vector3 scale)
+        public static Matrix4x4 Scaling(Vector3 scale)
         {
-            Matrix result;
+            Matrix4x4 result;
             Scaling(ref scale, out result);
             return result;
         }
@@ -2464,9 +2464,9 @@ namespace SeeingSharp
         /// <param name="y">Scaling factor that is applied along the y-axis.</param>
         /// <param name="z">Scaling factor that is applied along the z-axis.</param>
         /// <param name="result">When the method completes, contains the created scaling matrix.</param>
-        public static void Scaling(float x, float y, float z, out Matrix result)
+        public static void Scaling(float x, float y, float z, out Matrix4x4 result)
         {
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = x;
             result.M22 = y;
             result.M33 = z;
@@ -2479,9 +2479,9 @@ namespace SeeingSharp
         /// <param name="y">Scaling factor that is applied along the y-axis.</param>
         /// <param name="z">Scaling factor that is applied along the z-axis.</param>
         /// <returns>The created scaling matrix.</returns>
-        public static Matrix Scaling(float x, float y, float z)
+        public static Matrix4x4 Scaling(float x, float y, float z)
         {
-            Matrix result;
+            Matrix4x4 result;
             Scaling(x, y, z, out result);
             return result;
         }
@@ -2491,9 +2491,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="scale">The uniform scale that is applied along all axis.</param>
         /// <param name="result">When the method completes, contains the created scaling matrix.</param>
-        public static void Scaling(float scale, out Matrix result)
+        public static void Scaling(float scale, out Matrix4x4 result)
         {
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = result.M22 = result.M33 = scale;
         }
 
@@ -2502,9 +2502,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="scale">The uniform scale that is applied along all axis.</param>
         /// <returns>The created scaling matrix.</returns>
-        public static Matrix Scaling(float scale)
+        public static Matrix4x4 Scaling(float scale)
         {
-            Matrix result;
+            Matrix4x4 result;
             Scaling(scale, out result);
             return result;
         }
@@ -2514,12 +2514,12 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        public static void RotationX(float angle, out Matrix result)
+        public static void RotationX(float angle, out Matrix4x4 result)
         {
             float cos = (float)Math.Cos(angle);
             float sin = (float)Math.Sin(angle);
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M22 = cos;
             result.M23 = sin;
             result.M32 = -sin;
@@ -2531,9 +2531,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <returns>The created rotation matrix.</returns>
-        public static Matrix RotationX(float angle)
+        public static Matrix4x4 RotationX(float angle)
         {
-            Matrix result;
+            Matrix4x4 result;
             RotationX(angle, out result);
             return result;
         }
@@ -2543,12 +2543,12 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        public static void RotationY(float angle, out Matrix result)
+        public static void RotationY(float angle, out Matrix4x4 result)
         {
             float cos = (float)Math.Cos(angle);
             float sin = (float)Math.Sin(angle);
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = cos;
             result.M13 = -sin;
             result.M31 = sin;
@@ -2560,9 +2560,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <returns>The created rotation matrix.</returns>
-        public static Matrix RotationY(float angle)
+        public static Matrix4x4 RotationY(float angle)
         {
-            Matrix result;
+            Matrix4x4 result;
             RotationY(angle, out result);
             return result;
         }
@@ -2572,12 +2572,12 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        public static void RotationZ(float angle, out Matrix result)
+        public static void RotationZ(float angle, out Matrix4x4 result)
         {
             float cos = (float)Math.Cos(angle);
             float sin = (float)Math.Sin(angle);
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = cos;
             result.M12 = sin;
             result.M21 = -sin;
@@ -2589,9 +2589,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <returns>The created rotation matrix.</returns>
-        public static Matrix RotationZ(float angle)
+        public static Matrix4x4 RotationZ(float angle)
         {
-            Matrix result;
+            Matrix4x4 result;
             RotationZ(angle, out result);
             return result;
         }
@@ -2602,7 +2602,7 @@ namespace SeeingSharp
         /// <param name="axis">The axis around which to rotate. This parameter is assumed to be normalized.</param>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        public static void RotationAxis(ref Vector3 axis, float angle, out Matrix result)
+        public static void RotationAxis(ref Vector3 axis, float angle, out Matrix4x4 result)
         {
             float x = axis.X;
             float y = axis.Y;
@@ -2616,7 +2616,7 @@ namespace SeeingSharp
             float xz = x * z;
             float yz = y * z;
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = xx + (cos * (1.0f - xx));
             result.M12 = (xy - (cos * xy)) + (sin * z);
             result.M13 = (xz - (cos * xz)) - (sin * y);
@@ -2634,9 +2634,9 @@ namespace SeeingSharp
         /// <param name="axis">The axis around which to rotate. This parameter is assumed to be normalized.</param>
         /// <param name="angle">Angle of rotation in radians. Angles are measured clockwise when looking along the rotation axis toward the origin.</param>
         /// <returns>The created rotation matrix.</returns>
-        public static Matrix RotationAxis(Vector3 axis, float angle)
+        public static Matrix4x4 RotationAxis(Vector3 axis, float angle)
         {
-            Matrix result;
+            Matrix4x4 result;
             RotationAxis(ref axis, angle, out result);
             return result;
         }
@@ -2646,7 +2646,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="rotation">The quaternion to use to build the matrix.</param>
         /// <param name="result">The created rotation matrix.</param>
-        public static void RotationQuaternion(ref Quaternion rotation, out Matrix result)
+        public static void RotationQuaternion(ref Quaternion rotation, out Matrix4x4 result)
         {
             float xx = rotation.X * rotation.X;
             float yy = rotation.Y * rotation.Y;
@@ -2658,7 +2658,7 @@ namespace SeeingSharp
             float yz = rotation.Y * rotation.Z;
             float xw = rotation.X * rotation.W;
 
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M11 = 1.0f - (2.0f * (yy + zz));
             result.M12 = 2.0f * (xy + zw);
             result.M13 = 2.0f * (zx - yw);
@@ -2675,9 +2675,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="rotation">The quaternion to use to build the matrix.</param>
         /// <returns>The created rotation matrix.</returns>
-        public static Matrix RotationQuaternion(Quaternion rotation)
+        public static Matrix4x4 RotationQuaternion(Quaternion rotation)
         {
-            Matrix result;
+            Matrix4x4 result;
             RotationQuaternion(ref rotation, out result);
             return result;
         }
@@ -2689,7 +2689,7 @@ namespace SeeingSharp
         /// <param name="pitch">Pitch around the x-axis, in radians.</param>
         /// <param name="roll">Roll around the z-axis, in radians.</param>
         /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        public static void RotationYawPitchRoll(float yaw, float pitch, float roll, out Matrix result)
+        public static void RotationYawPitchRoll(float yaw, float pitch, float roll, out Matrix4x4 result)
         {
             Quaternion quaternion = new Quaternion();
             Quaternion.RotationYawPitchRoll(yaw, pitch, roll, out quaternion);
@@ -2703,9 +2703,9 @@ namespace SeeingSharp
         /// <param name="pitch">Pitch around the x-axis, in radians.</param>
         /// <param name="roll">Roll around the z-axis, in radians.</param>
         /// <returns>The created rotation matrix.</returns>
-        public static Matrix RotationYawPitchRoll(float yaw, float pitch, float roll)
+        public static Matrix4x4 RotationYawPitchRoll(float yaw, float pitch, float roll)
         {
-            Matrix result;
+            Matrix4x4 result;
             RotationYawPitchRoll(yaw, pitch, roll, out result);
             return result;
         }
@@ -2715,7 +2715,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The offset for all three coordinate planes.</param>
         /// <param name="result">When the method completes, contains the created translation matrix.</param>
-        public static void Translation(ref Vector3 value, out Matrix result)
+        public static void Translation(ref Vector3 value, out Matrix4x4 result)
         {
             Translation(value.X, value.Y, value.Z, out result);
         }
@@ -2725,9 +2725,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The offset for all three coordinate planes.</param>
         /// <returns>The created translation matrix.</returns>
-        public static Matrix Translation(Vector3 value)
+        public static Matrix4x4 Translation(Vector3 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             Translation(ref value, out result);
             return result;
         }
@@ -2739,9 +2739,9 @@ namespace SeeingSharp
         /// <param name="y">Y-coordinate offset.</param>
         /// <param name="z">Z-coordinate offset.</param>
         /// <param name="result">When the method completes, contains the created translation matrix.</param>
-        public static void Translation(float x, float y, float z, out Matrix result)
+        public static void Translation(float x, float y, float z, out Matrix4x4 result)
         {
-            result = Matrix.Identity;
+            result = Matrix4x4.Identity;
             result.M41 = x;
             result.M42 = y;
             result.M43 = z;
@@ -2754,9 +2754,9 @@ namespace SeeingSharp
         /// <param name="y">Y-coordinate offset.</param>
         /// <param name="z">Z-coordinate offset.</param>
         /// <returns>The created translation matrix.</returns>
-        public static Matrix Translation(float x, float y, float z)
+        public static Matrix4x4 Translation(float x, float y, float z)
         {
-            Matrix result;
+            Matrix4x4 result;
             Translation(x, y, z, out result);
             return result;
         }
@@ -2770,7 +2770,7 @@ namespace SeeingSharp
         /// <param name="rotationVec">The rotation vector</param>
         /// <param name="transVec">The translation vector</param>
         /// <param name="matrix">Contains the created skew/shear matrix. </param>
-        public static void Skew(float angle, ref Vector3 rotationVec, ref Vector3 transVec, out Matrix matrix)
+        public static void Skew(float angle, ref Vector3 rotationVec, ref Vector3 transVec, out Matrix4x4 matrix)
         {
             //http://elckerlyc.ewi.utwente.nl/browser/Elckerlyc/Hmi/HmiMath/src/hmi/math/Mat3f.java
             float MINIMAL_SKEW_ANGLE = 0.000001f;
@@ -2793,7 +2793,7 @@ namespace SeeingSharp
 
             float d = (rr1 / rr0) - (rv1 / rv0);
 
-            matrix = Matrix.Identity;
+            matrix = Matrix4x4.Identity;
             matrix.M11 = d * e1[0] * e0[0] + 1.0f;
             matrix.M12 = d * e1[0] * e0[1];
             matrix.M13 = d * e1[0] * e0[2];
@@ -2812,7 +2812,7 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation(float scaling, ref Quaternion rotation, ref Vector3 translation, out Matrix result)
+        public static void AffineTransformation(float scaling, ref Quaternion rotation, ref Vector3 translation, out Matrix4x4 result)
         {
             result = Scaling(scaling) * RotationQuaternion(rotation) * Translation(translation);
         }
@@ -2824,9 +2824,9 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix AffineTransformation(float scaling, Quaternion rotation, Vector3 translation)
+        public static Matrix4x4 AffineTransformation(float scaling, Quaternion rotation, Vector3 translation)
         {
-            Matrix result;
+            Matrix4x4 result;
             AffineTransformation(scaling, ref rotation, ref translation, out result);
             return result;
         }
@@ -2839,7 +2839,7 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation(float scaling, ref Vector3 rotationCenter, ref Quaternion rotation, ref Vector3 translation, out Matrix result)
+        public static void AffineTransformation(float scaling, ref Vector3 rotationCenter, ref Quaternion rotation, ref Vector3 translation, out Matrix4x4 result)
         {
             result = Scaling(scaling) * Translation(-rotationCenter) * RotationQuaternion(rotation) *
                 Translation(rotationCenter) * Translation(translation);
@@ -2853,9 +2853,9 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix AffineTransformation(float scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation)
+        public static Matrix4x4 AffineTransformation(float scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation)
         {
-            Matrix result;
+            Matrix4x4 result;
             AffineTransformation(scaling, ref rotationCenter, ref rotation, ref translation, out result);
             return result;
         }
@@ -2867,7 +2867,7 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation2D(float scaling, float rotation, ref Vector2 translation, out Matrix result)
+        public static void AffineTransformation2D(float scaling, float rotation, ref Vector2 translation, out Matrix4x4 result)
         {
             result = Scaling(scaling, scaling, 1.0f) * RotationZ(rotation) * Translation((Vector3)translation);
         }
@@ -2879,9 +2879,9 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix AffineTransformation2D(float scaling, float rotation, Vector2 translation)
+        public static Matrix4x4 AffineTransformation2D(float scaling, float rotation, Vector2 translation)
         {
-            Matrix result;
+            Matrix4x4 result;
             AffineTransformation2D(scaling, rotation, ref translation, out result);
             return result;
         }
@@ -2894,7 +2894,7 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created affine transformation matrix.</param>
-        public static void AffineTransformation2D(float scaling, ref Vector2 rotationCenter, float rotation, ref Vector2 translation, out Matrix result)
+        public static void AffineTransformation2D(float scaling, ref Vector2 rotationCenter, float rotation, ref Vector2 translation, out Matrix4x4 result)
         {
             result = Scaling(scaling, scaling, 1.0f) * Translation((Vector3)(-rotationCenter)) * RotationZ(rotation) *
                 Translation((Vector3)rotationCenter) * Translation((Vector3)translation);
@@ -2908,9 +2908,9 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created affine transformation matrix.</returns>
-        public static Matrix AffineTransformation2D(float scaling, Vector2 rotationCenter, float rotation, Vector2 translation)
+        public static Matrix4x4 AffineTransformation2D(float scaling, Vector2 rotationCenter, float rotation, Vector2 translation)
         {
-            Matrix result;
+            Matrix4x4 result;
             AffineTransformation2D(scaling, ref rotationCenter, rotation, ref translation, out result);
             return result;
         }
@@ -2925,9 +2925,9 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created transformation matrix.</param>
-        public static void Transformation(ref Vector3 scalingCenter, ref Quaternion scalingRotation, ref Vector3 scaling, ref Vector3 rotationCenter, ref Quaternion rotation, ref Vector3 translation, out Matrix result)
+        public static void Transformation(ref Vector3 scalingCenter, ref Quaternion scalingRotation, ref Vector3 scaling, ref Vector3 rotationCenter, ref Quaternion rotation, ref Vector3 translation, out Matrix4x4 result)
         {
-            Matrix sr = RotationQuaternion(scalingRotation);
+            Matrix4x4 sr = RotationQuaternion(scalingRotation);
 
             result = Translation(-scalingCenter) * Transpose(sr) * Scaling(scaling) * sr * Translation(scalingCenter) * Translation(-rotationCenter) *
                 RotationQuaternion(rotation) * Translation(rotationCenter) * Translation(translation);       
@@ -2943,9 +2943,9 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created transformation matrix.</returns>
-        public static Matrix Transformation(Vector3 scalingCenter, Quaternion scalingRotation, Vector3 scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation)
+        public static Matrix4x4 Transformation(Vector3 scalingCenter, Quaternion scalingRotation, Vector3 scaling, Vector3 rotationCenter, Quaternion rotation, Vector3 translation)
         {
-            Matrix result;
+            Matrix4x4 result;
             Transformation(ref scalingCenter, ref scalingRotation, ref scaling, ref rotationCenter, ref rotation, ref translation, out result);
             return result;
         }
@@ -2960,7 +2960,7 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <param name="result">When the method completes, contains the created transformation matrix.</param>
-        public static void Transformation2D(ref Vector2 scalingCenter, float scalingRotation, ref Vector2 scaling, ref Vector2 rotationCenter, float rotation, ref Vector2 translation, out Matrix result)
+        public static void Transformation2D(ref Vector2 scalingCenter, float scalingRotation, ref Vector2 scaling, ref Vector2 rotationCenter, float rotation, ref Vector2 translation, out Matrix4x4 result)
         {
             result = Translation((Vector3)(-scalingCenter)) * RotationZ(-scalingRotation) * Scaling((Vector3)scaling) * RotationZ(scalingRotation) * Translation((Vector3)scalingCenter) * 
                 Translation((Vector3)(-rotationCenter)) * RotationZ(rotation) * Translation((Vector3)rotationCenter) * Translation((Vector3)translation);
@@ -2979,9 +2979,9 @@ namespace SeeingSharp
         /// <param name="rotation">The rotation of the transformation.</param>
         /// <param name="translation">The translation factor of the transformation.</param>
         /// <returns>The created transformation matrix.</returns>
-        public static Matrix Transformation2D(Vector2 scalingCenter, float scalingRotation, Vector2 scaling, Vector2 rotationCenter, float rotation, Vector2 translation)
+        public static Matrix4x4 Transformation2D(Vector2 scalingCenter, float scalingRotation, Vector2 scaling, Vector2 rotationCenter, float rotation, Vector2 translation)
         {
-            Matrix result;
+            Matrix4x4 result;
             Transformation2D(ref scalingCenter, scalingRotation, ref scaling, ref rotationCenter, rotation, ref translation, out result);
             return result;
         }
@@ -2992,9 +2992,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to add.</param>
         /// <param name="right">The second matrix to add.</param>
         /// <returns>The sum of the two matricies.</returns>
-        public static Matrix operator +(Matrix left, Matrix right)
+        public static Matrix4x4 operator +(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Add(ref left, ref right, out result);
             return result;
         }
@@ -3004,7 +3004,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix to assert (unchange).</param>
         /// <returns>The asserted (unchanged) matrix.</returns>
-        public static Matrix operator +(Matrix value)
+        public static Matrix4x4 operator +(Matrix4x4 value)
         {
             return value;
         }
@@ -3015,9 +3015,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to subtract.</param>
         /// <param name="right">The second matrix to subtract.</param>
         /// <returns>The difference between the two matricies.</returns>
-        public static Matrix operator -(Matrix left, Matrix right)
+        public static Matrix4x4 operator -(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Subtract(ref left, ref right, out result);
             return result;
         }
@@ -3027,9 +3027,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="value">The matrix to negate.</param>
         /// <returns>The negated matrix.</returns>
-        public static Matrix operator -(Matrix value)
+        public static Matrix4x4 operator -(Matrix4x4 value)
         {
-            Matrix result;
+            Matrix4x4 result;
             Negate(ref value, out result);
             return result;
         }
@@ -3040,9 +3040,9 @@ namespace SeeingSharp
         /// <param name="right">The matrix to scale.</param>
         /// <param name="left">The amount by which to scale.</param>
         /// <returns>The scaled matrix.</returns>
-        public static Matrix operator *(float left, Matrix right)
+        public static Matrix4x4 operator *(float left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Multiply(ref right, left, out result);
             return result;
         }
@@ -3053,9 +3053,9 @@ namespace SeeingSharp
         /// <param name="left">The matrix to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
         /// <returns>The scaled matrix.</returns>
-        public static Matrix operator *(Matrix left, float right)
+        public static Matrix4x4 operator *(Matrix4x4 left, float right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Multiply(ref left, right, out result);
             return result;
         }
@@ -3066,9 +3066,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to multiply.</param>
         /// <param name="right">The second matrix to multiply.</param>
         /// <returns>The product of the two matricies.</returns>
-        public static Matrix operator *(Matrix left, Matrix right)
+        public static Matrix4x4 operator *(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Multiply(ref left, ref right, out result);
             return result;
         }
@@ -3079,9 +3079,9 @@ namespace SeeingSharp
         /// <param name="left">The matrix to scale.</param>
         /// <param name="right">The amount by which to scale.</param>
         /// <returns>The scaled matrix.</returns>
-        public static Matrix operator /(Matrix left, float right)
+        public static Matrix4x4 operator /(Matrix4x4 left, float right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Divide(ref left, right, out result);
             return result;
         }
@@ -3092,9 +3092,9 @@ namespace SeeingSharp
         /// <param name="left">The first matrix to divide.</param>
         /// <param name="right">The second matrix to divide.</param>
         /// <returns>The quotient of the two matricies.</returns>
-        public static Matrix operator /(Matrix left, Matrix right)
+        public static Matrix4x4 operator /(Matrix4x4 left, Matrix4x4 right)
         {
-            Matrix result;
+            Matrix4x4 result;
             Divide(ref left, ref right, out result);
             return result;
         }
@@ -3105,7 +3105,7 @@ namespace SeeingSharp
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> has the same value as <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator ==(Matrix left, Matrix right)
+        public static bool operator ==(Matrix4x4 left, Matrix4x4 right)
         {
             return left.Equals(right);
         }
@@ -3116,7 +3116,7 @@ namespace SeeingSharp
         /// <param name="left">The first value to compare.</param>
         /// <param name="right">The second value to compare.</param>
         /// <returns><c>true</c> if <paramref name="left"/> has a different value than <paramref name="right"/>; otherwise, <c>false</c>.</returns>
-        public static bool operator !=(Matrix left, Matrix right)
+        public static bool operator !=(Matrix4x4 left, Matrix4x4 right)
         {
             return !left.Equals(right);
         }
@@ -3209,7 +3209,7 @@ namespace SeeingSharp
         /// <returns>
         /// <c>true</c> if the specified <see cref="SharpDX.Matrix"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
-        public bool Equals(Matrix other)
+        public bool Equals(Matrix4x4 other)
         {
             return (Math.Abs(other.M11 - M11) < MathUtil.ZeroTolerance &&
                 Math.Abs(other.M12 - M12) < MathUtil.ZeroTolerance &&
@@ -3244,10 +3244,10 @@ namespace SeeingSharp
             if (value == null)
                 return false;
 
-            if (!ReferenceEquals(value.GetType(), typeof(Matrix)))
+            if (!ReferenceEquals(value.GetType(), typeof(Matrix4x4)))
                 return false;
 
-            return Equals((Matrix)value);
+            return Equals((Matrix4x4)value);
         }
 
 #if SlimDX1xInterop

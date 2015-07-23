@@ -153,7 +153,7 @@ namespace SeeingSharp.Multimedia.Objects
                 {
                     // Transform picking ray to local space
                     Ray pickingRay = new Ray(rayStart, rayDirection);
-                    pickingRay.Transform(Matrix.Invert(base.Transform));
+                    pickingRay.Transform(Matrix4x4.Invert(base.Transform));
 
                     // Check for intersection on the bounding box
                     float distance = 0f;

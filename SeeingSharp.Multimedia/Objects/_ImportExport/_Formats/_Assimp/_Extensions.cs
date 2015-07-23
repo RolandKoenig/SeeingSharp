@@ -46,9 +46,9 @@ namespace SeeingSharp.Multimedia.Objects
             return new Color4(color.R, color.G, color.B, color.A);
         }
 
-        internal static Matrix ToSeeingSharpMatrix(this Assimp.Matrix4x4 matrix)
+        internal static Matrix4x4 ToSeeingSharpMatrix(this Assimp.Matrix4x4 matrix)
         {
-            return new Matrix(
+            return new Matrix4x4(
                 matrix.A1, matrix.A2, matrix.A3, matrix.A4,
                 matrix.B1, matrix.B2, matrix.B3, matrix.B4,
                 matrix.C1, matrix.C2, matrix.C3, matrix.C4,

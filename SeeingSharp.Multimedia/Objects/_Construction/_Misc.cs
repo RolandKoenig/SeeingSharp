@@ -111,7 +111,7 @@ namespace SeeingSharp.Multimedia.Objects
             VolumetricSideSurfaceVertexColor = Color4.White,
             CalculateNormals = true,
             Alignment = TextGeometryAlignment.LowerLeft,
-            VertexTransform = Matrix.Identity
+            VertexTransform = Matrix4x4.Identity
         };
 
         public string FontFamily;
@@ -130,6 +130,6 @@ namespace SeeingSharp.Multimedia.Objects
         public float VolumetricTextDepth;
         public bool CalculateNormals;
         public TextGeometryAlignment Alignment;
-        public Matrix VertexTransform;
+        public Matrix4x4 VertexTransform;
     }
 }

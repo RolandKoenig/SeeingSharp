@@ -67,14 +67,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="projMatrix">The calculated projection matrix.</param>
         protected override void CalculateViewProjectionMatrices(
             Vector3 position, Vector3 target, Vector3 upVector, float zNear, float zFar, int screenWidth, int screenHeight,
-            out Matrix viewMatrix, out Matrix projMatrix)
+            out Matrix4x4 viewMatrix, out Matrix4x4 projMatrix)
         {
             m_aspectRatio = (float)screenWidth / (float)screenHeight;
-            viewMatrix = Matrix.LookAtLH(
+            viewMatrix = Matrix4x4.LookAtLH(
                 position,
                 target,
                 upVector);
-            projMatrix = Matrix.PerspectiveFovLH(
+            projMatrix = Matrix4x4.PerspectiveFovLH(
                 m_fov,
                 m_aspectRatio,
                 zNear, zFar);

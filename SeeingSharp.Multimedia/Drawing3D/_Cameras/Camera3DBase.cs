@@ -44,9 +44,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
         private Vector3 m_right;
         private Vector3 m_look;
 
-        private Matrix m_view;
-        private Matrix m_project;
-        private Matrix m_viewProj;
+        private Matrix4x4 m_view;
+        private Matrix4x4 m_project;
+        private Matrix4x4 m_viewProj;
 
         private int m_screenWidth;
         private int m_screenHeight;
@@ -151,7 +151,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="projMatrix">The calculated projection matrix.</param>
         protected abstract void CalculateViewProjectionMatrices(
             Vector3 position, Vector3 target, Vector3 upVector, float zNear, float zFar, int screenWidth, int screenHeight,
-            out Matrix viewMatrix, out Matrix projMatrix);
+            out Matrix4x4 viewMatrix, out Matrix4x4 projMatrix);
 
         /// <summary>
         /// Sets the size of the screen.
@@ -301,7 +301,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Retrieves the view-matrix.
         /// </summary>
         [Browsable(false)]
-        public Matrix View
+        public Matrix4x4 View
         {
             get { return m_view; }
         }
@@ -310,7 +310,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Gets the view-projection matrix.
         /// </summary>
         [Browsable(false)]
-        public Matrix ViewProjection
+        public Matrix4x4 ViewProjection
         {
             get { return m_viewProj; }
         }
@@ -460,7 +460,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Retrieves projection-matrix.
         /// </summary>
         [Browsable(false)]
-        public Matrix Projection
+        public Matrix4x4 Projection
         {
             get
             {

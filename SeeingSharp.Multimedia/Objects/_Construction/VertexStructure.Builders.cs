@@ -30,7 +30,7 @@ namespace SeeingSharp.Multimedia.Objects
     {
         private Vector2 m_tileSize = Vector2.Zero;
         private bool m_buildTimeTransformEnabled;
-        private Matrix m_buildTransformMatrix;
+        private Matrix4x4 m_buildTransformMatrix;
         private Func<Vertex, Vertex> m_buildTimeTransformFunc;
 
         /// <summary>
@@ -53,7 +53,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// Enables build-time transform using the given matrix.
         /// </summary>
         /// <param name="transformMatrix">Transform matrix.</param>
-        public void EnableBuildTimeTransform(Matrix transformMatrix)
+        public void EnableBuildTimeTransform(Matrix4x4 transformMatrix)
         {
             m_buildTimeTransformEnabled = true;
             m_buildTransformMatrix = transformMatrix;
@@ -66,7 +66,7 @@ namespace SeeingSharp.Multimedia.Objects
         public void EnableBuildTimeTransform(Func<Vertex, Vertex> transformFunc)
         {
             m_buildTimeTransformEnabled = true;
-            m_buildTransformMatrix = Matrix.Identity;
+            m_buildTransformMatrix = Matrix4x4.Identity;
             m_buildTimeTransformFunc = transformFunc;
         }
 
@@ -76,7 +76,7 @@ namespace SeeingSharp.Multimedia.Objects
         public void DisableBuildTimeTransform()
         {
             m_buildTimeTransformEnabled = false;
-            m_buildTransformMatrix = Matrix.Identity;
+            m_buildTransformMatrix = Matrix4x4.Identity;
         }
 
         /// <summary>

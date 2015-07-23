@@ -52,7 +52,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Updates the bounding frustum.
         /// </summary>
         /// <param name="viewProjectionMatrix"></param>
-        internal void UpdateFrustum(Matrix viewProjectionMatrix)
+        internal void UpdateFrustum(Matrix4x4 viewProjectionMatrix)
         {
             m_cameraFrustum = new BoundingFrustum(viewProjectionMatrix);
         }

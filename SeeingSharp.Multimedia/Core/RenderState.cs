@@ -65,7 +65,7 @@ namespace SeeingSharp.Multimedia.Core
             this.DeviceIndex = device.DeviceIndex;
 
             //Initialize world matrix
-            m_world = new Matrix4Stack(Matrix.Identity);
+            m_world = new Matrix4Stack(Matrix4x4.Identity);
 
             //Create settings stack
             m_renderSettingsStack = new Stack<RenderStackEntry>();
@@ -180,7 +180,7 @@ namespace SeeingSharp.Multimedia.Core
             m_renderSettingsStack.Clear();
             m_sceneStack.Clear();
             m_currentScene = null;
-            m_world = new Matrix4Stack(Matrix.Identity);
+            m_world = new Matrix4Stack(Matrix4x4.Identity);
 
             //Inititialize current render properties
             m_currentRenderSettings = new RenderStackEntry();
@@ -362,7 +362,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Generates a WorldViewProjection matrix.
         /// </summary>
         /// <param name="world">The world matrix.</param>
-        public Matrix GenerateWorldViewProj(Matrix world)
+        public Matrix4x4 GenerateWorldViewProj(Matrix4x4 world)
         {
             if (m_disposed) { throw new ObjectDisposedException("RenderState"); }
 
@@ -380,7 +380,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the ViewProj matrix.
         /// </summary>
-        public Matrix ViewProj
+        public Matrix4x4 ViewProj
         {
             get { return m_currentRenderSettings.ViewProj; }
         }
@@ -528,7 +528,7 @@ namespace SeeingSharp.Multimedia.Core
             /// <summary>
             /// Gets the current view projection matrix.
             /// </summary>
-            public Matrix ViewProj
+            public Matrix4x4 ViewProj
             {
                 get { return Camera.ViewProjection; }
             }

@@ -256,7 +256,7 @@ namespace SeeingSharp.Multimedia.Objects
             // Scale the text using given scale factor
             if (m_geometryOptions.VerticesScaleFactor > 0f)
             {
-                Matrix scaleMatrix = Matrix.Scaling(
+                Matrix4x4 scaleMatrix = Matrix4x4.Scaling(
                     m_geometryOptions.VerticesScaleFactor,
                     m_geometryOptions.VerticesScaleFactor,
                     m_geometryOptions.VerticesScaleFactor);

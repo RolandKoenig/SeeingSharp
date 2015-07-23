@@ -29,23 +29,23 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp
 {
-    public partial struct Matrix
+    public partial struct Matrix4x4
     {
         /// <summary>
         /// Gets a matrix for given horizontal and vertical rotation.
         /// </summary>
         /// <param name="hRotation">Horizontal rotation angle.</param>
         /// <param name="vRotation">Vertical rotation angle.</param>
-        public static Matrix RotationHV(float hRotation, float vRotation)
+        public static Matrix4x4 RotationHV(float hRotation, float vRotation)
         {
-            return Matrix.RotationYawPitchRoll(hRotation, vRotation, 0f);//Matrix4.RotationZ(vRotation) * Matrix4.RotationY(hRotation);
+            return Matrix4x4.RotationYawPitchRoll(hRotation, vRotation, 0f);//Matrix4.RotationZ(vRotation) * Matrix4.RotationY(hRotation);
         }
 
         /// <summary>
         /// Gets a matrix for given horizontal and vertical rotation.
         /// </summary>
         /// <param name="rotation">Vector containing horizontal and vertical rotation angles.</param>
-        public static Matrix RotationHV(Vector2 rotation)
+        public static Matrix4x4 RotationHV(Vector2 rotation)
         {
             return RotationHV(rotation.X, rotation.Y);
         }
@@ -55,10 +55,10 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="upVector">The up vector (standard: y-axis).</param>
         /// <param name="forwardVector">The forward vector (standard: x-axis)</param>
-        public static Matrix RotationDirection(Vector3 upVector, Vector3 forwardVector)
+        public static Matrix4x4 RotationDirection(Vector3 upVector, Vector3 forwardVector)
         {
             Vector3 right = Vector3.Cross(upVector, forwardVector);
-            return new Matrix(
+            return new Matrix4x4(
                 right.X, right.Y, right.Z, 0f,
                 upVector.X, upVector.Y, upVector.Z, 0f,
                 forwardVector.X, forwardVector.Y, forwardVector.Z, 0f,

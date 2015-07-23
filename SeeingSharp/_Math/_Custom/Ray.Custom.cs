@@ -34,7 +34,7 @@ namespace SeeingSharp
         /// <summary>
         /// Transforms the ray
         /// </summary>
-        public void Transform(Matrix transformMatrix)
+        public void Transform(Matrix4x4 transformMatrix)
         {
             this.Position = Vector3.TransformCoordinate(Position, transformMatrix);
             this.Direction = Vector3.TransformNormal(Direction, transformMatrix);

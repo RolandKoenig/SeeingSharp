@@ -180,8 +180,8 @@
     <Compile Include="_Math\_Custom\EngineMath.cs" />
     <Compile Include="_Math\_Custom\Line.cs" />
     <Compile Include="_Math\_Custom\Line2D.cs" />
-    <Compile Include="_Math\_Custom\Matrix.Custom.cs" />
     <Compile Include="_Math\_Custom\Matrix4Stack.cs" />
+    <Compile Include="_Math\_Custom\Matrix4x4.Custom.cs" />
     <Compile Include="_Math\_Custom\Plane.cs" />
     <Compile Include="_Math\_Custom\Point.Custom.cs" />
     <Compile Include="_Math\_Custom\Polygon.cs" />
@@ -217,8 +217,8 @@
     <Compile Include="_Math\_SharpDXMath\Int3.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Int4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\MathUtil.MIT.cs" />
-    <Compile Include="_Math\_SharpDXMath\Matrix.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Matrix3x2.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Matrix4x4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Matrix5x4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\OrientedBoundingBox.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Plane.MIT.cs" />

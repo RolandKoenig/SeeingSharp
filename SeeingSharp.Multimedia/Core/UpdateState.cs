@@ -41,7 +41,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             m_updateTime = updateTime;
             m_updateTimeMilliseconds = (int)updateTime.TotalMilliseconds;
-            m_world = new Matrix4Stack(Matrix.Identity);
+            m_world = new Matrix4Stack(Matrix4x4.Identity);
         }
 
         /// <summary>

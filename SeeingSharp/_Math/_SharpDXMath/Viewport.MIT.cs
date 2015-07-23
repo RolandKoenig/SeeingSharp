@@ -217,9 +217,9 @@ namespace SeeingSharp
         /// <param name="view">The view matrix.</param>
         /// <param name="world">The world matrix.</param>
         /// <returns>Vector3.</returns>
-        public Vector3 Project(Vector3 source, Matrix projection, Matrix view, Matrix world)
+        public Vector3 Project(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
-            var matrix = Matrix.Multiply(Matrix.Multiply(world, view), projection);
+            var matrix = Matrix4x4.Multiply(Matrix4x4.Multiply(world, view), projection);
             var vector = (Vector3)Vector3.Transform(source, matrix);
             float a = (((source.X * matrix.M14) + (source.Y * matrix.M24)) + (source.Z * matrix.M34)) + matrix.M44;
 
@@ -243,9 +243,9 @@ namespace SeeingSharp
         /// <param name="view">The view matrix.</param>
         /// <param name="world">The world matrix.</param>
         /// <returns>Vector3.</returns>
-        public Vector3 Unproject(Vector3 source, Matrix projection, Matrix view, Matrix world)
+        public Vector3 Unproject(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
-            var matrix = Matrix.Invert(Matrix.Multiply(Matrix.Multiply(world, view), projection));
+            var matrix = Matrix4x4.Invert(Matrix4x4.Multiply(Matrix4x4.Multiply(world, view), projection));
             source.X = (((source.X - X) / (Width)) * 2f) - 1f;
             source.Y = -((((source.Y - Y) / (Height)) * 2f) - 1f);
             source.Z = (source.Z - MinDepth) / (MaxDepth - MinDepth);

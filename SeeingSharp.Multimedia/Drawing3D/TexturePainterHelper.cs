@@ -137,7 +137,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 Color = Vector4.Zero,
                 Opacity = m_opacity,
                 SpriteScaling = m_scaling,
-                World = Matrix.Identity
+                World = Matrix4x4.Identity
             });
 
             // Render using current configuration

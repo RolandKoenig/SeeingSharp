@@ -939,7 +939,7 @@ namespace SeeingSharp
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="SharpDX.Matrix"/>.</param>
         /// <param name="result">When the method completes, contains the transformed <see cref="SharpDX.Vector4"/>.</param>
-        public static void Transform(ref Vector2 vector, ref Matrix transform, out Vector4 result)
+        public static void Transform(ref Vector2 vector, ref Matrix4x4 transform, out Vector4 result)
         {
             result = new Vector4(
                 (vector.X * transform.M11) + (vector.Y * transform.M21) + transform.M41,
@@ -954,7 +954,7 @@ namespace SeeingSharp
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="SharpDX.Matrix"/>.</param>
         /// <returns>The transformed <see cref="SharpDX.Vector4"/>.</returns>
-        public static Vector4 Transform(Vector2 vector, Matrix transform)
+        public static Vector4 Transform(Vector2 vector, Matrix4x4 transform)
         {
             Vector4 result;
             Transform(ref vector, ref transform, out result);
@@ -969,7 +969,7 @@ namespace SeeingSharp
         /// <param name="destination">The array for which the transformed vectors are stored.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Transform(Vector2[] source, ref Matrix transform, Vector4[] destination)
+        public static void Transform(Vector2[] source, ref Matrix4x4 transform, Vector4[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -997,7 +997,7 @@ namespace SeeingSharp
         /// therefore makes the vector homogeneous. The homogeneous vector is often prefered when working
         /// with coordinates as the w component can safely be ignored.
         /// </remarks>
-        public static void TransformCoordinate(ref Vector2 coordinate, ref Matrix transform, out Vector2 result)
+        public static void TransformCoordinate(ref Vector2 coordinate, ref Matrix4x4 transform, out Vector2 result)
         {
             Vector4 vector = new Vector4();
             vector.X = (coordinate.X * transform.M11) + (coordinate.Y * transform.M21) + transform.M41;
@@ -1021,7 +1021,7 @@ namespace SeeingSharp
         /// therefore makes the vector homogeneous. The homogeneous vector is often prefered when working
         /// with coordinates as the w component can safely be ignored.
         /// </remarks>
-        public static Vector2 TransformCoordinate(Vector2 coordinate, Matrix transform)
+        public static Vector2 TransformCoordinate(Vector2 coordinate, Matrix4x4 transform)
         {
             Vector2 result;
             TransformCoordinate(ref coordinate, ref transform, out result);
@@ -1044,7 +1044,7 @@ namespace SeeingSharp
         /// therefore makes the vector homogeneous. The homogeneous vector is often prefered when working
         /// with coordinates as the w component can safely be ignored.
         /// </remarks>
-        public static void TransformCoordinate(Vector2[] source, ref Matrix transform, Vector2[] destination)
+        public static void TransformCoordinate(Vector2[] source, ref Matrix4x4 transform, Vector2[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -1072,7 +1072,7 @@ namespace SeeingSharp
         /// apply. This is often prefered for normal vectors as normals purely represent direction
         /// rather than location because normal vectors should not be translated.
         /// </remarks>
-        public static void TransformNormal(ref Vector2 normal, ref Matrix transform, out Vector2 result)
+        public static void TransformNormal(ref Vector2 normal, ref Matrix4x4 transform, out Vector2 result)
         {
             result = new Vector2(
                 (normal.X * transform.M11) + (normal.Y * transform.M21),
@@ -1092,7 +1092,7 @@ namespace SeeingSharp
         /// apply. This is often prefered for normal vectors as normals purely represent direction
         /// rather than location because normal vectors should not be translated.
         /// </remarks>
-        public static Vector2 TransformNormal(Vector2 normal, Matrix transform)
+        public static Vector2 TransformNormal(Vector2 normal, Matrix4x4 transform)
         {
             Vector2 result;
             TransformNormal(ref normal, ref transform, out result);
@@ -1115,7 +1115,7 @@ namespace SeeingSharp
         /// apply. This is often prefered for normal vectors as normals purely represent direction
         /// rather than location because normal vectors should not be translated.
         /// </remarks>
-        public static void TransformNormal(Vector2[] source, ref Matrix transform, Vector2[] destination)
+        public static void TransformNormal(Vector2[] source, ref Matrix4x4 transform, Vector2[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");

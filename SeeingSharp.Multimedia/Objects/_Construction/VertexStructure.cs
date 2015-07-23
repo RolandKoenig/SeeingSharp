@@ -778,7 +778,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// Transforms positions and normals of all vertices using the given transform matrix
         /// </summary>
         /// <param name="transformMatrix"></param>
-        public void TransformVertices(Matrix transformMatrix)
+        public void TransformVertices(Matrix4x4 transformMatrix)
         {
             int length = m_vertices.Count;
             for (int loop = 0; loop < length; loop++)

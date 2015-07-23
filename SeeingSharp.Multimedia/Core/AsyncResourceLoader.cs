@@ -35,7 +35,7 @@ namespace SeeingSharp.Multimedia.Core
         private static AsyncResourceLoader s_current;
 
         #region Task members
-        private ConcurrentQueue<Func<object>> m_openTasks;
+        private ConcurrentQueue<object> m_openTasks;
         private int m_runningTaskCount;
         private ConcurrentQueue<TaskCompletionSource<object>> m_openWaiters;
         #endregion
@@ -45,7 +45,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         private AsyncResourceLoader()
         {
-            m_openTasks = new ConcurrentQueue<Func<object>>();
+            m_openTasks = new ConcurrentQueue<object>();
             m_openWaiters = new ConcurrentQueue<TaskCompletionSource<object>>();
         }
 
@@ -62,6 +62,11 @@ namespace SeeingSharp.Multimedia.Core
             return taskSource.Task;
         }
 
+        //internal Task<T> EnqueueAsyncResourceLoadingTaskAsync<T>(Func<Task<T>> resourceLoadAction)
+        //{
+
+        //}
+
         /// <summary>
         /// Enqueues the given action for resource loading.
         /// </summary>
@@ -71,7 +76,7 @@ namespace SeeingSharp.Multimedia.Core
             TaskCompletionSource<T> taskSource = new TaskCompletionSource<T>();
 
             // Register the given task
-            m_openTasks.Enqueue(() =>
+            m_openTasks.Enqueue((Func<object>)(() =>
             {
                 try
                 {
@@ -84,7 +89,7 @@ namespace SeeingSharp.Multimedia.Core
                     taskSource.SetException(ex);
                     return default(T);
                 }
-            });
+            }));
 
             // Trigger task queue processing
             this.TriggerTaskQueue();
@@ -100,23 +105,48 @@ namespace SeeingSharp.Multimedia.Core
             while ((m_runningTaskCount < Constants.ASYNC_LOADER_MAX_PRALLEL_TASK_COUNT) &&
                    (m_openTasks.Count > 0))
             {
-                Func<object> actFunc = null;
-                if(m_openTasks.TryDequeue(out actFunc))
+                object actFuncWrapper = null;
+                if(m_openTasks.TryDequeue(out actFuncWrapper))
                 {
                     Interlocked.Increment(ref m_runningTaskCount);
 
-                    // Start this task actually
-                    Task.Run(() =>
+                    Func<object> syncFunc = actFuncWrapper as Func<object>;
+                    if (syncFunc != null)
                     {
-                        // Run the registered function
-                        actFunc();
+                        // Start this task actually
+                        Task.Run(() =>
+                        {
+                            // Run the registered function
+                            syncFunc();
 
-                        // Decrement the task counter
-                        Interlocked.Decrement(ref m_runningTaskCount);
+                            // Decrement the task counter
+                            Interlocked.Decrement(ref m_runningTaskCount);
 
-                        // Finally, trigger other tasks if needed
-                        TriggerTaskQueue();
-                    });
+                            // Finally, trigger other tasks if needed
+                            TriggerTaskQueue();
+                        });
+
+                        continue;
+                    }
+
+                    Func<Task<object>> asyncFunc = actFuncWrapper as Func<Task<object>>;
+                    if(asyncFunc != null)
+                    {
+                        Task<object> asyncFuncTask = asyncFunc();
+                        asyncFuncTask.ContinueWith((givenTask) =>
+                        {
+                            // Decrement the task counter
+                            Interlocked.Decrement(ref m_runningTaskCount);
+
+                            // Finally, trigger other tasks if needed
+                            TriggerTaskQueue();
+                        });
+
+                        continue;
+                    }
+
+                    // TODO: Handle exception case
+                    Interlocked.Decrement(ref m_runningTaskCount);
                 }
             }
 

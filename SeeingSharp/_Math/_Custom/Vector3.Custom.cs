@@ -49,7 +49,7 @@ namespace SeeingSharp
         /// Transform this coordinate using the given transformation matrix.
         /// </summary>
         /// <param name="transform">The transformation matrix.</param>
-        public void TransformCoordinate(Matrix transform)
+        public void TransformCoordinate(Matrix4x4 transform)
         {
             Vector3 transformed = Vector3.TransformCoordinate(this, transform);
             this.X = transformed.X;
@@ -61,7 +61,7 @@ namespace SeeingSharp
         /// Transform this normal using the given transformation matrix.
         /// </summary>
         /// <param name="transform">The transformation matrix.</param>
-        public void TransformNormal(Matrix transform)
+        public void TransformNormal(Matrix4x4 transform)
         {
             Vector3 transformed = Vector3.TransformNormal(this, transform);
             this.X = transformed.X;

@@ -37,7 +37,7 @@ namespace SeeingSharp
         /// <summary>
         /// The matrix which aligns and scales the box, and its tarnslation vector represents the center of the box.
         /// </summary>
-        public Matrix Transformation;
+        public Matrix4x4 Transformation;
 
         /// <summary>
         /// Creates an <see cref="SharpDX.OrientedBoundingBox"/> from a BoundingBox.
@@ -50,7 +50,7 @@ namespace SeeingSharp
         {
             var Center = bb.Minimum + (bb.Maximum - bb.Minimum) / 2f;
             Extents = bb.Maximum - Center;
-            Transformation = Matrix.Translation(Center);
+            Transformation = Matrix4x4.Translation(Center);
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace SeeingSharp
         {
             var Center = minimum + (maximum - minimum) / 2f;
             Extents = maximum - Center;
-            Transformation = Matrix.Translation(Center);
+            Transformation = Matrix4x4.Translation(Center);
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace SeeingSharp
 
             var Center = minimum + (maximum - minimum) / 2f;
             Extents = maximum - Center;
-            Transformation = Matrix.Translation(Center);
+            Transformation = Matrix4x4.Translation(Center);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace SeeingSharp
         /// While any kind of transformation can be applied, it is recommended to apply scaling using scale method instead, which
         /// scales the Extents and keeps the Transformation matrix for rotation only, and that preserves collision detection accuracy.
         /// </remarks>
-        public void Transform(ref Matrix mat)
+        public void Transform(ref Matrix4x4 mat)
         {
             Transformation *= mat;
         }
@@ -144,7 +144,7 @@ namespace SeeingSharp
         /// While any kind of transformation can be applied, it is recommended to apply scaling using scale method instead, which
         /// scales the Extents and keeps the Transformation matrix for rotation only, and that preserves collision detection accuracy.
         /// </remarks>
-        public void Transform(Matrix mat)
+        public void Transform(Matrix4x4 mat)
         {
             Transformation *= mat;
         }
@@ -267,8 +267,8 @@ namespace SeeingSharp
         public ContainmentType Contains(ref Vector3 point)
         {
             // Transform the point into the obb coordinates
-            Matrix invTrans;
-            Matrix.Invert(ref Transformation, out invTrans);
+            Matrix4x4 invTrans;
+            Matrix4x4.Invert(ref Transformation, out invTrans);
 
             Vector3 locPoint;
             Vector3.TransformCoordinate(ref point, ref invTrans, out locPoint);
@@ -305,8 +305,8 @@ namespace SeeingSharp
         /// <returns>The type of containment.</returns>
         public ContainmentType Contains(Vector3[] points)
         {
-            Matrix invTrans;
-            Matrix.Invert(ref Transformation, out invTrans);
+            Matrix4x4 invTrans;
+            Matrix4x4.Invert(ref Transformation, out invTrans);
 
             var containsAll = true;
             var containsAny = false;
@@ -351,8 +351,8 @@ namespace SeeingSharp
         /// </remarks>
         public ContainmentType Contains(BoundingSphere sphere, bool IgnoreScale = false)
         {
-            Matrix invTrans;
-            Matrix.Invert(ref Transformation, out invTrans);
+            Matrix4x4 invTrans;
+            Matrix4x4.Invert(ref Transformation, out invTrans);
 
             // Transform sphere center into the obb coordinates
             Vector3 locCenter;
@@ -388,7 +388,7 @@ namespace SeeingSharp
             return ContainmentType.Intersects;
         }
 
-        private static Vector3[] GetRows(ref Matrix mat)
+        private static Vector3[] GetRows(ref Matrix4x4 mat)
         {
             return new Vector3[] {
                 new Vector3(mat.M11,mat.M12,mat.M13),
@@ -418,8 +418,8 @@ namespace SeeingSharp
             var RotA = GetRows(ref Transformation);
             var RotB = GetRows(ref obb.Transformation);
 
-            var R = new Matrix();       // Rotation from B to A
-            var AR = new Matrix();      // absolute values of R matrix, to use with box extents
+            var R = new Matrix4x4();       // Rotation from B to A
+            var AR = new Matrix4x4();      // absolute values of R matrix, to use with box extents
 
             float ExtentA, ExtentB, Separation;
             int i, k;
@@ -495,8 +495,8 @@ namespace SeeingSharp
 
             //http://www.3dkingdoms.com/weekly/bbox.cpp
             // Put line in box space
-            Matrix invTrans;
-            Matrix.Invert(ref Transformation, out invTrans);
+            Matrix4x4 invTrans;
+            Matrix4x4.Invert(ref Transformation, out invTrans);
 
             Vector3 LB1;
             Vector3.TransformCoordinate(ref L1, ref invTrans, out LB1);
@@ -546,9 +546,9 @@ namespace SeeingSharp
             float ExtentA, ExtentB, Separation;
             int i, k;
 
-            Matrix R;                   // Rotation from B to A
-            Matrix.Invert(ref Transformation, out R);
-            var AR = new Matrix();      // absolute values of R matrix, to use with box extents
+            Matrix4x4 R;                   // Rotation from B to A
+            Matrix4x4.Invert(ref Transformation, out R);
+            var AR = new Matrix4x4();      // absolute values of R matrix, to use with box extents
 
             for (i = 0; i < 3; i++)
                 for (k = 0; k < 3; k++)
@@ -611,8 +611,8 @@ namespace SeeingSharp
         public bool Intersects(ref Ray ray, out Vector3 point)
         {
             // Put ray in box space
-            Matrix invTrans;
-            Matrix.Invert(ref Transformation, out invTrans);
+            Matrix4x4 invTrans;
+            Matrix4x4.Invert(ref Transformation, out invTrans);
 
             Ray bRay;
             Vector3.TransformNormal(ref ray.Direction, ref invTrans, out bRay.Direction);
@@ -677,16 +677,16 @@ namespace SeeingSharp
         /// If true, the method will use a fast algorithm which is inapplicable if a scale is applied to the transformation matrix of the OrientedBoundingBox.
         /// </param>
         /// <returns></returns>
-        public static Matrix GetBoxToBoxMatrix(ref OrientedBoundingBox A, ref OrientedBoundingBox B, bool NoMatrixScaleApplied = false)
+        public static Matrix4x4 GetBoxToBoxMatrix(ref OrientedBoundingBox A, ref OrientedBoundingBox B, bool NoMatrixScaleApplied = false)
         {
-            Matrix AtoB_Matrix;
+            Matrix4x4 AtoB_Matrix;
 
             // Calculate B to A transformation matrix
             if (NoMatrixScaleApplied)
             {
                 var RotA = GetRows(ref A.Transformation);
                 var RotB = GetRows(ref B.Transformation);
-                AtoB_Matrix = new Matrix();
+                AtoB_Matrix = new Matrix4x4();
                 int i, k;
                 for (i = 0; i < 3; i++)
                     for (k = 0; k < 3; k++)
@@ -699,8 +699,8 @@ namespace SeeingSharp
             }
             else
             {
-                Matrix AInvMat;
-                Matrix.Invert(ref A.Transformation, out AInvMat);
+                Matrix4x4 AInvMat;
+                Matrix4x4.Invert(ref A.Transformation, out AInvMat);
                 AtoB_Matrix = B.Transformation * AInvMat;
             }
 
@@ -720,7 +720,7 @@ namespace SeeingSharp
         /// </remarks>
         public static void Merge(ref OrientedBoundingBox A, ref OrientedBoundingBox B, bool NoMatrixScaleApplied = false)
         {
-            Matrix AtoB_Matrix = GetBoxToBoxMatrix(ref A, ref B, NoMatrixScaleApplied);
+            Matrix4x4 AtoB_Matrix = GetBoxToBoxMatrix(ref A, ref B, NoMatrixScaleApplied);
 
             //Get B corners in A Space
             var bCorners = B.GetLocalCorners();

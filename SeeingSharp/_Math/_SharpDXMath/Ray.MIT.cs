@@ -283,7 +283,7 @@ namespace SeeingSharp
         /// <param name="viewport"><see cref="SharpDX.ViewportF"/>.</param>
         /// <param name="worldViewProjection">Transformation <see cref="SharpDX.Matrix"/>.</param>
         /// <returns>Resulting <see cref="SharpDX.Ray"/>.</returns>
-        public static Ray GetPickRay(int x, int y, ViewportF viewport, Matrix worldViewProjection)
+        public static Ray GetPickRay(int x, int y, ViewportF viewport, Matrix4x4 worldViewProjection)
         {
             var nearPoint = new Vector3(x, y, 0);
             var farPoint = new Vector3(x, y, 1);

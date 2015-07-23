@@ -65,7 +65,7 @@ namespace SeeingSharp
             Vector3 right = Vector3.Cross(
                 upVector, Math.Abs(upVector.X) > Math.Abs(upVector.Z) ? new Vector3(0, 0, 1) : new Vector3(1, 0, 0));
             Vector3 backward = Vector3.Cross(right, upVector);
-            var m = new Matrix(
+            var m = new Matrix4x4(
                 backward.X, right.X, upVector.X, 0, backward.Y, right.Y, upVector.Y, 0, backward.Z, right.Z, upVector.Z, 0, 0, 0, 0, 1);
 
             //Make first point origin

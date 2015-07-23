@@ -43,7 +43,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
     [StructLayout(LayoutKind.Sequential)]
     internal struct CBPerView
     {
-        public Matrix ViewProj;
+        public Matrix4x4 ViewProj;
         public Vector3 CameraPosition;
         public float GradientFactor;
         public float BorderFactor;
@@ -58,7 +58,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
     [StructLayout(LayoutKind.Sequential)]
     internal struct CBPerObject
     {
-        public Matrix World;
+        public Matrix4x4 World;
         public Vector4 Color;
         public float BorderPart;
         public float BorderMultiplyer;

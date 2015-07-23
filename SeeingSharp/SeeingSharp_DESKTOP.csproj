@@ -64,8 +64,8 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors">
-      <HintPath>..\packages\System.Numerics.Vectors.4.0.0\lib\portable-net45+win8+wpa81\System.Numerics.Vectors.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -232,7 +232,7 @@
     <Compile Include="_Math\_Custom\EngineMath.cs" />
     <Compile Include="_Math\_Custom\Line.cs" />
     <Compile Include="_Math\_Custom\Line2D.cs" />
-    <Compile Include="_Math\_Custom\Matrix.Custom.cs" />
+    <Compile Include="_Math\_Custom\Matrix4x4.Custom.cs" />
     <Compile Include="_Math\_Custom\Matrix4Stack.cs" />
     <Compile Include="_Math\_Custom\Plane.cs" />
     <Compile Include="_Math\_Custom\Point.Custom.cs" />
@@ -268,7 +268,7 @@
     <Compile Include="_Math\_SharpDXMath\Int3.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Int4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\MathUtil.MIT.cs" />
-    <Compile Include="_Math\_SharpDXMath\Matrix.MIT.cs" />
+    <Compile Include="_Math\_SharpDXMath\Matrix4x4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Matrix3x2.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Matrix5x4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\OrientedBoundingBox.MIT.cs" />

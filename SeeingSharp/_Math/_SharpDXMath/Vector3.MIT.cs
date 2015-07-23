@@ -879,7 +879,7 @@ namespace SeeingSharp
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <param name="result">When the method completes, contains the vector in screen space.</param>
-        public static void Project(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix worldViewProjection, out Vector3 result)
+        public static void Project(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix4x4 worldViewProjection, out Vector3 result)
         {
             Vector3 v = new Vector3();
             TransformCoordinate(ref vector, ref worldViewProjection, out v);
@@ -899,7 +899,7 @@ namespace SeeingSharp
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <returns>The vector in screen space.</returns>
-        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection)
+        public static Vector3 Project(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4x4 worldViewProjection)
         {
             Vector3 result;
             Project(ref vector, x, y, width, height, minZ, maxZ, ref worldViewProjection, out result);
@@ -918,11 +918,11 @@ namespace SeeingSharp
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <param name="result">When the method completes, contains the vector in object space.</param>
-        public static void Unproject(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix worldViewProjection, out Vector3 result)
+        public static void Unproject(ref Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, ref Matrix4x4 worldViewProjection, out Vector3 result)
         {
             Vector3 v = new Vector3();
-            Matrix matrix = new Matrix();
-            Matrix.Invert(ref worldViewProjection, out matrix);
+            Matrix4x4 matrix = new Matrix4x4();
+            Matrix4x4.Invert(ref worldViewProjection, out matrix);
 
             v.X = (((vector.X - x) / width) * 2.0f) - 1.0f;
             v.Y = -((((vector.Y - y) / height) * 2.0f) - 1.0f);
@@ -943,7 +943,7 @@ namespace SeeingSharp
         /// <param name="maxZ">The maximum depth of the viewport.</param>
         /// <param name="worldViewProjection">The combined world-view-projection matrix.</param>
         /// <returns>The vector in object space.</returns>
-        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix worldViewProjection)
+        public static Vector3 Unproject(Vector3 vector, float x, float y, float width, float height, float minZ, float maxZ, Matrix4x4 worldViewProjection)
         {
             Vector3 result;
             Unproject(ref vector, x, y, width, height, minZ, maxZ, ref worldViewProjection, out result);
@@ -1171,7 +1171,7 @@ namespace SeeingSharp
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="SharpDX.Matrix"/>.</param>
         /// <param name="result">When the method completes, contains the transformed <see cref="SharpDX.Vector4"/>.</param>
-        public static void Transform(ref Vector3 vector, ref Matrix transform, out Vector4 result)
+        public static void Transform(ref Vector3 vector, ref Matrix4x4 transform, out Vector4 result)
         {
             result = new Vector4(
                 (vector.X * transform.M11) + (vector.Y * transform.M21) + (vector.Z * transform.M31) + transform.M41,
@@ -1186,7 +1186,7 @@ namespace SeeingSharp
         /// <param name="vector">The source vector.</param>
         /// <param name="transform">The transformation <see cref="SharpDX.Matrix"/>.</param>
         /// <returns>The transformed <see cref="SharpDX.Vector4"/>.</returns>
-        public static Vector4 Transform(Vector3 vector, Matrix transform)
+        public static Vector4 Transform(Vector3 vector, Matrix4x4 transform)
         {
             Vector4 result;
             Transform(ref vector, ref transform, out result);
@@ -1201,7 +1201,7 @@ namespace SeeingSharp
         /// <param name="destination">The array for which the transformed vectors are stored.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="source"/> or <paramref name="destination"/> is <c>null</c>.</exception>
         /// <exception cref="ArgumentOutOfRangeException">Thrown when <paramref name="destination"/> is shorter in length than <paramref name="source"/>.</exception>
-        public static void Transform(Vector3[] source, ref Matrix transform, Vector4[] destination)
+        public static void Transform(Vector3[] source, ref Matrix4x4 transform, Vector4[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -1229,7 +1229,7 @@ namespace SeeingSharp
         /// therefore makes the vector homogeneous. The homogeneous vector is often prefered when working
         /// with coordinates as the w component can safely be ignored.
         /// </remarks>
-        public static void TransformCoordinate(ref Vector3 coordinate, ref Matrix transform, out Vector3 result)
+        public static void TransformCoordinate(ref Vector3 coordinate, ref Matrix4x4 transform, out Vector3 result)
         {
             Vector4 vector = new Vector4();
             vector.X = (coordinate.X * transform.M11) + (coordinate.Y * transform.M21) + (coordinate.Z * transform.M31) + transform.M41;
@@ -1253,7 +1253,7 @@ namespace SeeingSharp
         /// therefore makes the vector homogeneous. The homogeneous vector is often prefered when working
         /// with coordinates as the w component can safely be ignored.
         /// </remarks>
-        public static Vector3 TransformCoordinate(Vector3 coordinate, Matrix transform)
+        public static Vector3 TransformCoordinate(Vector3 coordinate, Matrix4x4 transform)
         {
             Vector3 result;
             TransformCoordinate(ref coordinate, ref transform, out result);
@@ -1276,7 +1276,7 @@ namespace SeeingSharp
         /// therefore makes the vector homogeneous. The homogeneous vector is often prefered when working
         /// with coordinates as the w component can safely be ignored.
         /// </remarks>
-        public static void TransformCoordinate(Vector3[] source, ref Matrix transform, Vector3[] destination)
+        public static void TransformCoordinate(Vector3[] source, ref Matrix4x4 transform, Vector3[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");
@@ -1304,7 +1304,7 @@ namespace SeeingSharp
         /// apply. This is often prefered for normal vectors as normals purely represent direction
         /// rather than location because normal vectors should not be translated.
         /// </remarks>
-        public static void TransformNormal(ref Vector3 normal, ref Matrix transform, out Vector3 result)
+        public static void TransformNormal(ref Vector3 normal, ref Matrix4x4 transform, out Vector3 result)
         {
             result = new Vector3(
                 (normal.X * transform.M11) + (normal.Y * transform.M21) + (normal.Z * transform.M31),
@@ -1325,7 +1325,7 @@ namespace SeeingSharp
         /// apply. This is often prefered for normal vectors as normals purely represent direction
         /// rather than location because normal vectors should not be translated.
         /// </remarks>
-        public static Vector3 TransformNormal(Vector3 normal, Matrix transform)
+        public static Vector3 TransformNormal(Vector3 normal, Matrix4x4 transform)
         {
             Vector3 result;
             TransformNormal(ref normal, ref transform, out result);
@@ -1348,7 +1348,7 @@ namespace SeeingSharp
         /// apply. This is often prefered for normal vectors as normals purely represent direction
         /// rather than location because normal vectors should not be translated.
         /// </remarks>
-        public static void TransformNormal(Vector3[] source, ref Matrix transform, Vector3[] destination)
+        public static void TransformNormal(Vector3[] source, ref Matrix4x4 transform, Vector3[] destination)
         {
             if (source == null)
                 throw new ArgumentNullException("source");

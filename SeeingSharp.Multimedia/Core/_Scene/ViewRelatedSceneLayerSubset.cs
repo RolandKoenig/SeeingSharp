@@ -471,7 +471,7 @@ namespace SeeingSharp.Multimedia.Core
             cbPerView.ScreenPixelSize = this.ViewInformation.Camera.GetScreenSize();
             cbPerView.LightPower = viewConfiguration.LightPower;
             cbPerView.StrongLightFactor = viewConfiguration.StrongLightFactor;
-            cbPerView.ViewProj = Matrix.Transpose(this.ViewInformation.Camera.ViewProjection);
+            cbPerView.ViewProj = Matrix4x4.Transpose(this.ViewInformation.Camera.ViewProjection);
             m_renderParameters.UpdateValues(renderState, cbPerView);
 
             // Query for postprocess effect

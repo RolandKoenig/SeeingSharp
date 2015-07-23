@@ -88,7 +88,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="lineColor">The color for the line.</param>
         /// <param name="lineVertexBuffer">The vertex buffer containing all line vertices.</param>
         /// <param name="vertexCount">Total count of vertices.</param>
-        internal void RenderLines(RenderState renderState, Matrix worldViewProj, Color4 lineColor, D3D11.Buffer lineVertexBuffer, int vertexCount)
+        internal void RenderLines(RenderState renderState, Matrix4x4 worldViewProj, Color4 lineColor, D3D11.Buffer lineVertexBuffer, int vertexCount)
         {
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
 
@@ -164,7 +164,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         [StructLayout(LayoutKind.Sequential)]
         private struct ConstantBufferData
         {
-            public Matrix WorldViewProj;
+            public Matrix4x4 WorldViewProj;
             public Color4 DiffuseColor;
         }
     }

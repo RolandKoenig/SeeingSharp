@@ -62,7 +62,7 @@ namespace SeeingSharp
             this.Maximum = maximum;
         }
 
-        public void Transform(Matrix matrix)
+        public void Transform(Matrix4x4 matrix)
         {
             Vector3[] corners = this.GetCorners();
             for (int loop = 0; loop < corners.Length; loop++)

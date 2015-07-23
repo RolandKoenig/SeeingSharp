@@ -422,16 +422,16 @@ namespace SeeingSharp.Multimedia.Core
             if ((m_currentScene != null) &&
                 (m_camera != null))
             {
-                Matrix projectionMatrix = m_camera.Projection;
+                Matrix4x4 projectionMatrix = m_camera.Projection;
 
                 Vector3 pickingVector;
                 pickingVector.X = (((2.0f * localLocation.X) / m_currentViewSize.Width) - 1) / projectionMatrix.M11;
                 pickingVector.Y = -(((2.0f * localLocation.Y) / m_currentViewSize.Height) - 1) / projectionMatrix.M22;
                 pickingVector.Z = 1f;
 
-                Matrix worldMatrix = Matrix.Identity;
-                Matrix viewWorld = m_camera.View * worldMatrix;
-                Matrix inversionViewWorld = Matrix.Invert(viewWorld);
+                Matrix4x4 worldMatrix = Matrix4x4.Identity;
+                Matrix4x4 viewWorld = m_camera.View * worldMatrix;
+                Matrix4x4 inversionViewWorld = Matrix4x4.Invert(viewWorld);
                 Vector3 rayDirection = Vector3.Normalize(new Vector3(
                     pickingVector.X * inversionViewWorld.M11 + pickingVector.Y * inversionViewWorld.M21 + pickingVector.Z * inversionViewWorld.M31,
                     pickingVector.X * inversionViewWorld.M12 + pickingVector.Y * inversionViewWorld.M22 + pickingVector.Z * inversionViewWorld.M32,
