@@ -19,6 +19,7 @@ namespace SeeingSharp.PerformanceTests.Mathematics
             Console.WriteLine("#################### Seeing# Vector (default way)");
             Console.WriteLine("CrossProduct:   " + Check_SeeingSharp_Std_Vector_CrossProduct().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Add:            " + Check_SeeingSharp_Std_Vector_Add().TotalMilliseconds.ToString("F2") + "ms");
+            Console.WriteLine("Multiply:       " + Check_SeeingSharp_Std_Vector_Multiply().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Subtract:       " + Check_SeeingSharp_Std_Vector_Subtract().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Transform:      " + Check_SeeingSharp_Std_Vector_Transform().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("DotProduct:     " + Check_SeeingSharp_Std_Vector_DotProduct().TotalMilliseconds.ToString("F2") + "ms");
@@ -29,6 +30,7 @@ namespace SeeingSharp.PerformanceTests.Mathematics
             Console.WriteLine("#################### Seeing# Vector (using ref/out parameters)");
             Console.WriteLine("CrossProduct:   " + Check_SeeingSharp_RefOut_Vector_CrossProduct().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Add:            " + Check_SeeingSharp_RefOut_Vector_Add().TotalMilliseconds.ToString("F2") + "ms");
+            Console.WriteLine("Multiply:       " + Check_SeeingSharp_RefOut_Vector_Multiply().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Subtract:       " + Check_SeeingSharp_RefOut_Vector_Subtract().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Transform:      " + Check_SeeingSharp_RefOut_Vector_Transform().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("DotProduct:     " + Check_SeeingSharp_RefOut_Vector_DotProduct().TotalMilliseconds.ToString("F2") + "ms");
@@ -39,6 +41,7 @@ namespace SeeingSharp.PerformanceTests.Mathematics
             Console.WriteLine("#################### System.Numerics (new SIMD instructions)");
             Console.WriteLine("CrossProduct:   " + Check_SystemNumerics_Vector_CrossProduct().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Add:            " + Check_SystemNumerics_Vector_Add().TotalMilliseconds.ToString("F2") + "ms");
+            Console.WriteLine("Multiply:       " + Check_SystemNumerics_Vector_Multiply().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Subtract:       " + Check_SystemNumerics_Vector_Subtract().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("Transform:      " + Check_SystemNumerics_Vector_Transform().TotalMilliseconds.ToString("F2") + "ms");
             Console.WriteLine("DotProduct:     " + Check_SystemNumerics_Vector_DotProduct().TotalMilliseconds.ToString("F2") + "ms");
@@ -83,6 +86,24 @@ namespace SeeingSharp.PerformanceTests.Mathematics
                 for (int loop = 0; loop < COUNT_TRIES; loop++)
                 {
                     resultVector = dummyVector + dummyVector2;
+                }
+            }
+            stopwatch.Stop();
+            return stopwatch.Elapsed;
+        }
+
+        private static TimeSpan Check_SeeingSharp_Std_Vector_Multiply()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            {
+                Vector3 dummyVector = new Vector3(2f, 3f, 4f);
+                float dummyLenght = 3f;
+
+                Vector3 resultVector = Vector3.Zero;
+                for (int loop = 0; loop < COUNT_TRIES; loop++)
+                {
+                    resultVector = dummyVector * dummyLenght;
                 }
             }
             stopwatch.Stop();
@@ -221,6 +242,24 @@ namespace SeeingSharp.PerformanceTests.Mathematics
             return stopwatch.Elapsed;
         }
 
+        private static TimeSpan Check_SeeingSharp_RefOut_Vector_Multiply()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            {
+                Vector3 dummyVector = new Vector3(2f, 3f, 4f);
+                float dummyLength = 3f;
+
+                Vector3 resultVector = Vector3.Zero;
+                for (int loop = 0; loop < COUNT_TRIES; loop++)
+                {
+                    Vector3.Multiply(ref dummyVector, dummyLength, out resultVector);
+                }
+            }
+            stopwatch.Stop();
+            return stopwatch.Elapsed;
+        }
+
         private static TimeSpan Check_SeeingSharp_RefOut_Vector_Subtract()
         {
             Stopwatch stopwatch = new Stopwatch();
@@ -350,6 +389,24 @@ namespace SeeingSharp.PerformanceTests.Mathematics
                 for (int loop = 0; loop < COUNT_TRIES; loop++)
                 {
                     resultVector = dummyVector + dummyVector2;
+                }
+            }
+            stopwatch.Stop();
+            return stopwatch.Elapsed;
+        }
+
+        private static TimeSpan Check_SystemNumerics_Vector_Multiply()
+        {
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            {
+                System.Numerics.Vector3 dummyVector = new System.Numerics.Vector3(2f, 3f, 4f);
+                float dummyLength = 3f;
+
+                System.Numerics.Vector3 resultVector = System.Numerics.Vector3.Zero;
+                for (int loop = 0; loop < COUNT_TRIES; loop++)
+                {
+                    resultVector = System.Numerics.Vector3.Multiply(dummyVector, dummyLength);
                 }
             }
             stopwatch.Stop();
