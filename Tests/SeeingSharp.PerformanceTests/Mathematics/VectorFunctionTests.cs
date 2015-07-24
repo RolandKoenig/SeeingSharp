@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.PerformanceTests.Mathematics
 {
+    /// <summary>
+    /// This class contains testmethods for performance comparison of SeeingSharp.Vector3 and System.Numerics.Vector3.
+    /// </summary>
     public static class VectorFunctionTests
     {
         #region SeeingSharp
