@@ -60,6 +60,7 @@
   <ItemGroup>
     <Compile Include="_Base\_Misc.cs" />
     <Compile Include="_Samples\BasicSamples\AsyncAnimationSample.cs" />
+    <Compile Include="_Samples\BasicSamples\PalletsAnimatedSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsSample.cs" />
     <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
@@ -101,6 +102,7 @@
     <Resource Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Resource Include="Assets\SampleImages\Media_Foundation_Camera_Capture.png" />
     <Resource Include="Assets\SampleImages\Direct2D_Render_Dxf_File.png" />
+    <Resource Include="Assets\SampleImages\Basics_PalletsAnimated.png" />
     <Content Include="Assets\Textures\Background.png" />
   </ItemGroup>
   <ItemGroup>

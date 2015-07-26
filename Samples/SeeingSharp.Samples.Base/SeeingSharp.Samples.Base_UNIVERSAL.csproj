@@ -51,6 +51,7 @@
     <Compile Include="_Performance\PerformanceSnapshot.cs" />
     <Compile Include="_Performance\PerformanceSnapshotItem.cs" />
     <Compile Include="_Samples\BasicSamples\AsyncAnimationSample.cs" />
+    <Compile Include="_Samples\BasicSamples\PalletsAnimatedSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsSample.cs" />
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
@@ -65,6 +66,7 @@
   <ItemGroup>
     <Content Include="Assets\SampleImages\Basics_AsyncAnimation.png" />
     <Content Include="Assets\SampleImages\Basics_Pallets.png" />
+    <Content Include="Assets\SampleImages\Basics_PalletsAnimated.png" />
     <Content Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture.png" />
     <Content Include="Assets\SampleImages\Basics_RotatingPallet.png" />
