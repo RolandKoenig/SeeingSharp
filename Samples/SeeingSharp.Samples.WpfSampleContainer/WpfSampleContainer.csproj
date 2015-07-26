@@ -92,6 +92,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Speech" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -178,6 +180,10 @@
     <ProjectReference Include="..\..\SeeingSharp\SeeingSharp_DESKTOP.csproj">
       <Project>{c2a4856d-600e-4fff-bcbf-ca3f7ed6fe57}</Project>
       <Name>SeeingSharp_DESKTOP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeeingSharp.Samples.Base\SeeingSharp.Samples.Base_DESKTOP.csproj">
+      <Project>{1c967edd-286f-42f9-86a2-d2c3a3136891}</Project>
+      <Name>SeeingSharp.Samples.Base_DESKTOP</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

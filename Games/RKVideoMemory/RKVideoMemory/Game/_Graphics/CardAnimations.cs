@@ -22,6 +22,7 @@
 #endregion License information (SeeingSharp and all based games/applications)
 
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -111,7 +112,7 @@ namespace RKVideoMemory.Game
             return sequenceBuilder
                 .CallAction(() =>
                 {
-                    sequenceBuilder.TargetObject.RotationEuler = new SeeingSharp.Vector3(0f, 0f, EngineMath.RAD_180DEG);
+                    sequenceBuilder.TargetObject.RotationEuler = new Vector3(0f, 0f, EngineMath.RAD_180DEG);
                     sequenceBuilder.TargetObject.Opacity = 0f;
                     sequenceBuilder.TargetObject.AccentuationFactor = 1f;
                     sequenceBuilder.TargetObject.Scaling = Vector3.One;

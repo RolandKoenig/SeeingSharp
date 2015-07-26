@@ -132,8 +132,6 @@
         #endregion
 
         private System.Windows.Forms.DataGridView m_dataGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn sumAverageMSDataGridViewTextBoxColumn;
         private System.Windows.Forms.Timer m_refreshTimer;
         private System.Windows.Forms.ToolStrip m_barTools;
         private System.Windows.Forms.ToolStripButton m_cmdCopy;

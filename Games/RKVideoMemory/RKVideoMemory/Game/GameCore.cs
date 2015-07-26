@@ -24,6 +24,7 @@
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -119,16 +120,6 @@ namespace RKVideoMemory.Game
         public GameScreenManagerLogic CurrentMap
         {
             get { return m_gameScreenManager; }
-        }
-
-        public SeeingSharpMessenger Messenger
-        {
-            get { return m_scene.Messenger; }
-        }
-
-        public Scene Scene
-        {
-            get { return m_scene; }
         }
 
         public Camera3DBase Camera

@@ -25,6 +25,7 @@ using SeeingSharp;
 using SeeingSharp.Multimedia.Core;
 using RK2048.Logic;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;

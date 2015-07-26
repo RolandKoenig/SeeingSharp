@@ -23,6 +23,7 @@
 
 using SeeingSharp.Multimedia.Objects;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Text;
 using SeeingSharp.Multimedia.Core;
