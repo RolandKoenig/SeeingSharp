@@ -24,6 +24,7 @@ using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Util;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -58,7 +59,7 @@ namespace RKRocket.Game
 
             graphics.DrawBitmap(
                 m_playerBitmap,
-                new SeeingSharp.Vector2(100f, 100f));
+                new Vector2(100f, 100f));
         }
 
 
