@@ -11,8 +11,6 @@ namespace SeeingSharp.PerformanceTests
     {
         public static void Main(string[] args)
         {
-            //VectorFunctionTests.PerformPerformanceTest();
-
             AnimationTests.PerformPerformanceTest();
         }
     }

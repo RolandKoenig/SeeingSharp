@@ -43,7 +43,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
 {
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "PalletsAnimated",
-        Constants.SAMPLE_BASICS_PALLETS_ORDER,
+        Constants.SAMPLE_BASICS_PALLETS_ANIMATED_ORDER,
         "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/PalletsAnimatedSample.cs",
         SampleTargetPlatform.AllExcludingSmartphone)]
     public class PalletsAnimatedSample : SampleBase
