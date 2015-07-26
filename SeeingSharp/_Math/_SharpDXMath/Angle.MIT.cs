@@ -47,7 +47,7 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Globalization;
-
+using System.Numerics;
 
 namespace SeeingSharp
 {

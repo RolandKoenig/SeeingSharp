@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -36,7 +37,7 @@ namespace SeeingSharp
         /// </summary>
         public void Transform(Matrix4x4 transformMatrix)
         {
-            this.Position = Vector3.TransformCoordinate(Position, transformMatrix);
+            this.Position = Vector3.Transform(Position, transformMatrix);
             this.Direction = Vector3.TransformNormal(Direction, transformMatrix);
         }
     }

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -66,8 +67,8 @@ namespace SeeingSharp
 
             // Calculate length and normal
             float length = 0f;
-            m_movementNormal = movementDistance;
-            m_movementNormal.Normalize(out length);
+            m_movementNormal = Vector3.Normalize(movementDistance);
+            length = movementDistance.Length();
             if (length <= EngineMath.TOLERANCE_DOUBLE_POSITIVE)
             {
                 // No movement.. leave all values on defaults

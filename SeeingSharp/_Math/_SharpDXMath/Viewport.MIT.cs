@@ -21,6 +21,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -245,7 +246,9 @@ namespace SeeingSharp
         /// <returns>Vector3.</returns>
         public Vector3 Unproject(Vector3 source, Matrix4x4 projection, Matrix4x4 view, Matrix4x4 world)
         {
-            var matrix = Matrix4x4.Invert(Matrix4x4.Multiply(Matrix4x4.Multiply(world, view), projection));
+            Matrix4x4 matrix = Matrix4x4.Identity;
+            Matrix4x4.Invert(Matrix4x4.Multiply(Matrix4x4.Multiply(world, view), projection), out matrix);
+
             source.X = (((source.X - X) / (Width)) * 2f) - 1f;
             source.Y = -((((source.Y - Y) / (Height)) * 2f) - 1f);
             source.Z = (source.Z - MinDepth) / (MaxDepth - MinDepth);

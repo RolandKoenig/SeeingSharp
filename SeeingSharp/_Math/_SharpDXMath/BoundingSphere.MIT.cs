@@ -46,6 +46,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -253,7 +254,7 @@ namespace SeeingSharp
             Vector3 center = Vector3.Zero;
             for (int i = start; i < upperEnd; ++i)
             {
-                Vector3.Add(ref points[i], ref center, out center);
+                center = Vector3.Add(points[i], center);
             }
 
             //This is the center of our sphere.
@@ -265,8 +266,7 @@ namespace SeeingSharp
             {
                 //We are doing a relative distance comparasin to find the maximum distance
                 //from the center of our sphere.
-                float distance;
-                Vector3.DistanceSquared(ref center, ref points[i], out distance);
+                float distance = Vector3.DistanceSquared(center, points[i]);
 
                 if (distance > radius)
                     radius = distance;
@@ -314,7 +314,7 @@ namespace SeeingSharp
         /// <param name="result">When the method completes, the newly constructed bounding sphere.</param>
         public static void FromBox(ref BoundingBox box, out BoundingSphere result)
         {
-            Vector3.Lerp(ref box.Minimum, ref box.Maximum, 0.5f, out result.Center);
+            result.Center = Vector3.Lerp(box.Minimum, box.Maximum, 0.5f);
 
             float x = box.Minimum.X - box.Maximum.X;
             float y = box.Minimum.Y - box.Maximum.Y;

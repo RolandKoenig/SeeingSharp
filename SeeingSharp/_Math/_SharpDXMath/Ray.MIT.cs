@@ -46,6 +46,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -288,13 +289,12 @@ namespace SeeingSharp
             var nearPoint = new Vector3(x, y, 0);
             var farPoint = new Vector3(x, y, 1);
 
-            nearPoint = Vector3.Unproject(nearPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth,
+            nearPoint = Vector3Ex.Unproject(nearPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth,
                                         viewport.MaxDepth, worldViewProjection);
-            farPoint = Vector3.Unproject(farPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth,
+            farPoint = Vector3Ex.Unproject(farPoint, viewport.X, viewport.Y, viewport.Width, viewport.Height, viewport.MinDepth,
                                         viewport.MaxDepth, worldViewProjection);
 
-            Vector3 direction = farPoint - nearPoint;
-            direction.Normalize();
+            Vector3 direction = Vector3.Normalize(farPoint - nearPoint);
 
             return new Ray(nearPoint, direction);
         }

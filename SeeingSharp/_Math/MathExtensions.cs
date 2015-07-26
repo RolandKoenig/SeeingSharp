@@ -22,6 +22,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Numerics;
 
 #if DESKTOP
 using System.Windows.Media.Media3D;
@@ -68,7 +69,7 @@ namespace SeeingSharp
         /// <param name="lines">A list containing all lines.</param>
         public static IEnumerable<Vector3> GetAllPoints(this IEnumerable<Line> lines)
         {
-            Vector3 lastVector = Vector3.MinValue;
+            Vector3 lastVector = Vector3Ex.MinValue;
             foreach (Line actLine in lines)
             {
                 if (lastVector != actLine.StartPosition) { yield return actLine.StartPosition; }

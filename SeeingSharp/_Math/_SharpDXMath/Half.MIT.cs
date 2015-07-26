@@ -22,6 +22,7 @@ using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace SeeingSharp
 {

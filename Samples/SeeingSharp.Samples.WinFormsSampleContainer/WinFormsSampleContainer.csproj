@@ -174,10 +174,6 @@
       <Project>{BD9D021A-85DB-4D43-AC49-560987E3339F}</Project>
       <Name>SeeingSharp.Multimedia_DESKTOP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SeeingSharp.Samples.Base\SeeingSharp.Samples.Base_DESKTOP.csproj">
-      <Project>{1c967edd-286f-42f9-86a2-d2c3a3136891}</Project>
-      <Name>SeeingSharp.Samples.Base_DESKTOP</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -67,7 +68,7 @@ namespace SeeingSharp
             Vector3[] corners = this.GetCorners();
             for (int loop = 0; loop < corners.Length; loop++)
             {
-                corners[loop] = Vector3.TransformCoordinate(corners[loop], matrix);
+                corners[loop] = Vector3.Transform(corners[loop], matrix);
             }
 
             this.Redefine(corners);
@@ -83,8 +84,8 @@ namespace SeeingSharp
             Vector3 max = new Vector3(float.MinValue);
             for (int i = 0; i < points.Length; ++i)
             {
-                Vector3.Min(ref min, ref points[i], out min);
-                Vector3.Max(ref max, ref points[i], out max);
+                min = Vector3.Min(min, points[i]);
+                max = Vector3.Max(max, points[i]);
             }
 
             this.Minimum = min;

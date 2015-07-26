@@ -21,6 +21,7 @@
 using System;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace SeeingSharp
 {

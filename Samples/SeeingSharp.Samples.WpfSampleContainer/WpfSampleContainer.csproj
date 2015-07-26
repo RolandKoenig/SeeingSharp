@@ -179,10 +179,6 @@
       <Project>{c2a4856d-600e-4fff-bcbf-ca3f7ed6fe57}</Project>
       <Name>SeeingSharp_DESKTOP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SeeingSharp.Samples.Base\SeeingSharp.Samples.Base_DESKTOP.csproj">
-      <Project>{1c967edd-286f-42f9-86a2-d2c3a3136891}</Project>
-      <Name>SeeingSharp.Samples.Base_DESKTOP</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Textures\White.png" />

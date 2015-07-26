@@ -19,7 +19,7 @@
 // THE SOFTWARE.
 using System;
 using System.Runtime.InteropServices;
-
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -309,7 +309,7 @@ namespace SeeingSharp
             result.pTop.Normalize();
             result.pBottom.Normalize();
 
-            result.pMatrix = Matrix4x4.LookAtLH(cameraPos, cameraPos + lookDir * 10, upDir) * Matrix4x4.PerspectiveFovLH(fov, aspect, znear, zfar);
+            result.pMatrix = Matrix4x4Ex.CreateLookAtLH(cameraPos, cameraPos + lookDir * 10, upDir) * Matrix4x4Ex.CreatePerspectiveFovLH(fov, aspect, znear, zfar);
 
             return result;
         }

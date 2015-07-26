@@ -21,6 +21,8 @@
 */
 #endregion
 
+using System.Numerics;
+
 namespace SeeingSharp
 {
     public partial struct Color4

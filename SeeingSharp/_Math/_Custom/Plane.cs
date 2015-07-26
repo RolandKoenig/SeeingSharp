@@ -21,6 +21,8 @@
 */
 #endregion
 
+using System.Numerics;
+
 namespace SeeingSharp
 {
     public partial struct Plane
@@ -31,8 +33,7 @@ namespace SeeingSharp
         /// <param name="point">The point to calculate the distance to.</param>
         public float Distance(ref Vector3 point)
         {
-            float distance;
-            Vector3.Dot(ref this.Normal, ref point, out distance);
+            float distance = Vector3.Dot(this.Normal, point);
             distance += this.D;
 
             return distance;

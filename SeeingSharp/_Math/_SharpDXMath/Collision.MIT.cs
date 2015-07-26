@@ -46,6 +46,7 @@ using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -157,8 +158,7 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 126
 
-            float dot;
-            Vector3.Dot(ref plane.Normal, ref point, out dot);
+            float dot = Vector3.Dot(plane.Normal, point);
             float t = dot - plane.D;
 
             result = point - (t * plane.Normal);
@@ -175,9 +175,8 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 130
 
-            Vector3 temp;
-            Vector3.Max(ref point, ref box.Minimum, out temp);
-            Vector3.Min(ref temp, ref box.Maximum, out result);
+            Vector3 temp = Vector3.Max(point, box.Minimum);
+            result = Vector3.Min(temp, box.Maximum);
         }
 
         /// <summary>
@@ -193,8 +192,7 @@ namespace SeeingSharp
             //Reference: None
 
             //Get the unit direction from the sphere's center to the point.
-            Vector3.Subtract(ref point, ref sphere.Center, out result);
-            result.Normalize();
+            result = Vector3.Normalize(Vector3.Subtract(point, sphere.Center));
 
             //Multiply the unit direction by the sphere's radius to get a vector
             //the length of the sphere.
@@ -222,8 +220,7 @@ namespace SeeingSharp
             //Reference: None
 
             //Get the unit direction from the first sphere's center to the second sphere's center.
-            Vector3.Subtract(ref sphere2.Center, ref sphere1.Center, out result);
-            result.Normalize();
+            result = Vector3.Normalize(Vector3.Subtract(sphere2.Center, sphere1.Center));
 
             //Multiply the unit direction by the first sphere's radius to get a vector
             //the length of the first sphere.
@@ -244,8 +241,7 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 127
 
-            float dot;
-            Vector3.Dot(ref plane.Normal, ref point, out dot);
+            float dot = Vector3.Dot(plane.Normal, point);
             return dot - plane.D;
         }
 
@@ -343,8 +339,7 @@ namespace SeeingSharp
             //Source: Jorgy343
             //Reference: None
 
-            float distance;
-            Vector3.Distance(ref sphere.Center, ref point, out distance);
+            float distance = Vector3.Distance(sphere.Center, point);
             distance -= sphere.Radius;
 
             return Math.Max(distance, 0f);
@@ -361,8 +356,7 @@ namespace SeeingSharp
             //Source: Jorgy343
             //Reference: None
 
-            float distance;
-            Vector3.Distance(ref sphere1.Center, ref sphere2.Center, out distance);
+            float distance = Vector3.Distance(sphere1.Center, sphere2.Center);
             distance -= sphere1.Radius + sphere2.Radius;
 
             return Math.Max(distance, 0f);
@@ -379,8 +373,7 @@ namespace SeeingSharp
             //Source: RayIntersectsSphere
             //Reference: None
 
-            Vector3 m;
-            Vector3.Subtract(ref ray.Position, ref point, out m);
+            Vector3 m = Vector3.Subtract(ray.Position, point);
 
             //Same thing as RayIntersectsSphere except that the radius of the sphere (point)
             //is the epsilon for zero.
@@ -421,9 +414,7 @@ namespace SeeingSharp
             //Source: Real-Time Rendering, Third Edition
             //Reference: Page 780
 
-            Vector3 cross;
-
-            Vector3.Cross(ref ray1.Direction, ref ray2.Direction, out cross);
+            Vector3 cross = Vector3.Cross(ray1.Direction, ray2.Direction);
             float denominator = cross.Length();
 
             //Lines are parallel.
@@ -509,8 +500,7 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 175
 
-            float direction;
-            Vector3.Dot(ref plane.Normal, ref ray.Direction, out direction);
+            float direction = Vector3.Dot(plane.Normal, ray.Direction);
 
             if (Math.Abs(direction) < MathUtil.ZeroTolerance)
             {
@@ -518,8 +508,7 @@ namespace SeeingSharp
                 return false;
             }
 
-            float position;
-            Vector3.Dot(ref plane.Normal, ref ray.Position, out position);
+            float position = Vector3.Dot(plane.Normal, ray.Position);
             distance = (-plane.D - position) / direction;
 
             if (distance < 0f)
@@ -836,8 +825,7 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 177
 
-            Vector3 m;
-            Vector3.Subtract(ref ray.Position, ref sphere.Center, out m);
+            Vector3 m = Vector3.Subtract(ray.Position, sphere.Center);
 
             float b = Vector3.Dot(m, ray.Direction);
             float c = Vector3.Dot(m, m) - (sphere.Radius * sphere.Radius);
@@ -893,8 +881,7 @@ namespace SeeingSharp
         /// <returns>Whether the two objects intersected.</returns>
         public static PlaneIntersectionType PlaneIntersectsPoint(ref Plane plane, ref Vector3 point)
         {
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref point, out distance);
+            float distance = Vector3.Dot(plane.Normal, point);
             distance += plane.D;
 
             if (distance > 0f)
@@ -914,13 +901,11 @@ namespace SeeingSharp
         /// <returns>Whether the two objects intersected.</returns>
         public static bool PlaneIntersectsPlane(ref Plane plane1, ref Plane plane2)
         {
-            Vector3 direction;
-            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out direction);
+            Vector3 direction = Vector3.Cross(plane1.Normal, plane2.Normal);
 
             //If direction is the zero vector, the planes are parallel and possibly
             //coincident. It is not an intersection. The dot product will tell us.
-            float denominator;
-            Vector3.Dot(ref direction, ref direction, out denominator);
+            float denominator = Vector3.Dot(direction, direction);
 
             if (Math.Abs(denominator) < MathUtil.ZeroTolerance)
                 return false;
@@ -946,13 +931,11 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 207
 
-            Vector3 direction;
-            Vector3.Cross(ref plane1.Normal, ref plane2.Normal, out direction);
+            Vector3 direction = Vector3.Cross(plane1.Normal, plane2.Normal);
 
             //If direction is the zero vector, the planes are parallel and possibly
             //coincident. It is not an intersection. The dot product will tell us.
-            float denominator;
-            Vector3.Dot(ref direction, ref direction, out denominator);
+            float denominator = Vector3.Dot(direction, direction);
 
             //We assume the planes are normalized, therefore the denominator
             //only serves as a parallel and coincident check. Otherwise we need
@@ -965,11 +948,10 @@ namespace SeeingSharp
 
             Vector3 point;
             Vector3 temp = plane1.D * plane2.Normal - plane2.D * plane1.Normal;
-            Vector3.Cross(ref temp, ref direction, out point);
+            point =  Vector3.Cross(temp, direction);
 
             line.Position = point;
-            line.Direction = direction;
-            line.Direction.Normalize();
+            line.Direction = Vector3.Normalize(direction);
 
             return true;
         }
@@ -1021,8 +1003,7 @@ namespace SeeingSharp
             min.Y = (plane.Normal.Y >= 0.0f) ? box.Maximum.Y : box.Minimum.Y;
             min.Z = (plane.Normal.Z >= 0.0f) ? box.Maximum.Z : box.Minimum.Z;
 
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref max, out distance);
+            float distance = Vector3.Dot(plane.Normal, max);
 
             if (distance + plane.D > 0.0f)
                 return PlaneIntersectionType.Front;
@@ -1046,8 +1027,7 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 160
 
-            float distance;
-            Vector3.Dot(ref plane.Normal, ref sphere.Center, out distance);
+            float distance = Vector3.Dot(plane.Normal, sphere.Center);
             distance += plane.D;
 
             if (distance > sphere.Radius)
@@ -1114,8 +1094,7 @@ namespace SeeingSharp
             //Source: Real-Time Collision Detection by Christer Ericson
             //Reference: Page 166
 
-            Vector3 vector;
-            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out vector);
+            Vector3 vector = Vector3.Clamp(sphere.Center, box.Minimum, box.Maximum);
             float distance = Vector3.DistanceSquared(sphere.Center, vector);
 
             return distance <= sphere.Radius * sphere.Radius;
@@ -1138,8 +1117,7 @@ namespace SeeingSharp
             ClosestPointPointTriangle(ref sphere.Center, ref vertex1, ref vertex2, ref vertex3, out point);
             Vector3 v = point - sphere.Center;
 
-            float dot;
-            Vector3.Dot(ref v, ref v, out dot);
+            float dot = Vector3.Dot(v, v);
 
             return dot <= sphere.Radius * sphere.Radius;
         }
@@ -1234,8 +1212,7 @@ namespace SeeingSharp
         /// <returns>The type of containment the two objects have.</returns>
         public static ContainmentType BoxContainsSphere(ref BoundingBox box, ref BoundingSphere sphere)
         {
-            Vector3 vector;
-            Vector3.Clamp(ref sphere.Center, ref box.Minimum, ref box.Maximum, out vector);
+            Vector3 vector = Vector3.Clamp(sphere.Center, box.Minimum, box.Maximum);
             float distance = Vector3.DistanceSquared(sphere.Center, vector);
 
             if (distance > sphere.Radius * sphere.Radius)

@@ -234,6 +234,12 @@
     <Compile Include="_Math\_SharpDXMath\Vector4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Viewport.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\ViewportF.MIT.cs" />
+    <Compile Include="_Math\_SimdEx\Matrix3x2Ex.cs" />
+    <Compile Include="_Math\_SimdEx\Matrix4x4Ex.cs" />
+    <Compile Include="_Math\_SimdEx\QuaternionEx.cs" />
+    <Compile Include="_Math\_SimdEx\Vector2Ex.cs" />
+    <Compile Include="_Math\_SimdEx\Vector3Ex.cs" />
+    <Compile Include="_Math\_SimdEx\Vector4Ex.cs" />
     <Compile Include="_Misc.cs" />
     <Compile Include="_Translatables.cs" />
   </ItemGroup>
@@ -242,7 +248,6 @@
     <Folder Include="Behaviors\_WinRT\" />
     <Folder Include="Util\TableData\_OpenXml\" />
     <Folder Include="View\" />
-    <Folder Include="_Math\_SimdEx\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">

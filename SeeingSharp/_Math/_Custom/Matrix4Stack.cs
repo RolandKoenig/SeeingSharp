@@ -23,6 +23,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -68,7 +69,7 @@ namespace SeeingSharp
         /// </summary>
         public void TranslateLocal(float transX, float transY, float transZ)
         {
-            m_top = Matrix4x4.Translation(transX, transY, transZ) * m_top;
+            m_top = Matrix4x4.CreateTranslation(transX, transY, transZ) * m_top;
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace SeeingSharp
         /// </summary>
         public void TranslateLocal(Vector3 transVector)
         {
-            m_top = Matrix4x4.Translation(transVector) * m_top;
+            m_top = Matrix4x4.CreateTranslation(transVector) * m_top;
         }
 
         /// <summary>
@@ -87,7 +88,7 @@ namespace SeeingSharp
         /// <param name="roll">Roll around z-axis.</param>
         public void RotateYawPitchRollLocal(float yaw, float pitch, float roll)
         {
-            m_top = Matrix4x4.RotationYawPitchRoll(yaw, pitch, roll) * m_top;
+            m_top = Matrix4x4Ex.CreateRotationYawPitchRoll(yaw, pitch, roll) * m_top;
         }
 
         /// <summary>
@@ -97,7 +98,7 @@ namespace SeeingSharp
         /// <param name="vRotation">The vertical rotation angle.</param>
         public void RotateHVLocal(float hRotation, float vRotation)
         {
-            m_top = Matrix4x4.RotationYawPitchRoll(vRotation, hRotation, 0f) * m_top; //Matrix.RotationHV(hRotation, vRotation) * m_top;
+            m_top = Matrix4x4Ex.CreateRotationYawPitchRoll(vRotation, hRotation, 0f) * m_top; //Matrix.RotationHV(hRotation, vRotation) * m_top;
         }
 
         /// <summary>
@@ -106,8 +107,7 @@ namespace SeeingSharp
         /// <param name="rotation">Vector containing horizontal and vertical rotations.</param>
         public void RotateHVLocal(Vector2 rotation)
         {
-            //m_top = //Matrix.RotationHV(rotation.X, rotation.Y) * m_top;
-            m_top = Matrix4x4.RotationYawPitchRoll(rotation.X, rotation.Y, 0f) * m_top;
+            m_top = Matrix4x4Ex.CreateRotationYawPitchRoll(rotation.X, rotation.Y, 0f) * m_top;
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace SeeingSharp
         /// </summary>
         public void ScaleLocal(float scaleX, float scaleY, float scaleZ)
         {
-            m_top = Matrix4x4.Scaling(scaleX, scaleY, scaleZ) * m_top;
+            m_top = Matrix4x4.CreateScale(scaleX, scaleY, scaleZ) * m_top;
         }
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace SeeingSharp
         /// </summary>
         public void ScaleLocal(Vector3 scaling)
         {
-            m_top = Matrix4x4.Scaling(scaling) * m_top;
+            m_top = Matrix4x4.CreateScale(scaling) * m_top;
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace SeeingSharp
         /// </summary>
         public void ScaleLocal(float scaleFactor)
         {
-            m_top = Matrix4x4.Scaling(scaleFactor, scaleFactor, scaleFactor) * m_top;
+            m_top = Matrix4x4.CreateScale(scaleFactor, scaleFactor, scaleFactor) * m_top;
         }
 
         /// <summary>
@@ -139,7 +139,7 @@ namespace SeeingSharp
         /// </summary>
         public void RotateXLocal(float angle)
         {
-            m_top = Matrix4x4.RotationX(angle) * m_top;
+            m_top = Matrix4x4.CreateRotationX(angle) * m_top;
         }
 
         /// <summary>
@@ -147,7 +147,7 @@ namespace SeeingSharp
         /// </summary>
         public void RotateYLocal(float angle)
         {
-            m_top = Matrix4x4.RotationY(angle) * m_top;
+            m_top = Matrix4x4.CreateRotationY(angle) * m_top;
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace SeeingSharp
         /// </summary>
         public void RotateZLocal(float angle)
         {
-            m_top = Matrix4x4.RotationZ(angle) * m_top;
+            m_top = Matrix4x4.CreateRotationZ(angle) * m_top;
         }
 
         /// <summary>

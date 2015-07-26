@@ -27,6 +27,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -47,7 +48,7 @@ namespace SeeingSharp
             m_verticesPublic = new ReadOnlyCollection<Vector3>(m_vertices);
 
             //Define normal calculation method
-            m_normal = new Lazy<Vector3>(() => Vector3.CalculateTriangleNormal(m_vertices[0], m_vertices[1], m_vertices[2]));
+            m_normal = new Lazy<Vector3>(() => Vector3Ex.CalculateTriangleNormal(m_vertices[0], m_vertices[1], m_vertices[2]));
         }
 
         /// <summary>

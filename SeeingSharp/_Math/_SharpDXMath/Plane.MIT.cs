@@ -45,6 +45,7 @@
 using System;
 using System.Globalization;
 using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace SeeingSharp
 {
@@ -546,7 +547,7 @@ namespace SeeingSharp
             float d = plane.D;
 
             Matrix4x4 inverse;
-            Matrix4x4.Invert(ref transformation, out inverse);
+            Matrix4x4.Invert(transformation, out inverse);
 
             result.Normal.X = (((x * inverse.M11) + (y * inverse.M12)) + (z * inverse.M13)) + (d * inverse.M14);
             result.Normal.Y = (((x * inverse.M21) + (y * inverse.M22)) + (z * inverse.M23)) + (d * inverse.M24);
@@ -568,11 +569,12 @@ namespace SeeingSharp
             float z = plane.Normal.Z;
             float d = plane.D;
 
-            transformation.Invert();
-            result.Normal.X = (((x * transformation.M11) + (y * transformation.M12)) + (z * transformation.M13)) + (d * transformation.M14);
-            result.Normal.Y = (((x * transformation.M21) + (y * transformation.M22)) + (z * transformation.M23)) + (d * transformation.M24);
-            result.Normal.Z = (((x * transformation.M31) + (y * transformation.M32)) + (z * transformation.M33)) + (d * transformation.M34);
-            result.D = (((x * transformation.M41) + (y * transformation.M42)) + (z * transformation.M43)) + (d * transformation.M44);
+            Matrix4x4 inverted;
+            Matrix4x4.Invert(transformation, out inverted);
+            result.Normal.X = (((x * inverted.M11) + (y * inverted.M12)) + (z * inverted.M13)) + (d * inverted.M14);
+            result.Normal.Y = (((x * inverted.M21) + (y * inverted.M22)) + (z * inverted.M23)) + (d * inverted.M24);
+            result.Normal.Z = (((x * inverted.M31) + (y * inverted.M32)) + (z * inverted.M33)) + (d * inverted.M34);
+            result.D = (((x * inverted.M41) + (y * inverted.M42)) + (z * inverted.M43)) + (d * inverted.M44);
 
             return result;
         }
@@ -589,7 +591,7 @@ namespace SeeingSharp
                 throw new ArgumentNullException("planes");
 
             Matrix4x4 inverse;
-            Matrix4x4.Invert(ref transformation, out inverse);
+            Matrix4x4.Invert(transformation, out inverse);
 
             for (int i = 0; i < planes.Length; ++i)
             {
