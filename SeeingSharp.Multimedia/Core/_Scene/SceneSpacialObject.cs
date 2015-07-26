@@ -24,6 +24,7 @@
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Util;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 
 namespace SeeingSharp.Multimedia.Core
@@ -221,15 +222,15 @@ namespace SeeingSharp.Multimedia.Core
             {
                 case SpacialTransformationType.ScalingTranslationEulerAngles:
                 case SpacialTransformationType.TranslationEulerAngles:
-                    return Matrix4x4.RotationYawPitchRoll(m_rotation.Y, m_rotation.X, m_rotation.Z);
+                    return Matrix4x4.CreateFromYawPitchRoll(m_rotation.Y, m_rotation.X, m_rotation.Z);
 
                 case SpacialTransformationType.ScalingTranslationQuaternion:
                 case SpacialTransformationType.TranslationQuaternion:
-                    return Matrix4x4.RotationQuaternion(m_rotationQuaternion);
+                    return Matrix4x4.CreateFromQuaternion(m_rotationQuaternion);
 
                 case SpacialTransformationType.ScalingTranslationDirection:
                 case SpacialTransformationType.TranslationDirection:
-                    return Matrix4x4.RotationDirection(m_rotationUp, m_rotationForward);
+                    return Matrix4x4Ex.CreateRotationDirection(m_rotationUp, m_rotationForward);
 
                 case SpacialTransformationType.Translation:
                 case SpacialTransformationType.None:
@@ -250,7 +251,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public Matrix4x4 GetScalingMatrix()
         {
-            return Matrix4x4.Scaling(m_scaling);
+            return Matrix4x4.CreateScale(m_scaling);
         }
 
         /// <summary>
@@ -258,7 +259,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public Matrix4x4 GetTranslationMatrix()
         {
-            return Matrix4x4.Translation(m_position);
+            return Matrix4x4.CreateTranslation(m_position);
         }
 
         /// <summary>
@@ -283,59 +284,59 @@ namespace SeeingSharp.Multimedia.Core
                 {
                     case SpacialTransformationType.ScalingTranslationEulerAngles:
                         m_transform =
-                            Matrix4x4.Scaling(m_scaling) *
-                            Matrix4x4.RotationYawPitchRoll(m_rotation.Y, m_rotation.X, m_rotation.Z) *
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4.CreateScale(m_scaling) *
+                            Matrix4x4.CreateFromYawPitchRoll(m_rotation.Y, m_rotation.X, m_rotation.Z) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
                     case SpacialTransformationType.ScalingTranslationQuaternion:
                         m_transform =
-                            Matrix4x4.Scaling(m_scaling) *
-                            Matrix4x4.RotationQuaternion(m_rotationQuaternion) *
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4.CreateScale(m_scaling) *
+                            Matrix4x4.CreateFromQuaternion(m_rotationQuaternion) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
                     case SpacialTransformationType.ScalingTranslationDirection:
                         m_transform =
-                            Matrix4x4.Scaling(m_scaling) *
-                            Matrix4x4.RotationDirection(m_rotationUp, m_rotationForward) *
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4.CreateScale(m_scaling) *
+                            Matrix4x4Ex.CreateRotationDirection(m_rotationUp, m_rotationForward) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
                     case SpacialTransformationType.ScalingTranslation:
                         m_transform =
-                            Matrix4x4.Scaling(m_scaling) *
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4.CreateScale(m_scaling) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
                     case SpacialTransformationType.TranslationEulerAngles:
                         m_transform =
-                            Matrix4x4.RotationYawPitchRoll(m_rotation.Y, m_rotation.X, m_rotation.Z) *
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4.CreateFromYawPitchRoll(m_rotation.Y, m_rotation.X, m_rotation.Z) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
                     case SpacialTransformationType.TranslationQuaternion:
                         m_transform =
-                            Matrix4x4.RotationQuaternion(m_rotationQuaternion) *
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4.CreateFromQuaternion(m_rotationQuaternion) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
                     case SpacialTransformationType.TranslationDirection:
                         m_transform =
-                            Matrix4x4.RotationDirection(m_rotationUp, m_rotationForward) *
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4Ex.CreateRotationDirection(m_rotationUp, m_rotationForward) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
                     case SpacialTransformationType.Translation:
                         m_transform = 
-                            Matrix4x4.Translation(m_position) *
+                            Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
 
@@ -680,9 +681,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                Vector3 result = new Vector3(0f, 1f, 0f);
-                Vector3.TransformCoordinate(result, m_transform);
-                return result;
+                return Vector3.Transform(new Vector3(0f, 1f, 0f), m_transform);
             }
         }
 
@@ -693,9 +692,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                Vector3 result = new Vector3(0f, 0f, 1f);
-                Vector3.TransformCoordinate(result, m_transform);
-                return result;
+                return Vector3.Transform(new Vector3(0f, 0f, 1f), m_transform);
             }
         }
 
@@ -706,9 +703,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                Vector3 result = new Vector3(1f, 0f, 0f);
-                Vector3.TransformCoordinate(result, m_transform);
-                return result;
+                return Vector3.Transform(new Vector3(1f, 0f, 0f), m_transform);
             }
         }
 

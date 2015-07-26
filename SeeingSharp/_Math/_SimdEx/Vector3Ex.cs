@@ -11,11 +11,133 @@ namespace SeeingSharp
     public static class Vector3Ex
     {
         /// <summary>
+        /// Generates a normal out of given horizontal and vertical rotation.
+        /// </summary>
+        /// <param name="horizontalRotation">Horizontal rotation value.</param>
+        /// <param name="verticalRotation">Vertical rotation value.</param>
+        public static Vector3 NormalFromHVRotation(float horizontalRotation, float verticalRotation)
+        {
+            Vector3 result = Vector3.Zero;
+
+            //Generate vector
+            result.X = (float)(1f * Math.Cos(verticalRotation) * Math.Cos(horizontalRotation));
+            result.Y = (float)(1f * Math.Sin(verticalRotation));
+            result.Z = (float)(1f * Math.Cos(verticalRotation) * Math.Sin(horizontalRotation));
+
+            //Normalize the generated vector
+            result = Vector3.Normalize(result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Generates a normal out of given horizontal and vertical rotation.
+        /// </summary>
+        /// <param name="rotation">Vector containing horizontal and vertical rotations.</param>
+        public static Vector3 NormalFromHVRotation(Vector2 rotation)
+        {
+            return NormalFromHVRotation(rotation.X, rotation.Y);
+        }
+
+        /// <summary>
+        /// Gets an average vector.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Average(params Vector3[] vectors)
+        {
+            if (vectors.Length == 0) { return Vector3.Zero; }
+            Vector3 result = Vector3Ex.Sum(vectors);
+
+            result.X = result.X / (float)vectors.Length;
+            result.Y = result.Y / (float)vectors.Length;
+            result.Z = result.Z / (float)vectors.Length;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets an average vector.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Average(List<Vector3> vectors)
+        {
+            if (vectors.Count == 0) { return Vector3.Zero; }
+            Vector3 result = Vector3Ex.Sum(vectors);
+
+            result.X = result.X / (float)vectors.Count;
+            result.Y = result.Y / (float)vectors.Count;
+            result.Z = result.Z / (float)vectors.Count;
+
+            return result;
+        }
+
+        /// <summary>
+        /// Converts this vector to a vector containing horizontal and vertical rotation values.
+        /// </summary>
+        /// <param name="vector">The vector to be converted.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 ToHVRotation(Vector3 vector)
+        {
+            Vector3 normal = Vector3.Normalize(vector);
+
+            Vector2 result = new Vector2();
+            result.X = (float)Math.Atan2(normal.Z, normal.X);
+            result.Y = (float)Math.Atan2(normal.Y, new Vector2(normal.Z, normal.X).Length());
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the a vector containing the sum of each given vector.
+        /// </summary>
+        /// <param name="vectors">The vectors to add one by one.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Sum(params Vector3[] vectors)
+        {
+            Vector3 result = Vector3.Zero;
+            for (int loop = 0; loop < vectors.Length; loop++)
+            {
+                result = result + vectors[loop];
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the a vector containing the sum of each given vector.
+        /// </summary>
+        /// <param name="vectors">The vectors to add one by one.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector3 Sum(List<Vector3> vectors)
+        {
+            Vector3 result = Vector3.Zero;
+            for (int loop = 0; loop < vectors.Count; loop++)
+            {
+                result = result + vectors[loop];
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// Writes horizontal and vertical rotation values to given parameters.
+        /// </summary>
+        /// <param name="vector">The vector to be converted.</param>
+        /// <param name="hRotation">Parameter for horizontal rotation.</param>
+        /// <param name="vRotation">Parameter for vertical rotation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void ToHVRotation(Vector3 vector, out float hRotation, out float vRotation)
+        {
+            Vector3 normal = Vector3.Normalize(vector);
+
+            hRotation = (float)Math.Atan2(normal.Z, normal.X);
+            vRotation = (float)Math.Atan2(normal.Y, new Vector2(normal.Z, normal.X).Length());
+        }
+
+        /// <summary>
         /// Calculates the normal of the given triangle
         /// </summary>
         /// <param name="p0">First point of the triangle.</param>
         /// <param name="p1">Second point of the triangle.</param>
         /// <param name="p2">Third point of the triangle.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 CalculateTriangleNormal(Vector3 p0, Vector3 p1, Vector3 p2)
         {
             return CalculateTriangleNormal(p0, p1, p2, true);
@@ -28,6 +150,7 @@ namespace SeeingSharp
         /// <param name="p1">Second point of the triangle.</param>
         /// <param name="p2">Third point of the triangle.</param>
         /// <param name="doNormalize">Setting this parameter to false causes the result normal to be not normalized after calculation.</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static Vector3 CalculateTriangleNormal(Vector3 p0, Vector3 p1, Vector3 p2, bool doNormalize)
         {
             Vector3 result = new Vector3();

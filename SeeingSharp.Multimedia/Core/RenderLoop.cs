@@ -22,6 +22,7 @@
 #endregion License information (SeeingSharp and all based games/applications)
 
 using System;
+using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
@@ -431,7 +432,9 @@ namespace SeeingSharp.Multimedia.Core
 
                 Matrix4x4 worldMatrix = Matrix4x4.Identity;
                 Matrix4x4 viewWorld = m_camera.View * worldMatrix;
-                Matrix4x4 inversionViewWorld = Matrix4x4.Invert(viewWorld);
+                Matrix4x4 inversionViewWorld;
+                Matrix4x4.Invert(viewWorld, out inversionViewWorld);
+
                 Vector3 rayDirection = Vector3.Normalize(new Vector3(
                     pickingVector.X * inversionViewWorld.M11 + pickingVector.Y * inversionViewWorld.M21 + pickingVector.Z * inversionViewWorld.M31,
                     pickingVector.X * inversionViewWorld.M12 + pickingVector.Y * inversionViewWorld.M22 + pickingVector.Z * inversionViewWorld.M32,

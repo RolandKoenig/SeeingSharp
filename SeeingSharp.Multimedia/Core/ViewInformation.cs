@@ -24,6 +24,7 @@
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Views;
 using System.Collections.Generic;
+using System.Numerics;
 
 namespace SeeingSharp.Multimedia.Core
 {

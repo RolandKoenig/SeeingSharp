@@ -25,6 +25,7 @@ using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
 using System;
+using System.Numerics;
 using System.Linq;
 using System.Collections.Generic;
 

@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -147,8 +148,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Calculate transform matrix
-            Matrix4x4 viewProj = renderState.ViewProj;
-            viewProj.Transpose();
+            Matrix4x4 viewProj = Matrix4x4.Transpose(renderState.ViewProj);
 
             // Render all lines finally
             resourceData.LineRenderResources.RenderLines(

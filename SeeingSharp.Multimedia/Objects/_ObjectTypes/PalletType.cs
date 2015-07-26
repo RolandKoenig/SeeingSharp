@@ -21,6 +21,7 @@
 */
 #endregion
 
+using System.Numerics;
 using SeeingSharp;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
@@ -166,7 +167,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
             #endregion -----------------------------------------------------------
 
-            Matrix4x4 rotMatrix = Matrix4x4.RotationY(EngineMath.RAD_90DEG);
+            Matrix4x4 rotMatrix = Matrix4x4.CreateRotationY(EngineMath.RAD_90DEG);
 
             result[0].UpdateVerticesUsingRelocationBy(new Vector3(-m_width / 2f, 0f, -m_depth / 2f));
             result[0].CalculateTangentsAndBinormals();

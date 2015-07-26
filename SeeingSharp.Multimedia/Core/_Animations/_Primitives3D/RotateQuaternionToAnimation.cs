@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Numerics;
 
 namespace SeeingSharp.Multimedia.Core
 {
@@ -64,8 +65,7 @@ namespace SeeingSharp.Multimedia.Core
             //how does Slerp work: --> http://en.wikipedia.org/wiki/Slerp
             float changeFactor = (float)base.CurrentTime.Ticks / (float)base.FixedTime.Ticks;
 
-            Quaternion slerpQuaternion;
-            Quaternion.Slerp(ref m_startQuaternion, ref m_targetQuaternion, changeFactor, out slerpQuaternion);
+            Quaternion slerpQuaternion = Quaternion.Slerp(m_startQuaternion, m_targetQuaternion, changeFactor);
             m_targetObject.RotationQuaternion = slerpQuaternion;
         }
 

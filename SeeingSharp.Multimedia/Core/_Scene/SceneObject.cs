@@ -24,6 +24,7 @@
 using SeeingSharp.Util;
 using SeeingSharp.Checking;
 using System;
+using System.Numerics;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Dynamic;

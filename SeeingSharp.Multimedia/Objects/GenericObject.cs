@@ -27,6 +27,7 @@ using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
 using System;
+using System.Numerics;
 
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
@@ -153,7 +154,9 @@ namespace SeeingSharp.Multimedia.Objects
                 {
                     // Transform picking ray to local space
                     Ray pickingRay = new Ray(rayStart, rayDirection);
-                    pickingRay.Transform(Matrix4x4.Invert(base.Transform));
+                    Matrix4x4 temp;
+                    Matrix4x4.Invert(base.Transform, out temp);
+                    pickingRay.Transform(temp);
 
                     // Check for intersection on the bounding box
                     float distance = 0f;

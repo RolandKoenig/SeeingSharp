@@ -26,6 +26,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
+using System.Numerics;
 using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Objects
@@ -202,7 +203,7 @@ namespace SeeingSharp.Multimedia.Objects
                                 {
                                     Vector3 position = Vector3.Transform(
                                         objInfo.Vertices[surfaceVertexReferences[loop]].Position,
-                                        transformStack.Top).XYZ;
+                                        transformStack.Top);
                                     localIndices[surfaceVertexReferences[loop]] = structure.AddVertex(new Vertex(
                                         position, actMaterial.Diffuse, actTexCoord, Vector3.Zero));
                                     if (actSurface.IsTwoSided)
@@ -225,7 +226,7 @@ namespace SeeingSharp.Multimedia.Objects
                                 // Create one vertex for one reference for flat shading
                                 Vector3 position = Vector3.Transform(
                                     objInfo.Vertices[surfaceVertexReferences[loop]].Position,
-                                    transformStack.Top).XYZ;
+                                    transformStack.Top);
                                 onStructureReferencedVertices[loop] = structure.AddVertex(new Vertex(
                                     position, actMaterial.Diffuse, actTexCoord, Vector3.Zero));
                                 if (actSurface.IsTwoSided)

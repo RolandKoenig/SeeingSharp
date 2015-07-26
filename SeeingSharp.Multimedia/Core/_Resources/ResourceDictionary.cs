@@ -26,6 +26,7 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Numerics;
 using System.Collections.ObjectModel;
 using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Drawing3D;

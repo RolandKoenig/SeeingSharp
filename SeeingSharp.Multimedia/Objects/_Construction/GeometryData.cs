@@ -21,7 +21,7 @@
 */
 #endregion
 
-using SharpDX;
+using System.Numerics;
 using System.Runtime.InteropServices;
 
 namespace SeeingSharp.Multimedia.Objects

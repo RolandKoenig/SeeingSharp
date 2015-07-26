@@ -21,6 +21,7 @@
 */
 #endregion
 
+using System.Numerics;
 using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Objects

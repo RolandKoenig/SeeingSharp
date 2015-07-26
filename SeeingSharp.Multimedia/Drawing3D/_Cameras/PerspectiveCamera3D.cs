@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -70,11 +71,11 @@ namespace SeeingSharp.Multimedia.Drawing3D
             out Matrix4x4 viewMatrix, out Matrix4x4 projMatrix)
         {
             m_aspectRatio = (float)screenWidth / (float)screenHeight;
-            viewMatrix = Matrix4x4.LookAtLH(
+            viewMatrix = Matrix4x4Ex.CreateLookAtLH(
                 position,
                 target,
                 upVector);
-            projMatrix = Matrix4x4.PerspectiveFovLH(
+            projMatrix = Matrix4x4Ex.CreatePerspectiveFovLH(
                 m_fov,
                 m_aspectRatio,
                 zNear, zFar);

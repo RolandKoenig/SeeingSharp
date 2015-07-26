@@ -23,6 +23,7 @@
 
 using SeeingSharp.Util;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Reflection;
 
@@ -281,7 +282,7 @@ namespace SeeingSharp.Multimedia.Objects
                 if (m_buildTimeTransformFunc != null) { vertex = m_buildTimeTransformFunc(vertex); }
                 else
                 {
-                    vertex.Position = Vector3.TransformCoordinate(vertex.Position, m_buildTransformMatrix);
+                    vertex.Position = Vector3.Transform(vertex.Position, m_buildTransformMatrix);
                     vertex.Normal = Vector3.TransformNormal(vertex.Normal, m_buildTransformMatrix);
                 }
             }
@@ -307,8 +308,8 @@ namespace SeeingSharp.Multimedia.Objects
                 Vertex vertex3 = m_vertices[actTriangle.Index3];
 
                 //Get average values for current face
-                Vector3 averageBinormal = Vector3.Normalize(Vector3.Average(vertex1.Binormal, vertex2.Binormal, vertex3.Binormal));
-                Vector3 averagePosition = Vector3.Average(vertex1.Position, vertex2.Position, vertex3.Position);
+                Vector3 averageBinormal = Vector3.Normalize(Vector3Ex.Average(vertex1.Binormal, vertex2.Binormal, vertex3.Binormal));
+                Vector3 averagePosition = Vector3Ex.Average(vertex1.Position, vertex2.Position, vertex3.Position);
                 averageBinormal *= 0.2f;
 
                 //Generate a line
@@ -338,8 +339,8 @@ namespace SeeingSharp.Multimedia.Objects
                 Vertex vertex3 = m_vertices[actTriangle.Index3];
 
                 //Get average values for current face
-                Vector3 averageNormal = Vector3.Normalize(Vector3.Average(vertex1.Normal, vertex2.Normal, vertex3.Normal));
-                Vector3 averagePosition = Vector3.Average(vertex1.Position, vertex2.Position, vertex3.Position);
+                Vector3 averageNormal = Vector3.Normalize(Vector3Ex.Average(vertex1.Normal, vertex2.Normal, vertex3.Normal));
+                Vector3 averagePosition = Vector3Ex.Average(vertex1.Position, vertex2.Position, vertex3.Position);
                 averageNormal *= 0.2f;
 
                 //Generate a line
@@ -369,8 +370,8 @@ namespace SeeingSharp.Multimedia.Objects
                 Vertex vertex3 = m_vertices[actTriangle.Index3];
 
                 //Get average values for current face
-                Vector3 averageTangent = Vector3.Normalize(Vector3.Average(vertex1.Tangent, vertex2.Tangent, vertex3.Tangent));
-                Vector3 averagePosition = Vector3.Average(vertex1.Position, vertex2.Position, vertex3.Position);
+                Vector3 averageTangent = Vector3.Normalize(Vector3Ex.Average(vertex1.Tangent, vertex2.Tangent, vertex3.Tangent));
+                Vector3 averagePosition = Vector3Ex.Average(vertex1.Position, vertex2.Position, vertex3.Position);
                 averageTangent *= 0.2f;
 
                 //Generate a line
@@ -508,8 +509,7 @@ namespace SeeingSharp.Multimedia.Objects
                 Vector3 tdir = new Vector3((s1 * x2 - s2 * x1) * r, (s1 * y2 - s2 * y1) * r, (s1 * z2 - s2 * z1) * r);
 
                 // Create the tangent vector (assumes that each vertex normal within the face are equal)
-                Vector3 tangent = sdir - vertex1.Normal * Vector3.Dot(vertex1.Normal, sdir);
-                tangent.Normalize();
+                Vector3 tangent = Vector3.Normalize(sdir - vertex1.Normal * Vector3.Dot(vertex1.Normal, sdir));
 
                 // Create the binormal using the tangent
                 float tangentDir = (Vector3.Dot(Vector3.Cross(vertex1.Normal, sdir), tdir) >= 0.0f) ? 1f : -1f;
@@ -551,7 +551,7 @@ namespace SeeingSharp.Multimedia.Objects
             Vertex v2 = m_vertices[actTriangle.Index2];
             Vertex v3 = m_vertices[actTriangle.Index3];
 
-            Vector3 normal = Vector3.CalculateTriangleNormal(v1.Geometry.Position, v2.Geometry.Position, v3.Geometry.Position);
+            Vector3 normal = Vector3Ex.CalculateTriangleNormal(v1.Geometry.Position, v2.Geometry.Position, v3.Geometry.Position);
 
             v1 = v1.Copy(v1.Geometry.Position, normal);
             v2 = v2.Copy(v2.Geometry.Position, normal);
@@ -621,7 +621,7 @@ namespace SeeingSharp.Multimedia.Objects
                         Vertex v2 = m_vertices[m_indices[triangleStartIndex + 1]];
                         Vertex v3 = m_vertices[m_indices[triangleStartIndex + 2]];
 
-                        finalNormalHelper += Vector3.CalculateTriangleNormal(v1.Geometry.Position, v2.Geometry.Position, v3.Geometry.Position, false);
+                        finalNormalHelper += Vector3Ex.CalculateTriangleNormal(v1.Geometry.Position, v2.Geometry.Position, v3.Geometry.Position, false);
 
                         normalCount++;
                     }
@@ -667,8 +667,8 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public BoundingBox GenerateBoundingBox()
         {
-            Vector3 maximum = Vector3.MinValue;
-            Vector3 minimum = Vector3.MaxValue;
+            Vector3 maximum = Vector3Ex.MinValue;
+            Vector3 minimum = Vector3Ex.MaxValue;
 
             foreach (Vertex actVertex in m_vertices)
             {
@@ -784,7 +784,7 @@ namespace SeeingSharp.Multimedia.Objects
             for (int loop = 0; loop < length; loop++)
             {
                 m_vertices[loop] = m_vertices[loop].Copy(
-                    Vector3.TransformCoordinate(m_vertices[loop].Position, transformMatrix),
+                    Vector3.Transform(m_vertices[loop].Position, transformMatrix),
                     Vector3.TransformNormal(m_vertices[loop].Normal, transformMatrix));
             }
         }

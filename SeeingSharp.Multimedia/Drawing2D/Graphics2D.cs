@@ -22,6 +22,7 @@
 #endregion License information (SeeingSharp and all based games/applications)
 
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

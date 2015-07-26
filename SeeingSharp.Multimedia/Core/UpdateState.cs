@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Numerics;
 using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Core

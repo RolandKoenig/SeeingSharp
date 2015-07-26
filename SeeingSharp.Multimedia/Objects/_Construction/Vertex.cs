@@ -22,6 +22,7 @@
 #endregion
 
 using System.Runtime.InteropServices;
+using System.Numerics;
 
 namespace SeeingSharp.Multimedia.Objects
 {

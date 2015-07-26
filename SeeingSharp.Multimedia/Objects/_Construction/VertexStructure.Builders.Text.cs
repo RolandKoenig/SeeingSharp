@@ -23,6 +23,7 @@
 
 using SeeingSharp.Multimedia.Core;
 using System.Collections.Generic;
+using System.Numerics;
 
 // Some namespace mappings
 using DWrite = SharpDX.DirectWrite;

@@ -23,10 +23,13 @@
 
 using System.Collections.Generic;
 using System.Linq;
-using SharpDX;
+using System.Numerics;
 using SharpDX.Direct2D1;
 using SharpDX.DirectWrite;
 using SeeingSharp.Multimedia.Core;
+
+// Namespace mappings
+using SDX = SharpDX;
 
 namespace SeeingSharp.Multimedia.Objects
 {
@@ -62,14 +65,14 @@ namespace SeeingSharp.Multimedia.Objects
         /// <remarks>
         /// The <see cref="M:SharpDX.DirectWrite.TextLayout.Draw_(System.IntPtr,System.IntPtr,System.Single,System.Single)" /> function calls this callback function with all the information about glyphs to render. The application implements this callback by mostly delegating the call to the underlying platform's graphics API such as {{Direct2D}} to draw glyphs on the drawing context. An application that uses GDI can implement this callback in terms of the <see cref="M:SharpDX.DirectWrite.BitmapRenderTarget.DrawGlyphRun(System.Single,System.Single,SharpDX.Direct2D1.MeasuringMode,SharpDX.DirectWrite.GlyphRun,SharpDX.DirectWrite.RenderingParams,SharpDX.Color4)" /> method.
         /// </remarks>
-        public override Result DrawGlyphRun(
+        public override SDX.Result DrawGlyphRun(
             object clientDrawingContext, float baselineOriginX, float baselineOriginY,
-            MeasuringMode measuringMode, GlyphRun glyphRun, GlyphRunDescription glyphRunDescription, ComObject clientDrawingEffect)
+            MeasuringMode measuringMode, GlyphRun glyphRun, GlyphRunDescription glyphRunDescription, SDX.ComObject clientDrawingEffect)
         {
             if ((glyphRun.Indices == null) ||
                (glyphRun.Indices.Length == 0))
             {
-                return Result.Ok; ;
+                return SDX.Result.Ok; ;
             }
 
             SharpDX.DirectWrite.Factory dWriteFactory = GraphicsCore.Current.FactoryDWrite;
@@ -256,7 +259,7 @@ namespace SeeingSharp.Multimedia.Objects
             // Scale the text using given scale factor
             if (m_geometryOptions.VerticesScaleFactor > 0f)
             {
-                Matrix4x4 scaleMatrix = Matrix4x4.Scaling(
+                Matrix4x4 scaleMatrix = Matrix4x4.CreateScale(
                     m_geometryOptions.VerticesScaleFactor,
                     m_geometryOptions.VerticesScaleFactor,
                     m_geometryOptions.VerticesScaleFactor);
@@ -264,7 +267,7 @@ namespace SeeingSharp.Multimedia.Objects
                 Matrix4Stack transformMatrix = new Matrix4Stack(scaleMatrix);
                 transformMatrix.TransformLocal(m_geometryOptions.VertexTransform);
 
-                tempStructure.UpdateVerticesUsingRelocationFunc((actVector) => Vector3.TransformCoordinate(actVector, transformMatrix.Top));
+                tempStructure.UpdateVerticesUsingRelocationFunc((actVector) => Vector3.Transform(actVector, transformMatrix.Top));
             }
 
             // TODO: Make this configurable
@@ -279,7 +282,7 @@ namespace SeeingSharp.Multimedia.Objects
             // Merge temporary structure to target structure
             m_target.AddStructure(tempStructure);
 
-            return Result.Ok;
+            return SDX.Result.Ok;
         }
 
         /// <summary>
@@ -296,9 +299,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// If the method succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.
         /// </returns>
         /// <unmanaged>HRESULT DrawInlineObject([None] void* clientDrawingContext,[None] FLOAT originX,[None] FLOAT originY,[None] IDWriteInlineObject* inlineObject,[None] BOOL isSideways,[None] BOOL isRightToLeft,[None] IUnknown* clientDrawingEffect)</unmanaged>
-        public override Result DrawInlineObject(object clientDrawingContext, float originX, float originY, InlineObject inlineObject, bool isSideways, bool isRightToLeft, ComObject clientDrawingEffect)
+        public override SDX.Result DrawInlineObject(object clientDrawingContext, float originX, float originY, InlineObject inlineObject, bool isSideways, bool isRightToLeft, SDX.ComObject clientDrawingEffect)
         {
-            return Result.Ok;
+            return SDX.Result.Ok;
         }
 
         /// <summary>
@@ -316,9 +319,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// <remarks>
         /// A single strikethrough can be broken into multiple calls, depending on how the formatting changes attributes. Strikethrough is not averaged across font sizes/styles changes. To get an appropriate starting pixel position, add strikethrough::offset to the baseline. Like underlines, the x coordinate will always be passed as the left side, regardless of text directionality.
         /// </remarks>
-        public override Result DrawStrikethrough(object clientDrawingContext, float baselineOriginX, float baselineOriginY, ref Strikethrough strikethrough, ComObject clientDrawingEffect)
+        public override SDX.Result DrawStrikethrough(object clientDrawingContext, float baselineOriginX, float baselineOriginY, ref Strikethrough strikethrough, SDX.ComObject clientDrawingEffect)
         {
-            return Result.Ok;
+            return SDX.Result.Ok;
         }
 
         /// <summary>
@@ -336,9 +339,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// <remarks>
         /// A single underline can be broken into multiple calls, depending on how the formatting changes attributes. If font sizes/styles change within an underline, the thickness and offset will be averaged weighted according to characters. To get an appropriate starting pixel position, add underline::offset to the baseline. Otherwise there will be no spacing between the text. The x coordinate will always be passed as the left side, regardless of text directionality. This simplifies drawing and reduces the problem of round-off that could potentially cause gaps or a double stamped alpha blend. To avoid alpha overlap, round the end points to the nearest device pixel.
         /// </remarks>
-        public override Result DrawUnderline(object clientDrawingContext, float baselineOriginX, float baselineOriginY, ref Underline underline, ComObject clientDrawingEffect)
+        public override SDX.Result DrawUnderline(object clientDrawingContext, float baselineOriginX, float baselineOriginY, ref Underline underline, SDX.ComObject clientDrawingEffect)
         {
-            return Result.Ok;
+            return SDX.Result.Ok;
         }
     }
 }

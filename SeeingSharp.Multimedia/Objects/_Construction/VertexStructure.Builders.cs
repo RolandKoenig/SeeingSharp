@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Numerics;
 using SeeingSharp.Multimedia.Core;
 
 namespace SeeingSharp.Multimedia.Objects
@@ -229,9 +230,9 @@ namespace SeeingSharp.Multimedia.Objects
                 float normalRadian = startRadian + (targetRadian - startRadian) / 2f;
 
                 //Generate all normals
-                Vector3 sideNormal = Vector3.NormalFromHVRotation(normalRadian, 0f);
-                Vector3 sideLeftNormal = Vector3.NormalFromHVRotation(startRadian, 0f);
-                Vector3 sideRightNormal = Vector3.NormalFromHVRotation(targetRadian, 0f);
+                Vector3 sideNormal = Vector3Ex.NormalFromHVRotation(normalRadian, 0f);
+                Vector3 sideLeftNormal = Vector3Ex.NormalFromHVRotation(startRadian, 0f);
+                Vector3 sideRightNormal = Vector3Ex.NormalFromHVRotation(targetRadian, 0f);
 
                 //Calculate border texture coordinates
                 Vector2 sideLeftTexCoord = new Vector2(0.5f + sideLeftNormal.X * radius, 0.5f + sideLeftNormal.Z * radius);
@@ -252,9 +253,9 @@ namespace SeeingSharp.Multimedia.Objects
 
                 //Generate side normal
                 Vector3 vectorToTop = topCoordinate - sideMiddleBottomCoord;
-                Vector2 vectorToTopRotation = vectorToTop.ToHVRotation();
+                Vector2 vectorToTopRotation = Vector3Ex.ToHVRotation(vectorToTop);
                 vectorToTopRotation.Y = vectorToTopRotation.Y + EngineMath.RAD_90DEG;
-                Vector3 topSideNormal = Vector3.NormalFromHVRotation(vectorToTopRotation);
+                Vector3 topSideNormal = Vector3Ex.NormalFromHVRotation(vectorToTopRotation);
 
                 //Add segment top triangle
                 Vertex topVertex = new Vertex(topCoordinate, color, new Vector2(texX / 2f, texY / 2f), topSideNormal);
@@ -377,9 +378,9 @@ namespace SeeingSharp.Multimedia.Objects
                 float normalRadian = startRadian + (targetRadian - startRadian) / 2f;
 
                 //Generate all normals
-                Vector3 sideNormal = Vector3.NormalFromHVRotation(normalRadian, 0f);
-                Vector3 sideLeftNormal = Vector3.NormalFromHVRotation(startRadian, 0f);
-                Vector3 sideRightNormal = Vector3.NormalFromHVRotation(targetRadian, 0f);
+                Vector3 sideNormal = Vector3Ex.NormalFromHVRotation(normalRadian, 0f);
+                Vector3 sideLeftNormal = Vector3Ex.NormalFromHVRotation(startRadian, 0f);
+                Vector3 sideRightNormal = Vector3Ex.NormalFromHVRotation(targetRadian, 0f);
 
                 //
                 Vector2 sideLeftTexCoord = new Vector2(0.5f + sideLeftNormal.X * radius, 0.5f + sideLeftNormal.Z * radius);

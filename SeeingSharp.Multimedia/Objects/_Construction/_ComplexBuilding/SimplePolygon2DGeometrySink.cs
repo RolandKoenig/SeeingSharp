@@ -22,7 +22,7 @@
 #endregion
 
 using System.Collections.Generic;
-using SharpDX;
+using System.Numerics;
 using SharpDX.Direct2D1;
 
 namespace SeeingSharp.Multimedia.Objects

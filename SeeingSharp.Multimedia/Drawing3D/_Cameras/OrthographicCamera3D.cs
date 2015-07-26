@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -93,11 +94,11 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             if (m_zoomFactor <= ZOOM_FACTOR_MIN) { m_zoomFactor = ZOOM_FACTOR_MIN; }
 
-            projMatrix = Matrix4x4.OrthoLH(
+            projMatrix = Matrix4x4Ex.CreateOrthoLH(
                 (float)ScreenWidth / m_zoomFactor, (float)screenHeight / m_zoomFactor,
                 -Math.Abs(Math.Max(zNear, zFar)),
                 Math.Abs(Math.Max(zNear, zFar)));
-            viewMatrix = Matrix4x4.LookAtLH(
+            viewMatrix = Matrix4x4Ex.CreateLookAtLH(
                 position,
                 target,
                 upVector);

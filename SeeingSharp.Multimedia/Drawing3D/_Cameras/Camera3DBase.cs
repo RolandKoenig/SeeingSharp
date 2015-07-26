@@ -23,6 +23,7 @@
 
 using PropertyTools.DataAnnotations;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -409,7 +410,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 m_relativeTarget = Vector3.Normalize(value);
 
                 //Update horizontal and vertical rotation
-                m_relativeTarget.ToHVRotation(out m_hRotation, out m_vRotation);
+                Vector3Ex.ToHVRotation(m_relativeTarget, out m_hRotation, out m_vRotation);
 
                 UpdateCamera();
             }

@@ -88,7 +88,7 @@ namespace SeeingSharp
         /// <param name="roll">Roll around z-axis.</param>
         public void RotateYawPitchRollLocal(float yaw, float pitch, float roll)
         {
-            m_top = Matrix4x4Ex.CreateRotationYawPitchRoll(yaw, pitch, roll) * m_top;
+            m_top = Matrix4x4.CreateFromYawPitchRoll(yaw, pitch, roll) * m_top;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace SeeingSharp
         /// <param name="vRotation">The vertical rotation angle.</param>
         public void RotateHVLocal(float hRotation, float vRotation)
         {
-            m_top = Matrix4x4Ex.CreateRotationYawPitchRoll(vRotation, hRotation, 0f) * m_top; //Matrix.RotationHV(hRotation, vRotation) * m_top;
+            m_top = Matrix4x4.CreateFromYawPitchRoll(vRotation, hRotation, 0f) * m_top; //Matrix.RotationHV(hRotation, vRotation) * m_top;
         }
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace SeeingSharp
         /// <param name="rotation">Vector containing horizontal and vertical rotations.</param>
         public void RotateHVLocal(Vector2 rotation)
         {
-            m_top = Matrix4x4Ex.CreateRotationYawPitchRoll(rotation.X, rotation.Y, 0f) * m_top;
+            m_top = Matrix4x4.CreateFromYawPitchRoll(rotation.X, rotation.Y, 0f) * m_top;
         }
 
         /// <summary>

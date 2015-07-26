@@ -11,32 +11,154 @@ namespace SeeingSharp
     public static class Matrix4x4Ex
     {
         /// <summary>
-        /// Creates a rotation matrix with a specified yaw, pitch, and roll.
+        /// Creates a left-handed, orthographic projection matrix.
         /// </summary>
-        /// <param name="yaw">Yaw around the y-axis, in radians.</param>
-        /// <param name="pitch">Pitch around the x-axis, in radians.</param>
-        /// <param name="roll">Roll around the z-axis, in radians.</param>
-        /// <param name="result">When the method completes, contains the created rotation matrix.</param>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void CreateRotationYawPitchRoll(float yaw, float pitch, float roll, out Matrix4x4 result)
+        /// <param name="width">Width of the viewing volume.</param>
+        /// <param name="height">Height of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <param name="result">When the method completes, contains the created projection matrix.</param>
+        public static void CreateOrthoLH(float width, float height, float znear, float zfar, out Matrix4x4 result)
         {
-            Quaternion quaternion = Quaternion.CreateFromYawPitchRoll(yaw, pitch, roll);
-            result = Matrix4x4.CreateFromQuaternion(quaternion);
+            float halfWidth = width * 0.5f;
+            float halfHeight = height * 0.5f;
+
+            CreateOrthoOffCenterLH(-halfWidth, halfWidth, -halfHeight, halfHeight, znear, zfar, out result);
         }
 
         /// <summary>
-        /// Creates a rotation matrix with a specified yaw, pitch, and roll.
+        /// Creates a left-handed, orthographic projection matrix.
         /// </summary>
-        /// <param name="yaw">Yaw around the y-axis, in radians.</param>
-        /// <param name="pitch">Pitch around the x-axis, in radians.</param>
-        /// <param name="roll">Roll around the z-axis, in radians.</param>
-        /// <returns>The created rotation matrix.</returns>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static Matrix4x4 CreateRotationYawPitchRoll(float yaw, float pitch, float roll)
+        /// <param name="width">Width of the viewing volume.</param>
+        /// <param name="height">Height of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <returns>The created projection matrix.</returns>
+        public static Matrix4x4 CreateOrthoLH(float width, float height, float znear, float zfar)
         {
             Matrix4x4 result;
-            CreateRotationYawPitchRoll(yaw, pitch, roll, out result);
+            CreateOrthoLH(width, height, znear, zfar, out result);
             return result;
+        }
+
+        /// <summary>
+        /// Creates a right-handed, orthographic projection matrix.
+        /// </summary>
+        /// <param name="width">Width of the viewing volume.</param>
+        /// <param name="height">Height of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <param name="result">When the method completes, contains the created projection matrix.</param>
+        public static void CreateOrthoRH(float width, float height, float znear, float zfar, out Matrix4x4 result)
+        {
+            float halfWidth = width * 0.5f;
+            float halfHeight = height * 0.5f;
+
+            CreateOrthoOffCenterRH(-halfWidth, halfWidth, -halfHeight, halfHeight, znear, zfar, out result);
+        }
+
+        /// <summary>
+        /// Creates a right-handed, orthographic projection matrix.
+        /// </summary>
+        /// <param name="width">Width of the viewing volume.</param>
+        /// <param name="height">Height of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <returns>The created projection matrix.</returns>
+        public static Matrix4x4 CreateOrthoRH(float width, float height, float znear, float zfar)
+        {
+            Matrix4x4 result;
+            CreateOrthoRH(width, height, znear, zfar, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a left-handed, customized orthographic projection matrix.
+        /// </summary>
+        /// <param name="left">Minimum x-value of the viewing volume.</param>
+        /// <param name="right">Maximum x-value of the viewing volume.</param>
+        /// <param name="bottom">Minimum y-value of the viewing volume.</param>
+        /// <param name="top">Maximum y-value of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <param name="result">When the method completes, contains the created projection matrix.</param>
+        public static void CreateOrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
+        {
+            float zRange = 1.0f / (zfar - znear);
+
+            result = Matrix4x4.Identity;
+            result.M11 = 2.0f / (right - left);
+            result.M22 = 2.0f / (top - bottom);
+            result.M33 = zRange;
+            result.M41 = (left + right) / (left - right);
+            result.M42 = (top + bottom) / (bottom - top);
+            result.M43 = -znear * zRange;
+        }
+
+        /// <summary>
+        /// Creates a left-handed, customized orthographic projection matrix.
+        /// </summary>
+        /// <param name="left">Minimum x-value of the viewing volume.</param>
+        /// <param name="right">Maximum x-value of the viewing volume.</param>
+        /// <param name="bottom">Minimum y-value of the viewing volume.</param>
+        /// <param name="top">Maximum y-value of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <returns>The created projection matrix.</returns>
+        public static Matrix4x4 CreateOrthoOffCenterLH(float left, float right, float bottom, float top, float znear, float zfar)
+        {
+            Matrix4x4 result;
+            CreateOrthoOffCenterLH(left, right, bottom, top, znear, zfar, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Creates a right-handed, customized orthographic projection matrix.
+        /// </summary>
+        /// <param name="left">Minimum x-value of the viewing volume.</param>
+        /// <param name="right">Maximum x-value of the viewing volume.</param>
+        /// <param name="bottom">Minimum y-value of the viewing volume.</param>
+        /// <param name="top">Maximum y-value of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <param name="result">When the method completes, contains the created projection matrix.</param>
+        public static void CreateOrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar, out Matrix4x4 result)
+        {
+            CreateOrthoOffCenterLH(left, right, bottom, top, znear, zfar, out result);
+            result.M33 *= -1.0f;
+        }
+
+        /// <summary>
+        /// Creates a right-handed, customized orthographic projection matrix.
+        /// </summary>
+        /// <param name="left">Minimum x-value of the viewing volume.</param>
+        /// <param name="right">Maximum x-value of the viewing volume.</param>
+        /// <param name="bottom">Minimum y-value of the viewing volume.</param>
+        /// <param name="top">Maximum y-value of the viewing volume.</param>
+        /// <param name="znear">Minimum z-value of the viewing volume.</param>
+        /// <param name="zfar">Maximum z-value of the viewing volume.</param>
+        /// <returns>The created projection matrix.</returns>
+        public static Matrix4x4 CreateOrthoOffCenterRH(float left, float right, float bottom, float top, float znear, float zfar)
+        {
+            Matrix4x4 result;
+            CreateOrthoOffCenterRH(left, right, bottom, top, znear, zfar, out result);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a rotation matrix for the given direction vectors.
+        /// </summary>
+        /// <param name="upVector">The up vector (standard: y-axis).</param>
+        /// <param name="forwardVector">The forward vector (standard: x-axis)</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Matrix4x4 CreateRotationDirection(Vector3 upVector, Vector3 forwardVector)
+        {
+            Vector3 right = Vector3.Cross(upVector, forwardVector);
+            return new Matrix4x4(
+                right.X, right.Y, right.Z, 0f,
+                upVector.X, upVector.Y, upVector.Z, 0f,
+                forwardVector.X, forwardVector.Y, forwardVector.Z, 0f,
+                0f, 0f, 0f, 1f);
         }
 
         /// <summary>

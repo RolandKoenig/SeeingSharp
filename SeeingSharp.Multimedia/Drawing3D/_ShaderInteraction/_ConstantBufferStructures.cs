@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Drawing3D

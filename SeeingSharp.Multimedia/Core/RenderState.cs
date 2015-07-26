@@ -22,6 +22,7 @@
 #endregion
 
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Drawing3D;
