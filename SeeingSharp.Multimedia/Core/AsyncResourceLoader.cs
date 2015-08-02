@@ -62,10 +62,29 @@ namespace SeeingSharp.Multimedia.Core
             return taskSource.Task;
         }
 
-        //internal Task<T> EnqueueAsyncResourceLoadingTaskAsync<T>(Func<Task<T>> resourceLoadAction)
-        //{
+        internal Task<T> EnqueueAsyncResourceLoadingTaskAsync<T>(Func<Task<T>> resourceLoadAction)
+        {
+            TaskCompletionSource<T> taskSource = new TaskCompletionSource<T>();
 
-        //}
+            // Register the given task
+            m_openTasks.Enqueue((Func<Task<object>>)(() =>
+            {
+                Task<T> task = resourceLoadAction();
+                return task.ContinueWith((Task<T> givenTask) =>
+                {
+                    if (givenTask.IsCanceled) { taskSource.SetCanceled(); }
+                    else if (givenTask.IsFaulted) { taskSource.SetException(givenTask.Exception); }
+                    else { taskSource.SetResult(givenTask.Result); }
+
+                    return (object)givenTask.Result;
+                });
+            }));
+
+            // Trigger task queue processing
+            this.TriggerTaskQueue();
+
+            return taskSource.Task;
+        }
 
         /// <summary>
         /// Enqueues the given action for resource loading.
@@ -84,7 +103,7 @@ namespace SeeingSharp.Multimedia.Core
                     taskSource.SetResult(result);
                     return result;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     taskSource.SetException(ex);
                     return default(T);
