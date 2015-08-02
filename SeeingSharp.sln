@@ -80,6 +80,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tools", "Tools", "{B0619BB7-B709-4C27-8D6F-1C54090C1320}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extern", "Extern", "{D1D2359F-6717-4725-8A4A-BBE467E9D1EF}"
+	ProjectSection(SolutionItems) = preProject
+		Extern\NuGet.exe = Extern\NuGet.exe
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenXmlSdk", "OpenXmlSdk", "{EAF697D6-DB11-4F4A-AEB1-694CADE5224F}"
 	ProjectSection(SolutionItems) = preProject

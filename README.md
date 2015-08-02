@@ -22,7 +22,7 @@ This one is the most complex library in this project. It contains the graphics e
  - Support for all Direct3D 11 Hardware (Featurelevel 9.1 up to 11)
  - Support for software rendering using WARP technology
  - Integration of Direct2D directly into the 3D render process (works also on Windows 7 platform)
- - Flexible content build system
+ - Integration of Media Foundation to enable VideoTextures (read video files) and VideoCapturing (write video files)
  - And much more..
  
 # Applications
