@@ -232,6 +232,16 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Initializes the GraphicsCore object with the given target platform value.
+        /// </summary>
+        public static void Initialize(TargetHardware targetHardware, bool enableDebug, SeeingSharpPlatform platform)
+        {
+            PlatformDetector.SetPlatform(platform);
+
+            Initialize(targetHardware, enableDebug);
+        }
+
+        /// <summary>
         /// Checks if there is any hardware device loaded.
         /// </summary>
         public bool IsAnyHardwareDeviceLoaded()

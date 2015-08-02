@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UniversalWindowsSampleContainer</RootNamespace>
     <AssemblyName>UniversalWindowsSampleContainer</AssemblyName>
-    <DefaultLanguage>en-US</DefaultLanguage>
+    <DefaultLanguage>en</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
@@ -105,6 +105,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="_Behavior\ApplySampleBehavior.cs" />
     <Compile Include="_Messages\MessageSampleChanged.cs" />
+    <Compile Include="_ViewModel\CategoryInfo.cs" />
     <Compile Include="_ViewModel\MainWindowViewModel.cs" />
     <Compile Include="_ViewModel\SampleViewModel.cs" />
   </ItemGroup>

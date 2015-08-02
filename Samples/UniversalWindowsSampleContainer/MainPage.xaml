@@ -12,98 +12,119 @@
         <local:MainWindowViewModel />
     </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-          Name="MainContentGrid">
+    <Grid Name="MainContentGrid"
+          Background="#00CCFF">
 
-        <!-- Define the page's header -->
-        <Grid Height="140"
-              HorizontalAlignment="Stretch" VerticalAlignment="Top"
-              Background="#00CCFF">
-            <TextBlock HorizontalAlignment="Left"
-                       VerticalAlignment="Top"
-                       Margin="120,60,0,0"
-                       Style="{StaticResource HeaderTextBlockStyle}"
-                       Text="Seeing# WinRT Samples" />
-        </Grid>
-
-        <!-- Define the main drawing error for SeeingSharp -->
-        <SwapChainPanel Margin="0,140,0,0">
-            <i:Interaction.Behaviors>
-                <local:ApplySampleBehavior ClearColor="LightGray" 
-                                           MainContentGrid="{Binding ElementName=MainContentGrid}"
-                                           BottomStatusBar="{Binding ElementName=MainStatusBar}"/>
-            </i:Interaction.Behaviors>
-        </SwapChainPanel>
-
-
-        <!-- Define listbox which shows all categories -->
-        <StackPanel Orientation="Vertical"
-                    Margin="120,140,0,0"
-                    VerticalAlignment="Top" HorizontalAlignment="Stretch" >
-
-            <!-- Show and select categories -->
-            <ListBox 
-                 Style="{StaticResource SampleListBoxStyle}"
-                 FontWeight="Bold" BorderThickness="0"
-                 Background="#CC7D7E82" Foreground="White"
-                 ItemsSource="{Binding Path=Categories}"
-                 SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay}">
-                <ListBox.Resources>
-                    <Style TargetType="ListBoxItem">
-                        <Setter Property="Margin" Value="5,2,5,2" />
-                    </Style>
-                </ListBox.Resources>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
-
-            <!-- Show and select samples -->
-            <ListBox 
-                 Style="{StaticResource SampleListBoxStyle}" 
-                 Background="#99D3D3D3" Foreground="Black" BorderThickness="0"
-                 ItemsSource="{Binding Path=VisibleSamples}"
-                 SelectedItem="{Binding Path=SelectedSample, Mode=TwoWay}"
-                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                 ScrollViewer.HorizontalScrollMode="Enabled">
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Vertical"
-                                Margin="5">
-                            <Image Source="{Binding Path=Bitmap}"
-                               Width="64" Height="64" 
-                               Margin="5"/>
-                            <TextBlock Text="{Binding Path=Name}"
-                                   HorizontalAlignment="Center"/>
+        <SplitView x:Name="SplitView" Background="LightGray" 
+                   OpenPaneLength="240" CompactPaneLength="48" 
+                   DisplayMode="CompactOverlay"  IsPaneOpen="False" 
+                   PaneBackground="#00CCFF">
+            <SplitView.Resources>
+                <Style TargetType="Button">
+                    <Setter Property="Background" Value="Transparent" />
+                </Style>
+            </SplitView.Resources>
+            
+            <SplitView.Pane>
+                <StackPanel Orientation="Vertical">
+                    <Button Content="&#xE700;" Width="48"
+                            Foreground="White"
+                            Click="OnCmdMenuHamburger_Click" FontFamily="Segoe MDL2 Assets" />
+                    <ListBox Style="{StaticResource SampleListBoxStyle}"
+                             FontWeight="Bold" BorderThickness="0"
+                             ItemsSource="{Binding Path=Categories}"
+                             SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay}"
+                             SelectionChanged="OnLstCategories_SelectionChanged">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical" Background="#00CCFF" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="local:CategoryInfo">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Width="48" Padding="5" Foreground="White"
+                                               Text="{x:Bind Path=IconSymbol}" FontFamily="Segoe MDL2 Assets" />
+                                    <TextBlock Foreground="White" Text="{x:Bind Path=Name}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                    <Button Margin="0,30,0,0" Foreground="White"
+                            Click="OnCmdShowSource_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="48" Padding="5" Foreground="White"
+                                       Text="" FontFamily="Segoe MDL2 Assets" />
+                            <TextBlock Foreground="White" Text="Sourcecode Online" />
                         </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
+                    </Button>
+                    <Button Foreground="White"
+                            Click="OnCmdShowProjectHomepage_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="48" Padding="5" Foreground="White"
+                                       Text="" FontFamily="Segoe MDL2 Assets" />
+                            <TextBlock Foreground="White" Text="Project Homepage" />
+                        </StackPanel>
+                    </Button>
+                    <Button Foreground="White"
+                            Click="OnCmdShowAuthorHomepage_Click">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="48" Padding="5" Foreground="White"
+                                       Text="" FontFamily="Segoe MDL2 Assets" />
+                            <TextBlock Foreground="White" Text="Author's Homepage (DE)" />
+                        </StackPanel>
+                    </Button>
+                </StackPanel>
 
-            <ProgressBar Name="MainStatusBar"
-                         HorizontalAlignment="Stretch"
-                         IsIndeterminate="True"
-                         Visibility="Collapsed"/>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid>
+                    <SwapChainPanel>
+                        <i:Interaction.Behaviors>
+                            <local:ApplySampleBehavior ClearColor="LightGray" 
+                                                       MainContentGrid="{Binding ElementName=MainContentGrid}"
+                                                       BottomStatusBar="{Binding ElementName=MainStatusBar}"/>
+                        </i:Interaction.Behaviors>
+                    </SwapChainPanel>
 
-            <StackPanel Orientation="Vertical" Margin="0,5,5,5"
-                        VerticalAlignment="Top" HorizontalAlignment="Left">
-                <StackPanel.Resources>
-                    <Style TargetType="Button">
-                        <Setter Property="Width" Value="200" />
-                        <Setter Property="Background" Value="#CC7D7E82" />
-                    </Style>
-                </StackPanel.Resources>
+                    <!-- Define listbox which shows all categories -->
+                    <StackPanel Orientation="Vertical"
+                                VerticalAlignment="Top" HorizontalAlignment="Stretch" >
 
-                <Button Content="Show Source" Command="{Binding Path=CommandShowSource}" />
-            </StackPanel>
-        </StackPanel>
+                        <!-- Show and select samples -->
+                        <ListBox Style="{StaticResource SampleListBoxStyle}" 
+                                 Background="#99D3D3D3" Foreground="Black" BorderThickness="0"
+                                 ItemsSource="{Binding Path=VisibleSamples}"
+                                 SelectedItem="{Binding Path=SelectedSample, Mode=TwoWay}"
+                                 ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                 ScrollViewer.HorizontalScrollMode="Enabled">
+                            <ListBox.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <StackPanel Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListBox.ItemsPanel>
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical"
+                                                Margin="2">
+                                        <Image Source="{Binding Path=Bitmap}"
+                                               Width="50" Height="50" 
+                                               Margin="2"/>
+                                        <TextBlock Text="{Binding Path=Name}"
+                                                   HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+
+                        <ProgressBar Name="MainStatusBar"
+                                     HorizontalAlignment="Stretch"
+                                     IsIndeterminate="True"
+                                     Visibility="Collapsed"/>
+                    </StackPanel>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
 
     </Grid>
 </Page>

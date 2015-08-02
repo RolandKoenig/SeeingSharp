@@ -60,6 +60,11 @@ namespace SeeingSharp.Multimedia.Core
 #endif
         }
 
+        internal static void SetPlatform(SeeingSharpPlatform platform)
+        {
+            s_cachedValue = platform;
+        }
+
         /// <summary>
         /// Checks on which platform we are running currently.
         /// </summary>

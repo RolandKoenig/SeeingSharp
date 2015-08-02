@@ -115,7 +115,7 @@ namespace WinFormsSampleContainer
             // to800x600ToolStripMenuItem1
             // 
             this.to800x600ToolStripMenuItem1.Name = "to800x600ToolStripMenuItem1";
-            this.to800x600ToolStripMenuItem1.Size = new System.Drawing.Size(167, 24);
+            this.to800x600ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
             this.to800x600ToolStripMenuItem1.Tag = "800x600";
             this.to800x600ToolStripMenuItem1.Text = "to 800x600";
             this.to800x600ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
@@ -123,7 +123,7 @@ namespace WinFormsSampleContainer
             // to1024x768ToolStripMenuItem1
             // 
             this.to1024x768ToolStripMenuItem1.Name = "to1024x768ToolStripMenuItem1";
-            this.to1024x768ToolStripMenuItem1.Size = new System.Drawing.Size(167, 24);
+            this.to1024x768ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
             this.to1024x768ToolStripMenuItem1.Tag = "1024x768";
             this.to1024x768ToolStripMenuItem1.Text = "to 1024x768";
             this.to1024x768ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
@@ -131,7 +131,7 @@ namespace WinFormsSampleContainer
             // to1280x1024ToolStripMenuItem1
             // 
             this.to1280x1024ToolStripMenuItem1.Name = "to1280x1024ToolStripMenuItem1";
-            this.to1280x1024ToolStripMenuItem1.Size = new System.Drawing.Size(167, 24);
+            this.to1280x1024ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
             this.to1280x1024ToolStripMenuItem1.Tag = "1280x1024";
             this.to1280x1024ToolStripMenuItem1.Text = "to 1280x1024";
             this.to1280x1024ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
@@ -139,7 +139,7 @@ namespace WinFormsSampleContainer
             // to1600x1200ToolStripMenuItem1
             // 
             this.to1600x1200ToolStripMenuItem1.Name = "to1600x1200ToolStripMenuItem1";
-            this.to1600x1200ToolStripMenuItem1.Size = new System.Drawing.Size(167, 24);
+            this.to1600x1200ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
             this.to1600x1200ToolStripMenuItem1.Tag = "1600x1200";
             this.to1600x1200ToolStripMenuItem1.Text = "to 1600x1200";
             this.to1600x1200ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
@@ -255,7 +255,7 @@ namespace WinFormsSampleContainer
             // 
             this.m_lblWorking.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.m_lblWorking.Name = "m_lblWorking";
-            this.m_lblWorking.Size = new System.Drawing.Size(75, 24);
+            this.m_lblWorking.Size = new System.Drawing.Size(74, 24);
             this.m_lblWorking.Text = "Working..";
             this.m_lblWorking.Visible = false;
             // 

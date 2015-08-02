@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -25,6 +26,36 @@ namespace UniversalWindowsSampleContainer
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        private void OnCmdMenuHamburger_Click(object sender, RoutedEventArgs e)
+        {
+            SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
+        }
+
+        private void OnLstCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SplitView.IsPaneOpen = false;
+        }
+
+        private async void OnCmdShowSource_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindowViewModel viewModel = this.DataContext as MainWindowViewModel;
+
+            await Windows.System.Launcher.LaunchUriAsync(
+                new Uri(viewModel?.SelectedSample?.SampleDescription.CodeUrl));
+        }
+
+        private async void OnCmdShowProjectHomepage_Click(object sender, RoutedEventArgs e)
+        {
+            await Windows.System.Launcher.LaunchUriAsync(
+                new Uri("https://github.com/RolandKoenig/SeeingSharp"));
+        }
+
+        private async void OnCmdShowAuthorHomepage_Click(object sender, RoutedEventArgs e)
+        {
+            await Windows.System.Launcher.LaunchUriAsync(
+                new Uri("http://www.rolandk.de/wp/"));
         }
     }
 }

@@ -38,12 +38,12 @@ namespace UniversalWindowsSampleContainer
     {
         #region all collections
         private List<SampleViewModel> m_allSamples;
-        private List<string> m_categories;
+        private List<CategoryInfo> m_categories;
         private ObservableCollection<SampleViewModel> m_visibleSamples;
         #endregion
 
         #region current selection
-        private string m_selectedCategory;
+        private CategoryInfo m_selectedCategory;
         private SampleViewModel m_selectedSample;
         #endregion
 
@@ -58,9 +58,10 @@ namespace UniversalWindowsSampleContainer
                     .Convert<SampleDescription, SampleViewModel>(
                         (actSampleDesc) => new SampleViewModel(actSampleDesc)));
             m_visibleSamples = new ObservableCollection<SampleViewModel>();
-            m_categories = new List<string>(
+            m_categories = new List<CategoryInfo>(
                 (from actSample in m_allSamples
-                 select actSample.Category).Distinct());
+                 select new CategoryInfo(actSample.Category, CategoryMetadata.GetCategoryIconSymbol(actSample.Category)))
+                 .Distinct(CategoryInfo.EqualityComparer));
 
             // Initialize commands
             this.CommandShowSource = new DelegateCommand(async () =>
@@ -86,12 +87,12 @@ namespace UniversalWindowsSampleContainer
         /// Applies the given selected sample category.
         /// </summary>
         /// <param name="newCategory">The new category.</param>
-        private void Handle_SelectedCategoryChanged(string newCategory)
+        private void Handle_SelectedCategoryChanged(CategoryInfo newCategory)
         {
             m_visibleSamples.Clear();
 
             m_allSamples
-                .Where((actSampleDesc) => actSampleDesc.Category == newCategory)
+                .Where((actSampleDesc) => actSampleDesc.Category == newCategory.Name)
                 .ForEachInEnumeration((actSampleDesc) => m_visibleSamples.Add(actSampleDesc));
         }
 
@@ -116,12 +117,12 @@ namespace UniversalWindowsSampleContainer
             }
         }
 
-        public List<string> Categories
+        public List<CategoryInfo> Categories
         {
             get { return m_categories; }
         }
 
-        public string SelectedCategory
+        public CategoryInfo SelectedCategory
         {
             get { return m_selectedCategory; }
             set
