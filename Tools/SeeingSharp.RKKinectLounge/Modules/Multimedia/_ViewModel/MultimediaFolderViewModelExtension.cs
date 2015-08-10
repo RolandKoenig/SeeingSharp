@@ -125,7 +125,9 @@ namespace SeeingSharp.RKKinectLounge.Modules.Multimedia
             }
 
             // Handle all remaining files
-            foreach (string actFileName in Directory.GetFiles(ownerViewModel.BasePath))
+            foreach (string actFileName in 
+                Directory.GetFiles(ownerViewModel.BasePath)
+                    .OrderBy((actPath) => actPath))
             {
                 if (loadedFiles.ContainsKey(actFileName)) { continue; }
 

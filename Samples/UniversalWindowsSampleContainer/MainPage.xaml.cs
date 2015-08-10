@@ -5,7 +5,9 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.UI;
 using Windows.UI.Popups;
+using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -26,6 +28,13 @@ namespace UniversalWindowsSampleContainer
         public MainPage()
         {
             this.InitializeComponent();
+
+            var titleBar = ApplicationView.GetForCurrentView().TitleBar;
+            titleBar.BackgroundColor = Color.FromArgb(255, 126, 127, 130);
+            titleBar.ForegroundColor = Colors.White;
+            titleBar.ButtonBackgroundColor = Color.FromArgb(255, 126, 127, 130);
+            titleBar.ButtonForegroundColor = Colors.White;
+
         }
 
         private void OnCmdMenuHamburger_Click(object sender, RoutedEventArgs e)

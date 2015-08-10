@@ -119,10 +119,13 @@ namespace SeeingSharp.RKKinectLounge.Base
         {
             if (string.IsNullOrEmpty(m_basePath)) { return; }
 
+            string[] subdirectories = Directory.GetDirectories(m_basePath);
+            base.HasBigSizeChildren = subdirectories.Length <= Constants.MAX_SUBITEM_COUNT_FOR_BIG_TILES;
+
             // Load all subfolders folder-by-folder
             // Trigger loading of the description (image, displayname, ...) before coninuing with next one
             List<FolderViewModel> foundSubdirectories = new List<FolderViewModel>();
-            foreach (string actSubdirectory in Directory.GetDirectories(m_basePath))
+            foreach (string actSubdirectory in subdirectories)
             {
                 FolderViewModel actSubdirVM = new FolderViewModel(this, actSubdirectory);
                 foundSubdirectories.Add(actSubdirVM);

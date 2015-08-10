@@ -12,8 +12,8 @@
     
     <UserControl.Resources>
         <Storyboard x:Key="ResizeThumbnailAnimation" AutoReverse="False">
-            <DoubleAnimation To="350" Duration="0:0:0.5" Storyboard.TargetProperty="(FrameworkElement.Width)" />
-            <DoubleAnimation To="250" Duration="0:0:0.5" Storyboard.TargetProperty="(FrameworkElement.Height)" />
+            <DoubleAnimation To="350" Duration="0:0:0" Storyboard.TargetProperty="(FrameworkElement.Width)" />
+            <DoubleAnimation To="250" Duration="0:0:0" Storyboard.TargetProperty="(FrameworkElement.Height)" />
         </Storyboard>
         <Style TargetType="Border" x:Key="ResizeThumbnailStyle">
             <Style.Triggers>
