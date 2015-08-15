@@ -42,9 +42,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
     public class StandardBitmapResource : BitmapResource
     {
         #region Bitmap resource and properties
-        private Task<MemoryMappedTexture32bpp> m_loadResourceTask;
+        private ResourceLink m_resourceLink;
         private D2D.Bitmap[] m_loadedBitmaps;
-        private MemoryMappedTexture32bpp m_cachedBitmap;
+        private bool m_firstLoadDone;
         private int m_pixelWidth;
         private int m_pixelHeight;
         private double m_dpiX;
@@ -58,36 +58,14 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public StandardBitmapResource(ResourceLink resource)
         {
             m_loadedBitmaps = new D2D.Bitmap[GraphicsCore.Current.DeviceCount];
+            m_resourceLink = resource;
 
-            // Set default values
+            // Set default values (modified after first load)
+            m_firstLoadDone = false;
             m_pixelWidth = 0;
             m_pixelHeight = 0;
             m_dpiX = 96.0;
             m_dpyY = 96.0;
-            m_cachedBitmap = null;
-
-            // Load the resource in a loading task
-            m_loadResourceTask = AsyncResourceLoader.Current.EnqueueResourceLoadingTaskAsync(() =>
-            {
-                using (Stream inputStream = resource.OpenInputStream())
-                using (WicBitmapSourceInternal bitmapSourceWrapper = GraphicsHelper.LoadBitmapSource_D2D(inputStream))
-                {
-                    WIC.BitmapSource bitmapSource = bitmapSourceWrapper.Converter;
-
-                    m_pixelWidth = bitmapSource.Size.Width;
-                    m_pixelHeight = bitmapSource.Size.Height;
-
-                    m_cachedBitmap = new MemoryMappedTexture32bpp(new Size2(
-                        m_pixelWidth, m_pixelHeight));
-                    bitmapSource.CopyPixels(
-                        m_cachedBitmap.Pitch,
-                        new SharpDX.DataPointer(m_cachedBitmap.Pointer, (int)m_cachedBitmap.SizeInBytes));
-
-                    bitmapSource.GetResolution(out m_dpiX, out m_dpyY);
-
-                    return m_cachedBitmap;
-                }
-            });
         }
 
         public override string ToString()
@@ -101,31 +79,35 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="engineDevice">The engine device.</param>
         internal override D2D.Bitmap GetBitmap(EngineDevice engineDevice)
         {
-            if (m_cachedBitmap == null) { throw new ObjectDisposedException("StandardBitmapResource"); }
             if (base.IsDisposed) { throw new ObjectDisposedException(this.GetType().Name); }
-
-            // Wait for caching task if it is still running
-            if(m_loadResourceTask != null)
-            {
-                m_loadResourceTask.Wait();
-                m_loadResourceTask = null;
-            }
 
             D2D.Bitmap result = m_loadedBitmaps[engineDevice.DeviceIndex];
             if (result == null)
             {
-                // Load the cached bitmap into the Direct2D resource
-                result = new D2D.Bitmap(
-                    engineDevice.FakeRenderTarget2D,
-                    m_cachedBitmap.PixelSize.ToDXSize2(),
-                    new SharpDX.DataPointer(m_cachedBitmap.Pointer, (int)m_cachedBitmap.SizeInBytes),
-                    m_cachedBitmap.Pitch,
-                    new D2D.BitmapProperties(new D2D.PixelFormat(
-                        SharpDX.DXGI.Format.B8G8R8A8_UNorm,
-                        D2D.AlphaMode.Premultiplied)));
+                using (Stream inputStream = m_resourceLink.OpenInputStream())
+                using (WicBitmapSourceInternal bitmapSourceWrapper = GraphicsHelper.LoadBitmapSource_D2D(inputStream))
+                {
+                    WIC.BitmapSource bitmapSource = bitmapSourceWrapper.Converter;
 
-                // Register loaded bitmap
-                m_loadedBitmaps[engineDevice.DeviceIndex] = result;
+                    // Store common properties about the bitmap
+                    if (!m_firstLoadDone)
+                    {
+                        m_firstLoadDone = true;
+                        m_pixelWidth = bitmapSource.Size.Width;
+                        m_pixelHeight = bitmapSource.Size.Height;
+                        bitmapSource.GetResolution(out m_dpiX, out m_dpyY);
+                    }
+
+                    // Load the bitmap into Direct2D
+                    result = D2D.Bitmap.FromWicBitmap(
+                        engineDevice.FakeRenderTarget2D, bitmapSource,
+                        new D2D.BitmapProperties(new D2D.PixelFormat(
+                            SharpDX.DXGI.Format.B8G8R8A8_UNorm,
+                            D2D.AlphaMode.Premultiplied)));
+
+                    // Register loaded bitmap
+                    m_loadedBitmaps[engineDevice.DeviceIndex] = result;
+                }
             }
             
 
@@ -138,16 +120,6 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public override void Dispose()
         {
             base.Dispose();
-
-            // Wait for caching task if it is still running
-            if (m_loadResourceTask != null)
-            {
-                m_loadResourceTask.Wait();
-                m_loadResourceTask = null;
-            }
-
-            // Dispose all created resources
-            GraphicsHelper.SafeDispose(ref m_cachedBitmap);
         }
 
         /// <summary>

@@ -271,12 +271,12 @@ namespace SeeingSharp.Tests.Rendering
                     graphics.DrawBitmap(bitmap, new Vector2(100f, 100f));
                 });
 
-                await AsyncResourceLoader.Current.WaitForAllFinishedAsync();
+                //await AsyncResourceLoader.Current.WaitForAllFinishedAsync();
                 await memRenderTarget.AwaitRenderAsync();
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
-                //screenshot.DumpToDesktop("Blub.png");
+                screenshot.DumpToDesktop("Blub.png");
 
                 // Calculate and check difference
                 float diff = BitmapComparison.CalculatePercentageDifference(
