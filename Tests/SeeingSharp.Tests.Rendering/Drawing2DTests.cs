@@ -80,7 +80,7 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public async Task Render_SimpleRoundedRect_Filled()
+        public async Task Render_SimpleRoundedRect_Filled_Solid()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -105,6 +105,46 @@ namespace SeeingSharp.Tests.Rendering
                 // Calculate and check difference
                 float diff = BitmapComparison.CalculatePercentageDifference(
                     screenshot, Properties.Resources.ReferenceImage_SimpleRoundedRectFilled);
+                Assert.True(diff < 0.2, "Difference to reference image is to big!");
+            }
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Render_SimpleRoundedRect_Filled_LinearGradient()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (LinearGradientBrushResource gradientBrush = new LinearGradientBrushResource(
+                new Vector2(0f, 0f),
+                new Vector2(512f, 0f),
+                new GradientStop[]
+                {
+                    new GradientStop(Color4.Gray, 0f),
+                    new GradientStop(Color4.White, 0.6f),
+                    new GradientStop(Color4.Black, 1f)
+                }, 
+                extendMode: ExtendMode.Mirror))
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                // Perform rendering
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+                await memRenderTarget.RenderLoop.Register2DDrawingLayerAsync((graphics) =>
+                {
+                    // 2D rendering is made here
+                    graphics.FillRoundedRectangle(
+                        new RectangleF(10, 10, 900, 900), 30, 30,
+                        gradientBrush);
+                });
+                await memRenderTarget.AwaitRenderAsync();
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                float diff = BitmapComparison.CalculatePercentageDifference(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleRoundedRectFilled_LinearGradient);
                 Assert.True(diff < 0.2, "Difference to reference image is to big!");
             }
         }

@@ -292,6 +292,12 @@ namespace SeeingSharp.Multimedia.Drawing2D
     /// </summary> 
     public struct GradientStop
     {
+        public GradientStop(Color4 color, float position)
+        {
+            this.Color = color;
+            this.Position = position;
+        }
+
         /// <summary>
         /// The color of the gradient stop.
         /// </summary>
