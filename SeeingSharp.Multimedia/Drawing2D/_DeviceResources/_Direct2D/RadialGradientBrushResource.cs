@@ -35,7 +35,7 @@ using D2D = SharpDX.Direct2D1;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public class LinearGradientBrushResource : BrushResource
+    public class RadialGradientBrushResource : BrushResource
     {
         #region Resources
         private LoadedBrushResources[] m_loadedBrushes;
@@ -45,29 +45,33 @@ namespace SeeingSharp.Multimedia.Drawing2D
         private GradientStop[] m_gradientStops;
         private ExtendMode m_extendMode;
         private Gamma m_gamma;
-        private Vector2 m_startPoint;
-        private Vector2 m_endPoint;
+        private Vector2 m_center;
+        private Vector2 m_gradientOriginOffset;
+        private float m_radiusX;
+        private float m_radiusY;
         private float m_opacity;
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SolidBrushResource" /> class.
+        /// Initializes a new instance of the <see cref="RadialGradientBrushResource" /> class.
         /// </summary>
-        /// <param name="startPoint">The start point of the gradient.</param>
-        /// <param name="endPoint">The end point of the gradient.</param>
-        public LinearGradientBrushResource(
-            Vector2 startPoint, Vector2 endPoint,
+        public RadialGradientBrushResource(
+            Vector2 center, Vector2 gradientOriginOffset, float radiusX, float radiusY,
             GradientStop[] gradientStops,
             ExtendMode extendMode = ExtendMode.Clamp,
             Gamma gamma = Gamma.StandardRgb,
             float opacity = 1f)
-        {
-            startPoint.EnsureNotEqual(endPoint, "startPoint", "endPoint");
+        {;
             gradientStops.EnsureNotNullOrEmpty("gradientStops");
+            opacity.EnsureInRange(0f, 1f, "opacity");
+            radiusX.EnsurePositive("radiusX");
+            radiusY.EnsurePositive("radiusY");
 
             m_gradientStops = gradientStops;
-            m_startPoint = startPoint;
-            m_endPoint = endPoint;
+            m_center = center;
+            m_gradientOriginOffset = gradientOriginOffset;
+            m_radiusX = radiusX;
+            m_radiusY = radiusY;
             m_extendMode = extendMode;
             m_gamma = gamma;
             m_opacity = opacity;
@@ -122,12 +126,14 @@ namespace SeeingSharp.Multimedia.Drawing2D
                     d2dGradientStops,
                     (D2D.Gamma)m_gamma,
                     (D2D.ExtendMode)m_extendMode);
-                result.Brush = new D2D.LinearGradientBrush(
+                result.Brush = new D2D.RadialGradientBrush(
                     engineDevice.FakeRenderTarget2D,
-                    new D2D.LinearGradientBrushProperties()
-                    {
-                        StartPoint = m_startPoint.ToDXVector(),
-                        EndPoint = m_endPoint.ToDXVector()
+                    new D2D.RadialGradientBrushProperties()
+                    { 
+                        Center = m_center.ToDXVector(),
+                        GradientOriginOffset = m_gradientOriginOffset.ToDXVector(),
+                        RadiusX = m_radiusX,
+                        RadiusY = m_radiusY
                     },
                     new D2D.BrushProperties()
                     {
@@ -152,14 +158,24 @@ namespace SeeingSharp.Multimedia.Drawing2D
             get { return m_extendMode; }
         }
 
-        public Vector2 StartPoint
+        public Vector2 Center
         {
-            get { return m_startPoint; }
+            get { return m_center; }
         }
 
-        public Vector2 EndPoint
+        public Vector2 GradientOriginOffset
         {
-            get { return m_endPoint; }
+            get { return m_gradientOriginOffset; }
+        }
+
+        public float RadiusX
+        {
+            get { return m_radiusX; }
+        }
+
+        public float RadiusY
+        {
+            get { return m_radiusY; }
         }
 
         //*********************************************************************
@@ -168,12 +184,12 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <summary>
         /// A simple helper storing both resurces.. 
         ///  - the GradientStopCollection
-        ///  - and the LinearGradientBrush itself
+        ///  - and the RadialGradientBrush itself
         /// </summary>
         private struct LoadedBrushResources
         {
             public D2D.GradientStopCollection GradientStops;
-            public D2D.LinearGradientBrush Brush;
+            public D2D.RadialGradientBrush Brush;
         }
     }
 }

@@ -41,9 +41,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
     /// </summary>
     public class StandardBitmapResource : BitmapResource
     {
-        #region Bitmap resource and properties
-        private ResourceLink m_resourceLink;
+        #region Resources
         private D2D.Bitmap[] m_loadedBitmaps;
+        #endregion
+
+        #region Configuration
+        private ResourceLink m_resourceLink;
+        #endregion
+
+        #region RuntimeValues
         private bool m_firstLoadDone;
         private int m_pixelWidth;
         private int m_pixelHeight;
@@ -150,6 +156,22 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public override int PixelHeight
         {
             get { return m_pixelHeight; }
+        }
+
+        public override double DpiX
+        {
+            get
+            {
+                return m_dpiX;
+            }
+        }
+
+        public override double DpiY
+        {
+            get
+            {
+                return m_dpyY;
+            }
         }
     }
 }

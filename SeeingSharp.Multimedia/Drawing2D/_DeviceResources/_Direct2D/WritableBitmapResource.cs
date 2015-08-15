@@ -36,22 +36,33 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class WriteableBitmapResource : BitmapResource
     {
-        #region Native resources and configuration
+        #region Resources
         private D2D.Bitmap[] m_loadedBitmaps;
+        #endregion
+
+        #region Configuration
         private Size2 m_bitmapSize;
         private D2D.PixelFormat m_pixelFormat;
+        private double m_dpiX;
+        private double m_dpiY;
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WriteableBitmapResource"/> class.
         /// </summary>
-        public WriteableBitmapResource(Size2 bitmapSize, BitmapFormat format, AlphaMode alphaMode)
+        public WriteableBitmapResource(
+            Size2 bitmapSize, 
+            BitmapFormat format = BitmapFormat.Bgra, 
+            AlphaMode alphaMode = AlphaMode.Straight,
+            double dpiX = 96.0, double dpiY = 96.0)
         {
             m_loadedBitmaps = new D2D.Bitmap[GraphicsCore.Current.DeviceCount];
             m_bitmapSize = bitmapSize;
             m_pixelFormat = new D2D.PixelFormat(
                 (DXGI.Format)format,
                 (D2D.AlphaMode)alphaMode);
+            m_dpiX = dpiX;
+            m_dpiY = dpiY;
         }
 
         /// <summary>
@@ -83,7 +94,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 result = new D2D.Bitmap(
                     engineDevice.FakeRenderTarget2D,
                     m_bitmapSize.ToDXSize2(), 
-                    new D2D.BitmapProperties(m_pixelFormat));
+                    new D2D.BitmapProperties(m_pixelFormat, (float)m_dpiX, (float)m_dpiY));
                 m_loadedBitmaps[engineDevice.DeviceIndex] = result;
             }
 
@@ -112,6 +123,22 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public override int PixelHeight
         {
             get { return m_bitmapSize.Height; }
+        }
+
+        public override double DpiX
+        {
+            get
+            {
+                return m_dpiX;
+            }
+        }
+
+        public override double DpiY
+        {
+            get
+            {
+                return m_dpiY;
+            }
         }
     }
 }

@@ -187,6 +187,9 @@
   <data name="ReferenceImage_SimpleRoundedRectFilled_LinearGradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ressources\referencerenderings\simpleroundedrectfilled_lineargradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="ReferenceImage_SimpleRoundedRectFilled_RadialGradient" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\ressources\referencerenderings\simpleroundedrectfilled_radialgradient.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="ReferenceImage_SimpleText_SingleColor" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\ressources\referencerenderings\simpletext_singlecolor.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

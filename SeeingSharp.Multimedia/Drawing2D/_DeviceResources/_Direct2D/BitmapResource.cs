@@ -45,5 +45,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
         {
             get;
         }
+
+        public abstract double DpiX
+        {
+            get;
+        }
+
+        public abstract double DpiY
+        {
+            get;
+        }
     }
 }

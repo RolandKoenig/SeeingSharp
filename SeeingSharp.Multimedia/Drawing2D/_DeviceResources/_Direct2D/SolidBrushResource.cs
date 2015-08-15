@@ -22,6 +22,7 @@
 #endregion
 
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,19 +36,29 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class SolidBrushResource : BrushResource
     {
-        #region Native resources and configuration
+        #region Resources
         private D2D.SolidColorBrush[] m_loadedBrushes;
+        #endregion
+
+        #region Configuration
         private Color4 m_singleColor;
+        private float m_opacity;
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SolidBrushResource" /> class.
         /// </summary>
         /// <param name="singleColor">Color of the single.</param>
-        public SolidBrushResource(Color4 singleColor)
+        /// <param name="opacity">The opacity value of the brush.</param>
+        public SolidBrushResource(
+            Color4 singleColor,
+            float opacity = 1f)
         {
+            opacity.EnsureInRange(0f, 1f, "opacity");
+
             m_loadedBrushes = new D2D.SolidColorBrush[GraphicsCore.Current.DeviceCount];
 
+            m_opacity = opacity;
             m_singleColor = singleColor;
         }
 
@@ -78,11 +89,28 @@ namespace SeeingSharp.Multimedia.Drawing2D
             if (result == null)
             {
                 // Load the brush
-                result = new D2D.SolidColorBrush(engineDevice.FakeRenderTarget2D, m_singleColor.ToDXColor());
+                result = new D2D.SolidColorBrush(
+                    engineDevice.FakeRenderTarget2D,
+                    m_singleColor.ToDXColor(),
+                    new D2D.BrushProperties()
+                    {
+                        Opacity = m_opacity,
+                        Transform = SharpDX.Matrix3x2.Identity
+                    });
                 m_loadedBrushes[engineDevice.DeviceIndex] = result;
             }
 
             return result;
+        }
+
+        public Color4 Color
+        {
+            get { return m_singleColor; }
+        }
+
+        public float Opacity
+        {
+            get { return m_opacity; }
         }
     }
 }
