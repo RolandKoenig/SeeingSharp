@@ -35,6 +35,60 @@ namespace SeeingSharp.Checking
     public static partial class Ensure
     {
         [Conditional("DEBUG")]
+        public static void EnsureNotEqual(
+            this Vector4 vectorValueLeft, Vector4 vectorValueRight, string checkedVariableName, string comparedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (EngineMath.EqualsWithTolerance(vectorValueLeft.X, vectorValueRight.X) &&
+                EngineMath.EqualsWithTolerance(vectorValueLeft.Y, vectorValueRight.Y) &&
+                EngineMath.EqualsWithTolerance(vectorValueLeft.Z, vectorValueRight.Z) &&
+                EngineMath.EqualsWithTolerance(vectorValueLeft.W, vectorValueRight.W))
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Vector {0} within method {1} with value {2} musst not be equal with the vector {3}!",
+                    checkedVariableName, callerMethod, vectorValueLeft, comparedVariableName));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureNotEqual(
+            this Vector3 vectorValueLeft, Vector3 vectorValueRight, string checkedVariableName, string comparedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (EngineMath.EqualsWithTolerance(vectorValueLeft.X, vectorValueRight.X) &&
+                EngineMath.EqualsWithTolerance(vectorValueLeft.Y, vectorValueRight.Y) &&
+                EngineMath.EqualsWithTolerance(vectorValueLeft.Z, vectorValueRight.Z))
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Vector {0} within method {1} with value {2} musst not be equal with the vector {3}!",
+                    checkedVariableName, callerMethod, vectorValueLeft, comparedVariableName));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureNotEqual(
+            this Vector2 vectorValueLeft, Vector2 vectorValueRight, string checkedVariableName, string comparedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (EngineMath.EqualsWithTolerance(vectorValueLeft.X, vectorValueRight.X) &&
+                EngineMath.EqualsWithTolerance(vectorValueLeft.Y, vectorValueRight.Y))
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Vector {0} within method {1} with value {2} musst not be equal with the vector {3}!",
+                    checkedVariableName, callerMethod, vectorValueLeft, comparedVariableName));
+            }
+        }
+
+        [Conditional("DEBUG")]
         public static void EnsureNormalized(
             this Vector3 vectorValue, string checkedVariableName,
             [CallerMemberName]
