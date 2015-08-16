@@ -32,6 +32,13 @@ using DXGI = SharpDX.DXGI;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
+    public enum Graphics2DTransformMode
+    {
+        Custom,
+
+        AutoScaleToVirtualScreen
+    }
+
     /// <summary>
     /// Represents enum from Direct2D.
     /// </summary>

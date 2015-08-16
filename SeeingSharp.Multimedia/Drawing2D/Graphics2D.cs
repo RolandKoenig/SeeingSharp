@@ -42,8 +42,12 @@ namespace SeeingSharp.Multimedia.Drawing2D
         #region Main view related properties
         private EngineDevice m_device;
         private D2D.RenderTarget m_renderTarget;
-        private Size2F m_screenSize;
+        private Size2F m_screenPixelSize;
         #endregion Main view related properties
+
+        #region Transform settings
+        private Graphics2DTransformSettings m_transformSettings;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Graphics2D"/> class.
@@ -53,9 +57,53 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="screenSize">The size of the screen in device independent pixels.</param>
         internal Graphics2D(EngineDevice device, D2D.RenderTarget renderTarget, Size2F screenSize)
         {
+            m_transformSettings = Graphics2DTransformSettings.Default;
+
             m_device = device;
             m_renderTarget = renderTarget;
-            m_screenSize = screenSize;
+            m_screenPixelSize = screenSize;
+        }
+
+        /// <summary>
+        /// Sets current transform settings on this graphics object.
+        /// (be carefull, the state is changed on device level!)
+        /// </summary>
+        /// <param name="transformSettings">The settings to be set.</param>
+        internal void SetTransformSettings(Graphics2DTransformSettings transformSettings)
+        {
+            m_transformSettings = transformSettings;
+
+            switch(transformSettings.TransformMode)
+            {
+                    // Overtake given scaling matrix
+                case Graphics2DTransformMode.Custom:
+                    m_renderTarget.Transform = transformSettings.CustomTransform.ToDXMatrix();
+                    break;
+
+                    // Calculate scaling matrix here 
+                case Graphics2DTransformMode.AutoScaleToVirtualScreen:
+                    float virtualWidth = m_transformSettings.VirtualScreenSize.Width;
+                    float virtualHeight = m_transformSettings.VirtualScreenSize.Height;
+                    if(virtualWidth == 0f) { virtualWidth = m_screenPixelSize.Width; }
+                    if(virtualHeight == 0f) { virtualHeight = m_screenPixelSize.Height; }
+
+                    float scaleFactorX = m_screenPixelSize.Width / virtualWidth;
+                    float scaleFactorY = m_screenPixelSize.Height / virtualHeight;
+                    float combinedScaleFactor = Math.Min(scaleFactorX, scaleFactorY);
+
+                    m_renderTarget.Transform = SharpDX.Matrix3x2.Scaling(combinedScaleFactor);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Resets the transform setting son this graphics object.
+        /// (be carefull, the state is changed on device level!)
+        /// </summary>
+        /// <param name="transformSettings">The settings to be set.</param>
+        internal void ResetTransformSettings()
+        {
+            this.SetTransformSettings(Graphics2DTransformSettings.Default);
         }
 
         /// <summary>
@@ -246,40 +294,85 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
 
         /// <summary>
-        /// Gets the total size of the screen (already scaled by DPI).
-        /// </summary>
-        public Size2F ScreenSize
-        {
-            get { return m_screenSize; }
-        }
-
-        /// <summary>
         /// Gets the bounds of the screen.
         /// </summary>
         public RectangleF ScreenBounds
         {
             get
             {
+                Size2F screenSize = this.ScreenSize;
                 return new RectangleF(
                     0f, 0f,
-                    m_screenSize.Width, m_screenSize.Height);
+                    screenSize.Width, screenSize.Height);
             }
         }
 
         /// <summary>
-        /// Gets the width of the screen (already scaled by DPI).
+        /// Gets the total size of pixels (already scaled by DPI).
         /// </summary>
-        public float ScreenWidth
+        public Size2F ScreenPixelSize
         {
-            get { return m_screenSize.Width; }
+            get { return m_screenPixelSize; }
         }
 
         /// <summary>
-        /// Gets the height of the screen (already scaled by DPI).
+        /// Gets the total size of this screen.
+        /// This value may be a virtual screen size (see TransformMode).
+        /// </summary>
+        public Size2F ScreenSize
+        {
+            get
+            {
+                switch (m_transformSettings.TransformMode)
+                {
+                    case Graphics2DTransformMode.AutoScaleToVirtualScreen:
+                        return m_transformSettings.VirtualScreenSize;
+
+                    default:
+                        return m_screenPixelSize;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Gets the width of the screen.
+        /// This value may be a virtual screen size (see TransformMode).
+        /// </summary>
+        public float ScreenWidth
+        {
+            get
+            {
+                switch(m_transformSettings.TransformMode)
+                {
+                    case Graphics2DTransformMode.AutoScaleToVirtualScreen:
+                        return m_transformSettings.VirtualScreenSize.Width;
+
+                    default:
+                        return m_screenPixelSize.Width;
+                }
+                
+            }
+        }
+
+        /// <summary>
+        /// Gets the height of the screen.
+        /// This value may be a virtual screen size (see TransformMode).
         /// </summary>
         public float ScreenHeight
         {
-            get { return m_screenSize.Height; }
+            get
+            {
+                switch (m_transformSettings.TransformMode)
+                {
+                    case Graphics2DTransformMode.AutoScaleToVirtualScreen:
+                        return m_transformSettings.VirtualScreenSize.Height;
+
+                    default:
+                        return m_screenPixelSize.Height;
+                }
+
+            }
         }
     }
 }

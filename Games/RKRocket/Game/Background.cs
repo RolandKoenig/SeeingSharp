@@ -52,7 +52,7 @@ namespace RKRocket.Game
             Graphics2D graphics = renderState.Graphics2D;
 
             graphics.FillRectangle(
-                new RectangleF(0f, 0f, graphics.ScreenSize.Width, graphics.ScreenSize.Height),
+                new RectangleF(0f, 0f, Constants.GFX_SCREEN_VPIXEL_WIDTH, Constants.GFX_SCREEN_VPIXEL_HEIGHT),
                 m_blackBrush);
         }
 

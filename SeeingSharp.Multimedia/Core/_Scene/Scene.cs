@@ -55,6 +55,9 @@ namespace SeeingSharp.Multimedia.Core
         #endregion Standard members
 
         #region Members for 2D rendering
+        private Graphics2DTransformMode m_transformMode2D;
+        private Size2F m_virtualScreenSize2D;
+        private Matrix3x2 m_customTransform2D;
         private List<Custom2DDrawingLayer> m_drawing2DLayers;
         #endregion Members for 2D rendering
 
@@ -88,6 +91,10 @@ namespace SeeingSharp.Multimedia.Core
         {
             if (string.IsNullOrEmpty(name)) { name = DEFAULT_SCENE_NAME; }
             this.Name = name;
+
+            m_transformMode2D = Graphics2DTransformMode.Custom;
+            m_customTransform2D = Matrix3x2.Identity;
+            m_virtualScreenSize2D = new Size2F();
 
             m_sceneLayers = new List<SceneLayer>();
             m_sceneLayers.Add(new SceneLayer(DEFAULT_LAYER_NAME, this));
@@ -1000,27 +1007,42 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="renderState">The current render state.</param>
         internal void Render2DOverlay(RenderState renderState)
         {
-            // Get current resource dictionary
-            ResourceDictionary resources = m_registeredResourceDicts[renderState.DeviceIndex];
-            if (resources == null) { throw new SeeingSharpGraphicsException("Unable to render scene: Resource dictionary for current device not found!"); }
-
-            // Start rendering
-            using (renderState.PushScene(this, resources))
+            Graphics2D graphics = renderState.Graphics2D;
+            graphics.SetTransformSettings(new Graphics2DTransformSettings()
             {
-                //Render all layers in current order
-                foreach (SceneLayer actLayer in m_sceneLayers)
+                CustomTransform = m_customTransform2D,
+                TransformMode = m_transformMode2D,
+                VirtualScreenSize = m_virtualScreenSize2D
+            });
+
+            try
+            {
+                // Get current resource dictionary
+                ResourceDictionary resources = m_registeredResourceDicts[renderState.DeviceIndex];
+                if (resources == null) { throw new SeeingSharpGraphicsException("Unable to render scene: Resource dictionary for current device not found!"); }
+
+                // Start rendering
+                using (renderState.PushScene(this, resources))
                 {
-                    if (actLayer.CountObjects > 0)
+                    //Render all layers in current order
+                    foreach (SceneLayer actLayer in m_sceneLayers)
                     {
-                        actLayer.Render2DOverlay(renderState);
+                        if (actLayer.CountObjects > 0)
+                        {
+                            actLayer.Render2DOverlay(renderState);
+                        }
                     }
                 }
-            }
 
-            // Render drawing layers
-            foreach (Custom2DDrawingLayer actDrawingLayer in m_drawing2DLayers)
+                // Render drawing layers
+                foreach (Custom2DDrawingLayer actDrawingLayer in m_drawing2DLayers)
+                {
+                    actDrawingLayer.Draw2DInternal(renderState.Graphics2D);
+                }
+            }
+            finally
             {
-                actDrawingLayer.Draw2DInternal(renderState.Graphics2D);
+                graphics.ResetTransformSettings();
             }
         }
 
@@ -1158,6 +1180,24 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_name; }
             private set { m_name = value; }
+        }
+
+        public Graphics2DTransformMode TransformMode2D
+        {
+            get { return m_transformMode2D; }
+            set { m_transformMode2D = value; }
+        }
+
+        public Size2F VirtualScreenSize2D
+        {
+            get { return m_virtualScreenSize2D; }
+            set { m_virtualScreenSize2D = value; }
+        }
+
+        public Matrix3x2 CustomTransform2D
+        {
+            get { return m_customTransform2D; }
+            set { m_customTransform2D = value; }
         }
     }
 }

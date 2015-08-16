@@ -39,7 +39,7 @@ namespace RKRocket.Behaviors
             DependencyProperty.Register("GameCore", typeof(GameCore), typeof(ApplyGameSceneBehavior), new PropertyMetadata(0));
 
         #region Members for UI connection
-        private SwapChainBackgroundPanel m_targetBGPanel;
+        private SwapChainPanel m_targetBGPanel;
         private SeeingSharpPanelPainter m_panelPainter;
         #endregion
 
@@ -53,7 +53,7 @@ namespace RKRocket.Behaviors
 
         public void Attach(DependencyObject associatedObject)
         {
-            SwapChainBackgroundPanel targetBGPanel = associatedObject as SwapChainBackgroundPanel;
+            SwapChainPanel targetBGPanel = associatedObject as SwapChainPanel;
             if((targetBGPanel != null) &&
                (m_panelPainter.TargetPanel != targetBGPanel))
             {
@@ -63,7 +63,7 @@ namespace RKRocket.Behaviors
                 }
 
                 m_targetBGPanel = targetBGPanel;
-
+                
                 m_panelPainter.Attach(m_targetBGPanel);
             }
 
@@ -75,6 +75,7 @@ namespace RKRocket.Behaviors
             if(m_panelPainter.IsAttachedToGui)
             {
                 m_panelPainter.Detach();
+
                 m_targetBGPanel = null;
             }
 

@@ -20,9 +20,11 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp;
 using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.Drawing2D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,7 +41,6 @@ namespace RKRocket.Game
         //#endregion
 
         #region Graphics related members
-        private bool m_initialized;
         private PerspectiveCamera3D m_camera;
         private Scene m_gameScene;
         #endregion
@@ -54,6 +55,12 @@ namespace RKRocket.Game
             m_gameScene = new Scene(
                 name: Constants.GAME_SCENE_NAME,
                 registerOnMessenger: true);
+
+            // Configure 2D screen
+            m_gameScene.TransformMode2D = Graphics2DTransformMode.AutoScaleToVirtualScreen;
+            m_gameScene.VirtualScreenSize2D = new Size2F(
+                Constants.GFX_SCREEN_VPIXEL_WIDTH,
+                Constants.GFX_SCREEN_VPIXEL_HEIGHT);
 
             // Register initial manipulate method
             m_gameScene.ManipulateSceneAsync(OnInitializeGame)

@@ -32,5 +32,13 @@ namespace RKRocket
     internal static class Constants
     {
         public const string GAME_SCENE_NAME = "RocketScene";
+
+        public const float GFX_SCREEN_VPIXEL_WIDTH = 1920f;
+        public const float GFX_SCREEN_VPIXEL_HEIGHT = 1080f;
+
+        public const float GFX_ROCKET_VPIXEL_WIDTH = 105f;
+        public const float GFX_ROCKET_VPIXEL_HEIGHT = 120f;
+        public const float GFX_ROCKET_VPIXEL_Y_CENTER = 1000f;
+
     }
 }
