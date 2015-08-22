@@ -37,30 +37,8 @@ namespace RKRocket.Game
     /// </summary>
     public class Star : IAnimatableObjectPosition2D, IAnimatableObjectOpacity
     {
-        private float m_scaling;
-        private float m_opacity;
-
-        public Star(float scaling)
-        {
-            m_scaling = scaling;
-            m_opacity = 1f;
-        }
-
-        public Vector2 Position
-        {
-            get;
-            set;
-        }
-
-        public float Opacity
-        {
-            get { return m_opacity; }
-            set { m_opacity = value; }
-        }
-
-        public float Scaling
-        {
-            get { return m_scaling; }
-        }
+        public Vector2 Position { get; set; } = Vector2.Zero;
+        public float Opacity { get; set; } = 1f;
+        public float Scaling { get; set; } = 1f;
     }
 }

@@ -36,7 +36,7 @@ namespace RKRocket.Game
     public class Background : GameObject2D
     {
         #region Graphics Resources
-        private SolidBrushResource m_backBrush;
+        private BrushResource m_backBrush;
         private StandardBitmapResource m_starBitmap;
         #endregion
 
@@ -50,12 +50,8 @@ namespace RKRocket.Game
         /// </summary>
         public Background()
         {
-            m_backBrush = new SolidBrushResource(
-                Color4.BlueColor.ChangeAlphaTo(0.01f));
-            m_starBitmap = new StandardBitmapResource(
-                new AssemblyResourceUriBuilder(
-                    "RKRocket", true,
-                    "Assets/Bitmaps/StarGray_128x128.png"));
+            m_backBrush = GraphicsResources.Brush_Background;
+            m_starBitmap = GraphicsResources.Bitmap_StarGray;
 
             m_generatedStars = new List<Star>();
             m_random = new Random();
@@ -71,7 +67,8 @@ namespace RKRocket.Game
                (m_random.Next(0, 100) < Constants.GFX_BACKGROUND_STAR_CREATE_PROPABILITY))
             {
                 // Create the star object
-                Star newStar = new Star(m_random.Next(60, 100) / 100f);
+                Star newStar = new Star();
+                newStar.Scaling = m_random.Next(60, 100) / 100f;
                 newStar.Position = new Vector2(
                     (float)m_random.Next(10, (int)Constants.GFX_SCREEN_VPIXEL_WIDTH - 10),
                     -20f);

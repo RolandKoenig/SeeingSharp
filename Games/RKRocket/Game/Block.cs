@@ -20,25 +20,65 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp;
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing2D;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RKRocket.Game
 {
-    public class Block : GameObject2D
+    public class Block : GameObject2D, IAnimatableObjectPosition2D
     {
-        protected override void OnRender_2DOverlay(RenderState renderState)
+        #region Graphics Resources
+        private StandardBitmapResource m_blockBitmap;
+        #endregion
+
+        #region Logic
+        private Vector2 m_position;
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Block"/> class.
+        /// </summary>
+        public Block()
         {
-   
+            m_blockBitmap = GraphicsResources.Bitmap_Blocks[0];
         }
 
         protected override void UpdateInternal(UpdateState updateState)
         {
-     
+
+        }
+
+        /// <summary>
+        /// Contains all 2D rendering logic for this object.
+        /// </summary>
+        /// <param name="renderState">The current state of the renderer.</param>
+        protected override void OnRender_2DOverlay(RenderState renderState)
+        {
+            Graphics2D graphics = renderState.Graphics2D;
+
+            RectangleF destRectangle = new RectangleF(
+                m_position.X - Constants.BLOCK_VPIXEL_WIDTH / 2f,
+                m_position.Y - Constants.BLOCK_VPIXEL_HEIGHT / 2f,
+                Constants.BLOCK_VPIXEL_WIDTH,
+                Constants.BLOCK_VPIXEL_HEIGHT);
+            graphics.DrawBitmap(
+                m_blockBitmap, destRectangle,
+                opacity: Constants.BLOCK_OPACITY_NORMAL,
+                interpolationMode: BitmapInterpolationMode.Linear);
+        }
+
+        public Vector2 Position
+        {
+            get { return m_position; }
+            set { m_position = value; }
         }
     }
 }

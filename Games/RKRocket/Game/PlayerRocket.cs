@@ -50,10 +50,7 @@ namespace RKRocket.Game
         {
             m_xPos = Constants.GFX_SCREEN_VPIXEL_WIDTH / 2f;
 
-            m_playerBitmap = new StandardBitmapResource(
-                new AssemblyResourceUriBuilder(
-                    "RKRocket", true,
-                    "Assets/Bitmaps/Rocket_254x512.png"));
+            m_playerBitmap = GraphicsResources.Bitmap_Player;
         }
 
         protected override void UpdateInternal(UpdateState updateState)

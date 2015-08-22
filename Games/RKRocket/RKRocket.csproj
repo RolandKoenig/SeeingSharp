@@ -127,6 +127,7 @@
     <Compile Include="Game\Projectile.cs" />
     <Compile Include="Game\_Background\Star.cs" />
     <Compile Include="Game\_Base\GameObject2D.cs" />
+    <Compile Include="_GraphicsResources.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>

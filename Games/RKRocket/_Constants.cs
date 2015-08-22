@@ -33,18 +33,31 @@ namespace RKRocket
     {
         public const string GAME_SCENE_NAME = "RocketScene";
 
+        #region Screen properties
         public const float GFX_SCREEN_VPIXEL_WIDTH = 1920f;
         public const float GFX_SCREEN_VPIXEL_HEIGHT = 1080f;
+        #endregion
 
+        #region player rocket properties
         public const float GFX_ROCKET_VPIXEL_WIDTH = 105f;
         public const float GFX_ROCKET_VPIXEL_HEIGHT = 120f;
         public const float GFX_ROCKET_VPIXEL_Y_CENTER = 1000f;
+        #endregion
 
-        public const float GFX_BACKGROUND_STAR_VPIXEL_WIDTH = 32f;
-        public const float GFX_BACKGROUND_STAR_VPIXEL_HEIGHT = 32f;
+        #region background properties
+        public const float GFX_BACKGROUND_STAR_VPIXEL_WIDTH = 24f;
+        public const float GFX_BACKGROUND_STAR_VPIXEL_HEIGHT = 24f;
+        public const int GFX_BACKGROUND_MAX_STAR_COUNT = 200;
+        public const int GFX_BACKGROUND_STAR_CREATE_PROPABILITY = 90;
+        #endregion
 
-        public const int GFX_BACKGROUND_MAX_STAR_COUNT = 150;
-        public const int GFX_BACKGROUND_STAR_CREATE_PROPABILITY = 70;
+        #region Block properties
+        public const int BLOCKS_COUNT_X = 12;
+        public const float BLOCK_OPACITY_NORMAL = 0.9f;
+        public const float BLOCK_VPIXEL_WIDTH = 128f;
+        public const float BLOCK_VPIXEL_HEIGHT = 44f;
+        #endregion
+
 
     }
 }
