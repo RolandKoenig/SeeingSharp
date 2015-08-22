@@ -90,8 +90,14 @@ namespace SeeingSharp.Multimedia.Drawing2D
                     float scaleFactorX = m_screenPixelSize.Width / virtualWidth;
                     float scaleFactorY = m_screenPixelSize.Height / virtualHeight;
                     float combinedScaleFactor = Math.Min(scaleFactorX, scaleFactorY);
+                    float truePixelWidth = virtualWidth * combinedScaleFactor;
+                    float truePixelHeight = virtualHeight * combinedScaleFactor;
 
-                    m_renderTarget.Transform = SharpDX.Matrix3x2.Scaling(combinedScaleFactor);
+                    m_renderTarget.Transform =
+                        SharpDX.Matrix3x2.Scaling(combinedScaleFactor) *
+                        SharpDX.Matrix3x2.Translation(
+                            m_screenPixelSize.Width / 2f - truePixelWidth / 2f,
+                            m_screenPixelSize.Height / 2f - truePixelHeight / 2f);
                     break;
             }
         }
