@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SeeingSharp.Multimedia.Views;
+using SeeingSharp;
 
 namespace RKRocket.Behaviors
 {
@@ -90,6 +91,7 @@ namespace RKRocket.Behaviors
             {
                 m_panelPainter.Scene = gameCore.GameScene;
                 m_panelPainter.Camera = gameCore.Camera;
+                m_panelPainter.RenderLoop.ClearColor = Color4.Transparent;
             }
         }
 

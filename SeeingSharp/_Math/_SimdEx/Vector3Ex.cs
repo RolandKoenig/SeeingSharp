@@ -116,6 +116,12 @@ namespace SeeingSharp
             return result;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static Vector2 GetXY(Vector3 vector3)
+        {
+            return new Vector2(vector3.X, vector3.Y);
+        }
+
         /// <summary>
         /// Writes horizontal and vertical rotation values to given parameters.
         /// </summary>

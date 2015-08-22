@@ -255,10 +255,10 @@ namespace SeeingSharp.Multimedia.Core
                 BufferCount = 2,
                 Scaling = SharpDX.DXGI.Scaling.Stretch,
                 SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,
+                AlphaMode = DXGI.AlphaMode.Premultiplied
             };
 
             //Creates the swap chain for XAML composition
-            
             return new DXGI.SwapChain1(device.FactoryDxgi, device.DeviceD3D11, ref desc);
         }
 #endif

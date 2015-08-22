@@ -40,5 +40,11 @@ namespace RKRocket
         public const float GFX_ROCKET_VPIXEL_HEIGHT = 120f;
         public const float GFX_ROCKET_VPIXEL_Y_CENTER = 1000f;
 
+        public const float GFX_BACKGROUND_STAR_VPIXEL_WIDTH = 32f;
+        public const float GFX_BACKGROUND_STAR_VPIXEL_HEIGHT = 32f;
+
+        public const int GFX_BACKGROUND_MAX_STAR_COUNT = 150;
+        public const int GFX_BACKGROUND_STAR_CREATE_PROPABILITY = 70;
+
     }
 }

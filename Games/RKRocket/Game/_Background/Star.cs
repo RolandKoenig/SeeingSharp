@@ -20,49 +20,47 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp;
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing2D;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing2D;
 
 namespace RKRocket.Game
 {
-    public class Background : GameObject2D
+    /// <summary>
+    /// An object which representates a star on the background.
+    /// </summary>
+    public class Star : IAnimatableObjectPosition2D, IAnimatableObjectOpacity
     {
-        private SolidBrushResource m_blackBrush;
+        private float m_scaling;
+        private float m_opacity;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Background"/> class.
-        /// </summary>
-        public Background()
+        public Star(float scaling)
         {
-            m_blackBrush = new SolidBrushResource(
-                Color4.Black);
+            m_scaling = scaling;
+            m_opacity = 1f;
         }
 
-        /// <summary>
-        /// Contains all 2D rendering logic for this object.
-        /// </summary>
-        protected override void OnRender_2DOverlay(RenderState renderState)
+        public Vector2 Position
         {
-            Graphics2D graphics = renderState.Graphics2D;
-
-            graphics.FillRectangle(
-                new RectangleF(0f, 0f, Constants.GFX_SCREEN_VPIXEL_WIDTH, Constants.GFX_SCREEN_VPIXEL_HEIGHT),
-                m_blackBrush);
+            get;
+            set;
         }
 
-        /// <summary>
-        /// Updates the object.
-        /// </summary>
-        /// <param name="updateState">Current update state.</param>
-        protected override void UpdateInternal(UpdateState updateState)
+        public float Opacity
         {
+            get { return m_opacity; }
+            set { m_opacity = value; }
+        }
 
+        public float Scaling
+        {
+            get { return m_scaling; }
         }
     }
 }

@@ -157,9 +157,13 @@
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectAccentuation.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectEulerRotation.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectOpacity.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectPosition2D.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectPosition.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectQuaternion.cs" />
     <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectScaling.cs" />
+    <Compile Include="Core\_Animations\_Primitives2D\Move2DToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives2D\Move2DByAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives2D\_Extensions.Move.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\ChangeAccentuationToAnimation.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\ScaleSpriteToAnimation.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\ChangeOpacityToAnimation.cs" />
@@ -177,6 +181,7 @@
     <Compile Include="Core\_Animations\_Standard\DelayAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\LazyAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\WaitFinishedAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\WaitForConditionPassedAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\WaitTaskFinishedAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\WaitTimePassedAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\_Extensions.cs" />

@@ -9,6 +9,13 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Background>
+        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="Aqua" Offset="0" />
+            <GradientStop Color="LightCyan" Offset="1" />
+        </LinearGradientBrush>
+    </Page.Background>
+
     <SwapChainPanel>
         <i:Interaction.Behaviors>
             <localBeh:ApplyGameSceneBehavior>

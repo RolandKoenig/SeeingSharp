@@ -67,6 +67,18 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Waits until the given condition returns true.
+        /// </summary>
+        /// <param name="builder">The AnimationSequenceBuilder object.</param>
+        /// <param name="checkFunction">Return true to continue with the animation.</param>
+        public static IAnimationSequenceBuilder<ObjectType> WaitForCondition<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder, Func<bool> checkFunction)
+            where ObjectType : class
+        {
+            builder.Add(new WaitForConditionPassedAnimation(checkFunction));
+            return builder;
+        }
+
+        /// <summary>
         /// Waits until previous animation steps are finished.
         /// </summary>
         /// <param name="builder">The AnimationSequenceBuilder object.</param>

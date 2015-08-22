@@ -42,6 +42,7 @@ namespace SeeingSharp.Multimedia.Input
 
         public void Start(object viewObject, object cameraObject)
         {
+            
         }
 
         public void UpdateMovement()

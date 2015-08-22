@@ -53,7 +53,7 @@ namespace RKRocket.Game
             m_playerBitmap = new StandardBitmapResource(
                 new AssemblyResourceUriBuilder(
                     "RKRocket", true,
-                    "Assets/Bitmaps/Rocket.png"));
+                    "Assets/Bitmaps/Rocket_254x512.png"));
         }
 
         protected override void UpdateInternal(UpdateState updateState)
@@ -77,7 +77,8 @@ namespace RKRocket.Game
 
             graphics.DrawBitmap(
                 m_playerBitmap,
-                destRectangle);
+                destRectangle,
+                interpolationMode: BitmapInterpolationMode.Linear);
         }
 
 

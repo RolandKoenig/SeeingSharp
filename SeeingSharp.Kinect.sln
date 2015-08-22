@@ -97,6 +97,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.PerformanceTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalWindowsSampleContainer", "Samples\UniversalWindowsSampleContainer\UniversalWindowsSampleContainer.csproj", "{F68B90F0-B6B8-46F0-9B05-912724AB81F5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKWebcamCapture", "Tools\RKWebcamCapture\RKWebcamCapture.csproj", "{B36CB835-2FFC-4F03-A5AF-40C246344EF9}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{431f8f6a-aa43-4de1-8ec3-744a0396af02}*SharedItemsImports = 4
@@ -600,6 +602,22 @@ Global
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5}.Release|x86.ActiveCfg = Release|x86
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5}.Release|x86.Build.0 = Release|x86
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5}.Release|x86.Deploy.0 = Release|x86
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|ARM.Build.0 = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|x64.Build.0 = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Debug|x86.Build.0 = Debug|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|ARM.ActiveCfg = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|ARM.Build.0 = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|x64.ActiveCfg = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|x64.Build.0 = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|x86.ActiveCfg = Release|Any CPU
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -634,5 +652,6 @@ Global
 		{9DC59F57-CF54-4565-8CD4-DBDADDA61F41} = {71CD5CB8-3CC8-401A-880D-5CE8E51B9B52}
 		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5} = {A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}
+		{B36CB835-2FFC-4F03-A5AF-40C246344EF9} = {B0619BB7-B709-4C27-8D6F-1C54090C1320}
 	EndGlobalSection
 EndGlobal

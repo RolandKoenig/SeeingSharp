@@ -39,12 +39,13 @@ namespace SeeingSharp
     /// </summary>
     public class MovementAnimationHelper
     {
-        // Outer parameters
+        #region Outer parameters
         private MovementSpeed m_speed;
         private Vector3 m_movementDistance;
         private Vector3 m_movementNormal;
+        #endregion
 
-        // All values needed location calculation
+        #region All values needed location calculation
         private double m_accelerationLength;
         private double m_accelerationSeconds;
         private double m_decelerationLength;
@@ -52,6 +53,7 @@ namespace SeeingSharp
         private double m_fullSpeedLength;
         private double m_fullSpeedSeconds;
         private double m_reachedMaxSpeed;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MovementAnimationHelper" /> class.
