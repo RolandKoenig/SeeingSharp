@@ -1,0 +1,137 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp_DESKTOP", "SeeingSharp\SeeingSharp_DESKTOP.csproj", "{C2A4856D-600E-4FFF-BCBF-CA3F7ED6FE57}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Multimedia_DESKTOP", "SeeingSharp.Multimedia\SeeingSharp.Multimedia_DESKTOP.csproj", "{BD9D021A-85DB-4D43-AC49-560987E3339F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.BuildTasks", "SeeingSharp.BuildTasks\SeeingSharp.BuildTasks.csproj", "{FEC88DB7-9207-4F56-A503-B3CAC7EE4F23}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Build", "Build", "{ED98CECD-2C6B-452B-A614-A7E8162E6044}"
+	ProjectSection(SolutionItems) = preProject
+		Build\SeeingSharp.Common.targets = Build\SeeingSharp.Common.targets
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Tests.Rendering", "Tests\SeeingSharp.Tests.Rendering\SeeingSharp.Tests.Rendering.csproj", "{3937E63B-C53A-411A-B2CF-031F077BCAE4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp_UNIVERSAL", "SeeingSharp\SeeingSharp_UNIVERSAL.csproj", "{B077159E-8A45-42D2-896E-131EB2F8B9D0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Multimedia_UNIVERSAL", "SeeingSharp.Multimedia\SeeingSharp.Multimedia_UNIVERSAL.csproj", "{B2985A80-5CA6-41E0-B96A-6B4625365F08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Tests", "Tests\SeeingSharp.Tests\SeeingSharp.Tests.csproj", "{D2858A05-E9DF-4445-A623-89270F6287C4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{4EBD257C-4D52-4836-813B-F31ED1678FBD}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Misc\_SeeingSharp.Multimedia.licenseheader = Misc\_SeeingSharp.Multimedia.licenseheader
+		LICENSE = LICENSE
+		LicenseOverview.xlsx = LicenseOverview.xlsx
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tutorials", "Tutorials", "{5AE385D5-4F6A-4C4D-9AB5-59BF514DC45E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Introduction", "Introduction", "{CB41D200-7619-4F15-9DFE-448BA8B16B07}"
+	ProjectSection(SolutionItems) = preProject
+		Tutorials\Introduction\README.md = Tutorials\Introduction\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Tutorials.Introduction01", "Tutorials\Introduction\SeeingSharp.Tutorials.Introduction01\SeeingSharp.Tutorials.Introduction01.csproj", "{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Tutorials.Introduction02", "Tutorials\Introduction\SeeingSharp.Tutorials.Introduction02\SeeingSharp.Tutorials.Introduction02.csproj", "{0DBC3417-6D67-41EC-832C-513A8543ACD0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Tutorials.Introduction03", "Tutorials\Introduction\SeeingSharp.Tutorials.Introduction03\SeeingSharp.Tutorials.Introduction03.csproj", "{E97BBADA-6264-45DD-8199-8252AAAD4B55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Tutorials.Introduction04", "Tutorials\Introduction\SeeingSharp.Tutorials.Introduction04\SeeingSharp.Tutorials.Introduction04.csproj", "{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Extern", "Extern", "{D1D2359F-6717-4725-8A4A-BBE467E9D1EF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OpenXmlSdk", "OpenXmlSdk", "{EAF697D6-DB11-4F4A-AEB1-694CADE5224F}"
+	ProjectSection(SolutionItems) = preProject
+		Extern\OpenXmlSdk\DocumentFormat.OpenXml.dll = Extern\OpenXmlSdk\DocumentFormat.OpenXml.dll
+		Extern\OpenXmlSdk\DocumentFormat.OpenXml.XML = Extern\OpenXmlSdk\DocumentFormat.OpenXml.XML
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.PerformanceTests", "Tests\SeeingSharp.PerformanceTests\SeeingSharp.PerformanceTests.csproj", "{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C2A4856D-600E-4FFF-BCBF-CA3F7ED6FE57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2A4856D-600E-4FFF-BCBF-CA3F7ED6FE57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2A4856D-600E-4FFF-BCBF-CA3F7ED6FE57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2A4856D-600E-4FFF-BCBF-CA3F7ED6FE57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD9D021A-85DB-4D43-AC49-560987E3339F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD9D021A-85DB-4D43-AC49-560987E3339F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD9D021A-85DB-4D43-AC49-560987E3339F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD9D021A-85DB-4D43-AC49-560987E3339F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FEC88DB7-9207-4F56-A503-B3CAC7EE4F23}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FEC88DB7-9207-4F56-A503-B3CAC7EE4F23}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FEC88DB7-9207-4F56-A503-B3CAC7EE4F23}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FEC88DB7-9207-4F56-A503-B3CAC7EE4F23}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3937E63B-C53A-411A-B2CF-031F077BCAE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3937E63B-C53A-411A-B2CF-031F077BCAE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3937E63B-C53A-411A-B2CF-031F077BCAE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3937E63B-C53A-411A-B2CF-031F077BCAE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B077159E-8A45-42D2-896E-131EB2F8B9D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B077159E-8A45-42D2-896E-131EB2F8B9D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B077159E-8A45-42D2-896E-131EB2F8B9D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B077159E-8A45-42D2-896E-131EB2F8B9D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B2985A80-5CA6-41E0-B96A-6B4625365F08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B2985A80-5CA6-41E0-B96A-6B4625365F08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B2985A80-5CA6-41E0-B96A-6B4625365F08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B2985A80-5CA6-41E0-B96A-6B4625365F08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2858A05-E9DF-4445-A623-89270F6287C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2858A05-E9DF-4445-A623-89270F6287C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2858A05-E9DF-4445-A623-89270F6287C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2858A05-E9DF-4445-A623-89270F6287C4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99A00CE5-060B-4C8C-9FE4-0D575D77D08D}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{0DBC3417-6D67-41EC-832C-513A8543ACD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DBC3417-6D67-41EC-832C-513A8543ACD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DBC3417-6D67-41EC-832C-513A8543ACD0}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0DBC3417-6D67-41EC-832C-513A8543ACD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DBC3417-6D67-41EC-832C-513A8543ACD0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DBC3417-6D67-41EC-832C-513A8543ACD0}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{E97BBADA-6264-45DD-8199-8252AAAD4B55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E97BBADA-6264-45DD-8199-8252AAAD4B55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E97BBADA-6264-45DD-8199-8252AAAD4B55}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{E97BBADA-6264-45DD-8199-8252AAAD4B55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E97BBADA-6264-45DD-8199-8252AAAD4B55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E97BBADA-6264-45DD-8199-8252AAAD4B55}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3937E63B-C53A-411A-B2CF-031F077BCAE4} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
+		{D2858A05-E9DF-4445-A623-89270F6287C4} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
+		{CB41D200-7619-4F15-9DFE-448BA8B16B07} = {5AE385D5-4F6A-4C4D-9AB5-59BF514DC45E}
+		{99A00CE5-060B-4C8C-9FE4-0D575D77D08D} = {CB41D200-7619-4F15-9DFE-448BA8B16B07}
+		{0DBC3417-6D67-41EC-832C-513A8543ACD0} = {CB41D200-7619-4F15-9DFE-448BA8B16B07}
+		{E97BBADA-6264-45DD-8199-8252AAAD4B55} = {CB41D200-7619-4F15-9DFE-448BA8B16B07}
+		{B18A2C2D-9EB9-4E3A-A801-BD7259B7CBF6} = {CB41D200-7619-4F15-9DFE-448BA8B16B07}
+		{EAF697D6-DB11-4F4A-AEB1-694CADE5224F} = {D1D2359F-6717-4725-8A4A-BBE467E9D1EF}
+		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
+	EndGlobalSection
+EndGlobal
