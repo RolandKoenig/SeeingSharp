@@ -23,12 +23,15 @@
 
 using System;
 using System.Linq;
+using System.ComponentModel;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using System.Reflection;
 using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Infrastructure;
 
 //Some namespace mappings
 using D2D = SharpDX.Direct2D1;
@@ -82,6 +85,7 @@ namespace SeeingSharp.Multimedia.Core
 
         // Members for threading
         #region
+        private static Task m_defaultInitTask;
         private Task m_mainLoopTask;
         private CancellationTokenSource m_mainLoopCancelTokenSource;
         #endregion
@@ -185,6 +189,54 @@ namespace SeeingSharp.Multimedia.Core
                 m_devices.Clear();
                 m_configuration = null;
                 m_resourceKeyGenerator = null;
+            }
+        }
+
+        public static void Touch()
+        {
+            if(!GraphicsCore.IsInitialized)
+            {
+                GraphicsCore.InitializeDefaultAsync()
+                    .Wait();
+            }
+        }
+
+        /// <summary>
+        /// Performs default initialization logic.
+        /// </summary>
+        /// <returns></returns>
+        public static async Task InitializeDefaultAsync()
+        {
+            if (s_current != null) { return; }
+
+#if DESKTOP
+            if(LicenseManager.UsageMode == LicenseUsageMode.Designtime) { return; }
+#endif
+
+            if (m_defaultInitTask != null)
+            {
+                await m_defaultInitTask;
+                return;
+            }
+            else
+            {
+                // Initialize application object
+                if (!SeeingSharpApplication.IsInitialized)
+                {  
+                    m_defaultInitTask = SeeingSharpApplication.InitializeAsync(
+                        typeof(GraphicsCore).GetTypeInfo().Assembly,
+                        new Assembly[]{
+                            typeof(ResourceLink).GetTypeInfo().Assembly,
+                        },
+                        new string[0]);
+                    await m_defaultInitTask.ConfigureAwait(false);
+                }
+
+                // Initialize graphics core object
+                if (!GraphicsCore.IsInitialized)
+                {
+                    GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+                }
             }
         }
 
@@ -320,6 +372,11 @@ namespace SeeingSharp.Multimedia.Core
             throw new NotImplementedException();
         }
 
+        public static bool IsInitializedDummy
+        {
+            get { return s_current != null; }
+        }
+
         /// <summary>
         /// Gets current singleton instance.
         /// </summary>
@@ -329,7 +386,7 @@ namespace SeeingSharp.Multimedia.Core
             {
 #if DESKTOP
                 // Do nothing if we are within the Wpf designer
-                if (System.ComponentModel.DesignerProperties.GetIsInDesignMode(new System.Windows.DependencyObject()))
+                if (LicenseManager.UsageMode == LicenseUsageMode.Designtime)
                 {
                     return null;
                 }
@@ -337,8 +394,10 @@ namespace SeeingSharp.Multimedia.Core
 
                 if (s_current == null)
                 {
-                    GraphicsCore.Initialize();
+                    GraphicsCore.InitializeDefaultAsync()
+                        .Wait();
                 }
+
                 return s_current;
             }
         }
@@ -356,7 +415,12 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public static bool IsInitialized
         {
-            get { return (s_current != null) && (s_current.m_devices.Count > 0); }
+            get
+            {
+                return 
+                    (s_current != null) && 
+                    (s_current.m_devices.Count > 0);
+            }
         }
 
         /// <summary>

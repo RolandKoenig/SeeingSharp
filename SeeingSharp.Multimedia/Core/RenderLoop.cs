@@ -40,10 +40,8 @@ using DXGI = SharpDX.DXGI;
 using D2D = SharpDX.Direct2D1;
 
 #if DESKTOP
-
 using GDI = System.Drawing;
 using WinForms = System.Windows.Forms;
-
 #endif
 
 namespace SeeingSharp.Multimedia.Core
@@ -160,6 +158,7 @@ namespace SeeingSharp.Multimedia.Core
             m_2dDrawingLayers = new List<Custom2DDrawingLayer>();
 
             // Load DebugDrawingLayer if debug mode is enabled
+            GraphicsCore.Touch();
             if (GraphicsCore.IsInitialized &&
                 GraphicsCore.Current.IsDebugEnabled)
             {

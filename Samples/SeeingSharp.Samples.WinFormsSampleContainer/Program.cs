@@ -44,7 +44,6 @@ namespace WinFormsSampleContainer
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
-
             // Default initializations
             SeeingSharpApplication.InitializeAsync(
                 Assembly.GetExecutingAssembly(),

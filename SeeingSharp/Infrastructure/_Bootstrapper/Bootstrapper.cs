@@ -57,7 +57,7 @@ namespace SeeingSharp.Infrastructure
         /// <summary>
         /// Runs all items within this bootstrapper.
         /// </summary>
-        internal async Task Run()
+        internal async Task RunAsync()
         {
             foreach (IBootstrapperItem actItem in m_items)
             {
@@ -65,7 +65,8 @@ namespace SeeingSharp.Infrastructure
                 this.CurrentItem = actItem;
 
                 //Execute the item
-                await actItem.Execute();
+                await actItem.Execute()
+                    .ConfigureAwait(false);
 
                 //Raise item executed event
                 ItemExecuted.Raise(this, new BootstrapperItemArgs(actItem));

@@ -123,6 +123,7 @@ namespace SeeingSharp.Multimedia.Views
             this.Source = m_dummyBitmap;
 
             //Create the RenderLoop object
+            GraphicsCore.Touch();
             m_renderLoop = new RenderLoop(
                 SynchronizationContext.Current,
                 OnRenderLoopCreateViewResources,

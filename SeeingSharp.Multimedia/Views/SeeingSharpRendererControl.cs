@@ -40,7 +40,6 @@ using SeeingSharp.Util;
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
-
 using GDI = System.Drawing;
 
 namespace SeeingSharp.Multimedia.Views
@@ -105,6 +104,7 @@ namespace SeeingSharp.Multimedia.Views
             base.DoubleBuffered = false;
 
             //Create the render loop
+            GraphicsCore.Touch();
             m_renderLoop = new RenderLoop(
                 SynchronizationContext.Current,
                 OnRenderLoopCreateViewResources,
@@ -122,6 +122,7 @@ namespace SeeingSharp.Multimedia.Views
                 m_renderLoop.Dispose();
             };
 
+            // Perform default initialization logic (if not called before)
             if (SeeingSharpApplication.IsInitialized)
             {
                 m_renderLoop.SetScene(new Scene());

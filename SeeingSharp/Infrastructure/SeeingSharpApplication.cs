@@ -97,7 +97,8 @@ namespace SeeingSharp.Infrastructure
             // Perform bootstrapping
             newApplication.m_bootstrapper = new Bootstrapper();
             newApplication.m_bootstrapper.LoadBootstrapperItems();
-            await newApplication.m_bootstrapper.Run();
+            await newApplication.m_bootstrapper.RunAsync()
+                .ConfigureAwait(false);
         }
 
 #if DESKTOP
