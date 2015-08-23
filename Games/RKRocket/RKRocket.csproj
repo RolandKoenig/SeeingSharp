@@ -93,6 +93,9 @@
     <Content Include="Assets\Bitmaps\BlockBlue_128x44.png" />
     <Content Include="Assets\Bitmaps\BlockRed_128x44.png" />
     <Content Include="Assets\Bitmaps\BlockYellow_128x44.png" />
+    <Content Include="Assets\Bitmaps\BulletGreen_128x128.png" />
+    <Content Include="Assets\Bitmaps\BulletRed_128x128.png" />
+    <Content Include="Assets\Bitmaps\BulletYellow_128x128.png" />
     <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
     <Content Include="Properties\Default.rd.xml" />

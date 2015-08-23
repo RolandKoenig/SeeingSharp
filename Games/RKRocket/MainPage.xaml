@@ -11,8 +11,8 @@
 
     <Page.Background>
         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-            <GradientStop Color="Aqua" Offset="0" />
-            <GradientStop Color="LightCyan" Offset="1" />
+            <GradientStop Color="#FF75C6DA" Offset="0" />
+            <GradientStop Color="LightBlue" Offset="1" />
         </LinearGradientBrush>
     </Page.Background>
 
