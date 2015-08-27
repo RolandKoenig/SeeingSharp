@@ -56,6 +56,7 @@ namespace WinFormsSampleContainer
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_splitter = new System.Windows.Forms.SplitContainer();
+            this.m_cmdNewChildWindow = new System.Windows.Forms.ToolStripButton();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).BeginInit();
@@ -72,6 +73,7 @@ namespace WinFormsSampleContainer
             this.m_cboDevice,
             this.toolStripSeparator2,
             this.m_cboRenderResolution,
+            this.m_cmdNewChildWindow,
             this.toolStripSeparator1,
             this.m_cmdShowSource,
             this.m_cmdCopy,
@@ -314,6 +316,15 @@ namespace WinFormsSampleContainer
             this.m_splitter.SplitterDistance = 128;
             this.m_splitter.TabIndex = 7;
             // 
+            // m_cmdNewChildWindow
+            // 
+            this.m_cmdNewChildWindow.Image = ((System.Drawing.Image)(resources.GetObject("m_cmdNewChildWindow.Image")));
+            this.m_cmdNewChildWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.m_cmdNewChildWindow.Name = "m_cmdNewChildWindow";
+            this.m_cmdNewChildWindow.Size = new System.Drawing.Size(160, 24);
+            this.m_cmdNewChildWindow.Text = "New Child Window";
+            this.m_cmdNewChildWindow.Click += new System.EventHandler(this.OnCmdNewChildWindow_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -365,6 +376,7 @@ namespace WinFormsSampleContainer
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripButton m_cmdShowSource;
         private System.Windows.Forms.ToolStripButton m_cmdHelp;
+        private System.Windows.Forms.ToolStripButton m_cmdNewChildWindow;
     }
 }
 

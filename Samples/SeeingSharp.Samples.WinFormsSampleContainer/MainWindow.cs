@@ -46,12 +46,18 @@ namespace WinFormsSampleContainer
 {
     public partial class MainWindow : Form
     {
+        #region Rendering related fields
         private SceneViewboxObjectFilter m_viewboxfilter;
+        #endregion
 
+        #region Sample releated fields
         private List<ListView> m_generatedListViews;
         private bool m_isChangingSample;
         private SampleDescription m_actSampleInfo;
         private SampleBase m_actSample;
+        #endregion
+
+        private List<ChildRenderWindow> m_openedChildRenderers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -61,6 +67,7 @@ namespace WinFormsSampleContainer
             InitializeComponent();
 
             m_generatedListViews = new List<ListView>();
+            m_openedChildRenderers = new List<ChildRenderWindow>();
         }
 
         /// <summary>
@@ -128,6 +135,12 @@ namespace WinFormsSampleContainer
                 // Wait for next finished rendering
                 await m_ctrlRenderer.RenderLoop.WaitForNextFinishedRenderAsync();
                 await m_ctrlRenderer.RenderLoop.WaitForNextFinishedRenderAsync();
+
+                // Apply new camera on child windows
+                foreach(ChildRenderWindow actChildWindow in m_openedChildRenderers)
+                {
+                    actChildWindow.ApplyViewpoint(m_ctrlRenderer.Camera.GetViewPoint());
+                }
             }
             finally
             {
@@ -357,6 +370,24 @@ namespace WinFormsSampleContainer
         private void OnCmdHelp_Click(object sender, EventArgs e)
         {
             Process.Start("https://github.com/RolandKoenig/SeeingSharp");
+        }
+
+        private void OnCmdNewChildWindow_Click(object sender, EventArgs e)
+        {
+            ChildRenderWindow childWindow = new ChildRenderWindow();
+            childWindow.Scene = m_ctrlRenderer.Scene;
+            childWindow.ApplyViewpoint(m_ctrlRenderer.Camera.GetViewPoint());
+
+            m_openedChildRenderers.Add(childWindow);
+
+            // Ensure that we cleanup the reference when the window is closed
+            childWindow.FormClosed += (innerSender, innerEArgs) =>
+            {
+                m_openedChildRenderers.Remove(childWindow);
+            };
+
+            // Show the child window finally
+            childWindow.Show(this);
         }
     }
 }
