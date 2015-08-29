@@ -16,13 +16,15 @@
         </LinearGradientBrush>
     </Page.Background>
 
-    <SwapChainPanel>
-        <i:Interaction.Behaviors>
-            <localBeh:ApplyGameSceneBehavior>
-                <localBeh:ApplyGameSceneBehavior.GameCore>
-                    <localGame:GameCore />
-                </localBeh:ApplyGameSceneBehavior.GameCore>
-            </localBeh:ApplyGameSceneBehavior>
-        </i:Interaction.Behaviors>
-    </SwapChainPanel>
+    <Grid>
+        <SwapChainPanel>
+            <i:Interaction.Behaviors>
+                <localBeh:ApplyGameSceneBehavior>
+                    <localBeh:ApplyGameSceneBehavior.GameCore>
+                        <localGame:GameCore />
+                    </localBeh:ApplyGameSceneBehavior.GameCore>
+                </localBeh:ApplyGameSceneBehavior>
+            </i:Interaction.Behaviors>
+        </SwapChainPanel>
+    </Grid>
 </Page>

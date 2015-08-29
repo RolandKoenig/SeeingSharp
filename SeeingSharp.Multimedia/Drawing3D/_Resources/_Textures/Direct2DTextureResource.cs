@@ -42,23 +42,20 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class Direct2DTextureResource : TextureResource, IRenderableResource
     {
-        // Intial configuration
         #region
         private Custom2DDrawingLayer m_drawingLayer;
         private int m_width;
         private int m_height;
         #endregion
 
-        // Resources for rendering
-        #region
-        private Graphics2D m_graphics2D;
-        private D2D.RenderTarget m_renderTarget2D;
+        #region Resources for Direct3D
         private D3D11.Texture2D m_renderTargetTexture;
         private D3D11.ShaderResourceView m_renderTargetTextureView;
-#if DESKTOP
-        private D3D10.Texture2D m_renderTarget3DShared10;
-#endif
-        private DXGI.Resource m_renderTarget3DSharedDxgi;
+        #endregion
+
+        #region Resourcs for Direct2D
+        private Graphics2D m_graphics2D;
+        private Direct2DOverlayRenderer m_overlayRenderer;
         #endregion
 
         /// <summary>
@@ -93,7 +90,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="renderState">Current render state.</param>
         public void Render(RenderState renderState)
         {
-            m_renderTarget2D.BeginDraw();
+            m_overlayRenderer.BeginDraw(renderState);
             try
             {
                 if (m_graphics2D != null)
@@ -103,7 +100,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             }
             finally
             {
-                m_renderTarget2D.EndDraw();
+                m_overlayRenderer.EndDraw(renderState);
             }
         }
 
@@ -114,65 +111,16 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="resources">The current ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
-            // Try to create a Direct2D render target based on the Direct3D 11 texture directly
-            //  => This should work starting with windows 8
-            try
-            {
-                m_renderTargetTexture = GraphicsHelper.CreateRenderTargetTexture(
-                    device, m_width, m_height, new GraphicsViewConfiguration() { AntialiasingEnabled = false });
-                m_renderTargetTextureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_renderTargetTexture);
-                using (DXGI.Surface dxgiSurface = m_renderTargetTexture.QueryInterface<DXGI.Surface>())
-                {
-                    m_renderTarget2D = new D2D.RenderTarget(
-                        device.Core.FactoryD2D,
-                        dxgiSurface,
-                        new D2D.RenderTargetProperties()
-                        {
-                            MinLevel = D2D.FeatureLevel.Level_10,
-                            Type = D2D.RenderTargetType.Default, 
-                            Usage = D2D.RenderTargetUsage.ForceBitmapRemoting,
-                            PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, D2D.AlphaMode.Premultiplied),
-                            DpiX = EngineMath.DEFAULT_DPI_X,
-                            DpiY = EngineMath.DEFAULT_DPI_Y
-                        });
-                    m_graphics2D = new Graphics2D(device, m_renderTarget2D, new Size2F(m_width, m_height));
-                    return;
-                }
-            }
-            catch (Exception) 
-            {
-                GraphicsHelper.SafeDispose(ref m_renderTarget2D);
-                GraphicsHelper.SafeDispose(ref m_renderTargetTextureView);
-                GraphicsHelper.SafeDispose(ref m_renderTargetTexture);
-            }
-
-            // No software device (or WinRT) supported on fallback mode
-#if DESKTOP
-            if (device.IsSoftware) { return; }
-
-            // Create the shared texture (same texture with Direct3D 11 and Direct3D 10 reference to it)
-            m_renderTargetTexture = GraphicsHelper.CreateSharedTexture(device, m_width, m_height);
+            m_renderTargetTexture = GraphicsHelper.CreateRenderTargetTexture(
+                device, m_width, m_height, new GraphicsViewConfiguration() { AntialiasingEnabled = false });
             m_renderTargetTextureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_renderTargetTexture);
-            m_renderTarget3DSharedDxgi = m_renderTargetTexture.QueryInterface<DXGI.Resource>();
-            IntPtr sharedHandle = m_renderTarget3DSharedDxgi.SharedHandle;
-            m_renderTarget3DShared10 = device.DeviceD3D10.OpenSharedResource<D3D10.Texture2D>(sharedHandle);
 
-            // Create the render target
-            using (DXGI.Surface dxgiSurface = m_renderTarget3DShared10.QueryInterface<DXGI.Surface>())
-            {
-                m_renderTarget2D = new D2D.RenderTarget(
-                    device.Core.FactoryD2D,
-                    dxgiSurface,
-                    new D2D.RenderTargetProperties()
-                    {
-                        MinLevel = D2D.FeatureLevel.Level_10,
-                        Type = D2D.RenderTargetType.Hardware,
-                        Usage = D2D.RenderTargetUsage.ForceBitmapRemoting,
-                        PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT_SHARING_D2D, D2D.AlphaMode.Premultiplied)
-                    });
-                m_graphics2D = new Graphics2D(device, m_renderTarget2D, new Size2F(m_width, m_height));
-            }
-#endif
+            m_overlayRenderer = new Direct2DOverlayRenderer(
+                device,
+                m_renderTargetTexture,
+                m_width, m_height,
+                DpiScaling.Default);
+            m_graphics2D = new Graphics2D(device, m_overlayRenderer.RenderTarget2D, new Size2F(m_width, m_height));
         }
 
         /// <summary>
@@ -183,11 +131,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_graphics2D = null;
-            GraphicsHelper.SafeDispose(ref m_renderTarget2D);
-#if DESKTOP
-            GraphicsHelper.SafeDispose(ref m_renderTarget3DShared10);
-#endif
-            GraphicsHelper.SafeDispose(ref m_renderTarget3DSharedDxgi);
+            GraphicsHelper.SafeDispose(ref m_overlayRenderer);
             GraphicsHelper.SafeDispose(ref m_renderTargetTextureView);
             GraphicsHelper.SafeDispose(ref m_renderTargetTexture);
         }

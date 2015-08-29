@@ -50,6 +50,11 @@ namespace RKRocket.Behaviors
         public ApplyGameSceneBehavior()
         {
             m_panelPainter = new SeeingSharpPanelPainter();
+
+            // Configure view
+            var viewConfig = m_panelPainter.RenderLoop.ViewConfiguration;
+            viewConfig.AlphaEnabledSwapChain = true;
+            viewConfig.AntialiasingEnabled = false;
         }
 
         public void Attach(DependencyObject associatedObject)

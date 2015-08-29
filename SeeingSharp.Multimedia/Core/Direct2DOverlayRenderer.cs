@@ -43,7 +43,7 @@ namespace SeeingSharp.Multimedia.Core
 {
     /// <summary>
     /// This class provides a generic way to draw Direct2D content into a Direct3D texture (typically the render target).
-    ///   - This works by default in Windows 8.
+    ///   - This works by default in Windows 8, 10.
     ///   - In Windows 7, the platform update is needed to to the default way
     ///     http://msdn.microsoft.com/en-us/library/windows/desktop/jj863687(v=vs.85).aspx
     ///   - Otherwhiese, the Fallback-Method is used (render Direct2D content to a shared texture, then render it onto the render target)
@@ -74,6 +74,8 @@ namespace SeeingSharp.Multimedia.Core
         private D3D10.Texture2D m_renderTarget3DShared10;
         private D3D11.ShaderResourceView m_renderTarget3DShared11View;
         private DXGI.Resource m_renderTarget3DSharedDxgi;
+#else
+        private D2D.Bitmap1 m_renderTargetBitmap;
 #endif
         #endregion
 
@@ -94,12 +96,16 @@ namespace SeeingSharp.Multimedia.Core
         public void Dispose()
         {
             // Dispose all created objects
-            GraphicsHelper.SafeDispose(ref m_renderTarget2D);
 #if DESKTOP
+            GraphicsHelper.SafeDispose(ref m_renderTarget2D);
             GraphicsHelper.SafeDispose(ref m_renderTarget3DSharedDxgi);
             GraphicsHelper.SafeDispose(ref m_renderTarget3DShared10);
             GraphicsHelper.SafeDispose(ref m_renderTarget3DShared11View);
             GraphicsHelper.SafeDispose(ref m_renderTarget3DShared11);
+#endif
+
+#if UNIVERSAL
+            GraphicsHelper.SafeDispose(ref m_renderTargetBitmap);
 #endif
 
             // Unload all created resources
@@ -127,6 +133,20 @@ namespace SeeingSharp.Multimedia.Core
                 (float)viewWidth / dpiScaling.ScaleFactorX,
                 (float)viewHeight / dpiScaling.ScaleFactorY);
 
+#if UNIVERSAL
+            using (DXGI.Surface dxgiSurface = m_renderTarget3D.QueryInterface<DXGI.Surface>())
+            {
+                D2D.BitmapProperties1 bitmapProperties = new D2D.BitmapProperties1();
+                bitmapProperties.DpiX = dpiScaling.DpiX;
+                bitmapProperties.DpiY = dpiScaling.DpiY;
+                bitmapProperties.BitmapOptions = D2D.BitmapOptions.Target | D2D.BitmapOptions.CannotDraw;
+                bitmapProperties.PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, D2D.AlphaMode.Premultiplied);
+
+                m_renderTargetBitmap = new SharpDX.Direct2D1.Bitmap1(m_device.DeviceContextD2D, dxgiSurface, bitmapProperties);
+                m_renderTarget2D = m_device.DeviceContextD2D;
+                m_graphics2D = new Graphics2D(m_device, m_device.DeviceContextD2D, scaledScreenSize);
+            }
+#else
             // Try to create a Direct2D render target based on the Direct3D 11 texture directly
             //  => This should work starting with windows 8
             try
@@ -156,7 +176,6 @@ namespace SeeingSharp.Multimedia.Core
 
             // Fallback method: Build a brigde using a Direct3D 10 texture
             //  => This should work on all Desktop-OS
-#if DESKTOP
             try
             {
                 m_resourceDict = new ResourceDictionary(m_device);
@@ -188,13 +207,18 @@ namespace SeeingSharp.Multimedia.Core
             }
             catch (Exception) { }
 #endif
-        }
+            }
 
         /// <summary>
         /// Begins the draw.
         /// </summary>
         public void BeginDraw(RenderState renderState)
         {
+#if UNIVERSAL
+            m_device.DeviceContextD2D.Target = m_renderTargetBitmap;
+            m_device.DeviceContextD2D.DotsPerInch = m_renderTargetBitmap.DotsPerInch;
+#endif
+
             // Start Direct2D rendering
             m_renderTarget2D.BeginDraw();
 
@@ -226,6 +250,10 @@ namespace SeeingSharp.Multimedia.Core
         {
             // Finish Direct2D drawing
             m_renderTarget2D.EndDraw();
+
+#if UNIVERSAL
+            m_device.DeviceContextD2D.Target = null;
+#endif
 
 #if DESKTOP
             if (m_renderTarget3DShared10 != null)

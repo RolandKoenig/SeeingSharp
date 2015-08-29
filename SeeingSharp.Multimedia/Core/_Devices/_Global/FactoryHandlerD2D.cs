@@ -25,7 +25,11 @@
 using D2D = SharpDX.Direct2D1;
 
 //Some type mappings
+#if UNIVERSAL
+using D2dFactory = SharpDX.Direct2D1.Factory2;
+#else
 using D2dFactory = SharpDX.Direct2D1.Factory;
+#endif
 
 namespace SeeingSharp.Multimedia.Core
 {
@@ -63,7 +67,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the factory object.
         /// </summary>
-        internal D2D.Factory Factory
+        internal D2dFactory Factory
         {
             get { return m_factory; }
         }

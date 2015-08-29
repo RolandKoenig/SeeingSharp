@@ -292,7 +292,6 @@ namespace WinFormsSampleContainer
             this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
             this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
             this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
-            this.m_ctrlRenderer.ViewConfiguration.Overlay2DEnabled = true;
             this.m_ctrlRenderer.ViewConfiguration.ShowTextures = true;
             this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
             this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;

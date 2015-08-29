@@ -469,6 +469,16 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_handlerD3D11.Device; }
         }
+
+        internal D2D.Device1 DeviceD2D
+        {
+            get { return m_handlerD2D.Device; }
+        }
+
+        internal D2D.DeviceContext1 DeviceContextD2D
+        {
+            get { return m_handlerD2D.DeviceContext; }
+        }
 #endif
 
         /// <summary>

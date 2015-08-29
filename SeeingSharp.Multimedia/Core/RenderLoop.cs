@@ -970,8 +970,7 @@ namespace SeeingSharp.Multimedia.Core
                 if (m_totalRenderCount < Int32.MaxValue) { m_totalRenderCount++; }
 
                 // Render 2D overlay if possible (may be not available on some older OS or older graphics cards)
-                if ((m_viewConfiguration.Overlay2DEnabled) &&
-                    (m_d2dOverlay != null) &&
+                if ((m_d2dOverlay != null) &&
                     (m_d2dOverlay.IsLoaded))
                 {
                     var d2dOverlayTime = GraphicsCore.Current.PerformanceCalculator.BeginMeasureActivityDuration(

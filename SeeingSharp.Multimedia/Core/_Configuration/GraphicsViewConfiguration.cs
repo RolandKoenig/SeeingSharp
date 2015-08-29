@@ -34,22 +34,30 @@ namespace SeeingSharp.Multimedia.Core
         private const string CATEGORY_QUALITY = "Quality";
         private const string CATEGORY_DETAILS = "Details";
 
+        #region Generic
         private GraphicsDeviceConfiguration m_deviceConfig;
-
         private bool m_viewNeedsRefresh;
+        #endregion
 
+        #region Antialiasing configuration
         private bool m_antialiasingEnabled;
         private AntialiasingQualityLevel m_antialiasingQuality;
+        #endregion
 
+        #region Most view parameters (Light, Gradient, Accentuation)
         private float m_generatedColorGradientFactor;
         private float m_generatedBorderFactor;
         private float m_accentuationFactor;
         private float m_ambientFactor;
         private float m_lightPower;
         private float m_strongLightFactor;
+        private bool m_alphaEnabledSwapChain;
+        #endregion
 
-        private bool m_overlay2DEnabled;
-
+        /// <summary>
+        /// Occurs when any configuration flag has changed.
+        /// This event may occure in different threads!
+        /// </summary>
         public event EventHandler ConfigurationChanged;
 
         /// <summary>
@@ -72,7 +80,7 @@ namespace SeeingSharp.Multimedia.Core
                 m_ambientFactor = 0.2f;
                 m_lightPower = 0.8f;
                 m_strongLightFactor = 1.5f;
-                m_overlay2DEnabled = true;
+                m_alphaEnabledSwapChain = false;
             };
             resetAction();
 
@@ -253,15 +261,21 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        /// <summary>
+        /// Set this flag to true to enable transparent pixels when view is embedded into Xaml stack.
+        /// Only relevant in UWP-Apps!
+        /// </summary>
+        [XmlAttribute]
         [Category(CATEGORY_DETAILS)]
-        public bool Overlay2DEnabled
+        public bool AlphaEnabledSwapChain
         {
-            get { return m_overlay2DEnabled; }
+            get { return m_alphaEnabledSwapChain; }
             set
             {
-                if(m_overlay2DEnabled != value)
+                if(m_alphaEnabledSwapChain != value)
                 {
-                    m_overlay2DEnabled = value;
+                    m_alphaEnabledSwapChain = value;
+                    m_viewNeedsRefresh = true;
                     ConfigurationChanged.Raise(this, EventArgs.Empty);
                 }
             }
