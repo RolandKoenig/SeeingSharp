@@ -178,19 +178,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <summary>
         /// Draws the given line with the given brush.
         /// </summary>
-        public void DrawLine(Vector2 start, Vector2 end, BrushResource brush)
-        {
-            brush.EnsureNotNull("brush");
-
-            m_renderTarget.DrawLine(
-                start.ToDXVector(), end.ToDXVector(),
-                brush.GetBrush(m_device));
-        }
-
-        /// <summary>
-        /// Draws the given line with the given brush.
-        /// </summary>
-        public void DrawLine(Vector2 start, Vector2 end, BrushResource brush, float strokeWidth)
+        public void DrawLine(Vector2 start, Vector2 end, BrushResource brush, float strokeWidth = 1f)
         {
             brush.EnsureNotNull("brush");
             strokeWidth.EnsurePositiveAndNotZero("strokeWidth");
