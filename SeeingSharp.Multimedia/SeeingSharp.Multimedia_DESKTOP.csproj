@@ -236,7 +236,8 @@
     <Compile Include="Drawing2D\Graphics2D.cs" />
     <Compile Include="Drawing2D\Graphics2DTransformSettings.cs" />
     <Compile Include="Drawing2D\_DeviceResources\Drawing2DResourceBase.cs" />
-    <Compile Include="Drawing2D\_DeviceResources\IEffectInput.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\IImage.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2DEffects\GaussianBlurEffectResource.cs" />
     <Compile Include="Drawing2D\_DeviceResources\_Direct2D\BitmapResource.cs" />
     <Compile Include="Drawing2D\_DeviceResources\_Direct2D\EffectResource.cs" />
     <Compile Include="Drawing2D\_DeviceResources\_Direct2D\RadialGradientBrushResource.cs" />

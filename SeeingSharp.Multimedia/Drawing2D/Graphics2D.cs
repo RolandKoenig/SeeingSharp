@@ -388,15 +388,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="image">The source of pixel data to be rendered.</param>
         /// <param name="destinationRectangle">The target rectangle where to draw the image.</param>
         public void DrawImage(
-            IEffectInput image,
+            IImage image,
             Vector2 destinationOrigin)
         {
             image.EnsureNotNull("bitmap");
 
-            IEffectInputInternal internalImage = image as IEffectInputInternal;
+            IImageInternal internalImage = image as IImageInternal;
             internalImage.EnsureNotNull("internalImage");
 
-            D2D.Image d2dImage = internalImage.GetInputObject(m_device) as D2D.Image;
+            D2D.Image d2dImage = internalImage.GetImageObject(m_device) as D2D.Image;
             d2dImage.EnsureNotNull("d2dImage");
 
             m_deviceContext.DrawImage(
@@ -414,16 +414,16 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="destinationRectangle">The target rectangle where to draw the image.</param>
         /// <param name="sourceRectangle">The area which to take from the bitmap.</param>
         public void DrawImage(
-            IEffectInput image,
+            IImage image,
             Vector2 destinationOrigin,
             RectangleF sourceRectangle)
         {
             image.EnsureNotNull("bitmap");
 
-            IEffectInputInternal internalImage = image as IEffectInputInternal;
+            IImageInternal internalImage = image as IImageInternal;
             internalImage.EnsureNotNull("internalImage");
 
-            D2D.Image d2dImage = internalImage.GetInputObject(m_device) as D2D.Image;
+            D2D.Image d2dImage = internalImage.GetImageObject(m_device) as D2D.Image;
             d2dImage.EnsureNotNull("d2dImage");
      
             m_deviceContext.DrawImage(

@@ -20,7 +20,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
 using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
@@ -28,42 +27,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using D2D = SharpDX.Direct2D1;
-
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public abstract class BitmapResource : Drawing2DResourceBase, IImage, IImageInternal
+    public interface IImage
     {
-        internal abstract D2D.Bitmap GetBitmap(EngineDevice engineDevice);
 
+    }
+
+    internal interface IImageInternal
+    {
         /// <summary>
-        /// Gets the input object for an effect.
+        /// Gets the image object..
         /// </summary>
-        /// <param name="device">The device for which to get the input.</param>
-        IDisposable IImageInternal.GetImageObject(EngineDevice device)
-        {
-            return this.GetBitmap(device)
-                .QueryInterface<D2D.Bitmap>();
-        }
-
-        public abstract int PixelWidth
-        {
-            get;
-        }
-
-        public abstract int PixelHeight
-        {
-            get;
-        }
-
-        public abstract double DpiX
-        {
-            get;
-        }
-
-        public abstract double DpiY
-        {
-            get;
-        }
+        /// <param name="device">The device for which to get the image.</param>
+        IDisposable GetImageObject(EngineDevice device);
     }
 }

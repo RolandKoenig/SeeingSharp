@@ -34,28 +34,28 @@ using D2D = SharpDX.Direct2D1;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public class EffectResource : Drawing2DResourceBase, IEffectInput, IEffectInputInternal
+    public abstract class EffectResource : Drawing2DResourceBase, IImage, IImageInternal
     {
         #region Resources
         private D2D.Effect[] m_loadedEffects;
         #endregion
 
         #region Configuration
-        private IEffectInputInternal[] m_effectInputs;
+        private IImageInternal[] m_effectInputs;
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EffectResource"/> class.
         /// </summary>
-        public EffectResource(params IEffectInput[] effectInputs)
+        public EffectResource(params IImage[] effectInputs)
         {
             m_loadedEffects = new D2D.Effect[GraphicsCore.Current.DeviceCount];
 
             // Get all effect inputs
-            m_effectInputs = new IEffectInputInternal[effectInputs.Length];
+            m_effectInputs = new IImageInternal[effectInputs.Length];
             for(int loop=0; loop<effectInputs.Length; loop++)
             {
-                m_effectInputs[loop] = effectInputs[loop] as IEffectInputInternal;
+                m_effectInputs[loop] = effectInputs[loop] as IImageInternal;
                 if(m_effectInputs[loop] == null)
                 {
                     throw new SeeingSharpGraphicsException("Unable to process effectinput at index " + loop + "!");
@@ -67,23 +67,18 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Gets the input object for an effect.
         /// </summary>
         /// <param name="device">The device for which to get the input.</param>
-        IDisposable IEffectInputInternal.GetInputObject(EngineDevice device)
+        IDisposable IImageInternal.GetImageObject(EngineDevice device)
         {
             D2D.Effect effect = m_loadedEffects[device.DeviceIndex];
             if(effect == null)
             {
-                // Load the effect here
-                // TODO: Make this one abstract and implement in base derived classes
-                D2D.Effects.GaussianBlur blurEffect = new D2D.Effects.GaussianBlur(device.DeviceContextD2D);
-                blurEffect.BorderMode = D2D.BorderMode.Soft;
-                blurEffect.Optimization = D2D.GaussianBlurOptimization.Quality;
-                blurEffect.StandardDeviation = 5f;
-                effect = blurEffect;
+                // Create the effect
+                effect = BuildEffect(device);
 
                 // Set input values
                 for(int loop=0; loop<m_effectInputs.Length; loop++)
                 {
-                    using (D2D.Image actInput = m_effectInputs[loop].GetInputObject(device) as D2D.Image)
+                    using (D2D.Image actInput = m_effectInputs[loop].GetImageObject(device) as D2D.Image)
                     {
                         effect.SetInput(loop, actInput, new SharpDX.Bool(false));
                     }
@@ -95,6 +90,12 @@ namespace SeeingSharp.Multimedia.Drawing2D
 
             return effect.Output;
         }
+
+        /// <summary>
+        /// Builds the effect.
+        /// </summary>
+        /// <param name="device">The device on which to load the effect instance.</param>
+        protected abstract D2D.Effect BuildEffect(EngineDevice device);
 
         /// <summary>
         /// Unloads all resources loaded on the given device.

@@ -50,7 +50,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
     public class Direct2DSimpleEffect : SampleBase
     {
         private StandardBitmapResource m_starBitmap;
-        private EffectResource m_startBitmapShaded;
+        private GaussianBlurEffectResource m_startBitmapShaded;
 
         /// <summary>
         /// Called when the sample has to startup.
@@ -69,7 +69,8 @@ namespace SeeingSharp.Samples.Base.Direct2D
                 new AssemblyResourceUriBuilder(
                     "SeeingSharp.Samples.Base", false,
                     "Assets/Bitmaps/StarColored_128x128.png"));
-            m_startBitmapShaded = new EffectResource(m_starBitmap);
+            m_startBitmapShaded = new GaussianBlurEffectResource(m_starBitmap);
+            m_startBitmapShaded.StandardDeviation = 4f;
 
             // Define 2D overlay
             Action<Graphics2D> draw2DAction = (graphics) =>
@@ -82,25 +83,6 @@ namespace SeeingSharp.Samples.Base.Direct2D
                 graphics.DrawImage(
                     m_startBitmapShaded,
                     new Vector2(150f, 100f));
-
-                //// 2D rendering is made here
-                //RectangleF d2dRectangle = new RectangleF(
-                //    10, 10,
-                //    graphics.ScreenSize.Width - 20,
-                //    graphics.ScreenSize.Height - 20);
-                //if (d2dRectangle.Width < 100) { return; }
-                //if (d2dRectangle.Height < 100) { return; }
-
-                //// Draw background rectangle
-                //graphics.FillRoundedRectangle(
-                //    d2dRectangle,
-                //    30, 30,
-                //    m_solidBrush);
-
-                //// Draw the text
-                //d2dRectangle.Inflate(-10, -10);
-                //d2dRectangle.Y = d2dRectangle.Y + (d2dRectangle.Height - 100);
-                //graphics.DrawText("Hello Direct2D!", m_textFormat, d2dRectangle, m_textBrush);
             };
 
             await targetRenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
