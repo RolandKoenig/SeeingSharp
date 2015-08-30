@@ -26,7 +26,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin.WinRT\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;WINRT</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;WINRT;UNIVERSAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -61,6 +61,7 @@
     <Compile Include="_Samples\CategoryMetadata.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DAnimatedTextureSample.cs" />
+    <Compile Include="_Samples\Direct2D\Direct2DSimpleEffect.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
     <Compile Include="_Samples\MFSamples\CameraCaptureSample.cs" />
     <Compile Include="_Samples\MFSamples\VideoTextureSample.cs" />
@@ -71,6 +72,7 @@
     <Content Include="Assets\SampleImages\Basics_Pallets.png" />
     <Content Include="Assets\SampleImages\Basics_PalletsAnimated.png" />
     <Content Include="Assets\SampleImages\Basics_TexturedPallet.png" />
+    <Content Include="Assets\SampleImages\Direct2D_Simple_Effect.png" />
     <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture_%28animated%29.png" />
     <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture.png" />
     <Content Include="Assets\SampleImages\Basics_RotatingPallet.png" />

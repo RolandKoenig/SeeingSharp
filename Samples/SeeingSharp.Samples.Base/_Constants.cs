@@ -61,6 +61,7 @@ namespace SeeingSharp.Samples.Base
         public const int SAMPLE_DIRECT2D_D2DTEXTURE_ORDER = 101;
         public const int SAMPLE_DIRECT2D_D2DANIMTEXTURE_ORDER = 102;
         public const int SAMPLE_DIRECT2D_SCREEN_OVERLAY_ORDER = 103;
+        public const int SAMPLE_DIRECT2D_SIMPLE_EFFECT = 104;
         #endregion
 
     }

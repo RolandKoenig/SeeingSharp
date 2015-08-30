@@ -32,9 +32,18 @@ using D2D = SharpDX.Direct2D1;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public abstract class BitmapResource : Drawing2DResourceBase
+    public abstract class BitmapResource : Drawing2DResourceBase, IEffectInput, IEffectInputInternal
     {
         internal abstract D2D.Bitmap GetBitmap(EngineDevice engineDevice);
+
+        /// <summary>
+        /// Gets the input object for an effect.
+        /// </summary>
+        /// <param name="device">The device for which to get the input.</param>
+        IDisposable IEffectInputInternal.GetInputObject(EngineDevice device)
+        {
+            return this.GetBitmap(device);
+        }
 
         public abstract int PixelWidth
         {

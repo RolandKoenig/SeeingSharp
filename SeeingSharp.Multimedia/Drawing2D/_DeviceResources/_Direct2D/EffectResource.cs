@@ -47,7 +47,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <summary>
         /// Initializes a new instance of the <see cref="EffectResource"/> class.
         /// </summary>
-        public EffectResource(IEffectInput[] effectInputs)
+        public EffectResource(params IEffectInput[] effectInputs)
         {
             m_loadedEffects = new D2D.Effect[GraphicsCore.Current.DeviceCount];
 
@@ -73,6 +73,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             if(effect == null)
             {
                 // Load the effect here
+                // TODO: Make this one abstract and implement in base derived classes
                 D2D.Effects.GaussianBlur blurEffect = new D2D.Effects.GaussianBlur(device.DeviceContextD2D);
                 blurEffect.BorderMode = D2D.BorderMode.Soft;
                 blurEffect.Optimization = D2D.GaussianBlurOptimization.Quality;
