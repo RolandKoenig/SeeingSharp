@@ -49,6 +49,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
     public class Direct2DAnimatedTextureSample : SampleBase
     {
         private StandardBitmapResource m_starBitmap;
+        private SolidBrushResource m_borderBrush;
 
         /// <summary>
         /// Called when the sample has to startup.
@@ -68,6 +69,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
                 new AssemblyResourceUriBuilder(
                     "SeeingSharp.Samples.Base", false,
                     "Assets/Bitmaps/StarColored_128x128.png"));
+            m_borderBrush = new SolidBrushResource(Color4.SteelBlue);
             Random starCreateRandomizer = new Random();
 
             // 2D rendering is made here
@@ -105,10 +107,12 @@ namespace SeeingSharp.Samples.Base.Direct2D
                         new RectangleF(
                             actLocation.X - 16f, actLocation.Y - 16f,
                             32f, 32f),
-                        1f,
+                        0.6f,
                         BitmapInterpolationMode.Linear);
-
                 }
+
+                // Draw a simple border
+                graphics.DrawRectangle(graphics.ScreenBounds, m_borderBrush, 2f);
             });
 
             // Build 3D scene
@@ -139,8 +143,6 @@ namespace SeeingSharp.Samples.Base.Direct2D
                     .WaitFinished()
                     .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_360DEG, 0f), TimeSpan.FromSeconds(2.0))
                     .WaitFinished()
-                    .RotateEulerAnglesTo(new Vector3(0f, 0f, 0f), TimeSpan.FromSeconds(2.0))
-                    .WaitFinished()
                     .CallAction(() => palletObject.RotationEuler = Vector3.Zero)
                     .ApplyAndRewind();
             });
@@ -156,6 +158,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
             base.OnClosed();
 
             CommonTools.SafeDispose(ref m_starBitmap);
+            CommonTools.SafeDispose(ref m_borderBrush);
         }
     }
 }

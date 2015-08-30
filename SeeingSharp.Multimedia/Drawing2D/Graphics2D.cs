@@ -129,6 +129,43 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
 
         /// <summary>
+        /// Draws the given rectangle with the given brush.
+        /// </summary>
+        public void DrawRectangle(RectangleF rectangle, BrushResource brush, float strokeWidth = 1f)
+        {
+            brush.EnsureNotNull("brush");
+            rectangle.EnsureNotEmpty("rectangle");
+            strokeWidth.EnsurePositive("strokeWidth");
+
+            m_renderTarget.DrawRectangle(
+                rectangle.ToDXRectangle(),
+                brush.GetBrush(m_device),
+                strokeWidth);
+        }
+
+        /// <summary>
+        /// Draws the given rounded rectangle with the given brush.
+        /// </summary>
+        public void DrawRoundedRectangle(RectangleF rectangle, float radiusX, float radiusY, BrushResource brush, float strokeWidth = 1f)
+        {
+            rectangle.EnsureNotEmpty("rectangle");
+            brush.EnsureNotNull("brush");
+            radiusX.EnsurePositive("radiusX");
+            radiusY.EnsurePositive("radiusY");
+            strokeWidth.EnsurePositive("strokeWidth");
+
+            D2D.RoundedRectangle roundedRect = new D2D.RoundedRectangle();
+            roundedRect.Rect = rectangle.ToDXRectangle();
+            roundedRect.RadiusX = radiusX;
+            roundedRect.RadiusY = radiusY;
+
+            m_renderTarget.DrawRoundedRectangle(
+                roundedRect,
+                brush.GetBrush(m_device),
+                strokeWidth);
+        }
+
+        /// <summary>
         /// Draws a point at the given location.
         /// </summary>
         public void DrawPoint(Vector2 point, BrushResource brush)
