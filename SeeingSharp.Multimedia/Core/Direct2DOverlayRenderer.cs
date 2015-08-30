@@ -43,7 +43,9 @@ namespace SeeingSharp.Multimedia.Core
 {
     /// <summary>
     /// This class provides a generic way to draw Direct2D content into a Direct3D texture (typically the render target).
-    ///   - This works by default in Windows 8, 10.
+    ///   - The first way over Device and DeviceContext works on UNIVERSAL build
+    ///     see https://msdn.microsoft.com/en-us/library/windows/desktop/hh780339(v=vs.85).aspx 
+    ///   - The second way for direct rendering on the render target works on windows 8 (Desktop and Store)
     ///   - In Windows 7, the platform update is needed to to the default way
     ///     http://msdn.microsoft.com/en-us/library/windows/desktop/jj863687(v=vs.85).aspx
     ///   - Otherwhiese, the Fallback-Method is used (render Direct2D content to a shared texture, then render it onto the render target)

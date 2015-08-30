@@ -59,7 +59,8 @@ namespace SeeingSharp.Samples.Base
 
         #region parameters for Direct2D samples
         public const int SAMPLE_DIRECT2D_D2DTEXTURE_ORDER = 101;
-        public const int SAMPLE_DIRECT2D_SCREEN_OVERLAY_ORDER = 102;
+        public const int SAMPLE_DIRECT2D_D2DANIMTEXTURE_ORDER = 102;
+        public const int SAMPLE_DIRECT2D_SCREEN_OVERLAY_ORDER = 103;
         #endregion
 
     }

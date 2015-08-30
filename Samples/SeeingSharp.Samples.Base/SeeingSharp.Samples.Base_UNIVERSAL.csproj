@@ -60,15 +60,18 @@
     <Compile Include="_Samples\BasicSamples\TransparentPalletsSample.cs" />
     <Compile Include="_Samples\CategoryMetadata.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
+    <Compile Include="_Samples\Direct2D\Direct2DAnimatedTextureSample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
     <Compile Include="_Samples\MFSamples\CameraCaptureSample.cs" />
     <Compile Include="_Samples\MFSamples\VideoTextureSample.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\SampleImages\Basics_AsyncAnimation.png" />
     <Content Include="Assets\SampleImages\Basics_Pallets.png" />
     <Content Include="Assets\SampleImages\Basics_PalletsAnimated.png" />
     <Content Include="Assets\SampleImages\Basics_TexturedPallet.png" />
+    <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture_%28animated%29.png" />
     <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture.png" />
     <Content Include="Assets\SampleImages\Basics_RotatingPallet.png" />
     <Content Include="Assets\SampleImages\Basics_SingleModel.png" />
