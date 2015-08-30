@@ -65,9 +65,11 @@ namespace SeeingSharp.Samples.Base.MFSamples
             camera.UpdateCamera();
 
             // Open the video file
+            //  see original vide at: https://www.flickr.com/photos/mlinksva/20939860191/in/photolist-xUofUg-xzKr45-xzKn65-xzhfV1-xPfMqh-wTxmUk-wSd5bL-xwAUF3-wSbSW3-xNqVYR-xNqUyB-xKte5J-xKtbMh-wQKVu5-wQVbiV-wQLHns-xKsHiQ-xvapef-xKsF1y-xMMyY2-xvbbXC-xvb5Xy-xNqkBK-xvb25o-xvafSW-xvb4FW-xKsavw-xMM69V-wQUtWn-xvgDSv-xLW62q-xvbig9-wQL8p7-xMMFog-wQV8CK-wQLGcS-wQLLZY-wQKN9U-xvhorD-xNq5we-xvbh7f-wQU3KF-xLWiZE-xvgVqe-wQKKEq-xvaJN3-xNqjhF-wQUEhH-xKspPw-wQRXGt
+            //  Licensed under public domain
             ResourceLink videoLink = new AssemblyResourceUriBuilder(
                 "SeeingSharp.Samples.Base", false,
-                "Assets/Videos/DummyVideo.mp4");
+                "Assets/Videos/DummyVideoLandscape.mp4");
             m_videoReader = new AsyncRealtimeVideoReader(videoLink);
             m_videoReader.VideoReachedEnd += (sender, eArgs) =>
             {
@@ -95,17 +97,6 @@ namespace SeeingSharp.Samples.Base.MFSamples
                 newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
                 newObject.Scaling = new Vector3(2f, 2f, 2f);
                 newObject.EnableShaderGeneratedBorder();
-
-                // Start pallet rotating animation
-                newObject.BuildAnimationSequence()
-                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_180DEG, 0f), TimeSpan.FromSeconds(2.0))
-                    .WaitFinished()
-                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_360DEG, 0f), TimeSpan.FromSeconds(2.0))
-                    .WaitFinished()
-                    .RotateEulerAnglesTo(new Vector3(0f, 0f, 0f), TimeSpan.FromSeconds(2.0))
-                    .WaitFinished()
-                    .CallAction(() => newObject.RotationEuler = Vector3.Zero)
-                    .ApplyAndRewind();
             });
         }
 

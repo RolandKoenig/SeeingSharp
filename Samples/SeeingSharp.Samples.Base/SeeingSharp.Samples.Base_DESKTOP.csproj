@@ -98,6 +98,7 @@
     <Resource Include="Assets\Models\Penguin.ac" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Assets\Videos\DummyVideoLandscape.mp4" />
     <Resource Include="Assets\Textures\NoCaptureDevice.png" />
     <Resource Include="Assets\Textures\SimpleTexture.png" />
     <Resource Include="Assets\SampleImages\Direct2D_Draw_to_Texture.png" />

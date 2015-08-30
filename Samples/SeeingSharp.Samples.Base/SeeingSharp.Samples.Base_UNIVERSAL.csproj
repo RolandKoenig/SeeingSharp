@@ -97,6 +97,7 @@
     <Content Include="Assets\Textures\Wall.png" />
     <Content Include="Assets\Textures\White.png" />
     <Content Include="Assets\Videos\DummyVideo.mp4" />
+    <Content Include="Assets\Videos\DummyVideoLandscape.mp4" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_UNIVERSAL.csproj">
