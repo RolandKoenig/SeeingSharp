@@ -74,7 +74,14 @@ namespace SeeingSharp.Samples.Base.Direct2D
             // Define 2D overlay
             Action<Graphics2D> draw2DAction = (graphics) =>
             {
-                
+                graphics.DrawBitmap(
+                    m_starBitmap,
+                    new Vector2(10f, 100f),
+                    1f,
+                    BitmapInterpolationMode.Linear);
+                graphics.DrawImage(
+                    m_startBitmapShaded,
+                    new Vector2(150f, 100f));
 
                 //// 2D rendering is made here
                 //RectangleF d2dRectangle = new RectangleF(

@@ -77,7 +77,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 D2D.Effects.GaussianBlur blurEffect = new D2D.Effects.GaussianBlur(device.DeviceContextD2D);
                 blurEffect.BorderMode = D2D.BorderMode.Soft;
                 blurEffect.Optimization = D2D.GaussianBlurOptimization.Quality;
-                blurEffect.StandardDeviation = 2f;
+                blurEffect.StandardDeviation = 5f;
                 effect = blurEffect;
 
                 // Set input values

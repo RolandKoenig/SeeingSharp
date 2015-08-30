@@ -381,6 +381,60 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 sourceRectangle.ToDXRectangle());
         }
 
+#if UNIVERSAL
+        /// <summary>
+        /// Draws the given image.
+        /// </summary>
+        /// <param name="image">The source of pixel data to be rendered.</param>
+        /// <param name="destinationRectangle">The target rectangle where to draw the image.</param>
+        public void DrawImage(
+            IEffectInput image,
+            Vector2 destinationOrigin)
+        {
+            image.EnsureNotNull("bitmap");
+
+            IEffectInputInternal internalImage = image as IEffectInputInternal;
+            internalImage.EnsureNotNull("internalImage");
+
+            D2D.Image d2dImage = internalImage.GetInputObject(m_device) as D2D.Image;
+            d2dImage.EnsureNotNull("d2dImage");
+
+            m_deviceContext.DrawImage(
+                d2dImage,
+                destinationOrigin.ToDXVector(),
+                null,
+                D2D.InterpolationMode.Linear,
+                D2D.CompositeMode.SourceOver);
+        }
+
+        /// <summary>
+        /// Draws the given image.
+        /// </summary>
+        /// <param name="image">The source of pixel data to be rendered.</param>
+        /// <param name="destinationRectangle">The target rectangle where to draw the image.</param>
+        /// <param name="sourceRectangle">The area which to take from the bitmap.</param>
+        public void DrawImage(
+            IEffectInput image,
+            Vector2 destinationOrigin,
+            RectangleF sourceRectangle)
+        {
+            image.EnsureNotNull("bitmap");
+
+            IEffectInputInternal internalImage = image as IEffectInputInternal;
+            internalImage.EnsureNotNull("internalImage");
+
+            D2D.Image d2dImage = internalImage.GetInputObject(m_device) as D2D.Image;
+            d2dImage.EnsureNotNull("d2dImage");
+     
+            m_deviceContext.DrawImage(
+                d2dImage,
+                destinationOrigin.ToDXVector(),
+                sourceRectangle.ToDXRectangle(),
+                D2D.InterpolationMode.Linear,
+                D2D.CompositeMode.SourceOver);
+        }
+#endif
+
         /// <summary>
         /// Gets the device which is used for rendering.
         /// </summary>

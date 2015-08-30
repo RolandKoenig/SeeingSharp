@@ -42,7 +42,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="device">The device for which to get the input.</param>
         IDisposable IEffectInputInternal.GetInputObject(EngineDevice device)
         {
-            return this.GetBitmap(device);
+            return this.GetBitmap(device)
+                .QueryInterface<D2D.Bitmap>();
         }
 
         public abstract int PixelWidth
