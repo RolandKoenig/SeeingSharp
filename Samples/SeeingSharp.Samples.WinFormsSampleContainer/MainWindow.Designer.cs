@@ -39,6 +39,7 @@ namespace WinFormsSampleContainer
             this.to1024x768ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.to1280x1024ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.to1600x1200ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_cmdNewChildWindow = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_cmdShowSource = new System.Windows.Forms.ToolStripButton();
             this.m_cmdCopy = new System.Windows.Forms.ToolStripButton();
@@ -56,7 +57,6 @@ namespace WinFormsSampleContainer
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_splitter = new System.Windows.Forms.SplitContainer();
-            this.m_cmdNewChildWindow = new System.Windows.Forms.ToolStripButton();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).BeginInit();
@@ -81,7 +81,7 @@ namespace WinFormsSampleContainer
             this.m_cmdHelp});
             this.m_barTools.Location = new System.Drawing.Point(0, 0);
             this.m_barTools.Name = "m_barTools";
-            this.m_barTools.Size = new System.Drawing.Size(762, 27);
+            this.m_barTools.Size = new System.Drawing.Size(857, 32);
             this.m_barTools.TabIndex = 0;
             this.m_barTools.Text = "toolStrip1";
             // 
@@ -91,14 +91,14 @@ namespace WinFormsSampleContainer
             this.m_cboDevice.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.m_cboDevice.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cboDevice.Name = "m_cboDevice";
-            this.m_cboDevice.Size = new System.Drawing.Size(108, 24);
+            this.m_cboDevice.Size = new System.Drawing.Size(126, 29);
             this.m_cboDevice.Text = "<Device>";
             this.m_cboDevice.ToolTipText = "Change current rendering device";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 32);
             // 
             // m_cboRenderResolution
             // 
@@ -110,14 +110,14 @@ namespace WinFormsSampleContainer
             this.m_cboRenderResolution.Image = global::WinFormsSampleContainer.Properties.Resources.Output16x16;
             this.m_cboRenderResolution.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cboRenderResolution.Name = "m_cboRenderResolution";
-            this.m_cboRenderResolution.Size = new System.Drawing.Size(167, 24);
+            this.m_cboRenderResolution.Size = new System.Drawing.Size(198, 29);
             this.m_cboRenderResolution.Text = "Change Resolution";
             this.m_cboRenderResolution.ToolTipText = "Change rendering resolution (pixels)";
             // 
             // to800x600ToolStripMenuItem1
             // 
             this.to800x600ToolStripMenuItem1.Name = "to800x600ToolStripMenuItem1";
-            this.to800x600ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
+            this.to800x600ToolStripMenuItem1.Size = new System.Drawing.Size(207, 30);
             this.to800x600ToolStripMenuItem1.Tag = "800x600";
             this.to800x600ToolStripMenuItem1.Text = "to 800x600";
             this.to800x600ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
@@ -125,7 +125,7 @@ namespace WinFormsSampleContainer
             // to1024x768ToolStripMenuItem1
             // 
             this.to1024x768ToolStripMenuItem1.Name = "to1024x768ToolStripMenuItem1";
-            this.to1024x768ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
+            this.to1024x768ToolStripMenuItem1.Size = new System.Drawing.Size(207, 30);
             this.to1024x768ToolStripMenuItem1.Tag = "1024x768";
             this.to1024x768ToolStripMenuItem1.Text = "to 1024x768";
             this.to1024x768ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
@@ -133,7 +133,7 @@ namespace WinFormsSampleContainer
             // to1280x1024ToolStripMenuItem1
             // 
             this.to1280x1024ToolStripMenuItem1.Name = "to1280x1024ToolStripMenuItem1";
-            this.to1280x1024ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
+            this.to1280x1024ToolStripMenuItem1.Size = new System.Drawing.Size(207, 30);
             this.to1280x1024ToolStripMenuItem1.Tag = "1280x1024";
             this.to1280x1024ToolStripMenuItem1.Text = "to 1280x1024";
             this.to1280x1024ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
@@ -141,15 +141,24 @@ namespace WinFormsSampleContainer
             // to1600x1200ToolStripMenuItem1
             // 
             this.to1600x1200ToolStripMenuItem1.Name = "to1600x1200ToolStripMenuItem1";
-            this.to1600x1200ToolStripMenuItem1.Size = new System.Drawing.Size(173, 26);
+            this.to1600x1200ToolStripMenuItem1.Size = new System.Drawing.Size(207, 30);
             this.to1600x1200ToolStripMenuItem1.Tag = "1600x1200";
             this.to1600x1200ToolStripMenuItem1.Text = "to 1600x1200";
             this.to1600x1200ToolStripMenuItem1.Click += new System.EventHandler(this.OnCmdChangeResolution_Click);
             // 
+            // m_cmdNewChildWindow
+            // 
+            this.m_cmdNewChildWindow.Image = global::WinFormsSampleContainer.Properties.Resources.OutputAdd16x16;
+            this.m_cmdNewChildWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.m_cmdNewChildWindow.Name = "m_cmdNewChildWindow";
+            this.m_cmdNewChildWindow.Size = new System.Drawing.Size(187, 29);
+            this.m_cmdNewChildWindow.Text = "New Child Window";
+            this.m_cmdNewChildWindow.Click += new System.EventHandler(this.OnCmdNewChildWindow_Click);
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 32);
             // 
             // m_cmdShowSource
             // 
@@ -157,7 +166,7 @@ namespace WinFormsSampleContainer
             this.m_cmdShowSource.Image = global::WinFormsSampleContainer.Properties.Resources.PageCSharp16x16;
             this.m_cmdShowSource.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdShowSource.Name = "m_cmdShowSource";
-            this.m_cmdShowSource.Size = new System.Drawing.Size(24, 24);
+            this.m_cmdShowSource.Size = new System.Drawing.Size(24, 29);
             this.m_cmdShowSource.Text = "Show Source";
             this.m_cmdShowSource.Click += new System.EventHandler(this.OnCmdShowSource_Click);
             // 
@@ -167,7 +176,7 @@ namespace WinFormsSampleContainer
             this.m_cmdCopy.Image = global::WinFormsSampleContainer.Properties.Resources.Camera16x16;
             this.m_cmdCopy.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdCopy.Name = "m_cmdCopy";
-            this.m_cmdCopy.Size = new System.Drawing.Size(24, 24);
+            this.m_cmdCopy.Size = new System.Drawing.Size(24, 29);
             this.m_cmdCopy.Text = "Copy";
             this.m_cmdCopy.ToolTipText = "Take a screenshot and copy it to Clipboard";
             this.m_cmdCopy.Click += new System.EventHandler(this.OnCmdCopy_Click);
@@ -178,7 +187,7 @@ namespace WinFormsSampleContainer
             this.m_cmdShowPerformance.Image = global::WinFormsSampleContainer.Properties.Resources.PerformanceMeasure16x16;
             this.m_cmdShowPerformance.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdShowPerformance.Name = "m_cmdShowPerformance";
-            this.m_cmdShowPerformance.Size = new System.Drawing.Size(24, 24);
+            this.m_cmdShowPerformance.Size = new System.Drawing.Size(24, 29);
             this.m_cmdShowPerformance.Text = "toolStripButton1";
             this.m_cmdShowPerformance.ToolTipText = "Show performance data";
             this.m_cmdShowPerformance.Click += new System.EventHandler(this.OnCmdShowPerformance_Click);
@@ -190,7 +199,7 @@ namespace WinFormsSampleContainer
             this.m_cmdHelp.Image = global::WinFormsSampleContainer.Properties.Resources.Help16x16;
             this.m_cmdHelp.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.m_cmdHelp.Name = "m_cmdHelp";
-            this.m_cmdHelp.Size = new System.Drawing.Size(24, 24);
+            this.m_cmdHelp.Size = new System.Drawing.Size(24, 29);
             this.m_cmdHelp.Text = "toolStripButton1";
             this.m_cmdHelp.Click += new System.EventHandler(this.OnCmdHelp_Click);
             // 
@@ -204,7 +213,7 @@ namespace WinFormsSampleContainer
             this.m_tabControlSamples.Margin = new System.Windows.Forms.Padding(0);
             this.m_tabControlSamples.Name = "m_tabControlSamples";
             this.m_tabControlSamples.SelectedIndex = 0;
-            this.m_tabControlSamples.Size = new System.Drawing.Size(762, 128);
+            this.m_tabControlSamples.Size = new System.Drawing.Size(857, 128);
             this.m_tabControlSamples.TabIndex = 3;
             // 
             // m_images
@@ -223,41 +232,42 @@ namespace WinFormsSampleContainer
             this.m_lblCountObjectsValue,
             this.m_lblWorking,
             this.m_barProgress});
-            this.m_barStatus.Location = new System.Drawing.Point(0, 493);
+            this.m_barStatus.Location = new System.Drawing.Point(0, 618);
             this.m_barStatus.Name = "m_barStatus";
-            this.m_barStatus.Size = new System.Drawing.Size(762, 29);
+            this.m_barStatus.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
+            this.m_barStatus.Size = new System.Drawing.Size(857, 34);
             this.m_barStatus.TabIndex = 4;
             // 
             // m_lblRenderResolution
             // 
             this.m_lblRenderResolution.Name = "m_lblRenderResolution";
-            this.m_lblRenderResolution.Size = new System.Drawing.Size(133, 24);
+            this.m_lblRenderResolution.Size = new System.Drawing.Size(159, 29);
             this.m_lblRenderResolution.Text = "Render Resolution:";
             // 
             // m_lblRenderResolutionValue
             // 
             this.m_lblRenderResolutionValue.Name = "m_lblRenderResolutionValue";
-            this.m_lblRenderResolutionValue.Size = new System.Drawing.Size(99, 24);
+            this.m_lblRenderResolutionValue.Size = new System.Drawing.Size(119, 29);
             this.m_lblRenderResolutionValue.Text = "<Resolution>";
             // 
             // m_lblCountObjects
             // 
             this.m_lblCountObjects.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.m_lblCountObjects.Name = "m_lblCountObjects";
-            this.m_lblCountObjects.Size = new System.Drawing.Size(75, 24);
+            this.m_lblCountObjects.Size = new System.Drawing.Size(91, 29);
             this.m_lblCountObjects.Text = "#Objects:";
             // 
             // m_lblCountObjectsValue
             // 
             this.m_lblCountObjectsValue.Name = "m_lblCountObjectsValue";
-            this.m_lblCountObjectsValue.Size = new System.Drawing.Size(68, 24);
+            this.m_lblCountObjectsValue.Size = new System.Drawing.Size(84, 29);
             this.m_lblCountObjectsValue.Text = "<Count>";
             // 
             // m_lblWorking
             // 
             this.m_lblWorking.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.m_lblWorking.Name = "m_lblWorking";
-            this.m_lblWorking.Size = new System.Drawing.Size(74, 24);
+            this.m_lblWorking.Size = new System.Drawing.Size(91, 30);
             this.m_lblWorking.Text = "Working..";
             this.m_lblWorking.Visible = false;
             // 
@@ -265,7 +275,7 @@ namespace WinFormsSampleContainer
             // 
             this.m_barProgress.MarqueeAnimationSpeed = 20;
             this.m_barProgress.Name = "m_barProgress";
-            this.m_barProgress.Size = new System.Drawing.Size(150, 23);
+            this.m_barProgress.Size = new System.Drawing.Size(169, 29);
             this.m_barProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             this.m_barProgress.Visible = false;
             // 
@@ -281,11 +291,13 @@ namespace WinFormsSampleContainer
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
+            this.m_ctrlRenderer.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 334);
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(857, 453);
             this.m_ctrlRenderer.TabIndex = 6;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_ctrlRenderer.ViewConfiguration.AlphaEnabledSwapChain = false;
             this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.2F;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
@@ -300,7 +312,8 @@ namespace WinFormsSampleContainer
             // 
             this.m_splitter.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_splitter.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-            this.m_splitter.Location = new System.Drawing.Point(0, 27);
+            this.m_splitter.Location = new System.Drawing.Point(0, 32);
+            this.m_splitter.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.m_splitter.Name = "m_splitter";
             this.m_splitter.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
@@ -311,28 +324,21 @@ namespace WinFormsSampleContainer
             // m_splitter.Panel2
             // 
             this.m_splitter.Panel2.Controls.Add(this.m_ctrlRenderer);
-            this.m_splitter.Size = new System.Drawing.Size(762, 466);
+            this.m_splitter.Size = new System.Drawing.Size(857, 586);
             this.m_splitter.SplitterDistance = 128;
+            this.m_splitter.SplitterWidth = 5;
             this.m_splitter.TabIndex = 7;
-            // 
-            // m_cmdNewChildWindow
-            // 
-            this.m_cmdNewChildWindow.Image = ((System.Drawing.Image)(resources.GetObject("m_cmdNewChildWindow.Image")));
-            this.m_cmdNewChildWindow.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.m_cmdNewChildWindow.Name = "m_cmdNewChildWindow";
-            this.m_cmdNewChildWindow.Size = new System.Drawing.Size(160, 24);
-            this.m_cmdNewChildWindow.Text = "New Child Window";
-            this.m_cmdNewChildWindow.Click += new System.EventHandler(this.OnCmdNewChildWindow_Click);
             // 
             // MainWindow
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(762, 522);
+            this.ClientSize = new System.Drawing.Size(857, 652);
             this.Controls.Add(this.m_splitter);
             this.Controls.Add(this.m_barStatus);
             this.Controls.Add(this.m_barTools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "MainWindow";
             this.Text = "Seeing# Win.Forms SampleContainer";
             this.m_barTools.ResumeLayout(false);

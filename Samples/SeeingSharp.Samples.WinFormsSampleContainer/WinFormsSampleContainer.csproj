@@ -177,6 +177,7 @@
     <Content Include="Resources\Icons\Camera16x16.png" />
     <Content Include="Resources\Icons\Copy16x16.png" />
     <Content Include="Resources\Icons\Help16x16.png" />
+    <Content Include="Resources\Icons\OutputAdd16x16.png" />
     <Content Include="Resources\Icons\PageCSharp16x16.png" />
     <Content Include="Resources\Icons\PerformanceMeasure16x16.png" />
     <Content Include="Resources\Icons\Output16x16.png" />
