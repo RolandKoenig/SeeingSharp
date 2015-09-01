@@ -103,6 +103,7 @@
     <Compile Include="Util\CommonTools.Cloning.cs" />
     <Compile Include="Util\CommonTools.cs" />
     <Compile Include="Util\CustomLazy.cs" />
+    <Compile Include="Util\CustomObservable.cs" />
     <Compile Include="Util\DummyDisposable.cs" />
     <Compile Include="Util\MultiDisposable.cs" />
     <Compile Include="Util\SerializerRepository.cs" />
