@@ -51,11 +51,13 @@ namespace RKRocket.Game
             m_xPos = Constants.GFX_SCREEN_VPIXEL_WIDTH / 2f;
 
             m_playerBitmap = GraphicsResources.Bitmap_Player;
+
+            
         }
 
         protected override void UpdateInternal(UpdateState updateState)
         {
-
+   
         }
 
         /// <summary>

@@ -325,6 +325,21 @@ namespace SeeingSharp.Multimedia.Input
             m_pressedKeys.Clear();
             m_controlDown = false;
         }
+
+        public IEnumerable<MouseEvent> GetLastMouseEvents()
+        {
+            yield break;
+        }
+
+        public IEnumerable<KeyboardEvent> GetLastKeyboardEvents()
+        {
+            yield break;
+        }
+
+        public IEnumerable<GamepadEvent> GetLastGamepadEvents()
+        {
+            yield break;
+        }
     }
 }
 

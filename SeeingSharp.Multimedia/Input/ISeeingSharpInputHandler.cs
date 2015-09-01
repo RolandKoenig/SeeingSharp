@@ -66,5 +66,23 @@ namespace SeeingSharp.Multimedia.Input
         /// Stops input handling.
         /// </summary>
         void Stop();
+
+        /// <summary>
+        /// Queries the mouse events which hapened since the last call of this method.
+        /// This call removes all events from the internal cache.
+        /// </summary>
+        IEnumerable<MouseEvent> GetLastMouseEvents();
+
+        /// <summary>
+        /// Queries the keyboard events which hapened since the last call of this method.
+        /// This call removes all events from the itnernal cache.
+        /// </summary>
+        IEnumerable<KeyboardEvent> GetLastKeyboardEvents();
+
+        /// <summary>
+        /// Queries the gamepad events which hapened since the last call of this method.
+        /// This call removes all events from the itnernal cache.
+        /// </summary>
+        IEnumerable<GamepadEvent> GetLastGamepadEvents();
     }
 }

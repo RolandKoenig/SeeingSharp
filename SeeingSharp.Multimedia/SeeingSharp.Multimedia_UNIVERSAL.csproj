@@ -227,6 +227,10 @@
     <Compile Include="DrawingVideo\_Util\MFSessionEventListener.cs" />
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
+    <Compile Include="Input\_Events\GamepadEvent.cs" />
+    <Compile Include="Input\InputEvent.cs" />
+    <Compile Include="Input\_Events\KeyboardEvent.cs" />
+    <Compile Include="Input\_Events\MouseEvent.cs" />
     <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
     <Compile Include="Gaming\GameBase.cs" />

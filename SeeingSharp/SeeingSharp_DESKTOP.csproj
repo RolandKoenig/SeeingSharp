@@ -169,6 +169,7 @@
     <Compile Include="Util\TableData\_OpenXml\XlsxTableHeaderRow.cs" />
     <Compile Include="Util\TableData\_OpenXml\XlsxTableImporter.cs" />
     <Compile Include="Util\TplBasedLoop.cs" />
+    <Compile Include="Util\_Collections\RingBuffer.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceFileAttribute.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceInfo.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceLink.cs" />

@@ -106,6 +106,7 @@
     <Compile Include="Util\CustomObservable.cs" />
     <Compile Include="Util\DummyDisposable.cs" />
     <Compile Include="Util\MultiDisposable.cs" />
+    <Compile Include="Util\_Collections\RingBuffer.cs" />
     <Compile Include="Util\SerializerRepository.cs" />
     <Compile Include="Util\TableData\ITableFile.cs" />
     <Compile Include="Util\TableData\ITableHeaderRow.cs" />

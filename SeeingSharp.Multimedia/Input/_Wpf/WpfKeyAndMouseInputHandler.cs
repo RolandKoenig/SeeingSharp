@@ -303,6 +303,21 @@ namespace SeeingSharp.Multimedia.Input
         {
             StopCameraDragging();
         }
+
+        public IEnumerable<MouseEvent> GetLastMouseEvents()
+        {
+            yield break;
+        }
+
+        public IEnumerable<KeyboardEvent> GetLastKeyboardEvents()
+        {
+            yield break;
+        }
+
+        public IEnumerable<GamepadEvent> GetLastGamepadEvents()
+        {
+            yield break;
+        }
     }
 }
 #endif
