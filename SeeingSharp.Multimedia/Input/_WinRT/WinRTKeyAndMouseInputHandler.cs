@@ -38,22 +38,23 @@ using Windows.UI.Input;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using SeeingSharp.Util;
 
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
     targetType: typeof(SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler),
-    contractType: typeof(SeeingSharp.Multimedia.Input.ISeeingSharpInputHandler))]
+    contractType: typeof(SeeingSharp.Multimedia.Input.IInputHandler))]
 
 namespace SeeingSharp.Multimedia.Input
 {
-    class WinRTKeyAndMouseInputHandler : ISeeingSharpInputHandler
+    class WinRTKeyAndMouseInputHandler : IInputHandler
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
 
         #region objects from outside
         private SeeingSharpPanelPainter m_painter;
-        private IInputEnabledView m_focusHandler;
+        private IInputEnabledView m_viewInterface;
         private RenderLoop m_renderLoop;
         private Camera3DBase m_camera;
         #endregion
@@ -104,10 +105,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public SeeingSharpInputMode[] GetSupportedInputModes()
         {
-            return new[]
-            {
-                SeeingSharpInputMode.FreeCameraMovement
-            };
+            return null;
         }
 
         /// <summary>
@@ -120,10 +118,10 @@ namespace SeeingSharp.Multimedia.Input
             m_painter = viewObject as SeeingSharpPanelPainter;
             if (m_painter == null) { throw new ArgumentException("Unable to handle given view object!"); }
 
-            m_focusHandler = m_painter as IInputEnabledView;
-            if (m_focusHandler == null) { throw new ArgumentException("Unable to handle given view object!"); }
+            m_viewInterface = m_painter as IInputEnabledView;
+            if (m_viewInterface == null) { throw new ArgumentException("Unable to handle given view object!"); }
 
-            m_renderLoop = m_focusHandler.RenderLoop;
+            m_renderLoop = m_viewInterface.RenderLoop;
             if (m_renderLoop == null) { throw new ArgumentException("Unable to handle given view object!"); }
 
             m_camera = cameraObject as Camera3DBase;
@@ -189,6 +187,8 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public void UpdateMovement()
         {
+            if(m_viewInterface.InputMode != SeeingSharpInputMode.FreeCameraMovement) { return; }
+
             // Define multiplyer
             float multiplyer = 1f;
 
@@ -244,6 +244,14 @@ namespace SeeingSharp.Multimedia.Input
                         break;
                 }
             }
+        }
+
+        /// <summary>
+        /// Querries all current input states.
+        /// </summary>
+        public IEnumerable<InputStateBase> GetInputStates()
+        {
+            yield break;
         }
 
         /// <summary>
@@ -306,6 +314,9 @@ namespace SeeingSharp.Multimedia.Input
                 m_dummyButtonForFocus.Focus(FocusState.Programmatic);
             }
 
+            // Store the mouse event
+            PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+
             StopCameraDragging();
 
             // Needed here because we loose focus again by default on left mouse button
@@ -319,6 +330,9 @@ namespace SeeingSharp.Multimedia.Input
             {
                 m_dummyButtonForFocus.Focus(FocusState.Programmatic);
             }
+
+            // Store the mouse event
+            PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
 
             StartCameraDragging(e.GetCurrentPoint(m_painter.TargetPanel));
 
@@ -344,18 +358,23 @@ namespace SeeingSharp.Multimedia.Input
                     (float)(currentPoint.Position.X - m_lastDragPoint.Position.X),
                     (float)(currentPoint.Position.Y - m_lastDragPoint.Position.Y));
 
-                if (currentPoint.Properties.IsLeftButtonPressed)
+                // Move camera if we are in FreeCameraMovement input mode
+                if (m_viewInterface.InputMode == SeeingSharpInputMode.FreeCameraMovement)
                 {
-                    camera.Strave((float)((double)moveDistance.X / 50));
-                    camera.UpDown((float)(-(double)moveDistance.Y / 50));
-                }
-                else if (currentPoint.Properties.IsRightButtonPressed)
-                {
-                    camera.Rotate(
-                         (float)(-(double)moveDistance.X / 300),
-                         (float)(-(double)moveDistance.Y / 300));
+                    if (currentPoint.Properties.IsLeftButtonPressed)
+                    {
+                        camera.Strave((float)((double)moveDistance.X / 50));
+                        camera.UpDown((float)(-(double)moveDistance.Y / 50));
+                    }
+                    else if (currentPoint.Properties.IsRightButtonPressed)
+                    {
+                        camera.Rotate(
+                             (float)(-(double)moveDistance.X / 300),
+                             (float)(-(double)moveDistance.Y / 300));
+                    }
                 }
 
+                // Store last drag point
                 m_lastDragPoint = currentPoint;
             }
         }
@@ -364,10 +383,15 @@ namespace SeeingSharp.Multimedia.Input
         {
             if (!m_hasFocus) { return; }
 
-            Camera3DBase camera = m_renderLoop.Camera;
-            if (camera != null)
+            int wheelDelta = e.GetCurrentPoint(m_painter.TargetPanel).Properties.MouseWheelDelta;
+
+            if (m_viewInterface.InputMode == SeeingSharpInputMode.FreeCameraMovement)
             {
-                camera.Zoom((float)(e.GetCurrentPoint(m_painter.TargetPanel).Properties.MouseWheelDelta / 100.0));
+                Camera3DBase camera = m_renderLoop.Camera;
+                if (camera != null)
+                {
+                    camera.Zoom((float)(wheelDelta / 100.0));
+                }
             }
         }
 
@@ -377,21 +401,6 @@ namespace SeeingSharp.Multimedia.Input
         private void OnTargetPanel_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             StopCameraDragging();
-        }
-
-        public IEnumerable<MouseEvent> GetLastMouseEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<KeyboardEvent> GetLastKeyboardEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<GamepadEvent> GetLastGamepadEvents()
-        {
-            yield break;
         }
     }
 }

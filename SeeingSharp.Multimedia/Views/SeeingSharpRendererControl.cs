@@ -64,7 +64,7 @@ namespace SeeingSharp.Multimedia.Views
         #endregion Resources for Direct3D 11
 
         #region Members for input handling
-        private List<ISeeingSharpInputHandler> m_inputHandlers;
+        private List<IInputHandler> m_inputHandlers;
         private SeeingSharpInputMode m_inputMode;
         private bool m_isMouseInside;
         #endregion Members for input handling
@@ -93,7 +93,7 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         public SeeingSharpRendererControl()
         {
-            m_inputHandlers = new List<ISeeingSharpInputHandler>();
+            m_inputHandlers = new List<IInputHandler>();
 
             //Set style parameters for this control
             base.SetStyle(ControlStyles.AllPaintingInWmPaint, true);

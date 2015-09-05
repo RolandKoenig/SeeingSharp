@@ -57,7 +57,7 @@ namespace RKRocket.Game
 
         protected override void UpdateInternal(UpdateState updateState)
         {
-   
+            
         }
 
         /// <summary>

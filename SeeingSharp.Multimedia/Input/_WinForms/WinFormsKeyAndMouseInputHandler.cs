@@ -35,18 +35,18 @@ using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 
-using GDI = System.Drawing;
 // Some namespace mapings
+using GDI = System.Drawing;
 using WinForms = System.Windows.Forms;
 
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
     targetType: typeof(SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler),
-    contractType: typeof(SeeingSharp.Multimedia.Input.ISeeingSharpInputHandler))]
+    contractType: typeof(SeeingSharp.Multimedia.Input.IInputHandler))]
 
 namespace SeeingSharp.Multimedia.Input
 {
-    internal class WinFormsKeyAndMouseInputHandler : ISeeingSharpInputHandler
+    internal class WinFormsKeyAndMouseInputHandler : IInputHandler
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
@@ -222,6 +222,14 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
+        /// Querries all current input states.
+        /// </summary>
+        public IEnumerable<InputStateBase> GetInputStates()
+        {
+            yield break;
+        }
+
+        /// <summary>
         /// Called when the mouse enters the screen.
         /// </summary>
         /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
@@ -324,21 +332,6 @@ namespace SeeingSharp.Multimedia.Input
             // Clear all button states
             m_pressedKeys.Clear();
             m_controlDown = false;
-        }
-
-        public IEnumerable<MouseEvent> GetLastMouseEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<KeyboardEvent> GetLastKeyboardEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<GamepadEvent> GetLastGamepadEvents()
-        {
-            yield break;
         }
     }
 }

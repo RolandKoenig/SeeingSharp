@@ -28,8 +28,7 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Input
 {
-    public class MouseEvent : InputEvent
+    public class KeyboardState
     {
-
     }
 }

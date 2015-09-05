@@ -11,11 +11,11 @@ using XI = SharpDX.XInput;
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
     targetType: typeof(SeeingSharp.Multimedia.Input.GenericXInputHandler),
-    contractType: typeof(SeeingSharp.Multimedia.Input.ISeeingSharpInputHandler))]
+    contractType: typeof(SeeingSharp.Multimedia.Input.IInputHandler))]
 
 namespace SeeingSharp.Multimedia.Input
 {
-    internal class GenericXInputHandler : ISeeingSharpInputHandler
+    internal class GenericXInputHandler : IInputHandler
     {
         /// <summary>
         /// Gets a list containing all supported view types.
@@ -53,17 +53,10 @@ namespace SeeingSharp.Multimedia.Input
         {
         }
 
-        public IEnumerable<MouseEvent> GetLastMouseEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<KeyboardEvent> GetLastKeyboardEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<GamepadEvent> GetLastGamepadEvents()
+        /// <summary>
+        /// Querries all current input states.
+        /// </summary>
+        public IEnumerable<InputStateBase> GetInputStates()
         {
             yield break;
         }

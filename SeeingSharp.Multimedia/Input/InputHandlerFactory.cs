@@ -35,7 +35,7 @@ namespace SeeingSharp.Multimedia.Input
 {
     public class InputHandlerFactory
     {
-        private List<ISeeingSharpInputHandler> m_inputHandlers;
+        private List<IInputHandler> m_inputHandlers;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="InputHandlerFactory"/> class.
@@ -43,7 +43,7 @@ namespace SeeingSharp.Multimedia.Input
         internal InputHandlerFactory()
         {
             m_inputHandlers = SeeingSharpApplication.Current.TypeQuery
-                .GetAndInstanciateByContract<ISeeingSharpInputHandler>();
+                .GetAndInstanciateByContract<IInputHandler>();
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace SeeingSharp.Multimedia.Input
         /// <param name="currentlyDispsoing">Is the view currently disposing?</param>
         internal static void UpdateInputHandlerList(
             IInputEnabledView viewObject,
-            List<ISeeingSharpInputHandler> inputHandlers,
+            List<IInputHandler> inputHandlers,
             RenderLoop renderLoop,
             bool currentlyDispsoing)
         {
@@ -102,7 +102,7 @@ namespace SeeingSharp.Multimedia.Input
         /// <typeparam name="ViewType">Gets the type of the view.</typeparam>
         /// <typeparam name="CameraType">Gets the type of the camera.</typeparam>
         /// <param name="viewObject">The view for which to the input handlers.</param>
-        public List<ISeeingSharpInputHandler> GetInputHandler<ViewType, CameraType>(IInputEnabledView viewObject)
+        public List<IInputHandler> GetInputHandler<ViewType, CameraType>(IInputEnabledView viewObject)
             where ViewType : class
             where CameraType : class
         {
@@ -118,9 +118,9 @@ namespace SeeingSharp.Multimedia.Input
         /// <param name="viewObject">The view for which to query the input object.</param>
         /// <param name="givenCameraType">The type of the view.</param>
         /// <param name="givenViewType">The type of the camera.</param>
-        public List<ISeeingSharpInputHandler> GetInputHandler(IInputEnabledView viewObject, Type givenViewType, Type givenCameraType)
+        public List<IInputHandler> GetInputHandler(IInputEnabledView viewObject, Type givenViewType, Type givenCameraType)
         {
-            List<ISeeingSharpInputHandler> result = new List<ISeeingSharpInputHandler>();
+            List<IInputHandler> result = new List<IInputHandler>();
             foreach (var actInputHandler in m_inputHandlers)
             {
                 // Query for the input handler's information
@@ -177,7 +177,7 @@ namespace SeeingSharp.Multimedia.Input
                 if (!inputModeSupported) { continue; }
 
                 // Create a new input handler
-                result.Add(Activator.CreateInstance(actInputHandler.GetType()) as ISeeingSharpInputHandler);
+                result.Add(Activator.CreateInstance(actInputHandler.GetType()) as IInputHandler);
             }
             return result;
         }

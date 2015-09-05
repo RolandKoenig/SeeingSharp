@@ -101,5 +101,26 @@ namespace SeeingSharp.Checking
                     checkedVariableName, callerMethod, countMin, countMax, collectionCount));
             }
         }
+
+        [Conditional("DEBUG")]
+        public static void EnsureCountEquals<T>(
+            this IEnumerable<T> collection, int count, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            // Get the collection count
+            int collectionCount = -1;
+            collectionCount = CommonTools.GetCollectionCount<T>(collection);
+
+            // Check result
+            if (collectionCount != count)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Collection {0} within method {1} does not have the expected count of elements (expected {2})!",
+                    checkedVariableName, callerMethod, count, collectionCount));
+            }
+        }
     }
 }

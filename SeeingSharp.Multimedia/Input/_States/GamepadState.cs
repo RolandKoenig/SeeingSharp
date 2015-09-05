@@ -28,7 +28,7 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Input
 {
-    public class KeyboardEvent : InputEvent
+    class GamepadState
     {
     }
 }

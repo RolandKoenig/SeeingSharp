@@ -71,7 +71,7 @@ namespace SeeingSharp.Multimedia.Views
         #endregion
 
         #region Members for input handling
-        private List<ISeeingSharpInputHandler> m_inputHandlers;
+        private List<IInputHandler> m_inputHandlers;
         private SeeingSharpInputMode m_inputMode;
         #endregion
 
@@ -99,7 +99,7 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         public SeeingSharpRendererElement()
         {
-            m_inputHandlers = new List<ISeeingSharpInputHandler>();
+            m_inputHandlers = new List<IInputHandler>();
 
             this.Loaded += OnLoaded;
             this.Unloaded += OnUnloaded;

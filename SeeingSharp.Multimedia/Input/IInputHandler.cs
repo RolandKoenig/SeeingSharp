@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it.
-    More info at
+    Seeing# and all games/applications distributed together with it. 
+    More info at 
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,7 +19,7 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion License information (SeeingSharp and all based games/applications)
+#endregion
 
 using System;
 using System.Collections.Generic;
@@ -30,7 +30,7 @@ using SeeingSharp.Multimedia.Core;
 
 namespace SeeingSharp.Multimedia.Input
 {
-    public interface ISeeingSharpInputHandler
+    public interface IInputHandler
     {
         /// <summary>
         /// Gets a list containing all supported view types.
@@ -68,21 +68,8 @@ namespace SeeingSharp.Multimedia.Input
         void Stop();
 
         /// <summary>
-        /// Queries the mouse events which hapened since the last call of this method.
-        /// This call removes all events from the internal cache.
+        /// Querries all current input states.
         /// </summary>
-        IEnumerable<MouseEvent> GetLastMouseEvents();
-
-        /// <summary>
-        /// Queries the keyboard events which hapened since the last call of this method.
-        /// This call removes all events from the itnernal cache.
-        /// </summary>
-        IEnumerable<KeyboardEvent> GetLastKeyboardEvents();
-
-        /// <summary>
-        /// Queries the gamepad events which hapened since the last call of this method.
-        /// This call removes all events from the itnernal cache.
-        /// </summary>
-        IEnumerable<GamepadEvent> GetLastGamepadEvents();
+        IEnumerable<InputStateBase> GetInputStates();
     }
 }

@@ -37,11 +37,11 @@ using System.Windows.Input;
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
     targetType: typeof(SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler),
-    contractType: typeof(SeeingSharp.Multimedia.Input.ISeeingSharpInputHandler))]
+    contractType: typeof(SeeingSharp.Multimedia.Input.IInputHandler))]
 
 namespace SeeingSharp.Multimedia.Input
 {
-    class WpfKeyAndMouseInputHandler : ISeeingSharpInputHandler
+    class WpfKeyAndMouseInputHandler : IInputHandler
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
@@ -215,6 +215,14 @@ namespace SeeingSharp.Multimedia.Input
             m_isDragging = false;
         }
 
+        /// <summary>
+        /// Querries all current input states.
+        /// </summary>
+        public IEnumerable<InputStateBase> GetInputStates()
+        {
+            yield break;
+        }
+
         private void StartCameraDragging(MouseButtonEventArgs e)
         {
             m_rendererElement.Focus();
@@ -302,21 +310,6 @@ namespace SeeingSharp.Multimedia.Input
         private void OnRendererElement_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
             StopCameraDragging();
-        }
-
-        public IEnumerable<MouseEvent> GetLastMouseEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<KeyboardEvent> GetLastKeyboardEvents()
-        {
-            yield break;
-        }
-
-        public IEnumerable<GamepadEvent> GetLastGamepadEvents()
-        {
-            yield break;
         }
     }
 }

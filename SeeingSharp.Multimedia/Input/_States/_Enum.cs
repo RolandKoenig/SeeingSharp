@@ -28,17 +28,12 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Input
 {
-    public abstract class InputEvent
+    public enum MouseButton : int
     {
-        public InputEvent()
-        {
-            this.TimestampUtc = DateTime.UtcNow;
-        }   
-
-        public DateTime TimestampUtc
-        {
-            get;
-            private set;
-        }
+        Left = 0,
+        Middle = 1,
+        Right = 2,
+        Extended1 = 3,
+        Extended2 = 4
     }
 }

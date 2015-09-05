@@ -36,7 +36,7 @@ namespace SeeingSharp.Multimedia
 
         public const int ASYNC_LOADER_MAX_PRALLEL_TASK_COUNT = 2;
 
-        // Constants for time duration measuring
+        #region Constants for time duration measuring
         public const string PERF_GLOBAL_PER_FRAME = "Graphics.Global.OneFrame";
         public const string PERF_GLOBAL_WAIT_TIME = "Graphics.Global.WaitTime";
         public const string PERF_GLOBAL_UPDATE_AND_PREPARE = "Graphics.Global.UpdateAndPrepare";
@@ -47,11 +47,14 @@ namespace SeeingSharp.Multimedia
         public const string PERF_RENDERLOOP_PRESENT = "Graphics.RenderLoop.Present (Scene: {0}, View: {1})";
         public const string PERF_RENDERLOOP_RENDER = "Graphics.RenderLoop.Render (Scene: {0}, View: {1})";
         public const string PERF_RENDERLOOP_RENDER_2D = "Graphics.RenderLoop.Render.2D (Scene: {0}, View: {1})";
+        #endregion
 
-        // Constants for occurences per timeunit measuring
+        #region Constants for occurences per timeunit measuring
         public static string PERF_GLOBAL_FRAMES_FINISHED = "Graphics.Global.FramesRendered";
+        #endregion
 
-        // Constants for animation system
+        #region Constants for animation system
         public static readonly TimeSpan UPDATE_STATE_MAX_TIME = new TimeSpan(0, 0, 0, 0, Int32.MaxValue);
+        #endregion
     }
 }
