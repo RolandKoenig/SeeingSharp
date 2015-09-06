@@ -35,34 +35,33 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Core
 {
+    /// <summary>
+    /// The core main loop for coordinating render and update processes over all 
+    /// registered RenderLoops.
+    /// </summary>
     public class EngineMainLoop
     {
-        // => Optimize for 40 Frames / Sec
-        private const double MINIMUM_FRAME_TIME_MS = 1000.0 / 60.0;
-        private const double MINIMUM_DELAY_TIME_MS = 10.0;
-
+        #region Singleton instance
         private static EngineMainLoop s_current;
+        #endregion
 
         #region main thread synchronization
         private Task m_runningTask;
         private ConcurrentQueue<Action> m_globalLoopAwaiters;
         #endregion
 
-        // RenderLoop collections
-        #region
+        #region RenderLoop collections
         private List<RenderLoop> m_registeredRenderLoops;
         private List<RenderLoop> m_unregisteredRenderLoops;
         private object m_registeredRenderLoopsLock;
         #endregion
 
-        // Scene collections
-        #region
+        #region Scene collections
         private List<Scene> m_scenesForUnload;
         private object m_scenesForUnloadLock;
         #endregion
 
-        // Members regarding 2D resources
-        #region
+        #region Members regarding 2D resources
         private ConcurrentQueue<Drawing2DResourceBase> m_drawing2DResourcesToUnload;
         #endregion
 
@@ -165,8 +164,8 @@ namespace SeeingSharp.Multimedia.Core
                         {
                             // Wait some time before doing anything..
                             double lastRenderMilliseconds = renderStopWatch.GetTrueElapsedMilliseconds();
-                            double delayTime = MINIMUM_FRAME_TIME_MS - lastRenderMilliseconds;
-                            if (delayTime < MINIMUM_DELAY_TIME_MS) { delayTime = MINIMUM_DELAY_TIME_MS; }
+                            double delayTime = Constants.MINIMUM_FRAME_TIME_MS - lastRenderMilliseconds;
+                            if (delayTime < Constants.MINIMUM_DELAY_TIME_MS) { delayTime = Constants.MINIMUM_DELAY_TIME_MS; }
 
                             //GraphicsCore.Current.NotifyActivityDuration(Constants.PERF_GLOBAL_WAIT_TIME + "_PARAM", TimeSpan.FromMilliseconds(MINIMUM_FRAME_TIME_MS - lastRenderMilliseconds).Ticks);
                             using (var perfTokenInner = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_WAIT_TIME))

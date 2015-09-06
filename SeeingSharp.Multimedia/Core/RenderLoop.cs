@@ -45,10 +45,12 @@ using GDI = System.Drawing;
 
 namespace SeeingSharp.Multimedia.Core
 {
+    /// <summary>
+    /// This class controls rendering logic behind each view object.
+    /// </summary>
     public class RenderLoop : IDisposable
     {
-        // Configuration values
-        #region
+        #region Configuration values
         private SynchronizationContext m_guiSyncContext;
         private GraphicsViewConfiguration m_viewConfiguration;
         private bool m_discardRendering;
@@ -57,11 +59,11 @@ namespace SeeingSharp.Multimedia.Core
         private Camera3DBase m_camera;
         #endregion
 
-        // Async actions
+        #region Async actions
         private ThreadSaveQueue<Action> m_afterPresentActions;
+        #endregion
 
-        // Target parameters for rendering
-        #region
+        #region Target parameters for rendering
         private DateTime m_lastTargetParametersChanged;
         private EngineDevice m_targetDevice;
         private Size2 m_targetSize;
@@ -69,8 +71,7 @@ namespace SeeingSharp.Multimedia.Core
         private Scene m_targetScene;
         #endregion
 
-        // Callback methods for current host object
-        #region
+        #region Callback methods for current host object
         private Func<EngineDevice, Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling>> m_actionCreateViewResources;
         private Action<EngineDevice> m_actionDisposeViewResources;
         private Func<EngineDevice, bool> m_actionCheckCanRender;
@@ -79,8 +80,7 @@ namespace SeeingSharp.Multimedia.Core
         private Action<EngineDevice> m_actionPresent;
         #endregion
 
-        // Values needed for runtime
-        #region
+        #region Values needed for runtime
         private bool m_lastRenderSuccessfully;
         private bool m_nextRenderAllowed;
         private int m_totalRenderCount;
@@ -88,8 +88,7 @@ namespace SeeingSharp.Multimedia.Core
         private List<SeeingSharpVideoWriter> m_videoWriters;
         #endregion
 
-        // Direct3D resources and other values gathered during graphics loading
-        #region
+        #region Direct3D resources and other values gathered during graphics loading
         private List<Custom2DDrawingLayer> m_2dDrawingLayers;
         private DebugDrawingLayer m_debugDrawingLayer;
         private EngineDevice m_currentDevice;
@@ -104,20 +103,18 @@ namespace SeeingSharp.Multimedia.Core
         private SharpDX.ViewportF m_viewport;
         #endregion
 
-        //Direct3D resources for rendertarget capturing
+        #region Direct3D resources for rendertarget capturing
         // A staging texture for reading contents by Cpu
         // A standard texture for copying data from multisample texture to standard one
         // see http://www.rolandk.de/wp/2013/06/inhalt-der-rendertarget-textur-in-ein-bitmap-kopieren/
-        #region
         private D3D11.Texture2D m_copyHelperTextureStaging;
         private D3D11.Texture2D m_copyHelperTextureStandard;
         #endregion
 
-        // Filters
+        #region Other resources
         private List<SceneObjectFilter> m_filters;
-
-        //Other resources
         private ViewInformation m_viewInformation;
+        #endregion
 
         /// <summary>
         /// Raised when the corresponding device has changed.

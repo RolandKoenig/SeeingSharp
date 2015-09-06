@@ -36,6 +36,11 @@ namespace SeeingSharp.Multimedia
 
         public const int ASYNC_LOADER_MAX_PRALLEL_TASK_COUNT = 2;
 
+        #region Rendering constants
+        public const double MINIMUM_FRAME_TIME_MS = 1000.0 / 60.0;
+        public const double MINIMUM_DELAY_TIME_MS = 10.0;
+        #endregion
+
         #region View constants
         public const int MIN_VIEW_WIDTH = 32;
         public const int MIN_VIEW_HEIGHT = 32;
