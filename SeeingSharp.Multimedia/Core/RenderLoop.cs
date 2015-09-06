@@ -41,16 +41,12 @@ using D2D = SharpDX.Direct2D1;
 
 #if DESKTOP
 using GDI = System.Drawing;
-using WinForms = System.Windows.Forms;
 #endif
 
 namespace SeeingSharp.Multimedia.Core
 {
     public class RenderLoop : IDisposable
     {
-        internal const int MIN_VIEW_WIDTH = 32;
-        internal const int MIN_VIEW_HEIGHT = 32;
-
         // Configuration values
         #region
         private SynchronizationContext m_guiSyncContext;
@@ -209,8 +205,8 @@ namespace SeeingSharp.Multimedia.Core
             width.EnsurePositive("width");
             height.EnsurePositive("height");
 
-            if (width < MIN_VIEW_WIDTH) { width = MIN_VIEW_WIDTH; }
-            if (height < MIN_VIEW_HEIGHT) { height = MIN_VIEW_HEIGHT; }
+            if (width < Constants.MIN_VIEW_WIDTH) { width = Constants.MIN_VIEW_WIDTH; }
+            if (height < Constants.MIN_VIEW_HEIGHT) { height = Constants.MIN_VIEW_HEIGHT; }
 
             m_targetSize = new Size2(width, height);
         }
@@ -632,7 +628,7 @@ namespace SeeingSharp.Multimedia.Core
             m_renderTargetDepth = null;
             m_renderTargetDepthView = null;
             m_viewport = new SharpDX.ViewportF();
-            m_currentViewSize = new Size2(MIN_VIEW_WIDTH, MIN_VIEW_HEIGHT);
+            m_currentViewSize = new Size2(Constants.MIN_VIEW_WIDTH, Constants.MIN_VIEW_HEIGHT);
 
             // Dispose local resources
             GraphicsHelper.SafeDispose(ref m_copyHelperTextureStaging);
@@ -1203,12 +1199,6 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_currentDevice; }
         }
-
-        //public bool CyclicRendering
-        //{
-        //    get { return m_renderTimer.Enabled; }
-        //    set { m_renderTimer.Enabled = value; }
-        //}
 
         /// <summary>
         /// Gets the total count of visible objects.

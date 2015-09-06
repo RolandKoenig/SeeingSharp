@@ -409,8 +409,8 @@ namespace SeeingSharp.Multimedia.Views
         {
             int width = this.Width;
             int height = this.Height;
-            if (width <= RenderLoop.MIN_VIEW_WIDTH) { width = RenderLoop.MIN_VIEW_WIDTH; }
-            if (height <= RenderLoop.MIN_VIEW_HEIGHT) { height = RenderLoop.MIN_VIEW_HEIGHT; }
+            if (width <= Constants.MIN_VIEW_WIDTH) { width = Constants.MIN_VIEW_WIDTH; }
+            if (height <= Constants.MIN_VIEW_HEIGHT) { height = Constants.MIN_VIEW_HEIGHT; }
 
             //Get all factories
             m_factory = device.FactoryDxgi;

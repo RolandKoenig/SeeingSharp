@@ -36,6 +36,11 @@ namespace SeeingSharp.Multimedia
 
         public const int ASYNC_LOADER_MAX_PRALLEL_TASK_COUNT = 2;
 
+        #region View constants
+        public const int MIN_VIEW_WIDTH = 32;
+        public const int MIN_VIEW_HEIGHT = 32;
+        #endregion
+
         #region Constants for time duration measuring
         public const string PERF_GLOBAL_PER_FRAME = "Graphics.Global.OneFrame";
         public const string PERF_GLOBAL_WAIT_TIME = "Graphics.Global.WaitTime";

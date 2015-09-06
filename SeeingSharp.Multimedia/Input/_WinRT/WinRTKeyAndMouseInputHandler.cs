@@ -64,6 +64,10 @@ namespace SeeingSharp.Multimedia.Input
         private bool m_hasFocus;
         #endregion
 
+        #region Input states
+        private MouseOrPointerState m_stateMouseOrPointer;
+        #endregion
+
         #region state variables for camera movement
         private bool m_isDragging;
         private PointerPoint m_lastDragPoint;
@@ -76,6 +80,8 @@ namespace SeeingSharp.Multimedia.Input
         public WinRTKeyAndMouseInputHandler()
         {
             m_pressedKeys = new List<VirtualKey>();
+
+            m_stateMouseOrPointer = new MouseOrPointerState();
         }
 
         /// <summary>
@@ -314,8 +320,8 @@ namespace SeeingSharp.Multimedia.Input
                 m_dummyButtonForFocus.Focus(FocusState.Programmatic);
             }
 
-            // Store the mouse event
-            PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+            //// Store the mouse event
+            //PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
 
             StopCameraDragging();
 
@@ -331,8 +337,18 @@ namespace SeeingSharp.Multimedia.Input
                 m_dummyButtonForFocus.Focus(FocusState.Programmatic);
             }
 
-            // Store the mouse event
+            // Track mouse/pointer state
             PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+            PointerPointProperties pointProperties = currentPoint.Properties;
+            if (pointProperties.IsPrimary)
+            {
+                m_stateMouseOrPointer.NotifyButtonStates(
+                    pointProperties.IsLeftButtonPressed,
+                    pointProperties.IsMiddleButtonPressed,
+                    pointProperties.IsRightButtonPressed,
+                    pointProperties.IsXButton1Pressed,
+                    pointProperties.IsXButton2Pressed);
+            }
 
             StartCameraDragging(e.GetCurrentPoint(m_painter.TargetPanel));
 
@@ -358,15 +374,28 @@ namespace SeeingSharp.Multimedia.Input
                     (float)(currentPoint.Position.X - m_lastDragPoint.Position.X),
                     (float)(currentPoint.Position.Y - m_lastDragPoint.Position.Y));
 
+                // Track mouse/pointer state
+                PointerPointProperties pointProperties = currentPoint.Properties;
+                if (pointProperties.IsPrimary)
+                {
+                    m_stateMouseOrPointer.NotifyButtonStates(
+                        pointProperties.IsLeftButtonPressed,
+                        pointProperties.IsMiddleButtonPressed,
+                        pointProperties.IsRightButtonPressed,
+                        pointProperties.IsXButton1Pressed,
+                        pointProperties.IsXButton2Pressed);
+                    m_stateMouseOrPointer.NotifyMouseMove(moveDistance);
+                }
+
                 // Move camera if we are in FreeCameraMovement input mode
                 if (m_viewInterface.InputMode == SeeingSharpInputMode.FreeCameraMovement)
                 {
-                    if (currentPoint.Properties.IsLeftButtonPressed)
+                    if (pointProperties.IsLeftButtonPressed)
                     {
                         camera.Strave((float)((double)moveDistance.X / 50));
                         camera.UpDown((float)(-(double)moveDistance.Y / 50));
                     }
-                    else if (currentPoint.Properties.IsRightButtonPressed)
+                    else if (pointProperties.IsRightButtonPressed)
                     {
                         camera.Rotate(
                              (float)(-(double)moveDistance.X / 300),
@@ -383,8 +412,22 @@ namespace SeeingSharp.Multimedia.Input
         {
             if (!m_hasFocus) { return; }
 
-            int wheelDelta = e.GetCurrentPoint(m_painter.TargetPanel).Properties.MouseWheelDelta;
+            // Track mouse/pointer state
+            PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+            PointerPointProperties pointProperties = currentPoint.Properties;
+            int wheelDelta = pointProperties.MouseWheelDelta;
+            if (pointProperties.IsPrimary)
+            {
+                m_stateMouseOrPointer.NotifyButtonStates(
+                    pointProperties.IsLeftButtonPressed,
+                    pointProperties.IsMiddleButtonPressed,
+                    pointProperties.IsRightButtonPressed,
+                    pointProperties.IsXButton1Pressed,
+                    pointProperties.IsXButton2Pressed);
+                m_stateMouseOrPointer.NotifyMouseWheel(wheelDelta);
+            }
 
+            // Handle input modes
             if (m_viewInterface.InputMode == SeeingSharpInputMode.FreeCameraMovement)
             {
                 Camera3DBase camera = m_renderLoop.Camera;
