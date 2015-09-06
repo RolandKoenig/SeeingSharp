@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,27 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Input
 {
+    /// <summary>
+    /// Base class for all input states.
+    /// </summary>
     public abstract class InputStateBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="InputStateBase"/> class.
+        /// </summary>
+        protected InputStateBase()
+        {
+
+        }
+
+        /// <summary>
+        /// The view object this input state was queried on.
+        /// Null, if this InputState does not depend on a view.
+        /// </summary>
+        public ViewInformation RelatedView
+        {
+            get;
+            internal set;
+        }
     }
 }

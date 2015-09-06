@@ -38,6 +38,7 @@ using SeeingSharp.Util;
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
 using D2D = SharpDX.Direct2D1;
+using SeeingSharp.Multimedia.Input;
 
 #if DESKTOP
 using GDI = System.Drawing;
@@ -640,6 +641,19 @@ namespace SeeingSharp.Multimedia.Core
             // Handle VisibleObjectCount field
             this.VisibleObjectCount = this.VisibleObjectCountInternal;
             this.VisibleObjectCountInternal = 0;
+        }
+
+        /// <summary>
+        /// Queries for all view related input states (e. g. Mouse, Touch, Keyboard).
+        /// </summary>
+        internal async Task<List<InputStateBase>> QueryViewRelatedInputState()
+        {
+            await m_guiSyncContext.PostAsync(() =>
+            {
+
+            });
+
+            return null;
         }
 
         /// <summary>

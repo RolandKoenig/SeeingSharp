@@ -205,7 +205,7 @@ namespace SeeingSharp.Multimedia.Core
                             QueryForDevicesInUse(renderingRenderLoops, devicesInUse);
 
                             // Second global pass: Render scene(s) and update beside
-                            RenderAndUpdateBeside(renderingRenderLoops, scenesToRender, devicesInUse, updateState);
+                            await RenderAndUpdateBesideAsync(renderingRenderLoops, scenesToRender, devicesInUse, updateState);
 
                             // Clear unreferenced Scenes finally
                             lock(m_scenesForUnloadLock)
@@ -423,11 +423,18 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="scenesToRender">All scenes to be updated / rendered.</param>
         /// <param name="devicesInUse">The rendering devices that are in use.</param>
         /// <param name="updateState">Current global update state.</param>
-        private void RenderAndUpdateBeside(List<RenderLoop> registeredRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, UpdateState updateState)
+        private async Task RenderAndUpdateBesideAsync(List<RenderLoop> registeredRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, UpdateState updateState)
         {
             using (var perfToken = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_RENDER_AND_UPDATE_BESIDE))
             {
                 ThreadSaveQueue<RenderLoop> invalidRenderLoops = new ThreadSaveQueue<RenderLoop>();
+
+                // Querry for all input states
+                Task[] inputStateQuerryTasks = new Task[registeredRenderLoops.Count];
+                for(int loop=0; loop<registeredRenderLoops.Count; loop++)
+                {
+                    inputStateQuerryTasks[loop] = registeredRenderLoops[loop].QueryViewRelatedInputState();
+                }
 
                 // Trigger all tasks for 'Update' pass
                 Parallel.For(0, devicesInUse.Count + scenesToRender.Count, (actTaskIndex) =>
@@ -482,6 +489,9 @@ namespace SeeingSharp.Multimedia.Core
                 {
                     actRenderLoop.Camera.StateChanged = false;
                 }
+
+                // Wait for querried input states
+                await Task.WhenAll(inputStateQuerryTasks);
             }
         }
 
