@@ -148,7 +148,7 @@ namespace SeeingSharp.Multimedia.Input
         /// in preparation of the next update pass.
         /// Called by update-render loop.
         /// </summary>
-        internal MouseOrPointerState CopyAndResetForUpdatePass()
+        protected override InputStateBase CopyAndResetForUpdatePassInternal()
         {
             // Copy the object
             MouseOrPointerState result = new MouseOrPointerState();

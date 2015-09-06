@@ -93,7 +93,8 @@ namespace SeeingSharp.Multimedia.Views
                 OnRenderLoop_CheckCanRender,
                 OnRenderLoop_PrepareRendering,
                 OnRenderLoop_AfterRendering,
-                OnRenderLoop_Present);
+                OnRenderLoop_Present,
+                OnRenderLoop_QueryInputStates);
             m_renderLoop.ClearColor = Color4.CornflowerBlue;
             m_renderLoop.CallPresentInUIThread = false;
 
@@ -464,6 +465,24 @@ namespace SeeingSharp.Multimedia.Views
             //  see http://msdn.microsoft.com/en-us/library/windows/desktop/bb174576(v=vs.85).aspx
             //  see example http://msdn.microsoft.com/en-us/library/windows/apps/hh825871.aspx
             m_swapChain.Present(1, DXGI.PresentFlags.None);
+        }
+
+        /// <summary>
+        /// Queries all input states.
+        /// (Called within UI thread)
+        /// </summary>
+        private IEnumerable<InputStateBase> OnRenderLoop_QueryInputStates()
+        {
+            foreach(IInputHandler actInputHandler in m_inputHandlers)
+            {
+                IEnumerable<InputStateBase> inputStates = actInputHandler.GetInputStates();
+                if(inputStates == null) { continue; }
+
+                foreach(InputStateBase actInputstate in inputStates)
+                {
+                    yield return actInputstate;
+                }
+            }
         }
 
         /// <summary>

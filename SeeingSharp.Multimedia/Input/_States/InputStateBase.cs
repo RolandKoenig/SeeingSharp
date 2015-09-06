@@ -34,6 +34,10 @@ namespace SeeingSharp.Multimedia.Input
     /// </summary>
     public abstract class InputStateBase
     {
+        #region state related data
+        private ViewInformation m_relatedView;
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="InputStateBase"/> class.
         /// </summary>
@@ -43,13 +47,43 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
+        /// Copies this object and then resets it 
+        /// in preparation of the next update pass.
+        /// Called by update-render loop.
+        /// </summary>
+        internal InputStateBase CopyAndResetForUpdatePass()
+        {
+            return CopyAndResetForUpdatePassInternal();
+        }
+
+        /// <summary>
+        /// Copies this object and then resets it 
+        /// in preparation of the next update pass.
+        /// Called by update-render loop.
+        /// </summary>
+        protected abstract InputStateBase CopyAndResetForUpdatePassInternal();
+
+        /// <summary>
         /// The view object this input state was queried on.
         /// Null, if this InputState does not depend on a view.
         /// </summary>
         public ViewInformation RelatedView
         {
-            get;
-            internal set;
+            get{ return m_relatedView; }
+            internal set { m_relatedView = value; }
+        }
+
+        /// <summary>
+        /// The view index this input state was queried on.
+        /// -1, if this InputState does not depend on a view.
+        /// </summary>
+        public int ViewIndex
+        {
+            get
+            {
+                if(m_relatedView == null) { return -1; }
+                else { return m_relatedView.ViewIndex; }
+            }
         }
     }
 }

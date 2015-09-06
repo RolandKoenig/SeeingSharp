@@ -23,6 +23,7 @@
 
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Concurrent;
@@ -430,7 +431,7 @@ namespace SeeingSharp.Multimedia.Core
                 ThreadSaveQueue<RenderLoop> invalidRenderLoops = new ThreadSaveQueue<RenderLoop>();
 
                 // Querry for all input states
-                Task[] inputStateQuerryTasks = new Task[registeredRenderLoops.Count];
+                Task<List<InputStateBase>>[] inputStateQuerryTasks = new Task<List<InputStateBase>>[registeredRenderLoops.Count];
                 for(int loop=0; loop<registeredRenderLoops.Count; loop++)
                 {
                     inputStateQuerryTasks[loop] = registeredRenderLoops[loop].QueryViewRelatedInputState();
@@ -492,6 +493,13 @@ namespace SeeingSharp.Multimedia.Core
 
                 // Wait for querried input states
                 await Task.WhenAll(inputStateQuerryTasks);
+                foreach(Task<List<InputStateBase>> actQueryTask in inputStateQuerryTasks)
+                {
+                    List<InputStateBase> actResult = actQueryTask.Result;
+                    if(actResult == null) { continue; }
+
+                    // TODO
+                }
             }
         }
 

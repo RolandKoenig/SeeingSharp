@@ -79,6 +79,7 @@ namespace SeeingSharp.Multimedia.Core
         private Action<EngineDevice> m_actionPrepareRendering;
         private Action<EngineDevice> m_actionAfterRendering;
         private Action<EngineDevice> m_actionPresent;
+        private Func<IEnumerable<InputStateBase>> m_actionQueryInputStates;
         #endregion
 
         #region Values needed for runtime
@@ -142,7 +143,8 @@ namespace SeeingSharp.Multimedia.Core
             Func<EngineDevice, bool> actionCheckCanRender,
             Action<EngineDevice> actionPrepareRendering,
             Action<EngineDevice> actionAfterRendering,
-            Action<EngineDevice> actionPresent)
+            Action<EngineDevice> actionPresent,
+            Func<IEnumerable<InputStateBase>> actionQueryInputStates = null)
         {
             m_afterPresentActions = new ThreadSaveQueue<Action>();
 
@@ -173,6 +175,7 @@ namespace SeeingSharp.Multimedia.Core
             m_actionPrepareRendering = actionPrepareRendering;
             m_actionAfterRendering = actionAfterRendering;
             m_actionPresent = actionPresent;
+            m_actionQueryInputStates = actionQueryInputStates;
 
             // Create default objects
             m_clearColor = Color4.White;
@@ -648,12 +651,23 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal async Task<List<InputStateBase>> QueryViewRelatedInputState()
         {
+            if(m_actionQueryInputStates == null) { return null; }
+
+            // Query all states
+            List<InputStateBase> result = new List<InputStateBase>(10);
             await m_guiSyncContext.PostAsync(() =>
             {
+                foreach(InputStateBase actInputState in m_actionQueryInputStates())
+                {
+                    if(actInputState == null) { continue; }
 
+                    InputStateBase actQueriedObject = actInputState.CopyAndResetForUpdatePass();
+                    actQueriedObject.RelatedView = m_viewInformation;
+                    result.Add(actQueriedObject);
+                }
             });
 
-            return null;
+            return result;
         }
 
         /// <summary>

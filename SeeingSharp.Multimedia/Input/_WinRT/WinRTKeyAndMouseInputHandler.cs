@@ -257,7 +257,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public IEnumerable<InputStateBase> GetInputStates()
         {
-            yield break;
+            yield return m_stateMouseOrPointer;
         }
 
         /// <summary>
