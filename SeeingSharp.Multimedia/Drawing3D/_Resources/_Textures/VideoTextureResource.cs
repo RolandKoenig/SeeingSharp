@@ -121,7 +121,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Triggers internal update within the resource (e. g. Render to Texture).
         /// </summary>
         /// <param name="updateState">Current state of update process.</param>
-        public void Update(UpdateState updateState)
+        public void Update(SceneRelatedUpdateState updateState)
         {
 
         }

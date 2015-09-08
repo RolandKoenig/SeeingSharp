@@ -123,7 +123,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="animationState">The current state of the animation.</param>
         /// <param name="updateState">The current state of the update pass.</param>
-        public AnimationUpdateResult Update(UpdateState updateState, AnimationState animationState)
+        public AnimationUpdateResult Update(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
             // Call start animation if m_currentTime is zero
             HandleStartAnimation();
@@ -248,7 +248,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Called each time the CurrentTime value gets updated.
         /// </summary>
-        protected virtual void OnCurrentTimeUpdated(UpdateState updateState, AnimationState animationState)
+        protected virtual void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
         }
 

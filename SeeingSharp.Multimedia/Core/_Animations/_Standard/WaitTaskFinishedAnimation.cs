@@ -39,7 +39,7 @@ namespace SeeingSharp.Multimedia.Core
             m_taskToWaitFor = taskToWaitFor;
         }
 
-        protected override void OnCurrentTimeUpdated(UpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
             base.OnCurrentTimeUpdated(updateState, animationState);
 

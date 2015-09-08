@@ -55,7 +55,7 @@ namespace RKRocket.Game
             
         }
 
-        protected override void UpdateInternal(UpdateState updateState)
+        protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
             
         }

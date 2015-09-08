@@ -27,22 +27,47 @@ using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Core
 {
+    /// <summary>
+    /// A state object created by the EngineMainLoop object which controls
+    /// the update pass.
+    /// </summary>
     public class UpdateState
     {
+        #region Parameters passed by global loop
         private int m_updateTimeMilliseconds;
         private TimeSpan m_updateTime;
-        private Matrix4Stack m_world;
-        private SceneLayer m_sceneLayer;
+        #endregion
+
+        /// <summary>
+        /// Prevents a default instance of the <see cref="UpdateState"/> class from being created.
+        /// </summary>
+        private UpdateState()
+        {
+            
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="UpdateState"/> class.
         /// </summary>
         /// <param name="updateTime">The update time.</param>
         public UpdateState(TimeSpan updateTime)
+            : this()
         {
             m_updateTime = updateTime;
             m_updateTimeMilliseconds = (int)updateTime.TotalMilliseconds;
-            m_world = new Matrix4Stack(Matrix4x4.Identity);
+            
+        }
+
+        /// <summary>
+        /// Called internally by EngineMainLoop and creates a copy of this object
+        /// for each updated scene.
+        /// </summary>
+        internal UpdateState CopyForSceneUpdate()
+        {
+            UpdateState result = new UpdateState();
+            result.m_updateTime = this.m_updateTime;
+            result.m_updateTimeMilliseconds = this.m_updateTimeMilliseconds;
+            return result;
         }
 
         /// <summary>
@@ -53,7 +78,6 @@ namespace SeeingSharp.Multimedia.Core
         {
             m_updateTime = updateTime;
             m_updateTimeMilliseconds = (int)updateTime.TotalMilliseconds;
-            m_world.ResetStackToIdentity();
         }
 
         /// <summary>
@@ -71,37 +95,5 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_updateTimeMilliseconds; }
         }
-
-        /// <summary>
-        /// Gets current world transform.
-        /// </summary>
-        public Matrix4Stack World
-        {
-            get { return m_world; }
-        }
-
-        /// <summary>
-        /// The scene layer the currently updated object belongs to.
-        /// </summary>
-        public SceneLayer SceneLayer
-        {
-            get { return m_sceneLayer; }
-            internal set { m_sceneLayer = value; }
-        }
-
-        /// <summary>
-        /// The scene the currently updated object belongs to.
-        /// </summary>
-        public Scene Scene
-        {
-            get
-            {
-                if (m_sceneLayer == null) { return null; }
-                else { return m_sceneLayer.Scene; }
-            }
-        }
-
-        internal bool ForceTransformUpdatesOnChilds;
-        internal bool IsEventDrivenUpdate;
     }
 }

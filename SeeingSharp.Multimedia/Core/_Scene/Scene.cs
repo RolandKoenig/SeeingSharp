@@ -109,6 +109,8 @@ namespace SeeingSharp.Multimedia.Core
             m_registeredViews = new IndexBasedDynamicCollection<ViewInformation>();
             m_renderParameters = new IndexBasedDynamicCollection<SceneRenderParameters>();
 
+            this.CachedUpdateState = new SceneRelatedUpdateState();
+
             // Try to initialize this scene object
             InitializeResourceDictionaries(false);
 
@@ -833,8 +835,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Updates the scene.
         /// </summary>
-        /// <param name="updateTime">Current update state.</param>
-        internal void Update(UpdateState updateState)
+        internal void Update(SceneRelatedUpdateState updateState)
         {
             // Apply local SynchronizationContext if configured so
             SynchronizationContext previousSyncContext = null;
@@ -892,7 +893,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Updates the scene (called beside rendering).
         /// </summary>
         /// <param name="updateTime">Current update state.</param>
-        internal void UpdateBesideRender(UpdateState updateState)
+        internal void UpdateBesideRender(SceneRelatedUpdateState updateState)
         {
             // Invoke all async action attached to this scene
             Action actAsyncAction = null;
@@ -1199,6 +1200,12 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_customTransform2D; }
             set { m_customTransform2D = value; }
+        }
+
+        internal SceneRelatedUpdateState CachedUpdateState
+        {
+            get;
+            private set;
         }
     }
 }

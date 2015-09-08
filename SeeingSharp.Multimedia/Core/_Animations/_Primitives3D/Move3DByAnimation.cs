@@ -88,7 +88,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Called each time the CurrentTime value gets updated.
         /// </summary>
-        protected override void OnCurrentTimeUpdated(UpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
             m_targetObject.Position = m_startVector + m_moveHelper.GetPartialMoveDistance(base.CurrentTime);
         }

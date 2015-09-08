@@ -34,7 +34,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Triggers internal update within the resource (e. g. Render to Texture).
         /// </summary>
         /// <param name="updateState">Current state of update process.</param>
-        void Update(UpdateState updateState);
+        void Update(SceneRelatedUpdateState updateState);
 
         /// <summary>
         /// Triggers internal rendering within the resource (e. g. Render to Texture).

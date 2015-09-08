@@ -222,7 +222,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Executes view update using the given update state object.
         /// </summary>
         /// <param name="updateState">The update state.</param>
-        internal void UpdateForView(UpdateState updateState)
+        internal void UpdateForView(SceneRelatedUpdateState updateState)
         {
             if (m_disposed) { throw new ObjectDisposedException("ViewRelatedLayerSubset"); }
 
@@ -350,7 +350,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState">The update state.</param>
         /// <param name="sceneObjectsForSingleUpdateCall">A collection of scene objects for a single update call. These are normally a list of newly inserted static objects.</param>
-        internal void UpdateBesideRender(UpdateState updateState, Queue<SceneObject> sceneObjectsForSingleUpdateCall)
+        internal void UpdateBesideRender(SceneRelatedUpdateState updateState, Queue<SceneObject> sceneObjectsForSingleUpdateCall)
         {
             List<SceneObjectFilter> filters = m_viewInformation.Filters;
             m_tmpChangedVisibilities.Clear();

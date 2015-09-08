@@ -152,7 +152,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// Updates the object.
         /// </summary>
         /// <param name="updateState">Current update state.</param>
-        protected override void UpdateInternal(UpdateState updateState)
+        protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
 
         }
@@ -162,7 +162,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         /// <param name="updateState">Current state of the update pass.</param>
         /// <param name="layerViewSubset">The layer view subset wich called this update method.</param>
-        protected override void UpdateForViewInternal(UpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
+        protected override void UpdateForViewInternal(SceneRelatedUpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
         {
             if(base.CountRenderPassSubscriptions(layerViewSubset) <= 0)
             {

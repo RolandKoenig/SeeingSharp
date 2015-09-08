@@ -267,10 +267,14 @@ namespace SeeingSharp.Multimedia.Core
 
                 PrecalculateAnimations();
 
-                UpdateState updateStateObj = new UpdateState(singleUpdateInterval);
+                // Create shared UpdateState object
+                SceneRelatedUpdateState updateStateObj = new SceneRelatedUpdateState();
+                updateStateObj.OnStartSceneUpdate(new UpdateState(singleUpdateInterval));
+                updateStateObj.IsEventDrivenUpdate = true;
+
                 while (this.CountRunningAnimations > 0)
                 {
-                    updateStateObj.Reset(singleUpdateInterval);
+                    updateStateObj.OnStartSceneUpdate(new UpdateState(singleUpdateInterval));
                     this.Update(updateStateObj);
 
                     totalStepCount++;
@@ -297,7 +301,8 @@ namespace SeeingSharp.Multimedia.Core
                 PrecalculateAnimations();
 
                 // Create shared UpdateState object
-                UpdateState updateState = new UpdateState(TimeSpan.Zero);
+                SceneRelatedUpdateState updateState = new SceneRelatedUpdateState();
+                updateState.OnStartSceneUpdate(new UpdateState(TimeSpan.Zero));
                 updateState.IsEventDrivenUpdate = true;
 
                 // Perform whole animation in an event-driven way
@@ -309,7 +314,7 @@ namespace SeeingSharp.Multimedia.Core
 
                     // Perform animation calculation
                     TimeSpan timeTillNext = this.TimeTillCurrentAnimationStepFinished;
-                    updateState.Reset(timeTillNext);
+                    updateState.OnStartSceneUpdate(new UpdateState(timeTillNext));
                     AnimationUpdateResult updateResult = this.Update(updateState);
                     countSteps++;
 
@@ -355,7 +360,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Updates all animations contained by this animation sequence.
         /// </summary>
         /// <param name="updateState">Current state of update process.</param>
-        public AnimationUpdateResult Update(UpdateState updateState)
+        public AnimationUpdateResult Update(SceneRelatedUpdateState updateState)
         {
             return this.Update(updateState, null);
         }
@@ -365,7 +370,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState">The current state of the update pass.</param>
         /// <param name="animationState">The current state of the animation.</param>
-        public AnimationUpdateResult Update(UpdateState updateState, AnimationState animationState)
+        public AnimationUpdateResult Update(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
             int countAnimationsFinished = 0;
 
@@ -644,7 +649,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="updateState">Current update state.</param>
         /// <param name="animationState">Current animation state.</param>
         /// <param name="animationQueue">The queue which should be updated.</param>
-        private void UpdateQueueInternal(UpdateState updateState, AnimationState animationState, Queue<IAnimation> animationQueue)
+        private void UpdateQueueInternal(SceneRelatedUpdateState updateState, AnimationState animationState, Queue<IAnimation> animationQueue)
         {
             AnimationState animationStateInner = new AnimationState();
             int actIndex = 0;

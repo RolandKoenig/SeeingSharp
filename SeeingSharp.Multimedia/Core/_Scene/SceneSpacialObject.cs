@@ -266,7 +266,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Updates the object.
         /// </summary>
         /// <param name="updateState">Current update state.</param>
-        protected override void UpdateInternal(UpdateState updateState)
+        protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
             //Calculates local transform matrix (transforms local space to world space)
             bool doRecreateShaderParameters = false;
@@ -369,7 +369,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState">The current update state.</param>
         /// <param name="dependencies">The full dependency list that should be updated.</param>
-        protected override void UpdateDependenciesInternal(UpdateState updateState, List<SceneObject> dependencies)
+        protected override void UpdateDependenciesInternal(SceneRelatedUpdateState updateState, List<SceneObject> dependencies)
         {
             updateState.ForceTransformUpdatesOnChilds = m_forceTransformUpdateOnChilds;
             m_forceTransformUpdateOnChilds = false;

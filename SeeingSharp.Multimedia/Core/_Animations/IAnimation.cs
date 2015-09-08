@@ -42,7 +42,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="animationState">The current state of the animation.</param>
         /// <param name="updateState">The current state of the update pass.</param>
-        AnimationUpdateResult Update(UpdateState updateState, AnimationState animationState);
+        AnimationUpdateResult Update(SceneRelatedUpdateState updateState, AnimationState animationState);
 
         /// <summary>
         /// Gets the time in milliseconds till this animation is finished.

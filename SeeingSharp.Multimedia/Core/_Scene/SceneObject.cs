@@ -352,7 +352,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Updates this object.
         /// </summary>
         /// <param name="updateState">State of update process.</param>
-        public void Update(UpdateState updateState)
+        public void Update(SceneRelatedUpdateState updateState)
         {
             // Update all behaviors first
             foreach (SceneObjectBehavior actBehavior in m_behaviors)
@@ -370,7 +370,7 @@ namespace SeeingSharp.Multimedia.Core
         /// UpdateOverall methods are called sequentially object by object.
         /// </summary>
         /// <param name="updateState">Current update state of the scene.</param>
-        public void UpdateOverall(UpdateState updateState)
+        public void UpdateOverall(SceneRelatedUpdateState updateState)
         {
             // Update all dependencies finally
             if (m_dependencies.Count > 0)
@@ -405,7 +405,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState">Current state of the update pass.</param>
         /// <param name="layerViewSubset">The layer view subset wich called this update method.</param>
-        public void UpdateForView(UpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
+        public void UpdateForView(SceneRelatedUpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
         {
             UpdateForViewInternal(updateState, layerViewSubset);
         }
@@ -422,21 +422,21 @@ namespace SeeingSharp.Multimedia.Core
         /// Updates the object.
         /// </summary>
         /// <param name="updateState">Current update state.</param>
-        protected abstract void UpdateInternal(UpdateState updateState);
+        protected abstract void UpdateInternal(SceneRelatedUpdateState updateState);
 
         /// <summary>
         /// Updates this object for the given view.
         /// </summary>
         /// <param name="updateState">Current state of the update pass.</param>
         /// <param name="layerViewSubset">The layer view subset wich called this update method.</param>
-        protected abstract void UpdateForViewInternal(UpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset);
+        protected abstract void UpdateForViewInternal(SceneRelatedUpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset);
 
         /// <summary>
         /// Updates all dependencies of this object. Override this to change default behavior.
         /// </summary>
         /// <param name="updateState">The current update state.</param>
         /// <param name="dependencies">The full dependency list that should be updated.</param>
-        protected virtual void UpdateDependenciesInternal(UpdateState updateState, List<SceneObject> dependencies)
+        protected virtual void UpdateDependenciesInternal(SceneRelatedUpdateState updateState, List<SceneObject> dependencies)
         {
             // Trigger updates of all dependencies
             foreach (SceneObject actDependency in m_dependencies)

@@ -139,6 +139,7 @@
     <Compile Include="Core\RenderPassSubscription.cs" />
     <Compile Include="Core\RenderState.cs" />
     <Compile Include="Core\RenderTargets.cs" />
+    <Compile Include="Core\SceneRelatedUpdateState.cs" />
     <Compile Include="Core\UpdateState.cs" />
     <Compile Include="Core\ViewInformation.cs" />
     <Compile Include="Core\_Animations\AnimationBase.cs" />
@@ -317,7 +318,6 @@
     <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
     <Compile Include="Input\_States\_Enum.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
-    <Compile Include="Gaming\GameBase.cs" />
     <Compile Include="Input\IInputEnabledView.cs" />
     <Compile Include="Input\InputHandlerFactory.cs" />
     <Compile Include="Input\_Misc.cs" />

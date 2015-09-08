@@ -68,7 +68,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// </summary>
         /// <param name="updateState">The current state of update processing.</param>
         /// <param name="animationState">The current state of the animation.</param>
-        protected override void OnCurrentTimeUpdated(UpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
             base.OnCurrentTimeUpdated(updateState, animationState);
 

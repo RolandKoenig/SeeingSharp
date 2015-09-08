@@ -59,7 +59,7 @@ namespace SeeingSharp.Multimedia.Core
         /// For methods that depend on other object, use UpdateOverall.
         /// </summary>
         /// <param name="updateState">Current update state of the scene.</param>
-        public abstract void Update(UpdateState updateState);
+        public abstract void Update(SceneRelatedUpdateState updateState);
 
         /// <summary>
         /// Update logic for overall updates.
@@ -67,7 +67,7 @@ namespace SeeingSharp.Multimedia.Core
         /// UpdateOverall methods are called sequentially object by object.
         /// </summary>
         /// <param name="updateState">Current update state of the scene.</param>
-        public abstract void UpdateOverall(UpdateState updateState);
+        public abstract void UpdateOverall(SceneRelatedUpdateState updateState);
 
         /// <summary>
         /// Called when the current host object has changed.

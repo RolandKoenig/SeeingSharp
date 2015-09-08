@@ -51,7 +51,7 @@ namespace RKRocket.Game
             m_blockBitmap = GraphicsResources.Bitmap_Blocks[0];
         }
 
-        protected override void UpdateInternal(UpdateState updateState)
+        protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
 
         }

@@ -61,7 +61,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState">The current state of the update pass.</param>
         /// <param name="animationState">The current state of the animation.</param>
-        public AnimationUpdateResult Update(UpdateState updateState, AnimationState animationState)
+        public AnimationUpdateResult Update(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
             if (m_animation == null) { m_animation = m_animationCreator(); }
             if (m_animation == null) { return AnimationUpdateResult.Empty; }

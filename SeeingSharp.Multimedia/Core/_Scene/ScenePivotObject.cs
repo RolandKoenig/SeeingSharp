@@ -70,7 +70,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState">Current state of the update pass.</param>
         /// <param name="layerViewSubset">The layer view subset wich called this update method.</param>
-        protected override void UpdateForViewInternal(UpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
+        protected override void UpdateForViewInternal(SceneRelatedUpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
         {
             
         }

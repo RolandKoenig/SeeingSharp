@@ -314,7 +314,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Updates the layer.
         /// </summary>
         /// <param name="updateState">Current update state.</param>
-        internal void Update(UpdateState updateState)
+        internal void Update(SceneRelatedUpdateState updateState)
         {
             updateState.SceneLayer = this;
             m_isInUpdate = true;
@@ -362,7 +362,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Performs "update-beside-render" for this layer.
         /// </summary>
         /// <param name="updateState">Current update state.</param>
-        internal void UpdateBesideRender(UpdateState updateState)
+        internal void UpdateBesideRender(SceneRelatedUpdateState updateState)
         {
             updateState.SceneLayer = this;
             m_isInUpdateBeside = true;

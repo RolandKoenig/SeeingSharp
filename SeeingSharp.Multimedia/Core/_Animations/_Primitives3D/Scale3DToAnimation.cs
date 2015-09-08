@@ -66,7 +66,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Called each time the CurrentTime value gets updated.
         /// </summary>
-        protected override void OnCurrentTimeUpdated(UpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
         {
             float scaleFactor = (float)base.CurrentTime.Ticks / (float)base.FixedTime.Ticks;
 
