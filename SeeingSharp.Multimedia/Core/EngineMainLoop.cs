@@ -197,11 +197,11 @@ namespace SeeingSharp.Multimedia.Core
                             renderStopWatch.Restart();
 
                             // First global pass: Update scene and prepare rendering
-                            await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, updateState)
+                            await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, inputStates, updateState)
                                 .ConfigureAwait(false);
                             foreach (Camera3DBase actCamera in camerasToUpdate)
                             {
-                                sceneRelatedUpdateState.OnStartSceneUpdate(updateState);
+                                sceneRelatedUpdateState.OnStartSceneUpdate(updateState, null);
                                 actCamera.AnimationHandler.Update(sceneRelatedUpdateState);
                             }
 
@@ -269,8 +269,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="renderingRenderLoops">The registered render loops on the current pass.</param>
         /// <param name="scenesToRender">All scenes to be updated / rendered.</param>
         /// <param name="devicesInUse">The rendering devices that are in use.</param>
+        /// <param name="inputStates">All input states queried during last render.</param>
         /// <param name="updateState">Current global update state.</param>
-        private async Task UpdateAndPrepareRendering(List<RenderLoop> renderingRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, UpdateState updateState)
+        private async Task UpdateAndPrepareRendering(List<RenderLoop> renderingRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, List<InputStateBase> inputStates, UpdateState updateState)
         {
             using (var perfToken = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_UPDATE_AND_PREPARE))
             {
@@ -359,7 +360,7 @@ namespace SeeingSharp.Multimedia.Core
                             Scene actScene = scenesToRender[actTaskIndex];
                             SceneRelatedUpdateState actUpdateState = actScene.CachedUpdateState;
 
-                            actUpdateState.OnStartSceneUpdate(updateState);
+                            actUpdateState.OnStartSceneUpdate(updateState, inputStates);
 
                             actScene.Update(actUpdateState);
                         }
@@ -467,7 +468,7 @@ namespace SeeingSharp.Multimedia.Core
                             Scene actScene = scenesToRender[sceneIndex];
                             SceneRelatedUpdateState actUpdateState = actScene.CachedUpdateState;
 
-                            actUpdateState.OnStartSceneUpdate(updateState);
+                            actUpdateState.OnStartSceneUpdate(updateState, null);
                             actScene.UpdateBesideRender(actUpdateState);
                         }
                     }

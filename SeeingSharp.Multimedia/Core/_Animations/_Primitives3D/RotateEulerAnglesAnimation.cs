@@ -114,7 +114,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Called each time the CurrentTime value gets updated.
         /// </summary>
-        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(IAnimationUpdateState updateState, AnimationState animationState)
         {
             float percentagePassed = (float)base.CurrentTime.Ticks / (float)m_duration.Ticks;
             m_targetObject.RotationEuler = m_startRotation + m_changeRotation * percentagePassed;

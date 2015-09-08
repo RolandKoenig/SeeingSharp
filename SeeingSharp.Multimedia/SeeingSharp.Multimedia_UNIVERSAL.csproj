@@ -70,6 +70,7 @@
     <Compile Include="Core\_Animations\IAnimation.cs" />
     <Compile Include="Core\_Animations\IAnimatableObject.cs" />
     <Compile Include="Core\_Animations\IAnimationSequenceBuilder.cs" />
+    <Compile Include="Core\_Animations\IAnimationUpdateState.cs" />
     <Compile Include="Core\_Animations\_Analytics\EventDrivenPassInfo.cs" />
     <Compile Include="Core\_Animations\_Analytics\EventDrivenStepInfo.cs" />
     <Compile Include="Core\_Animations\_Extensions.cs" />

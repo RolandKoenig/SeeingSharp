@@ -77,7 +77,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Called each time the CurrentTime value gets updated.
         /// </summary>
-        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(IAnimationUpdateState updateState, AnimationState animationState)
         {
             float changeFactor = (float)base.CurrentTime.Ticks / (float)base.FixedTime.Ticks;
             m_targetObject.Opacity = m_startOpacity + m_moveOpacity * changeFactor;

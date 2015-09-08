@@ -31,7 +31,7 @@ namespace SeeingSharp.Multimedia.Core
     /// A state object created by the EngineMainLoop object which controls
     /// the update pass.
     /// </summary>
-    public class UpdateState
+    public class UpdateState : IAnimationUpdateState
     {
         #region Parameters passed by global loop
         private int m_updateTimeMilliseconds;

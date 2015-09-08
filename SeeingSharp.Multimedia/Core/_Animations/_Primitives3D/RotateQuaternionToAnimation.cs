@@ -60,7 +60,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState"></param>
         /// <param name="animationState"></param>
-        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(IAnimationUpdateState updateState, AnimationState animationState)
         {
             //how does Slerp work: --> http://en.wikipedia.org/wiki/Slerp
             float changeFactor = (float)base.CurrentTime.Ticks / (float)base.FixedTime.Ticks;

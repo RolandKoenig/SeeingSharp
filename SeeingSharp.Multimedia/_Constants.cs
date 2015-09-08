@@ -65,6 +65,9 @@ namespace SeeingSharp.Multimedia
 
         #region Constants for animation system
         public static readonly TimeSpan UPDATE_STATE_MAX_TIME = new TimeSpan(0, 0, 0, 0, Int32.MaxValue);
+        public static readonly TimeSpan UPDATE_DEFAULT_CYLCE = new TimeSpan(UPDATE_DEFAULT_CYCLES_TICKS);
+        public const double UPDATE_DEFAULT_CYCLE_MS = 50.0;
+        public const long UPDATE_DEFAULT_CYCLES_TICKS = 500000;
         #endregion
     }
 }

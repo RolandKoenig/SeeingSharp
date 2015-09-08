@@ -58,7 +58,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState"></param>
         /// <param name="animationState"></param>
-        protected override void OnCurrentTimeUpdated(SceneRelatedUpdateState updateState, AnimationState animationState)
+        protected override void OnCurrentTimeUpdated(IAnimationUpdateState updateState, AnimationState animationState)
         {
             if (m_checkFunction()) { this.NotifyAnimationFinished(); }
         }

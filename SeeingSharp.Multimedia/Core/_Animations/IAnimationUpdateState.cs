@@ -20,44 +20,24 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Core
 {
-    public class WaitTaskFinishedAnimation : AnimationBase
+    public interface IAnimationUpdateState
     {
-        private Task m_taskToWaitFor;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WaitTaskFinishedAnimation" /> class.
-        /// </summary>
-        public WaitTaskFinishedAnimation(Task taskToWaitFor)
-            : base(null, AnimationType.FinishedByEvent)
+        TimeSpan UpdateTime
         {
-            m_taskToWaitFor = taskToWaitFor;
+            get;
         }
 
-        protected override void OnCurrentTimeUpdated(IAnimationUpdateState updateState, AnimationState animationState)
+        int UpdateTimeMilliseconds
         {
-            base.OnCurrentTimeUpdated(updateState, animationState);
-
-            if(m_taskToWaitFor.IsCanceled ||
-               m_taskToWaitFor.IsCompleted ||
-               m_taskToWaitFor.IsFaulted)
-            {
-                base.NotifyAnimationFinished();
-            }
-        }
-
-        /// <summary>
-        /// Is this animation a blocking animation?
-        /// If true, all following animation have to wait for finish-event.
-        /// </summary>
-        public override bool IsBlockingAnimation
-        {
-            get { return true; }
+            get;
         }
     }
 }
