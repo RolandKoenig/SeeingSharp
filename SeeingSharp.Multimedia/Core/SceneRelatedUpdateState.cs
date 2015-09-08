@@ -36,7 +36,11 @@ namespace SeeingSharp.Multimedia.Core
     /// </summary>
     public class SceneRelatedUpdateState : IAnimationUpdateState
     {
-        #region members
+        #region parameters
+        private Scene m_owner;
+        #endregion
+
+        #region parameters for single update step
         private UpdateState m_updateState;
         private Matrix4Stack m_world;
         private SceneLayer m_sceneLayer;
@@ -46,19 +50,11 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneRelatedUpdateState"/> class.
         /// </summary>
-        internal SceneRelatedUpdateState()
+        internal SceneRelatedUpdateState(Scene owner)
         {
+            m_owner = owner;
             m_world = new Matrix4Stack(Matrix4x4.Identity);
             m_inputStates = new List<InputStateBase>(16);
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SceneRelatedUpdateState"/> class.
-        /// </summary>
-        public SceneRelatedUpdateState(UpdateState updateState)
-            : this()
-        {
-            m_updateState = updateState;
         }
 
         /// <summary>
@@ -73,8 +69,32 @@ namespace SeeingSharp.Multimedia.Core
             m_updateState = updateState;
             m_sceneLayer = null;
 
-            // Update input states
+            // Reset input states
             m_inputStates.Clear();
+            this.MouseOrPointer = MouseOrPointerState.Dummy;
+
+            // Update input states
+            int inputStateCount = unfilteredInputStates.Count;
+            for(int loop=0; loop<inputStateCount; loop++)
+            {
+                InputStateBase actInputState = unfilteredInputStates[loop];
+
+                // TODO: Move this call to another location because
+                // we have a conflict with the UI thread which may register/deregister
+                // a view
+                if(m_owner.IsViewRegistered(actInputState.RelatedView))
+                {
+                    m_inputStates.Add(actInputState);
+
+                    // Handle MouseOrPointer states
+                    MouseOrPointerState mouseOrPointer = actInputState as MouseOrPointerState;
+                    if(mouseOrPointer != null)
+                    {
+                        this.MouseOrPointer = mouseOrPointer;
+                        continue;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -121,6 +141,20 @@ namespace SeeingSharp.Multimedia.Core
                 if (m_sceneLayer == null) { return null; }
                 else { return m_sceneLayer.Scene; }
             }
+        }
+
+        /// <summary>
+        /// Gets a collection containing all gathered input states.
+        /// </summary>
+        public IEnumerable<InputStateBase> InputStates
+        {
+            get { return m_inputStates; }
+        }
+
+        public MouseOrPointerState MouseOrPointer
+        {
+            get;
+            private set;
         }
 
         internal bool ForceTransformUpdatesOnChilds;

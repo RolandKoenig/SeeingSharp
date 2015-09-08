@@ -597,7 +597,7 @@ namespace SeeingSharp.Tests.Rendering
             /// <param name="updateState">The current state of the update process.</param>
             public void Update(UpdateState updateState)
             {
-                m_animHandler.Update(new SceneRelatedUpdateState(updateState));
+                m_animHandler.Update(updateState);
             }
 
             public AnimationHandler AnimationHandler

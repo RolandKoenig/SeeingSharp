@@ -22,6 +22,7 @@
 #endregion
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing2D;
+using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Util;
 using SeeingSharp;
 using System;
@@ -51,8 +52,6 @@ namespace RKRocket.Game
             m_xPos = Constants.GFX_SCREEN_VPIXEL_WIDTH / 2f;
 
             m_playerBitmap = GraphicsResources.Bitmap_Player;
-
-            
         }
 
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)

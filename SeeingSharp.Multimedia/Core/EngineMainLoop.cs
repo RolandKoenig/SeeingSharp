@@ -158,7 +158,6 @@ namespace SeeingSharp.Multimedia.Core
                 List<EngineDevice> devicesInUse = new List<EngineDevice>(16);
                 List<InputStateBase> inputStates = new List<InputStateBase>(16);
                 UpdateState updateState = new UpdateState(TimeSpan.Zero);
-                SceneRelatedUpdateState sceneRelatedUpdateState = new SceneRelatedUpdateState();
                 while (!cancelToken.IsCancellationRequested)
                 {
                     bool exceptionOccurred = false;
@@ -201,8 +200,7 @@ namespace SeeingSharp.Multimedia.Core
                                 .ConfigureAwait(false);
                             foreach (Camera3DBase actCamera in camerasToUpdate)
                             {
-                                sceneRelatedUpdateState.OnStartSceneUpdate(updateState, null);
-                                actCamera.AnimationHandler.Update(sceneRelatedUpdateState);
+                                actCamera.AnimationHandler.Update(updateState);
                             }
 
                             // Queries for devices / scenes in use (may have changed during prepare)

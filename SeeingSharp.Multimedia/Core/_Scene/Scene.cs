@@ -109,7 +109,7 @@ namespace SeeingSharp.Multimedia.Core
             m_registeredViews = new IndexBasedDynamicCollection<ViewInformation>();
             m_renderParameters = new IndexBasedDynamicCollection<SceneRenderParameters>();
 
-            this.CachedUpdateState = new SceneRelatedUpdateState();
+            this.CachedUpdateState = new SceneRelatedUpdateState(this);
 
             // Try to initialize this scene object
             InitializeResourceDictionaries(false);

@@ -35,6 +35,7 @@ namespace SeeingSharp.Multimedia.Input
     /// </summary>
     public class MouseOrPointerState : InputStateBase
     {
+        public static readonly MouseOrPointerState Dummy = new MouseOrPointerState();
         private static readonly int BUTTON_COUNT = Enum.GetValues(typeof(MouseButton)).Length;
 
         #region Current state
