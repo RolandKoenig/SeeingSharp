@@ -358,6 +358,34 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnTargetPanel_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
+            // Calculate move distance
+            PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+            if(m_lastDragPoint == null) { m_lastDragPoint = currentPoint; }
+            Vector2 moveDistance = new Vector2(
+                (float)(currentPoint.Position.X - m_lastDragPoint.Position.X),
+                (float)(currentPoint.Position.Y - m_lastDragPoint.Position.Y));
+            Vector2 currentLocation = new Vector2(
+                (float)currentPoint.Position.X,
+                (float)currentPoint.Position.Y);
+
+            // Track mouse/pointer state
+            PointerPointProperties pointProperties = currentPoint.Properties;
+            if (pointProperties.IsPrimary)
+            {
+                m_stateMouseOrPointer.NotifyButtonStates(
+                    pointProperties.IsLeftButtonPressed,
+                    pointProperties.IsMiddleButtonPressed,
+                    pointProperties.IsRightButtonPressed,
+                    pointProperties.IsXButton1Pressed,
+                    pointProperties.IsXButton2Pressed);
+
+                m_stateMouseOrPointer.NotifyMouseLocation(
+                    currentLocation, moveDistance, m_painter.ActualSize.ToVector2());
+            }
+
+            // Store last drag point
+            m_lastDragPoint = currentPoint;
+
             Camera3DBase camera = m_renderLoop.Camera;
             if ((camera != null) &&
                 (m_isDragging))
@@ -366,25 +394,6 @@ namespace SeeingSharp.Multimedia.Input
                 if (m_dummyButtonForFocus != null)
                 {
                     m_dummyButtonForFocus.Focus(FocusState.Programmatic);
-                }
-
-                // Calculate move distance
-                PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
-                Vector2 moveDistance = new Vector2(
-                    (float)(currentPoint.Position.X - m_lastDragPoint.Position.X),
-                    (float)(currentPoint.Position.Y - m_lastDragPoint.Position.Y));
-
-                // Track mouse/pointer state
-                PointerPointProperties pointProperties = currentPoint.Properties;
-                if (pointProperties.IsPrimary)
-                {
-                    m_stateMouseOrPointer.NotifyButtonStates(
-                        pointProperties.IsLeftButtonPressed,
-                        pointProperties.IsMiddleButtonPressed,
-                        pointProperties.IsRightButtonPressed,
-                        pointProperties.IsXButton1Pressed,
-                        pointProperties.IsXButton2Pressed);
-                    m_stateMouseOrPointer.NotifyMouseMove(moveDistance);
                 }
 
                 // Move camera if we are in FreeCameraMovement input mode
@@ -402,9 +411,6 @@ namespace SeeingSharp.Multimedia.Input
                              (float)(-(double)moveDistance.Y / 300));
                     }
                 }
-
-                // Store last drag point
-                m_lastDragPoint = currentPoint;
             }
         }
 

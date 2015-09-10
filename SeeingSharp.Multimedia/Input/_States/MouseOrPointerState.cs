@@ -39,7 +39,9 @@ namespace SeeingSharp.Multimedia.Input
         private static readonly int BUTTON_COUNT = Enum.GetValues(typeof(MouseButton)).Length;
 
         #region Current state
-        private Vector2 m_moveDistance;
+        private Vector2 m_moveDistancePixel;
+        private Vector2 m_positionPixel;
+        private Vector2 m_screenSizePixel;
         private int m_wheelDelta;
         private bool[] m_buttonsHit;        // Only for one frame at true
         private bool[] m_buttonsDown;       // All following frames the mouse is down
@@ -127,12 +129,14 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Notifies the move distance of the mouse.
+        /// Notifies some information about the mouse pointer.
         /// Called by input handler.
         /// </summary>
-        internal void NotifyMouseMove(Vector2 moveDistance)
+        internal void NotifyMouseLocation(Vector2 pixelPosition, Vector2 moveDistancePixel, Vector2 screenSizePixel)
         {
-            m_moveDistance += moveDistance;
+            m_positionPixel = pixelPosition;
+            m_moveDistancePixel = moveDistancePixel;
+            m_screenSizePixel = screenSizePixel;
         }
 
         /// <summary>
@@ -153,7 +157,9 @@ namespace SeeingSharp.Multimedia.Input
         {
             // Copy the object
             MouseOrPointerState result = new MouseOrPointerState();
-            result.m_moveDistance = m_moveDistance;
+            result.m_moveDistancePixel = m_moveDistancePixel;
+            result.m_screenSizePixel = m_screenSizePixel;
+            result.m_positionPixel = m_positionPixel;
             result.m_wheelDelta = m_wheelDelta;
             for (int loop = 0; loop < BUTTON_COUNT; loop++)
             {
@@ -163,7 +169,7 @@ namespace SeeingSharp.Multimedia.Input
             }
 
             // Reset current object
-            m_moveDistance = Vector2.Zero;
+            m_moveDistancePixel = Vector2.Zero;
             m_wheelDelta = 0;
             for(int loop=0; loop<BUTTON_COUNT; loop++)
             {
@@ -184,9 +190,36 @@ namespace SeeingSharp.Multimedia.Input
             return result;
         }
 
-        public Vector2 MoveDistance
+        public Vector2 MoveDistanceDip
         {
-            get { return m_moveDistance; }
+            get { return m_moveDistancePixel; }
+        }
+
+        public Vector2 PositionDip
+        {
+            get { return m_positionPixel; }
+        }
+
+        public Vector2 MoveDistanceRelative
+        {
+            get
+            {
+                if (m_screenSizePixel.X == 0f) { return Vector2.Zero; }
+                if (m_screenSizePixel.Y == 0f) { return Vector2.Zero; }
+
+                return m_moveDistancePixel / m_screenSizePixel;
+            }
+        }
+
+        public Vector2 PositionRelative
+        {
+            get
+            {
+                if(m_screenSizePixel.X == 0f) { return Vector2.Zero; }
+                if(m_screenSizePixel.Y == 0f) { return Vector2.Zero; }
+
+                return m_positionPixel / m_screenSizePixel;
+            }
         }
 
         public int WheelDelta

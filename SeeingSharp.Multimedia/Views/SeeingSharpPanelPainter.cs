@@ -563,6 +563,14 @@ namespace SeeingSharp.Multimedia.Views
             }
         }
 
+        public Size2 ActualSize
+        {
+            get
+            {
+                return new Size2((int)m_targetPanel.ActualWidth, (int)m_targetPanel.ActualHeight);
+            }
+        }
+
         /// <summary>
         /// Gets or sets the clear color for the 3D view.
         /// </summary>

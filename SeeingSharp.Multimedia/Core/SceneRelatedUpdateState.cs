@@ -74,24 +74,27 @@ namespace SeeingSharp.Multimedia.Core
             this.MouseOrPointer = MouseOrPointerState.Dummy;
 
             // Update input states
-            int inputStateCount = unfilteredInputStates.Count;
-            for(int loop=0; loop<inputStateCount; loop++)
+            if (unfilteredInputStates != null)
             {
-                InputStateBase actInputState = unfilteredInputStates[loop];
-
-                // TODO: Move this call to another location because
-                // we have a conflict with the UI thread which may register/deregister
-                // a view
-                if(m_owner.IsViewRegistered(actInputState.RelatedView))
+                int inputStateCount = unfilteredInputStates.Count;
+                for (int loop = 0; loop < inputStateCount; loop++)
                 {
-                    m_inputStates.Add(actInputState);
+                    InputStateBase actInputState = unfilteredInputStates[loop];
 
-                    // Handle MouseOrPointer states
-                    MouseOrPointerState mouseOrPointer = actInputState as MouseOrPointerState;
-                    if(mouseOrPointer != null)
+                    // TODO: Move this call to another location because
+                    // we have a conflict with the UI thread which may register/deregister
+                    // a view
+                    if (m_owner.IsViewRegistered(actInputState.RelatedView))
                     {
-                        this.MouseOrPointer = mouseOrPointer;
-                        continue;
+                        m_inputStates.Add(actInputState);
+
+                        // Handle MouseOrPointer states
+                        MouseOrPointerState mouseOrPointer = actInputState as MouseOrPointerState;
+                        if (mouseOrPointer != null)
+                        {
+                            this.MouseOrPointer = mouseOrPointer;
+                            continue;
+                        }
                     }
                 }
             }

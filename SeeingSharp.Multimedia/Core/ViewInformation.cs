@@ -30,11 +30,13 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class ViewInformation
     {
-        //Runtime values
+        #region Runtime values
         private BoundingFrustum m_cameraFrustum;
+        #endregion
 
-        //Object filters for the scene model
+        #region Object filters for the scene model
         private List<SceneObjectFilter> m_sceneObjectFilters;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewInformation" /> class.

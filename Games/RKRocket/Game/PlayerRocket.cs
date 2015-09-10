@@ -42,6 +42,7 @@ namespace RKRocket.Game
 
         #region State
         private float m_xPos;
+        private bool m_isMouseHit;
         #endregion
 
         /// <summary>
@@ -56,7 +57,16 @@ namespace RKRocket.Game
 
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
-            
+            MouseOrPointerState mouseState = updateState.MouseOrPointer;
+            if(mouseState == null) { return; }
+
+            // Set x location depending on primary mouse location
+            float newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
+            if(newXPos < 50f) { newXPos = 50f; }
+            if(newXPos > Constants.GFX_SCREEN_VPIXEL_WIDTH - 50) { newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH - 50f; }
+            m_xPos = newXPos;
+
+            //m_isMouseHit = mouseState.IsButtonHit(MouseButton.Left);
         }
 
         /// <summary>
@@ -67,11 +77,17 @@ namespace RKRocket.Game
         {
             Graphics2D graphics = renderState.Graphics2D;
 
+            System.Diagnostics.Debug.WriteLine("X-Pos: " + m_xPos);
+
             RectangleF destRectangle = new RectangleF(
                 m_xPos - (Constants.GFX_ROCKET_VPIXEL_WIDTH / 2f),
                 Constants.GFX_ROCKET_VPIXEL_Y_CENTER - (Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f),
                 Constants.GFX_ROCKET_VPIXEL_WIDTH,
                 Constants.GFX_ROCKET_VPIXEL_HEIGHT);
+            //if(m_isMouseHit)
+            //{
+            //    destRectangle.Inflate(50, 50);
+            //}
 
             graphics.DrawBitmap(
                 m_playerBitmap,
