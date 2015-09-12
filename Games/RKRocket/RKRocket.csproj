@@ -117,17 +117,18 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\ApplyGameSceneBehavior.cs" />
-    <Compile Include="Game\_Background\Background.cs">
+    <Compile Include="Game\CollisionSystem.cs" />
+    <Compile Include="Game\_Background\BackgroundEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Game\Block.cs">
+    <Compile Include="Game\BlockEntity.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Game\GameCore.cs" />
-    <Compile Include="Game\PlayerRocket.cs">
+    <Compile Include="Game\PlayerRocketEntity.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Game\Projectile.cs" />
+    <Compile Include="Game\ProjectileEntity.cs" />
     <Compile Include="Game\_Background\Star.cs" />
     <Compile Include="Game\_Base\GameObject2D.cs" />
     <Compile Include="_GraphicsResources.cs" />

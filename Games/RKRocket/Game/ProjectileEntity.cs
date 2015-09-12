@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class Projectile : GameObject2D
+    public class ProjectileEntity : GameObject2D
     {
         #region Resources
         private StandardBitmapResource m_bitmapProjectile;
@@ -45,9 +45,9 @@ namespace RKRocket.Game
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Projectile"/> class.
+        /// Initializes a new instance of the <see cref="ProjectileEntity"/> class.
         /// </summary>
-        public Projectile(Vector2 startLocation)
+        public ProjectileEntity(Vector2 startLocation)
         {
             m_bitmapProjectile = GraphicsResources.Bitmap_Projectile;
             m_currentLocation = startLocation;

@@ -34,7 +34,7 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class PlayerRocket : GameObject2D
+    public class PlayerRocketEntity : GameObject2D
     {
         #region Resources
         private StandardBitmapResource m_playerBitmap;
@@ -45,9 +45,9 @@ namespace RKRocket.Game
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerRocket"/> class.
+        /// Initializes a new instance of the <see cref="PlayerRocketEntity"/> class.
         /// </summary>
-        public PlayerRocket()
+        public PlayerRocketEntity()
         {
             m_xPos = Constants.GFX_SCREEN_VPIXEL_WIDTH / 2f;
 
@@ -68,7 +68,7 @@ namespace RKRocket.Game
             // Create projectiles on mouse hit
             if(mouseState.IsButtonHit(MouseButton.Left))
             {
-                Projectile newProjectile = new Projectile(new Vector2(
+                ProjectileEntity newProjectile = new ProjectileEntity(new Vector2(
                     m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER - Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f));
                 base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Add(newProjectile))
                     .FireAndForget();

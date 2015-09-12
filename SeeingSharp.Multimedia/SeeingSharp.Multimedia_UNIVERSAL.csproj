@@ -123,6 +123,8 @@
     <Compile Include="Core\_HardwareInfo\EngineAdapterInfo.cs" />
     <Compile Include="Core\_HardwareInfo\EngineHardwareInfo.cs" />
     <Compile Include="Core\_HardwareInfo\EngineOutputInfo.cs" />
+    <Compile Include="Core\_Messages\SceneObjectRemovedMessage.cs" />
+    <Compile Include="Core\_Messages\SceneObjectAddedMessage.cs" />
     <Compile Include="Core\_Misc.cs" />
     <Compile Include="Core\_RenderPasses\RenderPass2DOverlay.cs" />
     <Compile Include="Core\_RenderPasses\RenderPassBase.cs" />

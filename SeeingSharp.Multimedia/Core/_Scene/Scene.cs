@@ -455,6 +455,12 @@ namespace SeeingSharp.Multimedia.Core
             SceneLayer layerObject = GetLayer(layer);
             if (!layerObject.AddObject(sceneObject)) { return null; }
 
+            // Fire object added message
+            if(m_messenger != null)
+            {
+                m_messenger.Publish(new SceneObjectAddedMessage(sceneObject));
+            }
+
             return sceneObject;
         }
 
@@ -760,6 +766,11 @@ namespace SeeingSharp.Multimedia.Core
             {
                 actLayer.RemoveObject(sceneObject);
             }
+
+            if (m_messenger != null)
+            {
+                m_messenger.Publish(new SceneObjectRemovedMessage(sceneObject));
+            }
         }
 
         /// <summary>
@@ -774,6 +785,11 @@ namespace SeeingSharp.Multimedia.Core
 
             SceneLayer layerObject = GetLayer(layerName);
             layerObject.RemoveObject(sceneObject);
+
+            if(m_messenger != null)
+            {
+                m_messenger.Publish(new SceneObjectRemovedMessage(sceneObject));
+            }
         }
 
         /// <summary>

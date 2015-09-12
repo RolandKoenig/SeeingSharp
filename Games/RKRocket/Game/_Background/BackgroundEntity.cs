@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class Background : GameObject2D
+    public class BackgroundEntity : GameObject2D
     {
         #region Graphics Resources
         private BrushResource m_backBrush;
@@ -46,9 +46,9 @@ namespace RKRocket.Game
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Background"/> class.
+        /// Initializes a new instance of the <see cref="BackgroundEntity"/> class.
         /// </summary>
-        public Background()
+        public BackgroundEntity()
         {
             m_backBrush = GraphicsResources.Brush_Background;
             m_starBitmap = GraphicsResources.Bitmap_StarGray;

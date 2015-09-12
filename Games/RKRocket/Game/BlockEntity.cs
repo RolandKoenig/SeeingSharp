@@ -33,7 +33,7 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class Block : GameObject2D, IAnimatableObjectPosition2D
+    public class BlockEntity : GameObject2D, IAnimatableObjectPosition2D
     {
         #region Graphics Resources
         private StandardBitmapResource m_blockBitmap;
@@ -44,9 +44,9 @@ namespace RKRocket.Game
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Block"/> class.
+        /// Initializes a new instance of the <see cref="BlockEntity"/> class.
         /// </summary>
-        public Block()
+        public BlockEntity()
         {
             m_blockBitmap = GraphicsResources.Bitmap_Blocks[0];
         }

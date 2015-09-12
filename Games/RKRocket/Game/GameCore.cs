@@ -40,8 +40,8 @@ namespace RKRocket.Game
     public class GameCore : SceneLogicalObject
     {
         #region Level objects
-        private PlayerRocket m_playerRocket;
-        private List<Block> m_blocks;
+        private PlayerRocketEntity m_playerRocket;
+        private List<BlockEntity> m_blocks;
         #endregion
 
         #region Graphics related members
@@ -54,7 +54,7 @@ namespace RKRocket.Game
         /// </summary>
         public GameCore()
         {
-            m_blocks = new List<Block>();
+            m_blocks = new List<BlockEntity>();
 
             // Create  main scene objects
             m_camera = new PerspectiveCamera3D();
@@ -82,11 +82,14 @@ namespace RKRocket.Game
             // Append this object to the scene
             manipulator.Add(this);
 
+            // Append systems
+            manipulator.Add(new CollisionSystem());
+
             // Append the background
-            manipulator.Add(new Background());
+            manipulator.Add(new BackgroundEntity());
 
             // Create and append the player
-            m_playerRocket = new PlayerRocket();
+            m_playerRocket = new PlayerRocketEntity();
             manipulator.Add(m_playerRocket);
 
             // Load first level (create all blocks)
@@ -100,7 +103,7 @@ namespace RKRocket.Game
                         cellWidth * loopXBlock + (cellWidth / 2f),
                         cellHeight * loopRow + (cellHeight / 2f));
 
-                    Block newBlock = new Block();
+                    BlockEntity newBlock = new BlockEntity();
                     newBlock.Position = actBlockPosition;
                     manipulator.Add(newBlock);
                 }
