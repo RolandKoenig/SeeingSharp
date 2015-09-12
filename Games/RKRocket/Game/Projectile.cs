@@ -20,8 +20,12 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp;
+using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing2D;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,14 +35,70 @@ namespace RKRocket.Game
 {
     public class Projectile : GameObject2D
     {
-        protected override void OnRender_2DOverlay(RenderState renderState)
+        #region Resources
+        private StandardBitmapResource m_bitmapProjectile;
+        #endregion
+
+        #region State
+        private Vector2 m_currentLocation;
+        private float m_currentSpeed;
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Projectile"/> class.
+        /// </summary>
+        public Projectile(Vector2 startLocation)
         {
-      
+            m_bitmapProjectile = GraphicsResources.Bitmap_Projectile;
+            m_currentLocation = startLocation;
+            m_currentSpeed = Constants.SIM_PROJECTILE_SPEED;
         }
 
+        /// <summary>
+        /// Updates the projectile.
+        /// </summary>
+        /// <param name="updateState">State of the update.</param>
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
-         
+            float updateTimeSeconds = (float)updateState.UpdateTime.TotalSeconds;
+
+            // Calculate moving distance and next speed value
+            float movingDistance = 
+                0.5f * Constants.SIM_PROJECTILE_BRAKE_RETARDATION * (float)Math.Pow(updateTimeSeconds, 2.0f) +
+                m_currentSpeed * updateTimeSeconds;
+            m_currentSpeed = Constants.SIM_PROJECTILE_BRAKE_RETARDATION * updateTimeSeconds + m_currentSpeed;
+
+            // Update projectile location
+            m_currentLocation.Y = m_currentLocation.Y + movingDistance;
+
+            // Delete the projectile if we are out of the screen area
+            if(m_currentLocation.Y > Constants.GFX_SCREEN_VPIXEL_HEIGHT + 100f)
+            {
+                base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Remove(this))
+                    .FireAndForget(); ;
+            }
+        }
+
+        /// <summary>
+        /// Contains all 2D rendering logic for this object.
+        /// </summary>
+        /// <param name="renderState">The current state of the renderer.</param>
+        protected override void OnRender_2DOverlay(RenderState renderState)
+        {
+            Graphics2D graphics = renderState.Graphics2D;
+
+            RectangleF destRectangle = new RectangleF(
+                m_currentLocation.X - (Constants.GFX_PROJECTILE_VPIXEL_WIDTH / 2f),
+                m_currentLocation.Y - (Constants.GFX_PROJECTILE_VPIXEL_HEIGHT / 2f),
+                Constants.GFX_PROJECTILE_VPIXEL_WIDTH,
+                Constants.GFX_PROJECTILE_VPIXEL_HEIGHT);
+
+            float transparencyLevel = 1f - Math.Min(Math.Max(m_currentLocation.Y - Constants.GFX_SCREEN_VPIXEL_HEIGHT, 0f) / 100f, 1f);
+            graphics.DrawBitmap(
+                m_bitmapProjectile,
+                destRectangle,
+                opacity: transparencyLevel,
+                interpolationMode: BitmapInterpolationMode.Linear);
         }
     }
 }

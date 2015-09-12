@@ -42,7 +42,6 @@ namespace RKRocket.Game
 
         #region State
         private float m_xPos;
-        private bool m_isMouseHit;
         #endregion
 
         /// <summary>
@@ -57,8 +56,8 @@ namespace RKRocket.Game
 
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
+            // Get input states
             MouseOrPointerState mouseState = updateState.MouseOrPointer;
-            if(mouseState == null) { return; }
 
             // Set x location depending on primary mouse location
             float newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
@@ -66,7 +65,14 @@ namespace RKRocket.Game
             if(newXPos > Constants.GFX_SCREEN_VPIXEL_WIDTH - 50) { newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH - 50f; }
             m_xPos = newXPos;
 
-            //m_isMouseHit = mouseState.IsButtonHit(MouseButton.Left);
+            // Create projectiles on mouse hit
+            if(mouseState.IsButtonHit(MouseButton.Left))
+            {
+                Projectile newProjectile = new Projectile(new Vector2(
+                    m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER - Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f));
+                base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Add(newProjectile))
+                    .FireAndForget();
+            }
         }
 
         /// <summary>
@@ -77,24 +83,16 @@ namespace RKRocket.Game
         {
             Graphics2D graphics = renderState.Graphics2D;
 
-            System.Diagnostics.Debug.WriteLine("X-Pos: " + m_xPos);
-
             RectangleF destRectangle = new RectangleF(
                 m_xPos - (Constants.GFX_ROCKET_VPIXEL_WIDTH / 2f),
                 Constants.GFX_ROCKET_VPIXEL_Y_CENTER - (Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f),
                 Constants.GFX_ROCKET_VPIXEL_WIDTH,
                 Constants.GFX_ROCKET_VPIXEL_HEIGHT);
-            //if(m_isMouseHit)
-            //{
-            //    destRectangle.Inflate(50, 50);
-            //}
 
             graphics.DrawBitmap(
                 m_playerBitmap,
                 destRectangle,
                 interpolationMode: BitmapInterpolationMode.Linear);
         }
-
-
     }
 }

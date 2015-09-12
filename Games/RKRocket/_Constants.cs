@@ -44,6 +44,13 @@ namespace RKRocket
         public const float GFX_ROCKET_VPIXEL_Y_CENTER = 1000f;
         #endregion
 
+        #region projectile properties
+        public const float GFX_PROJECTILE_VPIXEL_WIDTH = 32f;
+        public const float GFX_PROJECTILE_VPIXEL_HEIGHT = 32f;
+        public const float SIM_PROJECTILE_SPEED = -1000f;
+        public const float SIM_PROJECTILE_BRAKE_RETARDATION = 550f;
+        #endregion
+
         #region background properties
         public const float GFX_BACKGROUND_STAR_VPIXEL_WIDTH = 24f;
         public const float GFX_BACKGROUND_STAR_VPIXEL_HEIGHT = 24f;

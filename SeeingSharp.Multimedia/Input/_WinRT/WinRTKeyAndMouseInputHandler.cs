@@ -320,8 +320,18 @@ namespace SeeingSharp.Multimedia.Input
                 m_dummyButtonForFocus.Focus(FocusState.Programmatic);
             }
 
-            //// Store the mouse event
-            //PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+            // Track mouse/pointer state
+            PointerPoint currentPoint = e.GetCurrentPoint(m_painter.TargetPanel);
+            PointerPointProperties pointProperties = currentPoint.Properties;
+            if (pointProperties.IsPrimary)
+            {
+                m_stateMouseOrPointer.NotifyButtonStates(
+                    pointProperties.IsLeftButtonPressed,
+                    pointProperties.IsMiddleButtonPressed,
+                    pointProperties.IsRightButtonPressed,
+                    pointProperties.IsXButton1Pressed,
+                    pointProperties.IsXButton2Pressed);
+            }
 
             StopCameraDragging();
 

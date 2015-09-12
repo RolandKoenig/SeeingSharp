@@ -53,9 +53,15 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         internal MouseOrPointerState()
         {
-            m_buttonsHit = new bool[BUTTON_COUNT];
-            m_buttonsDown = new bool[BUTTON_COUNT];
-            m_buttonsUp = new bool[BUTTON_COUNT];
+            int buttonCount = BUTTON_COUNT;
+            if (buttonCount <= 0)
+            {
+                buttonCount = Enum.GetValues(typeof(MouseButton)).Length;
+            }
+
+            m_buttonsHit = new bool[buttonCount];
+            m_buttonsDown = new bool[buttonCount];
+            m_buttonsUp = new bool[buttonCount];
         }
 
         /// <summary>
@@ -111,7 +117,7 @@ namespace SeeingSharp.Multimedia.Input
             // Update mouse states
             for(int loop=0; loop<buttonStates.Length; loop++)
             {
-                bool isHitOrDown = m_buttonsHit[loop] == m_buttonsDown[loop];
+                bool isHitOrDown = m_buttonsHit[loop] | m_buttonsDown[loop];
                 if(isHitOrDown == buttonStates[loop]) { continue; }
 
                 if(buttonStates[loop])

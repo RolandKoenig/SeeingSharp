@@ -80,7 +80,7 @@ namespace RKRocket.Game
                         new Vector2(newStar.Position.X, Constants.GFX_SCREEN_VPIXEL_HEIGHT + 150f),
                         (float)m_random.Next(400, 450))
                     .ChangeOpacityTo(1f, TimeSpan.FromMilliseconds(250f))
-                    .WaitForCondition(() => newStar.Position.Y > Constants.GFX_SCREEN_VPIXEL_HEIGHT - 150f)
+                    .WaitForCondition(() => newStar.Position.Y > Constants.GFX_SCREEN_VPIXEL_HEIGHT + 50f)
                     .ChangeOpacityTo(0f, TimeSpan.FromMilliseconds(250f))
                     .WaitFinished()
                     .ApplyAsSecondary(() => m_generatedStars.Remove(newStar));
