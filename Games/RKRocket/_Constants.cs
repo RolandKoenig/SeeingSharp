@@ -66,11 +66,16 @@ namespace RKRocket
         public const int BLOCK_OPACITY_CHANGING_TIME_MS = 500;
         public const float BLOCK_VPIXEL_WIDTH = 128f;
         public const float BLOCK_VPIXEL_HEIGHT = 44f;
-        public const float BLOCK_LEAVING_Y_TARGET = 1300f;
+        public const float BLOCK_LEAVING_Y_TARGET = 1100f;
         public const float BLOCK_LEAVING_MAX_SPEED = 1200f;
         public const float BLOCK_LEAVING_ACCELERATION = 500f;
         #endregion
 
-
+        #region Fragment properties
+        public const float FRAGMENT_VPIXEL_WIDTH = 20f;
+        public const float FRAGMENT_VPIXEL_HEIGHT = 20f;
+        public const int FRAGMENT_LIVETIME_S = 5;
+        public static readonly TimeSpan FRAGMENT_LIVETIME = TimeSpan.FromSeconds(FRAGMENT_LIVETIME_S);
+        #endregion
     }
 }

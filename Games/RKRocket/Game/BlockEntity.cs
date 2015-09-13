@@ -111,7 +111,7 @@ namespace RKRocket.Game
             // Animation for leaving the screen
             this.BuildAnimationSequence()
                 .Move2DTo(
-                    new Vector2(this.Position.X, Constants.BLOCK_LEAVING_Y_TARGET + 100f),
+                    new Vector2(this.Position.X, Constants.BLOCK_LEAVING_Y_TARGET + 300f),
                     new MovementSpeed(
                         Constants.BLOCK_LEAVING_MAX_SPEED, 
                         Constants.BLOCK_LEAVING_ACCELERATION, 
@@ -120,8 +120,8 @@ namespace RKRocket.Game
                 .ChangeFloatBy(
                     () => m_opacity,
                     (actValue) => m_opacity = actValue,
-                    0f,
-                    TimeSpan.FromMilliseconds(100))
+                    -m_opacity,
+                    TimeSpan.FromMilliseconds(300))
                 .WaitFinished()
                 .CallAction(() => base.Scene.ManipulateSceneAsync((maniulator) => maniulator.Remove(this)))
                 .Apply();

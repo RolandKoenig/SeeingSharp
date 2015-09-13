@@ -117,6 +117,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\ApplyGameSceneBehavior.cs" />
+    <Compile Include="Game\FragmentEntity.cs" />
     <Compile Include="Game\CollisionSystem.cs" />
     <Compile Include="Game\_Background\BackgroundEntity.cs">
       <SubType>Code</SubType>
