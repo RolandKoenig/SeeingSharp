@@ -55,6 +55,16 @@ namespace RKRocket.Game
         }
 
         /// <summary>
+        /// Gets the bounds of this object for the collision system.
+        /// </summary>
+        public BoundingSphere GetBoundsForCollisionSystem()
+        {
+            return new BoundingSphere(
+                new Vector3(m_currentLocation.X, 0f, m_currentLocation.Y),
+                Math.Max(Constants.GFX_PROJECTILE_VPIXEL_WIDTH, Constants.GFX_PROJECTILE_VPIXEL_HEIGHT) * 0.45f);
+        }
+
+        /// <summary>
         /// Updates the projectile.
         /// </summary>
         /// <param name="updateState">State of the update.</param>
@@ -99,6 +109,16 @@ namespace RKRocket.Game
                 destRectangle,
                 opacity: transparencyLevel,
                 interpolationMode: BitmapInterpolationMode.Linear);
+        }
+
+        /// <summary>
+        /// The CollisionSystem notifies us that a projectile collided with a block.
+        /// </summary>
+        private void OnMessage_Received(MessageCollisionProjectileToBlockDetected message)
+        {
+            if(message.Projectile != this) { return; }
+
+            m_currentSpeed = Constants.SIM_PROJECTILE_SPEED_AFTER_COLLISION;
         }
     }
 }

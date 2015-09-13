@@ -131,6 +131,8 @@
     <Compile Include="Game\ProjectileEntity.cs" />
     <Compile Include="Game\_Background\Star.cs" />
     <Compile Include="Game\_Base\GameObject2D.cs" />
+    <Compile Include="Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs" />
+    <Compile Include="Game\_Messages\MessageCollisionProjectileToBlockDetected.cs" />
     <Compile Include="_GraphicsResources.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -163,7 +165,6 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Game\_Messages\" />
     <Folder Include="Util\" />
   </ItemGroup>
   <ItemGroup>

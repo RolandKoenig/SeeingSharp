@@ -21,6 +21,7 @@
 */
 #endregion
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -58,6 +59,22 @@ namespace RKRocket.Game
             // Perfom collision checks for all projectiles
             foreach(ProjectileEntity actProjectile in m_projectiles)
             {
+                // Check for collisions with blocks
+                BoundingSphere actProjectileBoundingVolume = actProjectile.GetBoundsForCollisionSystem();
+                foreach(BlockEntity actBlock in m_blocks)
+                {
+                    if (actBlock.IsLeaving) { continue; }
+
+                    BoundingBox actBlockBoundingVolume = actBlock.GetBoundsForCollisionSystem();
+                    if(Collision.BoxIntersectsSphere(ref actBlockBoundingVolume, ref actProjectileBoundingVolume))
+                    {
+                        base.Messenger.Publish(
+                            new MessageCollisionProjectileToBlockDetected(
+                                actProjectile, actBlock));
+                    }
+                }
+
+                // Check for collisions with the player
 
             }
         }

@@ -48,6 +48,7 @@ namespace RKRocket
         public const float GFX_PROJECTILE_VPIXEL_WIDTH = 32f;
         public const float GFX_PROJECTILE_VPIXEL_HEIGHT = 32f;
         public const float SIM_PROJECTILE_SPEED = -1000f;
+        public const float SIM_PROJECTILE_SPEED_AFTER_COLLISION = 600f;
         public const float SIM_PROJECTILE_BRAKE_RETARDATION = 550f;
         #endregion
 
@@ -61,8 +62,13 @@ namespace RKRocket
         #region Block properties
         public const int BLOCKS_COUNT_X = 12;
         public const float BLOCK_OPACITY_NORMAL = 0.9f;
+        public const float BLOCK_OPACITY_WHEN_LEAVING = 0.4f;
+        public const int BLOCK_OPACITY_CHANGING_TIME_MS = 500;
         public const float BLOCK_VPIXEL_WIDTH = 128f;
         public const float BLOCK_VPIXEL_HEIGHT = 44f;
+        public const float BLOCK_LEAVING_Y_TARGET = 1300f;
+        public const float BLOCK_LEAVING_MAX_SPEED = 1200f;
+        public const float BLOCK_LEAVING_ACCELERATION = 500f;
         #endregion
 
 
