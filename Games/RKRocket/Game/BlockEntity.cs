@@ -43,6 +43,7 @@ namespace RKRocket.Game
         private Vector2 m_position;
         private bool m_isLeaving;
         private float m_opacity;
+        private float m_rotation;
         #endregion
 
         /// <summary>
@@ -93,10 +94,29 @@ namespace RKRocket.Game
                 m_position.Y - Constants.BLOCK_VPIXEL_HEIGHT / 2f,
                 Constants.BLOCK_VPIXEL_WIDTH,
                 Constants.BLOCK_VPIXEL_HEIGHT);
-            graphics.DrawBitmap(
-                m_blockBitmap, destRectangle,
-                opacity: m_opacity,
-                interpolationMode: BitmapInterpolationMode.Linear);
+
+            Matrix3x2 prevMatrix = Matrix3x2.Identity;
+            if(m_rotation > 0f)
+            {
+                // Apply transform based on local rotation
+                prevMatrix = graphics.Transform;
+                graphics.Transform = Matrix3x2.CreateRotation(m_rotation, m_position) * prevMatrix;
+            }
+            try
+            {
+                graphics.DrawBitmap(
+                    m_blockBitmap, destRectangle,
+                    opacity: m_opacity,
+                    interpolationMode: BitmapInterpolationMode.Linear);
+            }
+            finally
+            {
+                // Restore previous transform
+                if (m_rotation > 0f)
+                {
+                    graphics.Transform = prevMatrix;
+                }
+            }
         }
 
         /// <summary>
@@ -108,6 +128,9 @@ namespace RKRocket.Game
 
             m_isLeaving = true;
 
+            // Cancel all current animations
+            this.AnimationHandler.CancelAnimations();
+
             // Animation for leaving the screen
             this.BuildAnimationSequence()
                 .Move2DTo(
@@ -116,6 +139,11 @@ namespace RKRocket.Game
                         Constants.BLOCK_LEAVING_MAX_SPEED, 
                         Constants.BLOCK_LEAVING_ACCELERATION, 
                         0f))
+                .ChangeFloatBy(
+                    () => m_rotation,
+                    (actVaue) => m_rotation = actVaue,
+                    EngineMath.DegreeToRadian(240f),
+                    TimeSpan.FromSeconds(5.0))
                 .WaitForCondition(() => this.Position.Y >= Constants.BLOCK_LEAVING_Y_TARGET)
                 .ChangeFloatBy(
                     () => m_opacity,

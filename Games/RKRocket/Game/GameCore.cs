@@ -84,6 +84,7 @@ namespace RKRocket.Game
 
             // Append systems
             manipulator.Add(new CollisionSystem());
+            manipulator.Add(new FragmentCreationSystem());
 
             // Append the background
             manipulator.Add(new BackgroundEntity());
@@ -95,7 +96,7 @@ namespace RKRocket.Game
             // Load first level (create all blocks)
             float cellWidth = Constants.GFX_SCREEN_VPIXEL_WIDTH / Constants.BLOCKS_COUNT_X;
             float cellHeight = Constants.BLOCK_VPIXEL_HEIGHT + 10f;
-            for (int loopRow =0; loopRow < 3; loopRow++)
+            for (int loopRow =0; loopRow < 6; loopRow++)
             {
                 for(int loopXBlock = 0; loopXBlock < Constants.BLOCKS_COUNT_X; loopXBlock++)
                 {

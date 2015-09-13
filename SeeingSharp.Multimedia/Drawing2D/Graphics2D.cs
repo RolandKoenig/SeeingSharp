@@ -524,5 +524,11 @@ namespace SeeingSharp.Multimedia.Drawing2D
 
             }
         }
+
+        public Matrix3x2 Transform
+        {
+            get { return m_renderTarget.Transform.ToMatrix(); }
+            set { m_renderTarget.Transform = value.ToDXMatrix(); }
+        }
     }
 }

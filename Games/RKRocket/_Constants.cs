@@ -72,9 +72,13 @@ namespace RKRocket
         #endregion
 
         #region Fragment properties
+        public const int FRAGMENT_MIN_COUNT = 7;
+        public const int FRAGMENT_MAX_COUNT = 12;
+        public const int FRAGMENT_MIN_SPEED = 1000;
+        public const int FRAGMENT_MAX_SPEED = 1600;
         public const float FRAGMENT_VPIXEL_WIDTH = 20f;
         public const float FRAGMENT_VPIXEL_HEIGHT = 20f;
-        public const int FRAGMENT_LIVETIME_S = 5;
+        public const int FRAGMENT_LIVETIME_S = 2;
         public static readonly TimeSpan FRAGMENT_LIVETIME = TimeSpan.FromSeconds(FRAGMENT_LIVETIME_S);
         #endregion
     }

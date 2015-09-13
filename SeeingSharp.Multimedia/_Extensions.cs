@@ -53,6 +53,14 @@ namespace SeeingSharp.Multimedia
                 matrix.M31, matrix.M32);
         }
 
+        internal static Matrix3x2 ToMatrix(this SharpDX.Matrix3x2 sdxMatrix)
+        {
+            return new Matrix3x2(
+                sdxMatrix.M11, sdxMatrix.M12,
+                sdxMatrix.M21, sdxMatrix.M22,
+                sdxMatrix.M31, sdxMatrix.M32);
+        }
+
         internal static SharpDX.Color4 ToDXColor(this Color4 color)
         {
             return new SharpDX.Color4(color.Red, color.Green, color.Blue, color.Alpha);

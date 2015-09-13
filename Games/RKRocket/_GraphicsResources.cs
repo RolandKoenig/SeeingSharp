@@ -38,7 +38,7 @@ namespace RKRocket
     {
         #region Brushes
         public static readonly BrushResource Brush_Background = new SolidBrushResource(Color4.BlueColor.ChangeAlphaTo(0.01f));
-        public static readonly BrushResource Brush_Fragment = new SolidBrushResource(Color4.Gray.ChangeAlphaTo(0.4f));
+        public static readonly BrushResource Brush_Fragment = new SolidBrushResource(Color4.Gray.ChangeAlphaTo(0.3f));
         #endregion
 
         #region Bitmaps

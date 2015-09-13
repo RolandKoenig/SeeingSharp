@@ -120,5 +120,13 @@ namespace RKRocket.Game
 
             m_currentSpeed = Constants.SIM_PROJECTILE_SPEED_AFTER_COLLISION;
         }
+
+        /// <summary>
+        /// Gets the current position of the projectile.
+        /// </summary>
+        public Vector2 Position
+        {
+            get { return m_currentLocation; }
+        }
     }
 }

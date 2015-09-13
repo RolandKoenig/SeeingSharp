@@ -85,12 +85,13 @@ namespace RKRocket.Game
         {
             Graphics2D graphics = renderState.Graphics2D;
 
+            // Draw the fragment
             RectangleF destRectangle = new RectangleF(
                 m_position.X - Constants.FRAGMENT_VPIXEL_WIDTH / 2f,
                 m_position.Y - Constants.FRAGMENT_VPIXEL_HEIGHT / 2f,
                 Constants.FRAGMENT_VPIXEL_WIDTH,
                 Constants.FRAGMENT_VPIXEL_HEIGHT);
-
+            graphics.FillRectangle(destRectangle, m_fragmentBrush);
         }
 
         public Vector2 Position
