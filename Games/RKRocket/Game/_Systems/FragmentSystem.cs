@@ -31,16 +31,16 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class FragmentCreationSystem : SceneLogicalObject
+    public class FragmentSystem : SceneLogicalObject
     {
         #region Logic
         private Random m_randomizer;
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="FragmentCreationSystem"/> class.
+        /// Initializes a new instance of the <see cref="FragmentSystem"/> class.
         /// </summary>
-        public FragmentCreationSystem()
+        public FragmentSystem()
         {
             m_randomizer = new Random(Environment.TickCount);
         }

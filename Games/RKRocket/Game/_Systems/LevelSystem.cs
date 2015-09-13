@@ -20,25 +20,17 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp;
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Drawing2D;
 
 namespace RKRocket.Game
 {
-    /// <summary>
-    /// An object which representates a star on the background.
-    /// </summary>
-    public class Star : IAnimatableObjectPosition2D, IAnimatableObjectOpacity
+    public class LevelSystem : SceneLogicalObject
     {
-        public Vector2 Position { get; set; } = Vector2.Zero;
-        public float Opacity { get; set; } = 1f;
-        public float Scaling { get; set; } = 1f;
+
     }
 }

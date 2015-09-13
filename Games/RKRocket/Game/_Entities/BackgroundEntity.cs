@@ -115,5 +115,18 @@ namespace RKRocket.Game
                     interpolationMode: BitmapInterpolationMode.Linear);
             }
         }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        /// <summary>
+        /// An object which representates a star on the background.
+        /// </summary>
+        public class Star : IAnimatableObjectPosition2D, IAnimatableObjectOpacity
+        {
+            public Vector2 Position { get; set; } = Vector2.Zero;
+            public float Opacity { get; set; } = 1f;
+            public float Scaling { get; set; } = 1f;
+        }
     }
 }

@@ -84,7 +84,7 @@ namespace RKRocket.Game
 
             // Append systems
             manipulator.Add(new CollisionSystem());
-            manipulator.Add(new FragmentCreationSystem());
+            manipulator.Add(new FragmentSystem());
 
             // Append the background
             manipulator.Add(new BackgroundEntity());
