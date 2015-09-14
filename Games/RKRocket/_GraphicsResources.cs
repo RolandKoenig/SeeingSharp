@@ -65,11 +65,11 @@ namespace RKRocket
             new StandardBitmapResource(
                 new AssemblyResourceUriBuilder(
                     "RKRocket", true,
-                    "Assets/Bitmaps/BlockRed_128x44.png")),
+                    "Assets/Bitmaps/BlockYellow_128x44.png")),
             new StandardBitmapResource(
                 new AssemblyResourceUriBuilder(
                     "RKRocket", true,
-                    "Assets/Bitmaps/BlockYellow_128x44.png")),
+                    "Assets/Bitmaps/BlockRed_128x44.png")),
         };
         #endregion
 

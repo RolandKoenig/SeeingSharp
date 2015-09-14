@@ -21,6 +21,7 @@
 */
 #endregion
 using SeeingSharp;
+using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing2D;
 using System;
@@ -44,14 +45,18 @@ namespace RKRocket.Game
         private bool m_isLeaving;
         private float m_opacity;
         private float m_rotation;
+        private int m_points;
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BlockEntity"/> class.
         /// </summary>
-        public BlockEntity()
+        public BlockEntity(int points)
         {
-            m_blockBitmap = GraphicsResources.Bitmap_Blocks[0];
+            points.EnsureInRange(1, GraphicsResources.Bitmap_Blocks.Length, "points");
+
+            m_points = points;
+            m_blockBitmap = GraphicsResources.Bitmap_Blocks[m_points - 1];
             m_opacity = Constants.BLOCK_OPACITY_NORMAL;
         }
 
@@ -139,42 +144,53 @@ namespace RKRocket.Game
         {
             if (message.Block != this) { return; }
 
-            m_isLeaving = true;
+            m_points--;
+            if (m_points > 0)
+            {
+                m_blockBitmap = GraphicsResources.Bitmap_Blocks[m_points - 1];
+            }
+            else
+            {   
+                m_isLeaving = true;
 
-            // Cancel all current animations
-            this.AnimationHandler.CancelAnimations();
+                // Cancel all current animations
+                this.AnimationHandler.CancelAnimations();
 
-            // Animation for leaving the screen
-            this.BuildAnimationSequence()
-                .Move2DTo(
-                    new Vector2(this.Position.X, Constants.BLOCK_LEAVING_Y_TARGET + 300f),
-                    new MovementSpeed(
-                        Constants.BLOCK_LEAVING_MAX_SPEED, 
-                        Constants.BLOCK_LEAVING_ACCELERATION, 
-                        0f))
-                .ChangeFloatBy(
-                    () => m_rotation,
-                    (actVaue) => m_rotation = actVaue,
-                    EngineMath.DegreeToRadian(240f),
-                    TimeSpan.FromSeconds(5.0))
-                .WaitForCondition(() => this.Position.Y >= Constants.BLOCK_LEAVING_Y_TARGET)
-                .ChangeFloatBy(
-                    () => m_opacity,
-                    (actValue) => m_opacity = actValue,
-                    -m_opacity,
-                    TimeSpan.FromMilliseconds(300))
-                .WaitFinished()
-                .CallAction(() => base.Scene.ManipulateSceneAsync((maniulator) => maniulator.Remove(this)))
-                .Apply();
+                // Animation for leaving the screen
+                this.BuildAnimationSequence()
+                    .Move2DTo(
+                        new Vector2(this.Position.X, Constants.BLOCK_LEAVING_Y_TARGET + 300f),
+                        new MovementSpeed(
+                            Constants.BLOCK_LEAVING_MAX_SPEED,
+                            Constants.BLOCK_LEAVING_ACCELERATION,
+                            0f))
+                    .ChangeFloatBy(
+                        () => m_rotation,
+                        (actVaue) => m_rotation = actVaue,
+                        EngineMath.DegreeToRadian(240f),
+                        TimeSpan.FromSeconds(5.0))
+                    .WaitForCondition(() => this.Position.Y >= Constants.BLOCK_LEAVING_Y_TARGET)
+                    .ChangeFloatBy(
+                        () => m_opacity,
+                        (actValue) => m_opacity = actValue,
+                        -m_opacity,
+                        TimeSpan.FromMilliseconds(300))
+                    .WaitFinished()
+                    .CallAction(() => base.Scene.ManipulateSceneAsync((maniulator) => maniulator.Remove(this)))
+                    .Apply();
 
-            // Animation for changing the opacity value
-            this.BuildAnimationSequence()
-                .ChangeFloatBy(
-                    () => m_opacity,
-                    (actValue) => m_opacity = actValue,
-                    Constants.BLOCK_OPACITY_WHEN_LEAVING - m_opacity,
-                    TimeSpan.FromMilliseconds(Constants.BLOCK_OPACITY_CHANGING_TIME_MS))
-                .ApplyAsSecondary();
+                // Animation for changing the opacity value
+                this.BuildAnimationSequence()
+                    .ChangeFloatBy(
+                        () => m_opacity,
+                        (actValue) => m_opacity = actValue,
+                        Constants.BLOCK_OPACITY_WHEN_LEAVING - m_opacity,
+                        TimeSpan.FromMilliseconds(Constants.BLOCK_OPACITY_CHANGING_TIME_MS))
+                    .ApplyAsSecondary();
+
+                // Publish leaving message
+                base.Messenger.Publish(new MessageBlockStartsLeaving(this));
+            }
         }
 
         public Vector2 Position

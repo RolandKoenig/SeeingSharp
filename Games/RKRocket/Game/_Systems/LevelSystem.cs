@@ -73,6 +73,7 @@ namespace RKRocket.Game
                 LevelProperties currentLevel = Constants.LEVEL_PROPERTIES[levelPropertiesIndex];
 
                 // Load first level (create all blocks)
+                Random randomizer = new Random(Environment.TickCount);
                 float cellWidth = Constants.GFX_SCREEN_VPIXEL_WIDTH / Constants.BLOCKS_COUNT_X;
                 float cellHeight = Constants.BLOCK_VPIXEL_HEIGHT + 10f;
                 float creationYOffset = cellHeight * currentLevel.CountOfRows;
@@ -84,7 +85,7 @@ namespace RKRocket.Game
                             cellWidth * loopXBlock + (cellWidth / 2f),
                             cellHeight * loopRow + (cellHeight / 2f));
 
-                        BlockEntity newBlock = new BlockEntity();
+                        BlockEntity newBlock = new BlockEntity(randomizer.Next(1, 4));
                         newBlock.Position = new Vector2(actBlockPosition.X, actBlockPosition.Y - creationYOffset);
                         newBlock.BuildAnimationSequence()
                             .Move2DTo(actBlockPosition, TimeSpan.FromSeconds(1.0))
@@ -109,7 +110,7 @@ namespace RKRocket.Game
         /// <summary>
         /// This method gets called when a block was fired off
         /// </summary>
-        private void OnMessage_Received(MessageCollisionProjectileToBlockDetected message)
+        private void OnMessage_Received(MessageBlockStartsLeaving message)
         {
             m_aliveBlocks.Remove(message.Block);
         }
