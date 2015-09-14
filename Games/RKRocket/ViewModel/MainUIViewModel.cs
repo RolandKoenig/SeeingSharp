@@ -21,6 +21,7 @@
 */
 #endregion
 using RKRocket.Game;
+using SeeingSharp.Infrastructure;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
@@ -28,23 +29,62 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RKRocket.View
+namespace RKRocket.ViewModel
 {
     public class MainUIViewModel : ViewModelBase
     {
+        #region core game object
         private GameCore m_game;
+        #endregion
+
+        #region captured state variables
+        private int m_currentLevel;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainUIViewModel"/> class.
         /// </summary>
         public MainUIViewModel()
         {
-            m_game = new GameCore();
+            m_currentLevel = 1;
+
+            // Create core game object
+            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            {
+                m_game = new GameCore();
+
+                // Attach to all messages 
+                SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
+            }
+        }
+
+        /// <summary>
+        /// Called when we reached a new level.
+        /// </summary>
+        private void OnMessage_Received(MessageLevelStarted message)
+        {
+            this.CurrentLevel = message.LevelNumber;
         }
 
         public GameCore Game
         {
             get { return m_game; }
+        }
+
+        /// <summary>
+        /// The number of the current level.
+        /// </summary>
+        public int CurrentLevel
+        {
+            get { return m_currentLevel; }
+            set
+            {
+                if(m_currentLevel != value)
+                {
+                    m_currentLevel = value;
+                    base.RaisePropertyChanged();
+                }
+            }
         }
     }
 }

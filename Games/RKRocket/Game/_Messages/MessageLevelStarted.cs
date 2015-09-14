@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
+    [MessageAsyncRoutingTargets(SeeingSharpConstants.THREAD_NAME_GUI)]
     public class MessageLevelStarted : SeeingSharpMessage
     {
         public MessageLevelStarted(int levelNumber)
