@@ -64,7 +64,10 @@ namespace RKRocket.Game
         {
             // Check whether we are finished
             m_totalLiveTime = m_totalLiveTime + updateState.UpdateTime;
-            if(m_totalLiveTime >= Constants.FRAGMENT_LIVETIME)
+            if((m_totalLiveTime >= Constants.FRAGMENT_LIVETIME) ||
+               (m_position.X < -50f) ||
+               (m_position.X > Constants.GFX_SCREEN_VPIXEL_WIDTH + 50f) ||
+               (m_position.Y > Constants.GFX_SCREEN_VPIXEL_HEIGHT + 50f))
             {
                 base.Scene.ManipulateSceneAsync(maniupulator => maniupulator.Remove(this))
                     .FireAndForget();

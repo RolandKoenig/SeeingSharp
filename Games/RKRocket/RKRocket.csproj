@@ -117,6 +117,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\ApplyGameSceneBehavior.cs" />
+    <Compile Include="Game\_Messages\MessageLevelStarted.cs" />
     <Compile Include="Game\_Systems\FragmentSystem.cs" />
     <Compile Include="Game\_Entities\FragmentEntity.cs" />
     <Compile Include="Game\_Systems\CollisionSystem.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs" />
     <Compile Include="Game\_Messages\MessageCollisionProjectileToBlockDetected.cs" />
     <Compile Include="Game\_Systems\LevelSystem.cs" />
+    <Compile Include="Util\LevelProperties.cs" />
     <Compile Include="_GraphicsResources.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -166,9 +168,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Util\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>

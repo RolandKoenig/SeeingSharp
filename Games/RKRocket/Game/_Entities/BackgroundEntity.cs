@@ -71,7 +71,7 @@ namespace RKRocket.Game
                 newStar.Scaling = m_random.Next(60, 100) / 100f;
                 newStar.Position = new Vector2(
                     (float)m_random.Next(10, (int)Constants.GFX_SCREEN_VPIXEL_WIDTH - 10),
-                    -20f);
+                    -100f);
                 newStar.Opacity = 0f;
 
                 // Define the animation (move from top to bottom)

@@ -104,9 +104,22 @@ namespace RKRocket.Game
             }
             try
             {
+                // Calculate opacity value depending on y position of the block
+                float localOpacity = m_opacity;
+                if(m_position.Y < 0f) { localOpacity = 0f; }
+                else if (m_position.Y < 20f)
+                {
+                    localOpacity = (m_position.Y / 20f) * m_opacity;
+                }
+                else { localOpacity = m_opacity; }
+                
+                // Ensure correct opacity value
+                if(localOpacity < 0f) { localOpacity = 0f; }
+
+                // Draw the block
                 graphics.DrawBitmap(
                     m_blockBitmap, destRectangle,
-                    opacity: m_opacity,
+                    opacity: localOpacity,
                     interpolationMode: BitmapInterpolationMode.Linear);
             }
             finally
