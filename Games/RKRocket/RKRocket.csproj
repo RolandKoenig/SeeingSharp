@@ -136,7 +136,7 @@
     <Compile Include="Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs" />
     <Compile Include="Game\_Messages\MessageCollisionProjectileToBlockDetected.cs" />
     <Compile Include="Game\_Systems\LevelSystem.cs" />
-    <Compile Include="Util\LevelProperties.cs" />
+    <Compile Include="Data\LevelProperties.cs" />
     <Compile Include="_GraphicsResources.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>

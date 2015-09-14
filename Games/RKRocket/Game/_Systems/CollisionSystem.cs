@@ -59,6 +59,8 @@ namespace RKRocket.Game
             // Perfom collision checks for all projectiles
             foreach(ProjectileEntity actProjectile in m_projectiles)
             {
+                if (!actProjectile.RelevantForCollisionSystem) { continue; }
+
                 // Check for collisions with blocks
                 BoundingSphere actProjectileBoundingVolume = actProjectile.GetBoundsForCollisionSystem();
                 foreach(BlockEntity actBlock in m_blocks)

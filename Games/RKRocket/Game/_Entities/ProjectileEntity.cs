@@ -42,6 +42,7 @@ namespace RKRocket.Game
         #region State
         private Vector2 m_currentLocation;
         private float m_currentSpeed;
+        private bool m_relevantForCollisionSystem;
         #endregion
 
         /// <summary>
@@ -52,6 +53,7 @@ namespace RKRocket.Game
             m_bitmapProjectile = GraphicsResources.Bitmap_Projectile;
             m_currentLocation = startLocation;
             m_currentSpeed = Constants.SIM_PROJECTILE_SPEED;
+            m_relevantForCollisionSystem = true;
         }
 
         /// <summary>
@@ -119,6 +121,7 @@ namespace RKRocket.Game
             if(message.Projectile != this) { return; }
 
             m_currentSpeed = Constants.SIM_PROJECTILE_SPEED_AFTER_COLLISION;
+            m_relevantForCollisionSystem = false;
         }
 
         /// <summary>
@@ -127,6 +130,11 @@ namespace RKRocket.Game
         public Vector2 Position
         {
             get { return m_currentLocation; }
+        }
+
+        public bool RelevantForCollisionSystem
+        {
+            get { return m_relevantForCollisionSystem; }
         }
     }
 }

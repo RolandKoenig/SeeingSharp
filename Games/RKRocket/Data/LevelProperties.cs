@@ -26,7 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace RKRocket.Util
+namespace RKRocket.Data
 {
     public class LevelProperties
     {
