@@ -38,6 +38,9 @@ namespace RKRocket.Game
         private int m_actLevelNumber;
         private List<BlockEntity> m_aliveBlocks;
         private TimeSpan m_timeSinceNoBlock;
+        private LevelData m_lastLevel;
+        private LevelData m_currentLevel;
+        private bool m_isLoadingLevel;
         #endregion
 
         /// <summary>
@@ -45,11 +48,18 @@ namespace RKRocket.Game
         /// </summary>
         public LevelSystem()
         {
-            m_actLevelNumber = 3;
+            m_actLevelNumber = 0;
             m_aliveBlocks = new List<BlockEntity>();
+
+            m_currentLevel = new LevelData();
+            m_currentLevel.SetDefaultContent();
         }
 
-        protected override void UpdateInternal(SceneRelatedUpdateState updateState)
+        /// <summary>
+        /// Updates this object.
+        /// </summary>
+        /// <param name="updateState">Current state of the update pass.</param>
+        protected override async void UpdateInternal(SceneRelatedUpdateState updateState)
         {
             base.UpdateInternal(updateState);
 
@@ -58,34 +68,62 @@ namespace RKRocket.Game
             else { m_timeSinceNoBlock = TimeSpan.Zero; }
 
             // Decide whether wie jump to the next level
+            if (m_isLoadingLevel) { return; }
             if((m_actLevelNumber == 0) ||
                (m_timeSinceNoBlock > Constants.LEVEL_MIN_TIME_WITHOUT_BLOCKS))
             {
+                // Reset current timespan since level start
+                m_timeSinceNoBlock = TimeSpan.Zero;
+
                 // Increment level number
                 m_actLevelNumber += 1;
 
-                // Get corresponding level properties
-                int levelPropertiesIndex = m_actLevelNumber - 1;
-                if (Constants.LEVEL_PROPERTIES.Length <= levelPropertiesIndex)
+                // Exchange level objects
+                m_lastLevel = m_currentLevel;
+                m_currentLevel = null;
+
+                // Load next level
+                string formatedLevelNumber = m_actLevelNumber.ToString().PadLeft(3, '0');
+                m_isLoadingLevel = true;
+                try
                 {
-                    levelPropertiesIndex = Constants.LEVEL_PROPERTIES.Length - 1;
+                    m_currentLevel = await CommonTools.DeserializeJsonFromResourceAsync<LevelData>(
+                        new AssemblyResourceUriBuilder(
+                            "RKRocket", true,
+                            $"Assets/Levels/Level_{formatedLevelNumber}.json"));
                 }
-                LevelProperties currentLevel = Constants.LEVEL_PROPERTIES[levelPropertiesIndex];
+                catch (Exception)
+                {
+                    m_currentLevel = m_lastLevel;
+                }
+                finally
+                {
+                    m_isLoadingLevel = false;
+                }
 
                 // Load first level (create all blocks)
-                Random randomizer = new Random(Environment.TickCount);
                 float cellWidth = Constants.GFX_SCREEN_VPIXEL_WIDTH / Constants.BLOCKS_COUNT_X;
                 float cellHeight = Constants.BLOCK_VPIXEL_HEIGHT + 10f;
-                float creationYOffset = cellHeight * currentLevel.CountOfRows;
-                for (int loopRow = 0; loopRow < currentLevel.CountOfRows; loopRow++)
+                float creationYOffset = cellHeight * m_currentLevel.CountOfRows;
+                for (int loopRow = 0; loopRow < m_currentLevel.CountOfRows; loopRow++)
                 {
-                    for (int loopXBlock = 0; loopXBlock < Constants.BLOCKS_COUNT_X; loopXBlock++)
+                    string[] actRowData = m_currentLevel.GetRow(loopRow);
+                    for (int loopXBlock = 0; loopXBlock < Constants.BLOCKS_COUNT_X && loopXBlock < actRowData.Length; loopXBlock++)
                     {
+                        // Get block type out of level data
+                        int actBlockType = 0;
+                        if (string.IsNullOrWhiteSpace(actRowData[loopXBlock])) { continue; }
+                        if (!Int32.TryParse(actRowData[loopXBlock], out actBlockType)) { continue; }
+                        if (actBlockType < 0) { actBlockType = 0; }
+                        if (actBlockType >= GraphicsResources.Bitmap_Blocks.Length) { actBlockType = 0; }
+
+                        // Calculate the position of the block
                         Vector2 actBlockPosition = new Vector2(
                             cellWidth * loopXBlock + (cellWidth / 2f),
                             cellHeight * loopRow + (cellHeight / 2f));
 
-                        BlockEntity newBlock = new BlockEntity(randomizer.Next(1, 4));
+                        // Create the block
+                        BlockEntity newBlock = new BlockEntity(actBlockType);
                         newBlock.Position = new Vector2(actBlockPosition.X, actBlockPosition.Y - creationYOffset);
                         newBlock.BuildAnimationSequence()
                             .Move2DTo(actBlockPosition, TimeSpan.FromSeconds(1.0))

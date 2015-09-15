@@ -31,6 +31,8 @@ using System.Xml.Serialization;
 using System.Reflection;
 using System.Collections;
 using SeeingSharp.Infrastructure;
+using System.Text;
+using Newtonsoft.Json;
 
 #if UNIVERSAL
 using Windows.Storage;
@@ -305,6 +307,42 @@ namespace SeeingSharp.Util
             }
         }
 #endif
+
+        /// <summary>
+        /// Deserializes a json object from the given resource.
+        /// </summary>
+        /// <typeparam name="T">The type of the object.</typeparam>
+        /// <param name="resourceLink">The link to the resource.</param>
+        public static async Task<T> DeserializeJsonFromResourceAsync<T>(ResourceLink resourceLink)
+            where T : class
+        {
+            using (Stream inStream = await resourceLink.OpenInputStreamAsync())
+            using (StreamReader inStreamReader = new StreamReader(inStream))
+            using (JsonTextReader jsonReader = new JsonTextReader(inStreamReader))
+            {
+                return SerializerRepository.DEFAULT_JSON.Deserialize<T>(jsonReader);
+            }
+        }
+
+        /// <summary>
+        /// Serializes the given object to a json formatted string.
+        /// </summary>
+        /// <param name="obj">The object to be serialized.</param>
+        /// <param name="indent">Append empty spaces to produce easy readable json?</param>
+        public static string SerializeToJsonString<T>(T obj, bool indent = true)
+            where T : class
+        {
+            JsonSerializer serializer = SerializerRepository.DEFAULT_JSON;
+            if (!indent) { serializer = SerializerRepository.DEFAULT_JSON_WITHOUT_INDENT; }
+
+            StringBuilder stringBuilder = new StringBuilder(2048);
+            using (StringWriter stringWriter = new StringWriter(stringBuilder))
+            {
+                serializer.Serialize(stringWriter, obj, typeof(T));
+            }
+
+            return stringBuilder.ToString();
+        }
 
 #if DESKTOP
         /// <summary>

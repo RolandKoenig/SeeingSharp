@@ -1,5 +1,6 @@
 ﻿using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using RKRocket.Data;
 
 namespace RKRocket
 {
@@ -45,7 +47,6 @@ namespace RKRocket
         /// <param name="e">Details about the launch request and process.</param>
         protected override async void OnLaunched(LaunchActivatedEventArgs e)
         {
-
             // Initialize application and graphics
             Exception initException = null;
             if (!SeeingSharpApplication.IsInitialized)

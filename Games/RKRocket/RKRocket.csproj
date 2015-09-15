@@ -99,7 +99,9 @@
     <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <None Include="Assets\Levels\Level_001.json" />
+    <Content Include="Assets\Levels\Level_001.json" />
+    <Content Include="Assets\Levels\Level_002.json" />
+    <Content Include="Assets\Levels\Level_003.json" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -138,7 +140,7 @@
     <Compile Include="Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs" />
     <Compile Include="Game\_Messages\MessageCollisionProjectileToBlockDetected.cs" />
     <Compile Include="Game\_Systems\LevelSystem.cs" />
-    <Compile Include="Data\LevelProperties.cs" />
+    <Compile Include="Data\LevelData.cs" />
     <Compile Include="View\GameStatusView.xaml.cs">
       <DependentUpon>GameStatusView.xaml</DependentUpon>
     </Compile>

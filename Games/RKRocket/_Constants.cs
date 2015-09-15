@@ -41,14 +41,6 @@ namespace RKRocket
 
         #region Level properties
         public static readonly TimeSpan LEVEL_MIN_TIME_WITHOUT_BLOCKS = TimeSpan.FromSeconds(2.0);
-        public static readonly LevelProperties[] LEVEL_PROPERTIES = new LevelProperties[]
-        {
-            new LevelProperties(countOfRows: 3),
-            new LevelProperties(countOfRows: 4),
-            new LevelProperties(countOfRows: 5),
-            new LevelProperties(countOfRows: 6),
-            new LevelProperties(countOfRows: 7),
-        };
         #endregion
 
         #region player rocket properties
