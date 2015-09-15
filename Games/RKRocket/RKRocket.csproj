@@ -99,6 +99,7 @@
     <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
     <Content Include="Properties\Default.rd.xml" />
+    <None Include="Assets\Levels\Level_001.json" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -172,9 +173,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Assets\Levels\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
       <Name>Behaviors SDK %28XAML%29</Name>
