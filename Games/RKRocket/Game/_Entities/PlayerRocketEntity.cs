@@ -67,16 +67,20 @@ namespace RKRocket.Game
             // Initialize variables for input control
             bool isFireHit = false;
             float moveDistance = 0f;
+            float maxMoveDistance = (float)updateState.UpdateTime.TotalSeconds * Constants.SIM_ROCKET_MAX_X_MOVEMENT;
 
-            // Handle mouse state
+            // Capture mouse state
             if (mouseState.IsButtonHit(MouseButton.Left)) { isFireHit = true; }
             if (mouseState.MoveDistanceRelative != Vector2.Zero)
             {
                 float newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
                 moveDistance = newXPos - m_xPos;
+
+                //if(moveDistance < -maxMoveDistance) { moveDistance = -maxMoveDistance; }
+                //if(moveDistance > maxMoveDistance) { moveDistance = maxMoveDistance; }
             }
 
-            // Handle gamepad state
+            // Capture gamepad state
             if(gamepadState.IsConnected)
             {
                 isFireHit |= 
@@ -85,8 +89,16 @@ namespace RKRocket.Game
                     gamepadState.IsButtonHit(GamepadButton.B) ||
                     gamepadState.IsButtonHit(GamepadButton.Y);
 
-                if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)) { moveDistance = -20f; }
-                else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)) { moveDistance = 20f; }
+                if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)) { moveDistance = -maxMoveDistance; }
+                else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)) { moveDistance = maxMoveDistance; }
+                else if(Math.Abs((int)gamepadState.LeftThumbX) > 10000)
+                {
+                    moveDistance = (gamepadState.LeftThumbX / (float)short.MaxValue) * maxMoveDistance;
+                }
+                else if(Math.Abs((int)gamepadState.RightThumbX) > 10000)
+                {
+                    moveDistance = (gamepadState.RightThumbX / (float)short.MaxValue) * maxMoveDistance;
+                }
             }
 
             // Apply states

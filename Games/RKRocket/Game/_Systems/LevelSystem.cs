@@ -130,8 +130,8 @@ namespace RKRocket.Game
                         int actBlockType = 0;
                         if (string.IsNullOrWhiteSpace(actRowData[loopXBlock])) { continue; }
                         if (!Int32.TryParse(actRowData[loopXBlock], out actBlockType)) { continue; }
-                        if (actBlockType < 0) { actBlockType = 0; }
-                        if (actBlockType >= GraphicsResources.Bitmap_Blocks.Length) { actBlockType = 0; }
+                        if (actBlockType < 1) { actBlockType = 1; }
+                        if (actBlockType > GraphicsResources.Bitmap_Blocks.Length) { actBlockType = 1; }
 
                         // Calculate the position of the block
                         Vector2 actBlockPosition = new Vector2(

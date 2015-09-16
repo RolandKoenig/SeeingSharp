@@ -47,6 +47,7 @@ namespace RKRocket
         public const float GFX_ROCKET_VPIXEL_WIDTH = 105f;
         public const float GFX_ROCKET_VPIXEL_HEIGHT = 120f;
         public const float GFX_ROCKET_VPIXEL_Y_CENTER = 1000f;
+        public const float SIM_ROCKET_MAX_X_MOVEMENT = 1000f;
         #endregion
 
         #region projectile properties
