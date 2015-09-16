@@ -73,15 +73,12 @@ namespace RKRocket.Game
             if (mouseState.IsButtonHit(MouseButton.Left)) { isFireHit = true; }
             if (mouseState.MoveDistanceRelative != Vector2.Zero)
             {
-                float newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
-                moveDistance = newXPos - m_xPos;
-
-                //if(moveDistance < -maxMoveDistance) { moveDistance = -maxMoveDistance; }
-                //if(moveDistance > maxMoveDistance) { moveDistance = maxMoveDistance; }
+                float newMouseX = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
+                moveDistance = newMouseX - m_xPos;
             }
 
             // Capture gamepad state
-            if(gamepadState.IsConnected)
+            if (gamepadState.IsConnected)
             {
                 isFireHit |= 
                     gamepadState.IsButtonHit(GamepadButton.X) ||
@@ -89,8 +86,8 @@ namespace RKRocket.Game
                     gamepadState.IsButtonHit(GamepadButton.B) ||
                     gamepadState.IsButtonHit(GamepadButton.Y);
 
-                if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)) { moveDistance = -maxMoveDistance; }
-                else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)) { moveDistance = maxMoveDistance; }
+                if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)){ moveDistance = -maxMoveDistance; }
+                else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)){ moveDistance = maxMoveDistance; }
                 else if(Math.Abs((int)gamepadState.LeftThumbX) > 10000)
                 {
                     moveDistance = (gamepadState.LeftThumbX / (float)short.MaxValue) * maxMoveDistance;
