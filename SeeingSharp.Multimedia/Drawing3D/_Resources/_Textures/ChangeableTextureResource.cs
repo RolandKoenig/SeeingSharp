@@ -29,7 +29,6 @@ using System.Threading.Tasks;
 using SeeingSharp.Multimedia.Core;
 
 //Some namespace mappings
-using TKGFX = SharpDX.Toolkit.Graphics;
 using D3D11 = SharpDX.Direct3D11;
 using WIC = SharpDX.WIC;
 

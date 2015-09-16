@@ -99,7 +99,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                     m_sourceReader.SetCurrentMediaType(
                         MF.SourceReaderIndex.FirstVideoStream,
                         mediaType);
-                    m_sourceReader.SetStreamSelection(MF.SourceReaderIndex.FirstVideoStream, new SharpDX.Bool(true));
+                    m_sourceReader.SetStreamSelection(MF.SourceReaderIndex.FirstVideoStream, new SharpDX.Mathematics.Interop.RawBool(true));
                 }
                 // Read some information about the source
                 using (MF.MediaType mediaType = m_sourceReader.GetCurrentMediaType(MF.SourceReaderIndex.FirstVideoStream))
@@ -176,7 +176,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
                     m_sourceReader.SetCurrentMediaType(
                         MF.SourceReaderIndex.FirstVideoStream,
                         mediaType);
-                    m_sourceReader.SetStreamSelection(MF.SourceReaderIndex.FirstVideoStream, new SharpDX.Bool(true));
+                    m_sourceReader.SetStreamSelection(MF.SourceReaderIndex.FirstVideoStream, new SharpDX.Mathematics.Interop.RawBool(true));
                 }
 
                 // Read some information about the source

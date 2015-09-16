@@ -246,7 +246,7 @@ namespace SeeingSharp.Multimedia.Views
                 int streamDescriptorCount = presentationDescriptor.StreamDescriptorCount;
                 for (int loop = 0; loop < streamDescriptorCount; loop++)
                 {
-                    SDX.Bool selected = false;
+                    SharpDX.Mathematics.Interop.RawBool selected = false;
                     MF.StreamDescriptor streamDescriptor;
                     presentationDescriptor.GetStreamDescriptorByIndex(loop, out selected, out streamDescriptor);
                     if (selected)

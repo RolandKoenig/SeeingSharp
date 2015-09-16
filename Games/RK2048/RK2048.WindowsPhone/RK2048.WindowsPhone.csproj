@@ -118,6 +118,7 @@
     <None Include="..\..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
+    <None Include="app.config" />
     <None Include="Package.StoreAssociation.xml" />
     <None Include="packages.config" />
   </ItemGroup>

@@ -21,9 +21,11 @@
 */
 #endregion
 
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using SharpDX.Direct2D1;
+using SharpDX.Mathematics.Interop;
 
 namespace SeeingSharp.Multimedia.Objects
 {
@@ -73,7 +75,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         /// <param name="point">The end point of the line to draw.</param>
         /// <unmanaged>void AddLine([None] D2D1_POINT_2F point)</unmanaged>
-        public void AddLine(SharpDX.Vector2 point)
+        public void AddLine(SharpDX.Mathematics.Interop.RawVector2 point)
         {
             m_currentPolygonBuilder.Add(new Vector2(point.X, point.Y) - m_origin);
         }
@@ -116,7 +118,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         /// <param name="ointsRef">A pointer to an array of one or more points that describe the lines to draw. A line is drawn from the geometry sink's current point (the end point of the last segment drawn or the location specified by {{BeginFigure}}) to the first point in the array. if the array contains additional points, a line is drawn from the first point to the second point in the array, from the second point to the third point, and so on.</param>
         /// <unmanaged>void AddLines([In, Buffer] const D2D1_POINT_2F* points,[None] UINT pointsCount)</unmanaged>
-        public void AddLines(SharpDX.Vector2[] ointsRef)
+        public void AddLines(SharpDX.Mathematics.Interop.RawVector2[] ointsRef)
         {
             for (int loop = 0; loop < ointsRef.Length; loop++)
             {
@@ -133,7 +135,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <remarks>
         /// If this method is called while a figure is currently in progress, the interface is invalidated and all future methods will fail.
         /// </remarks>
-        public void BeginFigure(SharpDX.Vector2 startPoint, FigureBegin figureBegin)
+        public void BeginFigure(SharpDX.Mathematics.Interop.RawVector2 startPoint, FigureBegin figureBegin)
         {
             m_currentPolygonBuilder.Clear();
             m_currentPolygonBuilder.Add(new Vector2(startPoint.X, startPoint.Y) - m_origin);

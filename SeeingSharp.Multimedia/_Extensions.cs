@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharpDX.Mathematics.Interop;
 
 namespace SeeingSharp.Multimedia
 {
@@ -45,43 +46,37 @@ namespace SeeingSharp.Multimedia
         }
 #endif
 
-        internal static SharpDX.Matrix3x2 ToDXMatrix(this Matrix3x2 matrix)
+        internal static unsafe RawMatrix3x2 ToDXMatrix(this Matrix3x2 matrix)
         {
-            return new SharpDX.Matrix3x2(
-                matrix.M11, matrix.M12,
-                matrix.M21, matrix.M22,
-                matrix.M31, matrix.M32);
+            return *(RawMatrix3x2*)&matrix;
         }
 
-        internal static Matrix3x2 ToMatrix(this SharpDX.Matrix3x2 sdxMatrix)
+        internal static unsafe Matrix3x2 ToMatrix(this RawMatrix3x2 sdxMatrix)
         {
-            return new Matrix3x2(
-                sdxMatrix.M11, sdxMatrix.M12,
-                sdxMatrix.M21, sdxMatrix.M22,
-                sdxMatrix.M31, sdxMatrix.M32);
+            return *(Matrix3x2*)&sdxMatrix;
         }
 
-        internal static SharpDX.Color4 ToDXColor(this Color4 color)
+        internal static unsafe RawColor4 ToDXColor(this Color4 color)
         {
-            return new SharpDX.Color4(color.Red, color.Green, color.Blue, color.Alpha);
+            return *(RawColor4*)&color;
         }
 
-        internal static SharpDX.Vector2 ToDXVector(this Vector2 vector)
+        internal static unsafe RawVector2 ToDXVector(this Vector2 vector)
         {
-            return new SharpDX.Vector2(vector.X, vector.Y);
+            return *(RawVector2*)&vector;
         }
 
-        internal static SharpDX.Rectangle ToDXRectangle(this Rectangle rectangle)
+        internal static unsafe RawRectangle ToDXRectangle(this Rectangle rectangle)
         {
-            return new SharpDX.Rectangle(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            return *(RawRectangle*)&rectangle;
         }
 
-        internal static SharpDX.RectangleF ToDXRectangle(this RectangleF rectangle)
+        internal static unsafe RawRectangleF ToDXRectangle(this RectangleF rectangle)
         {
-            return new SharpDX.RectangleF(rectangle.X, rectangle.Y, rectangle.Width, rectangle.Height);
+            return *(RawRectangleF*)&rectangle;
         }
 
-        internal static SharpDX.Size2 ToDXSize2(this Size2 size)
+        internal static unsafe SharpDX.Size2 ToDXSize2(this Size2 size)
         {
             return new SharpDX.Size2(size.Width, size.Height);
         }

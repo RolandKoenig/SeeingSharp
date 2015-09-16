@@ -62,13 +62,22 @@ namespace SeeingSharp.Multimedia.Core
         [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]
         public string DesktopResolution
         {
-            get { return m_outputDescription.DesktopBounds.Width + "x" + m_outputDescription.DesktopBounds.Height.ToString(); }
+            get
+            {
+                return 
+                    (m_outputDescription.DesktopBounds.Right - m_outputDescription.DesktopBounds.Left) + 
+                    "x" +
+                    (m_outputDescription.DesktopBounds.Bottom - m_outputDescription.DesktopBounds.Top);
+            }
         }
 
         [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]
         public string DesktopLocation
         {
-            get { return "X = " + m_outputDescription.DesktopBounds.X + ", Y = " + m_outputDescription.DesktopBounds.Y; }
+            get
+            {
+                return "X = " + m_outputDescription.DesktopBounds.Left + ", Y = " + m_outputDescription.DesktopBounds.Top;
+            }
         }
 
         [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]

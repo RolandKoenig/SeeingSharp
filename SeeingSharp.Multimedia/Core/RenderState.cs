@@ -551,7 +551,7 @@ namespace SeeingSharp.Multimedia.Core
 
                 // Set render targets to output merger
                 //deviceContext.Rasterizer.SetViewport(SingleViewport);
-                deviceContext.Rasterizer.SetViewports(new SharpDX.ViewportF[] { SingleViewport, SingleViewport, SingleViewport });
+                deviceContext.Rasterizer.SetViewports(new SharpDX.Mathematics.Interop.RawViewportF[] { SingleViewport, SingleViewport, SingleViewport });
                 deviceContext.OutputMerger.SetTargets(RenderTargets.DepthStencilBuffer, m_targetArray);
             }
         }

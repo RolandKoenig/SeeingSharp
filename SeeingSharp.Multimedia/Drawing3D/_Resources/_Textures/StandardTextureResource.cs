@@ -30,27 +30,26 @@ using System.IO;
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
-using TKGFX = SharpDX.Toolkit.Graphics;
 using WIC = SharpDX.WIC;
 
 namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class StandardTextureResource : TextureResource
     {
-        #region Given configuration
+#region Given configuration
         private ResourceLink m_resourceLinkHighQuality;
         private ResourceLink m_resourceLinkLowQuality;
-        #endregion
+#endregion
 
-        #region Loaded resources
+#region Loaded resources
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;
-        #endregion
+#endregion
 
-        #region Runtime
+#region Runtime
         private bool m_isCubeTexture;
         private bool m_isRenderTarget;
-        #endregion
+#endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardTextureResource" /> class.
@@ -94,10 +93,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             {
                 using (Stream inStream = source.OpenInputStream())
                 {
-                    TKGFX.Image rawImage = TKGFX.Image.Load(inStream);
-                    if (rawImage == null) { throw new SeeingSharpException("Unable to load image!"); }
-
-                    m_texture = GraphicsHelper.CreateTexture(device, rawImage);
+                    m_texture = GraphicsHelper.LoadTexture2D(device, inStream);
                 }
             }
             catch(Exception)

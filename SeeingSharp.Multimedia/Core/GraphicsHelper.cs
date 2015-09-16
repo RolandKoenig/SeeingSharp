@@ -38,7 +38,6 @@ using SeeingSharp.Util;
 using Buffer = SharpDX.Direct3D11.Buffer;
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
-using TKGFX = SharpDX.Toolkit.Graphics;
 using D2D = SharpDX.Direct2D1;
 using WIC = SharpDX.WIC;
 #if DESKTOP
@@ -648,37 +647,6 @@ namespace SeeingSharp.Multimedia.Core
             textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
 
             return new D3D11.Texture2D(device.DeviceD3D11, textureDescription, rawData);
-        }
-
-        /// <summary>
-        /// Creates a new image based on the given raw image data.
-        /// </summary>
-        /// <param name="device">Graphics device.</param>
-        /// <param name="rawImage">Raw image data.</param>
-        internal static D3D11.Texture2D CreateTexture(EngineDevice device, TKGFX.Image rawImage)
-        {
-            device.EnsureNotNull("device");
-            rawImage.EnsureNotNull("rawImage");
-
-            D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
-            textureDescription.Width = rawImage.Description.Width;
-            textureDescription.Height = rawImage.Description.Height;
-            textureDescription.MipLevels = rawImage.Description.MipLevels;
-            textureDescription.ArraySize = rawImage.Description.ArraySize;
-            textureDescription.Format = rawImage.Description.Format;
-            textureDescription.Usage = D3D11.ResourceUsage.Default;
-            textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
-            textureDescription.BindFlags = D3D11.BindFlags.ShaderResource;
-            textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
-            textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
-
-            // Special handling for cube textures
-            if (rawImage.Description.Dimension == TKGFX.TextureDimension.TextureCube)
-            {
-                textureDescription.OptionFlags = D3D11.ResourceOptionFlags.TextureCube;
-            }
-
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription, rawImage.ToDataBox());
         }
 
         /// <summary>

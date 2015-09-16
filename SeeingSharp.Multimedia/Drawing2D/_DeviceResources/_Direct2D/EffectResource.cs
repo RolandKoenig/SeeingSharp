@@ -80,7 +80,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 {
                     using (D2D.Image actInput = m_effectInputs[loop].GetImageObject(device) as D2D.Image)
                     {
-                        effect.SetInput(loop, actInput, new SharpDX.Bool(false));
+                        effect.SetInput(loop, actInput, new SharpDX.Mathematics.Interop.RawBool(false));
                     }
                 }
 
