@@ -38,6 +38,7 @@ namespace RKRocket.Game
         private int m_actLevelNumber;
         private List<BlockEntity> m_aliveBlocks;
         private TimeSpan m_timeSinceNoBlock;
+        private TimeSpan m_timeSinceBlocksActive;
         private LevelData m_lastLevel;
         private LevelData m_currentLevel;
         private bool m_isLoadingLevel;
@@ -64,8 +65,23 @@ namespace RKRocket.Game
             base.UpdateInternal(updateState);
 
             // Record empty screen time
-            if(m_aliveBlocks.Count == 0) { m_timeSinceNoBlock += updateState.UpdateTime; }
-            else { m_timeSinceNoBlock = TimeSpan.Zero; }
+            if(m_aliveBlocks.Count == 0)
+            {
+                m_timeSinceNoBlock += updateState.UpdateTime;
+                m_timeSinceBlocksActive = TimeSpan.Zero;
+            }
+            else
+            {
+                m_timeSinceNoBlock = TimeSpan.Zero;
+                m_timeSinceBlocksActive += updateState.UpdateTime;
+            }
+
+            // Trigger fall down animation
+            if(m_timeSinceBlocksActive > TimeSpan.FromSeconds(m_currentLevel.TimeSinceFallDownSeconds))
+            {
+                m_timeSinceBlocksActive = TimeSpan.Zero;
+                base.Messenger.Publish<MessageBlocksFallOneCellDown>();
+            }
 
             // Decide whether wie jump to the next level
             if (m_isLoadingLevel) { return; }
@@ -80,7 +96,6 @@ namespace RKRocket.Game
 
                 // Exchange level objects
                 m_lastLevel = m_currentLevel;
-                m_currentLevel = null;
 
                 // Load next level
                 string formatedLevelNumber = m_actLevelNumber.ToString().PadLeft(3, '0');
@@ -102,9 +117,10 @@ namespace RKRocket.Game
                 }
 
                 // Load first level (create all blocks)
-                float cellWidth = Constants.GFX_SCREEN_VPIXEL_WIDTH / Constants.BLOCKS_COUNT_X;
-                float cellHeight = Constants.BLOCK_VPIXEL_HEIGHT + 10f;
-                float creationYOffset = cellHeight * m_currentLevel.CountOfRows;
+                float targetYOffset = Constants.BLOCK_CELL_HEIGHT * m_currentLevel.YCellOffset;
+                float creationYOffset = 
+                    Constants.BLOCK_CELL_HEIGHT * m_currentLevel.CountOfRows +
+                    targetYOffset;
                 for (int loopRow = 0; loopRow < m_currentLevel.CountOfRows; loopRow++)
                 {
                     string[] actRowData = m_currentLevel.GetRow(loopRow);
@@ -119,14 +135,14 @@ namespace RKRocket.Game
 
                         // Calculate the position of the block
                         Vector2 actBlockPosition = new Vector2(
-                            cellWidth * loopXBlock + (cellWidth / 2f),
-                            cellHeight * loopRow + (cellHeight / 2f));
+                            Constants.BLOCK_CELL_WIDTH * loopXBlock + (Constants.BLOCK_CELL_WIDTH / 2f),
+                            Constants.BLOCK_CELL_HEIGHT * loopRow + (Constants.BLOCK_CELL_HEIGHT / 2f));
 
                         // Create the block
                         BlockEntity newBlock = new BlockEntity(actBlockType);
                         newBlock.Position = new Vector2(actBlockPosition.X, actBlockPosition.Y - creationYOffset);
                         newBlock.BuildAnimationSequence()
-                            .Move2DTo(actBlockPosition, TimeSpan.FromSeconds(1.0))
+                            .Move2DTo(actBlockPosition - new Vector2(0f, targetYOffset), TimeSpan.FromSeconds(1.0))
                             .Apply();
                         m_aliveBlocks.Add(newBlock);
                     }

@@ -132,7 +132,7 @@ namespace RKRocket.Game
             get { return m_currentLocation; }
         }
 
-        public bool RelevantForCollisionSystem
+        public bool IsRelevantForCollisionSystem
         {
             get { return m_relevantForCollisionSystem; }
         }

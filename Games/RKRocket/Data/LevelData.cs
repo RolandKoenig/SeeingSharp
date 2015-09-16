@@ -64,6 +64,13 @@ namespace RKRocket.Data
             set;
         }
 
+        [JsonProperty]
+        public int YCellOffset
+        {
+            get;
+            set;
+        }
+
         public int CountOfRows
         {
             get { return m_levelRows.Count; }

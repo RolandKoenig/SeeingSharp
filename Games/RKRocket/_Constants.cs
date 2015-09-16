@@ -74,6 +74,8 @@ namespace RKRocket
         public const float BLOCK_LEAVING_Y_TARGET = 1100f;
         public const float BLOCK_LEAVING_MAX_SPEED = 1200f;
         public const float BLOCK_LEAVING_ACCELERATION = 500f;
+        public const float BLOCK_CELL_WIDTH = Constants.GFX_SCREEN_VPIXEL_WIDTH / Constants.BLOCKS_COUNT_X;
+        public const float BLOCK_CELL_HEIGHT = Constants.BLOCK_VPIXEL_HEIGHT + 10f;
         #endregion
 
         #region Fragment properties

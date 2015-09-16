@@ -137,6 +137,16 @@ namespace RKRocket.Game
             }
         }
 
+        private void OnMessage_Received(MessageBlocksFallOneCellDown message)
+        {
+            if (m_isLeaving) { return; }
+
+            // Trigger move down
+            this.BuildAnimationSequence()
+                .Move2DBy(new Vector2(0f, Constants.BLOCK_CELL_HEIGHT), TimeSpan.FromSeconds(0.5))
+                .Apply();
+        }
+
         /// <summary>
         /// The CollisionSystem notifies us that a projectile collided with a block.
         /// </summary>
@@ -205,6 +215,11 @@ namespace RKRocket.Game
         public bool IsLeaving
         {
             get { return m_isLeaving; }
+        }
+
+        public bool IsRelevantForCollisionSystem
+        {
+            get { return m_position.Y >= 25f; }
         }
     }
 }
