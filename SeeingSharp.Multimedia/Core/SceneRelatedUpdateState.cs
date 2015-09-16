@@ -71,7 +71,8 @@ namespace SeeingSharp.Multimedia.Core
 
             // Reset input states
             m_inputStates.Clear();
-            this.MouseOrPointer = MouseOrPointerState.Dummy;
+            this.DefaultMouseOrPointer = MouseOrPointerState.Dummy;
+            this.DefaultGamepad = GamepadState.Dummy;
 
             // Update input states
             if (unfilteredInputStates != null)
@@ -84,16 +85,31 @@ namespace SeeingSharp.Multimedia.Core
                     // TODO: Move this call to another location because
                     // we have a conflict with the UI thread which may register/deregister
                     // a view
-                    if (m_owner.IsViewRegistered(actInputState.RelatedView))
+                    if ((actInputState.RelatedView == null) ||
+                        (m_owner.IsViewRegistered(actInputState.RelatedView)))
                     {
                         m_inputStates.Add(actInputState);
 
-                        // Handle MouseOrPointer states
-                        MouseOrPointerState mouseOrPointer = actInputState as MouseOrPointerState;
-                        if (mouseOrPointer != null)
+                        // Register first MouseOrPointer state as default
+                        if (this.DefaultMouseOrPointer == MouseOrPointerState.Dummy)
                         {
-                            this.MouseOrPointer = mouseOrPointer;
-                            continue;
+                            MouseOrPointerState mouseOrPointer = actInputState as MouseOrPointerState;
+                            if (mouseOrPointer != null)
+                            {
+                                this.DefaultMouseOrPointer = mouseOrPointer;
+                                continue;
+                            }
+                        }
+
+                        // Register first Gamepad state as default
+                        if(this.DefaultGamepad == GamepadState.Dummy)
+                        {
+                            GamepadState gamepadState = actInputState as GamepadState;
+                            if(gamepadState != null)
+                            {
+                                this.DefaultGamepad = gamepadState;
+                                continue;
+                            }
                         }
                     }
                 }
@@ -154,7 +170,13 @@ namespace SeeingSharp.Multimedia.Core
             get { return m_inputStates; }
         }
 
-        public MouseOrPointerState MouseOrPointer
+        public MouseOrPointerState DefaultMouseOrPointer
+        {
+            get;
+            private set;
+        }
+
+        public GamepadState DefaultGamepad
         {
             get;
             private set;

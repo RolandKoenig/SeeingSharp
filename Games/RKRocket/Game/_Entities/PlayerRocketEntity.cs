@@ -54,19 +54,49 @@ namespace RKRocket.Game
             m_playerBitmap = GraphicsResources.Bitmap_Player;
         }
 
+        /// <summary>
+        /// Updates this object.
+        /// </summary>
+        /// <param name="updateState">State of the update.</param>
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
             // Get input states
-            MouseOrPointerState mouseState = updateState.MouseOrPointer;
+            MouseOrPointerState mouseState = updateState.DefaultMouseOrPointer;
+            GamepadState gamepadState = updateState.DefaultGamepad;
 
-            // Set x location depending on primary mouse location
-            float newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
-            if(newXPos < 50f) { newXPos = 50f; }
-            if(newXPos > Constants.GFX_SCREEN_VPIXEL_WIDTH - 50) { newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH - 50f; }
-            m_xPos = newXPos;
+            // Initialize variables for input control
+            bool isFireHit = false;
+            float moveDistance = 0f;
 
-            // Create projectiles on mouse hit
-            if(mouseState.IsButtonHit(MouseButton.Left))
+            // Handle mouse state
+            if (mouseState.IsButtonHit(MouseButton.Left)) { isFireHit = true; }
+            if (mouseState.MoveDistanceRelative != Vector2.Zero)
+            {
+                float newXPos = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
+                moveDistance = newXPos - m_xPos;
+            }
+
+            // Handle gamepad state
+            if(gamepadState.IsConnected)
+            {
+                isFireHit |= 
+                    gamepadState.IsButtonHit(GamepadButton.X) ||
+                    gamepadState.IsButtonHit(GamepadButton.A) ||
+                    gamepadState.IsButtonHit(GamepadButton.B) ||
+                    gamepadState.IsButtonHit(GamepadButton.Y);
+
+                if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)) { moveDistance = -20f; }
+                else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)) { moveDistance = 20f; }
+            }
+
+            // Apply states
+            if(moveDistance != 0f)
+            {
+                m_xPos = m_xPos + moveDistance;
+                if(m_xPos < 50f) { m_xPos = 50f; }
+                if(m_xPos > Constants.GFX_SCREEN_VPIXEL_WIDTH - 50) { m_xPos = Constants.GFX_SCREEN_VPIXEL_WIDTH - 50f; }
+            }
+            if (isFireHit)
             {
                 ProjectileEntity newProjectile = new ProjectileEntity(new Vector2(
                     m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER - Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f));

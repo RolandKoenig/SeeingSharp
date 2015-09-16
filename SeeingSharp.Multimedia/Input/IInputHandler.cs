@@ -34,13 +34,13 @@ namespace SeeingSharp.Multimedia.Input
     {
         /// <summary>
         /// Gets a list containing all supported view types.
-        /// Null means that all types are supported.
+        /// Null means that this handler is not bound to a view.
         /// </summary>
         Type[] GetSupportedViewTypes();
 
         /// <summary>
         /// Gets a list containing all supported camera types.
-        /// Null means that all types are supported.
+        /// Null means that this handler is not bound to a view.
         /// </summary>
         Type[] GetSupportedCameraTypes();
 

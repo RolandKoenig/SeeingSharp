@@ -649,7 +649,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Queries for all view related input states (e. g. Mouse, Touch, Keyboard).
         /// </summary>
-        internal async Task<List<InputStateBase>> QueryViewRelatedInputState()
+        internal async Task<List<InputStateBase>> QueryViewRelatedInputStateAsync()
         {
             if(m_actionQueryInputStates == null) { return null; }
 

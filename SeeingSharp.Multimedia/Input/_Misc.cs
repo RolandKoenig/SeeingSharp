@@ -41,4 +41,33 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         NoInput,
     }
+
+    /// <summary>
+    /// Describes the current state of the Xbox 360 Controller.
+    /// This structure is used by the SharpDX.XInput.State structure when polling for
+    /// changes in the state of the controller. The specific mapping of button to game
+    /// function varies depending on the game type. The constant XINPUT_GAMEPAD_TRIGGER_THRESHOLD
+    /// may be used as the value which bLeftTrigger and bRightTrigger must be greater
+    /// than to register as pressed. This is optional, but often desirable. Xbox 360
+    /// Controller buttons do not manifest crosstalk.
+    /// </summary>
+    [Flags]
+    public enum GamepadButton : short
+    {
+        Y = short.MinValue,
+        None = 0,
+        DPadUp = 1,
+        DPadDown = 2,
+        DPadLeft = 4,
+        DPadRight = 8,
+        Start = 16,
+        Back = 32,
+        LeftThumb = 64,
+        RightThumb = 128,
+        LeftShoulder = 256,
+        RightShoulder = 512,
+        A = 4096,
+        B = 8192,
+        X = 16384
+    }
 }

@@ -152,6 +152,13 @@ namespace SeeingSharp.Multimedia.Core
                 Stopwatch renderStopWatch = new Stopwatch();
                 renderStopWatch.Start();
 
+                // Starts all generic input handlers
+                List<IInputHandler> genericInputHandlers = GraphicsCore.Current.InputHandlers.GetInputHandler(null, null, null);
+                foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
+                {
+                    actGenericInputHandler.Start(null, null);
+                }
+
                 List<RenderLoop> renderingRenderLoops = new List<RenderLoop>(16);
                 List<Scene> scenesToRender = new List<Scene>(16);
                 List<Camera3DBase> camerasToUpdate = new List<Camera3DBase>(16);
@@ -213,6 +220,13 @@ namespace SeeingSharp.Multimedia.Core
                                 renderingRenderLoops, scenesToRender, devicesInUse, updateState,
                                 inputStates);
 
+                            // Get input from generic input handlers
+                            foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
+                            {
+                                actGenericInputHandler.UpdateMovement();
+                                inputStates.AddRange(actGenericInputHandler.GetInputStates());
+                            }
+
                             // Clear unreferenced Scenes finally
                             lock(m_scenesForUnloadLock)
                             {
@@ -256,6 +270,13 @@ namespace SeeingSharp.Multimedia.Core
                         await Task.Delay(1000);
                     }
                 }
+
+                // Stop all generic input handlers
+                foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
+                {
+                    actGenericInputHandler.Stop();
+                }
+                genericInputHandlers.Clear();
             });
 
             return m_runningTask;
@@ -427,7 +448,7 @@ namespace SeeingSharp.Multimedia.Core
                 Task<List<InputStateBase>>[] inputStateQuerryTasks = new Task<List<InputStateBase>>[registeredRenderLoops.Count];
                 for(int loop=0; loop<registeredRenderLoops.Count; loop++)
                 {
-                    inputStateQuerryTasks[loop] = registeredRenderLoops[loop].QueryViewRelatedInputState();
+                    inputStateQuerryTasks[loop] = registeredRenderLoops[loop].QueryViewRelatedInputStateAsync();
                 }
 
                 // Trigger all tasks for 'Update' pass

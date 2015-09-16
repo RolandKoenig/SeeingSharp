@@ -114,6 +114,7 @@ namespace SeeingSharp.Multimedia.Input
 
         /// <summary>
         /// Gets all possible GraphicsInputHandlers for the given view and camera types.
+        /// Pass null to all parameters to return all generic input handlers.
         /// </summary>
         /// <param name="viewObject">The view for which to query the input object.</param>
         /// <param name="givenCameraType">The type of the view.</param>
@@ -132,8 +133,11 @@ namespace SeeingSharp.Multimedia.Input
                 bool inputModeSupported = false;
 
                 // Check for view-type support
-                if (actSupportedViewTypes == null) { viewTypeSupported = true; }
-                else
+                if (actSupportedViewTypes == null)
+                {
+                    viewTypeSupported = givenViewType == null;
+                }
+                else if(givenViewType != null)
                 {
                     foreach (Type actViewType in actSupportedViewTypes)
                     {
@@ -147,8 +151,11 @@ namespace SeeingSharp.Multimedia.Input
                 if (!viewTypeSupported) { continue; }
 
                 // Check for camera-type support
-                if (actSupportedCameraTypes == null) { cameraTypeSupported = true; }
-                else
+                if (actSupportedCameraTypes == null)
+                {
+                    cameraTypeSupported = givenCameraType == null;
+                }
+                else if(givenCameraType != null)
                 {
                     foreach (Type actCameraType in actSupportedCameraTypes)
                     {
@@ -162,19 +169,22 @@ namespace SeeingSharp.Multimedia.Input
                 if (!cameraTypeSupported) { continue; }
 
                 // Check for input-mode support
-                if (actSupportedInputModes == null) { inputModeSupported = true; }
-                else
+                if (viewObject != null)
                 {
-                    foreach (SeeingSharpInputMode actInputMode in actSupportedInputModes)
+                    if (actSupportedInputModes == null) { inputModeSupported = true; }
+                    else
                     {
-                        if (actInputMode == viewObject.InputMode)
+                        foreach (SeeingSharpInputMode actInputMode in actSupportedInputModes)
                         {
-                            inputModeSupported = true;
-                            break;
+                            if (actInputMode == viewObject.InputMode)
+                            {
+                                inputModeSupported = true;
+                                break;
+                            }
                         }
                     }
+                    if (!inputModeSupported) { continue; }
                 }
-                if (!inputModeSupported) { continue; }
 
                 // Create a new input handler
                 result.Add(Activator.CreateInstance(actInputHandler.GetType()) as IInputHandler);
