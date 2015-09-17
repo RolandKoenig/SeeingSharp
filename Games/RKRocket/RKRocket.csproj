@@ -123,6 +123,7 @@
     <Compile Include="Game\_Messages\MessageBlockStartsLeaving.cs" />
     <Compile Include="Game\_Messages\MessageBlocksFallOneCellDown.cs" />
     <Compile Include="Game\_Messages\MessageLevelStarted.cs" />
+    <Compile Include="Game\_Messages\MessageScoreChanged.cs" />
     <Compile Include="Game\_Systems\FragmentSystem.cs" />
     <Compile Include="Game\_Entities\FragmentEntity.cs" />
     <Compile Include="Game\_Systems\CollisionSystem.cs" />
@@ -142,6 +143,7 @@
     <Compile Include="Game\_Messages\MessageCollisionProjectileToBlockDetected.cs" />
     <Compile Include="Game\_Systems\LevelSystem.cs" />
     <Compile Include="Data\LevelData.cs" />
+    <Compile Include="Game\_Systems\ScoreSystem.cs" />
     <Compile Include="View\GameStatusView.xaml.cs">
       <DependentUpon>GameStatusView.xaml</DependentUpon>
     </Compile>

@@ -86,6 +86,7 @@ namespace RKRocket.Game
             manipulator.Add(new CollisionSystem());
             manipulator.Add(new FragmentSystem());
             manipulator.Add(new LevelSystem());
+            manipulator.Add(new ScoreSystem());
 
             // Append the background
             manipulator.Add(new BackgroundEntity());
@@ -93,23 +94,6 @@ namespace RKRocket.Game
             // Create and append the player
             m_playerRocket = new PlayerRocketEntity();
             manipulator.Add(m_playerRocket);
-
-            //// Load first level (create all blocks)
-            //float cellWidth = Constants.GFX_SCREEN_VPIXEL_WIDTH / Constants.BLOCKS_COUNT_X;
-            //float cellHeight = Constants.BLOCK_VPIXEL_HEIGHT + 10f;
-            //for (int loopRow =0; loopRow < 6; loopRow++)
-            //{
-            //    for(int loopXBlock = 0; loopXBlock < Constants.BLOCKS_COUNT_X; loopXBlock++)
-            //    {
-            //        Vector2 actBlockPosition = new Vector2(
-            //            cellWidth * loopXBlock + (cellWidth / 2f),
-            //            cellHeight * loopRow + (cellHeight / 2f));
-
-            //        BlockEntity newBlock = new BlockEntity();
-            //        newBlock.Position = actBlockPosition;
-            //        manipulator.Add(newBlock);
-            //    }
-            //}
         }
 
         public Scene GameScene

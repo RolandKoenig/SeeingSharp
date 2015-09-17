@@ -39,6 +39,7 @@ namespace RKRocket.ViewModel
 
         #region captured state variables
         private int m_currentLevel;
+        private int m_currentScore;
         #endregion
 
         /// <summary>
@@ -66,6 +67,11 @@ namespace RKRocket.ViewModel
             this.CurrentLevel = message.LevelNumber;
         }
 
+        private void OnMessage_Received(MessageScoreChanged message)
+        {
+            this.CurrentScore = message.NewScore;
+        }
+
         public GameCore Game
         {
             get { return m_game; }
@@ -82,6 +88,19 @@ namespace RKRocket.ViewModel
                 if(m_currentLevel != value)
                 {
                     m_currentLevel = value;
+                    base.RaisePropertyChanged();
+                }
+            }
+        }
+
+        public int CurrentScore
+        {
+            get { return m_currentScore; }
+            set
+            {
+                if(m_currentScore != value)
+                {
+                    m_currentScore = value;
                     base.RaisePropertyChanged();
                 }
             }

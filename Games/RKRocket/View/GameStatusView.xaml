@@ -31,7 +31,9 @@
             </LinearGradientBrush>
         </StackPanel.Background>
         
-        <TextBlock Width="150">Level:</TextBlock>
-        <TextBlock Width="50" Text="{Binding Path=CurrentLevel}" />
+        <TextBlock>Level:</TextBlock>
+        <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentLevel}" />
+        <TextBlock Margin="50,0,0,0">Score:</TextBlock>
+        <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentScore}" />
     </StackPanel>
 </UserControl>
