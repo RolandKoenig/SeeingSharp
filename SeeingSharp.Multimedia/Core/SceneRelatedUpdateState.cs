@@ -73,6 +73,7 @@ namespace SeeingSharp.Multimedia.Core
             m_inputStates.Clear();
             this.DefaultMouseOrPointer = MouseOrPointerState.Dummy;
             this.DefaultGamepad = GamepadState.Dummy;
+            this.DefaultKeyboard = KeyboardState.Dummy;
 
             // Update input states
             if (unfilteredInputStates != null)
@@ -108,6 +109,17 @@ namespace SeeingSharp.Multimedia.Core
                             if(gamepadState != null)
                             {
                                 this.DefaultGamepad = gamepadState;
+                                continue;
+                            }
+                        }
+
+                        // Register first keyboard state as default
+                        if(this.DefaultKeyboard == KeyboardState.Dummy)
+                        {
+                            KeyboardState keyboardState = actInputState as KeyboardState;
+                            if(keyboardState != null)
+                            {
+                                this.DefaultKeyboard = keyboardState;
                                 continue;
                             }
                         }
@@ -177,6 +189,12 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         public GamepadState DefaultGamepad
+        {
+            get;
+            private set;
+        }
+
+        public KeyboardState DefaultKeyboard
         {
             get;
             private set;

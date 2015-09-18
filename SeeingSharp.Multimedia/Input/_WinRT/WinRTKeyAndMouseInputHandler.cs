@@ -51,12 +51,14 @@ namespace SeeingSharp.Multimedia.Input
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
+        private static readonly Dictionary<VirtualKey, WinVirtualKey> s_keyMappingDict;
 
         #region objects from outside
         private SeeingSharpPanelPainter m_painter;
         private IInputEnabledView m_viewInterface;
         private RenderLoop m_renderLoop;
         private Camera3DBase m_camera;
+        private CoreWindow m_coreWindow;
         #endregion
 
         #region local resources
@@ -66,6 +68,7 @@ namespace SeeingSharp.Multimedia.Input
 
         #region Input states
         private MouseOrPointerState m_stateMouseOrPointer;
+        private KeyboardState m_stateKeyboard;
         #endregion
 
         #region state variables for camera movement
@@ -75,6 +78,20 @@ namespace SeeingSharp.Multimedia.Input
         #endregion
 
         /// <summary>
+        /// Initializes the <see cref="WinRTKeyAndMouseInputHandler"/> class.
+        /// </summary>
+        static WinRTKeyAndMouseInputHandler()
+        {
+            s_keyMappingDict = new Dictionary<VirtualKey, WinVirtualKey>();
+            foreach(VirtualKey actVirtualKey in Enum.GetValues(typeof(VirtualKey)))
+            {
+                short actVirtualKeyCode = (short)actVirtualKey;
+                WinVirtualKey actWinVirtualKey = (WinVirtualKey)actVirtualKeyCode;
+                s_keyMappingDict[actVirtualKey] = actWinVirtualKey;
+            }
+        }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="WinRTKeyAndMouseInputHandler"/> class.
         /// </summary>
         public WinRTKeyAndMouseInputHandler()
@@ -82,6 +99,7 @@ namespace SeeingSharp.Multimedia.Input
             m_pressedKeys = new List<VirtualKey>();
 
             m_stateMouseOrPointer = new MouseOrPointerState();
+            m_stateKeyboard = new KeyboardState();
         }
 
         /// <summary>
@@ -156,6 +174,10 @@ namespace SeeingSharp.Multimedia.Input
             m_dummyButtonForFocus.GotFocus += OnDummyButtonForFocus_GotFocus;
             m_painter.TargetPanel.Children.Add(m_dummyButtonForFocus);
 
+            m_coreWindow = CoreWindow.GetForCurrentThread();
+            m_coreWindow.KeyDown += OnCoreWindow_KeyDown;
+            m_coreWindow.KeyUp += OnCoreWindow_KeyUp;
+
             // Set focus on the target 
             m_dummyButtonForFocus.Focus(FocusState.Programmatic);
         }
@@ -186,6 +208,10 @@ namespace SeeingSharp.Multimedia.Input
             m_painter.TargetPanel.PointerMoved -= OnTargetPanel_PointerMoved;
             m_painter.TargetPanel.KeyUp -= OnTargetPanel_KeyUp;
             m_painter.TargetPanel.KeyDown -= OnTargetPanel_KeyDown;
+
+            // Deregister events from CoreWindow
+            m_coreWindow.KeyDown -= OnCoreWindow_KeyDown;
+            m_coreWindow.KeyUp -= OnCoreWindow_KeyUp;
         }
 
         /// <summary>
@@ -258,6 +284,7 @@ namespace SeeingSharp.Multimedia.Input
         public IEnumerable<InputStateBase> GetInputStates()
         {
             yield return m_stateMouseOrPointer;
+            yield return m_stateKeyboard;
         }
 
         /// <summary>
@@ -303,12 +330,24 @@ namespace SeeingSharp.Multimedia.Input
         private void OnDummyButtonForFocus_LostFocus(object sender, RoutedEventArgs e)
         {
             m_pressedKeys.Clear();
+            m_stateKeyboard.NotifyFocusLost();
 
             m_hasFocus = false;
         }
 
+        private void OnCoreWindow_KeyDown(CoreWindow sender, KeyEventArgs e)
+        {
+            m_stateKeyboard.NotifyKeyDown(s_keyMappingDict[e.VirtualKey]);
+        }
+
+        private void OnCoreWindow_KeyUp(CoreWindow sender, KeyEventArgs e)
+        {
+            m_stateKeyboard.NotifyKeyUp(s_keyMappingDict[e.VirtualKey]);
+        }
+
         private void OnDummyButtonForFocus_GotFocus(object sender, RoutedEventArgs e)
         {
+            m_stateKeyboard.NotifyFocusGot();
             m_hasFocus = true;
         }
 

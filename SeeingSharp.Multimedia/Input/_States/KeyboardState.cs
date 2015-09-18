@@ -28,7 +28,86 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Input
 {
-    public class KeyboardState
+    public class KeyboardState : InputStateBase
     {
+        public static readonly KeyboardState Dummy = new KeyboardState(0, 0);
+
+        #region current key states
+        private List<WinVirtualKey> m_keysHit;
+        private List<WinVirtualKey> m_keysDown;
+        private bool m_focused;
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="KeyboardState"/> class.
+        /// </summary>
+        internal KeyboardState(int keyCapacityHit = 6, int keyCapacityDown = 12)
+        {
+            m_keysHit = new List<WinVirtualKey>(keyCapacityHit);
+            m_keysDown = new List<WinVirtualKey>(keyCapacityDown);
+        }
+
+        internal void NotifyKeyDown(WinVirtualKey key)
+        {
+            bool anyRegistered =
+                m_keysDown.Contains(key) ||
+                m_keysHit.Contains(key);
+            if (anyRegistered) { return; }
+
+            m_keysHit.Add(key);
+        }
+
+        internal void NotifyKeyUp(WinVirtualKey key)
+        {
+            while (m_keysHit.Remove(key)) { }
+            while (m_keysDown.Remove(key)) { }
+        }
+
+        internal void NotifyFocusLost()
+        {
+            m_focused = false;
+        }
+
+        internal void NotifyFocusGot()
+        {
+            m_focused = true;
+        }
+
+        public bool IsKeyHit(WinVirtualKey key)
+        {
+            if (!m_focused) { return false; }
+
+            return m_keysHit.Contains(key);
+        }
+
+        public bool IsKeyDown(WinVirtualKey key)
+        {
+            if (!m_focused) { return false; }
+
+            return
+                m_keysDown.Contains(key) ||
+                m_keysHit.Contains(key);
+        }
+
+        protected override InputStateBase CopyAndResetForUpdatePassInternal()
+        {
+            KeyboardState result = new KeyboardState(
+                m_keysHit.Count, m_keysDown.Count);
+
+            result.m_keysHit.AddRange(this.m_keysHit);
+            result.m_keysDown.AddRange(this.m_keysDown);
+            result.m_focused = this.m_focused;
+
+            // Update local collections (move hit keys to down keys)
+            this.m_keysDown.AddRange(this.m_keysHit);
+            this.m_keysHit.Clear();
+
+            return result;
+        }
+
+        public bool IsConnected
+        {
+            get { return m_focused; }
+        }
     }
 }

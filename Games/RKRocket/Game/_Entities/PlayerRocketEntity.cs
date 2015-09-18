@@ -63,6 +63,7 @@ namespace RKRocket.Game
             // Get input states
             MouseOrPointerState mouseState = updateState.DefaultMouseOrPointer;
             GamepadState gamepadState = updateState.DefaultGamepad;
+            KeyboardState keyboardState = updateState.DefaultKeyboard;
 
             // Initialize variables for input control
             bool isFireHit = false;
@@ -75,6 +76,27 @@ namespace RKRocket.Game
             {
                 float newMouseX = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
                 moveDistance = newMouseX - m_xPos;
+            }
+
+            // Capture keyboard state
+            if (keyboardState.IsConnected)
+            {
+                isFireHit |=
+                    keyboardState.IsKeyHit(WinVirtualKey.Space) ||
+                    keyboardState.IsKeyHit(WinVirtualKey.Enter);
+
+                if (keyboardState.IsKeyDown(WinVirtualKey.Left) ||
+                    keyboardState.IsKeyDown(WinVirtualKey.A) ||
+                    keyboardState.IsKeyDown(WinVirtualKey.NumPad4))
+                {
+                    moveDistance = -maxMoveDistance;
+                }
+                else if (keyboardState.IsKeyDown(WinVirtualKey.Right) ||
+                    keyboardState.IsKeyDown(WinVirtualKey.D) ||
+                    keyboardState.IsKeyDown(WinVirtualKey.NumPad6))
+                {
+                    moveDistance = maxMoveDistance;
+                }
             }
 
             // Capture gamepad state
