@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4B8EA1D4-0049-45CA-92F0-0030C54A339F}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>RKRocket</RootNamespace>
+    <AssemblyName>RKRocket</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Assets\Logo.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\RKRocket\Data\LevelData.cs">
+      <Link>Data\LevelData.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\GameCore.cs">
+      <Link>Game\GameCore.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Base\GameObject2D.cs">
+      <Link>Game\_Base\GameObject2D.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\BackgroundEntity.cs">
+      <Link>Game\_Entities\BackgroundEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\BlockEntity.cs">
+      <Link>Game\_Entities\BlockEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\FragmentEntity.cs">
+      <Link>Game\_Entities\FragmentEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\PlayerRocketEntity.cs">
+      <Link>Game\_Entities\PlayerRocketEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\ProjectileEntity.cs">
+      <Link>Game\_Entities\ProjectileEntity.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageBlocksFallOneCellDown.cs">
+      <Link>Game\_Messages\MessageBlocksFallOneCellDown.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageBlockStartsLeaving.cs">
+      <Link>Game\_Messages\MessageBlockStartsLeaving.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageCollisionProjectileToBlockDetected.cs">
+      <Link>Game\_Messages\MessageCollisionProjectileToBlockDetected.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs">
+      <Link>Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageLevelStarted.cs">
+      <Link>Game\_Messages\MessageLevelStarted.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageScoreChanged.cs">
+      <Link>Game\_Messages\MessageScoreChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Systems\CollisionSystem.cs">
+      <Link>Game\_Systems\CollisionSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Systems\FragmentSystem.cs">
+      <Link>Game\_Systems\FragmentSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Systems\LevelSystem.cs">
+      <Link>Game\_Systems\LevelSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Systems\ScoreSystem.cs">
+      <Link>Game\_Systems\ScoreSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\ViewModel\MainUIViewModel.cs">
+      <Link>ViewModel\MainUIViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\_Constants.cs">
+      <Link>_Constants.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\_GraphicsResources.cs">
+      <Link>_GraphicsResources.cs</Link>
+    </Compile>
+    <Compile Include="MainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainWindow.Designer.cs">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="MainWindow.resx">
+      <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Resource Include="..\RKRocket\Assets\Levels\Level_001.json">
+      <Link>Assets\Levels\Level_001.json</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Levels\Level_002.json">
+      <Link>Assets\Levels\Level_002.json</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Levels\Level_003.json">
+      <Link>Assets\Levels\Level_003.json</Link>
+    </Resource>
+    <None Include="..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\DataSources\RKRocket.ViewModel.MainUIViewModel.datasource" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Logo.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_DESKTOP.csproj">
+      <Project>{bd9d021a-85db-4d43-ac49-560987e3339f}</Project>
+      <Name>SeeingSharp.Multimedia_DESKTOP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SeeingSharp\SeeingSharp_DESKTOP.csproj">
+      <Project>{c2a4856d-600e-4fff-bcbf-ca3f7ed6fe57}</Project>
+      <Name>SeeingSharp_DESKTOP</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\BlockBlue_128x44.png">
+      <Link>Assets\Bitmaps\BlockBlue_128x44.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\BlockRed_128x44.png">
+      <Link>Assets\Bitmaps\BlockRed_128x44.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\BlockYellow_128x44.png">
+      <Link>Assets\Bitmaps\BlockYellow_128x44.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\BulletGreen_128x128.png">
+      <Link>Assets\Bitmaps\BulletGreen_128x128.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\BulletRed_128x128.png">
+      <Link>Assets\Bitmaps\BulletRed_128x128.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\BulletYellow_128x128.png">
+      <Link>Assets\Bitmaps\BulletYellow_128x128.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\Rocket_254x512.png">
+      <Link>Assets\Bitmaps\Rocket_254x512.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\StarColored_128x128.png">
+      <Link>Assets\Bitmaps\StarColored_128x128.png</Link>
+    </Resource>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\StarGray_128x128.png">
+      <Link>Assets\Bitmaps\StarGray_128x128.png</Link>
+    </Resource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

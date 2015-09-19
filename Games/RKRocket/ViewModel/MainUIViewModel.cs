@@ -50,7 +50,7 @@ namespace RKRocket.ViewModel
             m_currentLevel = 1;
 
             // Create core game object
-            if (!Windows.ApplicationModel.DesignMode.DesignModeEnabled)
+            if (SeeingSharpApplication.IsInitialized)
             {
                 m_game = new GameCore();
 
