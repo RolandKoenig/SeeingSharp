@@ -22,6 +22,11 @@ namespace RKRocket
         public MainWindow()
         {
             InitializeComponent();
+
+            //System.Windows.Window window = new System.Windows.Window();
+            //window.Show();
+
+            //System.Windows.Expression exp = null;
         }
 
         protected override void OnLoad(EventArgs e)
