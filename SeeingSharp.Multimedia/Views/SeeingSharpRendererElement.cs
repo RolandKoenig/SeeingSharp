@@ -126,12 +126,13 @@ namespace SeeingSharp.Multimedia.Views
             GraphicsCore.Touch();
             m_renderLoop = new RenderLoop(
                 SynchronizationContext.Current,
-                OnRenderLoopCreateViewResources,
-                OnRenderLoopDisposeViewResources,
-                OnRenderLoopCheckCanRender,
-                OnRenderLoopPrepareRendering,
-                OnRenderLoopAfterRendering,
-                OnRenderLoopPresent);
+                OnRenderLoop_CreateViewResources,
+                OnRenderLoop_DisposeViewResources,
+                OnRenderLoop_CheckCanRender,
+                OnRenderLoop_PrepareRendering,
+                OnRenderLoop_AfterRendering,
+                OnRenderLoop_Present,
+                OnRenderLoop_QueryInputStates);
             m_renderLoop.CameraChanged += OnRenderLoopCameraChanged;
             m_renderLoop.ClearColor = Color4.Transparent;
             m_renderLoop.CallPresentInUIThread = true;
@@ -233,7 +234,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Disposes all loaded view resources.
         /// </summary>
-        private void OnRenderLoopDisposeViewResources(EngineDevice engineDevice)
+        private void OnRenderLoop_DisposeViewResources(EngineDevice engineDevice)
         {
             if (m_d3dImageSource != null)
             {
@@ -257,7 +258,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Create all view resources.
         /// </summary>
-        private Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling> OnRenderLoopCreateViewResources(EngineDevice engineDevice)
+        private Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling> OnRenderLoop_CreateViewResources(EngineDevice engineDevice)
         {
             // Calculate pixel with and high of this visual
             Size pixelSize = this.GetPixelSize(new Size(100.0, 100.0));
@@ -306,7 +307,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop object checks wheter it is possible to render.
         /// </summary>
-        private bool OnRenderLoopCheckCanRender(EngineDevice engineDevice)
+        private bool OnRenderLoop_CheckCanRender(EngineDevice engineDevice)
         {
             if (m_d3dImageSource == null) { return false; }
             if (!m_d3dImageSource.IsFrontBufferAvailable) { return false; }
@@ -336,7 +337,7 @@ namespace SeeingSharp.Multimedia.Views
         /// Called when the render loop prepares rendering.
         /// </summary>
         /// <param name="engineDevice">The engine device.</param>
-        private void OnRenderLoopPrepareRendering(EngineDevice engineDevice)
+        private void OnRenderLoop_PrepareRendering(EngineDevice engineDevice)
         {
             if ((m_renderLoop != null) &&
                 (m_renderLoop.Camera != null))
@@ -352,7 +353,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop wants to present its results.
         /// </summary>
-        private void OnRenderLoopPresent(EngineDevice engineDevice)
+        private void OnRenderLoop_Present(EngineDevice engineDevice)
         {
             if (m_d3dImageSource == null) { return; }
             if (!this.IsLoaded) { return; }
@@ -388,7 +389,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop has finished rendering.
         /// </summary>
-        private void OnRenderLoopAfterRendering(EngineDevice engineDevice)
+        private void OnRenderLoop_AfterRendering(EngineDevice engineDevice)
         {
 
         }
@@ -402,6 +403,24 @@ namespace SeeingSharp.Multimedia.Views
             if (this.IsLoaded)
             {
                 InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+            }
+        }
+
+        /// <summary>
+        /// Queries all input states.
+        /// (Called within UI thread)
+        /// </summary>
+        private IEnumerable<InputStateBase> OnRenderLoop_QueryInputStates()
+        {
+            foreach (IInputHandler actInputHandler in m_inputHandlers)
+            {
+                IEnumerable<InputStateBase> inputStates = actInputHandler.GetInputStates();
+                if (inputStates == null) { continue; }
+
+                foreach (InputStateBase actInputstate in inputStates)
+                {
+                    yield return actInputstate;
+                }
             }
         }
 

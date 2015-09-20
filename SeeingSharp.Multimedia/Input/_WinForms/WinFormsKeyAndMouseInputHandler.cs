@@ -58,6 +58,11 @@ namespace SeeingSharp.Multimedia.Input
         private IInputEnabledView m_focusHandler;
         #endregion References to the view
 
+        #region Input states
+        private MouseOrPointerState m_stateMouseOrPointer;
+        private KeyboardState m_stateKeyboard;
+        #endregion
+
         #region Some helper variables
         private GDI.Point m_lastMousePoint;
         private bool m_isMouseInside;
@@ -71,6 +76,9 @@ namespace SeeingSharp.Multimedia.Input
         public WinFormsKeyAndMouseInputHandler()
         {
             m_pressedKeys = new List<Keys>();
+
+            m_stateMouseOrPointer = new MouseOrPointerState();
+            m_stateKeyboard = new KeyboardState();
         }
 
         /// <summary>
@@ -177,7 +185,7 @@ namespace SeeingSharp.Multimedia.Input
         /// <param name="cameraObject">The camera object (e. g. Camera3DBase).</param>
         public void Start(object viewObject, object cameraObject)
         {
-            m_currentControl = viewObject as Control;
+             m_currentControl = viewObject as Control;
             if (m_currentControl == null) { throw new ArgumentException("Unable to handle given view object!"); }
 
             m_focusHandler = m_currentControl as IInputEnabledView;
@@ -191,6 +199,8 @@ namespace SeeingSharp.Multimedia.Input
 
             m_currentControl.MouseEnter += OnMouseEnter;
             m_currentControl.MouseClick += OnMouseClick;
+            m_currentControl.MouseUp += OnMouseUp;
+            m_currentControl.MouseDown += OnMouseDown;
             m_currentControl.MouseLeave += OnMouseLeave;
             m_currentControl.MouseMove += OnMouseMove;
             m_currentControl.MouseWheel += OnMouseWheel;
@@ -212,6 +222,8 @@ namespace SeeingSharp.Multimedia.Input
                 m_currentControl.MouseLeave -= OnMouseLeave;
                 m_currentControl.MouseMove -= OnMouseMove;
                 m_currentControl.MouseWheel -= OnMouseWheel;
+                m_currentControl.MouseUp -= OnMouseUp;
+                m_currentControl.MouseDown -= OnMouseDown;
                 m_currentControl.KeyUp -= OnKeyUp;
                 m_currentControl.KeyDown -= OnKeyDown;
             }
@@ -226,7 +238,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public IEnumerable<InputStateBase> GetInputStates()
         {
-            yield break;
+            yield return m_stateMouseOrPointer;
         }
 
         /// <summary>
@@ -245,6 +257,60 @@ namespace SeeingSharp.Multimedia.Input
         private void OnMouseClick(object sender, MouseEventArgs e)
         {
             m_currentControl.Focus();
+
+
+        }
+
+        private void OnMouseDown(object sender, MouseEventArgs e)
+        {
+            switch(e.Button)
+            {
+                case MouseButtons.Left:
+                    m_stateMouseOrPointer.NotifyButtonDown(MouseButton.Left);
+                    break;
+
+                case MouseButtons.Middle:
+                    m_stateMouseOrPointer.NotifyButtonDown(MouseButton.Middle);
+                    break;
+
+                case MouseButtons.Right:
+                    m_stateMouseOrPointer.NotifyButtonDown(MouseButton.Right);
+                    break;
+
+                case MouseButtons.XButton1:
+                    m_stateMouseOrPointer.NotifyButtonDown(MouseButton.Extended1);
+                    break;
+
+                case MouseButtons.XButton2:
+                    m_stateMouseOrPointer.NotifyButtonDown(MouseButton.Extended2);
+                    break;
+            }
+        }
+
+        private void OnMouseUp(object sender, MouseEventArgs e)
+        {
+            switch (e.Button)
+            {
+                case MouseButtons.Left:
+                    m_stateMouseOrPointer.NotifyButtonUp(MouseButton.Left);
+                    break;
+
+                case MouseButtons.Middle:
+                    m_stateMouseOrPointer.NotifyButtonUp(MouseButton.Middle);
+                    break;
+
+                case MouseButtons.Right:
+                    m_stateMouseOrPointer.NotifyButtonUp(MouseButton.Right);
+                    break;
+
+                case MouseButtons.XButton1:
+                    m_stateMouseOrPointer.NotifyButtonUp(MouseButton.Extended1);
+                    break;
+
+                case MouseButtons.XButton2:
+                    m_stateMouseOrPointer.NotifyButtonUp(MouseButton.Extended2);
+                    break;
+            }
         }
 
         /// <summary>
@@ -285,6 +351,11 @@ namespace SeeingSharp.Multimedia.Input
                         m_camera.Zoom(moving.Y / -50f);
                         break;
                 }
+
+                m_stateMouseOrPointer.NotifyMouseLocation(
+                    new Vector2((float)e.X, (float)e.Y),
+                    new Vector2((float)moving.X, (float)moving.Y),
+                    Vector2Ex.FromSize2(m_renderLoop.ViewInformation.CurrentViewSize));
             }
         }
 
@@ -300,6 +371,8 @@ namespace SeeingSharp.Multimedia.Input
                 if (m_controlDown) { multiplyer = 2f; }
 
                 m_camera.Zoom((e.Delta / 100f) * multiplyer);
+
+                m_stateMouseOrPointer.NotifyMouseWheel(e.Delta);
             }
         }
 

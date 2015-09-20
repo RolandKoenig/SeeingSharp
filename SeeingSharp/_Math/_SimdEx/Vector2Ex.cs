@@ -10,6 +10,16 @@ namespace SeeingSharp
 {
     public static class Vector2Ex
     {
+        public static Vector2 FromSize2(Size2 size)
+        {
+            return new Vector2(size.Width, size.Height);
+        }
+
+        public static Vector2 FromSize2(Size2F size)
+        {
+            return new Vector2(size.Width, size.Height);
+        }
+
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static float GetValue(Vector2 vector, int index)
         {

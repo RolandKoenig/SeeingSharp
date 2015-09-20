@@ -91,6 +91,18 @@ namespace SeeingSharp.Multimedia.Input
             return m_buttonsUp[(int)mouseButton];
         }
 
+        internal void NotifyButtonDown(MouseButton button)
+        {
+            int index = (int)button;
+            this.UpdateMouseButtonState(index, true);
+        }
+
+        internal void NotifyButtonUp(MouseButton button)
+        {
+            int index = (int)button;
+            this.UpdateMouseButtonState(index, false);
+        }
+
         /// <summary>
         /// Notifies the state of the mouse buttons.
         /// Called by input handler.
@@ -117,20 +129,7 @@ namespace SeeingSharp.Multimedia.Input
             // Update mouse states
             for(int loop=0; loop<buttonStates.Length; loop++)
             {
-                bool isHitOrDown = m_buttonsHit[loop] | m_buttonsDown[loop];
-                if(isHitOrDown == buttonStates[loop]) { continue; }
-
-                if(buttonStates[loop])
-                {
-                    m_buttonsHit[loop] = true;
-                    m_buttonsDown[loop] = true;
-                }
-                else
-                {
-                    m_buttonsHit[loop] = false;
-                    m_buttonsDown[loop] = false;
-                    m_buttonsUp[loop] = true;
-                }
+                UpdateMouseButtonState(loop, buttonStates[loop]);
             }
         }
 
@@ -194,6 +193,30 @@ namespace SeeingSharp.Multimedia.Input
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Helper method: Updates the button state at the given index based
+        /// on currently notified press-state.
+        /// </summary>
+        /// <param name="buttonIndex">Index of the button.</param>
+        /// <param name="pressedState">True, if the button is pressed currently.</param>
+         private void UpdateMouseButtonState(int buttonIndex, bool pressedState)
+        {
+            bool isHitOrDown = m_buttonsHit[buttonIndex] | m_buttonsDown[buttonIndex];
+            if (isHitOrDown == pressedState) { return; }
+
+            if (pressedState)
+            {
+                m_buttonsHit[buttonIndex] = true;
+                m_buttonsDown[buttonIndex] = true;
+            }
+            else
+            {
+                m_buttonsHit[buttonIndex] = false;
+                m_buttonsDown[buttonIndex] = false;
+                m_buttonsUp[buttonIndex] = true;
+            }
         }
 
         public Vector2 MoveDistanceDip
