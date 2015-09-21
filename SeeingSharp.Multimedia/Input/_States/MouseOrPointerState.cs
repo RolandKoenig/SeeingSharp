@@ -251,6 +251,17 @@ namespace SeeingSharp.Multimedia.Input
             }
         }
 
+        /// <summary>
+        /// Gets the size of the screen in device independent pixel.
+        /// </summary>
+        public Vector2 ScreenSizeDip
+        {
+            get { return m_screenSizePixel; }
+        }
+
+        /// <summary>
+        /// Gets the current wheel delta.
+        /// </summary>
         public int WheelDelta
         {
             get { return m_wheelDelta; }

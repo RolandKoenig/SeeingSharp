@@ -31,30 +31,61 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
-            this.m_barMenu = new System.Windows.Forms.MenuStrip();
-            this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
-            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             this.m_lblLevel = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblLevelValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblScore = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblScoreValue = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_barMenu = new System.Windows.Forms.MenuStrip();
+            this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
+            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             this.m_barStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).BeginInit();
             this.SuspendLayout();
             // 
             // m_barStatus
             // 
+            this.m_barStatus.Dock = System.Windows.Forms.DockStyle.Top;
             this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_barStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_lblLevel,
             this.m_lblLevelValue,
             this.m_lblScore,
             this.m_lblScoreValue});
-            this.m_barStatus.Location = new System.Drawing.Point(0, 257);
+            this.m_barStatus.Location = new System.Drawing.Point(0, 24);
             this.m_barStatus.Name = "m_barStatus";
-            this.m_barStatus.Size = new System.Drawing.Size(455, 25);
+            this.m_barStatus.Size = new System.Drawing.Size(455, 46);
             this.m_barStatus.TabIndex = 0;
             this.m_barStatus.Text = "statusStrip1";
+            // 
+            // m_lblLevel
+            // 
+            this.m_lblLevel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.m_lblLevel.ForeColor = System.Drawing.Color.Gray;
+            this.m_lblLevel.Name = "m_lblLevel";
+            this.m_lblLevel.Size = new System.Drawing.Size(98, 41);
+            this.m_lblLevel.Text = "Level:";
+            // 
+            // m_lblLevelValue
+            // 
+            this.m_lblLevelValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblLevelValue.Name = "m_lblLevelValue";
+            this.m_lblLevelValue.Size = new System.Drawing.Size(35, 41);
+            this.m_lblLevelValue.Text = "1";
+            // 
+            // m_lblScore
+            // 
+            this.m_lblScore.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblScore.ForeColor = System.Drawing.Color.Gray;
+            this.m_lblScore.Name = "m_lblScore";
+            this.m_lblScore.Size = new System.Drawing.Size(103, 41);
+            this.m_lblScore.Text = "Score:";
+            // 
+            // m_lblScoreValue
+            // 
+            this.m_lblScoreValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblScoreValue.Name = "m_lblScoreValue";
+            this.m_lblScoreValue.Size = new System.Drawing.Size(35, 41);
+            this.m_lblScoreValue.Text = "0";
             // 
             // m_barMenu
             // 
@@ -70,9 +101,9 @@
             this.m_renderPanel.DiscardRendering = true;
             this.m_renderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
-            this.m_renderPanel.Location = new System.Drawing.Point(0, 24);
+            this.m_renderPanel.Location = new System.Drawing.Point(0, 70);
             this.m_renderPanel.Name = "m_renderPanel";
-            this.m_renderPanel.Size = new System.Drawing.Size(455, 233);
+            this.m_renderPanel.Size = new System.Drawing.Size(455, 212);
             this.m_renderPanel.TabIndex = 2;
             this.m_renderPanel.Text = "seeingSharpRendererControl1";
             this.m_renderPanel.ViewConfiguration.AccentuationFactor = 0F;
@@ -90,30 +121,6 @@
             // m_dataSource
             // 
             this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
-            // 
-            // m_lblLevel
-            // 
-            this.m_lblLevel.Name = "m_lblLevel";
-            this.m_lblLevel.Size = new System.Drawing.Size(46, 20);
-            this.m_lblLevel.Text = "Level:";
-            // 
-            // m_lblLevelValue
-            // 
-            this.m_lblLevelValue.Name = "m_lblLevelValue";
-            this.m_lblLevelValue.Size = new System.Drawing.Size(40, 20);
-            this.m_lblLevelValue.Text = "<N>";
-            // 
-            // m_lblScore
-            // 
-            this.m_lblScore.Name = "m_lblScore";
-            this.m_lblScore.Size = new System.Drawing.Size(49, 20);
-            this.m_lblScore.Text = "Score:";
-            // 
-            // m_lblScoreValue
-            // 
-            this.m_lblScoreValue.Name = "m_lblScoreValue";
-            this.m_lblScoreValue.Size = new System.Drawing.Size(40, 20);
-            this.m_lblScoreValue.Text = "<N>";
             // 
             // MainWindow
             // 

@@ -74,7 +74,23 @@ namespace RKRocket.Game
             if (mouseState.IsButtonHit(MouseButton.Left)) { isFireHit = true; }
             if (mouseState.MoveDistanceRelative != Vector2.Zero)
             {
-                float newMouseX = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
+                float newMouseX = 0f;
+                float currentViewWidthDip =
+                    (mouseState.ScreenSizeDip.Y / Constants.GFX_SCREEN_VPIXEL_HEIGHT) * Constants.GFX_SCREEN_VPIXEL_WIDTH;
+                if (mouseState.ScreenSizeDip.X > currentViewWidthDip)
+                {
+                    float relativMouseX = 
+                        (mouseState.PositionDip.X - (mouseState.ScreenSizeDip.X - currentViewWidthDip) / 2f) / 
+                        currentViewWidthDip;
+                    if(relativMouseX > 1f) { relativMouseX = 1f; }
+                    if(relativMouseX < -1f) { relativMouseX = -1f; }
+
+                    newMouseX = relativMouseX * Constants.GFX_SCREEN_VPIXEL_WIDTH;
+                }
+                else
+                {
+                    newMouseX = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
+                }
                 moveDistance = newMouseX - m_xPos;
             }
 

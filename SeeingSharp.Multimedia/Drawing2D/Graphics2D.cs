@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Util;
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia;
 using SeeingSharp.Multimedia.Core;
@@ -117,6 +118,18 @@ namespace SeeingSharp.Multimedia.Drawing2D
         internal void ResetTransformSettings()
         {
             this.SetTransformSettings(Graphics2DTransformSettings.Default);
+        }
+
+        public IDisposable BlockForCustomTransform(Matrix3x2 customTransform)
+        {
+            SharpDX.Mathematics.Interop.RawMatrix3x2 prevTransform = m_renderTarget.Transform;
+
+            m_renderTarget.Transform = new SharpDX.Matrix3x2(
+                customTransform.M11, customTransform.M12,
+                customTransform.M21, customTransform.M22,
+                customTransform.M31, customTransform.M32);
+
+            return new DummyDisposable(() => m_renderTarget.Transform = prevTransform);
         }
 
         /// <summary>

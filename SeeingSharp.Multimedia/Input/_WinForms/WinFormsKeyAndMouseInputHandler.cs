@@ -50,6 +50,7 @@ namespace SeeingSharp.Multimedia.Input
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
+        private static readonly Dictionary<Keys, WinVirtualKey> s_keyMappingDict;
 
         #region References to the view
         private Control m_currentControl;
@@ -69,6 +70,34 @@ namespace SeeingSharp.Multimedia.Input
         private bool m_controlDown;
         private List<Keys> m_pressedKeys;
         #endregion Some helper variables
+
+        /// <summary>
+        /// Initializes the <see cref="WinFormsKeyAndMouseInputHandler"/> class.
+        /// </summary>
+        static WinFormsKeyAndMouseInputHandler()
+        {
+            // First look for all key codes we have
+            Dictionary<int, WinVirtualKey> supportedKeyCodes = new Dictionary<int, WinVirtualKey>();
+            foreach(WinVirtualKey actVirtualKey in Enum.GetValues(typeof(WinVirtualKey)))
+            {
+                supportedKeyCodes[(int)actVirtualKey] = actVirtualKey;
+            }
+
+            // Build the mapping dictionary
+            s_keyMappingDict = new Dictionary<Keys, WinVirtualKey>();
+            foreach (Keys actKeyMember in Enum.GetValues(typeof(Keys)))
+            {
+                int actKeyCode = (int)actKeyMember;
+                if(supportedKeyCodes.ContainsKey(actKeyCode))
+                {
+                    s_keyMappingDict[actKeyMember] = supportedKeyCodes[actKeyCode];
+                }
+                else
+                {
+                    s_keyMappingDict[actKeyMember] = WinVirtualKey.None;
+                }
+            }
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WinFormsKeyAndMouseInputHandler"/> class.
@@ -206,6 +235,8 @@ namespace SeeingSharp.Multimedia.Input
             m_currentControl.MouseWheel += OnMouseWheel;
             m_currentControl.KeyUp += OnKeyUp;
             m_currentControl.KeyDown += OnKeyDown;
+            m_currentControl.LostFocus += OnLostFocus;
+            m_currentControl.GotFocus += OnGotFocus;
 
             m_controlDown = false;
         }
@@ -226,6 +257,8 @@ namespace SeeingSharp.Multimedia.Input
                 m_currentControl.MouseDown -= OnMouseDown;
                 m_currentControl.KeyUp -= OnKeyUp;
                 m_currentControl.KeyDown -= OnKeyDown;
+                m_currentControl.LostFocus -= OnLostFocus;
+                m_currentControl.GotFocus -= OnGotFocus;
             }
 
             m_currentControl = null;
@@ -239,6 +272,7 @@ namespace SeeingSharp.Multimedia.Input
         public IEnumerable<InputStateBase> GetInputStates()
         {
             yield return m_stateMouseOrPointer;
+            yield return m_stateKeyboard;
         }
 
         /// <summary>
@@ -383,6 +417,13 @@ namespace SeeingSharp.Multimedia.Input
         {
             // Remove the pressed key from the collection
             while (m_pressedKeys.Contains(e.KeyCode)) { m_pressedKeys.Remove(e.KeyCode); }
+
+            // Notify event to keyboard state
+            WinVirtualKey actKeyCode = s_keyMappingDict[e.KeyCode];
+            if (actKeyCode != WinVirtualKey.None)
+            {
+                m_stateKeyboard.NotifyKeyUp(actKeyCode);
+            }
         }
 
         /// <summary>
@@ -395,6 +436,13 @@ namespace SeeingSharp.Multimedia.Input
             if (!m_pressedKeys.Contains(e.KeyCode)) { m_pressedKeys.Add(e.KeyCode); }
 
             m_controlDown = e.Control;
+
+            // Notify event to keyboard state
+            WinVirtualKey actKeyCode = s_keyMappingDict[e.KeyCode];
+            if (actKeyCode != WinVirtualKey.None)
+            {
+                m_stateKeyboard.NotifyKeyDown(actKeyCode);
+            }
         }
 
         /// <summary>
@@ -405,6 +453,13 @@ namespace SeeingSharp.Multimedia.Input
             // Clear all button states
             m_pressedKeys.Clear();
             m_controlDown = false;
+
+            m_stateKeyboard.NotifyFocusLost();
+        }
+
+        private void OnGotFocus(object sender, EventArgs e)
+        {
+            m_stateKeyboard.NotifyFocusGot();
         }
     }
 }

@@ -97,13 +97,16 @@ namespace RKRocket.Game
         {
             Graphics2D graphics = renderState.Graphics2D;
 
-            //// Draw the background rectangle
-            //graphics.FillRectangle(
-            //    new RectangleF(0f, 0f, Constants.GFX_SCREEN_VPIXEL_WIDTH, Constants.GFX_SCREEN_VPIXEL_HEIGHT),
-            //    m_backBrush);
+            // Draw the background rectangle
+            using (graphics.BlockForCustomTransform(Matrix3x2.Identity))
+            {
+                graphics.FillRectangle(
+                    new RectangleF(0f, 0f, graphics.ScreenWidth, graphics.ScreenHeight), //Constants.GFX_SCREEN_VPIXEL_WIDTH, Constants.GFX_SCREEN_VPIXEL_HEIGHT),
+                    m_backBrush);
+            }
 
             // Draw all stars
-            foreach(Star actStar in m_generatedStars)
+            foreach (Star actStar in m_generatedStars)
             {
                 graphics.DrawBitmap(
                     m_starBitmap,

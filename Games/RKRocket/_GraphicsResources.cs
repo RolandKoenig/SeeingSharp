@@ -24,6 +24,7 @@ using SeeingSharp;
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Util;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -37,7 +38,14 @@ namespace RKRocket
     internal static class GraphicsResources
     {
         #region Brushes
-        public static readonly BrushResource Brush_Background = new SolidBrushResource(Color4.BlueColor.ChangeAlphaTo(0.01f));
+        public static readonly BrushResource Brush_Background = new LinearGradientBrushResource(
+            new Vector2(0f, 0f),
+            new Vector2(0f, 1f),
+            new GradientStop[]
+            {
+                new GradientStop(new Color4(117,198,218), 0f),
+                new GradientStop(Color4.LightBlue, 1)
+            });
         public static readonly BrushResource Brush_Fragment = new SolidBrushResource(Color4.Gray.ChangeAlphaTo(0.3f));
         #endregion
 
