@@ -28,8 +28,8 @@
     <UpdateRequired>false</UpdateRequired>
     <MapFileExtensions>true</MapFileExtensions>
     <InstallUrl>http://www.rolandk.de/files/frozensky.samples/winforms/</InstallUrl>
-    <SupportUrl>http://www.rolandk.de</SupportUrl>
-    <ErrorReportUrl>http://www.rolandk.de</ErrorReportUrl>
+    <SupportUrl>http://www.rolandk.de/wp</SupportUrl>
+    <ErrorReportUrl>http://www.rolandk.de/wp</ErrorReportUrl>
     <ProductName>Seeing# Win.Forms SampleContainer</ProductName>
     <PublisherName>Roland König</PublisherName>
     <SuiteName>Seeing#</SuiteName>
@@ -194,9 +194,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.5.1">
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6">
       <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.5.1 %28x86 and x64%29</ProductName>
+      <ProductName>Microsoft .NET Framework 4.6 %28x86 and x64%29</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
     <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
