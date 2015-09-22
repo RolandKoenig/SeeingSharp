@@ -75,8 +75,8 @@ namespace RKRocket.Game
                 1f,
                 Constants.BLOCK_VPIXEL_HEIGHT);
 
-            start = start + size * 0.1f;
-            size = size * 0.8f;
+            start = start + size * 0.02f;
+            size = size * 0.96f;
 
             return new BoundingBox(start, start + size);
         }

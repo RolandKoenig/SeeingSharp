@@ -63,7 +63,7 @@ namespace RKRocket.Game
         {
             return new BoundingSphere(
                 new Vector3(m_currentLocation.X, 0f, m_currentLocation.Y),
-                Math.Max(Constants.GFX_PROJECTILE_VPIXEL_WIDTH, Constants.GFX_PROJECTILE_VPIXEL_HEIGHT) * 0.45f);
+                Math.Max(Constants.GFX_PROJECTILE_VPIXEL_WIDTH, Constants.GFX_PROJECTILE_VPIXEL_HEIGHT) * 0.5f);
         }
 
         /// <summary>
