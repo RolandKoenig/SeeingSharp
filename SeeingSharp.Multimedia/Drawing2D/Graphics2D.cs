@@ -142,6 +142,21 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
 
         /// <summary>
+        /// Draws the given geometry.
+        /// </summary>
+        public void DrawGeometry(Geometry2DResourceBase geometry, BrushResource brush, float strokeWidth = 1f)
+        {
+            geometry.EnsureNotNullOrDisposed("geometry");
+            brush.EnsureNotNull("brush");
+            strokeWidth.EnsurePositive("strokeWidth");
+
+            m_renderTarget.DrawGeometry(
+                geometry.GetGeometry(),
+                brush.GetBrush(m_device),
+                strokeWidth);
+        }
+
+        /// <summary>
         /// Draws the given rectangle with the given brush.
         /// </summary>
         public void DrawRectangle(RectangleF rectangle, BrushResource brush, float strokeWidth = 1f)
@@ -215,6 +230,33 @@ namespace SeeingSharp.Multimedia.Drawing2D
             m_renderTarget.FillRectangle(
                 rectangle.ToDXRectangle(),
                 brush.GetBrush(m_device));
+        }
+
+        /// <summary>
+        /// Fills the given geometry.
+        /// </summary>
+        public void FillGeometry(Geometry2DResourceBase geometry, BrushResource brush)
+        {
+            geometry.EnsureNotNullOrDisposed("geometry");
+            brush.EnsureNotNull("brush");
+
+            m_renderTarget.FillGeometry(
+                geometry.GetGeometry(),
+                brush.GetBrush(m_device));
+        }
+
+        /// <summary>
+        /// Fills the given geometry.
+        /// </summary>
+        public void FillGeometry(Geometry2DResourceBase geometry, BrushResource brush, BrushResource opacityBrush)
+        {
+            geometry.EnsureNotNullOrDisposed("geometry");
+            brush.EnsureNotNull("brush");
+
+            m_renderTarget.FillGeometry(
+                geometry.GetGeometry(),
+                brush.GetBrush(m_device),
+                opacityBrush.GetBrush(m_device));
         }
 
         /// <summary>

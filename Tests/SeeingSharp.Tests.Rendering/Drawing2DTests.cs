@@ -111,6 +111,47 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
+        public async Task Render_SimpleGeometry()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            Polygon2D polygon = new Polygon2D(new Vector2[]
+            {
+                new Vector2(10, 10),
+                new Vector2(900, 100),
+                new Vector2(800, 924),
+                new Vector2(50, 1014),
+                new Vector2(10, 10)
+            });
+
+            using (SolidBrushResource solidBrush = new SolidBrushResource(Color4.LightGray))
+            using (SolidBrushResource solidBrushBorder = new SolidBrushResource(Color4.Gray))
+            using (PathGeometryResource pathGeometry = new PathGeometryResource(polygon))
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                // Perform rendering
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+                await memRenderTarget.RenderLoop.Register2DDrawingLayerAsync((graphics) =>
+                {
+                    // 2D rendering is made here
+                    graphics.DrawGeometry(pathGeometry, solidBrushBorder, 3f);
+                    graphics.FillGeometry(pathGeometry, solidBrush);
+                });
+                await memRenderTarget.AwaitRenderAsync();
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                float diff = BitmapComparison.CalculatePercentageDifference(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleGeometry2D);
+                Assert.True(diff < 0.2, "Difference to reference image is to big!");
+            }
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_SimpleRoundedRect_Filled_LinearGradient()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();

@@ -519,11 +519,11 @@ namespace SeeingSharp.Util
                 try
                 {
                     postAction();
-                    completionSource.SetResult(null);
+                    completionSource.TrySetResult(null);
                 }
                 catch (Exception ex)
                 {
-                    completionSource.SetException(ex);
+                    completionSource.TrySetException(ex);
                 }
             }, null);
             return completionSource.Task;

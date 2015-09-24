@@ -74,13 +74,24 @@ namespace SeeingSharp.Multimedia.Drawing2D
             using (D2D.GeometrySink geoSink = m_d2dGeometry.Open())
             {
                 ReadOnlyCollection<Vector2> vertices = polygon.Vertices;
-                SDXM.RawVector2[] points = new SDXM.RawVector2[vertices.Count];
-                for (int loop = 0; loop < points.Length; loop++)
+
+                // Start the figure
+                Vector2 startPoint = vertices[0];
+                geoSink.BeginFigure(
+                    *(SDXM.RawVector2*)&startPoint,
+                    D2D.FigureBegin.Filled);
+
+                // Add all lines
+                int vertexCount = vertices.Count;
+                for (int loop = 1; loop < vertexCount; loop++)
                 {
                     Vector2 actVectorOrig = vertices[loop];
-                    points[loop] = *(SDXM.RawVector2*)&actVectorOrig;
+                    geoSink.AddLine(*(SDXM.RawVector2*)&actVectorOrig);
                 }
-                geoSink.AddLines(points);
+
+                // End the figure
+                geoSink.EndFigure(D2D.FigureEnd.Closed);
+                geoSink.Close();
             }
         }
 

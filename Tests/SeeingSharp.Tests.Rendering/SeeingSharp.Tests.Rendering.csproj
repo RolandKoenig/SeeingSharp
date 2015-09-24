@@ -108,6 +108,7 @@
     <Resource Include="Ressources\Textures\SkyBox.dds" />
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
     <EmbeddedResource Include="Ressources\Bitmaps\Logo.png" />
+    <Content Include="Ressources\ReferenceRenderings\SimpleGeometry2D.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleRoundedRectFilled_RadialGradient.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleRoundedRectFilled_LinearGradient.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleBitmap_Transparency.png" />
