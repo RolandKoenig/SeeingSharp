@@ -26,6 +26,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SeeingSharp.Util;
+using SeeingSharp.Checking;
 
 // Namespace mappings
 using D2D = SharpDX.Direct2D1;
@@ -34,6 +35,21 @@ namespace SeeingSharp.Multimedia.Drawing2D
 {
     public abstract class Geometry2DResourceBase : IDisposable, ICheckDisposed
     {
+        /// <summary>
+        /// A very simple collision check between this geometry and the given one.
+        /// </summary>
+        /// <param name="other">The other geometry.</param>
+        public bool IntersectsWith(Geometry2DResourceBase other)
+        {
+            this.EnsureNotNullOrDisposed("this");
+            other.EnsureNotNullOrDisposed("other");
+
+            D2D.Geometry geometryThis = this.GetGeometry();
+            D2D.Geometry geometryOther = other.GetGeometry();
+
+            return geometryThis.Compare(geometryOther) != D2D.GeometryRelation.Disjoint;
+        }
+
         /// <summary>
         /// Gets the geometry object.
         /// </summary>

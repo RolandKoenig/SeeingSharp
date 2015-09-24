@@ -46,6 +46,59 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
+        public void Collision_Ellipse_to_Ellipse()
+        {
+            EllipseGeometryResource ellipseGeometry01 = new EllipseGeometryResource(
+                new Vector2(50, 50), 10f, 10f);
+            EllipseGeometryResource ellipseGeometry02 = new EllipseGeometryResource(
+                new Vector2(50, 80), 10f, 10f);
+            EllipseGeometryResource ellipseGeometry03 = new EllipseGeometryResource(
+                new Vector2(50, 70), 10f, 11f);
+            try
+            {
+                Assert.False(ellipseGeometry01.IntersectsWith(ellipseGeometry02));
+                Assert.True(ellipseGeometry03.IntersectsWith(ellipseGeometry02));
+                Assert.True(ellipseGeometry02.IntersectsWith(ellipseGeometry03));
+            }
+            finally
+            {
+                CommonTools.SafeDispose(ref ellipseGeometry01);
+                CommonTools.SafeDispose(ref ellipseGeometry02);
+                CommonTools.SafeDispose(ref ellipseGeometry03);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public void Collision_Ellipse_to_Polygon()
+        {
+            EllipseGeometryResource ellipseGeometry01 = new EllipseGeometryResource(
+                new Vector2(50, 50), 10f, 10f);
+            EllipseGeometryResource ellipseGeometry02 = new EllipseGeometryResource(
+                new Vector2(50, 80), 10f, 10f);
+
+            PolygonGeometryResource polygonGeometry = new PolygonGeometryResource(new Polygon2D(new Vector2[]
+            {
+                new Vector2(55f, 50f),
+                new Vector2(60f, 50f),
+                new Vector2(55f, 55f)
+            }));
+
+            try
+            {
+                Assert.True(ellipseGeometry01.IntersectsWith(polygonGeometry));
+                Assert.False(ellipseGeometry02.IntersectsWith(polygonGeometry));
+            }
+            finally
+            {
+                CommonTools.SafeDispose(ref ellipseGeometry01);
+                CommonTools.SafeDispose(ref ellipseGeometry02);
+                CommonTools.SafeDispose(ref polygonGeometry);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task Render_SimpleText_SimpleSingleColor()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
