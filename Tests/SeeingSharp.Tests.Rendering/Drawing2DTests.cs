@@ -126,7 +126,7 @@ namespace SeeingSharp.Tests.Rendering
 
             using (SolidBrushResource solidBrush = new SolidBrushResource(Color4.LightGray))
             using (SolidBrushResource solidBrushBorder = new SolidBrushResource(Color4.Gray))
-            using (PathGeometryResource pathGeometry = new PathGeometryResource(polygon))
+            using (PolygonGeometryResource polygonGeometry = new PolygonGeometryResource(polygon))
             using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
             {
                 // Perform rendering
@@ -134,8 +134,8 @@ namespace SeeingSharp.Tests.Rendering
                 await memRenderTarget.RenderLoop.Register2DDrawingLayerAsync((graphics) =>
                 {
                     // 2D rendering is made here
-                    graphics.DrawGeometry(pathGeometry, solidBrushBorder, 3f);
-                    graphics.FillGeometry(pathGeometry, solidBrush);
+                    graphics.DrawGeometry(polygonGeometry, solidBrushBorder, 3f);
+                    graphics.FillGeometry(polygonGeometry, solidBrush);
                 });
                 await memRenderTarget.AwaitRenderAsync();
 
@@ -146,6 +146,38 @@ namespace SeeingSharp.Tests.Rendering
                 // Calculate and check difference
                 float diff = BitmapComparison.CalculatePercentageDifference(
                     screenshot, Properties.Resources.ReferenceImage_SimpleGeometry2D);
+                Assert.True(diff < 0.2, "Difference to reference image is to big!");
+            }
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Render_SimpleGeometry_Ellipse()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (SolidBrushResource solidBrush = new SolidBrushResource(Color4.LightGray))
+            using (SolidBrushResource solidBrushBorder = new SolidBrushResource(Color4.Gray))
+            using (EllipseGeometryResource ellipseGeometry = new EllipseGeometryResource(new Vector2(512, 512), 400f, 300f))
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                // Perform rendering
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+                await memRenderTarget.RenderLoop.Register2DDrawingLayerAsync((graphics) =>
+                {
+                    // 2D rendering is made here
+                    graphics.DrawGeometry(ellipseGeometry, solidBrushBorder, 3f);
+                    graphics.FillGeometry(ellipseGeometry, solidBrush);
+                });
+                await memRenderTarget.AwaitRenderAsync();
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                float diff = BitmapComparison.CalculatePercentageDifference(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleGeometry2D_Ellipse);
                 Assert.True(diff < 0.2, "Difference to reference image is to big!");
             }
         }

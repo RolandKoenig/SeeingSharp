@@ -223,6 +223,16 @@ namespace SeeingSharp.Tests.Rendering.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_SimpleGeometry2D_Ellipse {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_SimpleGeometry2D_Ellipse", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ReferenceImage_SimpleLine {
             get {
                 object obj = ResourceManager.GetObject("ReferenceImage_SimpleLine", resourceCulture);

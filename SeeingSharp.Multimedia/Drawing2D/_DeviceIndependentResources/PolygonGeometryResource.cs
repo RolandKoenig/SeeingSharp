@@ -37,26 +37,26 @@ using SDXM = SharpDX.Mathematics.Interop;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public class PathGeometryResource : Geometry2DResourceBase
+    public class PolygonGeometryResource : Geometry2DResourceBase
     {
         #region resources
         private D2D.PathGeometry m_d2dGeometry;
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathGeometryResource"/> class.
+        /// Initializes a new instance of the <see cref="PolygonGeometryResource"/> class.
         /// </summary>
-        public PathGeometryResource()
+        public PolygonGeometryResource()
         {
             m_d2dGeometry = new D2D.PathGeometry(
                 GraphicsCore.Current.FactoryD2D);
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="PathGeometryResource"/> class.
+        /// Initializes a new instance of the <see cref="PolygonGeometryResource"/> class.
         /// </summary>
         /// <param name="polygon">The data which populates the geometry.</param>
-        public PathGeometryResource(Polygon2D polygon)
+        public PolygonGeometryResource(Polygon2D polygon)
             : this()
         {
             SetContent(polygon);
@@ -99,7 +99,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Does this geometry intersect with the given one?
         /// </summary>
         /// <param name="otherGeometry">The other geometry.</param>
-        public bool Intersects(PathGeometryResource otherGeometry)
+        public bool Intersects(PolygonGeometryResource otherGeometry)
         {
             this.EnsureNotNullOrDisposed("this");
             otherGeometry.EnsureNotNullOrDisposed("otherGeometry");
