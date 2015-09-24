@@ -101,10 +101,14 @@ namespace SeeingSharp.Multimedia.Core
             m_scene = scene;
             m_sceneLayer = sceneLayer;
 
+            // Register message handlers
             if(m_scene.Messenger != null)
             {
                 m_sceneMessageSubscriptions = m_scene.Messenger.SubscribeAll(this);
             }
+
+            // Call virtual event
+            this.OnAddedToScene(m_scene);
         }
 
         /// <summary>
@@ -115,6 +119,10 @@ namespace SeeingSharp.Multimedia.Core
             m_scene.EnsureNotNull("m_scene");
             m_sceneLayer.EnsureNotNull("m_sceneLayer");
 
+            // Remember old scene
+            Scene oldScene = m_scene;
+   
+            // Clear message subscriptions
             if (m_sceneMessageSubscriptions != null)
             {
                 foreach (MessageSubscription actSubscription in m_sceneMessageSubscriptions)
@@ -124,8 +132,12 @@ namespace SeeingSharp.Multimedia.Core
                 m_sceneMessageSubscriptions = null;
             }
 
+            // Clear references
             m_scene = null;
             m_sceneLayer = null;
+
+            // Call virtual event
+            this.OnRemovedFromScene(oldScene);
         }
 
         /// <summary>
@@ -414,6 +426,22 @@ namespace SeeingSharp.Multimedia.Core
         /// Unloads all resources of the object.
         /// </summary>
         public virtual void UnloadResources()
+        {
+
+        }
+
+        /// <summary>
+        /// Called when this object was added to a scene.
+        /// </summary>
+        protected virtual void OnAddedToScene(Scene newScene)
+        {
+
+        }
+
+        /// <summary>
+        /// Called when this object was removed from a scene.
+        /// </summary>
+        protected virtual void OnRemovedFromScene(Scene oldScene)
         {
 
         }

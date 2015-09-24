@@ -35,12 +35,14 @@ using SeeingSharp.Multimedia.Core;
 // Some namespace mappings
 using D2D = SharpDX.Direct2D1;
 using DWrite = SharpDX.DirectWrite;
+using SDXM = SharpDX.Mathematics.Interop;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
     public class Graphics2D
     {
         #region Main view related properties
+        private Matrix3x2Stack m_transformStack;
         private EngineDevice m_device;
         private D2D.RenderTarget m_renderTarget;
         private Size2F m_screenPixelSize;
@@ -62,6 +64,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         internal Graphics2D(EngineDevice device, D2D.RenderTarget renderTarget, Size2F screenSize)
         {
             m_transformSettings = Graphics2DTransformSettings.Default;
+            m_transformStack = new Matrix3x2Stack();
 
             m_device = device;
             m_renderTarget = renderTarget;
@@ -77,7 +80,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// (be carefull, the state is changed on device level!)
         /// </summary>
         /// <param name="transformSettings">The settings to be set.</param>
-        internal void SetTransformSettings(Graphics2DTransformSettings transformSettings)
+        internal void PushTransformSettings(Graphics2DTransformSettings transformSettings)
         {
             m_transformSettings = transformSettings;
 
@@ -85,7 +88,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             {
                     // Overtake given scaling matrix
                 case Graphics2DTransformMode.Custom:
-                    m_renderTarget.Transform = transformSettings.CustomTransform.ToDXMatrix();
+                    m_transformStack.Push(transformSettings.CustomTransform);
                     break;
 
                     // Calculate scaling matrix here 
@@ -101,13 +104,30 @@ namespace SeeingSharp.Multimedia.Drawing2D
                     float truePixelWidth = virtualWidth * combinedScaleFactor;
                     float truePixelHeight = virtualHeight * combinedScaleFactor;
 
-                    m_renderTarget.Transform =
-                        SharpDX.Matrix3x2.Scaling(combinedScaleFactor) *
-                        SharpDX.Matrix3x2.Translation(
+                    m_transformStack.Push();
+                    m_transformStack.TransformLocal(
+                        Matrix3x2.CreateScale(combinedScaleFactor) *
+                        Matrix3x2.CreateTranslation(
                             m_screenPixelSize.Width / 2f - truePixelWidth / 2f,
-                            m_screenPixelSize.Height / 2f - truePixelHeight / 2f);
+                            m_screenPixelSize.Height / 2f - truePixelHeight / 2f));
                     break;
+
+                default:
+                    throw new SeeingSharpGraphicsException($"Unable to handle transform mode {transformSettings.TransformMode}");
             }
+
+            // Apply current transform
+            this.ApplyTransformStack();
+        }
+
+        /// <summary>
+        /// Applies the top of the local transform stack.
+        /// </summary>
+        private unsafe void ApplyTransformStack()
+        {
+            Matrix3x2 top = m_transformStack.Top;
+            m_renderTarget.Transform =
+                *(SDXM.RawMatrix3x2*)&top;
         }
 
         /// <summary>
@@ -115,21 +135,45 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// (be carefull, the state is changed on device level!)
         /// </summary>
         /// <param name="transformSettings">The settings to be set.</param>
-        internal void ResetTransformSettings()
+        internal void PopTransformSettings()
         {
-            this.SetTransformSettings(Graphics2DTransformSettings.Default);
+            m_transformStack.Pop();
+
+            this.ApplyTransformStack();
         }
 
-        public IDisposable BlockForCustomTransform(Matrix3x2 customTransform)
+        /// <summary>
+        /// Pushes a new matrix to the TransformStack and pops it after Dispose has 
+        /// been called on the result object.
+        /// </summary>
+        /// <param name="customTransform">The custom transform matrix.</param>
+        public IDisposable BlockForLocalTransform_ReplacePrevious(Matrix3x2 customTransform)
         {
-            SharpDX.Mathematics.Interop.RawMatrix3x2 prevTransform = m_renderTarget.Transform;
+            m_transformStack.Push(customTransform);
+            this.ApplyTransformStack();
 
-            m_renderTarget.Transform = new SharpDX.Matrix3x2(
-                customTransform.M11, customTransform.M12,
-                customTransform.M21, customTransform.M22,
-                customTransform.M31, customTransform.M32);
+            return new DummyDisposable(() =>
+            {
+                m_transformStack.Pop();
+                this.ApplyTransformStack();
+            });
+        }
 
-            return new DummyDisposable(() => m_renderTarget.Transform = prevTransform);
+        /// <summary>
+        /// Transform current matrix locally with the given matrix.
+        /// </summary>
+        /// <param name="customTransform">The custom transform matrix.</param>
+        public IDisposable BlockForLocalTransform_TransformLocal(Matrix3x2 customTransform)
+        {
+            m_transformStack.Push();
+            m_transformStack.TransformLocal(customTransform);
+            this.ApplyTransformStack();
+
+            return new DummyDisposable(() =>
+            {
+                m_transformStack.Pop();
+                this.ApplyTransformStack();
+            });
         }
 
         /// <summary>
@@ -578,6 +622,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 }
 
             }
+        }
+
+        /// <summary>
+        /// Gets the current transform stack.
+        /// Call 'ApplyTransformStack' to apply the current top matrix of this stack.
+        /// </summary>
+        public Matrix3x2Stack TransformStack
+        {
+            get { return m_transformStack; }
         }
 
         public Matrix3x2 Transform

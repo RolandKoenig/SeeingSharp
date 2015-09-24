@@ -98,7 +98,7 @@ namespace RKRocket.Game
             Graphics2D graphics = renderState.Graphics2D;
 
             // Draw the background rectangle
-            using (graphics.BlockForCustomTransform(Matrix3x2.Identity))
+            using (graphics.BlockForLocalTransform_ReplacePrevious(Matrix3x2.Identity))
             {
                 graphics.FillRectangle(
                     new RectangleF(0f, 0f, graphics.ScreenWidth, graphics.ScreenHeight), //Constants.GFX_SCREEN_VPIXEL_WIDTH, Constants.GFX_SCREEN_VPIXEL_HEIGHT),

@@ -34,6 +34,10 @@ namespace RKRocket
     {
         public const string GAME_SCENE_NAME = "RocketScene";
 
+        #region Debug constants
+        public const bool RENDER_COLLISION_GEOMETRY = false;
+        #endregion
+
         #region Screen properties
         public const float GFX_SCREEN_VPIXEL_WIDTH = 1920f;
         public const float GFX_SCREEN_VPIXEL_HEIGHT = 1080f;

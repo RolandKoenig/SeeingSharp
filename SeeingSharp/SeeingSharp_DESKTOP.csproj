@@ -234,6 +234,7 @@
     <Compile Include="_Math\_Custom\EngineMath.cs" />
     <Compile Include="_Math\_Custom\Line.cs" />
     <Compile Include="_Math\_Custom\Line2D.cs" />
+    <Compile Include="_Math\_Custom\Matrix3x2Stack.cs" />
     <Compile Include="_Math\_Old\Matrix4x4.Custom.cs" />
     <Compile Include="_Math\_Custom\Matrix4Stack.cs" />
     <Compile Include="_Math\_Custom\Plane.cs" />

@@ -1025,7 +1025,7 @@ namespace SeeingSharp.Multimedia.Core
         internal void Render2DOverlay(RenderState renderState)
         {
             Graphics2D graphics = renderState.Graphics2D;
-            graphics.SetTransformSettings(new Graphics2DTransformSettings()
+            graphics.PushTransformSettings(new Graphics2DTransformSettings()
             {
                 CustomTransform = m_customTransform2D,
                 TransformMode = m_transformMode2D,
@@ -1059,7 +1059,7 @@ namespace SeeingSharp.Multimedia.Core
             }
             finally
             {
-                graphics.ResetTransformSettings();
+                graphics.PopTransformSettings();
             }
         }
 

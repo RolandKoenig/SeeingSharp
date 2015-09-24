@@ -38,6 +38,7 @@ namespace RKRocket.Game
     {
         #region Resources
         private StandardBitmapResource m_playerBitmap;
+        private PolygonGeometryResource m_collisionGeometry;
         #endregion
 
         #region State
@@ -170,6 +171,44 @@ namespace RKRocket.Game
                 m_playerBitmap,
                 destRectangle,
                 interpolationMode: BitmapInterpolationMode.Linear);
+
+            // DEBUG: Draw collision geometry
+            if (Constants.RENDER_COLLISION_GEOMETRY)
+            {
+                using (SolidBrushResource brush = new SolidBrushResource(Color4.Aqua.ChangeAlphaTo(0.5f)))
+                using (var disposable = graphics.BlockForLocalTransform_TransformLocal(
+                    Matrix3x2.CreateTranslation(m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER)))
+                {
+                    graphics.FillGeometry(m_collisionGeometry, brush);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Called when this object was added to the scene.
+        /// </summary>
+        protected override void OnAddedToScene(Scene newScene)
+        {
+            base.OnAddedToScene(newScene);
+
+            float halfWidth = Constants.GFX_ROCKET_VPIXEL_WIDTH / 2f;
+            Polygon2D collisionPolygon = new Polygon2D(new Vector2[]
+            {
+                new Vector2(-halfWidth, Constants.GFX_ROCKET_VPIXEL_HEIGHT * 0.4f),
+                new Vector2(0f, -Constants.GFX_ROCKET_VPIXEL_HEIGHT * 0.6f),
+                new Vector2(halfWidth, Constants.GFX_ROCKET_VPIXEL_HEIGHT * 0.4f)
+            });
+            m_collisionGeometry = new PolygonGeometryResource(collisionPolygon);
+        }
+
+        /// <summary>
+        /// Called when this object was removed from the scene.
+        /// </summary>
+        protected override void OnRemovedFromScene(Scene oldScene)
+        {
+            base.OnRemovedFromScene(oldScene);
+
+            CommonTools.SafeDispose(ref m_collisionGeometry);
         }
     }
 }

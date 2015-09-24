@@ -37,6 +37,7 @@ namespace RKRocket.Game
     {
         #region Resources
         private StandardBitmapResource m_bitmapProjectile;
+        private EllipseGeometryResource m_collisionGeometry;
         #endregion
 
         #region State
@@ -92,6 +93,29 @@ namespace RKRocket.Game
         }
 
         /// <summary>
+        /// Called when this object was added to the scene.
+        /// </summary>
+        protected override void OnAddedToScene(Scene newScene)
+        {
+            base.OnAddedToScene(newScene);
+
+            m_collisionGeometry = new EllipseGeometryResource(
+                Vector2.Zero,
+                Constants.GFX_PROJECTILE_VPIXEL_WIDTH / 2f,
+                Constants.GFX_PROJECTILE_VPIXEL_HEIGHT / 2f);
+        }
+
+        /// <summary>
+        /// Called when this object was removed from the scene.
+        /// </summary>
+        protected override void OnRemovedFromScene(Scene oldScene)
+        {
+            base.OnRemovedFromScene(oldScene);
+
+            CommonTools.SafeDispose(ref m_collisionGeometry);
+        }
+
+        /// <summary>
         /// Contains all 2D rendering logic for this object.
         /// </summary>
         /// <param name="renderState">The current state of the renderer.</param>
@@ -105,12 +129,24 @@ namespace RKRocket.Game
                 Constants.GFX_PROJECTILE_VPIXEL_WIDTH,
                 Constants.GFX_PROJECTILE_VPIXEL_HEIGHT);
 
+            // Draw the projectile
             float transparencyLevel = 1f - Math.Min(Math.Max(m_currentLocation.Y - Constants.GFX_SCREEN_VPIXEL_HEIGHT, 0f) / 100f, 1f);
             graphics.DrawBitmap(
                 m_bitmapProjectile,
                 destRectangle,
                 opacity: transparencyLevel,
                 interpolationMode: BitmapInterpolationMode.Linear);
+
+            // DEBUG: Draw collision geometry
+            if (Constants.RENDER_COLLISION_GEOMETRY)
+            {
+                using (SolidBrushResource brush = new SolidBrushResource(Color4.Aqua.ChangeAlphaTo(0.5f)))
+                using (var disposable = graphics.BlockForLocalTransform_TransformLocal(
+                    Matrix3x2.CreateTranslation(this.Position)))
+                {
+                    graphics.FillGeometry(m_collisionGeometry, brush);
+                }
+            }
         }
 
         /// <summary>
