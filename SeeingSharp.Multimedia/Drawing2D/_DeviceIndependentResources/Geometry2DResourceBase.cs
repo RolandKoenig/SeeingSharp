@@ -24,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Numerics;
 using System.Threading.Tasks;
 using SeeingSharp.Util;
 using SeeingSharp.Checking;
@@ -48,6 +49,22 @@ namespace SeeingSharp.Multimedia.Drawing2D
             D2D.Geometry geometryOther = other.GetGeometry();
 
             return geometryThis.Compare(geometryOther) != D2D.GeometryRelation.Disjoint;
+        }
+
+        /// <summary>
+        /// A very simple collision check between this geometry and the given one.
+        /// </summary>
+        /// <param name="other">The other geometry.</param>
+        /// <param name="otherTransform">The matrix which is used to transform the given geometry bevore checking.</param>
+        public bool IntersectsWith(Geometry2DResourceBase other, Matrix3x2 otherTransform)
+        {
+            this.EnsureNotNullOrDisposed("this");
+            other.EnsureNotNullOrDisposed("other");
+
+            D2D.Geometry geometryThis = this.GetGeometry();
+            D2D.Geometry geometryOther = other.GetGeometry();
+
+            return geometryThis.Compare(geometryOther, otherTransform.ToDXMatrix(), 1f) != D2D.GeometryRelation.Disjoint;
         }
 
         /// <summary>

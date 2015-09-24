@@ -59,5 +59,11 @@ namespace RKRocket.Game
             m_currentScore++;
             base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
         }
+
+        private void OnMessage_Received(MessageCollisionProjectileToPlayerDetected message)
+        {
+            m_currentScore--;
+            base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
+        }
     }
 }

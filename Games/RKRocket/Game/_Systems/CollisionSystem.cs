@@ -21,8 +21,10 @@
 */
 #endregion
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp;
 using System;
+using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,25 +61,40 @@ namespace RKRocket.Game
             // Perfom collision checks for all projectiles
             foreach(ProjectileEntity actProjectile in m_projectiles)
             {
-                if (!actProjectile.IsRelevantForCollisionSystem) { continue; }
-
                 // Check for collisions with blocks
-                BoundingSphere actProjectileBoundingVolume = actProjectile.GetBoundsForCollisionSystem();
-                foreach(BlockEntity actBlock in m_blocks)
+                bool collidedWithBlock = false;
+                if (actProjectile.IsRelevantForBlockCollision)
                 {
-                    if (!actBlock.IsRelevantForCollisionSystem) { continue; }
-                    if (actBlock.IsLeaving) { continue; }
-
-                    BoundingBox actBlockBoundingVolume = actBlock.GetBoundsForCollisionSystem();
-                    if(Collision.BoxIntersectsSphere(ref actBlockBoundingVolume, ref actProjectileBoundingVolume))
+                    BoundingSphere actProjectileBoundingVolume = actProjectile.GetBoundsForCollisionSystem();
+                    foreach (BlockEntity actBlock in m_blocks)
                     {
-                        base.Messenger.Publish(
-                            new MessageCollisionProjectileToBlockDetected(
-                                actProjectile, actBlock));
+                        if (!actBlock.IsRelevantForCollisionSystem) { continue; }
+                        if (actBlock.IsLeaving) { continue; }
+
+                        BoundingBox actBlockBoundingVolume = actBlock.GetBoundsForCollisionSystem();
+                        if (Collision.BoxIntersectsSphere(ref actBlockBoundingVolume, ref actProjectileBoundingVolume))
+                        {
+                            collidedWithBlock = true;
+                            base.Messenger.Publish(
+                                new MessageCollisionProjectileToBlockDetected(
+                                    actProjectile, actBlock));
+                        }
                     }
                 }
 
                 // Check for collisions with the player
+                if ((!collidedWithBlock) &&
+                    (actProjectile.IsRelevantForPlayerCollision))
+                {
+                    Geometry2DResourceBase geoProjectile = actProjectile.GetCollisionGeometry();
+                    Geometry2DResourceBase geoPlayer = m_player.GetCollisionGeometry();
+                    if(geoPlayer.IntersectsWith(geoProjectile, Matrix3x2.CreateTranslation(m_player.Position - actProjectile.Position)))
+                    {
+                        base.Messenger.Publish(
+                            new MessageCollisionProjectileToPlayerDetected(
+                                actProjectile, m_player));
+                    }
+                }
 
             }
         }

@@ -55,6 +55,11 @@ namespace RKRocket.Game
             m_playerBitmap = GraphicsResources.Bitmap_Player;
         }
 
+        public Geometry2DResourceBase GetCollisionGeometry()
+        {
+            return m_collisionGeometry;
+        }
+
         /// <summary>
         /// Updates this object.
         /// </summary>
@@ -209,6 +214,14 @@ namespace RKRocket.Game
             base.OnRemovedFromScene(oldScene);
 
             CommonTools.SafeDispose(ref m_collisionGeometry);
+        }
+
+        public Vector2 Position
+        {
+            get
+            {
+                return new Vector2(m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER);
+            }
         }
     }
 }

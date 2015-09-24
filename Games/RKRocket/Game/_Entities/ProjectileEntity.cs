@@ -43,7 +43,8 @@ namespace RKRocket.Game
         #region State
         private Vector2 m_currentLocation;
         private float m_currentSpeed;
-        private bool m_relevantForCollisionSystem;
+        private bool m_relevantForBlockCollision;
+        private bool m_relevantForPlayerCollision;
         #endregion
 
         /// <summary>
@@ -54,7 +55,13 @@ namespace RKRocket.Game
             m_bitmapProjectile = GraphicsResources.Bitmap_Projectile;
             m_currentLocation = startLocation;
             m_currentSpeed = Constants.SIM_PROJECTILE_SPEED;
-            m_relevantForCollisionSystem = true;
+            m_relevantForBlockCollision = true;
+            m_relevantForPlayerCollision = true;
+        }
+
+        public Geometry2DResourceBase GetCollisionGeometry()
+        {
+            return m_collisionGeometry;
         }
 
         /// <summary>
@@ -157,7 +164,17 @@ namespace RKRocket.Game
             if(message.Projectile != this) { return; }
 
             m_currentSpeed = Constants.SIM_PROJECTILE_SPEED_AFTER_COLLISION;
-            m_relevantForCollisionSystem = false;
+            m_relevantForBlockCollision = false;
+        }
+
+        /// <summary>
+        /// The CollisionSystem notifies us that a projectile collided the palyer.
+        /// </summary>
+        private void OnMessage_Received(MessageCollisionProjectileToPlayerDetected message)
+        {
+            if (message.Projectile != this) { return; }
+
+            m_relevantForPlayerCollision = false;
         }
 
         /// <summary>
@@ -168,9 +185,14 @@ namespace RKRocket.Game
             get { return m_currentLocation; }
         }
 
-        public bool IsRelevantForCollisionSystem
+        public bool IsRelevantForBlockCollision
         {
-            get { return m_relevantForCollisionSystem; }
+            get { return m_relevantForBlockCollision; }
+        }
+
+        public bool IsRelevantForPlayerCollision
+        {
+            get { return m_relevantForPlayerCollision && (m_currentSpeed > 0f); }
         }
     }
 }
