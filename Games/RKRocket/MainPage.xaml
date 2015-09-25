@@ -28,7 +28,7 @@
             </i:Interaction.Behaviors>
         </SwapChainPanel>
         
-        <locView:GameStatusView VerticalAlignment="Bottom"
+        <locView:GameStatusView VerticalAlignment="Top"
                                 HorizontalAlignment="Stretch" />
     </Grid>
 </Page>

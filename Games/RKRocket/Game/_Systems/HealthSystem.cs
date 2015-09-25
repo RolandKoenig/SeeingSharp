@@ -29,35 +29,33 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class ScoreSystem : SceneLogicalObject
+    public class HealthSystem : SceneLogicalObject
     {
         #region Local data
-        private int m_currentScore;
+        private int m_currentHealth;
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="ScoreSystem"/> class.
+        /// Initializes a new instance of the <see cref="HealthSystem"/> class.
         /// </summary>
-        public ScoreSystem()
+        public HealthSystem()
         {
-            m_currentScore = 0;
+            m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
         }
 
-        private void OnMessage_Received(MessageLevelStarted message)
+        private void OnMessage_Received(MessageCollisionProjectileToPlayerDetected message)
         {
-            if(message.LevelNumber > 1) { return; }
+            if (m_currentHealth <= 0) { return; }
 
-            if(m_currentScore != 0)
+            // Update health
+            m_currentHealth--;
+            base.Messenger.Publish(new MessagePlayerHealthChanged(m_currentHealth));
+
+            // Trigger game loosed event when we reached 0
+            if (m_currentHealth == 0)
             {
-                m_currentScore = 0;
-                base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
-            }
-        }
 
-        private void OnMessage_Received(MessageCollisionProjectileToBlockDetected message)
-        {
-            m_currentScore++;
-            base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
+            }
         }
     }
 }

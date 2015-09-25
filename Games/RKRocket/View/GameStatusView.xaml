@@ -17,7 +17,7 @@
     <StackPanel Orientation="Horizontal">
         <StackPanel.Resources>
             <Style TargetType="TextBlock">
-                <Setter Property="FontSize" Value="34" />
+                <Setter Property="FontSize" Value="26" />
                 <Setter Property="FontFamily" Value="Comic Sans MS" />
                 <Setter Property="VerticalAlignment" Value="Center" />
                 <Setter Property="Foreground" Value="White" />
@@ -35,5 +35,7 @@
         <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentLevel}" />
         <TextBlock Margin="50,0,0,0">Score:</TextBlock>
         <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentScore}" />
+        <TextBlock Margin="50,0,0,0">Health:</TextBlock>
+        <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentHealth}" />
     </StackPanel>
 </UserControl>

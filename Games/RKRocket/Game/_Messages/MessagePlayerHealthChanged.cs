@@ -20,44 +20,28 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp;
+using SeeingSharp.Util;
 
 namespace RKRocket.Game
 {
-    public class ScoreSystem : SceneLogicalObject
+    [MessageAsyncRoutingTargets(SeeingSharpConstants.THREAD_NAME_GUI)]
+    public class MessagePlayerHealthChanged : SeeingSharpMessage
     {
-        #region Local data
-        private int m_currentScore;
-        #endregion
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ScoreSystem"/> class.
-        /// </summary>
-        public ScoreSystem()
+        public MessagePlayerHealthChanged(int newHealth)
         {
-            m_currentScore = 0;
+            this.NewHealth = newHealth;
         }
 
-        private void OnMessage_Received(MessageLevelStarted message)
+        public int NewHealth
         {
-            if(message.LevelNumber > 1) { return; }
-
-            if(m_currentScore != 0)
-            {
-                m_currentScore = 0;
-                base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
-            }
-        }
-
-        private void OnMessage_Received(MessageCollisionProjectileToBlockDetected message)
-        {
-            m_currentScore++;
-            base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
+            get;
+            private set;
         }
     }
 }

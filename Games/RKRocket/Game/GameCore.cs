@@ -87,6 +87,7 @@ namespace RKRocket.Game
             manipulator.Add(new FragmentSystem());
             manipulator.Add(new LevelSystem());
             manipulator.Add(new ScoreSystem());
+            manipulator.Add(new HealthSystem());
 
             // Append the background
             manipulator.Add(new BackgroundEntity());

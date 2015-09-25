@@ -175,6 +175,10 @@ namespace RKRocket.Game
             if (message.Projectile != this) { return; }
 
             m_relevantForPlayerCollision = false;
+
+            // Remove this object from the scene
+            base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Remove(this))
+                .FireAndForget();
         }
 
         /// <summary>

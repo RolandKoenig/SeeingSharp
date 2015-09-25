@@ -40,6 +40,7 @@ namespace RKRocket.ViewModel
         #region captured state variables
         private int m_currentLevel;
         private int m_currentScore;
+        private int m_currentHealth;
         #endregion
 
         /// <summary>
@@ -48,6 +49,7 @@ namespace RKRocket.ViewModel
         public MainUIViewModel()
         {
             m_currentLevel = 1;
+            m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
 
             // Create core game object
             if (SeeingSharpApplication.IsInitialized)
@@ -72,6 +74,11 @@ namespace RKRocket.ViewModel
             this.CurrentScore = message.NewScore;
         }
 
+        private void OnMessage_Received(MessagePlayerHealthChanged message)
+        {
+            this.CurrentHealth = message.NewHealth;
+        }
+
         public GameCore Game
         {
             get { return m_game; }
@@ -83,7 +90,7 @@ namespace RKRocket.ViewModel
         public int CurrentLevel
         {
             get { return m_currentLevel; }
-            set
+            private set
             {
                 if(m_currentLevel != value)
                 {
@@ -93,14 +100,33 @@ namespace RKRocket.ViewModel
             }
         }
 
+        /// <summary>
+        /// Gets the current score value reached.
+        /// </summary>
         public int CurrentScore
         {
             get { return m_currentScore; }
-            set
+            private set
             {
                 if(m_currentScore != value)
                 {
                     m_currentScore = value;
+                    base.RaisePropertyChanged();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets the current health value of the player.
+        /// </summary>
+        public int CurrentHealth
+        {
+            get { return m_currentHealth; }
+            set
+            {
+                if(m_currentHealth != value)
+                {
+                    m_currentHealth = value;
                     base.RaisePropertyChanged();
                 }
             }
