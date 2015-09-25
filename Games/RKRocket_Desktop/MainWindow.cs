@@ -53,6 +53,10 @@ namespace RKRocket
                 case nameof(MainUIViewModel.CurrentScore):
                     m_lblScoreValue.Text = m_viewModel.CurrentScore.ToString();
                     break;
+
+                case nameof(MainUIViewModel.CurrentHealth):
+                    m_lblHealthValue.Text = m_viewModel.CurrentHealth.ToString();
+                    break;
             }
         }
     }

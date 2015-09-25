@@ -38,6 +38,8 @@
             this.m_barMenu = new System.Windows.Forms.MenuStrip();
             this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
+            this.m_lblHealth = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblHealthValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_barStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).BeginInit();
             this.SuspendLayout();
@@ -50,10 +52,12 @@
             this.m_lblLevel,
             this.m_lblLevelValue,
             this.m_lblScore,
-            this.m_lblScoreValue});
+            this.m_lblScoreValue,
+            this.m_lblHealth,
+            this.m_lblHealthValue});
             this.m_barStatus.Location = new System.Drawing.Point(0, 24);
             this.m_barStatus.Name = "m_barStatus";
-            this.m_barStatus.Size = new System.Drawing.Size(455, 46);
+            this.m_barStatus.Size = new System.Drawing.Size(587, 46);
             this.m_barStatus.TabIndex = 0;
             this.m_barStatus.Text = "statusStrip1";
             // 
@@ -92,7 +96,7 @@
             this.m_barMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_barMenu.Location = new System.Drawing.Point(0, 0);
             this.m_barMenu.Name = "m_barMenu";
-            this.m_barMenu.Size = new System.Drawing.Size(455, 24);
+            this.m_barMenu.Size = new System.Drawing.Size(587, 24);
             this.m_barMenu.TabIndex = 1;
             this.m_barMenu.Text = "menuStrip1";
             // 
@@ -103,7 +107,7 @@
             this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_renderPanel.Location = new System.Drawing.Point(0, 70);
             this.m_renderPanel.Name = "m_renderPanel";
-            this.m_renderPanel.Size = new System.Drawing.Size(455, 212);
+            this.m_renderPanel.Size = new System.Drawing.Size(587, 342);
             this.m_renderPanel.TabIndex = 2;
             this.m_renderPanel.Text = "seeingSharpRendererControl1";
             this.m_renderPanel.ViewConfiguration.AccentuationFactor = 0F;
@@ -122,11 +126,26 @@
             // 
             this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
             // 
+            // m_lblHealth
+            // 
+            this.m_lblHealth.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblHealth.ForeColor = System.Drawing.Color.Gray;
+            this.m_lblHealth.Name = "m_lblHealth";
+            this.m_lblHealth.Size = new System.Drawing.Size(120, 41);
+            this.m_lblHealth.Text = "Health:";
+            // 
+            // m_lblHealthValue
+            // 
+            this.m_lblHealthValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblHealthValue.Name = "m_lblHealthValue";
+            this.m_lblHealthValue.Size = new System.Drawing.Size(35, 41);
+            this.m_lblHealthValue.Text = "0";
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(455, 282);
+            this.ClientSize = new System.Drawing.Size(587, 412);
             this.Controls.Add(this.m_renderPanel);
             this.Controls.Add(this.m_barStatus);
             this.Controls.Add(this.m_barMenu);
@@ -152,6 +171,8 @@
         private System.Windows.Forms.BindingSource m_dataSource;
         private System.Windows.Forms.ToolStripStatusLabel m_lblScore;
         private System.Windows.Forms.ToolStripStatusLabel m_lblScoreValue;
+        private System.Windows.Forms.ToolStripStatusLabel m_lblHealth;
+        private System.Windows.Forms.ToolStripStatusLabel m_lblHealthValue;
     }
 }
 
