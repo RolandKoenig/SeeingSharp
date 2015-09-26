@@ -123,9 +123,11 @@
     <Compile Include="Game\_Messages\MessageBlockStartsLeaving.cs" />
     <Compile Include="Game\_Messages\MessageBlocksFallOneCellDown.cs" />
     <Compile Include="Game\_Messages\MessageLevelStarted.cs" />
+    <Compile Include="Game\_Messages\MessageGameOver.cs" />
     <Compile Include="Game\_Messages\MessageNewGame.cs" />
     <Compile Include="Game\_Messages\MessagePlayerHealthChanged.cs" />
     <Compile Include="Game\_Messages\MessageScoreChanged.cs" />
+    <Compile Include="Game\_Misc.cs" />
     <Compile Include="Game\_Systems\FragmentSystem.cs" />
     <Compile Include="Game\_Entities\FragmentEntity.cs" />
     <Compile Include="Game\_Systems\CollisionSystem.cs" />

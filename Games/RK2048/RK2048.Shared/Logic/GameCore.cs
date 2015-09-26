@@ -513,7 +513,7 @@ namespace RK2048.Logic
             try
             {
                 // Load current datacontainer
-                GameDataContainer dataContainer = await GameDataContainer.LoadFromRoamingFolderAsync();
+                GameDataContainer dataContainer = await GameDataContainer.LoadFromRoamingFolderAsync(Constants.GAME_NAME);
 
                 // Perform changes (if needed
                 bool dataContainerChanged = false;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RKRocket.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,11 @@ namespace RKRocket
         public MainPage()
         {
             this.InitializeComponent();
+        }
+
+        public MainUIViewModel ViewModel
+        {
+            get { return this.DataContext as MainUIViewModel; }
         }
     }
 }

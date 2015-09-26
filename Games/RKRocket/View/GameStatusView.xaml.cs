@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RKRocket.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -22,6 +23,11 @@ namespace RKRocket.View
         public GameStatusView()
         {
             this.InitializeComponent();
+        }
+
+        public MainUIViewModel ViewModel
+        {
+            get { return this.DataContext as MainUIViewModel; }
         }
     }
 }

@@ -37,6 +37,10 @@ namespace RKRocket.ViewModel
         private GameCore m_game;
         #endregion
 
+        #region View variables
+        private bool m_isPaneOpened;
+        #endregion
+
         #region captured state variables
         private int m_currentLevel;
         private int m_currentScore;
@@ -60,6 +64,7 @@ namespace RKRocket.ViewModel
                 SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
 
                 this.CommandNewGame = new DelegateCommand(OnCommandNewGame_Execute);
+                this.CommandSwitchPaneVisibility = new DelegateCommand(OnCommandSwitchPaneVisibility_Execute);
             }
         }
 
@@ -69,6 +74,11 @@ namespace RKRocket.ViewModel
         private void OnCommandNewGame_Execute()
         {
             m_game.Scene.Messenger.BeginPublish<MessageNewGame>();
+        }
+
+        private void OnCommandSwitchPaneVisibility_Execute()
+        {
+            this.IsPaneVisible = !this.IsPaneVisible;
         }
 
         /// <summary>
@@ -142,10 +152,29 @@ namespace RKRocket.ViewModel
             }
         }
 
+        public bool IsPaneVisible
+        {
+            get { return m_isPaneOpened; }
+            set
+            {
+                if(m_isPaneOpened != value)
+                {
+                    m_isPaneOpened = value;
+                    RaisePropertyChanged();
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the command that starts a new game.
         /// </summary>
         public DelegateCommand CommandNewGame
+        {
+            get;
+            private set;
+        }
+
+        public DelegateCommand CommandSwitchPaneVisibility
         {
             get;
             private set;

@@ -31,7 +31,11 @@ namespace RK2048
 {
     internal static class Constants
     {
-        // Some miscellaneous constants
+        #region Common
+        internal const string GAME_NAME = "RK2048";
+        #endregion
+
+        #region Some miscellaneous constants
         internal static readonly double TILE_ANIMATION_TIME_MS = 300.0;
         internal static readonly TimeSpan TILE_ANIMATION_TIME = TimeSpan.FromMilliseconds(TILE_ANIMATION_TIME_MS);
         internal static readonly TimeSpan TILE_ANIMATION_REMOVE_TIME = TimeSpan.FromMilliseconds(TILE_ANIMATION_TIME_MS);// * 1.5);
@@ -49,16 +53,19 @@ namespace RK2048
             1024,
             2048
         };
+        #endregion
 
-        // Some measures
+        #region Some measures
         internal static readonly float TILE_WIDTH = 2f;
         internal static readonly float TILE_PADDING = 0.2f;
+        #endregion
 
-        // Colors
+        #region Colors
         internal static readonly Color4 COLOR_TEXT = new Color4(0, 204, 255);
         internal static readonly Color4 COLOR_TILE_BASE = Color4.White;
+        #endregion
 
-        // Define resource keys for all tiles
+        #region Define resource keys for all tiles
         internal static readonly NamedOrGenericKey RES_GEO_TILE_2 = new NamedOrGenericKey("Resources/Tile_2");
         internal static readonly NamedOrGenericKey RES_GEO_TILE_4 = new NamedOrGenericKey("Resources/Tile_4");
         internal static readonly NamedOrGenericKey RES_GEO_TILE_8 = new NamedOrGenericKey("Resources/Tile_8");
@@ -84,5 +91,6 @@ namespace RK2048
             RES_GEO_TILE_1024,
             RES_GEO_TILE_2048,
         };
+        #endregion
     }
 }

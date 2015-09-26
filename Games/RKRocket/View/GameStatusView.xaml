@@ -5,14 +5,9 @@
     xmlns:local="using:RKRocket.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:locViewModel="using:RKRocket.ViewModel"
     mc:Ignorable="d"
     d:DesignHeight="50"
     d:DesignWidth="1980">
-
-    <UserControl.DataContext>
-        <locViewModel:MainUIViewModel />
-    </UserControl.DataContext>
 
     <StackPanel Orientation="Horizontal">
         <StackPanel.Resources>
@@ -30,12 +25,16 @@
                 <GradientStop Color="#997D7E81" Offset="1" />
             </LinearGradientBrush>
         </StackPanel.Background>
-        
-        <TextBlock>Level:</TextBlock>
-        <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentLevel}" />
+
+        <Button Content="&#xE700;" Width="48"
+                Foreground="White"
+                FontFamily="Segoe MDL2 Assets" FontSize="26" 
+                Command="{x:Bind Path=ViewModel.CommandSwitchPaneVisibility, Mode=OneTime}"/>
+        <TextBlock Margin="10,0,0,0">Level:</TextBlock>
+        <TextBlock Margin="20,0,0,0" Text="{x:Bind Path=ViewModel.CurrentLevel, Mode=OneWay}" />
         <TextBlock Margin="50,0,0,0">Score:</TextBlock>
-        <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentScore}" />
+        <TextBlock Margin="20,0,0,0" Text="{x:Bind Path=ViewModel.CurrentScore, Mode=OneWay}" />
         <TextBlock Margin="50,0,0,0">Health:</TextBlock>
-        <TextBlock Margin="20,0,0,0" Text="{Binding Path=CurrentHealth}" />
+        <TextBlock Margin="20,0,0,0" Text="{x:Bind Path=ViewModel.CurrentHealth, Mode=OneWay}" />
     </StackPanel>
 </UserControl>

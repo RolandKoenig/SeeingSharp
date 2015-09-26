@@ -140,6 +140,9 @@
     <Compile Include="..\RKRocket\Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs">
       <Link>Game\_Messages\MessageCollisionProjectileToPlayerDetected.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageGameOver.cs">
+      <Link>Game\_Messages\MessageGameOver.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessageLevelStarted.cs">
       <Link>Game\_Messages\MessageLevelStarted.cs</Link>
     </Compile>
@@ -151,6 +154,9 @@
     </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessageScoreChanged.cs">
       <Link>Game\_Messages\MessageScoreChanged.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Misc.cs">
+      <Link>Game\_Misc.cs</Link>
     </Compile>
     <Compile Include="..\RKRocket\Game\_Systems\CollisionSystem.cs">
       <Link>Game\_Systems\CollisionSystem.cs</Link>

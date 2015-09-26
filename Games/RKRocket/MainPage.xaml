@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:locView="using:RKRocket.View"
+    xmlns:locVM="using:RKRocket.ViewModel"
     mc:Ignorable="d">
 
     <Page.Background>
@@ -16,6 +17,10 @@
             <GradientStop Color="LightBlue" Offset="1" />
         </LinearGradientBrush>
     </Page.Background>
+
+    <Page.DataContext>
+        <locVM:MainUIViewModel />
+    </Page.DataContext>
 
     <Grid>
         <SwapChainPanel>
@@ -28,7 +33,22 @@
             </i:Interaction.Behaviors>
         </SwapChainPanel>
         
+        <SplitView x:Name="SplitView"
+               OpenPaneLength="240" CompactPaneLength="0" 
+               DisplayMode="CompactOverlay" 
+               IsPaneOpen="{x:Bind Path=ViewModel.IsPaneVisible, Mode=TwoWay}"
+               PaneBackground="Transparent">
+            <SplitView.Pane>
+                <StackPanel Orientation="Vertical" 
+                            Margin="0,38,0,0"
+                            Background="#997D7E81">
+
+                </StackPanel>
+            </SplitView.Pane>
+        </SplitView>
+
         <locView:GameStatusView VerticalAlignment="Top"
-                                HorizontalAlignment="Stretch" />
+                                HorizontalAlignment="Stretch"
+                                Height="38"/>
     </Grid>
 </Page>

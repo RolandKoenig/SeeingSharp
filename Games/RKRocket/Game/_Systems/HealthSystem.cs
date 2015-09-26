@@ -54,7 +54,7 @@ namespace RKRocket.Game
             // Trigger game loosed event when we reached 0
             if (m_currentHealth == 0)
             {
-
+                base.Messenger.Publish(new MessageGameOver(GameOverReason.HealthAtZero));
             }
         }
 
