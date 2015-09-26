@@ -73,14 +73,27 @@ namespace SeeingSharp.Multimedia.Core
             device.EnsureNotNull("device");
             gfxConfig.EnsureNotNull("gfxConfig");
 
+            //DXGI.SwapChainDescription1 desc = new SharpDX.DXGI.SwapChainDescription1()
+            //{
+            //    Width = width,
+            //    Height = height,
+            //    Format = DEFAULT_TEXTURE_FORMAT,
+            //    Stereo = false,
+            //    SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
+            //    Usage = SharpDX.DXGI.Usage.BackBuffer | SharpDX.DXGI.Usage.RenderTargetOutput,
+            //    BufferCount = 2,
+            //    Scaling = SharpDX.DXGI.Scaling.Stretch,
+            //    SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,
+            //    AlphaMode = gfxConfig.AlphaEnabledSwapChain ? DXGI.AlphaMode.Premultiplied : SharpDX.DXGI.AlphaMode.Ignore
+            //};
+
             // Create the swap chain description
             DXGI.SwapChainDescription swapChainDesc = new DXGI.SwapChainDescription();
             if (gfxConfig.AntialiasingEnabled && device.IsStandardAntialiasingPossible)
             {
                 swapChainDesc.OutputHandle = targetControl.Handle;
                 swapChainDesc.IsWindowed = true;
-                swapChainDesc.BufferCount = 1;
-                swapChainDesc.Flags = DXGI.SwapChainFlags.AllowModeSwitch;
+                swapChainDesc.BufferCount = 2;
                 swapChainDesc.ModeDescription = new DXGI.ModeDescription(
                     targetControl.Width,
                     targetControl.Height,
@@ -94,8 +107,7 @@ namespace SeeingSharp.Multimedia.Core
             {
                 swapChainDesc.OutputHandle = targetControl.Handle;
                 swapChainDesc.IsWindowed = true;
-                swapChainDesc.BufferCount = 1;
-                swapChainDesc.Flags = DXGI.SwapChainFlags.AllowModeSwitch;
+                swapChainDesc.BufferCount = 2;
                 swapChainDesc.ModeDescription = new DXGI.ModeDescription(
                     targetControl.Width,
                     targetControl.Height,

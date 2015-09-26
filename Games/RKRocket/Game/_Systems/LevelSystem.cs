@@ -168,5 +168,17 @@ namespace RKRocket.Game
         {
             m_aliveBlocks.Remove(message.Block);
         }
+
+        /// <summary>
+        /// Handles the NewGame event.
+        /// </summary>
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            m_actLevelNumber = 0;
+            m_aliveBlocks.Clear();
+
+            m_currentLevel = new LevelData();
+            m_currentLevel.SetDefaultContent();
+        }
     }
 }

@@ -1192,6 +1192,15 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether this scene is in pause mode.
+        /// </summary>
+        public bool IsPaused
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
         /// Gets or sets the name of this scene.
         /// </summary>
         public string Name

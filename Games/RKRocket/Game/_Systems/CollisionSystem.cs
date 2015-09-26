@@ -143,5 +143,14 @@ namespace RKRocket.Game
                 return;
             }
         }
+
+        /// <summary>
+        /// Handles the NewGame event.
+        /// </summary>
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            m_blocks.Clear();
+            m_projectiles.Clear();
+        }
     }
 }

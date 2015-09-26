@@ -58,7 +58,17 @@ namespace RKRocket.ViewModel
 
                 // Attach to all messages 
                 SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
+
+                this.CommandNewGame = new DelegateCommand(OnCommandNewGame_Execute);
             }
+        }
+
+        /// <summary>
+        /// Starts a new game.
+        /// </summary>
+        private void OnCommandNewGame_Execute()
+        {
+            m_game.Scene.Messenger.BeginPublish<MessageNewGame>();
         }
 
         /// <summary>
@@ -130,6 +140,15 @@ namespace RKRocket.ViewModel
                     base.RaisePropertyChanged();
                 }
             }
+        }
+
+        /// <summary>
+        /// Gets the command that starts a new game.
+        /// </summary>
+        public DelegateCommand CommandNewGame
+        {
+            get;
+            private set;
         }
     }
 }

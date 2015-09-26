@@ -29,42 +29,71 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblLevel = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblLevelValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblScore = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblScoreValue = new System.Windows.Forms.ToolStripStatusLabel();
-            this.m_barMenu = new System.Windows.Forms.MenuStrip();
-            this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
-            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             this.m_lblHealth = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblHealthValue = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_barMenu = new System.Windows.Forms.MenuStrip();
+            this.m_mnuGame = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_mnuStartNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_mnuExit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
+            this.m_panBorder1 = new System.Windows.Forms.Panel();
+            this.m_panBorder2 = new System.Windows.Forms.Panel();
+            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
+            toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barStatus.SuspendLayout();
+            this.m_barMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).BeginInit();
             this.SuspendLayout();
             // 
+            // toolStripSeparator1
+            // 
+            toolStripSeparator1.Name = "toolStripSeparator1";
+            toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            // 
             // m_barStatus
             // 
+            this.m_barStatus.AllowMerge = false;
+            this.m_barStatus.BackColor = System.Drawing.Color.WhiteSmoke;
             this.m_barStatus.Dock = System.Windows.Forms.DockStyle.Top;
             this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_barStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1,
             this.m_lblLevel,
             this.m_lblLevelValue,
             this.m_lblScore,
             this.m_lblScoreValue,
             this.m_lblHealth,
             this.m_lblHealthValue});
-            this.m_barStatus.Location = new System.Drawing.Point(0, 24);
+            this.m_barStatus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
+            this.m_barStatus.Location = new System.Drawing.Point(0, 29);
             this.m_barStatus.Name = "m_barStatus";
-            this.m_barStatus.Size = new System.Drawing.Size(587, 46);
+            this.m_barStatus.Size = new System.Drawing.Size(916, 46);
+            this.m_barStatus.SizingGrip = false;
             this.m_barStatus.TabIndex = 0;
             this.m_barStatus.Text = "statusStrip1";
+            // 
+            // toolStripStatusLabel1
+            // 
+            this.toolStripStatusLabel1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Gray;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(161, 41);
+            this.toolStripStatusLabel1.Text = "RK Rocket";
             // 
             // m_lblLevel
             // 
             this.m_lblLevel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.m_lblLevel.ForeColor = System.Drawing.Color.Gray;
+            this.m_lblLevel.Margin = new System.Windows.Forms.Padding(60, 3, 0, 2);
             this.m_lblLevel.Name = "m_lblLevel";
             this.m_lblLevel.Size = new System.Drawing.Size(98, 41);
             this.m_lblLevel.Text = "Level:";
@@ -91,41 +120,6 @@
             this.m_lblScoreValue.Size = new System.Drawing.Size(35, 41);
             this.m_lblScoreValue.Text = "0";
             // 
-            // m_barMenu
-            // 
-            this.m_barMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.m_barMenu.Location = new System.Drawing.Point(0, 0);
-            this.m_barMenu.Name = "m_barMenu";
-            this.m_barMenu.Size = new System.Drawing.Size(587, 24);
-            this.m_barMenu.TabIndex = 1;
-            this.m_barMenu.Text = "menuStrip1";
-            // 
-            // m_renderPanel
-            // 
-            this.m_renderPanel.DiscardRendering = true;
-            this.m_renderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
-            this.m_renderPanel.Location = new System.Drawing.Point(0, 70);
-            this.m_renderPanel.Name = "m_renderPanel";
-            this.m_renderPanel.Size = new System.Drawing.Size(587, 342);
-            this.m_renderPanel.TabIndex = 2;
-            this.m_renderPanel.Text = "seeingSharpRendererControl1";
-            this.m_renderPanel.ViewConfiguration.AccentuationFactor = 0F;
-            this.m_renderPanel.ViewConfiguration.AlphaEnabledSwapChain = false;
-            this.m_renderPanel.ViewConfiguration.AmbientFactor = 0.2F;
-            this.m_renderPanel.ViewConfiguration.AntialiasingEnabled = true;
-            this.m_renderPanel.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
-            this.m_renderPanel.ViewConfiguration.GeneratedBorderFactor = 1F;
-            this.m_renderPanel.ViewConfiguration.GeneratedColorGradientFactor = 1F;
-            this.m_renderPanel.ViewConfiguration.LightPower = 0.8F;
-            this.m_renderPanel.ViewConfiguration.ShowTextures = true;
-            this.m_renderPanel.ViewConfiguration.StrongLightFactor = 1.5F;
-            this.m_renderPanel.ViewConfiguration.WireframeEnabled = false;
-            // 
-            // m_dataSource
-            // 
-            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
-            // 
             // m_lblHealth
             // 
             this.m_lblHealth.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
@@ -141,13 +135,102 @@
             this.m_lblHealthValue.Size = new System.Drawing.Size(35, 41);
             this.m_lblHealthValue.Text = "0";
             // 
+            // m_barMenu
+            // 
+            this.m_barMenu.BackColor = System.Drawing.Color.White;
+            this.m_barMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.m_barMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_mnuGame,
+            this.toolStripMenuItem1});
+            this.m_barMenu.Location = new System.Drawing.Point(0, 0);
+            this.m_barMenu.Name = "m_barMenu";
+            this.m_barMenu.Size = new System.Drawing.Size(916, 28);
+            this.m_barMenu.TabIndex = 1;
+            this.m_barMenu.Text = "menuStrip1";
+            // 
+            // m_mnuGame
+            // 
+            this.m_mnuGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_mnuStartNew,
+            toolStripSeparator1,
+            this.m_mnuExit});
+            this.m_mnuGame.Name = "m_mnuGame";
+            this.m_mnuGame.ShortcutKeyDisplayString = "";
+            this.m_mnuGame.Size = new System.Drawing.Size(60, 24);
+            this.m_mnuGame.Text = "&Game";
+            // 
+            // m_mnuStartNew
+            // 
+            this.m_mnuStartNew.Name = "m_mnuStartNew";
+            this.m_mnuStartNew.Size = new System.Drawing.Size(181, 26);
+            this.m_mnuStartNew.Text = "Start New";
+            this.m_mnuStartNew.Click += new System.EventHandler(this.OnMnuStartNew_Click);
+            // 
+            // m_mnuExit
+            // 
+            this.m_mnuExit.Name = "m_mnuExit";
+            this.m_mnuExit.Size = new System.Drawing.Size(181, 26);
+            this.m_mnuExit.Text = "Exit";
+            this.m_mnuExit.Click += new System.EventHandler(this.OnMnuExit_Click);
+            // 
+            // toolStripMenuItem1
+            // 
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(47, 24);
+            this.toolStripMenuItem1.Text = "&Info";
+            // 
+            // m_renderPanel
+            // 
+            this.m_renderPanel.DiscardRendering = true;
+            this.m_renderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
+            this.m_renderPanel.Location = new System.Drawing.Point(0, 76);
+            this.m_renderPanel.Name = "m_renderPanel";
+            this.m_renderPanel.Size = new System.Drawing.Size(916, 451);
+            this.m_renderPanel.TabIndex = 2;
+            this.m_renderPanel.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_renderPanel.ViewConfiguration.AlphaEnabledSwapChain = false;
+            this.m_renderPanel.ViewConfiguration.AmbientFactor = 0.2F;
+            this.m_renderPanel.ViewConfiguration.AntialiasingEnabled = true;
+            this.m_renderPanel.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
+            this.m_renderPanel.ViewConfiguration.GeneratedBorderFactor = 1F;
+            this.m_renderPanel.ViewConfiguration.GeneratedColorGradientFactor = 1F;
+            this.m_renderPanel.ViewConfiguration.LightPower = 0.8F;
+            this.m_renderPanel.ViewConfiguration.ShowTextures = true;
+            this.m_renderPanel.ViewConfiguration.StrongLightFactor = 1.5F;
+            this.m_renderPanel.ViewConfiguration.WireframeEnabled = false;
+            // 
+            // m_panBorder1
+            // 
+            this.m_panBorder1.BackColor = System.Drawing.Color.Gainsboro;
+            this.m_panBorder1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.m_panBorder1.Location = new System.Drawing.Point(0, 28);
+            this.m_panBorder1.Name = "m_panBorder1";
+            this.m_panBorder1.Size = new System.Drawing.Size(916, 1);
+            this.m_panBorder1.TabIndex = 3;
+            // 
+            // m_panBorder2
+            // 
+            this.m_panBorder2.BackColor = System.Drawing.Color.Gainsboro;
+            this.m_panBorder2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.m_panBorder2.Location = new System.Drawing.Point(0, 75);
+            this.m_panBorder2.Name = "m_panBorder2";
+            this.m_panBorder2.Size = new System.Drawing.Size(916, 1);
+            this.m_panBorder2.TabIndex = 4;
+            // 
+            // m_dataSource
+            // 
+            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 412);
+            this.ClientSize = new System.Drawing.Size(916, 527);
             this.Controls.Add(this.m_renderPanel);
+            this.Controls.Add(this.m_panBorder2);
             this.Controls.Add(this.m_barStatus);
+            this.Controls.Add(this.m_panBorder1);
             this.Controls.Add(this.m_barMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.m_barMenu;
@@ -155,6 +238,8 @@
             this.Text = "RK Rocket";
             this.m_barStatus.ResumeLayout(false);
             this.m_barStatus.PerformLayout();
+            this.m_barMenu.ResumeLayout(false);
+            this.m_barMenu.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -173,6 +258,13 @@
         private System.Windows.Forms.ToolStripStatusLabel m_lblScoreValue;
         private System.Windows.Forms.ToolStripStatusLabel m_lblHealth;
         private System.Windows.Forms.ToolStripStatusLabel m_lblHealthValue;
+        private System.Windows.Forms.ToolStripMenuItem m_mnuGame;
+        private System.Windows.Forms.ToolStripMenuItem m_mnuStartNew;
+        private System.Windows.Forms.ToolStripMenuItem m_mnuExit;
+        private System.Windows.Forms.Panel m_panBorder1;
+        private System.Windows.Forms.Panel m_panBorder2;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

@@ -20,7 +20,8 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp.Multimedia.Core;
+using SeeingSharp;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,42 +30,10 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class HealthSystem : SceneLogicalObject
+    [MessageAsyncRoutingTargets(SeeingSharpConstants.THREAD_NAME_GUI)]
+    public class MessageNewGame : SeeingSharpMessage
     {
-        #region Local data
-        private int m_currentHealth;
-        #endregion
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="HealthSystem"/> class.
-        /// </summary>
-        public HealthSystem()
-        {
-            m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
-        }
 
-        private void OnMessage_Received(MessageCollisionProjectileToPlayerDetected message)
-        {
-            if (m_currentHealth <= 0) { return; }
-
-            // Update health
-            m_currentHealth--;
-            base.Messenger.Publish(new MessagePlayerHealthChanged(m_currentHealth));
-
-            // Trigger game loosed event when we reached 0
-            if (m_currentHealth == 0)
-            {
-
-            }
-        }
-
-        /// <summary>
-        /// Handles the NewGame event.
-        /// </summary>
-        private void OnMessage_Received(MessageNewGame message)
-        {
-            m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
-            base.Messenger.Publish(new MessagePlayerHealthChanged(m_currentHealth));
-        }
     }
 }

@@ -143,6 +143,9 @@
     <Compile Include="..\RKRocket\Game\_Messages\MessageLevelStarted.cs">
       <Link>Game\_Messages\MessageLevelStarted.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageNewGame.cs">
+      <Link>Game\_Messages\MessageNewGame.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessagePlayerHealthChanged.cs">
       <Link>Game\_Messages\MessagePlayerHealthChanged.cs</Link>
     </Compile>

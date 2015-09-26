@@ -379,7 +379,7 @@ namespace SeeingSharp.Multimedia.Core
                             Scene actScene = scenesToRender[actTaskIndex];
                             SceneRelatedUpdateState actUpdateState = actScene.CachedUpdateState;
 
-                            actUpdateState.OnStartSceneUpdate(updateState, inputStates);
+                            actUpdateState.OnStartSceneUpdate(actScene, updateState, inputStates);
 
                             actScene.Update(actUpdateState);
                         }
@@ -487,7 +487,7 @@ namespace SeeingSharp.Multimedia.Core
                             Scene actScene = scenesToRender[sceneIndex];
                             SceneRelatedUpdateState actUpdateState = actScene.CachedUpdateState;
 
-                            actUpdateState.OnStartSceneUpdate(updateState, null);
+                            actUpdateState.OnStartSceneUpdate(actScene, updateState, null);
                             actScene.UpdateBesideRender(actUpdateState);
                         }
                     }

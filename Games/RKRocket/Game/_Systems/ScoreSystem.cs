@@ -59,5 +59,14 @@ namespace RKRocket.Game
             m_currentScore++;
             base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
         }
+
+        /// <summary>
+        /// Handles the NewGame event.
+        /// </summary>
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            m_currentScore = 0;
+            base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
+        }
     }
 }

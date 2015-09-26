@@ -41,6 +41,7 @@ namespace SeeingSharp.Multimedia.Core
         #endregion
 
         #region parameters for single update step
+        private bool m_isPaused;
         private UpdateState m_updateState;
         private Matrix4Stack m_world;
         private SceneLayer m_sceneLayer;
@@ -60,10 +61,13 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Called just before the update pass of a scene object starts.
         /// </summary>
+        /// <param name="targetScene">The scene for which to prepare this state object</param>
         /// <param name="updateState">The update state.</param>
         /// <param name="unfilteredInputStates">A list containing all queried input states (still not filtered by scene!)</param>
-        internal void OnStartSceneUpdate(UpdateState updateState, List<InputStateBase> unfilteredInputStates)
+        internal void OnStartSceneUpdate(Scene targetScene, UpdateState updateState, List<InputStateBase> unfilteredInputStates)
         {
+            m_isPaused = targetScene.IsPaused;
+
             m_world.ResetStackToIdentity();
 
             m_updateState = updateState;
@@ -137,6 +141,7 @@ namespace SeeingSharp.Multimedia.Core
             {
                 m_updateState.EnsureNotNull("m_updateState");
 
+                if (m_isPaused) { return TimeSpan.Zero; }
                 return m_updateState.UpdateTime;
             }
         }
@@ -150,6 +155,7 @@ namespace SeeingSharp.Multimedia.Core
             {
                 m_updateState.EnsureNotNull("m_updateState");
 
+                if (m_isPaused) { return 0; }
                 return m_updateState.UpdateTimeMilliseconds;
             }
         }
@@ -172,6 +178,11 @@ namespace SeeingSharp.Multimedia.Core
                 if (m_sceneLayer == null) { return null; }
                 else { return m_sceneLayer.Scene; }
             }
+        }
+
+        public bool IsPaused
+        {
+            get { return m_isPaused; }
         }
 
         /// <summary>

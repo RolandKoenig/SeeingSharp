@@ -182,6 +182,16 @@ namespace RKRocket.Game
         }
 
         /// <summary>
+        /// Handles the NewGame event.
+        /// </summary>
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            // Remove this object from the scene
+            base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Remove(this))
+                .FireAndForget();
+        }
+
+        /// <summary>
         /// Gets the current position of the projectile.
         /// </summary>
         public Vector2 Position

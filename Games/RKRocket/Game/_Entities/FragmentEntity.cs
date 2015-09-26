@@ -97,6 +97,16 @@ namespace RKRocket.Game
             graphics.FillRectangle(destRectangle, m_fragmentBrush);
         }
 
+        /// <summary>
+        /// Handles the NewGame event.
+        /// </summary>
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            // Remove this object from the scene
+            base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Remove(this))
+                .FireAndForget();
+        }
+
         public Vector2 Position
         {
             get { return m_position; }

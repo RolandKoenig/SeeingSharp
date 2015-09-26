@@ -22,6 +22,7 @@
 #endregion
 using SeeingSharp;
 using SeeingSharp.Checking;
+using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing2D;
 using System;
@@ -201,6 +202,16 @@ namespace RKRocket.Game
                 // Publish leaving message
                 base.Messenger.Publish(new MessageBlockStartsLeaving(this));
             }
+        }
+
+        /// <summary>
+        /// Handles the NewGame event.
+        /// </summary>
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            // Remove this object from the scene
+            base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Remove(this))
+                .FireAndForget();
         }
 
         public Vector2 Position

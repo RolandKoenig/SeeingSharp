@@ -40,6 +40,11 @@ namespace RKRocket
             m_renderPanel.Camera = m_viewModel.Game.Camera;
 
             m_viewModel.PropertyChanged += OnViewModel_PropertyChanged;
+
+            // Set initial label contents
+            m_lblLevelValue.Text = m_viewModel.CurrentLevel.ToString();
+            m_lblScoreValue.Text = m_viewModel.CurrentScore.ToString();
+            m_lblHealthValue.Text = m_viewModel.CurrentHealth.ToString();
         }
 
         private void OnViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -58,6 +63,16 @@ namespace RKRocket
                     m_lblHealthValue.Text = m_viewModel.CurrentHealth.ToString();
                     break;
             }
+        }
+
+        private void OnMnuExit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void OnMnuStartNew_Click(object sender, EventArgs e)
+        {
+            m_viewModel.CommandNewGame.Execute();
         }
     }
 }
