@@ -48,6 +48,11 @@ namespace RKRocket.ViewModel
         #endregion
 
         /// <summary>
+        /// Occurs when the player reached GameOver state.
+        /// </summary>
+        public event EventHandler<GameOverEventArgs> GameOver;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainUIViewModel"/> class.
         /// </summary>
         public MainUIViewModel()
@@ -97,6 +102,27 @@ namespace RKRocket.ViewModel
         private void OnMessage_Received(MessagePlayerHealthChanged message)
         {
             this.CurrentHealth = message.NewHealth;
+        }
+
+        /// <summary>
+        /// Called when GameOver events comes from the game.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        private void OnMessage_Received(MessageGameOver message)
+        {
+            this.GameOver.Raise(this, new GameOverEventArgs(
+                new GameOverViewModel(message.Reason, m_currentScore)));
+        }
+
+        /// <summary>
+        /// Called when the game starts from the beginning.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            m_currentLevel = 1;
+            m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
+            m_currentScore = 0;
         }
 
         public GameCore Game

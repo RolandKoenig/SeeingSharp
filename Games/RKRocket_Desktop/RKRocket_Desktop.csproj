@@ -173,8 +173,14 @@
     <Compile Include="..\RKRocket\Game\_Systems\ScoreSystem.cs">
       <Link>Game\_Systems\ScoreSystem.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\ViewModel\GameOverViewModel.cs">
+      <Link>ViewModel\GameOverViewModel.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\ViewModel\MainUIViewModel.cs">
       <Link>ViewModel\MainUIViewModel.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\ViewModel\_Misc.cs">
+      <Link>ViewModel\_Misc.cs</Link>
     </Compile>
     <Compile Include="..\RKRocket\_Constants.cs">
       <Link>_Constants.cs</Link>
@@ -190,6 +196,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\GameOverForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\GameOverForm.Designer.cs">
+      <DependentUpon>GameOverForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -203,6 +215,10 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="View\GameOverForm.resx">
+      <DependentUpon>GameOverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\DataSources\RKRocket.ViewModel.GameOverViewModel.datasource" />
     <None Include="RKRocket_Desktop_TemporaryKey.pfx" />
     <Resource Include="..\RKRocket\Assets\Levels\Level_001.json">
       <Link>Assets\Levels\Level_001.json</Link>

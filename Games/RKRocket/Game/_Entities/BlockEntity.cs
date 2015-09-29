@@ -84,7 +84,11 @@ namespace RKRocket.Game
 
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
-
+            if((m_position.Y > Constants.BLOCK_SIM_MAX_Y) &&
+               (!this.IsLeaving))
+            {
+                base.Messenger.Publish(new MessageGameOver(GameOverReason.BlockReachedFooter));
+            }
         }
 
         /// <summary>

@@ -32,7 +32,6 @@
             System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblLevel = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblLevelValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblScore = new System.Windows.Forms.ToolStripStatusLabel();
@@ -57,7 +56,7 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(146, 6);
             // 
             // m_barStatus
             // 
@@ -66,7 +65,6 @@
             this.m_barStatus.Dock = System.Windows.Forms.DockStyle.Top;
             this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_barStatus.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripStatusLabel1,
             this.m_lblLevel,
             this.m_lblLevelValue,
             this.m_lblScore,
@@ -81,19 +79,11 @@
             this.m_barStatus.TabIndex = 0;
             this.m_barStatus.Text = "statusStrip1";
             // 
-            // toolStripStatusLabel1
-            // 
-            this.toolStripStatusLabel1.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.toolStripStatusLabel1.ForeColor = System.Drawing.Color.Gray;
-            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(161, 41);
-            this.toolStripStatusLabel1.Text = "RK Rocket";
-            // 
             // m_lblLevel
             // 
             this.m_lblLevel.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.m_lblLevel.ForeColor = System.Drawing.Color.Gray;
-            this.m_lblLevel.Margin = new System.Windows.Forms.Padding(60, 3, 0, 2);
+            this.m_lblLevel.Margin = new System.Windows.Forms.Padding(5, 3, 0, 2);
             this.m_lblLevel.Name = "m_lblLevel";
             this.m_lblLevel.Size = new System.Drawing.Size(98, 41);
             this.m_lblLevel.Text = "Level:";
@@ -162,14 +152,14 @@
             // m_mnuStartNew
             // 
             this.m_mnuStartNew.Name = "m_mnuStartNew";
-            this.m_mnuStartNew.Size = new System.Drawing.Size(181, 26);
+            this.m_mnuStartNew.Size = new System.Drawing.Size(149, 26);
             this.m_mnuStartNew.Text = "Start New";
             this.m_mnuStartNew.Click += new System.EventHandler(this.OnMnuStartNew_Click);
             // 
             // m_mnuExit
             // 
             this.m_mnuExit.Name = "m_mnuExit";
-            this.m_mnuExit.Size = new System.Drawing.Size(181, 26);
+            this.m_mnuExit.Size = new System.Drawing.Size(149, 26);
             this.m_mnuExit.Text = "Exit";
             this.m_mnuExit.Click += new System.EventHandler(this.OnMnuExit_Click);
             // 
@@ -264,7 +254,6 @@
         private System.Windows.Forms.Panel m_panBorder1;
         private System.Windows.Forms.Panel m_panBorder2;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
     }
 }
 

@@ -1,4 +1,5 @@
-﻿using RKRocket.ViewModel;
+﻿using RKRocket.View;
+using RKRocket.ViewModel;
 using SeeingSharp.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,9 @@ namespace RKRocket
 {
     public partial class MainWindow : Form
     {
+        #region State
         private MainUIViewModel m_viewModel;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -22,11 +25,6 @@ namespace RKRocket
         public MainWindow()
         {
             InitializeComponent();
-
-            //System.Windows.Window window = new System.Windows.Window();
-            //window.Show();
-
-            //System.Windows.Expression exp = null;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -36,6 +34,7 @@ namespace RKRocket
             if (!SeeingSharpApplication.IsInitialized) { return; }
 
             m_viewModel = new MainUIViewModel();
+            m_viewModel.GameOver += OnMainViewModel_GameOver;
             m_renderPanel.Scene = m_viewModel.Game.GameScene;
             m_renderPanel.Camera = m_viewModel.Game.Camera;
 
@@ -73,6 +72,30 @@ namespace RKRocket
         private void OnMnuStartNew_Click(object sender, EventArgs e)
         {
             m_viewModel.CommandNewGame.Execute();
+        }
+
+        /// <summary>
+        /// Called when the ViewModel wants to switch to GameOver view.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="GameOverEventArgs"/> instance containing the event data.</param>
+        private void OnMainViewModel_GameOver(object sender, GameOverEventArgs e)
+        {
+            using (GameOverForm dlgGameOver = new GameOverForm())
+            {
+                dlgGameOver.ViewModel = e.GameOverViewModel;
+                dlgGameOver.StartPosition = FormStartPosition.CenterParent;
+                switch(dlgGameOver.ShowDialog(this))
+                {
+                        // Dialog confirmed
+                    case DialogResult.OK:
+                        break;
+
+                        // Dialog canceled
+                    default:
+                        break;
+                }
+            }
         }
     }
 }
