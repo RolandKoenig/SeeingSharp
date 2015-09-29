@@ -29,6 +29,7 @@ using SeeingSharp.Util;
 
 namespace RKRocket.Game
 {
+    [MessagePossibleSource(Constants.GAME_SCENE_NAME)]
     public class MessageBlockStartsLeaving : SeeingSharpMessage
     {
         public MessageBlockStartsLeaving(BlockEntity block)

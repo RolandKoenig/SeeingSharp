@@ -48,11 +48,6 @@ namespace RKRocket.ViewModel
         #endregion
 
         /// <summary>
-        /// Occurs when the player reached GameOver state.
-        /// </summary>
-        public event EventHandler<GameOverEventArgs> GameOver;
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainUIViewModel"/> class.
         /// </summary>
         public MainUIViewModel()
@@ -110,8 +105,9 @@ namespace RKRocket.ViewModel
         /// <param name="message">The message.</param>
         private void OnMessage_Received(MessageGameOver message)
         {
-            this.GameOver.Raise(this, new GameOverEventArgs(
-                new GameOverViewModel(message.Reason, m_currentScore)));
+            base.Messenger.Publish(
+                new MessageGameOverDialogRequest(
+                    new GameOverViewModel(message.Reason, m_currentScore)));
         }
 
         /// <summary>

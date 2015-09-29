@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
+    [MessagePossibleSource(Constants.GAME_SCENE_NAME)]
     [MessageAsyncRoutingTargets(SeeingSharpConstants.THREAD_NAME_GUI)]
     public class MessageGameOver : SeeingSharpMessage
     {

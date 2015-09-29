@@ -1,6 +1,6 @@
-﻿using RKRocket.View;
-using RKRocket.ViewModel;
+﻿using RKRocket.ViewModel;
 using SeeingSharp.Infrastructure;
+using SeeingSharp.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,9 +11,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace RKRocket
+namespace RKRocket.View
 {
-    public partial class MainWindow : Form
+    public partial class MainWindow : SeeingSharpForm
     {
         #region State
         private MainUIViewModel m_viewModel;
@@ -33,11 +33,10 @@ namespace RKRocket
 
             if (!SeeingSharpApplication.IsInitialized) { return; }
 
+            // Create the main viewmodel
             m_viewModel = new MainUIViewModel();
-            m_viewModel.GameOver += OnMainViewModel_GameOver;
             m_renderPanel.Scene = m_viewModel.Game.GameScene;
             m_renderPanel.Camera = m_viewModel.Game.Camera;
-
             m_viewModel.PropertyChanged += OnViewModel_PropertyChanged;
 
             // Set initial label contents
@@ -46,6 +45,11 @@ namespace RKRocket
             m_lblHealthValue.Text = m_viewModel.CurrentHealth.ToString();
         }
 
+        /// <summary>
+        /// Manually react on property changes within the viewmodel.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
         private void OnViewModel_PropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch(e.PropertyName)
@@ -77,15 +81,14 @@ namespace RKRocket
         /// <summary>
         /// Called when the ViewModel wants to switch to GameOver view.
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="GameOverEventArgs"/> instance containing the event data.</param>
-        private void OnMainViewModel_GameOver(object sender, GameOverEventArgs e)
+        /// <param name="message">the message to be processed.</param>
+        private void OnMessage_Received(MessageGameOverDialogRequest message)
         {
             using (GameOverForm dlgGameOver = new GameOverForm())
             {
-                dlgGameOver.ViewModel = e.GameOverViewModel;
+                dlgGameOver.ViewModel = message.ViewModel;
                 dlgGameOver.StartPosition = FormStartPosition.CenterParent;
-                switch(dlgGameOver.ShowDialog(this))
+                switch (dlgGameOver.ShowDialog(this))
                 {
                         // Dialog confirmed
                     case DialogResult.OK:

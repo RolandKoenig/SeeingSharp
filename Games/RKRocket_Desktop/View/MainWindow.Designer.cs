@@ -1,4 +1,4 @@
-﻿namespace RKRocket
+﻿namespace RKRocket.View
 {
     partial class MainWindow
     {

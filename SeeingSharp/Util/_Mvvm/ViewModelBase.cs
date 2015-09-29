@@ -21,6 +21,7 @@
 */
 #endregion
 
+using SeeingSharp.Infrastructure;
 using System.Collections.Generic;
 
 namespace SeeingSharp.Util
@@ -28,5 +29,9 @@ namespace SeeingSharp.Util
     public abstract class ViewModelBase : PropertyChangedBase
     {
 
+        public SeeingSharpMessenger Messenger
+        {
+            get { return SeeingSharpApplication.Current.UIMessenger; }
+        }
     }
 }

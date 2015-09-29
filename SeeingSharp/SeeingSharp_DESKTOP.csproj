@@ -224,6 +224,12 @@
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />
+    <Compile Include="View\SeeingSharpForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\SeeingSharpUserControl.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="_Math\_Custom\BoundingBox.Custom.cs" />
     <Compile Include="_Math\_Custom\BoundingBox2D.cs" />
     <Compile Include="_Math\_Custom\BoundingSphere.Custom.cs" />
@@ -307,7 +313,6 @@
   <ItemGroup>
     <Folder Include="Behaviors\_WinForms\" />
     <Folder Include="Behaviors\_WinRT\" />
-    <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

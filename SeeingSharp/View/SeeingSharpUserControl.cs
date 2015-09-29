@@ -20,35 +20,47 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Util;
-using SeeingSharp;
+using System.Windows.Forms;
 
-namespace RKRocket.Game
-{
-    [MessagePossibleSource(Constants.GAME_SCENE_NAME)]
-    public class MessageCollisionProjectileToBlockDetected : SeeingSharpMessage
+namespace SeeingSharp.View
+{ 
+    public class SeeingSharpUserControl : UserControl
     {
-        public MessageCollisionProjectileToBlockDetected(ProjectileEntity projectile, BlockEntity block)
+        #region Message subscriptions
+        private IEnumerable<MessageSubscription> m_msgSubscriptions;
+        #endregion
+
+        protected override void OnHandleCreated(EventArgs e)
         {
-            this.Projectile = projectile;
-            this.Block = block;
+            // Register on all messages for which are methods defined here
+            if (SeeingSharpApplication.IsUIEnvironmentInitialized &&
+               (m_msgSubscriptions == null))
+            {
+                m_msgSubscriptions = SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
+            }
+
+            // Perform default event handling
+            base.OnHandleCreated(e);
         }
 
-        public ProjectileEntity Projectile
+        protected override void OnHandleDestroyed(EventArgs e)
         {
-            get;
-            private set;
-        }
+            // Deregister all messages
+            if (m_msgSubscriptions != null)
+            {
+                CommonTools.DisposeObjects(m_msgSubscriptions);
+                m_msgSubscriptions = null;
+            }
 
-        public BlockEntity Block
-        {
-            get;
-            private set;
+            // Perform default event handling
+            base.OnHandleDestroyed(e);
         }
     }
 }

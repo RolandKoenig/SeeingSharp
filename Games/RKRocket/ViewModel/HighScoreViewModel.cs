@@ -20,35 +20,16 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Util;
-using SeeingSharp;
 
-namespace RKRocket.Game
+namespace RKRocket.ViewModel
 {
-    [MessagePossibleSource(Constants.GAME_SCENE_NAME)]
-    public class MessageCollisionProjectileToBlockDetected : SeeingSharpMessage
+    public class HighScoreViewModel : ViewModelBase
     {
-        public MessageCollisionProjectileToBlockDetected(ProjectileEntity projectile, BlockEntity block)
-        {
-            this.Projectile = projectile;
-            this.Block = block;
-        }
-
-        public ProjectileEntity Projectile
-        {
-            get;
-            private set;
-        }
-
-        public BlockEntity Block
-        {
-            get;
-            private set;
-        }
     }
 }

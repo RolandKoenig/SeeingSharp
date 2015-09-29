@@ -97,6 +97,16 @@ namespace RKRocket.Game
             manipulator.Add(m_playerRocket);
         }
 
+        private void OnMessage_Received(MessageGameOver message)
+        {
+            m_gameScene.IsPaused = true;
+        }
+
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            m_gameScene.IsPaused = false;
+        }
+
         public Scene GameScene
         {
             get { return m_gameScene; }

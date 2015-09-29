@@ -25,27 +25,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Util;
 using SeeingSharp;
+using SeeingSharp.Util;
 
-namespace RKRocket.Game
+namespace RKRocket.ViewModel
 {
-    [MessagePossibleSource(Constants.GAME_SCENE_NAME)]
-    public class MessageCollisionProjectileToBlockDetected : SeeingSharpMessage
+    [MessagePossibleSource(SeeingSharpConstants.THREAD_NAME_GUI)]
+    public class MessageGameOverDialogRequest : SeeingSharpMessage
     {
-        public MessageCollisionProjectileToBlockDetected(ProjectileEntity projectile, BlockEntity block)
+        public MessageGameOverDialogRequest(GameOverViewModel viewModel)
         {
-            this.Projectile = projectile;
-            this.Block = block;
+            this.ViewModel = viewModel;
         }
 
-        public ProjectileEntity Projectile
-        {
-            get;
-            private set;
-        }
-
-        public BlockEntity Block
+        public GameOverViewModel ViewModel
         {
             get;
             private set;

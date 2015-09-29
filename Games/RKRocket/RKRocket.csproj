@@ -150,6 +150,8 @@
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Game\_Systems\ScoreSystem.cs" />
     <Compile Include="ViewModel\GameOverViewModel.cs" />
+    <Compile Include="ViewModel\HighScoreViewModel.cs" />
+    <Compile Include="ViewModel\_Messages\MessageGameOverDialogRequest.cs" />
     <Compile Include="ViewModel\_Misc.cs" />
     <Compile Include="View\GameStatusView.xaml.cs">
       <DependentUpon>GameStatusView.xaml</DependentUpon>

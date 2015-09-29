@@ -29,6 +29,7 @@ using SeeingSharp.Util;
 
 namespace RKRocket.Game
 {
+    [MessagePossibleSource(Constants.GAME_SCENE_NAME)]
     public class MessageCollisionProjectileToPlayerDetected : SeeingSharpMessage
     {
         public MessageCollisionProjectileToPlayerDetected(ProjectileEntity projectile, PlayerRocketEntity player)
