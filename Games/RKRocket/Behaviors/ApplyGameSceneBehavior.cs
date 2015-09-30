@@ -37,7 +37,7 @@ namespace RKRocket.Behaviors
     public class ApplyGameSceneBehavior : DependencyObject, IBehavior
     {
         public static readonly DependencyProperty GameCoreProperty =
-            DependencyProperty.Register("GameCore", typeof(GameCore), typeof(ApplyGameSceneBehavior), new PropertyMetadata(0));
+            DependencyProperty.Register("GameCore", typeof(GameCore), typeof(ApplyGameSceneBehavior), new PropertyMetadata(null));
 
         #region Members for UI connection
         private SwapChainPanel m_targetBGPanel;

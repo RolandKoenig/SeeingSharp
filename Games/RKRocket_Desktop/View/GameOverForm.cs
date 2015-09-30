@@ -46,6 +46,12 @@ namespace RKRocket.View
             this.Close();
         }
 
+        private void OnCmdOK_Click(object sender, EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            this.Close();
+        }
+
         public GameOverViewModel ViewModel
         {
             get { return m_dataSource.DataSource as GameOverViewModel; }

@@ -32,11 +32,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameOverForm));
             this.m_lblReachedScore = new System.Windows.Forms.Label();
             this.m_txtReachedScore = new System.Windows.Forms.TextBox();
+            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             this.m_txtName = new System.Windows.Forms.TextBox();
             this.m_lblName = new System.Windows.Forms.Label();
             this.m_cmdOK = new System.Windows.Forms.Button();
             this.m_cmdCancel = new System.Windows.Forms.Button();
-            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -45,37 +45,41 @@
             this.m_lblReachedScore.AutoSize = true;
             this.m_lblReachedScore.Location = new System.Drawing.Point(17, 15);
             this.m_lblReachedScore.Name = "m_lblReachedScore";
-            this.m_lblReachedScore.Size = new System.Drawing.Size(110, 17);
+            this.m_lblReachedScore.Size = new System.Drawing.Size(106, 17);
             this.m_lblReachedScore.TabIndex = 0;
-            this.m_lblReachedScore.Text = "Reached Score:";
+            this.m_lblReachedScore.Text = "Reached Score";
             // 
             // m_txtReachedScore
             // 
             this.m_txtReachedScore.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.m_dataSource, "ReachedScore", true));
-            this.m_txtReachedScore.Location = new System.Drawing.Point(231, 12);
+            this.m_txtReachedScore.Location = new System.Drawing.Point(189, 12);
             this.m_txtReachedScore.Name = "m_txtReachedScore";
             this.m_txtReachedScore.ReadOnly = true;
             this.m_txtReachedScore.Size = new System.Drawing.Size(56, 22);
-            this.m_txtReachedScore.TabIndex = 1;
+            this.m_txtReachedScore.TabIndex = 50;
+            // 
+            // m_dataSource
+            // 
+            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.GameOverViewModel);
             // 
             // m_txtName
             // 
             this.m_txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.m_txtName.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.m_dataSource, "Name", true));
-            this.m_txtName.Location = new System.Drawing.Point(231, 40);
+            this.m_txtName.Location = new System.Drawing.Point(189, 40);
             this.m_txtName.Name = "m_txtName";
-            this.m_txtName.Size = new System.Drawing.Size(244, 22);
-            this.m_txtName.TabIndex = 2;
+            this.m_txtName.Size = new System.Drawing.Size(286, 22);
+            this.m_txtName.TabIndex = 1;
             // 
             // m_lblName
             // 
             this.m_lblName.AutoSize = true;
             this.m_lblName.Location = new System.Drawing.Point(17, 43);
             this.m_lblName.Name = "m_lblName";
-            this.m_lblName.Size = new System.Drawing.Size(49, 17);
+            this.m_lblName.Size = new System.Drawing.Size(50, 17);
             this.m_lblName.TabIndex = 3;
-            this.m_lblName.Text = "Name:";
+            this.m_lblName.Text = "Name*";
             // 
             // m_cmdOK
             // 
@@ -83,9 +87,10 @@
             this.m_cmdOK.Location = new System.Drawing.Point(247, 90);
             this.m_cmdOK.Name = "m_cmdOK";
             this.m_cmdOK.Size = new System.Drawing.Size(111, 23);
-            this.m_cmdOK.TabIndex = 4;
+            this.m_cmdOK.TabIndex = 2;
             this.m_cmdOK.Text = "OK";
             this.m_cmdOK.UseVisualStyleBackColor = true;
+            this.m_cmdOK.Click += new System.EventHandler(this.OnCmdOK_Click);
             // 
             // m_cmdCancel
             // 
@@ -93,14 +98,10 @@
             this.m_cmdCancel.Location = new System.Drawing.Point(364, 90);
             this.m_cmdCancel.Name = "m_cmdCancel";
             this.m_cmdCancel.Size = new System.Drawing.Size(111, 23);
-            this.m_cmdCancel.TabIndex = 5;
+            this.m_cmdCancel.TabIndex = 3;
             this.m_cmdCancel.Text = "Cancel";
             this.m_cmdCancel.UseVisualStyleBackColor = true;
             this.m_cmdCancel.Click += new System.EventHandler(this.OnCmdCancel_Click);
-            // 
-            // m_dataSource
-            // 
-            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.GameOverViewModel);
             // 
             // GameOverForm
             // 

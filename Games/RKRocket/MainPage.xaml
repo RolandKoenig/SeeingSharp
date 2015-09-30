@@ -25,11 +25,7 @@
     <Grid>
         <SwapChainPanel>
             <i:Interaction.Behaviors>
-                <localBeh:ApplyGameSceneBehavior>
-                    <localBeh:ApplyGameSceneBehavior.GameCore>
-                        <localGame:GameCore />
-                    </localBeh:ApplyGameSceneBehavior.GameCore>
-                </localBeh:ApplyGameSceneBehavior>
+                <localBeh:ApplyGameSceneBehavior GameCore="{x:Bind Path=ViewModel.Game}" />
             </i:Interaction.Behaviors>
         </SwapChainPanel>
         

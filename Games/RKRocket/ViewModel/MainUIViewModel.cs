@@ -183,6 +183,9 @@ namespace RKRocket.ViewModel
                 {
                     m_isPaneOpened = value;
                     RaisePropertyChanged();
+
+                    if (value) { base.Messenger.Publish<MessageMenuOpened>(); }
+                    else { base.Messenger.Publish<MessageMenuClosed>(); }
                 }
             }
         }

@@ -46,6 +46,8 @@
             this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_panBorder1 = new System.Windows.Forms.Panel();
             this.m_panBorder2 = new System.Windows.Forms.Panel();
+            this.m_mnuHighscore = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_mnuInfoAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barStatus.SuspendLayout();
@@ -56,7 +58,7 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(148, 6);
             // 
             // m_barStatus
             // 
@@ -74,7 +76,7 @@
             this.m_barStatus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.m_barStatus.Location = new System.Drawing.Point(0, 29);
             this.m_barStatus.Name = "m_barStatus";
-            this.m_barStatus.Size = new System.Drawing.Size(916, 46);
+            this.m_barStatus.Size = new System.Drawing.Size(860, 46);
             this.m_barStatus.SizingGrip = false;
             this.m_barStatus.TabIndex = 0;
             this.m_barStatus.Text = "statusStrip1";
@@ -134,7 +136,7 @@
             this.m_mnuInfo});
             this.m_barMenu.Location = new System.Drawing.Point(0, 0);
             this.m_barMenu.Name = "m_barMenu";
-            this.m_barMenu.Size = new System.Drawing.Size(916, 28);
+            this.m_barMenu.Size = new System.Drawing.Size(860, 28);
             this.m_barMenu.TabIndex = 1;
             this.m_barMenu.Text = "menuStrip1";
             // 
@@ -142,6 +144,7 @@
             // 
             this.m_mnuGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_mnuStartNew,
+            this.m_mnuHighscore,
             toolStripSeparator1,
             this.m_mnuExit});
             this.m_mnuGame.Name = "m_mnuGame";
@@ -152,19 +155,21 @@
             // m_mnuStartNew
             // 
             this.m_mnuStartNew.Name = "m_mnuStartNew";
-            this.m_mnuStartNew.Size = new System.Drawing.Size(181, 26);
+            this.m_mnuStartNew.Size = new System.Drawing.Size(151, 26);
             this.m_mnuStartNew.Text = "Start New";
             this.m_mnuStartNew.Click += new System.EventHandler(this.OnMnuStartNew_Click);
             // 
             // m_mnuExit
             // 
             this.m_mnuExit.Name = "m_mnuExit";
-            this.m_mnuExit.Size = new System.Drawing.Size(181, 26);
+            this.m_mnuExit.Size = new System.Drawing.Size(151, 26);
             this.m_mnuExit.Text = "Exit";
             this.m_mnuExit.Click += new System.EventHandler(this.OnMnuExit_Click);
             // 
             // m_mnuInfo
             // 
+            this.m_mnuInfo.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.m_mnuInfoAbout});
             this.m_mnuInfo.Name = "m_mnuInfo";
             this.m_mnuInfo.Size = new System.Drawing.Size(47, 24);
             this.m_mnuInfo.Text = "&Info";
@@ -176,7 +181,7 @@
             this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_renderPanel.Location = new System.Drawing.Point(0, 76);
             this.m_renderPanel.Name = "m_renderPanel";
-            this.m_renderPanel.Size = new System.Drawing.Size(916, 451);
+            this.m_renderPanel.Size = new System.Drawing.Size(860, 330);
             this.m_renderPanel.TabIndex = 2;
             this.m_renderPanel.ViewConfiguration.AccentuationFactor = 0F;
             this.m_renderPanel.ViewConfiguration.AlphaEnabledSwapChain = false;
@@ -196,7 +201,7 @@
             this.m_panBorder1.Dock = System.Windows.Forms.DockStyle.Top;
             this.m_panBorder1.Location = new System.Drawing.Point(0, 28);
             this.m_panBorder1.Name = "m_panBorder1";
-            this.m_panBorder1.Size = new System.Drawing.Size(916, 1);
+            this.m_panBorder1.Size = new System.Drawing.Size(860, 1);
             this.m_panBorder1.TabIndex = 3;
             // 
             // m_panBorder2
@@ -205,8 +210,20 @@
             this.m_panBorder2.Dock = System.Windows.Forms.DockStyle.Top;
             this.m_panBorder2.Location = new System.Drawing.Point(0, 75);
             this.m_panBorder2.Name = "m_panBorder2";
-            this.m_panBorder2.Size = new System.Drawing.Size(916, 1);
+            this.m_panBorder2.Size = new System.Drawing.Size(860, 1);
             this.m_panBorder2.TabIndex = 4;
+            // 
+            // m_mnuHighscore
+            // 
+            this.m_mnuHighscore.Name = "m_mnuHighscore";
+            this.m_mnuHighscore.Size = new System.Drawing.Size(151, 26);
+            this.m_mnuHighscore.Text = "Highscore";
+            // 
+            // m_mnuInfoAbout
+            // 
+            this.m_mnuInfoAbout.Name = "m_mnuInfoAbout";
+            this.m_mnuInfoAbout.Size = new System.Drawing.Size(125, 26);
+            this.m_mnuInfoAbout.Text = "About";
             // 
             // m_dataSource
             // 
@@ -216,7 +233,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(916, 527);
+            this.ClientSize = new System.Drawing.Size(860, 406);
             this.Controls.Add(this.m_renderPanel);
             this.Controls.Add(this.m_panBorder2);
             this.Controls.Add(this.m_barStatus);
@@ -254,6 +271,8 @@
         private System.Windows.Forms.Panel m_panBorder1;
         private System.Windows.Forms.Panel m_panBorder2;
         private System.Windows.Forms.ToolStripMenuItem m_mnuInfo;
+        private System.Windows.Forms.ToolStripMenuItem m_mnuHighscore;
+        private System.Windows.Forms.ToolStripMenuItem m_mnuInfoAbout;
     }
 }
 
