@@ -182,6 +182,12 @@
     <Compile Include="..\RKRocket\ViewModel\_Messages\MessageGameOverDialogRequest.cs">
       <Link>ViewModel\_Messages\MessageGameOverDialogRequest.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\ViewModel\_Messages\MessageMenuClosed.cs">
+      <Link>ViewModel\_Messages\MessageMenuClosed.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\ViewModel\_Messages\MessageMenuOpened.cs">
+      <Link>ViewModel\_Messages\MessageMenuOpened.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\ViewModel\_Misc.cs">
       <Link>ViewModel\_Misc.cs</Link>
     </Compile>

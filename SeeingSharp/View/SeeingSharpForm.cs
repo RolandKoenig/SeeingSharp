@@ -62,5 +62,10 @@ namespace SeeingSharp.View
             // Perform default event handling
             base.OnHandleDestroyed(e);
         }
+
+        public SeeingSharpMessenger Messenger
+        {
+            get { return SeeingSharpApplication.Current.UIMessenger; }
+        }
     }
 }

@@ -43,6 +43,23 @@ namespace RKRocket.View
             m_lblLevelValue.Text = m_viewModel.CurrentLevel.ToString();
             m_lblScoreValue.Text = m_viewModel.CurrentScore.ToString();
             m_lblHealthValue.Text = m_viewModel.CurrentHealth.ToString();
+
+            m_mnuGame.DropDownOpened += OnMenu_DropDownOpened;
+            m_mnuInfo.DropDownOpened += OnMenu_DropDownOpened;
+            m_mnuGame.DropDownClosed += OnMenu_DropDownClosed;
+            m_mnuInfo.DropDownClosed += OnMenu_DropDownClosed;
+        }
+
+
+
+        private void OnMenu_DropDownOpened(object sender, EventArgs e)
+        {
+            base.Messenger.Publish<MessageMenuOpened>();
+        }
+
+        private void OnMenu_DropDownClosed(object sender, EventArgs e)
+        {
+            base.Messenger.Publish<MessageMenuClosed>();
         }
 
         /// <summary>

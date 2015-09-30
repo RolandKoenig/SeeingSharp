@@ -31,6 +31,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using RKRocket.ViewModel;
 
 namespace RKRocket.Game
 {
@@ -47,6 +48,11 @@ namespace RKRocket.Game
         #region Graphics related members
         private PerspectiveCamera3D m_camera;
         private Scene m_gameScene;
+        #endregion
+
+        #region Game states
+        private bool m_isGameOver;
+        private bool m_isMenuOpened;
         #endregion
 
         /// <summary>
@@ -71,6 +77,14 @@ namespace RKRocket.Game
             // Register initial manipulate method
             m_gameScene.ManipulateSceneAsync(OnInitializeGame)
                 .FireAndForget();
+        }
+
+        /// <summary>
+        /// Updates all global states of the scene.
+        /// </summary>
+        private void UpdateStates()
+        {
+            m_gameScene.IsPaused = m_isGameOver || m_isMenuOpened;
         }
 
         /// <summary>
@@ -99,12 +113,30 @@ namespace RKRocket.Game
 
         private void OnMessage_Received(MessageGameOver message)
         {
-            m_gameScene.IsPaused = true;
+            m_isGameOver = true;
+
+            this.UpdateStates();
         }
 
         private void OnMessage_Received(MessageNewGame message)
         {
-            m_gameScene.IsPaused = false;
+            m_isGameOver = false;
+
+            this.UpdateStates();
+        }
+
+        private void OnMessage_Received(MessageMenuOpened message)
+        {
+            m_isMenuOpened = true;
+
+            this.UpdateStates();
+        }
+
+        private void OnMessage_Received(MessageMenuClosed message)
+        {
+            m_isMenuOpened = false;
+
+            this.UpdateStates();
         }
 
         public Scene GameScene

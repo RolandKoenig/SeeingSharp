@@ -42,7 +42,7 @@
             this.m_mnuGame = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuStartNew = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuExit = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_mnuInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_panBorder1 = new System.Windows.Forms.Panel();
             this.m_panBorder2 = new System.Windows.Forms.Panel();
@@ -56,7 +56,7 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(146, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
             // 
             // m_barStatus
             // 
@@ -131,7 +131,7 @@
             this.m_barMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.m_barMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_mnuGame,
-            this.toolStripMenuItem1});
+            this.m_mnuInfo});
             this.m_barMenu.Location = new System.Drawing.Point(0, 0);
             this.m_barMenu.Name = "m_barMenu";
             this.m_barMenu.Size = new System.Drawing.Size(916, 28);
@@ -152,22 +152,22 @@
             // m_mnuStartNew
             // 
             this.m_mnuStartNew.Name = "m_mnuStartNew";
-            this.m_mnuStartNew.Size = new System.Drawing.Size(149, 26);
+            this.m_mnuStartNew.Size = new System.Drawing.Size(181, 26);
             this.m_mnuStartNew.Text = "Start New";
             this.m_mnuStartNew.Click += new System.EventHandler(this.OnMnuStartNew_Click);
             // 
             // m_mnuExit
             // 
             this.m_mnuExit.Name = "m_mnuExit";
-            this.m_mnuExit.Size = new System.Drawing.Size(149, 26);
+            this.m_mnuExit.Size = new System.Drawing.Size(181, 26);
             this.m_mnuExit.Text = "Exit";
             this.m_mnuExit.Click += new System.EventHandler(this.OnMnuExit_Click);
             // 
-            // toolStripMenuItem1
+            // m_mnuInfo
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(47, 24);
-            this.toolStripMenuItem1.Text = "&Info";
+            this.m_mnuInfo.Name = "m_mnuInfo";
+            this.m_mnuInfo.Size = new System.Drawing.Size(47, 24);
+            this.m_mnuInfo.Text = "&Info";
             // 
             // m_renderPanel
             // 
@@ -253,7 +253,7 @@
         private System.Windows.Forms.ToolStripMenuItem m_mnuExit;
         private System.Windows.Forms.Panel m_panBorder1;
         private System.Windows.Forms.Panel m_panBorder2;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem m_mnuInfo;
     }
 }
 

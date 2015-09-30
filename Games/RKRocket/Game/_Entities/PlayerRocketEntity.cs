@@ -66,6 +66,8 @@ namespace RKRocket.Game
         /// <param name="updateState">State of the update.</param>
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
+            if (updateState.IsPaused) { return; }
+
             // Get input states
             MouseOrPointerState mouseState = updateState.DefaultMouseOrPointer;
             GamepadState gamepadState = updateState.DefaultGamepad;
