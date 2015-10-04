@@ -1,13 +1,17 @@
 ﻿using RKRocket.ViewModel;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.View;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -17,6 +21,7 @@ namespace RKRocket.View
     {
         #region State
         private MainUIViewModel m_viewModel;
+        private int m_dropDownOpenCount;
         #endregion
 
         /// <summary>
@@ -25,6 +30,29 @@ namespace RKRocket.View
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Updates the state of the dialog.
+        /// </summary>
+        private void UpdateDialogState()
+        {
+            // Update status bar
+            int minXPos =
+                m_lblLevel.Width + m_lblLevelValue.Width +
+                m_lblHealth.Width + m_lblHealthValue.Width +
+                20;
+            int targetX = m_barStatus.Width - (
+                m_lblScore.Width + m_lblScoreValue.Width +
+                m_lblMaxReached.Width + m_lblMaxReachedValue.Width);
+            if (targetX > minXPos)
+            {
+                m_lblScore.Margin = new Padding(targetX - minXPos, 3, 0, 3);
+            }
+            else
+            {
+                m_lblScore.Margin = new Padding(0, 3, 0, 3);
+            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -49,18 +77,28 @@ namespace RKRocket.View
             m_mnuInfo.DropDownOpened += OnMenu_DropDownOpened;
             m_mnuGame.DropDownClosed += OnMenu_DropDownClosed;
             m_mnuInfo.DropDownClosed += OnMenu_DropDownClosed;
+
+            this.UpdateDialogState();
         }
-
-
 
         private void OnMenu_DropDownOpened(object sender, EventArgs e)
         {
+            m_dropDownOpenCount++;
             base.Messenger.Publish<MessageMenuOpened>();
         }
 
         private void OnMenu_DropDownClosed(object sender, EventArgs e)
         {
-            base.Messenger.Publish<MessageMenuClosed>();
+            m_dropDownOpenCount--;
+            CommonTools.InvokeDelayed(() =>
+                {
+                    if (this.IsDisposed) { return; }
+                    if(m_dropDownOpenCount <= 0)
+                    {
+                        base.Messenger.Publish<MessageMenuClosed>();
+                    }
+                },
+                TimeSpan.FromMilliseconds(300.0));
         }
 
         /// <summary>
@@ -88,6 +126,8 @@ namespace RKRocket.View
                     m_lblMaxReachedValue.Text = m_viewModel.MaxReachedScore.ToString();
                     break;
             }
+
+            this.UpdateDialogState();
         }
 
         private void OnMnuExit_Click(object sender, EventArgs e)
@@ -110,17 +150,14 @@ namespace RKRocket.View
             {
                 dlgGameOver.ViewModel = message.ViewModel;
                 dlgGameOver.StartPosition = FormStartPosition.CenterParent;
-                switch (dlgGameOver.ShowDialog(this))
-                {
-                        // Dialog confirmed
-                    case DialogResult.OK:
-                        break;
 
-                        // Dialog canceled
-                    default:
-                        break;
-                }
+                dlgGameOver.ShowDialog(this);
             }
+        }
+
+        private void OnBarStatus_SizeChanged(object sender, EventArgs e)
+        {
+            this.UpdateDialogState();
         }
     }
 }

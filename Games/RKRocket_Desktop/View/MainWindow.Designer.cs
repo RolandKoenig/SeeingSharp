@@ -36,12 +36,13 @@
             this.m_lblLevelValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblHealth = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblHealthValue = new System.Windows.Forms.ToolStripStatusLabel();
-            this.m_lblScore = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblMaxReached = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblMaxReachedValue = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblScore = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblScoreValue = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_barMenu = new System.Windows.Forms.MenuStrip();
             this.m_mnuGame = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuStartNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.m_mnuHighscore = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuInfoAbout = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +50,6 @@
             this.m_panBorder1 = new System.Windows.Forms.Panel();
             this.m_panBorder2 = new System.Windows.Forms.Panel();
             this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
-            this.m_lblMaxReached = new System.Windows.Forms.ToolStripStatusLabel();
-            this.m_lblScoreValue = new System.Windows.Forms.ToolStripStatusLabel();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barStatus.SuspendLayout();
             this.m_barMenu.SuspendLayout();
@@ -60,7 +59,7 @@
             // toolStripSeparator1
             // 
             toolStripSeparator1.Name = "toolStripSeparator1";
-            toolStripSeparator1.Size = new System.Drawing.Size(148, 6);
+            toolStripSeparator1.Size = new System.Drawing.Size(178, 6);
             // 
             // m_barStatus
             // 
@@ -73,17 +72,18 @@
             this.m_lblLevelValue,
             this.m_lblHealth,
             this.m_lblHealthValue,
-            this.m_lblMaxReached,
-            this.m_lblMaxReachedValue,
             this.m_lblScore,
-            this.m_lblScoreValue});
+            this.m_lblScoreValue,
+            this.m_lblMaxReached,
+            this.m_lblMaxReachedValue});
             this.m_barStatus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.m_barStatus.Location = new System.Drawing.Point(0, 29);
             this.m_barStatus.Name = "m_barStatus";
-            this.m_barStatus.Size = new System.Drawing.Size(777, 46);
+            this.m_barStatus.Size = new System.Drawing.Size(882, 46);
             this.m_barStatus.SizingGrip = false;
             this.m_barStatus.TabIndex = 0;
             this.m_barStatus.Text = "statusStrip1";
+            this.m_barStatus.SizeChanged += new System.EventHandler(this.OnBarStatus_SizeChanged);
             // 
             // m_lblLevel
             // 
@@ -116,13 +116,13 @@
             this.m_lblHealthValue.Size = new System.Drawing.Size(35, 41);
             this.m_lblHealthValue.Text = "0";
             // 
-            // m_lblScore
+            // m_lblMaxReached
             // 
-            this.m_lblScore.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.m_lblScore.ForeColor = System.Drawing.Color.Gray;
-            this.m_lblScore.Name = "m_lblScore";
-            this.m_lblScore.Size = new System.Drawing.Size(103, 41);
-            this.m_lblScore.Text = "Score:";
+            this.m_lblMaxReached.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblMaxReached.ForeColor = System.Drawing.Color.Gray;
+            this.m_lblMaxReached.Name = "m_lblMaxReached";
+            this.m_lblMaxReached.Size = new System.Drawing.Size(214, 41);
+            this.m_lblMaxReached.Text = "Max Reached:";
             // 
             // m_lblMaxReachedValue
             // 
@@ -130,6 +130,22 @@
             this.m_lblMaxReachedValue.Name = "m_lblMaxReachedValue";
             this.m_lblMaxReachedValue.Size = new System.Drawing.Size(35, 41);
             this.m_lblMaxReachedValue.Text = "0";
+            // 
+            // m_lblScore
+            // 
+            this.m_lblScore.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblScore.ForeColor = System.Drawing.Color.Gray;
+            this.m_lblScore.Margin = new System.Windows.Forms.Padding(50, 3, 0, 2);
+            this.m_lblScore.Name = "m_lblScore";
+            this.m_lblScore.Size = new System.Drawing.Size(103, 41);
+            this.m_lblScore.Text = "Score:";
+            // 
+            // m_lblScoreValue
+            // 
+            this.m_lblScoreValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
+            this.m_lblScoreValue.Name = "m_lblScoreValue";
+            this.m_lblScoreValue.Size = new System.Drawing.Size(35, 41);
+            this.m_lblScoreValue.Text = "0";
             // 
             // m_barMenu
             // 
@@ -140,7 +156,7 @@
             this.m_mnuInfo});
             this.m_barMenu.Location = new System.Drawing.Point(0, 0);
             this.m_barMenu.Name = "m_barMenu";
-            this.m_barMenu.Size = new System.Drawing.Size(777, 28);
+            this.m_barMenu.Size = new System.Drawing.Size(882, 28);
             this.m_barMenu.TabIndex = 1;
             this.m_barMenu.Text = "menuStrip1";
             // 
@@ -148,7 +164,6 @@
             // 
             this.m_mnuGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_mnuStartNew,
-            this.m_mnuHighscore,
             toolStripSeparator1,
             this.m_mnuExit});
             this.m_mnuGame.Name = "m_mnuGame";
@@ -159,20 +174,14 @@
             // m_mnuStartNew
             // 
             this.m_mnuStartNew.Name = "m_mnuStartNew";
-            this.m_mnuStartNew.Size = new System.Drawing.Size(151, 26);
+            this.m_mnuStartNew.Size = new System.Drawing.Size(181, 26);
             this.m_mnuStartNew.Text = "Start New";
             this.m_mnuStartNew.Click += new System.EventHandler(this.OnMnuStartNew_Click);
-            // 
-            // m_mnuHighscore
-            // 
-            this.m_mnuHighscore.Name = "m_mnuHighscore";
-            this.m_mnuHighscore.Size = new System.Drawing.Size(151, 26);
-            this.m_mnuHighscore.Text = "Highscore";
             // 
             // m_mnuExit
             // 
             this.m_mnuExit.Name = "m_mnuExit";
-            this.m_mnuExit.Size = new System.Drawing.Size(151, 26);
+            this.m_mnuExit.Size = new System.Drawing.Size(181, 26);
             this.m_mnuExit.Text = "Exit";
             this.m_mnuExit.Click += new System.EventHandler(this.OnMnuExit_Click);
             // 
@@ -187,7 +196,7 @@
             // m_mnuInfoAbout
             // 
             this.m_mnuInfoAbout.Name = "m_mnuInfoAbout";
-            this.m_mnuInfoAbout.Size = new System.Drawing.Size(125, 26);
+            this.m_mnuInfoAbout.Size = new System.Drawing.Size(181, 26);
             this.m_mnuInfoAbout.Text = "About";
             // 
             // m_renderPanel
@@ -197,7 +206,7 @@
             this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_renderPanel.Location = new System.Drawing.Point(0, 76);
             this.m_renderPanel.Name = "m_renderPanel";
-            this.m_renderPanel.Size = new System.Drawing.Size(777, 262);
+            this.m_renderPanel.Size = new System.Drawing.Size(882, 477);
             this.m_renderPanel.TabIndex = 2;
             this.m_renderPanel.ViewConfiguration.AccentuationFactor = 0F;
             this.m_renderPanel.ViewConfiguration.AlphaEnabledSwapChain = false;
@@ -217,7 +226,7 @@
             this.m_panBorder1.Dock = System.Windows.Forms.DockStyle.Top;
             this.m_panBorder1.Location = new System.Drawing.Point(0, 28);
             this.m_panBorder1.Name = "m_panBorder1";
-            this.m_panBorder1.Size = new System.Drawing.Size(777, 1);
+            this.m_panBorder1.Size = new System.Drawing.Size(882, 1);
             this.m_panBorder1.TabIndex = 3;
             // 
             // m_panBorder2
@@ -226,33 +235,18 @@
             this.m_panBorder2.Dock = System.Windows.Forms.DockStyle.Top;
             this.m_panBorder2.Location = new System.Drawing.Point(0, 75);
             this.m_panBorder2.Name = "m_panBorder2";
-            this.m_panBorder2.Size = new System.Drawing.Size(777, 1);
+            this.m_panBorder2.Size = new System.Drawing.Size(882, 1);
             this.m_panBorder2.TabIndex = 4;
             // 
             // m_dataSource
             // 
             this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
             // 
-            // m_lblMaxReached
-            // 
-            this.m_lblMaxReached.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.m_lblMaxReached.ForeColor = System.Drawing.Color.Gray;
-            this.m_lblMaxReached.Name = "m_lblMaxReached";
-            this.m_lblMaxReached.Size = new System.Drawing.Size(214, 41);
-            this.m_lblMaxReached.Text = "Max Reached:";
-            // 
-            // m_lblScoreValue
-            // 
-            this.m_lblScoreValue.Font = new System.Drawing.Font("Segoe UI", 18F, System.Drawing.FontStyle.Bold);
-            this.m_lblScoreValue.Name = "m_lblScoreValue";
-            this.m_lblScoreValue.Size = new System.Drawing.Size(35, 41);
-            this.m_lblScoreValue.Text = "0";
-            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(777, 338);
+            this.ClientSize = new System.Drawing.Size(882, 553);
             this.Controls.Add(this.m_renderPanel);
             this.Controls.Add(this.m_panBorder2);
             this.Controls.Add(this.m_barStatus);
@@ -290,7 +284,6 @@
         private System.Windows.Forms.Panel m_panBorder1;
         private System.Windows.Forms.Panel m_panBorder2;
         private System.Windows.Forms.ToolStripMenuItem m_mnuInfo;
-        private System.Windows.Forms.ToolStripMenuItem m_mnuHighscore;
         private System.Windows.Forms.ToolStripMenuItem m_mnuInfoAbout;
         private System.Windows.Forms.ToolStripStatusLabel m_lblMaxReached;
         private System.Windows.Forms.ToolStripStatusLabel m_lblScoreValue;
