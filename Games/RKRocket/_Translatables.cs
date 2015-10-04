@@ -20,48 +20,20 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using RKRocket.ViewModel;
+using SeeingSharp.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace RKRocket.View
+// Define assembly attributes for type that is defined in this file
+[assembly: AssemblyQueryableType(typeof(RKRocket.Translatables))]
+
+namespace RKRocket
 {
-    public partial class GameOverForm : Form
+    internal static class Translatables
     {
-        public GameOverForm()
-        {
-            InitializeComponent();
-        }
-
-        private void OnCmdCancel_Click(object sender, EventArgs e)
-        {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void OnCmdOK_Click(object sender, EventArgs e)
-        {
-            this.ViewModel.CommandPostScore.Execute();
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
-        public GameOverViewModel ViewModel
-        {
-            get { return m_dataSource.DataSource as GameOverViewModel; }
-            set
-            {
-                if(value == null) { m_dataSource.DataSource = typeof(GameOverViewModel); }
-                else { m_dataSource.DataSource = value; }
-            }
-        }
+        public static string BOOTRSAPPER_GAME_DATA = "Game";
     }
 }

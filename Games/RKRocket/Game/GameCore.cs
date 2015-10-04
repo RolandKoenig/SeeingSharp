@@ -32,6 +32,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
 using RKRocket.ViewModel;
+using SeeingSharp.Gaming;
+using SeeingSharp.Infrastructure;
 
 namespace RKRocket.Game
 {
@@ -74,7 +76,7 @@ namespace RKRocket.Game
                 Constants.GFX_SCREEN_VPIXEL_WIDTH,
                 Constants.GFX_SCREEN_VPIXEL_HEIGHT);
 
-            // Register initial manipulate method
+            // Initialize the scene
             m_gameScene.ManipulateSceneAsync(OnInitializeGame)
                 .FireAndForget();
         }

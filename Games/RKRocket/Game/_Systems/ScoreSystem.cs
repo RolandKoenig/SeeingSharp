@@ -20,6 +20,8 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Gaming;
+using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
@@ -58,6 +60,11 @@ namespace RKRocket.Game
         {
             m_currentScore++;
             base.Messenger.Publish(new MessageScoreChanged(m_currentScore));
+        }
+
+        private void OnMessage_Received(MessageGameOver message)
+        {
+
         }
 
         /// <summary>

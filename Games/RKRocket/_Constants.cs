@@ -33,6 +33,7 @@ namespace RKRocket
     internal static class Constants
     {
         public const string GAME_SCENE_NAME = "RocketScene";
+        public const string GAME_SHORT_NAME = "RKRocket";
 
         #region Debug constants
         public const bool RENDER_COLLISION_GEOMETRY = false;

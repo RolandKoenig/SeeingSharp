@@ -21,6 +21,7 @@
 */
 #endregion
 using RKRocket.Game;
+using SeeingSharp.Gaming;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Util;
 using System;
@@ -37,6 +38,10 @@ namespace RKRocket.ViewModel
         private GameCore m_game;
         #endregion
 
+        #region Data
+        private GameDataContainer m_gameData;
+        #endregion
+
         #region View variables
         private bool m_isPaneOpened;
         #endregion
@@ -45,6 +50,7 @@ namespace RKRocket.ViewModel
         private int m_currentLevel;
         private int m_currentScore;
         private int m_currentHealth;
+        private bool m_isGameOver;
         #endregion
 
         /// <summary>
@@ -55,10 +61,13 @@ namespace RKRocket.ViewModel
             m_currentLevel = 1;
             m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
 
+            // Load current game data
+            m_gameData = SeeingSharpApplication.Current.GetSingleton<GameDataContainer>();
+
             // Create core game object
             if (SeeingSharpApplication.IsInitialized)
             {
-                m_game = new GameCore();
+                m_game = SeeingSharpApplication.Current.GetSingleton<GameCore>();
 
                 // Attach to all messages 
                 SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
@@ -105,9 +114,17 @@ namespace RKRocket.ViewModel
         /// <param name="message">The message.</param>
         private void OnMessage_Received(MessageGameOver message)
         {
+            if (m_isGameOver) { return; }
+            m_isGameOver = true;
+
             base.Messenger.Publish(
                 new MessageGameOverDialogRequest(
                     new GameOverViewModel(message.Reason, m_currentScore)));
+        }
+
+        private void OnMessage_Received(MessageHighScorePosted message)
+        {
+            this.RaisePropertyChanged(() => this.MaxReachedScore);
         }
 
         /// <summary>
@@ -116,6 +133,7 @@ namespace RKRocket.ViewModel
         /// <param name="message">The message.</param>
         private void OnMessage_Received(MessageNewGame message)
         {
+            m_isGameOver = false;
             m_currentLevel = 1;
             m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
             m_currentScore = 0;
@@ -186,6 +204,31 @@ namespace RKRocket.ViewModel
 
                     if (value) { base.Messenger.Publish<MessageMenuOpened>(); }
                     else { base.Messenger.Publish<MessageMenuClosed>(); }
+                }
+            }
+        }
+
+        public int MaxReachedScore
+        {
+            get
+            {
+                if(m_gameData == null) { return 0; }
+                if(m_gameData.GameScores.Count == 0) { return 0; }
+                return m_gameData.GameScores.Max((actScore) => actScore.TotalScore);
+            }
+        }
+
+        public GameDataContainer GameData
+        {
+            get { return m_gameData; }
+            set
+            {
+                if(m_gameData != value)
+                {
+                    m_gameData = value;
+
+                    base.RaisePropertyChanged();
+                    base.RaisePropertyChanged(() => MaxReachedScore);
                 }
             }
         }

@@ -21,6 +21,8 @@
 */
 #endregion
 using RKRocket.Game;
+using SeeingSharp.Gaming;
+using SeeingSharp.Infrastructure;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
@@ -36,8 +38,36 @@ namespace RKRocket.ViewModel
         {
             this.Reason = reason;
             this.ReachedScore = reachedScore;
-            this.Name = string.Empty;
+
+            this.CommandPostScore = new DelegateCommand(OnCommandPostScore_Execute);
         }
+
+        private void OnCommandPostScore_Execute()
+        {
+            if (this.ReachedScore > 0)
+            {
+                GameDataContainer dataContainer = SeeingSharpApplication.Current.GetSingleton<GameDataContainer>();
+                dataContainer.TryPostNewScore(this.Name, this.ReachedScore);
+                dataContainer.SaveToRoamingFolder()
+                    .FireAndForget();
+
+                base.Messenger.Publish<MessageHighScorePosted>();
+
+                GameCore game = SeeingSharpApplication.Current.GetSingleton<GameCore>();
+                game.Scene.Messenger.BeginPublish<MessageNewGame>();
+            }
+        }
+
+        public DelegateCommand CommandPostScore
+        {
+            get;
+        }
+
+        public string Name
+        {
+            get;
+            set;
+        } = string.Empty;
 
         public GameOverReason Reason
         {
@@ -49,12 +79,6 @@ namespace RKRocket.ViewModel
         {
             get;
             private set;
-        }
-
-        public string Name
-        {
-            get;
-            set;
         }
     }
 }

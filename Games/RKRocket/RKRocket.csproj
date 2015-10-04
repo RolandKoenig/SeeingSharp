@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Behaviors\ApplyGameSceneBehavior.cs" />
+    <Compile Include="Bootstrapper\GameBootstrapper.cs" />
     <Compile Include="Game\_Messages\MessageBlockStartsLeaving.cs" />
     <Compile Include="Game\_Messages\MessageBlocksFallOneCellDown.cs" />
     <Compile Include="Game\_Messages\MessageLevelStarted.cs" />
@@ -149,6 +150,8 @@
     <Compile Include="Game\_Systems\LevelSystem.cs" />
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Game\_Systems\ScoreSystem.cs" />
+    <Compile Include="ViewModel\_Messages\MessageHighScorePosted.cs" />
+    <Compile Include="_Translatables.cs" />
     <Compile Include="ViewModel\GameOverViewModel.cs" />
     <Compile Include="ViewModel\HighScoreViewModel.cs" />
     <Compile Include="ViewModel\_Messages\MessageGameOverDialogRequest.cs" />

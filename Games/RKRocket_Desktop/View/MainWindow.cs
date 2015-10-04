@@ -42,6 +42,7 @@ namespace RKRocket.View
             // Set initial label contents
             m_lblLevelValue.Text = m_viewModel.CurrentLevel.ToString();
             m_lblScoreValue.Text = m_viewModel.CurrentScore.ToString();
+            m_lblMaxReachedValue.Text = m_viewModel.MaxReachedScore.ToString();
             m_lblHealthValue.Text = m_viewModel.CurrentHealth.ToString();
 
             m_mnuGame.DropDownOpened += OnMenu_DropDownOpened;
@@ -81,6 +82,10 @@ namespace RKRocket.View
 
                 case nameof(MainUIViewModel.CurrentHealth):
                     m_lblHealthValue.Text = m_viewModel.CurrentHealth.ToString();
+                    break;
+
+                case nameof(MainUIViewModel.MaxReachedScore):
+                    m_lblMaxReachedValue.Text = m_viewModel.MaxReachedScore.ToString();
                     break;
             }
         }

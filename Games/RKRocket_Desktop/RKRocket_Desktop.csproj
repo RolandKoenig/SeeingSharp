@@ -104,6 +104,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\RKRocket\Bootstrapper\GameBootstrapper.cs">
+      <Link>Bootstrapper\GameBootstrapper.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Data\LevelData.cs">
       <Link>Data\LevelData.cs</Link>
     </Compile>
@@ -182,6 +185,9 @@
     <Compile Include="..\RKRocket\ViewModel\_Messages\MessageGameOverDialogRequest.cs">
       <Link>ViewModel\_Messages\MessageGameOverDialogRequest.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\ViewModel\_Messages\MessageHighScorePosted.cs">
+      <Link>ViewModel\_Messages\MessageHighScorePosted.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\ViewModel\_Messages\MessageMenuClosed.cs">
       <Link>ViewModel\_Messages\MessageMenuClosed.cs</Link>
     </Compile>
@@ -196,6 +202,9 @@
     </Compile>
     <Compile Include="..\RKRocket\_GraphicsResources.cs">
       <Link>_GraphicsResources.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\_Translatables.cs">
+      <Link>_Translatables.cs</Link>
     </Compile>
     <Compile Include="View\MainWindow.cs">
       <SubType>Form</SubType>

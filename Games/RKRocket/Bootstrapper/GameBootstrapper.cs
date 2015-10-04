@@ -20,47 +20,48 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using RKRocket.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using SeeingSharp.Infrastructure;
+using SeeingSharp.Gaming;
+using RKRocket.Game;
 
-namespace RKRocket.View
+// Define assembly attributes for type that is defined in this file
+[assembly: AssemblyQueryableType(
+    targetType: typeof(RKRocket.Bootstrapper.GameBootstrapper),
+    contractType: typeof(SeeingSharp.Infrastructure.IBootstrapperItem))]
+
+namespace RKRocket.Bootstrapper
 {
-    public partial class GameOverForm : Form
+    public class GameBootstrapper : IBootstrapperItem
     {
-        public GameOverForm()
+        public async Task Execute()
         {
-            InitializeComponent();
+            // Load the game data container
+            GameDataContainer gameData = await GameDataContainer.LoadFromRoamingFolderAsync(Constants.GAME_SHORT_NAME);
+            SeeingSharpApplication.Current.RegisterSingleton(gameData);
+
+            // Create and initialize the GameCore object
+            GameCore gameCore = new GameCore();
+            SeeingSharpApplication.Current.RegisterSingleton(gameCore);
         }
 
-        private void OnCmdCancel_Click(object sender, EventArgs e)
+        public string Description
         {
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void OnCmdOK_Click(object sender, EventArgs e)
-        {
-            this.ViewModel.CommandPostScore.Execute();
-
-            this.DialogResult = DialogResult.OK;
-            this.Close();
-        }
-
-        public GameOverViewModel ViewModel
-        {
-            get { return m_dataSource.DataSource as GameOverViewModel; }
-            set
+            get
             {
-                if(value == null) { m_dataSource.DataSource = typeof(GameOverViewModel); }
-                else { m_dataSource.DataSource = value; }
+                return Translatables.BOOTRSAPPER_GAME_DATA;
+            }
+        }
+
+        public int OrderID
+        {
+            get
+            {
+                return 0;
             }
         }
     }
