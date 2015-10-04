@@ -36,9 +36,11 @@ namespace SeeingSharp.Infrastructure
 {
     public class SeeingSharpTranslator
     {
+        #region All members
         private CultureInfo m_startupCulture;
         private SeeingSharpLanguageKey m_currentLanguage;
         private Dictionary<string, List<TranslationXmlFile>> m_loadedFilesByCategory;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SeeingSharpTranslator" /> class.
@@ -53,6 +55,28 @@ namespace SeeingSharp.Infrastructure
             m_currentLanguage = SeeingSharpLanguageKey.Default;
             Enum.TryParse<SeeingSharpLanguageKey>(m_startupCulture.TwoLetterISOLanguageName.ToUpper(), out m_currentLanguage);
             if (m_currentLanguage == SeeingSharpLanguageKey.Default) { m_currentLanguage = SeeingSharpLanguageKey.EN; }
+        }
+
+        /// <summary>
+        /// Translates the given string from the given category.
+        /// </summary>
+        /// <param name="category">The category.</param>
+        /// <param name="translatableString">The translatable string.</param>
+        public string TranslateString(string category, string translatableString)
+        {
+            string translated = translatableString;
+            List<TranslationXmlFile> translationFiles = null;
+            if(m_loadedFilesByCategory.TryGetValue(category, out translationFiles))
+            {
+                foreach(TranslationXmlFile actXmlFile in translationFiles)
+                {
+                    if(actXmlFile.TryGetTranslation(translatableString, ref translated))
+                    {
+                        break;
+                    }
+                }
+            }
+            return translated;
         }
 
         /// <summary>
@@ -84,7 +108,7 @@ namespace SeeingSharp.Infrastructure
                         string actTranslation = actOriginal;
                         foreach(TranslationXmlFile actXmlFile in translatables)
                         {
-                            actXmlFile.GetTranslation(actOriginal, ref actTranslation);
+                            actXmlFile.TryGetTranslation(actOriginal, ref actTranslation);
                         }
 
                         // Change the sentence/word, if found in dictionaries

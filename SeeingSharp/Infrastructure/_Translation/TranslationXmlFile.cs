@@ -62,10 +62,9 @@ namespace SeeingSharp.Infrastructure
         /// </summary>
         /// <param name="original">The original sentence.</param>
         /// <param name="actTranslated">The translation of the given string.</param>
-        public string GetTranslation(string original, ref string actTranslated)
+        public bool TryGetTranslation(string original, ref string actTranslated)
         {
-            m_wordsDict.TryGetValue(original, out actTranslated);
-            return actTranslated;
+            return m_wordsDict.TryGetValue(original, out actTranslated);
         }
 
         /// <summary>

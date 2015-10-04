@@ -40,5 +40,7 @@ namespace SeeingSharp
         public static string LOADERROR_NO_HARDWARE_DEVICE_AVAILABLE = "No hardware graphics device available!";
 
         public static string ERROR_ROOT = "Root";
+
+        public static string VALIDATION_ERRORS = "Following configuration errors found:";
     }
 }

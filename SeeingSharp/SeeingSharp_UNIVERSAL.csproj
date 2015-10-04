@@ -12,21 +12,21 @@
     <AssemblyName>SeeingSharp</AssemblyName>
     <DefaultLanguage>de-DE</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <BaseIntermediateOutputPath>obj.Universal</BaseIntermediateOutputPath>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin.Universal\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;UNIVERSAL</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;UNIVERSAL;NETFX_CORE;WINDOWS_APP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
@@ -43,7 +43,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin.Universal\Release\</OutputPath>
-    <DefineConstants>TRACE;UNIVERSAL</DefineConstants>
+    <DefineConstants>TRACE;UNIVERSAL;NETFX_CORE;WINDOWS_APP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -71,6 +71,7 @@
     <Compile Include="Checking\Ensure.Vectors.cs" />
     <Compile Include="Checking\SeeingSharpCheckException.cs" />
     <Compile Include="ExceptionAnalyzers\SystemExceptionAnalyzer.cs" />
+    <Compile Include="Infrastructure\_Attributes\TranslatableDisplayNameAttribute.cs" />
     <Compile Include="SeeingSharpConstants.cs" />
     <Compile Include="SeeingSharpException.cs" />
     <Compile Include="SeeingSharpKey.cs" />
@@ -134,6 +135,8 @@
     <Compile Include="Util\_IO\_ResourceLinkImpl\UriResourceLink.cs" />
     <Compile Include="Util\_Messaging\SeeingSharpMessage.cs" />
     <Compile Include="Util\_Messaging\SeeingSharpMessenger.cs" />
+    <Compile Include="Util\_Mvvm\DataObjectValidationError.cs" />
+    <Compile Include="Util\_Mvvm\DataObjectValidator.cs" />
     <Compile Include="Util\_Mvvm\_Converters\StringFormatConverter.cs" />
     <Compile Include="Util\_Mvvm\_Converters\Vector2ToMultilineStringConverter.cs" />
     <Compile Include="Util\_Mvvm\_Converters\Vector3ToMultilineStringConverter.cs" />
@@ -251,6 +254,7 @@
     <Folder Include="Behaviors\_WinForms\" />
     <Folder Include="Behaviors\_WinRT\" />
     <Folder Include="Util\TableData\_OpenXml\" />
+    <Folder Include="Util\_Mvvm\_Attributes\" />
     <Folder Include="View\" />
   </ItemGroup>
   <ItemGroup>
@@ -275,11 +279,7 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <TargetPlatform Include="Windows, Version=8.1" />
-    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -20,52 +20,31 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using RKRocket.ViewModel;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
-namespace RKRocket.View
+namespace SeeingSharp.Infrastructure
 {
-    public partial class GameOverForm : Form
+    public class TranslatableDisplayNameAttribute : Attribute
     {
-        public GameOverForm()
+        private string m_displayName;
+        private string m_category;
+
+        public TranslatableDisplayNameAttribute(string category, string displayName)
         {
-            InitializeComponent();
+            m_category = category;
+            m_displayName = displayName;
         }
 
-        private void OnCmdCancel_Click(object sender, EventArgs e)
+        public string DisplayName
         {
-            this.ViewModel.CommandCancel.Execute();
-
-            this.DialogResult = DialogResult.Cancel;
-            this.Close();
-        }
-
-        private void OnCmdOK_Click(object sender, EventArgs e)
-        {
-            this.ViewModel.CommandPostScore.Execute();
-
-            if (!this.ViewModel.ContainsErrors)
+            get
             {
-                this.DialogResult = DialogResult.OK;
-                this.Close();
-            }
-        }
-
-        public GameOverViewModel ViewModel
-        {
-            get { return m_dataSource.DataSource as GameOverViewModel; }
-            set
-            {
-                if(value == null) { m_dataSource.DataSource = typeof(GameOverViewModel); }
-                else { m_dataSource.DataSource = value; }
+                if (!SeeingSharpApplication.IsInitialized) { return m_displayName; }
+                else { return SeeingSharpApplication.Current.Translator.TranslateString(m_category, m_displayName); }
             }
         }
     }

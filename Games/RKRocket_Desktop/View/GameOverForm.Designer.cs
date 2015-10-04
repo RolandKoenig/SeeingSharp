@@ -32,14 +32,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(GameOverForm));
             this.m_lblReachedScore = new System.Windows.Forms.Label();
             this.m_txtReachedScore = new System.Windows.Forms.TextBox();
+            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             this.m_cmdOK = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.m_lblReason = new System.Windows.Forms.Label();
-            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             this.m_txtName = new System.Windows.Forms.TextBox();
             this.m_lblName = new System.Windows.Forms.Label();
             this.m_cmdCancel = new System.Windows.Forms.Button();
+            this.m_dataSourceError = new System.Windows.Forms.ErrorProvider(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.m_dataSourceError)).BeginInit();
             this.SuspendLayout();
             // 
             // m_lblReachedScore
@@ -59,6 +61,10 @@
             this.m_txtReachedScore.ReadOnly = true;
             this.m_txtReachedScore.Size = new System.Drawing.Size(61, 22);
             this.m_txtReachedScore.TabIndex = 50;
+            // 
+            // m_dataSource
+            // 
+            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.GameOverViewModel);
             // 
             // m_cmdOK
             // 
@@ -89,10 +95,6 @@
             this.m_lblReason.TabIndex = 52;
             this.m_lblReason.Text = "Reason";
             // 
-            // m_dataSource
-            // 
-            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.GameOverViewModel);
-            // 
             // m_txtName
             // 
             this.m_txtName.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -122,6 +124,13 @@
             this.m_cmdCancel.TabIndex = 55;
             this.m_cmdCancel.Text = "Cancel";
             this.m_cmdCancel.UseVisualStyleBackColor = true;
+            this.m_cmdCancel.Click += new System.EventHandler(this.OnCmdCancel_Click);
+            // 
+            // m_dataSourceError
+            // 
+            this.m_dataSourceError.ContainerControl = this;
+            this.m_dataSourceError.DataSource = this.m_dataSource;
+            this.m_dataSourceError.RightToLeft = true;
             // 
             // GameOverForm
             // 
@@ -141,8 +150,8 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "GameOverForm";
             this.Text = "Gameover!";
-            this.Click += new System.EventHandler(this.OnCmdCancel_Click);
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.m_dataSourceError)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -159,5 +168,6 @@
         private System.Windows.Forms.TextBox m_txtName;
         private System.Windows.Forms.Label m_lblName;
         private System.Windows.Forms.Button m_cmdCancel;
+        private System.Windows.Forms.ErrorProvider m_dataSourceError;
     }
 }

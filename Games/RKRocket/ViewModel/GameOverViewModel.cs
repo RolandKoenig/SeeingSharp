@@ -26,6 +26,7 @@ using SeeingSharp.Infrastructure;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,10 +41,13 @@ namespace RKRocket.ViewModel
             this.ReachedScore = reachedScore;
 
             this.CommandPostScore = new DelegateCommand(OnCommandPostScore_Execute);
+            this.CommandCancel = new DelegateCommand(OnCommandCancel_Execute);
         }
 
         private void OnCommandPostScore_Execute()
         {
+            if (!this.Validate()) { return; }
+
             if (this.ReachedScore > 0)
             {
                 GameDataContainer dataContainer = SeeingSharpApplication.Current.GetSingleton<GameDataContainer>();
@@ -52,10 +56,16 @@ namespace RKRocket.ViewModel
                     .FireAndForget();
 
                 base.Messenger.Publish<MessageHighScorePosted>();
-
-                GameCore game = SeeingSharpApplication.Current.GetSingleton<GameCore>();
-                game.Scene.Messenger.BeginPublish<MessageNewGame>();
             }
+
+            GameCore game = SeeingSharpApplication.Current.GetSingleton<GameCore>();
+            game.Scene.Messenger.BeginPublish<MessageNewGame>();
+        }
+
+        private void OnCommandCancel_Execute()
+        {
+            GameCore game = SeeingSharpApplication.Current.GetSingleton<GameCore>();
+            game.Scene.Messenger.BeginPublish<MessageNewGame>();
         }
 
         public DelegateCommand CommandPostScore
@@ -63,6 +73,12 @@ namespace RKRocket.ViewModel
             get;
         }
 
+        public DelegateCommand CommandCancel
+        {
+            get;
+        }
+
+        [Required]
         public string Name
         {
             get;

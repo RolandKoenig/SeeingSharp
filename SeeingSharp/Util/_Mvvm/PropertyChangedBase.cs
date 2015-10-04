@@ -21,6 +21,7 @@
 */
 #endregion
 
+using SeeingSharp.Infrastructure;
 using System;
 using System.ComponentModel;
 using System.Linq.Expressions;
@@ -35,6 +36,52 @@ namespace SeeingSharp.Util
         /// Raises when one of the public properties have changed.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets the display name of the property described by the given expression.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="getPropertyExpression"></param>
+        public string GetMemberDisplayName<T>(Expression<Func<T>> getPropertyExpression)
+        {
+            LambdaExpression lambdaExpression = getPropertyExpression as LambdaExpression;
+            if (lambdaExpression != null)
+            {
+                MemberExpression memberExpression = lambdaExpression.Body as MemberExpression;
+                if (memberExpression != null)
+                {
+                    TranslatableDisplayNameAttribute attrib = memberExpression.Member.GetCustomAttribute<TranslatableDisplayNameAttribute>();
+                    if (attrib != null)
+                    {
+                        return attrib.DisplayName;
+                    }
+                    else
+                    {
+                        return memberExpression.Member.Name;
+                    }
+                }
+            }
+
+            throw new SeeingSharpException("Unable to parse given expression!");
+        }
+
+        /// <summary>
+        /// Gets the display name of the given property.
+        /// </summary>
+        /// <param name="propertyName">The name of the property.</param>
+        public string GetMemberDisplayName(string propertyName)
+        {
+            PropertyInfo propertyInfo = this.GetType().GetTypeInfo().GetDeclaredProperty(propertyName);
+            if (propertyInfo != null)
+            {
+                TranslatableDisplayNameAttribute attrib = propertyInfo.GetCustomAttribute<TranslatableDisplayNameAttribute>(); 
+                if (attrib != null)
+                {
+                    return attrib.DisplayName;
+                }
+            }
+            return propertyName;
+        }
 
         /// <summary>
         /// Ensures that the given string is not null,

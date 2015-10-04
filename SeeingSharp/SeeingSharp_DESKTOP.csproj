@@ -62,6 +62,7 @@
       <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\net45\PropertyTools.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
@@ -108,6 +109,7 @@
     <Compile Include="Checking\Ensure.cs" />
     <Compile Include="Checking\SeeingSharpCheckException.cs" />
     <Compile Include="ExceptionAnalyzers\SystemExceptionAnalyzer.cs" />
+    <Compile Include="Infrastructure\_Attributes\TranslatableDisplayNameAttribute.cs" />
     <Compile Include="SeeingSharpConstants.cs" />
     <Compile Include="SeeingSharpException.cs" />
     <Compile Include="SeeingSharpKey.cs" />
@@ -187,6 +189,8 @@
     <Compile Include="Util\_IO\_ResourceLinkImpl\StreamFactoryResourceLink.cs" />
     <Compile Include="Util\_IO\_ResourceLinkImpl\DesktopFileSystemResourceLink.cs" />
     <Compile Include="Util\_Mvvm\CommandManagerHelper.APACHE2.cs" />
+    <Compile Include="Util\_Mvvm\DataObjectValidationError.cs" />
+    <Compile Include="Util\_Mvvm\DataObjectValidator.cs" />
     <Compile Include="Util\_Mvvm\DelegateCommand.APACHE2.cs" />
     <Compile Include="Util\_Mvvm\_Converters\StringFormatConverter.cs" />
     <Compile Include="Util\_Input\GestureCatcher.cs" />
