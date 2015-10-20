@@ -102,6 +102,7 @@
     <Content Include="Assets\Levels\Level_001.json" />
     <Content Include="Assets\Levels\Level_002.json" />
     <Content Include="Assets\Levels\Level_003.json" />
+    <Content Include="Assets\Levels\Level_004.json" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
