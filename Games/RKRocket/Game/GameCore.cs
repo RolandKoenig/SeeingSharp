@@ -104,6 +104,7 @@ namespace RKRocket.Game
             manipulator.Add(new LevelSystem());
             manipulator.Add(new ScoreSystem());
             manipulator.Add(new HealthSystem());
+            manipulator.Add(new AudioSystem());
 
             // Append the background
             manipulator.Add(new BackgroundEntity());

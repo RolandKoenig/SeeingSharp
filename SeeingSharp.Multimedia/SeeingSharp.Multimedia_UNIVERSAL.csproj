@@ -112,6 +112,7 @@
     <Compile Include="Core\_Devices\_Global\FactoryHandlerDWrite.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerMF.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerWIC.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerXAudio2.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD2D.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D10.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D11.cs" />
@@ -237,6 +238,8 @@
     <Compile Include="Input\_States\KeyboardState.cs" />
     <Compile Include="Input\_States\MouseOrPointerState.cs" />
     <Compile Include="Input\_States\_Enum.cs" />
+    <Compile Include="PlayingSound\CachedSoundFile.cs" />
+    <Compile Include="PlayingSound\SoundManager.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
     <Compile Include="Input\IInputHandler.cs" />
     <Compile Include="Input\IInputEnabledView.cs" />
@@ -333,6 +336,10 @@
     </Reference>
     <Reference Include="SharpDX.MediaFoundation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.MediaFoundation.3.0.0-beta01\lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\SharpDX.MediaFoundation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.XAudio2, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.XAudio2.3.0.0-beta01\lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\SharpDX.XAudio2.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="SharpDX.XInput, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">

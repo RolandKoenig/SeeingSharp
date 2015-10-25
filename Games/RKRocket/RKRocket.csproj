@@ -130,6 +130,7 @@
     <Compile Include="Game\_Messages\MessagePlayerHealthChanged.cs" />
     <Compile Include="Game\_Messages\MessageScoreChanged.cs" />
     <Compile Include="Game\_Misc.cs" />
+    <Compile Include="Game\_Systems\AudioSystem.cs" />
     <Compile Include="Game\_Systems\FragmentSystem.cs" />
     <Compile Include="Game\_Entities\FragmentEntity.cs" />
     <Compile Include="Game\_Systems\CollisionSystem.cs" />

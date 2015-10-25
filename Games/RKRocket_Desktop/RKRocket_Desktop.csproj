@@ -77,7 +77,7 @@
     <ManifestKeyFile>RKRocket_Desktop_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>false</SignManifests>
+    <SignManifests>true</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -173,6 +173,9 @@
     </Compile>
     <Compile Include="..\RKRocket\Game\_Misc.cs">
       <Link>Game\_Misc.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Systems\AudioSystem.cs">
+      <Link>Game\_Systems\AudioSystem.cs</Link>
     </Compile>
     <Compile Include="..\RKRocket\Game\_Systems\CollisionSystem.cs">
       <Link>Game\_Systems\CollisionSystem.cs</Link>

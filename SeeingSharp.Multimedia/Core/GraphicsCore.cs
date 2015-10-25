@@ -31,6 +31,7 @@ using System.Reflection;
 using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Multimedia.PlayingSound;
 using SeeingSharp.Infrastructure;
 
 //Some namespace mappings
@@ -39,6 +40,7 @@ using D3D = SharpDX.Direct3D;
 using D3D11 = SharpDX.Direct3D11;
 using DWrite = SharpDX.DirectWrite;
 using WIC = SharpDX.WIC;
+using XA = SharpDX.XAudio2;
 
 #if DESKTOP
 using D3D10 = SharpDX.Direct3D10;
@@ -81,6 +83,11 @@ namespace SeeingSharp.Multimedia.Core
         private FactoryHandlerD2D m_factoryHandlerD2D;
         private FactoryHandlerDWrite m_factoryHandlerDWrite;
         private FactoryHandlerMF m_factoryHandlerMF;
+        private FactoryHandlerXAudio2 m_factoryHandlerXAudio2;
+        #endregion
+
+        #region Members for sound
+        private SoundManager m_soundManager;
         #endregion
 
         // Members for threading
@@ -127,6 +134,7 @@ namespace SeeingSharp.Multimedia.Core
                     m_factoryHandlerWIC = new FactoryHandlerWIC();
                     m_factoryHandlerD2D = new FactoryHandlerD2D(this);
                     m_factoryHandlerDWrite = new FactoryHandlerDWrite(this);
+                    m_factoryHandlerXAudio2 = new FactoryHandlerXAudio2();
                 }
                 catch (Exception)
                 {
@@ -134,11 +142,16 @@ namespace SeeingSharp.Multimedia.Core
                     m_factoryHandlerWIC = null;
                     m_factoryHandlerD2D = null;
                     m_factoryHandlerDWrite = null;
+                    m_factoryHandlerXAudio2 = null;
                     return;
                 }
                 this.FactoryD2D = m_factoryHandlerD2D.Factory;
                 this.FactoryDWrite = m_factoryHandlerDWrite.Factory;
                 this.FactoryWIC = m_factoryHandlerWIC.Factory;
+                this.XAudioDevice = m_factoryHandlerXAudio2.Device;
+
+                // Create the SoundManager
+                m_soundManager = new SoundManager(m_factoryHandlerXAudio2);
 
                 // Try to initialize Media Foundation interface
                 // (This is a separated init step because MF may not be available on some systems, e. g. Servers)
@@ -569,5 +582,10 @@ namespace SeeingSharp.Multimedia.Core
         /// Gets the DirectWrite factory object.
         /// </summary>
         internal DWrite.Factory FactoryDWrite;
+
+        /// <summary>
+        /// The global XAudio2 device
+        /// </summary>
+        internal XA.XAudio2 XAudioDevice;
     }
 }
