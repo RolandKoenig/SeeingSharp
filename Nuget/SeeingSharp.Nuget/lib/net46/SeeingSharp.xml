@@ -147,6 +147,7 @@
             </summary>
             <param name="mainAssembly">The main assembly of the application.</param>
             <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
+            <param name="startupArguments">All arguments passed to this application.</param>
         </member>
         <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.CreateDefaultServices(System.Windows.Window)">
             <summary>
@@ -417,7 +418,7 @@
             <summary>
             Is there any singleton with the given type?
             </summary>
-            <param name="singletonName">The type of the singleton.</param>
+            <param name="type">The type of the singleton.</param>
         </member>
         <member name="P:SeeingSharp.Infrastructure.SingletonContainer.Item(System.Type)">
             <summary>
@@ -1171,6 +1172,7 @@
             <summary>
             Starts reading from the given Sheet.
             </summary>
+            <param name="reader">The currently open reader.</param>
             <param name="sheetInfo"></param>
         </member>
         <member name="M:SeeingSharp.Util.TableData.XlsxTableFile.ReadCellValue(DocumentFormat.OpenXml.Spreadsheet.Cell)">
@@ -1271,7 +1273,7 @@
         </member>
         <member name="P:SeeingSharp.Util.RingBuffer`1.Item(System.Int32)">
             <summary>
-            Gets the <see cref="!:T"/> at the specified index.
+            Gets the object at the specified index.
             </summary>
         </member>
         <member name="P:SeeingSharp.Util.RingBuffer`1.Count">
@@ -2030,6 +2032,7 @@
             Reads a vector from the given xml reader.
             </summary>
             <param name="xmlReader">The xml reader.</param>
+            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
         </member>
         <member name="M:SeeingSharp.Util._CommonExtensions.ReadElementContentAsVector3(System.Xml.XmlReader)">
             <summary>
@@ -2042,6 +2045,7 @@
             Reads a vector from the given xml reader.
             </summary>
             <param name="xmlReader">The xml reader.</param>
+            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
         </member>
         <member name="M:SeeingSharp.Util.UriResourceLink.#ctor(System.Uri)">
             <summary>
@@ -2222,7 +2226,11 @@
             Performs an implicit conversion from <see cref="T:System.String"/> to <see cref="T:SeeingSharp.Util.DesktopFileSystemResourceLink"/>.
             </summary>
         </member>
-        <!-- Badly formed XML comment ignored for member "M:SeeingSharp.Util.DesktopFileSystemResourceLink.ToString" -->
+        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.GetForAnotherFile(System.String)">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
@@ -2561,7 +2569,7 @@
             Subscribes all receiver-methods of the given target object to this Messenger.
             Subscribe and unsubscribe is automatically called when the control is created/destroyed.
             </summary>
-            <param name="targetObject">The target object which is to subscribe..</param>
+            <param name="target">The target win.forms control.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeAll(System.Object)">
             <summary>
@@ -2646,7 +2654,6 @@
             <summary>
             Sends the given message to all subscribers (synchonous processing).
             </summary>
-            <param name="scriptProjectGuid">The guid of the script project which acts as a message filter.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Publish``1(``0)">
             <summary>
@@ -2654,7 +2661,6 @@
             </summary>
             <typeparam name="MessageType">Type of the message.</typeparam>
             <param name="message">The message to send.</param>
-            <param name="scriptProjectGuid">The guid of the script project which acts as a message filter.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.PublishInternal``1(``0,System.Boolean)">
             <summary>
@@ -3596,6 +3602,7 @@
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.ObjectThreadExceptionEventArgs"/> class.
             </summary>
+            <param name="threadState">The current state of the <see cref="T:SeeingSharp.Util.ObjectThread"/>.</param>
             <param name="innerException">The inner exception.</param>
         </member>
         <member name="P:SeeingSharp.Util.ObjectThreadExceptionEventArgs.Exception">
@@ -4153,7 +4160,7 @@
             </summary>
             <param name="ray">The ray to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.BoundingSphere.Intersects(SeeingSharp.Plane@)">
@@ -4351,11 +4358,11 @@
         </member>
         <member name="M:SeeingSharp.BoundingSphere.Equals(SeeingSharp.BoundingSphere)">
             <summary>
-            Determines whether the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance.
+            Determines whether the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance.
             </summary>
-            <param name="value">The <see cref="!:SeeingSharp.Vector4"/> to compare with this instance.</param>
+            <param name="value">The <see cref="T:System.Numerics.Vector4"/> to compare with this instance.</param>
             <returns>
-            <c>true</c> if the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+            <c>true</c> if the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
         <member name="M:SeeingSharp.BoundingSphere.Equals(System.Object)">
@@ -4864,14 +4871,14 @@
         </member>
         <member name="M:SeeingSharp.Color.op_Explicit(SeeingSharp.Color)~System.Numerics.Vector3">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Color"/> to <see cref="!:SeeingSharp.Vector3"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Color"/> to <see cref="T:System.Numerics.Vector3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Color.op_Explicit(SeeingSharp.Color)~System.Numerics.Vector4">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Color"/> to <see cref="!:SeeingSharp.Vector4"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Color"/> to <see cref="T:System.Numerics.Vector4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -4891,7 +4898,7 @@
         </member>
         <member name="M:SeeingSharp.Color.op_Explicit(System.Numerics.Vector3)~SeeingSharp.Color">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector3"/> to <see cref="T:SeeingSharp.Color"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector3"/> to <see cref="T:SeeingSharp.Color"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -4905,7 +4912,7 @@
         </member>
         <member name="M:SeeingSharp.Color.op_Explicit(System.Numerics.Vector4)~SeeingSharp.Color">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector4"/> to <see cref="T:SeeingSharp.Color"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector4"/> to <see cref="T:SeeingSharp.Color"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -6867,42 +6874,42 @@
         </member>
         <member name="M:SeeingSharp.Color4.op_Explicit(SeeingSharp.Color4)~System.Numerics.Vector3">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Color4"/> to <see cref="!:SeeingSharp.Vector3"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Color4"/> to <see cref="T:System.Numerics.Vector3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Color4.op_Implicit(SeeingSharp.Color4)~System.Numerics.Vector4">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Color4"/> to <see cref="!:SeeingSharp.Vector4"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Color4"/> to <see cref="T:System.Numerics.Vector4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Color4.op_Explicit(System.Numerics.Vector3)~SeeingSharp.Color4">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector3"/> to <see cref="T:SeeingSharp.Color4"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector3"/> to <see cref="T:SeeingSharp.Color4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Color4.op_Explicit(System.Numerics.Vector4)~SeeingSharp.Color4">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector4"/> to <see cref="T:SeeingSharp.Color4"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector4"/> to <see cref="T:SeeingSharp.Color4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Color4.op_Explicit(SeeingSharp.ColorBGRA)~SeeingSharp.Color4">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector3"/> to <see cref="T:SeeingSharp.Color4"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector3"/> to <see cref="T:SeeingSharp.Color4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Color4.op_Explicit(SeeingSharp.Color4)~SeeingSharp.ColorBGRA">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector4"/> to <see cref="T:SeeingSharp.Color4"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector4"/> to <see cref="T:SeeingSharp.Color4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -7559,7 +7566,7 @@
             </summary>
             <param name="ray">The ray to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Plane.Intersects(SeeingSharp.Plane@)">
@@ -7805,11 +7812,11 @@
         </member>
         <member name="M:SeeingSharp.Plane.Equals(SeeingSharp.Plane)">
             <summary>
-            Determines whether the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance.
+            Determines whether the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance.
             </summary>
-            <param name="value">The <see cref="!:SeeingSharp.Vector4"/> to compare with this instance.</param>
+            <param name="value">The <see cref="T:System.Numerics.Vector4"/> to compare with this instance.</param>
             <returns>
-            <c>true</c> if the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+            <c>true</c> if the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
         <member name="M:SeeingSharp.Plane.Equals(System.Object)">
@@ -7823,7 +7830,7 @@
         </member>
         <member name="T:SeeingSharp.Point">
             <summary>
-            Structure using the same layout than <see cref="T:System.Drawing.Point"/>.
+            Structure using the same layout than Point from System.Drawing namespace.
             </summary>
         </member>
         <member name="M:SeeingSharp.Point.#ctor(System.Int32,System.Int32)">
@@ -7880,14 +7887,14 @@
         </member>
         <member name="M:SeeingSharp.Point.op_Explicit(System.Numerics.Vector2)~SeeingSharp.Point">
             <summary>
-            Performs an implicit conversion from <see cref="!:SeeingSharp.Vector2"/> to <see cref="T:SeeingSharp.Point"/>.
+            Performs an implicit conversion from <see cref="T:System.Numerics.Vector2"/> to <see cref="T:SeeingSharp.Point"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Point.op_Implicit(SeeingSharp.Point)~System.Numerics.Vector2">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Point"/> to <see cref="!:SeeingSharp.Vector2"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Point"/> to <see cref="T:System.Numerics.Vector2"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -8021,7 +8028,7 @@
             </summary>
             <param name="ray">The ray to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Ray.Intersects(SeeingSharp.Plane@)">
@@ -8046,7 +8053,7 @@
             </summary>
             <param name="plane">The plane to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Ray.Intersects(System.Numerics.Vector3@,System.Numerics.Vector3@,System.Numerics.Vector3@)">
@@ -8077,7 +8084,7 @@
             <param name="vertex2">The second vertex of the triangle to test.</param>
             <param name="vertex3">The third vertex of the triangle to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Ray.Intersects(SeeingSharp.BoundingBox@)">
@@ -8109,7 +8116,7 @@
             </summary>
             <param name="box">The box to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Ray.Intersects(SeeingSharp.BoundingSphere@)">
@@ -8141,7 +8148,7 @@
             </summary>
             <param name="sphere">The sphere to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Ray.GetPickRay(System.Int32,System.Int32,SeeingSharp.ViewportF,System.Numerics.Matrix4x4)">
@@ -8151,7 +8158,7 @@
             <param name="x">X coordinate on 2d screen.</param>
             <param name="y">Y coordinate on 2d screen.</param>
             <param name="viewport"><see cref="T:SeeingSharp.ViewportF"/>.</param>
-            <param name="worldViewProjection">Transformation <see cref="!:SeeingSharp.Matrix"/>.</param>
+            <param name="worldViewProjection">Transformation <see cref="T:System.Numerics.Matrix4x4"/>.</param>
             <returns>Resulting <see cref="T:SeeingSharp.Ray"/>.</returns>
         </member>
         <member name="M:SeeingSharp.Ray.op_Equality(SeeingSharp.Ray,SeeingSharp.Ray)">
@@ -8216,11 +8223,11 @@
         </member>
         <member name="M:SeeingSharp.Ray.Equals(SeeingSharp.Ray)">
             <summary>
-            Determines whether the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance.
+            Determines whether the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance.
             </summary>
-            <param name="value">The <see cref="!:SeeingSharp.Vector4"/> to compare with this instance.</param>
+            <param name="value">The <see cref="T:System.Numerics.Vector4"/> to compare with this instance.</param>
             <returns>
-            <c>true</c> if the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+            <c>true</c> if the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
         <member name="M:SeeingSharp.Ray.Equals(System.Object)">
@@ -8251,7 +8258,7 @@
         </member>
         <member name="T:SeeingSharp.Size2">
             <summary>
-            Structure using the same layout than <see cref="T:System.Drawing.Size"/>.
+            Structure using the same layout than Size2 from System.Drawing namespace.
             </summary>
         </member>
         <member name="M:SeeingSharp.Size2.#ctor(System.Int32,System.Int32)">
@@ -9513,7 +9520,7 @@
             <param name="sphere"></param>
             <param name="point">The point to test.</param>
             <param name="result">When the method completes, contains the closest point between the two objects;
-            or, if the point is directly in the center of the sphere, contains <see cref="!:SeeingSharp.Vector3.Zero"/>.</param>
+            or, if the point is directly in the center of the sphere, contains <see cref="P:System.Numerics.Vector3.Zero"/>.</param>
         </member>
         <member name="M:SeeingSharp.Collision.ClosestPointSphereSphere(SeeingSharp.BoundingSphere@,SeeingSharp.BoundingSphere@,System.Numerics.Vector3@)">
             <summary>
@@ -9522,7 +9529,7 @@
             <param name="sphere1">The first sphere to test.</param>
             <param name="sphere2">The second sphere to test.</param>
             <param name="result">When the method completes, contains the closest point between the two objects;
-            or, if the point is directly in the center of the sphere, contains <see cref="!:SeeingSharp.Vector3.Zero"/>.</param>
+            or, if the point is directly in the center of the sphere, contains <see cref="P:System.Numerics.Vector3.Zero"/>.</param>
             <remarks>
             If the two spheres are overlapping, but not directly ontop of each other, the closest point
             is the 'closest' point of intersection. This can also be considered is the deepest point of
@@ -9584,7 +9591,7 @@
             <param name="ray1">The first ray to test.</param>
             <param name="ray2">The second ray to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersect.</returns>
             <remarks>
             This method performs a ray vs ray intersection test based on the following formula
@@ -9614,7 +9621,7 @@
             <param name="ray">The ray to test.</param>
             <param name="plane">The plane to test</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Collision.RayIntersectsTriangle(SeeingSharp.Ray@,System.Numerics.Vector3@,System.Numerics.Vector3@,System.Numerics.Vector3@,System.Single@)">
@@ -9645,7 +9652,7 @@
             <param name="vertex2">The second vertex of the triagnle to test.</param>
             <param name="vertex3">The third vertex of the triangle to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Collision.RayIntersectsBox(SeeingSharp.Ray@,SeeingSharp.BoundingBox@,System.Single@)">
@@ -9665,7 +9672,7 @@
             <param name="ray">The ray to test.</param>
             <param name="box">The box to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Collision.RayIntersectsSphere(SeeingSharp.Ray@,SeeingSharp.BoundingSphere@,System.Single@)">
@@ -9685,7 +9692,7 @@
             <param name="ray">The ray to test.</param>
             <param name="sphere">The sphere to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.Collision.PlaneIntersectsPoint(SeeingSharp.Plane@,System.Numerics.Vector3@)">
@@ -10222,14 +10229,14 @@
         </member>
         <member name="M:SeeingSharp.Color3.op_Implicit(SeeingSharp.Color3)~System.Numerics.Vector3">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Color3"/> to <see cref="!:SeeingSharp.Vector3"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Color3"/> to <see cref="T:System.Numerics.Vector3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Color3.op_Implicit(System.Numerics.Vector3)~SeeingSharp.Color3">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector3"/> to <see cref="T:SeeingSharp.Color3"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector3"/> to <see cref="T:SeeingSharp.Color3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -10775,14 +10782,14 @@
         </member>
         <member name="M:SeeingSharp.ColorBGRA.op_Explicit(SeeingSharp.ColorBGRA)~System.Numerics.Vector3">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.ColorBGRA"/> to <see cref="!:SeeingSharp.Vector3"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.ColorBGRA"/> to <see cref="T:System.Numerics.Vector3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.ColorBGRA.op_Explicit(SeeingSharp.ColorBGRA)~System.Numerics.Vector4">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.ColorBGRA"/> to <see cref="!:SeeingSharp.Vector4"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.ColorBGRA"/> to <see cref="T:System.Numerics.Vector4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -10796,7 +10803,7 @@
         </member>
         <member name="M:SeeingSharp.ColorBGRA.op_Explicit(System.Numerics.Vector3)~SeeingSharp.ColorBGRA">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector3"/> to <see cref="T:SeeingSharp.ColorBGRA"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector3"/> to <see cref="T:SeeingSharp.ColorBGRA"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -10810,7 +10817,7 @@
         </member>
         <member name="M:SeeingSharp.ColorBGRA.op_Explicit(System.Numerics.Vector4)~SeeingSharp.ColorBGRA">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector4"/> to <see cref="T:SeeingSharp.ColorBGRA"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector4"/> to <see cref="T:SeeingSharp.ColorBGRA"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -11208,14 +11215,14 @@
         </member>
         <member name="M:SeeingSharp.Half2.op_Implicit(System.Numerics.Vector2)~SeeingSharp.Half2">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector2"/> to <see cref="T:SeeingSharp.Half2"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector2"/> to <see cref="T:SeeingSharp.Half2"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half2.op_Implicit(SeeingSharp.Half2)~System.Numerics.Vector2">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Half2"/> to <see cref="!:SeeingSharp.Vector2"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Half2"/> to <see cref="T:System.Numerics.Vector2"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -11309,28 +11316,28 @@
         </member>
         <member name="M:SeeingSharp.Half3.op_Implicit(System.Numerics.Vector3)~SeeingSharp.Half3">
             <summary>
-            Performs an implicit conversion from <see cref="!:SeeingSharp.Vector3"/> to <see cref="T:SeeingSharp.Half3"/>.
+            Performs an implicit conversion from <see cref="T:System.Numerics.Vector3"/> to <see cref="T:SeeingSharp.Half3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half3.op_Implicit(SeeingSharp.Half3)~System.Numerics.Vector3">
             <summary>
-            Performs an implicit conversion from <see cref="T:SeeingSharp.Half3"/> to <see cref="!:SeeingSharp.Vector3"/>.
+            Performs an implicit conversion from <see cref="T:SeeingSharp.Half3"/> to <see cref="T:System.Numerics.Vector3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half3.op_Explicit(System.Numerics.Vector2)~SeeingSharp.Half3">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector2"/> to <see cref="T:SeeingSharp.Half3"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector2"/> to <see cref="T:SeeingSharp.Half3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half3.op_Explicit(SeeingSharp.Half3)~System.Numerics.Vector2">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Half3"/> to <see cref="!:SeeingSharp.Vector2"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Half3"/> to <see cref="T:System.Numerics.Vector2"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -11431,42 +11438,42 @@
         </member>
         <member name="M:SeeingSharp.Half4.op_Implicit(System.Numerics.Vector4)~SeeingSharp.Half4">
             <summary>
-            Performs an implicit conversion from <see cref="!:SeeingSharp.Vector4"/> to <see cref="T:SeeingSharp.Half4"/>.
+            Performs an implicit conversion from <see cref="T:System.Numerics.Vector4"/> to <see cref="T:SeeingSharp.Half4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half4.op_Implicit(SeeingSharp.Half4)~System.Numerics.Vector4">
             <summary>
-            Performs an implicit conversion from <see cref="T:SeeingSharp.Half4"/> to <see cref="!:SeeingSharp.Vector4"/>.
+            Performs an implicit conversion from <see cref="T:SeeingSharp.Half4"/> to <see cref="T:System.Numerics.Vector4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half4.op_Explicit(System.Numerics.Vector3)~SeeingSharp.Half4">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector3"/> to <see cref="T:SeeingSharp.Half4"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector3"/> to <see cref="T:SeeingSharp.Half4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half4.op_Explicit(SeeingSharp.Half4)~System.Numerics.Vector3">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Half4"/> to <see cref="!:SeeingSharp.Vector3"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Half4"/> to <see cref="T:System.Numerics.Vector3"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half4.op_Explicit(System.Numerics.Vector2)~SeeingSharp.Half4">
             <summary>
-            Performs an explicit conversion from <see cref="!:SeeingSharp.Vector2"/> to <see cref="T:SeeingSharp.Half4"/>.
+            Performs an explicit conversion from <see cref="T:System.Numerics.Vector2"/> to <see cref="T:SeeingSharp.Half4"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
         </member>
         <member name="M:SeeingSharp.Half4.op_Explicit(SeeingSharp.Half4)~System.Numerics.Vector2">
             <summary>
-            Performs an explicit conversion from <see cref="T:SeeingSharp.Half4"/> to <see cref="!:SeeingSharp.Vector2"/>.
+            Performs an explicit conversion from <see cref="T:SeeingSharp.Half4"/> to <see cref="T:System.Numerics.Vector2"/>.
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
@@ -12582,30 +12589,30 @@
         </member>
         <member name="M:SeeingSharp.MathUtil.NextVector2(System.Random,System.Numerics.Vector2,System.Numerics.Vector2)">
             <summary>
-            Gets random <see cref="!:SeeingSharp.Vector2"/> within range.
+            Gets random <see cref="T:System.Numerics.Vector2"/> within range.
             </summary>
             <param name="random">A <see cref="T:System.Random"/> instance.</param>
             <param name="min">Minimum.</param>
             <param name="max">Maximum.</param>
-            <returns>Random <see cref="!:SeeingSharp.Vector2"/>.</returns>
+            <returns>Random <see cref="T:System.Numerics.Vector2"/>.</returns>
         </member>
         <member name="M:SeeingSharp.MathUtil.NextVector3(System.Random,System.Numerics.Vector3,System.Numerics.Vector3)">
             <summary>
-            Gets random <see cref="!:SeeingSharp.Vector3"/> within range.
+            Gets random <see cref="T:System.Numerics.Vector3"/> within range.
             </summary>
             <param name="random">A <see cref="T:System.Random"/> instance.</param>
             <param name="min">Minimum.</param>
             <param name="max">Maximum.</param>
-            <returns>Random <see cref="!:SeeingSharp.Vector3"/>.</returns>
+            <returns>Random <see cref="T:System.Numerics.Vector3"/>.</returns>
         </member>
         <member name="M:SeeingSharp.MathUtil.NextVector4(System.Random,System.Numerics.Vector4,System.Numerics.Vector4)">
             <summary>
-            Gets random <see cref="!:SeeingSharp.Vector4"/> within range.
+            Gets random <see cref="T:System.Numerics.Vector4"/> within range.
             </summary>
             <param name="random">A <see cref="T:System.Random"/> instance.</param>
             <param name="min">Minimum.</param>
             <param name="max">Maximum.</param>
-            <returns>Random <see cref="!:SeeingSharp.Vector4"/>.</returns>
+            <returns>Random <see cref="T:System.Numerics.Vector4"/>.</returns>
         </member>
         <member name="M:SeeingSharp.MathUtil.NextColor(System.Random)">
             <summary>
@@ -12655,12 +12662,12 @@
         </member>
         <member name="M:SeeingSharp.MathUtil.NextDPointF(System.Random,System.Numerics.Vector2,System.Numerics.Vector2)">
             <summary>
-            Gets random <see cref="!:SeeingSharp.Vector2"/>.
+            Gets random <see cref="T:System.Numerics.Vector2"/>.
             </summary>
             <param name="random">A <see cref="T:System.Random"/> instance.</param>
             <param name="min">Minimum.</param>
             <param name="max">Maximum.</param>
-            <returns>Random <see cref="!:SeeingSharp.Vector2"/>.</returns>
+            <returns>Random <see cref="T:System.Numerics.Vector2"/>.</returns>
         </member>
         <member name="M:SeeingSharp.MathUtil.NextTime(System.Random,System.TimeSpan,System.TimeSpan)">
             <summary>
@@ -13021,6 +13028,7 @@
             <param name="x">Scaling factor that is applied along the x-axis.</param>
             <param name="y">Scaling factor that is applied along the y-axis.</param>
             <param name="z">Scaling factor that is applied along the z-axis.</param>
+            <param name="w"></param>
             <param name="result">When the method completes, contains the created scaling Matrix5x4.</param>
         </member>
         <member name="M:SeeingSharp.Matrix5x4.Scaling(System.Single,System.Single,System.Single,System.Single)">
@@ -13068,6 +13076,7 @@
             <param name="x">X-coordinate offset.</param>
             <param name="y">Y-coordinate offset.</param>
             <param name="z">Z-coordinate offset.</param>
+            <param name="w"></param>
             <param name="result">When the method completes, contains the created translation Matrix5x4.</param>
         </member>
         <member name="M:SeeingSharp.Matrix5x4.Translation(System.Single,System.Single,System.Single,System.Single)">
@@ -13418,7 +13427,7 @@
             </summary>
             <param name="ray">The ray to test.</param>
             <param name="point">When the method completes, contains the point of intersection,
-            or <see cref="!:SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+            or <see cref="P:System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
             <returns>Whether the two objects intersected.</returns>
         </member>
         <member name="M:SeeingSharp.OrientedBoundingBox.Intersects(SeeingSharp.Ray@)">
@@ -13478,11 +13487,11 @@
         </member>
         <member name="M:SeeingSharp.OrientedBoundingBox.Equals(SeeingSharp.OrientedBoundingBox)">
             <summary>
-            Determines whether the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance.
+            Determines whether the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance.
             </summary>
-            <param name="value">The <see cref="!:SeeingSharp.Vector4"/> to compare with this instance.</param>
+            <param name="value">The <see cref="T:System.Numerics.Vector4"/> to compare with this instance.</param>
             <returns>
-            <c>true</c> if the specified <see cref="!:SeeingSharp.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+            <c>true</c> if the specified <see cref="T:System.Numerics.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
             </returns>
         </member>
         <member name="M:SeeingSharp.OrientedBoundingBox.Equals(System.Object)">
@@ -13585,10 +13594,10 @@
         </member>
         <member name="M:SeeingSharp.Rectangle.Contains(System.Numerics.Vector2)">
             <summary>
-            Checks, if specified <see cref="!:SeeingSharp.Vector2"/> is inside <see cref="T:SeeingSharp.Rectangle"/>. 
+            Checks, if specified <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.Rectangle"/>. 
             </summary> 
-            <param name="vector2D">Coordinate <see cref="!:SeeingSharp.Vector2"/>.</param>
-            <returns><c>true</c> if <see cref="!:SeeingSharp.Vector2"/> is inside <see cref="T:SeeingSharp.Rectangle"/>, otherwise <c>false</c>.</returns>
+            <param name="vector2D">Coordinate <see cref="T:System.Numerics.Vector2"/>.</param>
+            <returns><c>true</c> if <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.Rectangle"/>, otherwise <c>false</c>.</returns>
         </member>
         <member name="P:SeeingSharp.Rectangle.Left">
             <summary>
@@ -13806,10 +13815,10 @@
         </member>
         <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2)">
             <summary>
-            Checks, if specified <see cref="!:SeeingSharp.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
+            Checks, if specified <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
             </summary> 
-            <param name="vector2D">Coordinate <see cref="!:SeeingSharp.Vector2"/>.</param>
-            <returns><c>true</c> if <see cref="!:SeeingSharp.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+            <param name="vector2D">Coordinate <see cref="T:System.Numerics.Vector2"/>.</param>
+            <returns><c>true</c> if <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
         </member>
         <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Point)">
             <summary>
@@ -13982,7 +13991,7 @@
         </member>
         <member name="T:SeeingSharp.Size2F">
             <summary>
-            Structure using the same layout than <see cref="T:System.Drawing.SizeF"/>.
+            Structure using the same layout than Size2F from System.Drawing namespace.
             </summary>
         </member>
         <member name="M:SeeingSharp.Size2F.#ctor(System.Single,System.Single)">
@@ -14605,6 +14614,7 @@
             <summary>
             Gets the component at the specified index.
             </summary>
+            <param name="matrix">The matrix from which to get the value.</param>
             <param name="row">The row of the matrix to access.</param>
             <param name="column">The column of the matrix to access.</param>
             <returns>The value of the component at the specified index.</returns>
@@ -14614,8 +14624,10 @@
             <summary>
             Sets the component at the specified index.
             </summary>
+            <param name="matrix">The matrix on which to set the value.</param>
             <param name="row">The row of the matrix to access.</param>
             <param name="column">The column of the matrix to access.</param>
+            <param name="value">The value to be set.</param>
             <returns>The value of the component at the specified index.</returns>
             <exception cref="T:System.ArgumentOutOfRangeException">Thrown when the <paramref name="row"/> or <paramref name="column"/>is out of the range [0, 3].</exception>
         </member>
