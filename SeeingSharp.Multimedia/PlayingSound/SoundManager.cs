@@ -61,7 +61,7 @@ namespace SeeingSharp.Multimedia.PlayingSound
         {
             resource.EnsureNotNull("resource");
 
-            using (CachedSoundFile cachedSoundFile = await CachedSoundFile.FromResource(resource))
+            using (CachedSoundFile cachedSoundFile = await CachedSoundFile.FromResourceAsync(resource))
             {
                 await PlaySoundAsync(cachedSoundFile);
             }
@@ -92,6 +92,10 @@ namespace SeeingSharp.Multimedia.PlayingSound
 
                 // Await finished playing
                 await complSource.Task;
+
+                // Destroy the voice object
+                //  A NullReference is raised later, if we forget this call
+                sourceVoice.DestroyVoice();
 
                 // Remove the created voice finally
                 m_playingVoices.Remove(sourceVoice);

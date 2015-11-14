@@ -157,6 +157,8 @@ namespace RKRocket.Game
                     m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER - Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f));
                 base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Add(newProjectile))
                     .FireAndForget();
+
+                base.Messenger.Publish<MessageProjectileShooted>();
             }
         }
 

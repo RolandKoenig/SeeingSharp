@@ -20,8 +20,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.PlayingSound;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
@@ -31,26 +29,12 @@ using System.Threading.Tasks;
 
 namespace RKRocket.Game
 {
-    public class AudioSystem : SceneLogicalObject
+    [MessagePossibleSource(Constants.GAME_SCENE_NAME)]
+    public class MessageProjectileShooted : SeeingSharpMessage
     {
-        private CachedSoundFile m_soundShoot;
-
-        public AudioSystem()
+        public MessageProjectileShooted()
         {
-            CachedSoundFile.FromResourceAsync(
-                new AssemblyResourceUriBuilder(
-                    "RKRocket", true,
-                    "Assets/Sounds/Explosion.wav"))
-                .ContinueWith((givenTask) => m_soundShoot = givenTask.Result);
-        }
 
-        private void OnMessage_Received(MessageProjectileShooted message)
-        {
-            if(m_soundShoot != null)
-            {
-                GraphicsCore.Current.SoundManager.PlaySoundAsync(m_soundShoot)
-                    .FireAndForget();
-            }
         }
     }
 }

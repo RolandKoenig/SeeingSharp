@@ -168,6 +168,9 @@
     <Compile Include="..\RKRocket\Game\_Messages\MessagePlayerHealthChanged.cs">
       <Link>Game\_Messages\MessagePlayerHealthChanged.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessageProjectileShooted.cs">
+      <Link>Game\_Messages\MessageProjectileShooted.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessageScoreChanged.cs">
       <Link>Game\_Messages\MessageScoreChanged.cs</Link>
     </Compile>
@@ -339,7 +342,14 @@
       <Link>Assets\Bitmaps\StarGray_128x128.png</Link>
     </Resource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="..\RKRocket\Assets\Sounds\Explosion.LicenseInfo.txt">
+      <Link>Assets\Sounds\Explosion.LicenseInfo.txt</Link>
+    </Content>
+    <Resource Include="..\RKRocket\Assets\Sounds\Explosion.wav">
+      <Link>Assets\Sounds\Explosion.wav</Link>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)Build\SeeingSharp.Common.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

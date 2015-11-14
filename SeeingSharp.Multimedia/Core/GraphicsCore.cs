@@ -557,6 +557,14 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets the currently running SoundManager object.
+        /// </summary>
+        public SoundManager SoundManager
+        {
+            get { return m_soundManager; }
+        }
+
+        /// <summary>
         /// Gets the current performance calculator.
         /// </summary>
         public PerformanceAnalyzer PerformanceCalculator

@@ -98,6 +98,8 @@
     <Content Include="Assets\Bitmaps\BulletYellow_128x128.png" />
     <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
+    <Content Include="Assets\Sounds\Explosion.LicenseInfo.txt" />
+    <Resource Include="Assets\Sounds\Explosion.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\Levels\Level_001.json" />
     <Content Include="Assets\Levels\Level_002.json" />
@@ -128,6 +130,7 @@
     <Compile Include="Game\_Messages\MessageGameOver.cs" />
     <Compile Include="Game\_Messages\MessageNewGame.cs" />
     <Compile Include="Game\_Messages\MessagePlayerHealthChanged.cs" />
+    <Compile Include="Game\_Messages\MessageProjectileShooted.cs" />
     <Compile Include="Game\_Messages\MessageScoreChanged.cs" />
     <Compile Include="Game\_Misc.cs" />
     <Compile Include="Game\_Systems\AudioSystem.cs" />
