@@ -602,36 +602,36 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets random <see cref="SeeingSharp.Vector2"/> within range.
+        /// Gets random <see cref="System.Numerics.Vector2"/> within range.
         /// </summary>
         /// <param name="random">A <see cref="System.Random"/> instance.</param>
         /// <param name="min">Minimum.</param>
         /// <param name="max">Maximum.</param>
-        /// <returns>Random <see cref="SeeingSharp.Vector2"/>.</returns>
+        /// <returns>Random <see cref="System.Numerics.Vector2"/>.</returns>
         public static Vector2 NextVector2(Random random, Vector2 min, Vector2 max)
         {
             return new Vector2(NextFloat(random, min.X, max.X), NextFloat(random, min.Y, max.Y));
         }
 
         /// <summary>
-        /// Gets random <see cref="SeeingSharp.Vector3"/> within range.
+        /// Gets random <see cref="System.Numerics.Vector3"/> within range.
         /// </summary>
         /// <param name="random">A <see cref="System.Random"/> instance.</param>
         /// <param name="min">Minimum.</param>
         /// <param name="max">Maximum.</param>
-        /// <returns>Random <see cref="SeeingSharp.Vector3"/>.</returns>
+        /// <returns>Random <see cref="System.Numerics.Vector3"/>.</returns>
         public static Vector3 NextVector3(Random random, Vector3 min, Vector3 max)
         {
             return new Vector3(NextFloat(random, min.X, max.X), NextFloat(random, min.Y, max.Y), NextFloat(random, min.Z, max.Z));
         }
 
         /// <summary>
-        /// Gets random <see cref="SeeingSharp.Vector4"/> within range.
+        /// Gets random <see cref="System.Numerics.Vector4"/> within range.
         /// </summary>
         /// <param name="random">A <see cref="System.Random"/> instance.</param>
         /// <param name="min">Minimum.</param>
         /// <param name="max">Maximum.</param>
-        /// <returns>Random <see cref="SeeingSharp.Vector4"/>.</returns>
+        /// <returns>Random <see cref="System.Numerics.Vector4"/>.</returns>
         public static Vector4 NextVector4(Random random, Vector4 min, Vector4 max)
         {
             return new Vector4(NextFloat(random, min.X, max.X), NextFloat(random, min.Y, max.Y), NextFloat(random, min.Z, max.Z), NextFloat(random, min.W, max.W));
@@ -699,12 +699,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets random <see cref="SeeingSharp.Vector2"/>.
+        /// Gets random <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         /// <param name="random">A <see cref="System.Random"/> instance.</param>
         /// <param name="min">Minimum.</param>
         /// <param name="max">Maximum.</param>
-        /// <returns>Random <see cref="SeeingSharp.Vector2"/>.</returns>
+        /// <returns>Random <see cref="System.Numerics.Vector2"/>.</returns>
         public static Vector2 NextDPointF(Random random, Vector2 min, Vector2 max)
         {
             return new Vector2(NextFloat(random, min.X, max.X), NextFloat(random, min.Y, max.Y));

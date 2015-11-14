@@ -237,7 +237,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
 
         /// <summary>
         /// Interpolate texture coordinate based on xy-scaling.
-        /// </value>
+        /// </summary>
         public bool AdjustTextureCoordinates
         {
             get { return m_adjustTextureCoordinates; }

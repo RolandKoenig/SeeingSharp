@@ -147,7 +147,7 @@ namespace SeeingSharp.Infrastructure
         /// <summary>
         /// Is there any singleton with the given type?
         /// </summary>
-        /// <param name="singletonName">The type of the singleton.</param>
+        /// <param name="type">The type of the singleton.</param>
         internal bool ContainsSingleton(Type type)
         {
             lock (m_singletonsLock)

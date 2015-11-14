@@ -31,8 +31,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DocumentationFile>bin.Universal\Debug\SeeingSharp.XML</DocumentationFile>
     <SuppressXamlWarnings>
     </SuppressXamlWarnings>
     <GenerateLibraryLayout>false</GenerateLibraryLayout>

@@ -80,7 +80,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="SeeingSharp.Vector4"/> to <see cref="SeeingSharp.Half4"/>.
+        /// Performs an implicit conversion from <see cref="System.Numerics.Vector4"/> to <see cref="SeeingSharp.Half4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -90,7 +90,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="SeeingSharp.Half4"/> to <see cref="SeeingSharp.Vector4"/>.
+        /// Performs an implicit conversion from <see cref="SeeingSharp.Half4"/> to <see cref="System.Numerics.Vector4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -100,7 +100,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SeeingSharp.Vector3"/> to <see cref="SeeingSharp.Half4"/>.
+        /// Performs an explicit conversion from <see cref="System.Numerics.Vector3"/> to <see cref="SeeingSharp.Half4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -110,7 +110,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SeeingSharp.Half4"/> to <see cref="SeeingSharp.Vector3"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Half4"/> to <see cref="System.Numerics.Vector3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -120,7 +120,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SeeingSharp.Vector2"/> to <see cref="SeeingSharp.Half4"/>.
+        /// Performs an explicit conversion from <see cref="System.Numerics.Vector2"/> to <see cref="SeeingSharp.Half4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -130,7 +130,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SeeingSharp.Half4"/> to <see cref="SeeingSharp.Vector2"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Half4"/> to <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>

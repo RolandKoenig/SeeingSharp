@@ -130,7 +130,7 @@ namespace SeeingSharp.Util
         }
 
         /// <summary>
-        /// Gets the <see cref="T"/> at the specified index.
+        /// Gets the object at the specified index.
         /// </summary>
         public T this[int index]
         {

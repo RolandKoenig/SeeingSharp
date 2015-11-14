@@ -58,7 +58,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.
         /// </summary>
-        /// <returns>
         public override string ToString()
         {
             return "File-Resource: " + m_filePath;

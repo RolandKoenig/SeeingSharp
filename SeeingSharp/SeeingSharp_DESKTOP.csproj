@@ -29,7 +29,7 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DocumentationFile>bin.Desktop\Debug\SeeingSharp.XML</DocumentationFile>
     <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>

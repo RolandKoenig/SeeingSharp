@@ -25,7 +25,7 @@ using System.Numerics;
 namespace SeeingSharp
 {
     /// <summary>
-    /// Structure using the same layout than <see cref="System.Drawing.Point"/>.
+    /// Structure using the same layout than Point from System.Drawing namespace.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public partial struct Point : IEquatable<Point>
@@ -112,7 +112,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="SeeingSharp.Vector2"/> to <see cref="Point"/>.
+        /// Performs an implicit conversion from <see cref="System.Numerics.Vector2"/> to <see cref="Point"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -122,7 +122,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="Point"/> to <see cref="SeeingSharp.Vector2"/>.
+        /// Performs an explicit conversion from <see cref="Point"/> to <see cref="System.Numerics.Vector2"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>

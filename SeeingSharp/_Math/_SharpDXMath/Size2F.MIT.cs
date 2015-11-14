@@ -25,7 +25,7 @@ using System.Numerics;
 namespace SeeingSharp
 {
     /// <summary>
-    /// Structure using the same layout than <see cref="System.Drawing.SizeF"/>.
+    /// Structure using the same layout than Size2F from System.Drawing namespace.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Size2F : IEquatable<Size2F>

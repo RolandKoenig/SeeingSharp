@@ -185,7 +185,7 @@ namespace SeeingSharp
         /// <param name="sphere"></param>
         /// <param name="point">The point to test.</param>
         /// <param name="result">When the method completes, contains the closest point between the two objects;
-        /// or, if the point is directly in the center of the sphere, contains <see cref="SeeingSharp.Vector3.Zero"/>.</param>
+        /// or, if the point is directly in the center of the sphere, contains <see cref="System.Numerics.Vector3.Zero"/>.</param>
         public static void ClosestPointSpherePoint(ref BoundingSphere sphere, ref Vector3 point, out Vector3 result)
         {
             //Source: Jorgy343
@@ -208,7 +208,7 @@ namespace SeeingSharp
         /// <param name="sphere1">The first sphere to test.</param>
         /// <param name="sphere2">The second sphere to test.</param>
         /// <param name="result">When the method completes, contains the closest point between the two objects;
-        /// or, if the point is directly in the center of the sphere, contains <see cref="SeeingSharp.Vector3.Zero"/>.</param>
+        /// or, if the point is directly in the center of the sphere, contains <see cref="System.Numerics.Vector3.Zero"/>.</param>
         /// <remarks>
         /// If the two spheres are overlapping, but not directly ontop of each other, the closest point
         /// is the 'closest' point of intersection. This can also be considered is the deepest point of
@@ -397,7 +397,7 @@ namespace SeeingSharp
         /// <param name="ray1">The first ray to test.</param>
         /// <param name="ray2">The second ray to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersect.</returns>
         /// <remarks>
         /// This method performs a ray vs ray intersection test based on the following formula
@@ -531,7 +531,7 @@ namespace SeeingSharp
         /// <param name="ray">The ray to test.</param>
         /// <param name="plane">The plane to test</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsPlane(ref Ray ray, ref Plane plane, out Vector3 point)
         {
@@ -664,7 +664,7 @@ namespace SeeingSharp
         /// <param name="vertex2">The second vertex of the triagnle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
         {
@@ -797,7 +797,7 @@ namespace SeeingSharp
         /// <param name="ray">The ray to test.</param>
         /// <param name="box">The box to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out Vector3 point)
         {
@@ -858,7 +858,7 @@ namespace SeeingSharp
         /// <param name="ray">The ray to test.</param>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out Vector3 point)
         {

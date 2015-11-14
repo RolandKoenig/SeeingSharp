@@ -63,6 +63,7 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectThreadExceptionEventArgs"/> class.
         /// </summary>
+        /// <param name="threadState">The current state of the <see cref="ObjectThread"/>.</param>
         /// <param name="innerException">The inner exception.</param>
         public ObjectThreadExceptionEventArgs(ObjectThreadState threadState, Exception innerException)
         {

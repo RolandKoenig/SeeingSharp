@@ -105,7 +105,7 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="System.Numerics.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public bool Intersects(ref Ray ray, out Vector3 point)
         {
@@ -476,11 +476,11 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="SeeingSharp.Vector4"/> is equal to this instance.
+        /// Determines whether the specified <see cref="System.Numerics.Vector4"/> is equal to this instance.
         /// </summary>
-        /// <param name="value">The <see cref="SeeingSharp.Vector4"/> to compare with this instance.</param>
+        /// <param name="value">The <see cref="System.Numerics.Vector4"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="SeeingSharp.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="System.Numerics.Vector4"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(BoundingSphere value)
         {

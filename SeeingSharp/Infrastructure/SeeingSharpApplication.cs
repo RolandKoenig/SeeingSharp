@@ -76,6 +76,7 @@ namespace SeeingSharp.Infrastructure
         /// </summary>
         /// <param name="mainAssembly">The main assembly of the application.</param>
         /// <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
+        /// <param name="startupArguments">All arguments passed to this application.</param>
         public static async Task InitializeAsync(Assembly mainAssembly, IEnumerable<Assembly> otherAssemblies, string[] startupArguments)
         {
             if (s_current != null) { throw new SeeingSharpException("RKApplication is already initialized!"); }

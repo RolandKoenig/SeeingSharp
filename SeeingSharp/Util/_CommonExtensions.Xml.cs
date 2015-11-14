@@ -49,6 +49,7 @@ namespace SeeingSharp.Util
         /// Reads a vector from the given xml reader.
         /// </summary>
         /// <param name="xmlReader">The xml reader.</param>
+        /// <param name="formatProvider">The <see cref="IFormatProvider"/> for parsing <see cref="System.Single"/> values.</param>
         public static Vector3 ReadContentAsVector3(this XmlReader xmlReader, IFormatProvider formatProvider)
         {
             string[] components = xmlReader.ReadContentAsString().Split(',');
@@ -75,6 +76,7 @@ namespace SeeingSharp.Util
         /// Reads a vector from the given xml reader.
         /// </summary>
         /// <param name="xmlReader">The xml reader.</param>
+        /// <param name="formatProvider">The <see cref="IFormatProvider"/> for parsing <see cref="System.Single"/> values.</param>
         public static Vector3 ReadElementContentAsVector3(this XmlReader xmlReader, IFormatProvider formatProvider)
         {
             string[] components = xmlReader.ReadElementContentAsString().Split(',');

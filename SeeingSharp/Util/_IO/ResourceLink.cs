@@ -144,7 +144,7 @@ namespace SeeingSharp.Util
 
 #if UNIVERSAL
         /// <summary>
-        /// Performs an implicit conversion from <see cref="StorageFile"/> to <see cref="ResourceLink"/>.
+        /// Performs an implicit conversion from <see cref="Windows.Storage.StorageFile"/> to <see cref="ResourceLink"/>.
         /// </summary>
         public static implicit operator ResourceLink(Windows.Storage.StorageFile storageFile)
         {

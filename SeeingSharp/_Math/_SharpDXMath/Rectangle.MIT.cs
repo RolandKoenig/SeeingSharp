@@ -74,10 +74,10 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Checks, if specified <see cref="SeeingSharp.Vector2"/> is inside <see cref="SeeingSharp.Rectangle"/>. 
+        /// Checks, if specified <see cref="System.Numerics.Vector2"/> is inside <see cref="SeeingSharp.Rectangle"/>. 
         /// </summary> 
-        /// <param name="vector2D">Coordinate <see cref="SeeingSharp.Vector2"/>.</param>
-        /// <returns><c>true</c> if <see cref="SeeingSharp.Vector2"/> is inside <see cref="SeeingSharp.Rectangle"/>, otherwise <c>false</c>.</returns>
+        /// <param name="vector2D">Coordinate <see cref="System.Numerics.Vector2"/>.</param>
+        /// <returns><c>true</c> if <see cref="System.Numerics.Vector2"/> is inside <see cref="SeeingSharp.Rectangle"/>, otherwise <c>false</c>.</returns>
         public bool Contains(Vector2 vector2D)
         {
             return (vector2D.X >= _left && vector2D.X <= _right && vector2D.Y >= _top && vector2D.Y <= _bottom);

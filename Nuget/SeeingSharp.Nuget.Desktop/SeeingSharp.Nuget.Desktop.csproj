@@ -65,6 +65,8 @@
   <ItemGroup>
     <Content Include="lib\net46\SeeingSharp.dll" />
     <Content Include="lib\net46\SeeingSharp.Multimedia.dll" />
+    <Content Include="lib\net46\SeeingSharp.Multimedia.xml" />
+    <Content Include="lib\net46\SeeingSharp.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

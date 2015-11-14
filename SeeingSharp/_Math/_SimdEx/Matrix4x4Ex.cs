@@ -512,6 +512,7 @@ namespace SeeingSharp
         /// <summary>
         /// Gets the component at the specified index.
         /// </summary>
+        /// <param name="matrix">The matrix from which to get the value.</param>
         /// <param name="row">The row of the matrix to access.</param>
         /// <param name="column">The column of the matrix to access.</param>
         /// <returns>The value of the component at the specified index.</returns>
@@ -530,8 +531,10 @@ namespace SeeingSharp
         /// <summary>
         /// Sets the component at the specified index.
         /// </summary>
+        /// <param name="matrix">The matrix on which to set the value.</param>
         /// <param name="row">The row of the matrix to access.</param>
         /// <param name="column">The column of the matrix to access.</param>
+        /// <param name="value">The value to be set.</param>
         /// <returns>The value of the component at the specified index.</returns>
         /// <exception cref="System.ArgumentOutOfRangeException">Thrown when the <paramref name="row"/> or <paramref name="column"/>is out of the range [0, 3].</exception>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

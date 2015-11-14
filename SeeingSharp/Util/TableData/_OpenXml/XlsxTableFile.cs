@@ -119,6 +119,7 @@ namespace SeeingSharp.Util.TableData
         /// <summary>
         /// Starts reading from the given Sheet.
         /// </summary>
+        /// <param name="reader">The currently open reader.</param>
         /// <param name="sheetInfo"></param>
         private IEnumerable<List<string>> ReadRowValues(OpenXmlReader reader, SheetInformation sheetInfo)
         {

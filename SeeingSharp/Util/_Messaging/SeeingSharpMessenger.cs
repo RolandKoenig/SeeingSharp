@@ -215,7 +215,7 @@ namespace SeeingSharp.Util
         /// Subscribes all receiver-methods of the given target object to this Messenger.
         /// Subscribe and unsubscribe is automatically called when the control is created/destroyed.
         /// </summary>
-        /// <param name="targetObject">The target object which is to subscribe..</param>
+        /// <param name="target">The target win.forms control.</param>
         public void SubscribeAllOnControl(System.Windows.Forms.Control target)
         {
             target.EnsureNotNull("target");
@@ -524,7 +524,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Sends the given message to all subscribers (synchonous processing).
         /// </summary>
-        /// <param name="scriptProjectGuid">The guid of the script project which acts as a message filter.</param>
         public void Publish<MessageType>()
             where MessageType : SeeingSharpMessage, new()
         {
@@ -536,7 +535,6 @@ namespace SeeingSharp.Util
         /// </summary>
         /// <typeparam name="MessageType">Type of the message.</typeparam>
         /// <param name="message">The message to send.</param>
-        /// <param name="scriptProjectGuid">The guid of the script project which acts as a message filter.</param>
         public void Publish<MessageType>(
             MessageType message)
             where MessageType : SeeingSharpMessage
