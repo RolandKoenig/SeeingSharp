@@ -51,6 +51,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceHandlerD3D11"/> class.
         /// </summary>
+        /// <param name="targetHardware">The target hardware for which to create this device.</param>
         /// <param name="dxgiAdapter">The corresponding DXGI adapter.</param>
         /// <param name="debugEnabled">Is debug enabled?</param>
         internal DeviceHandlerD3D10(TargetHardware targetHardware, DXGI.Adapter1 dxgiAdapter, bool debugEnabled)

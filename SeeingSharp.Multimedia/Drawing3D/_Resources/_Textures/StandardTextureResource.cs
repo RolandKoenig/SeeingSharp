@@ -54,7 +54,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardTextureResource" /> class.
         /// </summary>
-        /// <param name="fileName">Name of the file.</param>
         public StandardTextureResource(ResourceLink textureSource)
         {
             m_resourceLinkHighQuality = textureSource;
@@ -80,8 +79,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
-        /// <exception cref="SeeingSharpGraphicsException"></exception>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             // Select source texture
@@ -120,7 +117,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_textureView = GraphicsHelper.DisposeObject(m_textureView);

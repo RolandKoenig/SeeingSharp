@@ -165,7 +165,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Waits until the given object is visible.
         /// </summary>
-        /// <param name="sceneObject">The scene object.</param>
+        /// <param name="sceneObjects">The scene objects to check for.</param>
         /// <param name="viewInfo">The view information.</param>
         /// <param name="cancelToken">The cancel token.</param>
         public Task WaitUntilVisibleAsync(IEnumerable<SceneObject> sceneObjects, ViewInformation viewInfo, CancellationToken cancelToken = default(CancellationToken))
@@ -356,7 +356,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Removes the resource with the given key.
         /// </summary>
-        /// <typeparam name="ResourceType">The type of the resource.</typeparam>
         /// <param name="resourceKey">The key of the resource to be deleted.</param>
         internal void RemoveResource(NamedOrGenericKey resourceKey)
         {
@@ -371,8 +370,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Picks an object in 3D space.
         /// </summary>
-        /// <param name="rayStart">Start of picking ray.</param>
-        /// <param name="rayDirection">Normal of picking ray.</param>
         internal List<SceneObject> Pick(Vector3 rayStart, Vector3 rayDirection, ViewInformation viewInformation, PickingOptions pickingOptions)
         {
             rayDirection.EnsureNormalized("rayDirection");
@@ -908,7 +905,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Updates the scene (called beside rendering).
         /// </summary>
-        /// <param name="updateTime">Current update state.</param>
         internal void UpdateBesideRender(SceneRelatedUpdateState updateState)
         {
             // Invoke all async action attached to this scene

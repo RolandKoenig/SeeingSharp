@@ -62,7 +62,6 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Loads all resources of the object.
         /// </summary>
-        /// <param name="device">Current DirectX device.</param>
         public override void LoadResources(EngineDevice device, ResourceDictionary resourceDictionary)
         {
             TexturePainterHelper newHelper = new TexturePainterHelper(m_resTexture);

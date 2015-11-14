@@ -70,7 +70,7 @@ namespace SeeingSharp.Multimedia.PlayingSound
         /// <summary>
         /// Plays the given sound.
         /// </summary>
-        /// <param name="resourcesoundFile">The file to be played.</param>
+        /// <param name="soundFile">The sound file to be played.</param>
         public async Task PlaySoundAsync(CachedSoundFile soundFile)
         {
             soundFile.EnsureNotNullOrDisposed("soundFile");

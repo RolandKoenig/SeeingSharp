@@ -134,7 +134,6 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Resets the transform setting son this graphics object.
         /// (be carefull, the state is changed on device level!)
         /// </summary>
-        /// <param name="transformSettings">The settings to be set.</param>
         internal void PopTransformSettings()
         {
             m_transformStack.Pop();
@@ -431,7 +430,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Draws the given bitmap.
         /// </summary>
         /// <param name="bitmap">The bitmap.</param>
-        /// <param name="destinationRectangle">The target rectangle where to draw the bitmap.</param>
+        /// <param name="destinationOrigin">The point where to start rendering.</param>
         /// <param name="opacity">The opacity.</param>
         /// <param name="interpolationMode">The interpolation mode.</param>
         public void DrawBitmap(
@@ -456,7 +455,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Draws the given bitmap.
         /// </summary>
         /// <param name="bitmap">The bitmap.</param>
-        /// <param name="destinationRectangle">The target rectangle where to draw the bitmap.</param>
+        /// <param name="destinationOrigin">The point where to start rendering.</param>
         /// <param name="opacity">The opacity.</param>
         /// <param name="sourceRectangle">The area which to take from the bitmap.</param>
         /// <param name="interpolationMode">The interpolation mode.</param>
@@ -485,7 +484,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Draws the given image.
         /// </summary>
         /// <param name="image">The source of pixel data to be rendered.</param>
-        /// <param name="destinationRectangle">The target rectangle where to draw the image.</param>
+        /// <param name="destinationOrigin">The origin point where to draw the image.</param>
         public void DrawImage(
             IImage image,
             Vector2 destinationOrigin)
@@ -510,7 +509,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Draws the given image.
         /// </summary>
         /// <param name="image">The source of pixel data to be rendered.</param>
-        /// <param name="destinationRectangle">The target rectangle where to draw the image.</param>
+        /// <param name="destinationOrigin">The origin point where to draw the image.</param>
         /// <param name="sourceRectangle">The area which to take from the bitmap.</param>
         public void DrawImage(
             IImage image,

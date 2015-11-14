@@ -42,7 +42,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceHandlerD3D9"/> class.
         /// </summary>
-        /// <param name="core">The core.</param>
+        /// <param name="dxgiAdapter">The target adapter.</param>
+        /// <param name="isSoftwareAdapter">Are we in software mode?</param>
+        /// <param name="debugEnabled">Is debug mode enabled?</param>
         internal DeviceHandlerD3D9(DXGI.Adapter1 dxgiAdapter, bool isSoftwareAdapter, bool debugEnabled)
         {
             // Update member variables

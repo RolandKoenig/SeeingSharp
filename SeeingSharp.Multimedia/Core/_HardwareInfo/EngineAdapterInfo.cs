@@ -57,9 +57,8 @@ namespace SeeingSharp.Multimedia.Core
         private DXGI.AdapterDescription m_adapterDescription;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AdapterItemViewModel" /> class.
+        /// Initializes a new instance of the <see cref="EngineAdapterInfo" /> class.
         /// </summary>
-        /// <param name="adapter">The adapter to get all data from.</param>
         internal EngineAdapterInfo(int adapterIndex, DxgiAdapter adapter)
         {
             m_outputs = new List<EngineOutputInfo>();

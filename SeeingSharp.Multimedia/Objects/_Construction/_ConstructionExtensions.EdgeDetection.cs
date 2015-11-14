@@ -32,8 +32,6 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Generates a shadow volume structure out of the given vertex structures.
         /// </summary>
-        /// <param name="structures">The structures for which to create the shadow volume.</param>
-        /// <param name="lightDirection">The direction of the light.</param>
         public static VertexStructure GenerateShadowVolume(this IEnumerable<VertexStructure> structures, Vector3 lightDirection, float shadowVolumeLength)
         {
             VertexStructure result = new VertexStructure();

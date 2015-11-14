@@ -31,7 +31,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
-    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <DocumentationFile>bin.Desktop\Debug\SeeingSharp.Multimedia.XML</DocumentationFile>
     <NoWarn>1591</NoWarn>
   </PropertyGroup>

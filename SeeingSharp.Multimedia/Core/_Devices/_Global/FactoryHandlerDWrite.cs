@@ -37,7 +37,6 @@ namespace SeeingSharp.Multimedia.Core
         /// Initializes a new instance of the <see cref="FactoryHandlerDWrite"/> class.
         /// </summary>
         /// <param name="core">The core.</param>
-        /// <param name="dxgiHandler">The dxgi handler.</param>
         internal FactoryHandlerDWrite(GraphicsCore core)
         {
             //Update member variables

@@ -122,7 +122,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Adds a new geometry resource to the scene.
         /// </summary>
         /// <param name="sceneManipulator">The manipulator of the scene.</param>
-        /// <param name="textureKey">The geometry to be loaded.</param>
+        /// <param name="vertexStructures">The structures which define the geometry.</param>
         public static NamedOrGenericKey AddGeometry(this SceneManipulator sceneManipulator, params VertexStructure[] vertexStructures)
         {
             return sceneManipulator.AddResource<GeometryResource>(() => new GeometryResource(vertexStructures));

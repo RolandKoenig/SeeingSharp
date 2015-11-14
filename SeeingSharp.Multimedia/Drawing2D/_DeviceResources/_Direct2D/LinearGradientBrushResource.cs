@@ -55,6 +55,10 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         /// <param name="startPoint">The start point of the gradient.</param>
         /// <param name="endPoint">The end point of the gradient.</param>
+        /// <param name="gradientStops">All points within the color gradient.</param>
+        /// <param name="extendMode">How to draw outside the content area?</param>
+        /// <param name="gamma">The gama configuration.</param>
+        /// <param name="opacity">The opacity value of the brush.</param>
         public LinearGradientBrushResource(
             Vector2 startPoint, Vector2 endPoint,
             GradientStop[] gradientStops,

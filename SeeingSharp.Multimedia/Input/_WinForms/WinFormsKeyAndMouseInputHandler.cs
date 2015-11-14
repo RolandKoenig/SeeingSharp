@@ -278,7 +278,6 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Called when the mouse enters the screen.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
         private void OnMouseEnter(object sender, EventArgs e)
         {
             m_lastMousePoint = m_currentControl.PointToClient(Cursor.Position);
@@ -350,7 +349,6 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Called when the mouse leaves the screen.
         /// </summary>
-        /// <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
         private void OnMouseLeave(object sender, EventArgs e)
         {
             m_lastMousePoint = System.Drawing.Point.Empty;
@@ -361,7 +359,6 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Called when the mouse moves on the screen.
         /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
         private void OnMouseMove(object sender, MouseEventArgs e)
         {
             if (m_isMouseInside)
@@ -396,7 +393,6 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Called when mouse wheel is used.
         /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.MouseEventArgs"/> that contains the event data.</param>
         private void OnMouseWheel(object sender, MouseEventArgs e)
         {
             if (m_isMouseInside)
@@ -429,7 +425,6 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Called when a key is down.
         /// </summary>
-        /// <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs"/> that contains the event data.</param>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
             // Handle key input

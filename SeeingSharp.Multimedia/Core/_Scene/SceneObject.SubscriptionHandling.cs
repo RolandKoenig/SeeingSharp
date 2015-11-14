@@ -49,9 +49,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Subscribes on the given render pass with the given action.
         /// </summary>
-        /// <param name="renderPass">The pass to register on.</param>
-        /// <param name="updateState">The update state used for registering.</param>
-        /// <param name="renderAction">The target action to be invoked on render.</param>
         protected internal void SubscribeToPass(RenderPassInfo renderPass, ViewRelatedSceneLayerSubset layerViewSubset, Action<RenderState> renderAction)
         {
             List<RenderPassSubscription> subscriptionList = m_viewRelatedSubscriptions[layerViewSubset.ViewIndex];
@@ -92,7 +89,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Unsubscribes from the given render pass.
         /// </summary>
-        /// <param name="passInfo">The pass to unsubscribe from.</param>
         protected internal void UnsubscribeFromPass(RenderPassInfo passInfo, UpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
         {
             // Get the subscription list
@@ -120,7 +116,6 @@ namespace SeeingSharp.Multimedia.Core
         /// Clears all subscriptions on the given view subset.
         /// Only for internal use.. this method gets called when a view is deregistered.
         /// </summary>
-        /// <param name="layerViewSubset">The view subset from which to clear all subscription entries.</param>
         internal void ClearSubscriptionsWithoutUnsubscribeCall(ViewRelatedSceneLayerSubset layerViewSubset, RenderPassSubscription subscription)
         {
             // Get the subscription list

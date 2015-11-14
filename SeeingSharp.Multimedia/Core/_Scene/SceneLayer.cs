@@ -54,6 +54,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Creates a new SceneLayer object for the given scene.
         /// </summary>
+        /// <param name="name">The name of the layer.</param>
         /// <param name="parentScene">Parent scene.</param>
         internal SceneLayer(string name, Scene parentScene)
         {
@@ -81,8 +82,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Registers the given view on this layer.
         /// </summary>
-        /// <param name="viewIndex">The index which this view has on the current scene.</param>
-        /// <param name="viewInformation">The ViewInformation object describing the view.</param>
         internal void RegisterView(int viewIndex, ViewInformation viewInformation, ResourceDictionary resourceDictionary)
         {
             ViewRelatedSceneLayerSubset newLayerViewSubset = new ViewRelatedSceneLayerSubset(this, viewInformation, resourceDictionary, viewIndex);
@@ -387,7 +386,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Renders the scene to the given context.
         /// </summary>
-        /// <param name="deviceContext">The device context.</param>
         internal void Render(RenderState renderState)
         {
             //Delegate render call to corresponding view subset

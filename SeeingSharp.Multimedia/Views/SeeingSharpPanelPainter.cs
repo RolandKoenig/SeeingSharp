@@ -80,7 +80,6 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Initializes a new instance of the <see cref="SeeingSharpPanelPainter" /> class.
         /// </summary>
-        /// <param name="targetPanel">The target panel.</param>
         public SeeingSharpPanelPainter()
         {
             m_inputHandlers = new List<IInputHandler>();

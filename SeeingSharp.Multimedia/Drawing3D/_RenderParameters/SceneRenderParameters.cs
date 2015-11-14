@@ -89,7 +89,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_cbPerFrame = resources.GetResourceAndEnsureLoaded(
@@ -100,7 +99,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_cbPerFrame = null;

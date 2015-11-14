@@ -193,6 +193,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="radius">The radius of the cone.</param>
         /// <param name="height">The height of the cone.</param>
         /// <param name="countOfSegments">Total count of segments to generate.</param>
+        /// <param name="color">The color for the generated vertices.</param>
         public BuiltVerticesRange BuildConeFullV(Vector3 bottomMiddle, float radius, float height, int countOfSegments, Color4 color)
         {
             int startVertex = m_vertices.Count;
@@ -484,7 +485,6 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Builds a cube into a vertex structure (this cube is built up of just 8 vertices, so not texturing is supported)
         /// </summary>
-        /// <param name="vs">Target VertexStructure object</param>
         /// <param name="start">Start point of the cube (left-lower-front point)</param>
         /// <param name="size">Size of the cube</param>
         public BuiltVerticesRange BuildCube8V(Vector3 start, Vector3 size)
@@ -495,7 +495,6 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Builds a cube into a vertex structure (this cube is built up of just 8 vertices, so no texturing is supported)
         /// </summary>
-        /// <param name="vs">Target VertexStructure object</param>
         /// <param name="start">Start point of the cube (left-lower-front point)</param>
         /// <param name="size">Size of the cube</param>
         /// <param name="color">Color of the cube</param>

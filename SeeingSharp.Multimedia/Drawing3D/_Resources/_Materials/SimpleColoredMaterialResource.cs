@@ -73,7 +73,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             // Load all required shaders and constant buffers
@@ -102,7 +101,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_vertexShader = null;
@@ -253,7 +251,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
 
         /// <summary>
         /// Needed for video rendering (Frames from the MF SourceReader have alpha always to zero).
-        /// </value>
+        /// </summary>
         public float AddToAlpha
         {
             get { return m_addToAlpha; }

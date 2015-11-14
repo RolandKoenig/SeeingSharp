@@ -146,7 +146,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets an array of StandardVertices from the given VertexStructure objects.
         /// </summary>
-        /// <param name="source">The VertexStructure object array.</param>
         public static StandardVertex[] FromVertexStructure(VertexStructure[] structures)
         {
             if (structures == null) { throw new ArgumentNullException("structures"); }

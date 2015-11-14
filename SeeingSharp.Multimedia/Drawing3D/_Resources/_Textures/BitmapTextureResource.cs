@@ -53,7 +53,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="BitmapTextureResource"/> class.
         /// </summary>
-        /// <param name="name">The name of the resource.</param>
         /// <param name="bitmap">The bitmap source object.</param>
         public BitmapTextureResource(Bitmap bitmap)
         {
@@ -77,7 +76,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             if (m_texture == null)
@@ -113,7 +111,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             if (m_texture != null)

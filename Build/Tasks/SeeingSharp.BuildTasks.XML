@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>SeeingSharp.BuildTasks</name>
+    </assembly>
+    <members>
+        <member name="T:SeeingSharp.BuildTasks.ClickonceSignTask">
+            <summary>
+            This task is responsible for automated signing of clickonce installation files.
+            All steps of the following coding are besed on the workflow described here:
+            http://blogs.msdn.com/b/vsto/archive/2009/04/29/signing-and-re-signing-manifests-in-clickonce.aspx
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.BuildTasks.ClickonceSignTask.Execute">
+            <summary>
+            Führt beim Überschreiben in einer abgeleiteten Klasse die Aufgabe aus.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.BuildTasks.ClickonceSignTask.TryParseVersion(System.String[])">
+            <summary>
+            Tries to parse the version out of the given parts from a 'Application Files' subdirectory.
+            </summary>
+            <param name="splittedDirectoryName">The splitted directory name.</param>
+        </member>
+        <member name="M:SeeingSharp.BuildTasks.ClickonceSignTask.TryRunProcess(System.String,System.String[])">
+            <summary>
+            Tries to run the given process with the given parameters.
+            </summary>
+            <param name="exeName">Name of the executable.</param>
+            <param name="parameters">The parameters.</param>
+        </member>
+        <member name="M:SeeingSharp.BuildTasks.ShaderBuildTask.Execute">
+            <summary>
+            Executes this build task.
+            </summary>
+            <returns>
+            true, wenn die Aufgabe erfolgreich ausgeführt wurde, andernfalls false.
+            </returns>
+        </member>
+        <member name="P:SeeingSharp.BuildTasks.ShaderBuildTask.ShaderFiles">
+            <summary>
+            List containing all input files.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.BuildTasks.ShaderBuildTask.ShaderProfile">
+            <summary>
+            The shader profile to be used.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.BuildTasks.ShaderBuildTask.OutputAdditionalExtension">
+            <summary>
+            The name of the output without extension.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.BuildTasks.ShaderBuildTask.AppendDebugInfo">
+            <summary>
+            Append debug info to output file?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.BuildTasks.ShaderBuildTask.OutputFiles">
+            <summary>
+            A list containing all output files.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -33,7 +33,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets or creates the material resource for the given VertexStructure object.
         /// </summary>
-        /// <param name="targetStructure">The target structure.</param>
         internal static MaterialResource GetOrCreateMaterialResourceAndEnsureLoaded(this ResourceDictionary resourceDict, VertexStructure targetStructure)
         {
             MaterialResource materialResource = GetOrCreateMaterialResource(resourceDict, targetStructure);
@@ -48,7 +47,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets or creates the material resource for the given VertexStructure object.
         /// </summary>
-        /// <param name="targetStructure">The target structure.</param>
         internal static MaterialResource GetOrCreateMaterialResource(this ResourceDictionary resourceDict, VertexStructure targetStructure)
         {
             NamedOrGenericKey materialKey = targetStructure.Material;
@@ -132,7 +130,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new geometry resource.
         /// </summary>
-        /// <param name="structures">All structures for the generated geometry resource.</param>
         internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, params VertexStructure[] structures)
         {
             return resourceDiciontary.AddResource(new GeometryResource(structures));
@@ -141,8 +138,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new geometry resource.
         /// </summary>
-        /// <param name="resourceKey">The key of the resource.</param>
-        /// <param name="structures">All structures for the generated geometry resource.</param>
         internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, params VertexStructure[] structures)
         {
             return resourceDiciontary.AddResource(resourceKey, new GeometryResource(structures));
@@ -151,7 +146,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new geometry resource.
         /// </summary>
-        /// <param name="objectType">A ObjectType describing the generated structure.</param>
         internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, ObjectType objectType)
         {
             return resourceDiciontary.AddResource(new GeometryResource(objectType));
@@ -160,8 +154,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new geometry resource.
         /// </summary>
-        /// <param name="resourceKey">The key of the resource.</param>
-        /// <param name="objectType">A ObjectType describing the generated structure.</param>
         internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, ObjectType objectType)
         {
             return resourceDiciontary.AddResource(resourceKey, new GeometryResource(objectType));
@@ -170,8 +162,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new text geometry with the given text.
         /// </summary>
-        /// <param name="resourceName">The key of the resource.</param>
-        /// <param name="textToAdd">The text to generate the geometry from.</param>
         internal static GeometryResource AddTextGeometry(this ResourceDictionary resourceDiciontary, string textToAdd)
         {
             return resourceDiciontary.AddTextGeometry(textToAdd, TextGeometryOptions.Default);
@@ -180,8 +170,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new text geometry with the given text.
         /// </summary>
-        /// <param name="resourceName">The key of the resource.</param>
-        /// <param name="textToAdd">The text to generate the geometry from.</param>
         internal static GeometryResource AddTextGeometry(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, string textToAdd)
         {
             return resourceDiciontary.AddTextGeometry(resourceKey, textToAdd, TextGeometryOptions.Default);
@@ -190,8 +178,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new text geometry with the given text.
         /// </summary>
-        /// <param name="textToAdd">The text to generate the geometry from.</param>
-        /// <param name="textGeometryOptions">Some parameters for text creation.</param>
         internal static GeometryResource AddTextGeometry(this ResourceDictionary resourceDiciontary, string textToAdd, TextGeometryOptions textGeometryOptions)
         {
             VertexStructure newStructure = new VertexStructure();
@@ -203,9 +189,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new text geometry with the given text.
         /// </summary>
-        /// <param name="resourceName">The key of the resource.</param>
-        /// <param name="textToAdd">The text to generate the geometry from.</param>
-        /// <param name="textGeometryOptions">Some parameters for text creation.</param>
         internal static GeometryResource AddTextGeometry(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, string textToAdd, TextGeometryOptions textGeometryOptions)
         {
             VertexStructure newStructure = new VertexStructure();
@@ -218,7 +201,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new texture resource pointing to the given texture file name.
         /// </summary>
-        /// <param name="textureFileName">The path to the texture's file.</param>
         internal static StandardTextureResource AddTexture(this ResourceDictionary resourceDiciontary, string textureFileName)
         {
             return resourceDiciontary.AddResource(new StandardTextureResource(textureFileName));
@@ -227,8 +209,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new texture resource pointing to the given texture file name.
         /// </summary>
-        /// <param name="resourceKey">The key of the generated texture resource.</param>
-        /// <param name="textureFileName">The path to the texture's file.</param>
         internal static StandardTextureResource AddTexture(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, string textureFileName)
         {
             return resourceDiciontary.AddResource(resourceKey, new StandardTextureResource(textureFileName));
@@ -237,7 +217,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new texture resource pointing to the given texture file name.
         /// </summary>
-        /// <param name="textureResourceUri">The resource uri of the texture.</param>
         internal static StandardTextureResource AddTexture(this ResourceDictionary resourceDiciontary, Uri textureResourceUri)
         {
             return resourceDiciontary.AddResource(new StandardTextureResource(textureResourceUri));
@@ -246,8 +225,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new texture resource pointing to the given texture file name.
         /// </summary>
-        /// <param name="resourceKey">The key of the generated texture resource.</param>
-        /// <param name="textureResourceUri">The resource uri of the texture.</param>
         internal static StandardTextureResource AddTexture(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, Uri textureResourceUri)
         {
             return resourceDiciontary.AddResource(resourceKey, new StandardTextureResource(textureResourceUri));

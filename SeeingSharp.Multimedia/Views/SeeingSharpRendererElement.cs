@@ -205,7 +205,6 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Is this object in design mode?
         /// </summary>
-        /// <param name="dependencyObject">The object to check.</param>
         private bool IsInDesignMode()
         {
             return DesignerProperties.GetIsInDesignMode(this);

@@ -37,7 +37,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="Resource"/> class.
         /// </summary>
-        /// <param name="name">The name of the resource.</param>
         protected Resource()
         {
             m_resourceType = this.GetType();
@@ -56,7 +55,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         internal void LoadResource()
         {
             if (m_resourceDictionary == null) { throw new SeeingSharpGraphicsException("Unable to load resource: Resource " + m_key.ToString() + " hos no registered ResourceDictionary!"); }
@@ -83,7 +81,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         internal void UnloadResource()
         {
             if (m_resourceDictionary == null) { throw new SeeingSharpGraphicsException("Unable to unload resource: Resource " + m_key.ToString() + " hos no registered ResourceDictionary!"); }

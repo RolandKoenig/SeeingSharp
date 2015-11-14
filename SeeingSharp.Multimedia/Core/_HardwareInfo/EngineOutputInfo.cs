@@ -35,9 +35,8 @@ namespace SeeingSharp.Multimedia.Core
         private DXGI.OutputDescription m_outputDescription;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OutputItemViewModel" /> class.
+        /// Initializes a new instance of the <see cref="EngineOutputInfo" /> class.
         /// </summary>
-        /// <param name="output">The output to get all data from.</param>
         internal EngineOutputInfo(int outputIndex, DXGI.Output output)
         {
             m_outputIndex = outputIndex;

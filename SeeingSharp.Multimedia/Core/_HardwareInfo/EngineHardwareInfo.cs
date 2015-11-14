@@ -54,7 +54,7 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AvailableHardwareViewModel" /> class.
+        /// Initializes a new instance of the <see cref="EngineHardwareInfo" /> class.
         /// </summary>
         internal EngineHardwareInfo(DxgiFactory dxgiFactory)
         {

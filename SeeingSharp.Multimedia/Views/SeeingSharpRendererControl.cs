@@ -89,7 +89,7 @@ namespace SeeingSharp.Multimedia.Views
         public event EventHandler<MouseEventArgs> MouseClickEx;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Direct3D11Panel"/> class.
+        /// Initializes a new instance of the <see cref="SeeingSharpRendererControl"/> class.
         /// </summary>
         public SeeingSharpRendererControl()
         {
@@ -211,7 +211,7 @@ namespace SeeingSharp.Multimedia.Views
         /// Saves a screenshot to harddisc.
         /// </summary>
         /// <param name="targetFile">Target file path.</param>
-        /// <param name="fileFormat">Target file format.</param>
+        /// <param name="imageFormat">Target file format.</param>
         public async Task SaveScreenshotAsync(string targetFile, System.Drawing.Imaging.ImageFormat imageFormat)
         {
             if (m_backBuffer != null)

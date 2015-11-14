@@ -50,6 +50,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Checks for visibility of the given object.
         /// </summary>
         /// <param name="input">The object to be checked..</param>
+        /// <param name="viewInformation">A reference to the view on which to check for visibility.</param>
         public abstract bool IsObjectVisible(SceneObject input, ViewInformation viewInformation);
         
         /// <summary>

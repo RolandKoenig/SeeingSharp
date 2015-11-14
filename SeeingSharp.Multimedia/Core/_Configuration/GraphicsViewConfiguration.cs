@@ -63,7 +63,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsViewConfiguration" /> class.
         /// </summary>
-        /// <param name="deviceConfig">The device configuration object.</param>
         internal GraphicsViewConfiguration()
         {
             this.ShowTextures = true;

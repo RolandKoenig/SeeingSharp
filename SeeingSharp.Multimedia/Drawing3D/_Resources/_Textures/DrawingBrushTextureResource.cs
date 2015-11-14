@@ -47,7 +47,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawingBrushTextureResource"/> class.
         /// </summary>
-        /// <param name="name">The name.</param>
         /// <param name="drawingBrush">The drawing brush.</param>
         public DrawingBrushTextureResource(Brush drawingBrush)
             : this(drawingBrush, 128, 128)
@@ -58,7 +57,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="DrawingBrushTextureResource"/> class.
         /// </summary>
-        /// <param name="name">The name.</param>
         /// <param name="drawingBrush">The drawing brush.</param>
         /// <param name="height">Width of the texture.</param>
         /// <param name="width">Height of the texture.</param>
@@ -72,7 +70,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             using (Bitmap drawingBitmap = new Bitmap(m_width, m_height))
@@ -93,7 +90,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_textureView = GraphicsHelper.DisposeObject(m_textureView);

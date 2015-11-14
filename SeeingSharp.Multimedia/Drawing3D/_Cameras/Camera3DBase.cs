@@ -178,12 +178,12 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Rotates the target around the position of the camera.
         /// </summary>
-        /// <param name="h">horizontal rotation.</param>
-        /// <param name="v">vertical rotation.</param>
-        public void Rotate(float HRot, float VRot)
+        /// <param name="hRot">horizontal rotation.</param>
+        /// <param name="vRot">vertical rotation.</param>
+        public void Rotate(float hRot, float vRot)
         {
-            m_hRotation += HRot;
-            m_vRotation += VRot;
+            m_hRotation += hRot;
+            m_vRotation += vRot;
 
             if (m_vRotation >= (float)Math.PI / 2f) { m_vRotation = (float)Math.PI / 2f - 0.001f; }
             if (m_vRotation <= -(float)Math.PI / 2f) { m_vRotation = -(float)Math.PI / 2f + 0.001f; }

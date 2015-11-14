@@ -89,8 +89,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Updates all parameters.
         /// </summary>
-        /// <param name="renderState">The render state on which to apply.</param>
-        /// <param name="timeValue">Current time value to set.</param>
         internal void UpdateValues(RenderState renderState, CBPerView cbPerView)
         {
             m_cbPerView.SetData(renderState.Device.DeviceImmediateContextD3D11, cbPerView);
@@ -127,7 +125,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_cbPerView = resources.GetResourceAndEnsureLoaded(
@@ -138,12 +135,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             m_cbPerView = null;
             m_postprocessEffect = null;
-            //resources.RemoveResource(KEY_CONSTANT_BUFFER);
         }
 
         /// <summary>

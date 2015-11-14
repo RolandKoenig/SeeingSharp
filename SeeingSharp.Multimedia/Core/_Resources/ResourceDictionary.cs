@@ -151,7 +151,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Adds the given resource to the dictionary.
         /// </summary>
-        /// <param name="resourceKey">The key of the resource.</param>
+        /// <param name="resource">The key of the resource.</param>
         internal ResourceType AddResource<ResourceType>(ResourceType resource)
             where ResourceType : Resource
         {
@@ -472,7 +472,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the resource with the given key.
         /// </summary>
-        /// <param name="name">Key of the resource.</param>
+        /// <param name="key">Key of the resource.</param>
         public Resource this[NamedOrGenericKey key]
         {
             get { return m_resources[key].Resource; }

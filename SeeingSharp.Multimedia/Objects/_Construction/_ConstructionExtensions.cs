@@ -61,7 +61,6 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Transforms positions and normals of all vertices using the given transform matrix
         /// </summary>
-        /// <param name="transformMatrix"></param>
         public static void TransformVertices(this IEnumerable<VertexStructure> structures, Matrix4x4 matrix)
         {
             foreach (VertexStructure actStructure in structures)

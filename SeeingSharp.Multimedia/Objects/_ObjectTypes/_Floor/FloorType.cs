@@ -50,7 +50,7 @@ namespace SeeingSharp.Multimedia.Objects
         private NamedOrGenericKey m_bottomMaterial;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GroundObject"/> class.
+        /// Initializes a new instance of the <see cref="FloorType"/> class.
         /// </summary>
         public FloorType(Vector2 tileSize, float borderSize)
         {
@@ -120,7 +120,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Sets the tilemap.
         /// </summary>
-        /// <param name="timeMap">The new tilemap to apply (use null for empty tiles).</param>
+        /// <param name="tileMap">The new tilemap to apply (use null for empty tiles).</param>
         public void SetTilemap(bool[,] tileMap)
         {
             //Get width and height of the tilemap

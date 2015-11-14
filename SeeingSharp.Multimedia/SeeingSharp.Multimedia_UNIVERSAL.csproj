@@ -34,9 +34,10 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <SuppressXamlWarnings>1591</SuppressXamlWarnings>
-    <DocumentationFile>
-    </DocumentationFile>
+    <SuppressXamlWarnings>
+    </SuppressXamlWarnings>
+    <DocumentationFile>bin.Universal\Debug\SeeingSharp.Multimedia.XML</DocumentationFile>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

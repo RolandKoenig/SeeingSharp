@@ -34,7 +34,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderPassBase" /> class.
         /// </summary>
-        /// <param name="name">The name.</param>
         public RenderPassBase()
         {
 

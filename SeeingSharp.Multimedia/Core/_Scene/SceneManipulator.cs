@@ -174,7 +174,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Removes the resource with the given key.
         /// </summary>
-        /// <typeparam name="ResourceType">The type of the resource.</typeparam>
         /// <param name="resourceKey">The key of the resource to be deleted.</param>
         public void RemoveResource(NamedOrGenericKey resourceKey)
         {
@@ -282,6 +281,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Adds a new generic object targeting to the given geometry resource.
         /// </summary>
         /// <param name="geometryResource">The geometry to be used.</param>
+        /// <param name="layer">The layer on which to add the object.</param>
         public GenericObject AddGeneric(NamedOrGenericKey geometryResource, string layer)
         {
             return this.Add(new GenericObject(geometryResource), layer);
@@ -305,6 +305,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="geometryResource">The geometry to be used.</param>
         /// <param name="position">The position for the created object.</param>
+        /// <param name="layer">The layer on which to add the object.</param>
         public GenericObject AddGeneric(NamedOrGenericKey geometryResource, Vector3 position, string layer)
         {
             GenericObject newGenericObject = new GenericObject(geometryResource);

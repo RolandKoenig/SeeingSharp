@@ -40,7 +40,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderPassDefaultTransparent" /> class.
         /// </summary>
-        /// <param name="name">The name.</param>
         public RenderPassDefaultTransparent()
         {
 
@@ -73,6 +72,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Loads the resource.
         /// </summary>
+        /// <param name="device">The target device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
@@ -85,6 +85,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Unloads the resource.
         /// </summary>
+        /// <param name="device">The target device.</param>
         /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {

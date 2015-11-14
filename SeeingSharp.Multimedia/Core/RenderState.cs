@@ -78,11 +78,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderState"/> class.
         /// </summary>
-        /// <param name="device">The device.</param>
-        /// <param name="renderTargetViews">The render target views.</param>
-        /// <param name="depthStencilView">The depth stencil view.</param>
-        /// <param name="viewport">The viewport.</param>
-        /// <param name="camera">The camera for the new render target.</param>
         internal RenderState(
             EngineDevice device,
             PerformanceAnalyzer performanceCalculator,
@@ -274,7 +269,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Pushes a scene onto the stack.
         /// </summary>
-        /// <param name="scene">Scene to push.</param>
+        /// <param name="scene">Scene to be pushed onto the stack.</param>
+        /// <param name="resourceDictionary">The <see cref="ResourceDictionary"/> to be pushed onto the stack.</param>
         public IDisposable PushScene(Scene scene, ResourceDictionary resourceDictionary)
         {
             if (m_disposed) { throw new ObjectDisposedException("RenderState"); }

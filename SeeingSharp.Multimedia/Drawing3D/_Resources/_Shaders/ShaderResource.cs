@@ -63,7 +63,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             //Load the shader itself
@@ -81,7 +80,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             UnloadShader();
@@ -90,7 +88,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads a shader using the given bytecode.
         /// </summary>
-        /// <param name="inStream">A reading stream to the shader's bytecode.</param>
         protected internal abstract void LoadShader(EngineDevice device, byte[] shaderBytecode);
 
         /// <summary>

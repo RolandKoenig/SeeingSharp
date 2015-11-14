@@ -380,8 +380,6 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Imports the texture node where the xml reader is currently located.
         /// </summary>
-        /// <param name="inStreamXml">The xml reader object.</param>
-        /// <param name="container">The container where to import to.</param>
         private void ImportObject(XmlReader inStreamXml, ImportedModelContainer container, SceneObject parentObject)
         {
             Vector3 upVector = Vector3.UnitY;

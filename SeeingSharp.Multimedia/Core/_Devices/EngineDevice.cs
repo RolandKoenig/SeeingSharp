@@ -98,7 +98,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineDevice"/> class.
         /// </summary>
-        /// <param name="hostAdapter">The host adapter.</param>
         internal EngineDevice(GraphicsCore core, TargetHardware targetHardware, GraphicsCoreConfiguration coreConfiguration, DXGI.Adapter1 adapter, bool isSoftwareAdapter, bool debugEnabled)
         {
             m_core = core;
@@ -210,7 +209,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Get the sample description for the given quality level.
         /// </summary>
-        /// <param name="qualityLevel">The quality level for which a sample description is needed.</param>
         internal DXGI.SampleDescription GetSampleDescription(bool antialiasingEnabled)
         {
             if (antialiasingEnabled) { return m_sampleDescWithAntialiasing; }

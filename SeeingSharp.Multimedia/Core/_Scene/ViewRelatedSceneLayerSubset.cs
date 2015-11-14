@@ -86,8 +86,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewRelatedSceneLayerSubset" /> class.
         /// </summary>
-        /// <param name="sceneLayer">The scene layer.</param>
-        /// <param name="viewInformation">The view information.</param>
         internal ViewRelatedSceneLayerSubset(SceneLayer sceneLayer, ViewInformation viewInformation, ResourceDictionary resources, int viewIndex)
         {
             m_scene = sceneLayer.Scene;
@@ -546,8 +544,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Subscribes the given object to the given render pass.
         /// </summary>
-        /// <param name="passInfo">The pass to subscribe on.</param>
-        /// <param name="sceneObject">The scene object to subscribe.</param>
         internal RenderPassSubscription SubscribeForPass(RenderPassInfo passInfo, SceneObject sceneObject, Action<RenderState> renderMethod)
         {
             if (!m_isSubscribeUnsubscribeAllowed) { throw new SeeingSharpException("Subscription is not allowed currently!"); }
@@ -565,8 +561,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Unsubscribes the given object from the given render pass.
         /// </summary>
-        /// <param name="passInfo">The pass to unsubscribe from.</param>
-        /// <param name="sceneObject">The scene object to unsubscribe.</param>
         internal void UnsubscribeForPass(RenderPassSubscription subscription)
         {
             if (!m_isSubscribeUnsubscribeAllowed) { throw new SeeingSharpException("Subscription is not allowed currently!"); }
@@ -726,8 +720,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Rendering logic for lines renderings.
         /// </summary>
-        /// <param name="renderState">Current render state.</param>
-        /// <param name="invalidObjects">A collection containing all invalid objects (raised exceptions during rendering..).</param>
         private void RenderPass(
             RenderPassBase renderPass, PassSubscribionProperties subscriptions,
             RenderState renderState, ref List<SceneObject> invalidObjects)

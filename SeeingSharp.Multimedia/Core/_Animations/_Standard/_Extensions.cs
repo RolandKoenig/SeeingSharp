@@ -59,6 +59,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Waits until given task has finished executing.
         /// </summary>
         /// <param name="builder">The AnimationSequenceBuilder object.</param>
+        /// <param name="blockingTask">The Task for which we have to wait.</param>
         public static IAnimationSequenceBuilder<ObjectType> WaitTaskFinished<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder, Task blockingTask)
             where ObjectType : class
         {
@@ -105,6 +106,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Adds a lazy animation object.
         /// </summary>
+        /// <param name="builder">The AnimationSequenceBuilder object.</param>
         /// <param name="animationCreator">A lambda that creates the animation.</param>
         public static IAnimationSequenceBuilder<ObjectType> Lazy<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder, Func<IAnimation> animationCreator)
             where ObjectType : class
@@ -116,6 +118,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Builds a lazy animation object using the given child sequence.
         /// </summary>
+        /// <param name="builder">The AnimationSequenceBuilder object.</param>
         /// <param name="childSequenceBuilder">A SequenceBuilder building a child sequence.</param>
         public static IAnimationSequenceBuilder<ObjectType> Lazy<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder, Action<IAnimationSequenceBuilder<ObjectType>> childSequenceBuilder)
             where ObjectType : class

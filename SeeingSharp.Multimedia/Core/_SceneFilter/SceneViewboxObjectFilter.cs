@@ -35,16 +35,18 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class SceneViewboxObjectFilter : SceneObjectFilter
     {
-        // Values for viewbox clipping
+        #region Values for viewbox clipping
         [IgnoreGenericClone]
         private ViewInformation m_viewInfo;
         [IgnoreGenericClone]
         private BoundingFrustum m_boundingFrustum;
+        #endregion
 
-        // Values for y-filter
+        #region Values for y-filter
         private bool m_enableYFilter;
         private float m_yFilterMin;
         private float m_yFilterMax;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneViewboxObjectFilter"/> class.
@@ -74,6 +76,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Checks for visibility of the given object.
         /// </summary>
         /// <param name="input">The object to be checked..</param>
+        /// <param name="viewInfo">The view on which to check for visibility.</param>
         public override bool IsObjectVisible(SceneObject input, ViewInformation viewInfo)
         {
             if (m_viewInfo == null) { return true; }

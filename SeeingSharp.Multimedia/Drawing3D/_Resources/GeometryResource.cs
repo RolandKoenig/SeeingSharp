@@ -50,7 +50,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="GeometryResource"/> class.
         /// </summary>
-        /// <param name="name">The name of the resource.</param>
         public GeometryResource(ObjectType objectType)
         {
             m_objectType = objectType;
@@ -61,7 +60,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="GeometryResource"/> class.
         /// </summary>
-        /// <param name="name">The name.</param>
         /// <param name="vertexStructures">The vertex structures.</param>
         public GeometryResource(params VertexStructure[] vertexStructures)
             : this(new GenericObjectType(vertexStructures))
@@ -99,7 +97,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Redefines the content of this geometry resource.
         /// </summary>
-        /// <param name="vertexStructures">The new ObjectType to be applied.</param>
         public void Redefine(ResourceDictionary resources, ObjectType objectType)
         {
             //Unload resource first if it was loaded
@@ -123,7 +120,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Redefines the content of this geometry resource.
         /// </summary>
-        /// <param name="vertexStructures">An array containing all new vertex structures.</param>
         public void Redefine(ResourceDictionary resources, params VertexStructure[] vertexStructures)
         {
             this.Redefine(resources, new GenericObjectType(vertexStructures));
@@ -199,7 +195,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Loads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             //Build structures
@@ -248,7 +243,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Unloads the resource.
         /// </summary>
-        /// <param name="resources">Parent ResourceDictionary.</param>
         protected override void UnloadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             for (int loop = 0; loop < m_loadedStructures.Length; loop++)
@@ -266,8 +260,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Builds vertex and index buffers.
         /// </summary>
         /// <param name="device">The device on which to build all buffers.</param>
-        /// <param name="vertexBuffers">An array containing all vertex buffers.</param>
-        /// <param name="indexBuffers">An array containing all index buffers.</param>
+        /// <param name="structures">All structure to be loaded.</param>
         /// <param name="resources">The current resource dictionary</param>
         protected virtual LoadedStructureInfo[] BuildBuffers(EngineDevice device, VertexStructure[] structures, ResourceDictionary resources)
         {

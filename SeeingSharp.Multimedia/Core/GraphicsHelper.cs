@@ -65,27 +65,13 @@ namespace SeeingSharp.Multimedia.Core
         /// Creates a default SwapChain for the given target control.
         /// </summary>
         /// <param name="targetControl">Target control of the swap chain.</param>
-        /// <param name="factory">Factory for SwapChain creation.</param>
         /// <param name="device">Graphics device.</param>
+        /// <param name="gfxConfig">The current graphics configuration.</param>
         internal static DXGI.SwapChain CreateDefaultSwapChain(WinForms.Control targetControl, EngineDevice device, GraphicsViewConfiguration gfxConfig)
         {
             targetControl.EnsureNotNull("targetControl");
             device.EnsureNotNull("device");
             gfxConfig.EnsureNotNull("gfxConfig");
-
-            //DXGI.SwapChainDescription1 desc = new SharpDX.DXGI.SwapChainDescription1()
-            //{
-            //    Width = width,
-            //    Height = height,
-            //    Format = DEFAULT_TEXTURE_FORMAT,
-            //    Stereo = false,
-            //    SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
-            //    Usage = SharpDX.DXGI.Usage.BackBuffer | SharpDX.DXGI.Usage.RenderTargetOutput,
-            //    BufferCount = 2,
-            //    Scaling = SharpDX.DXGI.Scaling.Stretch,
-            //    SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,
-            //    AlphaMode = gfxConfig.AlphaEnabledSwapChain ? DXGI.AlphaMode.Premultiplied : SharpDX.DXGI.AlphaMode.Ignore
-            //};
 
             // Create the swap chain description
             DXGI.SwapChainDescription swapChainDesc = new DXGI.SwapChainDescription();
@@ -365,7 +351,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Loads a bitmap using WIC.
         /// </summary>
-        /// <param name="inStream">The stream from wich to load the texture file.</param>
         internal static WicBitmapSourceInternal LoadBitmapSource(ResourceLink resource)
         {
             using(Stream inStream = resource.OpenInputStream())
@@ -403,7 +388,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Loads a bitmap using WIC.
         /// </summary>
-        /// <param name="inStream">The stream from wich to load the texture file.</param>
         internal static WicBitmapSourceInternal LoadBitmapSource_D2D(ResourceLink resource)
         {
             using (Stream inStream = resource.OpenInputStream())
@@ -563,7 +547,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Creates a default viewport for the given width and height
         /// </summary>
-        /// <param name="targetControl">Target control object.</param>
         internal static SharpDX.ViewportF CreateDefaultViewport(int width, int height)
         {
             width.EnsurePositive("width");
@@ -874,6 +857,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="device">Graphics device.</param>
         /// <param name="width">Width of generated texture.</param>
         /// <param name="height">Height of generated texture.</param>
+        /// <param name="gfxConfig">Current graphics configuration.</param>
         internal static D3D11.Texture2D CreateDepthBufferTexture(EngineDevice device, int width, int height, GraphicsViewConfiguration gfxConfig)
         {
             device.EnsureNotNull("device");
@@ -948,6 +932,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Calculate the Bias value depending on the given value to be added to the depth buffer.
         /// </summary>
+        /// <param name="device">The device for which to get the value.</param>
         /// <param name="zValue">The z value to be added.</param>
         public static int GetDepthBiasValue(EngineDevice device, float zValue)
         {
@@ -1194,7 +1179,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="device">The target graphics device.</param>
         /// <param name="subdirectory">The subdirectory where the shader is located.</param>
         /// <param name="shaderNameWithoutExt">The name of the shader without extension.</param>
-        /// <param name="isMinimalistic">Was minimalistic shader chosen?</param>
+        /// <param name="shaderModel">The shader model to be loaded.</param>
         /// <returns>A tuple containing namespace and filename.</returns>
         internal static Tuple<string, string> GetShaderResourcePath(
             EngineDevice device,
@@ -1234,7 +1219,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="subdirectory">The subdirectory where the shader is located.</param>
         /// <param name="shaderNameWithoutExt">The name of the shader without extension.</param>
-        /// <param name="isMinimalistic">Was minimalistic shader chosen?</param>
+        /// <param name="device">The target device object.</param>
+        /// <param name="shaderModel">The target shader model.</param>
         internal static AssemblyResourceLink GetShaderResourceLink(EngineDevice device, string subdirectory, string shaderNameWithoutExt, string shaderModel)
         {
             device.EnsureNotNull("device");
@@ -1250,6 +1236,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets a vertex shader resource pointing to given shader file.
         /// </summary>
+        /// <param name="device">The target device object.</param>
         /// <param name="subdirectory">The subdirectory where the shader is located.</param>
         /// <param name="shaderNameWithoutExt">The name of the shader without extension.</param>
         internal static VertexShaderResource GetVertexShaderResource(EngineDevice device, string subdirectory, string shaderNameWithoutExt)
@@ -1266,6 +1253,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets a pixel shader resource pointing to given shader file.
         /// </summary>
+        /// <param name="device">The target device object.</param>
         /// <param name="subdirectory">The subdirectory where the shader is located.</param>
         /// <param name="shaderNameWithoutExt">The name of the shader without extension.</param>
         internal static PixelShaderResource GetPixelShaderResource(EngineDevice device, string subdirectory, string shaderNameWithoutExt)

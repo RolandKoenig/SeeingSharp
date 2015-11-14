@@ -36,6 +36,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="start">Starting color.</param>
         /// <param name="destination">Destination color.</param>
         /// <param name="gradientDirection">Direction of the gradient.</param>
+        /// <param name="height">Height of the texture in pixels.</param>
+        /// <param name="widht">Width of the texture in pixels.</param>
         public LinearGradientTextureResource(
             Color4 start,
             Color4 destination,
@@ -68,7 +70,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets the start-point of the gradient.
         /// </summary>
-        /// <param name="direction">Direction of the gradient.</param>
         private static GDI.Point GetStartPoint(GradientDirection direction, int width, int height)
         {
             switch (direction)
@@ -88,7 +89,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets the target-point of the gradient.
         /// </summary>
-        /// <param name="direction">Direction of the gradient.</param>
         private static GDI.Point GetTargetPoint(GradientDirection direction, int width, int height)
         {
             switch (direction)

@@ -84,7 +84,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// This method waits for an asynchronous event message from the MF framework.
         /// </summary>
         /// <param name="eventType">The type of the event to wait for.</param>
-        /// <param name="specificEventHandler">A specific event handler implemented by the caller. Returns false if the event is not handled.</param>
         /// <param name="cancelToken">The cancellation token.</param>
         internal Task<MF.MediaEvent> WaitForEventAsync(
             MF.MediaEventTypes eventType,
@@ -162,17 +161,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
             }
         }
 
-        /// <summary>
-        ///   <p><strong>Applies to: </strong>desktop apps | Metro style apps</p><p> </p><p>Called when an asynchronous operation is completed.</p>
-        /// </summary>
-        /// <param name="asyncResultRef"><dd> <p>Pointer to the <strong><see cref="T:SharpDX.MediaFoundation.AsyncResult" /></strong> interface. Pass this reference to the asynchronous <strong>End...</strong> method to complete the asynchronous call.</p> </dd></param>
-        /// <!-- Failed to insert some or all of included XML --><include file=".\..\Documentation\CodeComments.xml" path="/comments/comment[@id='IMFAsyncCallback::Invoke']/*" />
-        ///   <msdn-id>bb970360</msdn-id>
-        ///   <unmanaged>HRESULT IMFAsyncCallback::Invoke([In, Optional] IMFAsyncResult* pAsyncResult)</unmanaged>
-        ///   <unmanaged-short>IMFAsyncCallback::Invoke</unmanaged-short>
-        /// <remarks>
-        ///   <p>Within your implementation of <strong>Invoke</strong>, call the corresponding <strong>End...</strong> method.</p><p>This interface is available on the following platforms if the Windows Media Format 11 SDK redistributable components are installed:</p><ul> <li>Windows?XP with Service Pack?2 (SP2) and later.</li> <li>Windows?XP Media Center Edition?2005 with KB900325 (Windows?XP Media Center Edition?2005) and KB925766 (October 2006 Update Rollup for Windows?XP Media Center Edition) installed.</li> </ul>
-        /// </remarks>
         public void Invoke(MF.AsyncResult asyncResultRef)
         {
             MF.MediaEventTypes eventType;
