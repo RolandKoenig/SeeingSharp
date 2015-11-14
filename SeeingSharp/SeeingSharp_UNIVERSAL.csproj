@@ -58,6 +58,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Misc\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridAutoRefreshBehavior.cs" />
     <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
@@ -199,15 +202,6 @@
     <Compile Include="_Math\MathExtensions.cs" />
     <Compile Include="_Math\_Mechanics\MovementAnimationHelper.cs" />
     <Compile Include="_Math\_Mechanics\MovementSpeed.cs" />
-    <Compile Include="_Math\_Old\Matrix3x2.MIT.cs" />
-    <Compile Include="_Math\_Old\Matrix4x4.Custom.cs" />
-    <Compile Include="_Math\_Old\Matrix4x4.MIT.cs" />
-    <Compile Include="_Math\_Old\Quaternion.MIT.cs" />
-    <Compile Include="_Math\_Old\Vector2.MIT.cs" />
-    <Compile Include="_Math\_Old\Vector3.Custom.cs" />
-    <Compile Include="_Math\_Old\Vector3.MIT.cs" />
-    <Compile Include="_Math\_Old\Vector4.Custom.cs" />
-    <Compile Include="_Math\_Old\Vector4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Angle.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Bool.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Bool4.MIT.cs" />

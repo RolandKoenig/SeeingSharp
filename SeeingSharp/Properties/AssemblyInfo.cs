@@ -26,12 +26,4 @@ using System.Resources;
 
 [assembly: AssemblyTitle("Seeing#")]
 [assembly: AssemblyDescription("Main assembly containing all base classes of Seeing#")]
-[assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("RolandK")]
-[assembly: AssemblyProduct("Seeing#")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
-[assembly: AssemblyTrademark("")]
-[assembly: AssemblyCulture("")]
 [assembly: NeutralResourcesLanguage("de")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]

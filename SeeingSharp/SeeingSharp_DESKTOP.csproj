@@ -29,8 +29,11 @@
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <PlatformTarget>AnyCPU</PlatformTarget>
+    <DocumentationFile>bin.Desktop\Debug\SeeingSharp.XML</DocumentationFile>
+    <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+    <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -96,6 +99,9 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Misc\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridAutoRefreshBehavior.cs" />
     <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
@@ -245,7 +251,6 @@
     <Compile Include="_Math\_Custom\Line.cs" />
     <Compile Include="_Math\_Custom\Line2D.cs" />
     <Compile Include="_Math\_Custom\Matrix3x2Stack.cs" />
-    <Compile Include="_Math\_Old\Matrix4x4.Custom.cs" />
     <Compile Include="_Math\_Custom\Matrix4Stack.cs" />
     <Compile Include="_Math\_Custom\Plane.cs" />
     <Compile Include="_Math\_Custom\Point.Custom.cs" />
@@ -254,8 +259,6 @@
     <Compile Include="_Math\_Custom\Ray.Custom.cs" />
     <Compile Include="_Math\_Custom\Ray2D.cs" />
     <Compile Include="_Math\_Custom\Size2.Custom.cs" />
-    <Compile Include="_Math\_Old\Vector3.Custom.cs" />
-    <Compile Include="_Math\_Old\Vector4.Custom.cs" />
     <Compile Include="_Math\_Custom\_Misc.cs" />
     <Compile Include="_Math\_Mechanics\MovementAnimationHelper.cs" />
     <Compile Include="_Math\_Mechanics\MovementSpeed.cs" />
@@ -281,21 +284,15 @@
     <Compile Include="_Math\_SharpDXMath\Int3.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Int4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\MathUtil.MIT.cs" />
-    <Compile Include="_Math\_Old\Matrix4x4.MIT.cs" />
-    <Compile Include="_Math\_Old\Matrix3x2.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Matrix5x4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\OrientedBoundingBox.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Plane.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Point.MIT.cs" />
-    <Compile Include="_Math\_Old\Quaternion.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Ray.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Rectangle.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\RectangleF.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Size2.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Size2F.MIT.cs" />
-    <Compile Include="_Math\_Old\Vector2.MIT.cs" />
-    <Compile Include="_Math\_Old\Vector3.MIT.cs" />
-    <Compile Include="_Math\_Old\Vector4.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\Viewport.MIT.cs" />
     <Compile Include="_Math\_SharpDXMath\ViewportF.MIT.cs" />
     <Compile Include="_Math\MathExtensions.cs" />
@@ -326,6 +323,10 @@
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

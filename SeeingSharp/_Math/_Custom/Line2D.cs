@@ -46,9 +46,9 @@ namespace SeeingSharp
         /// Initializes a new instance of the <see cref="Line2D" /> struct.
         /// </summary>
         /// <param name="x1">X coordinate of the start point.</param>
-        /// <param name="y1">Y coordinate of the start point.<</param>
-        /// <param name="x2">X coordinate of the end point.<</param>
-        /// <param name="y2">Y coordinate of the end point.<</param>
+        /// <param name="y1">Y coordinate of the start point.</param>
+        /// <param name="x2">X coordinate of the end point.</param>
+        /// <param name="y2">Y coordinate of the end point.</param>
         public Line2D(float x1, float y1, float x2, float y2)
             : this(new Vector2(x1, y1), new Vector2(x2, y2))
         {

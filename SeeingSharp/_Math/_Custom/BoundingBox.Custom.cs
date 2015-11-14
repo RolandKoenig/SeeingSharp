@@ -34,10 +34,6 @@ namespace SeeingSharp
     {
         public static BoundingBox Empty = new BoundingBox();
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="AxisAlignedBox"/> struct.
-        /// </summary>
-        /// <param name="containedLocations">The contained locations.</param>
         public BoundingBox(IEnumerable<Vector3> containedLocations)
         {
             Vector3 minimum = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);

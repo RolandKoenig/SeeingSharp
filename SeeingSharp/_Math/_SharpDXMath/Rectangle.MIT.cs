@@ -63,21 +63,21 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Checks, if specified point is inside <see cref="SharpDX.Rectangle"/>.
+        /// Checks, if specified point is inside <see cref="SeeingSharp.Rectangle"/>.
         /// </summary>
         /// <param name="x">X point coordinate.</param>
         /// <param name="y">Y point coordinate.</param>
-        /// <returns><c>true</c> if point is inside <see cref="SharpDX.Rectangle"/>, otherwise <c>false</c>.</returns>
+        /// <returns><c>true</c> if point is inside <see cref="SeeingSharp.Rectangle"/>, otherwise <c>false</c>.</returns>
         public bool Contains(float x, float y)
         {
             return (x >= _left && x <= _right && y >= _top && y <= _bottom);
         }
 
         /// <summary>
-        /// Checks, if specified <see cref="SharpDX.Vector2"/> is inside <see cref="SharpDX.Rectangle"/>. 
+        /// Checks, if specified <see cref="SeeingSharp.Vector2"/> is inside <see cref="SeeingSharp.Rectangle"/>. 
         /// </summary> 
-        /// <param name="vector2D">Coordinate <see cref="SharpDX.Vector2"/>.</param>
-        /// <returns><c>true</c> if <see cref="SharpDX.Vector2"/> is inside <see cref="SharpDX.Rectangle"/>, otherwise <c>false</c>.</returns>
+        /// <param name="vector2D">Coordinate <see cref="SeeingSharp.Vector2"/>.</param>
+        /// <returns><c>true</c> if <see cref="SeeingSharp.Vector2"/> is inside <see cref="SeeingSharp.Rectangle"/>, otherwise <c>false</c>.</returns>
         public bool Contains(Vector2 vector2D)
         {
             return (vector2D.X >= _left && vector2D.X <= _right && vector2D.Y >= _top && vector2D.Y <= _bottom);
@@ -391,11 +391,11 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="SharpDX.Rectangle"/> is equal to this instance.
+        /// Determines whether the specified <see cref="SeeingSharp.Rectangle"/> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="SharpDX.Rectangle"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="SeeingSharp.Rectangle"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="SharpDX.Rectangle"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="SeeingSharp.Rectangle"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(Rectangle other)
         {

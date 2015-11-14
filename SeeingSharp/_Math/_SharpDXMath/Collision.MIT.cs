@@ -148,7 +148,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the closest point between a <see cref="SharpDX.Plane"/> and a point.
+        /// Determines the closest point between a <see cref="SeeingSharp.Plane"/> and a point.
         /// </summary>
         /// <param name="plane">The plane to test.</param>
         /// <param name="point">The point to test.</param>
@@ -165,7 +165,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the closest point between a <see cref="SharpDX.BoundingBox"/> and a point.
+        /// Determines the closest point between a <see cref="SeeingSharp.BoundingBox"/> and a point.
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="point">The point to test.</param>
@@ -180,12 +180,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the closest point between a <see cref="SharpDX.BoundingSphere"/> and a point.
+        /// Determines the closest point between a <see cref="SeeingSharp.BoundingSphere"/> and a point.
         /// </summary>
         /// <param name="sphere"></param>
         /// <param name="point">The point to test.</param>
         /// <param name="result">When the method completes, contains the closest point between the two objects;
-        /// or, if the point is directly in the center of the sphere, contains <see cref="SharpDX.Vector3.Zero"/>.</param>
+        /// or, if the point is directly in the center of the sphere, contains <see cref="SeeingSharp.Vector3.Zero"/>.</param>
         public static void ClosestPointSpherePoint(ref BoundingSphere sphere, ref Vector3 point, out Vector3 result)
         {
             //Source: Jorgy343
@@ -203,12 +203,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the closest point between a <see cref="SharpDX.BoundingSphere"/> and a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines the closest point between a <see cref="SeeingSharp.BoundingSphere"/> and a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="sphere1">The first sphere to test.</param>
         /// <param name="sphere2">The second sphere to test.</param>
         /// <param name="result">When the method completes, contains the closest point between the two objects;
-        /// or, if the point is directly in the center of the sphere, contains <see cref="SharpDX.Vector3.Zero"/>.</param>
+        /// or, if the point is directly in the center of the sphere, contains <see cref="SeeingSharp.Vector3.Zero"/>.</param>
         /// <remarks>
         /// If the two spheres are overlapping, but not directly ontop of each other, the closest point
         /// is the 'closest' point of intersection. This can also be considered is the deepest point of
@@ -231,7 +231,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the distance between a <see cref="SharpDX.Plane"/> and a point.
+        /// Determines the distance between a <see cref="SeeingSharp.Plane"/> and a point.
         /// </summary>
         /// <param name="plane">The plane to test.</param>
         /// <param name="point">The point to test.</param>
@@ -246,7 +246,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the distance between a <see cref="SharpDX.BoundingBox"/> and a point.
+        /// Determines the distance between a <see cref="SeeingSharp.BoundingBox"/> and a point.
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="point">The point to test.</param>
@@ -277,7 +277,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the distance between a <see cref="SharpDX.BoundingBox"/> and a <see cref="SharpDX.BoundingBox"/>.
+        /// Determines the distance between a <see cref="SeeingSharp.BoundingBox"/> and a <see cref="SeeingSharp.BoundingBox"/>.
         /// </summary>
         /// <param name="box1">The first box to test.</param>
         /// <param name="box2">The second box to test.</param>
@@ -329,7 +329,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the distance between a <see cref="SharpDX.BoundingSphere"/> and a point.
+        /// Determines the distance between a <see cref="SeeingSharp.BoundingSphere"/> and a point.
         /// </summary>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="point">The point to test.</param>
@@ -346,7 +346,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines the distance between a <see cref="SharpDX.BoundingSphere"/> and a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines the distance between a <see cref="SeeingSharp.BoundingSphere"/> and a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="sphere1">The first sphere to test.</param>
         /// <param name="sphere2">The second sphere to test.</param>
@@ -363,7 +363,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a point.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a point.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="point">The point to test.</param>
@@ -392,12 +392,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a <see cref="SharpDX.Ray"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a <see cref="SeeingSharp.Ray"/>.
         /// </summary>
         /// <param name="ray1">The first ray to test.</param>
         /// <param name="ray2">The second ray to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SharpDX.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersect.</returns>
         /// <remarks>
         /// This method performs a ray vs ray intersection test based on the following formula
@@ -488,7 +488,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a <see cref="SharpDX.Plane"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a <see cref="SeeingSharp.Plane"/>.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="plane">The plane to test.</param>
@@ -526,12 +526,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a <see cref="SharpDX.Plane"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a <see cref="SeeingSharp.Plane"/>.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="plane">The plane to test</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SharpDX.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsPlane(ref Ray ray, ref Plane plane, out Vector3 point)
         {
@@ -550,7 +550,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a triangle.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a triangle.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -657,14 +657,14 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a triangle.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a triangle.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="vertex1">The first vertex of the triangle to test.</param>
         /// <param name="vertex2">The second vertex of the triagnle to test.</param>
         /// <param name="vertex3">The third vertex of the triangle to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SharpDX.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsTriangle(ref Ray ray, ref Vector3 vertex1, ref Vector3 vertex2, ref Vector3 vertex3, out Vector3 point)
         {
@@ -680,7 +680,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a <see cref="SharpDX.BoundingBox"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a <see cref="SeeingSharp.BoundingBox"/>.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="box">The box to test.</param>
@@ -792,12 +792,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a <see cref="SharpDX.Plane"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a <see cref="SeeingSharp.Plane"/>.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="box">The box to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SharpDX.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsBox(ref Ray ray, ref BoundingBox box, out Vector3 point)
         {
@@ -813,7 +813,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="sphere">The sphere to test.</param>
@@ -853,12 +853,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Ray"/> and a <see cref="SharpDX.BoundingSphere"/>. 
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Ray"/> and a <see cref="SeeingSharp.BoundingSphere"/>. 
         /// </summary>
         /// <param name="ray">The ray to test.</param>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="point">When the method completes, contains the point of intersection,
-        /// or <see cref="SharpDX.Vector3.Zero"/> if there was no intersection.</param>
+        /// or <see cref="SeeingSharp.Vector3.Zero"/> if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         public static bool RayIntersectsSphere(ref Ray ray, ref BoundingSphere sphere, out Vector3 point)
         {
@@ -874,7 +874,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Plane"/> and a point.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Plane"/> and a point.
         /// </summary>
         /// <param name="plane">The plane to test.</param>
         /// <param name="point">The point to test.</param>
@@ -894,7 +894,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Plane"/> and a <see cref="SharpDX.Plane"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Plane"/> and a <see cref="SeeingSharp.Plane"/>.
         /// </summary>
         /// <param name="plane1">The first plane to test.</param>
         /// <param name="plane2">The second plane to test.</param>
@@ -914,12 +914,12 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Plane"/> and a <see cref="SharpDX.Plane"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Plane"/> and a <see cref="SeeingSharp.Plane"/>.
         /// </summary>
         /// <param name="plane1">The first plane to test.</param>
         /// <param name="plane2">The second plane to test.</param>
         /// <param name="line">When the method completes, contains the line of intersection
-        /// as a <see cref="SharpDX.Ray"/>, or a zero ray if there was no intersection.</param>
+        /// as a <see cref="SeeingSharp.Ray"/>, or a zero ray if there was no intersection.</param>
         /// <returns>Whether the two objects intersected.</returns>
         /// <remarks>
         /// Although a ray is set to have an origin, the ray returned by this method is really
@@ -957,7 +957,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Plane"/> and a triangle.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Plane"/> and a triangle.
         /// </summary>
         /// <param name="plane">The plane to test.</param>
         /// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -983,7 +983,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Plane"/> and a <see cref="SharpDX.BoundingBox"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Plane"/> and a <see cref="SeeingSharp.BoundingBox"/>.
         /// </summary>
         /// <param name="plane">The plane to test.</param>
         /// <param name="box">The box to test.</param>
@@ -1017,7 +1017,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.Plane"/> and a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.Plane"/> and a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="plane">The plane to test.</param>
         /// <param name="sphere">The sphere to test.</param>
@@ -1041,7 +1041,7 @@ namespace SeeingSharp
 
         /* This implentation is wrong
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.BoundingBox"/> and a triangle.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.BoundingBox"/> and a triangle.
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -1064,7 +1064,7 @@ namespace SeeingSharp
         */
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.BoundingBox"/> and a <see cref="SharpDX.BoundingBox"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.BoundingBox"/> and a <see cref="SeeingSharp.BoundingBox"/>.
         /// </summary>
         /// <param name="box1">The first box to test.</param>
         /// <param name="box2">The second box to test.</param>
@@ -1084,7 +1084,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.BoundingBox"/> and a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.BoundingBox"/> and a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="sphere">The sphere to test.</param>
@@ -1101,7 +1101,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.BoundingSphere"/> and a triangle.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.BoundingSphere"/> and a triangle.
         /// </summary>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -1123,7 +1123,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether there is an intersection between a <see cref="SharpDX.BoundingSphere"/> and a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines whether there is an intersection between a <see cref="SeeingSharp.BoundingSphere"/> and a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="sphere1">First sphere to test.</param>
         /// <param name="sphere2">Second sphere to test.</param>
@@ -1135,7 +1135,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingBox"/> contains a point.
+        /// Determines whether a <see cref="SeeingSharp.BoundingBox"/> contains a point.
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="point">The point to test.</param>
@@ -1154,7 +1154,7 @@ namespace SeeingSharp
 
         /* This implentation is wrong
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingBox"/> contains a triangle.
+        /// Determines whether a <see cref="SeeingSharp.BoundingBox"/> contains a triangle.
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -1178,7 +1178,7 @@ namespace SeeingSharp
         */
 
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingBox"/> contains a <see cref="SharpDX.BoundingBox"/>.
+        /// Determines whether a <see cref="SeeingSharp.BoundingBox"/> contains a <see cref="SeeingSharp.BoundingBox"/>.
         /// </summary>
         /// <param name="box1">The first box to test.</param>
         /// <param name="box2">The second box to test.</param>
@@ -1205,7 +1205,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingBox"/> contains a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines whether a <see cref="SeeingSharp.BoundingBox"/> contains a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="box">The box to test.</param>
         /// <param name="sphere">The sphere to test.</param>
@@ -1229,7 +1229,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingSphere"/> contains a point.
+        /// Determines whether a <see cref="SeeingSharp.BoundingSphere"/> contains a point.
         /// </summary>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="point">The point to test.</param>
@@ -1243,7 +1243,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingSphere"/> contains a triangle.
+        /// Determines whether a <see cref="SeeingSharp.BoundingSphere"/> contains a triangle.
         /// </summary>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="vertex1">The first vertex of the triangle to test.</param>
@@ -1269,7 +1269,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingSphere"/> contains a <see cref="SharpDX.BoundingBox"/>.
+        /// Determines whether a <see cref="SeeingSharp.BoundingSphere"/> contains a <see cref="SeeingSharp.BoundingBox"/>.
         /// </summary>
         /// <param name="sphere">The sphere to test.</param>
         /// <param name="box">The box to test.</param>
@@ -1342,7 +1342,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether a <see cref="SharpDX.BoundingSphere"/> contains a <see cref="SharpDX.BoundingSphere"/>.
+        /// Determines whether a <see cref="SeeingSharp.BoundingSphere"/> contains a <see cref="SeeingSharp.BoundingSphere"/>.
         /// </summary>
         /// <param name="sphere1">The first sphere to test.</param>
         /// <param name="sphere2">The second sphere to test.</param>

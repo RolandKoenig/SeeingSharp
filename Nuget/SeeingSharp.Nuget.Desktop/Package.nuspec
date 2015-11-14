@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>SeeingSharp.Desktop</id>
+    <version>1.0.0-beta</version>
+    <title>Seeing# (Desktop)</title>
+    <authors>RolandK</authors>
+    <owners>RolandK</owners>
+    <description>
+      The desktop build of Seeing#
+    </description>
+    <releaseNotes>
+    </releaseNotes>
+    <summary>
+      The desktop build of Seeing#
+    </summary>
+    <language>en-US</language>
+    <projectUrl>https://github.com/RolandKoenig/SeeingSharp/</projectUrl>
+    <iconUrl>http://www.rolandk.de/files/seeingsharp/logo_50x50.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <licenseUrl>https://github.com/RolandKoenig/SeeingSharp/blob/master/LICENSE</licenseUrl>
+    <copyright>Copyright  2015</copyright>
+    <dependencies>
+        <group targetFramework="net46">
+          <dependency id="AssimpNet" version="3.3.1" />
+          <dependency id="Newtonsoft.Json" version="7.0.1" />
+          <dependency id="PropertyTools.Wpf" version="2015.1.49" />
+          <dependency id="Rx-Core" version="2.2.5" />
+          <dependency id="Rx-Interfaces" version="2.2.5" />
+          <dependency id="Rx-Linq" version="2.2.5" />
+          <dependency id="Rx-Main" version="2.2.5" />
+          <dependency id="Rx-PlatformServices" version="2.2.5" />
+          <dependency id="SharpDX" version="3.0.0-beta01" />
+          <dependency id="SharpDX.D3DCompiler" version="3.0.0-beta01" />
+          <dependency id="SharpDX.Direct2D1" version="3.0.0-beta01" />
+          <dependency id="SharpDX.Direct3D10" version="2.6.3" />
+          <dependency id="SharpDX.Direct3D11" version="3.0.0-beta01" />
+          <dependency id="SharpDX.Direct3D9" version="3.0.0-beta01" />
+          <dependency id="SharpDX.DXGI" version="3.0.0-beta01" />
+          <dependency id="SharpDX.Mathematics" version="3.0.0-beta01" />
+          <dependency id="SharpDX.MediaFoundation" version="3.0.0-beta01" />
+          <dependency id="SharpDX.XAudio2" version="3.0.0-beta01" />
+          <dependency id="SharpDX.XInput" version="3.0.0-beta01" />
+        </group>
+    </dependencies>
+    <references>
+      <group targetFramework="net46">
+        <reference file="SeeingSharp.dll" />
+        <reference file="SeeingSharp.Multimedia.dll" />
+      </group>
+    </references>
+    <tags></tags>
+  </metadata>
+  <files>
+    <file src="lib\" target="lib" />
+    <file src="tools\" target="tools" />
+    <file src="content\" target="content" />
+  </files>
+</package>

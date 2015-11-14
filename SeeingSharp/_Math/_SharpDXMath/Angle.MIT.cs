@@ -98,7 +98,7 @@ namespace SeeingSharp
         private int radiansInt;
 
         /// <summary>
-        /// Initializes a new instance of the SharpDX.AngleSingle structure with the
+        /// Initializes a new instance of the SeeingSharp.AngleSingle structure with the
         /// given unit dependant angle and unit type.
         /// </summary>
         /// <param name="angle">A unit dependant measure of the angle.</param>
@@ -131,7 +131,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the SharpDX.AngleSingle structure using the
+        /// Initializes a new instance of the SeeingSharp.AngleSingle structure using the
         /// arc length formula (θ = s/r).
         /// </summary>
         /// <param name="arcLength">The measure of the arc.</param>
@@ -143,7 +143,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Wraps this SharpDX.AngleSingle to be in the range [π, -π].
+        /// Wraps this SeeingSharp.AngleSingle to be in the range [π, -π].
         /// </summary>
         public void Wrap()
         {
@@ -158,7 +158,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Wraps this SharpDX.AngleSingle to be in the range [0, 2π).
+        /// Wraps this SeeingSharp.AngleSingle to be in the range [0, 2π).
         /// </summary>
         public void WrapPositive()
         {
@@ -171,7 +171,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets or sets the total number of revolutions this SharpDX.AngleSingle represents.
+        /// Gets or sets the total number of revolutions this SeeingSharp.AngleSingle represents.
         /// </summary>
         public float Revolutions
         {
@@ -180,7 +180,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets or sets the total number of degrees this SharpDX.AngleSingle represents.
+        /// Gets or sets the total number of degrees this SeeingSharp.AngleSingle represents.
         /// </summary>
         public float Degrees
         {
@@ -189,7 +189,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets or sets the minutes component of the degrees this SharpDX.AngleSingle represents.
+        /// Gets or sets the minutes component of the degrees this SeeingSharp.AngleSingle represents.
         /// When setting the minutes, if the value is in the range (-60, 60) the whole degrees are
         /// not changed; otherwise, the whole degrees may be changed. Fractional values may set
         /// the seconds component.
@@ -222,7 +222,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets or sets the seconds of the degrees this SharpDX.AngleSingle represents.
+        /// Gets or sets the seconds of the degrees this SeeingSharp.AngleSingle represents.
         /// When setting te seconds, if the value is in the range (-60, 60) the whole minutes
         /// or whole degrees are not changed; otherwise, the whole minutes or whole degrees
         /// may be changed.
@@ -267,7 +267,7 @@ namespace SeeingSharp
         }
         
         /// <summary>
-        /// Gets or sets the total number of radians this SharpDX.AngleSingle represents.
+        /// Gets or sets the total number of radians this SeeingSharp.AngleSingle represents.
         /// </summary>
         public float Radians
         {
@@ -276,7 +276,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets or sets the total number of milliradians this SharpDX.AngleSingle represents.
+        /// Gets or sets the total number of milliradians this SeeingSharp.AngleSingle represents.
         /// One milliradian is equal to 1/(2000π).
         /// </summary>
         public float Milliradians
@@ -286,7 +286,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets or sets the total number of gradians this SharpDX.AngleSingle represents.
+        /// Gets or sets the total number of gradians this SeeingSharp.AngleSingle represents.
         /// </summary>
         public float Gradians
         {
@@ -295,7 +295,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a System.Boolean that determines whether this SharpDX.Angle
+        /// Gets a System.Boolean that determines whether this SeeingSharp.Angle
         /// is a right angle (i.e. 90° or π/2).
         /// </summary>
         public bool IsRight
@@ -304,7 +304,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a System.Boolean that determines whether this SharpDX.Angle
+        /// Gets a System.Boolean that determines whether this SeeingSharp.Angle
         /// is a straight angle (i.e. 180° or π).
         /// </summary>
         public bool IsStraight
@@ -313,7 +313,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a System.Boolean that determines whether this SharpDX.Angle
+        /// Gets a System.Boolean that determines whether this SeeingSharp.Angle
         /// is a full rotation angle (i.e. 360° or 2π).
         /// </summary>
         public bool IsFullRotation
@@ -322,7 +322,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a System.Boolean that determines whether this SharpDX.Angle
+        /// Gets a System.Boolean that determines whether this SeeingSharp.Angle
         /// is an oblique angle (i.e. is not 90° or a multiple of 90°).
         /// </summary>
         public bool IsOblique
@@ -331,7 +331,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a System.Boolean that determines whether this SharpDX.Angle
+        /// Gets a System.Boolean that determines whether this SeeingSharp.Angle
         /// is an acute angle (i.e. less than 90° but greater than 0°).
         /// </summary>
         public bool IsAcute
@@ -340,7 +340,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a System.Boolean that determines whether this SharpDX.Angle
+        /// Gets a System.Boolean that determines whether this SeeingSharp.Angle
         /// is an obtuse angle (i.e. greater than 90° but less than 180°).
         /// </summary>
         public bool IsObtuse
@@ -349,7 +349,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a System.Boolean that determines whether this SharpDX.Angle
+        /// Gets a System.Boolean that determines whether this SeeingSharp.Angle
         /// is a reflex angle (i.e. greater than 180° but less than 360°).
         /// </summary>
         public bool IsReflex
@@ -358,7 +358,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a SharpDX.AngleSingle instance that complements this angle (i.e. the two angles add to 90°).
+        /// Gets a SeeingSharp.AngleSingle instance that complements this angle (i.e. the two angles add to 90°).
         /// </summary>
         public AngleSingle Complement
         {
@@ -366,7 +366,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a SharpDX.AngleSingle instance that supplements this angle (i.e. the two angles add to 180°).
+        /// Gets a SeeingSharp.AngleSingle instance that supplements this angle (i.e. the two angles add to 180°).
         /// </summary>
         public AngleSingle Supplement
         {
@@ -374,10 +374,10 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Wraps the SharpDX.AngleSingle given in the value argument to be in the range [π, -π].
+        /// Wraps the SeeingSharp.AngleSingle given in the value argument to be in the range [π, -π].
         /// </summary>
-        /// <param name="value">A SharpDX.AngleSingle to wrap.</param>
-        /// <returns>The SharpDX.AngleSingle that is wrapped.</returns>
+        /// <param name="value">A SeeingSharp.AngleSingle to wrap.</param>
+        /// <returns>The SeeingSharp.AngleSingle that is wrapped.</returns>
         public static AngleSingle Wrap(AngleSingle value)
         {
             value.Wrap();
@@ -385,10 +385,10 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Wraps the SharpDX.AngleSingle given in the value argument to be in the range [0, 2π).
+        /// Wraps the SeeingSharp.AngleSingle given in the value argument to be in the range [0, 2π).
         /// </summary>
-        /// <param name="value">A SharpDX.AngleSingle to wrap.</param>
-        /// <returns>The SharpDX.AngleSingle that is wrapped.</returns>
+        /// <param name="value">A SeeingSharp.AngleSingle to wrap.</param>
+        /// <returns>The SeeingSharp.AngleSingle that is wrapped.</returns>
         public static AngleSingle WrapPositive(AngleSingle value)
         {
             value.WrapPositive();
@@ -396,11 +396,11 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Compares two SharpDX.AngleSingle instances and returns the smaller angle.
+        /// Compares two SeeingSharp.AngleSingle instances and returns the smaller angle.
         /// </summary>
-        /// <param name="left">The first SharpDX.AngleSingle instance to compare.</param>
-        /// <param name="right">The second SharpDX.AngleSingle instance to compare.</param>
-        /// <returns>The smaller of the two given SharpDX.AngleSingle instances.</returns>
+        /// <param name="left">The first SeeingSharp.AngleSingle instance to compare.</param>
+        /// <param name="right">The second SeeingSharp.AngleSingle instance to compare.</param>
+        /// <returns>The smaller of the two given SeeingSharp.AngleSingle instances.</returns>
         public static AngleSingle Min(AngleSingle left, AngleSingle right)
         {
             if (left.radians < right.radians)
@@ -410,11 +410,11 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Compares two SharpDX.AngleSingle instances and returns the greater angle.
+        /// Compares two SeeingSharp.AngleSingle instances and returns the greater angle.
         /// </summary>
-        /// <param name="left">The first SharpDX.AngleSingle instance to compare.</param>
-        /// <param name="right">The second SharpDX.AngleSingle instance to compare.</param>
-        /// <returns>The greater of the two given SharpDX.AngleSingle instances.</returns>
+        /// <param name="left">The first SeeingSharp.AngleSingle instance to compare.</param>
+        /// <param name="right">The second SeeingSharp.AngleSingle instance to compare.</param>
+        /// <returns>The greater of the two given SeeingSharp.AngleSingle instances.</returns>
         public static AngleSingle Max(AngleSingle left, AngleSingle right)
         {
             if (left.radians > right.radians)
@@ -424,7 +424,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Adds two SharpDX.AngleSingle objects and returns the result.
+        /// Adds two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The first object to add.</param>
         /// <param name="right">The second object to add.</param>
@@ -435,7 +435,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Subtracts two SharpDX.AngleSingle objects and returns the result.
+        /// Subtracts two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The first object to subtract.</param>
         /// <param name="right">The second object to subtract.</param>
@@ -446,7 +446,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Multiplies two SharpDX.AngleSingle objects and returns the result.
+        /// Multiplies two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The first object to multiply.</param>
         /// <param name="right">The second object to multiply.</param>
@@ -457,7 +457,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Divides two SharpDX.AngleSingle objects and returns the result.
+        /// Divides two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The numerator object.</param>
         /// <param name="right">The denominator object.</param>
@@ -468,7 +468,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a new SharpDX.AngleSingle instance that represents the zero angle (i.e. 0°).
+        /// Gets a new SeeingSharp.AngleSingle instance that represents the zero angle (i.e. 0°).
         /// </summary>
         public static AngleSingle ZeroAngle
         {
@@ -476,7 +476,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a new SharpDX.AngleSingle instance that represents the right angle (i.e. 90° or π/2).
+        /// Gets a new SeeingSharp.AngleSingle instance that represents the right angle (i.e. 90° or π/2).
         /// </summary>
         public static AngleSingle RightAngle
         {
@@ -484,7 +484,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a new SharpDX.AngleSingle instance that represents the straight angle (i.e. 180° or π).
+        /// Gets a new SeeingSharp.AngleSingle instance that represents the straight angle (i.e. 180° or π).
         /// </summary>
         public static AngleSingle StraightAngle
         {
@@ -492,7 +492,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Gets a new SharpDX.AngleSingle instance that represents the full rotation angle (i.e. 360° or 2π).
+        /// Gets a new SeeingSharp.AngleSingle instance that represents the full rotation angle (i.e. 360° or 2π).
         /// </summary>
         public static AngleSingle FullRotationAngle
         {
@@ -500,7 +500,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns a System.Boolean that indicates whether the values of two SharpDX.Angle
+        /// Returns a System.Boolean that indicates whether the values of two SeeingSharp.Angle
         /// objects are equal.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
@@ -512,7 +512,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns a System.Boolean that indicates whether the values of two SharpDX.Angle
+        /// Returns a System.Boolean that indicates whether the values of two SeeingSharp.Angle
         /// objects are not equal.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
@@ -524,8 +524,8 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns a System.Boolean that indicates whether a SharpDX.Angle
-        /// object is less than another SharpDX.AngleSingle object.
+        /// Returns a System.Boolean that indicates whether a SeeingSharp.Angle
+        /// object is less than another SeeingSharp.AngleSingle object.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
         /// <param name="right">The second object to compare.</param>
@@ -536,8 +536,8 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns a System.Boolean that indicates whether a SharpDX.Angle
-        /// object is greater than another SharpDX.AngleSingle object.
+        /// Returns a System.Boolean that indicates whether a SeeingSharp.Angle
+        /// object is greater than another SeeingSharp.AngleSingle object.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
         /// <param name="right">The second object to compare.</param>
@@ -548,8 +548,8 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns a System.Boolean that indicates whether a SharpDX.Angle
-        /// object is less than or equal to another SharpDX.AngleSingle object.
+        /// Returns a System.Boolean that indicates whether a SeeingSharp.Angle
+        /// object is less than or equal to another SeeingSharp.AngleSingle object.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
         /// <param name="right">The second object to compare.</param>
@@ -560,8 +560,8 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns a System.Boolean that indicates whether a SharpDX.Angle
-        /// object is greater than or equal to another SharpDX.AngleSingle object.
+        /// Returns a System.Boolean that indicates whether a SeeingSharp.Angle
+        /// object is greater than or equal to another SeeingSharp.AngleSingle object.
         /// </summary>
         /// <param name="left">The first object to compare.</param>
         /// <param name="right">The second object to compare.</param>
@@ -572,10 +572,10 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns the value of the SharpDX.AngleSingle operand. (The sign of
+        /// Returns the value of the SeeingSharp.AngleSingle operand. (The sign of
         /// the operand is unchanged.)
         /// </summary>
-        /// <param name="value">A SharpDX.AngleSingle object.</param>
+        /// <param name="value">A SeeingSharp.AngleSingle object.</param>
         /// <returns>The value of the value parameter.</returns>
         public static AngleSingle operator +(AngleSingle value)
         {
@@ -583,9 +583,9 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns the the negated value of the SharpDX.AngleSingle operand.
+        /// Returns the the negated value of the SeeingSharp.AngleSingle operand.
         /// </summary>
-        /// <param name="value">A SharpDX.AngleSingle object.</param>
+        /// <param name="value">A SeeingSharp.AngleSingle object.</param>
         /// <returns>The negated value of the value parameter.</returns>
         public static AngleSingle operator -(AngleSingle value)
         {
@@ -593,7 +593,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Adds two SharpDX.AngleSingle objects and returns the result.
+        /// Adds two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The first object to add.</param>
         /// <param name="right">The second object to add.</param>
@@ -604,7 +604,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Subtracts two SharpDX.AngleSingle objects and returns the result.
+        /// Subtracts two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The first object to subtract</param>
         /// <param name="right">The second object to subtract.</param>
@@ -615,7 +615,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Multiplies two SharpDX.AngleSingle objects and returns the result.
+        /// Multiplies two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The first object to multiply.</param>
         /// <param name="right">The second object to multiply.</param>
@@ -626,7 +626,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Divides two SharpDX.AngleSingle objects and returns the result.
+        /// Divides two SeeingSharp.AngleSingle objects and returns the result.
         /// </summary>
         /// <param name="left">The numerator object.</param>
         /// <param name="right">The denominator object.</param>
@@ -669,7 +669,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Compares this instance to a second SharpDX.AngleSingle and returns
+        /// Compares this instance to a second SeeingSharp.AngleSingle and returns
         /// an integer that indicates whether the value of this instance is less than,
         /// equal to, or greater than the value of the specified object.
         /// </summary>
@@ -694,11 +694,11 @@ namespace SeeingSharp
 
         /// <summary>
         /// Returns a value that indicates whether the current instance and a specified
-        /// SharpDX.AngleSingle object have the same value.
+        /// SeeingSharp.AngleSingle object have the same value.
         /// </summary>
         /// <param name="other">The object to compare.</param>
         /// <returns>
-        /// Returns true if this SharpDX.AngleSingle object and another have the same value;
+        /// Returns true if this SeeingSharp.AngleSingle object and another have the same value;
         /// otherwise, false.
         /// </returns>
         public bool Equals(AngleSingle other)
@@ -761,7 +761,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Returns a hash code for this SharpDX.AngleSingle instance.
+        /// Returns a hash code for this SeeingSharp.AngleSingle instance.
         /// </summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode()
@@ -775,9 +775,9 @@ namespace SeeingSharp
         /// </summary>
         /// <param name="obj">The object to compare.</param>
         /// <returns>
-        /// Returns true if the obj parameter is a SharpDX.AngleSingle object or a type
-        /// capable of implicit conversion to a SharpDX.AngleSingle value, and
-        /// its value is equal to the value of the current SharpDX.Angle
+        /// Returns true if the obj parameter is a SeeingSharp.AngleSingle object or a type
+        /// capable of implicit conversion to a SeeingSharp.AngleSingle value, and
+        /// its value is equal to the value of the current SeeingSharp.Angle
         /// object; otherwise, false.
         /// </returns>
         public override bool Equals(object obj)

@@ -341,7 +341,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="int"/> array to <see cref="SharpDX.Bool4"/>.
+        /// Performs an implicit conversion from <see cref="int"/> array to <see cref="SeeingSharp.Bool4"/>.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>The result of the conversion.</returns>
@@ -351,7 +351,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref="SharpDX.Bool4"/> to <see cref="System.Int32"/> array.
+        /// Performs an implicit conversion from <see cref="SeeingSharp.Bool4"/> to <see cref="System.Int32"/> array.
         /// </summary>
         /// <param name="input">The input.</param>
         /// <returns>The result of the conversion.</returns>

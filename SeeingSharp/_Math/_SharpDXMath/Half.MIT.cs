@@ -91,7 +91,7 @@ namespace SeeingSharp
 
 
         /// <summary>
-        /// Initializes a new instance of the <see cref = "T:SharpDX.Half" /> structure.
+        /// Initializes a new instance of the <see cref = "T:SeeingSharp.Half" /> structure.
         /// </summary>
         /// <param name = "value">The floating point value that should be stored in 16 bit format.</param>
         public Half(float value)
@@ -135,7 +135,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref = "T:System.Single" /> to <see cref = "T:SharpDX.Half" />.
+        /// Performs an explicit conversion from <see cref = "T:System.Single" /> to <see cref = "T:SeeingSharp.Half" />.
         /// </summary>
         /// <param name = "value">The value to be converted.</param>
         /// <returns>The converted value.</returns>
@@ -145,7 +145,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an implicit conversion from <see cref = "T:SharpDX.Half" /> to <see cref = "T:System.Single" />.
+        /// Performs an implicit conversion from <see cref = "T:SeeingSharp.Half" /> to <see cref = "T:System.Single" />.
         /// </summary>
         /// <param name = "value">The value to be converted.</param>
         /// <returns>The converted value.</returns>

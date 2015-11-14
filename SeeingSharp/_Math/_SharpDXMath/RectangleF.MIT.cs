@@ -63,11 +63,11 @@ namespace SeeingSharp
         }
 
                 /// <summary>
-        /// Checks, if specified point is inside <see cref="SharpDX.RectangleF"/>.
+        /// Checks, if specified point is inside <see cref="SeeingSharp.RectangleF"/>.
         /// </summary>
         /// <param name="x">X point coordinate.</param>
         /// <param name="y">Y point coordinate.</param>
-        /// <returns><c>true</c> if point is inside <see cref="SharpDX.RectangleF"/>, otherwise <c>false</c>.</returns>
+        /// <returns><c>true</c> if point is inside <see cref="SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
         public bool Contains(int x, int y)
         {
             if (x >= _left && x <= _right && y >= _top && y <= _bottom)
@@ -78,11 +78,11 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Checks, if specified point is inside <see cref="SharpDX.RectangleF"/>.
+        /// Checks, if specified point is inside <see cref="SeeingSharp.RectangleF"/>.
         /// </summary>
         /// <param name="x">X point coordinate.</param>
         /// <param name="y">Y point coordinate.</param>
-        /// <returns><c>true</c> if point is inside <see cref="SharpDX.RectangleF"/>, otherwise <c>false</c>.</returns>
+        /// <returns><c>true</c> if point is inside <see cref="SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
         public bool Contains(float x, float y)
         {
             if (x >= _left && x <= _right && y >= _top && y <= _bottom)
@@ -93,10 +93,10 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Checks, if specified <see cref="SharpDX.Vector2"/> is inside <see cref="SharpDX.RectangleF"/>. 
+        /// Checks, if specified <see cref="SeeingSharp.Vector2"/> is inside <see cref="SeeingSharp.RectangleF"/>. 
         /// </summary> 
-        /// <param name="vector2D">Coordinate <see cref="SharpDX.Vector2"/>.</param>
-        /// <returns><c>true</c> if <see cref="SharpDX.Vector2"/> is inside <see cref="SharpDX.RectangleF"/>, otherwise <c>false</c>.</returns>
+        /// <param name="vector2D">Coordinate <see cref="SeeingSharp.Vector2"/>.</param>
+        /// <returns><c>true</c> if <see cref="SeeingSharp.Vector2"/> is inside <see cref="SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
         public bool Contains(Vector2 vector2D)
         {
             if (vector2D.X >= _left && vector2D.X <= _right && vector2D.Y >= _top && vector2D.Y <= _bottom)
@@ -107,10 +107,10 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Checks, if specified <see cref="SharpDX.Point"/> is inside <see cref="SharpDX.RectangleF"/>. 
+        /// Checks, if specified <see cref="SeeingSharp.Point"/> is inside <see cref="SeeingSharp.RectangleF"/>. 
         /// </summary>
-        /// <param name="point">Coordinate <see cref="SharpDX.Point"/>.</param> 
-        /// <returns><c>true</c> if <see cref="SharpDX.Point"/> is inside <see cref="SharpDX.RectangleF"/>, otherwise <c>false</c>.</returns>
+        /// <param name="point">Coordinate <see cref="SeeingSharp.Point"/>.</param> 
+        /// <returns><c>true</c> if <see cref="SeeingSharp.Point"/> is inside <see cref="SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
         public bool Contains(SeeingSharp.Point point)
         {
             if (point.X >= _left && point.X <= _right && point.Y >= _top && point.Y <= _bottom)

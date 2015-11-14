@@ -132,11 +132,11 @@ namespace SeeingSharp
         }
 
     	/// <summary>
-        /// Determines whether the specified <see cref="SharpDX.ViewportF"/> is equal to this instance.
+        /// Determines whether the specified <see cref="SeeingSharp.ViewportF"/> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="SharpDX.ViewportF"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="SeeingSharp.ViewportF"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="SharpDX.ViewportF"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="SeeingSharp.ViewportF"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(ViewportF other)
         {
@@ -281,7 +281,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Viewport"/> to <see cref="SharpDX.ViewportF"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Viewport"/> to <see cref="SeeingSharp.ViewportF"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>

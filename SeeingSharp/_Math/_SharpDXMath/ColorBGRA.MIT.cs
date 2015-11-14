@@ -51,7 +51,7 @@ namespace SeeingSharp
         public byte A;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="value">The value that will be assigned to all components.</param>
         public ColorBGRA(byte value)
@@ -60,7 +60,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="value">The value that will be assigned to all components.</param>
         public ColorBGRA(float value)
@@ -69,7 +69,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="red">The red component of the color.</param>
         /// <param name="green">The green component of the color.</param>
@@ -84,7 +84,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="red">The red component of the color.</param>
         /// <param name="green">The green component of the color.</param>
@@ -99,7 +99,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="value">The red, green, blue, and alpha components of the color.</param>
         public ColorBGRA(Vector4 value)
@@ -111,7 +111,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="value">The red, green, and blue compoennts of the color.</param>
         /// <param name="alpha">The alpha component of the color.</param>
@@ -124,7 +124,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="bgra">A packed integer containing all four color components in BGRA order.</param>
         public ColorBGRA(uint bgra)
@@ -136,7 +136,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="bgra">A packed integer containing all four color components in BGRA.</param>
         public ColorBGRA(int bgra)
@@ -148,7 +148,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="values">The values to assign to the red, green, and blue, alpha components of the color. This must be an array with four elements.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
@@ -167,7 +167,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="SharpDX.ColorBGRA"/> struct.
+        /// Initializes a new instance of the <see cref="SeeingSharp.ColorBGRA"/> struct.
         /// </summary>
         /// <param name="values">The values to assign to the red, green, and blue, alpha components of the color. This must be an array with four elements.</param>
         /// <exception cref="ArgumentNullException">Thrown when <paramref name="values"/> is <c>null</c>.</exception>
@@ -892,7 +892,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.ColorBGRA"/> to <see cref="SharpDX.Color3"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.ColorBGRA"/> to <see cref="SeeingSharp.Color3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -902,7 +902,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.ColorBGRA"/> to <see cref="SharpDX.Vector3"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.ColorBGRA"/> to <see cref="SeeingSharp.Vector3"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -912,7 +912,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.ColorBGRA"/> to <see cref="SharpDX.Vector4"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.ColorBGRA"/> to <see cref="SeeingSharp.Vector4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -922,7 +922,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.ColorBGRA"/> to <see cref="SharpDX.Color4"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.ColorBGRA"/> to <see cref="SeeingSharp.Color4"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -932,7 +932,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Vector3"/> to <see cref="SharpDX.ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Vector3"/> to <see cref="SeeingSharp.ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -942,7 +942,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Color3"/> to <see cref="SharpDX.ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Color3"/> to <see cref="SeeingSharp.ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -952,7 +952,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Vector4"/> to <see cref="SharpDX.ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Vector4"/> to <see cref="SeeingSharp.ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -962,7 +962,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Color4"/> to <see cref="SharpDX.ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Color4"/> to <see cref="SeeingSharp.ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -972,7 +972,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Color"/> to <see cref="SharpDX.ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Color"/> to <see cref="SeeingSharp.ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -982,7 +982,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.ColorBGRA"/> to <see cref="SharpDX.Color"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.ColorBGRA"/> to <see cref="SeeingSharp.Color"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -992,7 +992,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.ColorBGRA"/> to <see cref="System.Int32"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.ColorBGRA"/> to <see cref="System.Int32"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>
@@ -1004,7 +1004,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="System.Int32"/> to <see cref="SharpDX.ColorBGRA"/>.
+        /// Performs an explicit conversion from <see cref="System.Int32"/> to <see cref="SeeingSharp.ColorBGRA"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>
@@ -1083,11 +1083,11 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Determines whether the specified <see cref="SharpDX.ColorBGRA"/> is equal to this instance.
+        /// Determines whether the specified <see cref="SeeingSharp.ColorBGRA"/> is equal to this instance.
         /// </summary>
-        /// <param name="other">The <see cref="SharpDX.ColorBGRA"/> to compare with this instance.</param>
+        /// <param name="other">The <see cref="SeeingSharp.ColorBGRA"/> to compare with this instance.</param>
         /// <returns>
-        /// <c>true</c> if the specified <see cref="SharpDX.ColorBGRA"/> is equal to this instance; otherwise, <c>false</c>.
+        /// <c>true</c> if the specified <see cref="SeeingSharp.ColorBGRA"/> is equal to this instance; otherwise, <c>false</c>.
         /// </returns>
         public bool Equals(ColorBGRA other)
         {

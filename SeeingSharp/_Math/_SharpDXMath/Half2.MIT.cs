@@ -43,7 +43,7 @@ namespace SeeingSharp
         public Half Y;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:SharpDX.Half2" /> structure.
+        /// Initializes a new instance of the <see cref="T:SeeingSharp.Half2" /> structure.
         /// </summary>
         /// <param name="x">The X component.</param>
         /// <param name="y">The Y component.</param>
@@ -54,7 +54,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:SharpDX.Half2" /> structure.
+        /// Initializes a new instance of the <see cref="T:SeeingSharp.Half2" /> structure.
         /// </summary>
         /// <param name="value">The value to set for both the X and Y components.</param>
         public Half2(Half value)
@@ -64,7 +64,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Vector2"/> to <see cref="SharpDX.Half2"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Vector2"/> to <see cref="SeeingSharp.Half2"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -74,7 +74,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Half2"/> to <see cref="SharpDX.Vector2"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Half2"/> to <see cref="SeeingSharp.Vector2"/>.
         /// </summary>
         /// <param name="value">The value.</param>
         /// <returns>The result of the conversion.</returns>

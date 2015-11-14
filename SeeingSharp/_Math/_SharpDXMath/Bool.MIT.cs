@@ -86,7 +86,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="SharpDX.Bool"/> to <see cref="bool"/>.
+        /// Performs an explicit conversion from <see cref="SeeingSharp.Bool"/> to <see cref="bool"/>.
         /// </summary>
         /// <param name="booleanValue">The value.</param>
         /// <returns>The result of the conversion.</returns>
@@ -96,7 +96,7 @@ namespace SeeingSharp
         }
 
         /// <summary>
-        /// Performs an explicit conversion from <see cref="bool"/> to <see cref="SharpDX.Bool"/>.
+        /// Performs an explicit conversion from <see cref="bool"/> to <see cref="SeeingSharp.Bool"/>.
         /// </summary>
         /// <param name="boolValue">The value.</param>
         /// <returns>The result of the conversion.</returns>

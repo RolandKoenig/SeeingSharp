@@ -38,7 +38,7 @@ namespace SeeingSharp
         private Lazy<Vector3> m_normal;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="Polygon3D" /> class.
+        /// Initializes a new instance of the <see cref="Polygon" /> class.
         /// </summary>
         public Polygon(params Vector3[] vertices)
         {
