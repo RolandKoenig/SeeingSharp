@@ -34,9 +34,6 @@ using System.Threading.Tasks;
 using D3D11 = SharpDX.Direct3D11;
 using D2D = SharpDX.Direct2D1;
 using DXGI = SharpDX.DXGI;
-#if DESKTOP
-using D3D10 = SharpDX.Direct3D10;
-#endif
 
 namespace SeeingSharp.Multimedia.Drawing3D
 {

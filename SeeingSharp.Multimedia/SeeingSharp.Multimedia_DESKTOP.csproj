@@ -75,10 +75,6 @@
       <HintPath>..\packages\SharpDX.Direct2D1.3.0.0-beta01\lib\net45\SharpDX.Direct2D1.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="SharpDX.Direct3D10, Version=2.6.3.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>$(SharpDXPackageBinDir)\SharpDX.Direct3D10.dll</HintPath>
-    </Reference>
     <Reference Include="SharpDX.Direct3D11, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.Direct3D11.3.0.0-beta01\lib\net45\SharpDX.Direct3D11.dll</HintPath>
       <Private>True</Private>
@@ -209,7 +205,6 @@
     <Compile Include="Core\_Devices\_Global\FactoryHandlerWIC.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerXAudio2.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD2D.cs" />
-    <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D10.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D11.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D9.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerDXGI.cs" />

@@ -37,7 +37,6 @@ using D2D = SharpDX.Direct2D1;
 #if DESKTOP
 using DXGI = SharpDX.DXGI;
 using D3D11 = SharpDX.Direct3D11;
-using D3D10 = SharpDX.Direct3D10;
 using D3D9 = SharpDX.Direct3D9;
 using DWrite = SharpDX.DirectWrite;
 using D2D = SharpDX.Direct2D1;
@@ -76,7 +75,6 @@ namespace SeeingSharp.Multimedia.Core
 #if DESKTOP
         private DeviceHandlerDXGI m_handlerDXGI;
         private DeviceHandlerD3D11 m_handlerD3D11;
-        private DeviceHandlerD3D10 m_handlerD3D10;
         private DeviceHandlerD3D9 m_handlerD3D9;
         private DeviceHandlerD2D m_handlerD2D;
 #endif
@@ -120,7 +118,6 @@ namespace SeeingSharp.Multimedia.Core
 #if DESKTOP
                 m_handlerD3D11 = new DeviceHandlerD3D11(targetHardware, adapter, debugEnabled);
                 m_handlerDXGI = new DeviceHandlerDXGI(adapter, m_handlerD3D11.Device);
-                m_handlerD3D10 = new DeviceHandlerD3D10(targetHardware, adapter, debugEnabled);
                 m_handlerD3D9 = new DeviceHandlerD3D9(adapter, isSoftwareAdapter, debugEnabled); 
 #endif
             }
@@ -135,7 +132,6 @@ namespace SeeingSharp.Multimedia.Core
 #if DESKTOP
                 m_handlerD3D11 = null;
                 m_handlerDXGI = null;
-                m_handlerD3D10 = null;
                 m_handlerD3D9 = null;
 #endif
             }
@@ -440,14 +436,6 @@ namespace SeeingSharp.Multimedia.Core
         internal D3D11.Device DeviceD3D11
         {
             get { return m_handlerD3D11.Device; }
-        }
-
-        /// <summary>
-        /// Gets the Direct3D 10 device object.
-        /// </summary>
-        internal D3D10.Device DeviceD3D10
-        {
-            get { return m_handlerD3D10.Device; }
         }
 
         internal D3D9.DeviceEx DeviceD3D9

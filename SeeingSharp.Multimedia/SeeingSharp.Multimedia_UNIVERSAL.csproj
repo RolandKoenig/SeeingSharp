@@ -121,7 +121,6 @@
     <Compile Include="Core\_Devices\_Global\FactoryHandlerWIC.cs" />
     <Compile Include="Core\_Devices\_Global\FactoryHandlerXAudio2.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD2D.cs" />
-    <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D10.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D11.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D9.cs" />
     <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerDXGI.cs" />

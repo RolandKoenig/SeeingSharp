@@ -41,7 +41,6 @@ using DXGI = SharpDX.DXGI;
 using D2D = SharpDX.Direct2D1;
 using WIC = SharpDX.WIC;
 #if DESKTOP
-using D3D10 = SharpDX.Direct3D10;
 using GDI = System.Drawing;
 using WinForms = System.Windows.Forms;
 #endif
@@ -287,36 +286,6 @@ namespace SeeingSharp.Multimedia.Core
             };
             return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
         }
-
-#if DESKTOP
-        /// <summary>
-        /// Creates a Direct3D 10 texture that can be shared between more devices.
-        /// </summary>
-        /// <param name="device">The Direct3D 10 device.</param>
-        /// <param name="width">The width of the generated texture.</param>
-        /// <param name="height">The height of the generated texture.</param>
-        internal static D3D10.Texture2D CreateSharedTexture10(EngineDevice device, int width, int height)
-        {
-            device.EnsureNotNull("device");
-            width.EnsurePositive("width");
-            height.EnsurePositive("height");
-
-            D3D10.Texture2DDescription textureDescription = new D3D10.Texture2DDescription
-            {
-                BindFlags = D3D10.BindFlags.RenderTarget | D3D10.BindFlags.ShaderResource,
-                Format = DEFAULT_TEXTURE_FORMAT,
-                Width = width,
-                Height = height,
-                MipLevels = 1,
-                SampleDescription = new DXGI.SampleDescription(1, 0),
-                Usage = D3D10.ResourceUsage.Default,
-                OptionFlags = D3D10.ResourceOptionFlags.Shared,
-                CpuAccessFlags = D3D10.CpuAccessFlags.None,
-                ArraySize = 1
-            };
-            return new D3D10.Texture2D(device.DeviceD3D10, textureDescription);
-        }
-#endif
 
         /// <summary>
         /// Loads the texture2 D from stream.

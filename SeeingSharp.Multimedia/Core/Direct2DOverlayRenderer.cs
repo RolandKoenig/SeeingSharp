@@ -35,10 +35,6 @@ using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
 using D2D = SharpDX.Direct2D1;
 
-#if DESKTOP
-using D3D10 = SharpDX.Direct3D10;
-#endif
-
 namespace SeeingSharp.Multimedia.Core
 {
     /// <summary>
@@ -69,14 +65,7 @@ namespace SeeingSharp.Multimedia.Core
 
         #region Only set if we need it (e. g. Win7, Win 2008 platforms)
         private ResourceDictionary m_resourceDict;
-#if DESKTOP
-        private ChangeableTextureResource m_changeableTexture;
-        private TexturePainterHelper m_texturePainter;
-        private D3D11.Texture2D m_renderTarget3DShared11;
-        private D3D10.Texture2D m_renderTarget3DShared10;
-        private D3D11.ShaderResourceView m_renderTarget3DShared11View;
-        private DXGI.Resource m_renderTarget3DSharedDxgi;
-#else
+#if UNIVERSAL
         private D2D.Bitmap1 m_renderTargetBitmap;
 #endif
         #endregion
@@ -100,10 +89,6 @@ namespace SeeingSharp.Multimedia.Core
             // Dispose all created objects
 #if DESKTOP
             GraphicsHelper.SafeDispose(ref m_renderTarget2D);
-            GraphicsHelper.SafeDispose(ref m_renderTarget3DSharedDxgi);
-            GraphicsHelper.SafeDispose(ref m_renderTarget3DShared10);
-            GraphicsHelper.SafeDispose(ref m_renderTarget3DShared11View);
-            GraphicsHelper.SafeDispose(ref m_renderTarget3DShared11);
 #endif
 
 #if UNIVERSAL
@@ -117,12 +102,6 @@ namespace SeeingSharp.Multimedia.Core
                 m_resourceDict.Clear();
                 m_resourceDict = null;
             }
-
-#if DESKTOP
-            // Reset remaining members
-            m_changeableTexture = null;
-            m_texturePainter = null;
-#endif
         }
 
         /// <summary>
@@ -172,42 +151,6 @@ namespace SeeingSharp.Multimedia.Core
                 }
             }
             catch (Exception) { }
-
-            // Next step does not work on software devices
-            if (m_device.IsSoftware) { return; }
-
-            // Fallback method: Build a brigde using a Direct3D 10 texture
-            //  => This should work on all Desktop-OS
-            try
-            {
-                m_resourceDict = new ResourceDictionary(m_device);
-
-                // Create the shared texture (same texture with Direct3D 11 and Direct3D 10 reference to it)
-                m_renderTarget3DShared11 = GraphicsHelper.CreateSharedTexture(m_device, (int)scaledScreenSize.Width, (int)scaledScreenSize.Height);
-                m_renderTarget3DShared11View = new D3D11.ShaderResourceView(m_device.DeviceD3D11, m_renderTarget3DShared11);
-                m_renderTarget3DSharedDxgi = m_renderTarget3DShared11.QueryInterface<DXGI.Resource>();
-                IntPtr sharedHandle = m_renderTarget3DSharedDxgi.SharedHandle;
-                m_renderTarget3DShared10 = m_device.DeviceD3D10.OpenSharedResource<D3D10.Texture2D>(sharedHandle);
-
-                // Create the render target
-                using (DXGI.Surface dxgiSurface = m_renderTarget3DShared10.QueryInterface<DXGI.Surface>())
-                {
-                    m_renderTarget2D = new D2D.RenderTarget(
-                        m_device.Core.FactoryD2D,
-                        dxgiSurface,
-                        new D2D.RenderTargetProperties()
-                        {
-                            MinLevel = D2D.FeatureLevel.Level_10,
-                            Type = D2D.RenderTargetType.Hardware,
-                            Usage = D2D.RenderTargetUsage.ForceBitmapRemoting,
-                            PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT_SHARING_D2D, D2D.AlphaMode.Premultiplied),
-                            DpiX = dpiScaling.DpiX,
-                            DpiY = dpiScaling.DpiY
-                        });
-                    m_graphics2D = new Graphics2D(m_device, m_renderTarget2D, scaledScreenSize);
-                }
-            }
-            catch (Exception) { }
 #endif
             }
 
@@ -223,26 +166,6 @@ namespace SeeingSharp.Multimedia.Core
 
             // Start Direct2D rendering
             m_renderTarget2D.BeginDraw();
-
-#if DESKTOP
-            // Fallback method: Clear Direct2D buffer before starting with rendering
-            //                  Later we draw the contents of this texture to the render target as a fullscreen texture
-            if (m_renderTarget3DShared10 != null)
-            {
-                m_renderTarget2D.Clear(Color4.Transparent.ToDXColor());
-
-                // Create resources for later texture drawing
-                if (m_texturePainter == null)
-                {
-                    // Precreate the texture painter
-                    m_changeableTexture = m_resourceDict.GetResourceAndEnsureLoaded<ChangeableTextureResource>(
-                        RES_KEY_FALLBACK_TEXTURE,
-                        () => new ChangeableTextureResource());
-                    m_texturePainter = new TexturePainterHelper(RES_KEY_FALLBACK_TEXTURE);
-                    m_texturePainter.LoadResources(m_resourceDict);
-                }
-            }
-#endif
         }
 
         /// <summary>
@@ -255,18 +178,6 @@ namespace SeeingSharp.Multimedia.Core
 
 #if UNIVERSAL
             m_device.DeviceContextD2D.Target = null;
-#endif
-
-#if DESKTOP
-            if (m_renderTarget3DShared10 != null)
-            {
-                // Flush render calls on Direct3D 10 device
-                m_device.DeviceD3D10.Flush();
-
-                // Draw Direct2D contents to the render target (just draw the texture)
-                m_changeableTexture.SetContents(m_renderTarget3DShared11, m_renderTarget3DShared11View);
-                m_texturePainter.RenderPlain(renderState);
-            }
 #endif
         }
 

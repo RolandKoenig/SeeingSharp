@@ -42,10 +42,6 @@ using DWrite = SharpDX.DirectWrite;
 using WIC = SharpDX.WIC;
 using XA = SharpDX.XAudio2;
 
-#if DESKTOP
-using D3D10 = SharpDX.Direct3D10;
-#endif
-
 //Some type mappings
 #if WINRT
 using DxgiFactory = SharpDX.DXGI.Factory2;

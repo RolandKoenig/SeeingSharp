@@ -384,14 +384,6 @@
             <param name="width">The width of the generated texture.</param>
             <param name="height">The height of the generated texture.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.CreateSharedTexture10(SeeingSharp.Multimedia.Core.EngineDevice,System.Int32,System.Int32)">
-            <summary>
-            Creates a Direct3D 10 texture that can be shared between more devices.
-            </summary>
-            <param name="device">The Direct3D 10 device.</param>
-            <param name="width">The width of the generated texture.</param>
-            <param name="height">The height of the generated texture.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.LoadTexture2D(SeeingSharp.Multimedia.Core.EngineDevice,System.IO.Stream)">
             <summary>
             Loads the texture2 D from stream.
@@ -3216,11 +3208,6 @@
             Gets the Direct3D 11 device object.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.EngineDevice.DeviceD3D10">
-            <summary>
-            Gets the Direct3D 10 device object.
-            </summary>
-        </member>
         <member name="P:SeeingSharp.Multimedia.Core.EngineDevice.DeviceImmediateContextD3D11">
             <summary>
             Gets the main Direct3D 11 context object.
@@ -3387,54 +3374,6 @@
             </summary>
             <param name="core">The core.</param>
             <param name="engineDevice">The engine device.</param>
-        </member>
-        <member name="T:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10">
-            <summary>
-            All initialization logic for the D3D10 device
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,SharpDX.DXGI.Adapter1,System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.DeviceHandlerD3D11"/> class.
-            </summary>
-            <param name="targetHardware">The target hardware for which to create this device.</param>
-            <param name="dxgiAdapter">The corresponding DXGI adapter.</param>
-            <param name="debugEnabled">Is debug enabled?</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.GetDxgiDevice">
-            <summary>
-            Gets the Dxgi device object.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.FeatureLevel">
-            <summary>
-            Gets current feature level.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.Device">
-            <summary>
-            Gets the Direct3D 11 device.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.DeviceNativePointer">
-            <summary>
-            Gets the native pointer to the device object.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.IsInitialized">
-            <summary>
-            Is device successfully initialized?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.DeviceModeDescription">
-            <summary>
-            Gets a short description containing info about the created device.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D10.IsDirect2DTextureEnabled">
-            <summary>
-            Are Direct2D textures possible?
-            </summary>
         </member>
         <member name="T:SeeingSharp.Multimedia.Core.DeviceHandlerD3D11">
             <summary>
