@@ -91,6 +91,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{F021657B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Nuget", "Nuget\SeeingSharp.Nuget\SeeingSharp.Nuget.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Multimedia.Nuget", "Nuget\SeeingSharp.Multimedia.Nuget\SeeingSharp.Multimedia.Nuget.csproj", "{5C53014A-CC17-415E-93EE-0C2763BFAD58}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{431f8f6a-aa43-4de1-8ec3-744a0396af02}*SharedItemsImports = 4
@@ -491,6 +493,14 @@ Global
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|ARM.ActiveCfg = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|x64.ActiveCfg = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Release|x86.ActiveCfg = Release|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -517,5 +527,6 @@ Global
 		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5} = {A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {F021657B-87C7-4C14-BEDB-88557498FE49}
+		{5C53014A-CC17-415E-93EE-0C2763BFAD58} = {F021657B-87C7-4C14-BEDB-88557498FE49}
 	EndGlobalSection
 EndGlobal
