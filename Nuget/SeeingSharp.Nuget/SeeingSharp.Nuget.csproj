@@ -59,6 +59,8 @@
   <ItemGroup>
     <Content Include="lib\net46\SeeingSharp.dll" />
     <Content Include="lib\net46\SeeingSharp.xml" />
+    <Content Include="lib\portable-win8+wpa81\SeeingSharp.dll" />
+    <Content Include="lib\portable-win8+wpa81\SeeingSharp.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -83,6 +85,8 @@
   <PropertyGroup>
     <PreBuildEvent>copy "$(SolutionDir)SeeingSharp\bin.Desktop\$(ConfigurationName)\SeeingSharp.dll" "$(ProjectDir)lib\net46\SeeingSharp.dll" /Y
 copy "$(SolutionDir)SeeingSharp\bin.Desktop\$(ConfigurationName)\SeeingSharp.XML" "$(ProjectDir)lib\net46\SeeingSharp.xml" /Y
-</PreBuildEvent>
+
+copy "$(SolutionDir)SeeingSharp\bin.Universal\$(ConfigurationName)\SeeingSharp.dll" "$(ProjectDir)lib\portable-win8+wpa81\SeeingSharp.dll" /Y
+copy "$(SolutionDir)SeeingSharp\bin.Universal\$(ConfigurationName)\SeeingSharp.XML" "$(ProjectDir)lib\portable-win8+wpa81\SeeingSharp.xml" /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>

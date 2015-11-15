@@ -59,6 +59,145 @@
             Unloads this part of the application.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor(System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
+            </summary>
+            <param name="ex">The ex.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.AnalyzeException(System.Exception,SeeingSharp.Infrastructure.ExceptionInfoNode,System.Collections.Generic.IEnumerable{SeeingSharp.Infrastructure.IExceptionAnalyzer})">
+            <summary>
+            Analyzes the given exception.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+            <param name="targetNode">The target node where to put all data to.</param>
+            <param name="exceptionAnalyzers">All loaded analyzer objects.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.MainMessage">
+            <summary>
+            Gets or sets the main message.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfoNode.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfoNode"/> class.
+            </summary>
+            <param name="exceptionType">The type of the exception.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.TypeName">
+            <summary>
+            Gets or sets the name of this node.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.InnerExceptionNodes">
+            <summary>
+            Gets a collection containing all subnodes.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.Properties">
+            <summary>
+            Gets a list containing all exception properties.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Infrastructure.IExceptionAnalyzer">
+            <summary>
+            This interface is used by the error-reporting framework.
+            It queries for all information provided by an exception which will be presentet to
+            the user / developer.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.ReadExceptionInfo(System.Exception)">
+            <summary>
+            Reads all exception information from the given exception object.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.GetInnerExceptions(System.Exception)">
+            <summary>
+            Gets all inner exceptions provided by the given exception object.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.SeeingSharpTranslator" /> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateString(System.String,System.String)">
+            <summary>
+            Translates the given string from the given category.
+            </summary>
+            <param name="category">The category.</param>
+            <param name="translatableString">The translatable string.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateAllTranslatableClasses">
+            <summary>
+            Translates all translatable classes.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.QueryTranslationsAsync(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Queries for all translations found in loaded assemblies.
+            </summary>
+            <param name="currentAssemblies">A collection containing all currently loaded assemblies.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.LoadTranslationFile(System.String,System.IO.Stream)">
+            <summary>
+            Loads a translation file from the given stream.
+            </summary>
+            <param name="fileName">The name of the file from which the given stream loads data.</param>
+            <param name="inStream">The input stream.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Language">
+            <summary>
+            Gets the current language this app runs on.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Culture">
+            <summary>
+            Gets the culture this app is started with.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.TypeQueryHandler"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetAndInstanciateByContract``1">
+            <summary>
+            Gets and instanciates all types which are implementing the given contract.
+            </summary>
+            <typeparam name="ContractType">The implemented contract.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypesByAttribute``1">
+            <summary>
+            Gets a collection containing all types which have the given attribute attached.
+            </summary>
+            <typeparam name="T1">The type of the attribute.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract``1">
+            <summary>
+            Gets a list containing all types that implement the given contract.
+            </summary>
+            <typeparam name="ContractType">The implemented contract.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract(System.Type)">
+            <summary>
+            Gets a list containing all types that implement the given contract.
+            </summary>
+            <param name="contractType">The implemented contract.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypes(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Queries for types in the given collection of assemblies.
+            </summary>
+            <param name="assembliesToQuery">A collection containing all assemblies for the query.</param>
+        </member>
         <member name="P:SeeingSharp.Infrastructure.AssemblyQueryableTypeAttribute.TargetType">
             <summary>
             Gets The type which is to be found through assembly query.
@@ -112,12 +251,6 @@
             <param name="mainAssembly">The main assembly of the application.</param>
             <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
             <param name="startupArguments">All arguments passed to this application.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.CreateDefaultServices(System.Windows.Window)">
-            <summary>
-            Creates all default services.
-            </summary>
-            <param name="mainWindow">The mainwindow instance.</param>
         </member>
         <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeUIEnvironment">
             <summary>
@@ -243,70 +376,6 @@
             Gets a short description of this item for the UI (e. g. for splash screens).
             </summary>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor(System.Exception)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
-            </summary>
-            <param name="ex">The ex.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.AnalyzeException(System.Exception,SeeingSharp.Infrastructure.ExceptionInfoNode,System.Collections.Generic.IEnumerable{SeeingSharp.Infrastructure.IExceptionAnalyzer})">
-            <summary>
-            Analyzes the given exception.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-            <param name="targetNode">The target node where to put all data to.</param>
-            <param name="exceptionAnalyzers">All loaded analyzer objects.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.MainMessage">
-            <summary>
-            Gets or sets the main message.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfoNode.#ctor(System.Type)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfoNode"/> class.
-            </summary>
-            <param name="exceptionType">The type of the exception.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.TypeName">
-            <summary>
-            Gets or sets the name of this node.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.InnerExceptionNodes">
-            <summary>
-            Gets a collection containing all subnodes.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.Properties">
-            <summary>
-            Gets a list containing all exception properties.
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Infrastructure.IExceptionAnalyzer">
-            <summary>
-            This interface is used by the error-reporting framework.
-            It queries for all information provided by an exception which will be presentet to
-            the user / developer.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.ReadExceptionInfo(System.Exception)">
-            <summary>
-            Reads all exception information from the given exception object.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.GetInnerExceptions(System.Exception)">
-            <summary>
-            Gets all inner exceptions provided by the given exception object.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-        </member>
         <member name="T:SeeingSharp.Infrastructure.PlatformClass">
             <summary>
             Controls the class of the hosting platform.
@@ -396,61 +465,6 @@
             </summary>
             <param name="name">The name of the singleton.</param>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonExtension.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.SingletonExtension" /> class.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SingletonExtension.Name">
-            <summary>
-            Gets or sets the name of the singleton.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SingletonExtension.Type">
-            <summary>
-            Gets or sets the type of the singleton.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.SeeingSharpTranslator" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateString(System.String,System.String)">
-            <summary>
-            Translates the given string from the given category.
-            </summary>
-            <param name="category">The category.</param>
-            <param name="translatableString">The translatable string.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateAllTranslatableClasses">
-            <summary>
-            Translates all translatable classes.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.QueryTranslationsAsync(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
-            <summary>
-            Queries for all translations found in loaded assemblies.
-            </summary>
-            <param name="currentAssemblies">A collection containing all currently loaded assemblies.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.LoadTranslationFile(System.String,System.IO.Stream)">
-            <summary>
-            Loads a translation file from the given stream.
-            </summary>
-            <param name="fileName">The name of the file from which the given stream loads data.</param>
-            <param name="inStream">The input stream.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Language">
-            <summary>
-            Gets the current language this app runs on.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Culture">
-            <summary>
-            Gets the culture this app is started with.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Infrastructure.TranslatedWord.ToString">
             <summary>
             Returns a <see cref="T:System.String" /> that represents this instance.
@@ -482,41 +496,6 @@
             <summary>
             Gets a collection containing all translated words.
             </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.TypeQueryHandler"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetAndInstanciateByContract``1">
-            <summary>
-            Gets and instanciates all types which are implementing the given contract.
-            </summary>
-            <typeparam name="ContractType">The implemented contract.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypesByAttribute``1">
-            <summary>
-            Gets a collection containing all types which have the given attribute attached.
-            </summary>
-            <typeparam name="T1">The type of the attribute.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract``1">
-            <summary>
-            Gets a list containing all types that implement the given contract.
-            </summary>
-            <typeparam name="ContractType">The implemented contract.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract(System.Type)">
-            <summary>
-            Gets a list containing all types that implement the given contract.
-            </summary>
-            <param name="contractType">The implemented contract.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypes(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
-            <summary>
-            Queries for types in the given collection of assemblies.
-            </summary>
-            <param name="assembliesToQuery">A collection containing all assemblies for the query.</param>
         </member>
         <member name="M:SeeingSharp.SeeingSharpException.#ctor(System.String)">
             <summary>
@@ -555,48 +534,6 @@
             Gets a list containing all game scores.
             </summary>
         </member>
-        <member name="T:SeeingSharp.Properties.Resources">
-            <summary>
-              A strongly-typed resource class, for looking up localized strings, etc.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Properties.Resources.ResourceManager">
-            <summary>
-              Returns the cached ResourceManager instance used by this class.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Properties.Resources.Culture">
-            <summary>
-              Overrides the current thread's CurrentUICulture property for all
-              resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.BitmapComparison">
-            <summary>
-            This class is for comparing two pictueres and to calculate the difference between these.
-            Originally, this algorithm was based on http://www.codeproject.com/Articles/374386/Simple-image-comparison-in-NET.
-            
-            In order to apply ghe GPLv3 to this project, I reimplemented this class and made following main changes:
-             - No scaling of the images to smaller representations (not needed for my use-cases)
-             - No use of List of float during comparison algorithm
-             - No GetPixel!
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.BitmapComparison.IsNearEqual(System.Drawing.Bitmap,System.Drawing.Bitmap)">
-            <summary>
-            Determines whether the given bitmaps are near equality.
-            </summary>
-            <param name="bitmapLeft">The bitmap left.</param>
-            <param name="bitmapRight">The bitmap right.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.BitmapComparison.CalculatePercentageDifference(System.Drawing.Bitmap,System.Drawing.Bitmap)">
-            <summary>
-            Caculate a differece between two pictures
-            </summary>
-            <param name="bitmapLeft">The first bitmap for the comparison.</param>
-            <param name="bitmapRight">The second bitmap for the comparison.</param>
-            <returns>Difference of both bitmaps in precent</returns>
-        </member>
         <member name="M:SeeingSharp.Util.CommonTools.InvokeDelayed(System.Action,System.TimeSpan,System.Boolean)">
             <summary>
             Executes the given action after the given amount of time.
@@ -604,18 +541,6 @@
             <param name="action">The action to be executed.</param>
             <param name="delayTime">The delay time to be passed before executing the given action.</param>
             <param name="forceValidSyncContext">True to force a valid (UI) SynchronizationContext.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.CloneObject``1(``0)">
-            <summary>
-            Clones an object by doing a full deep copy of every field and property.
-            </summary>
-            <param name="source">Object to clone</param>
-            <returns>Cloned copy</returns>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.CloneObjectInternal(System.Object,System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-            Internal method to clone an object
-            </summary>
         </member>
         <member name="M:SeeingSharp.Util.CommonTools.GetBackingArray``1(System.Collections.Generic.List{``0})">
             <summary>
@@ -687,6 +612,20 @@
             </summary>
             <param name="fileName">The file name from which to get the category.</param>
         </member>
+        <member name="M:SeeingSharp.Util.CommonTools.DeserializeFromXmlFile``1(Windows.Storage.StorageFile)">
+            <summary>
+            Deserializes an object of the given type from the given storage file.
+            </summary>
+            <param name="storagefile">The file to deserialize from.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.CommonTools.SerializeToXmlFile``1(Windows.Storage.StorageFile,``0)">
+            <summary>
+            Serializes the given object to the given storage file.
+            </summary>
+            <typeparam name="T">The type of the object to serialize.</typeparam>
+            <param name="storageFile">The target file.</param>
+            <param name="objectToSerialize">The object to serialize.</param>
+        </member>
         <member name="M:SeeingSharp.Util.CommonTools.DeserializeJsonFromResourceAsync``1(SeeingSharp.Util.ResourceLink)">
             <summary>
             Deserializes a json object from the given resource.
@@ -700,26 +639,6 @@
             </summary>
             <param name="obj">The object to be serialized.</param>
             <param name="indent">Append empty spaces to produce easy readable json?</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.DeserializeFromXmlFile``1(System.String)">
-            <summary>
-            Deserializes an object of the given type from the given storage file.
-            </summary>
-            <param name="filePath">The file to deserialize from.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.DeserializeFromXmlFileAsync``1(System.String)">
-            <summary>
-            Deserializes an object of the given type from the given storage file.
-            </summary>
-            <param name="storagefile">The file to deserialize from.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.SerializeToXmlFileAsync``1(System.String,``0)">
-            <summary>
-            Serializes the given object to the given storage file.
-            </summary>
-            <typeparam name="T">The type of the object to serialize.</typeparam>
-            <param name="storageFile">The target file.</param>
-            <param name="objectToSerialize">The object to serialize.</param>
         </member>
         <member name="M:SeeingSharp.Util.CommonTools.BinaryInsert``1(System.Collections.Generic.List{``0},``0)">
             <summary>
@@ -842,6 +761,55 @@
         <member name="M:SeeingSharp.Util.DummyDisposable.Dispose">
             <summary>
             Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Util.RingBuffer`1">
+            <summary>
+            This is a simple RingBuffer implementation for Seeing#, 
+            originally created for the Input event system.
+            
+            More info on cyclic buffers: https://en.wikipedia.org/wiki/Circular_buffer
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.RingBuffer`1.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.RingBuffer`1"/> class.
+            </summary>
+            <param name="maxItemCount">The maximum count of items.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.RingBuffer`1.AddWithOverride(`0)">
+            <summary>
+            Adds a new item to the buffer and overrides existing items 
+            if the count of items reached the maximum.
+            </summary>
+            <param name="newItem">The new item to be added.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.RingBuffer`1.AddWithException(`0)">
+            <summary>
+            Adds a new item to the buffer and throws an exception 
+            if the count of items reached the maximum.
+            </summary>
+            <param name="newItem">The new item to be added.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.RingBuffer`1.RemoveAndPushItemsTo(SeeingSharp.Util.CustomObservable{`0})">
+            <summary>
+            Removes all items from the buffer and pushes them to the given observable collection.
+            </summary>
+            <param name="targetObservable">The target observable.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.RingBuffer`1.Clear">
+            <summary>
+            Clears this collection.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.RingBuffer`1.Item(System.Int32)">
+            <summary>
+            Gets the object at the specified index.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.RingBuffer`1.Count">
+            <summary>
+            Gets the total count of items.
             </summary>
         </member>
         <member name="F:SeeingSharp.Util.SerializerRepository.DEFAULT_JSON">
@@ -1105,65 +1073,76 @@
             <param name="sourceFile">The source file to be loaded.</param>
             <param name="importerConfig">The configuration of the importer.</param>
         </member>
-        <member name="M:SeeingSharp.Util.TplBasedLoop.#ctor(System.Int32)">
+        <member name="M:SeeingSharp.Util.ResourceLink.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.TplBasedLoop"/> class.
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.ResourceLink"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.TplBasedLoop.RunAsync(System.Threading.CancellationToken)">
+        <member name="M:SeeingSharp.Util.ResourceLink.ReadCompleteToString">
             <summary>
-            Starts running the mainloop.
-            </summary>
-            <param name="cancelToken"></param>
-            <returns></returns>
-        </member>
-        <member name="T:SeeingSharp.Util.RingBuffer`1">
-            <summary>
-            This is a simple RingBuffer implementation for Seeing#, 
-            originally created for the Input event system.
-            
-            More info on cyclic buffers: https://en.wikipedia.org/wiki/Circular_buffer
+            Reads the complete resource to a new string.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.RingBuffer`1.#ctor(System.Int32)">
+        <member name="M:SeeingSharp.Util.ResourceLink.ReadCompleteToStringAsync">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.RingBuffer`1"/> class.
-            </summary>
-            <param name="maxItemCount">The maximum count of items.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.RingBuffer`1.AddWithOverride(`0)">
-            <summary>
-            Adds a new item to the buffer and overrides existing items 
-            if the count of items reached the maximum.
-            </summary>
-            <param name="newItem">The new item to be added.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.RingBuffer`1.AddWithException(`0)">
-            <summary>
-            Adds a new item to the buffer and throws an exception 
-            if the count of items reached the maximum.
-            </summary>
-            <param name="newItem">The new item to be added.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.RingBuffer`1.RemoveAndPushItemsTo(SeeingSharp.Util.CustomObservable{`0})">
-            <summary>
-            Removes all items from the buffer and pushes them to the given observable collection.
-            </summary>
-            <param name="targetObservable">The target observable.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.RingBuffer`1.Clear">
-            <summary>
-            Clears this collection.
+            Reads the complete resource to a new string.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Util.RingBuffer`1.Item(System.Int32)">
+        <member name="M:SeeingSharp.Util.ResourceLink.GetForAnotherFile(System.String)">
             <summary>
-            Gets the object at the specified index.
+            Gets an object pointing to a file at the same location (e. g. the same directory).
+            </summary>
+            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.ResourceLink.OpenOutputStream">
+            <summary>
+            Opens an output stream to the current stream source.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Util.RingBuffer`1.Count">
+        <member name="M:SeeingSharp.Util.ResourceLink.OpenInputStreamAsync">
             <summary>
-            Gets the total count of items.
+            Opens the input stream to the described resource.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ResourceLink.OpenInputStream">
+            <summary>
+            Opens a stream to the resource.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ResourceLink.GetExtensionFromFileName(System.String)">
+            <summary>
+            Gets the name of the extension from the given file name.
+            </summary>
+            <param name="fileName">Name of the file.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.ResourceLink.op_Implicit(Windows.Storage.StorageFile)~SeeingSharp.Util.ResourceLink">
+            <summary>
+            Performs an implicit conversion from <see cref="T:Windows.Storage.StorageFile"/> to <see cref="T:SeeingSharp.Util.ResourceLink"/>.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ResourceLink.op_Implicit(SeeingSharp.Util.AssemblyResourceUriBuilder)~SeeingSharp.Util.ResourceLink">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SeeingSharp.Util.AssemblyResourceUriBuilder"/> to <see cref="T:SeeingSharp.Util.ResourceLink"/>.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ResourceLink.op_Implicit(System.Uri)~SeeingSharp.Util.ResourceLink">
+            <summary>
+            Performs an implicit conversion from <see cref="T:System.Uri"/> to <see cref="T:SeeingSharp.Util.ResourceLink"/>.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.ResourceLink.FileExtension">
+            <summary>
+            Gets the file extension of the resource we target to.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.ResourceLink.SupportsAsync">
+            <summary>
+            Are async operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.ResourceLink.SupportsSync">
+            <summary>
+            Are synchronous operations supported on this ResourceLink?
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.AssemblyResourceFileAttribute.#ctor(System.String)">
@@ -1378,6 +1357,516 @@
             <summary>
             Gets the AssemblyResourceInfo object with the given key
             </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceUriBuilder.#ctor(System.String,System.Boolean,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.AssemblyResourceUriBuilder"/> class.
+            </summary>
+            <param name="assemblyName">Name of the assembly.</param>
+            <param name="isMainAssembly">if set to <c>true</c> [is main assembly].</param>
+            <param name="filePath">The file path.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceUriBuilder.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceUriBuilder.GetUri">
+            <summary>
+            Builds the Uri object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.#ctor(SeeingSharp.Util.AssemblyResourceLink)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.AssemblyResourceLinkSource" /> class.
+            </summary>
+            <param name="resourceLink">The link to the resource.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.op_Implicit(SeeingSharp.Util.AssemblyResourceLink)~SeeingSharp.Util.AssemblyResourceLinkSource">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SeeingSharp.Util.AssemblyResourceLink"/> to <see cref="T:SeeingSharp.Util.AssemblyResourceLinkSource"/>.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.GetForAnotherFile(System.String)">
+            <summary>
+            Gets an object pointing to a file at the same location (e. g. the same directory).
+            </summary>
+            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenOutputStream">
+            <summary>
+            Opens an output stream to the current stream source.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenInputStreamAsync">
+            <summary>
+            Opens the input stream to the described resource.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenInputStream">
+            <summary>
+            Opens a stream to the resource.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.AssemblyResourceLinkSource.FileExtension">
+            <summary>
+            Gets the file extension of the resource we target to.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.AssemblyResourceLinkSource.SupportsAsync">
+            <summary>
+            Are async operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.AssemblyResourceLinkSource.SupportsSync">
+            <summary>
+            Are synchronous operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.#ctor(Windows.Storage.StorageFile,Windows.Storage.StorageFolder)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.StorageFileResourceLink"/> class.
+            </summary>
+            <param name="storageFile">The reference to the WinRT StorageFile object.</param>
+            <param name="parentFolder">The parent folder which contains the given file.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.op_Implicit(Windows.Storage.StorageFile)~SeeingSharp.Util.StorageFileResourceLink">
+            <summary>
+            Performs an implicit conversion from <see cref="T:Windows.Storage.StorageFile"/> to <see cref="T:SeeingSharp.Util.StorageFileResourceLink"/>.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.GetForAnotherFile(System.String)">
+            <summary>
+            Gets an object pointing to a file at the same location (e. g. the same directory).
+            </summary>
+            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.OpenInputStream">
+            <summary>
+            Opens a stream to the resource.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.OpenInputStreamAsync">
+            <summary>
+            Opens the input stream to the described resource.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.OpenOutputStream">
+            <summary>
+            Opens an output stream to the current stream source.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.StorageFileResourceLink.FileExtension">
+            <summary>
+            Gets the file extension of the resource we target to.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.StorageFileResourceLink.SupportsAsync">
+            <summary>
+            Are async operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.StorageFileResourceLink.SupportsSync">
+            <summary>
+            Are synchronous operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.#ctor(System.Func{System.IO.Stream},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.StreamFactoryResourceLink" /> class.
+            </summary>
+            <param name="streamFactory">The factory method which creates the stream object.</param>
+            <param name="fileName">The name of the virtual file.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.op_Implicit(System.Func{System.IO.Stream})~SeeingSharp.Util.StreamFactoryResourceLink">
+            <summary>
+            Performs an implicit conversion from <see cref="T:System.Func`1"/> to <see cref="T:SeeingSharp.Util.StreamFactoryResourceLink"/>.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.GetForAnotherFile(System.String)">
+            <summary>
+            Gets an object pointing to a file at the same location (e. g. the same directory).
+            </summary>
+            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenOutputStream">
+            <summary>
+            Opens an output stream to the current stream source.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenInputStreamAsync">
+            <summary>
+            Opens the input stream to the described resource.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenInputStream">
+            <summary>
+            Opens a stream to the resource.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.StreamFactoryResourceLink.FileExtension">
+            <summary>
+            Gets the file extension of the resource we target to.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.StreamFactoryResourceLink.SupportsAsync">
+            <summary>
+            Are async operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.StreamFactoryResourceLink.SupportsSync">
+            <summary>
+            Are synchronous operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.#ctor(System.Uri)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.UriResourceLink"/> class.
+            </summary>
+            <param name="uri">The uri from which to read.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.#ctor(SeeingSharp.Util.AssemblyResourceUriBuilder)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.UriResourceLink"/> class.
+            </summary>
+            <param name="uriBuilder">The URI builder.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.op_Implicit(System.Uri)~SeeingSharp.Util.UriResourceLink">
+            <summary>
+            Performs an implicit conversion from <see cref="T:System.Uri"/> to <see cref="T:SeeingSharp.Util.UriResourceLink"/>.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.op_Implicit(SeeingSharp.Util.AssemblyResourceUriBuilder)~SeeingSharp.Util.UriResourceLink">
+            <summary>
+            Performs an implicit conversion from <see cref="T:SeeingSharp.Util.AssemblyResourceUriBuilder"/> to <see cref="T:SeeingSharp.Util.UriResourceLink"/>.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.GetForAnotherFile(System.String)">
+            <summary>
+            Gets an object pointing to a file at the same location (e. g. the same directory).
+            </summary>
+            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.OpenOutputStream">
+            <summary>
+            Opens an output stream to the current stream source.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.OpenInputStreamAsync">
+            <summary>
+            Opens the input stream to the described resource.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.UriResourceLink.OpenInputStream">
+            <summary>
+            Opens a stream to the resource.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.UriResourceLink.FileExtension">
+            <summary>
+            Gets the file extension of the resource we target to.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.UriResourceLink.SupportsAsync">
+            <summary>
+            Are async operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.UriResourceLink.SupportsSync">
+            <summary>
+            Are synchronous operations supported on this ResourceLink?
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Util.SeeingSharpMessage">
+            <summary>
+            Base class of all messages sent and received through ApplicationMessenger class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetAsyncRoutingTargetThreads">
+            <summary>
+            Gets a list containing all target threads for message routing.
+            An empty list means that no routing logic applies.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetAsyncRoutingTargetThreadsOfMessageType(System.Type)">
+            <summary>
+            Gets a list containing all target threads for message routing.
+            An empty list means that no routing logic applies.
+            </summary>
+            <param name="messageType">The type of the message.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetPossibleSourceThreads">
+            <summary>
+            Gets a list containing all possible source threads of this message.
+            An empty list means that every thread can fire this message
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetPossibleSourceThreadsOfMessageType(System.Type)">
+            <summary>
+            Gets a list containing all possible source threads of this message.
+            An empty list means that every thread can fire this message
+            </summary>
+            <param name="messageType">The type of the message.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessage.WrapText(System.String,System.Int32,System.String)">
+            <summary>
+            Helper method which wraps the given text for display within documentation string.
+            </summary>
+            <param name="text">The text to be wrapped.</param>
+            <param name="maxCharactersPerLine">The maximum count of characters in one line.</param>
+            <param name="lineHeader">The line header to append on the beginning.</param>
+        </member>
+        <member name="T:SeeingSharp.Util.SeeingSharpMessenger">
+            <summary>
+            Main class for sending/receiving messages.
+            This class followes the Messenger pattern but modifies it on some parts like 
+            thread synchronization.
+            What 'messenger' actually is, see here a short explanation: http://stackoverflow.com/questions/22747954/mvvm-light-toolkit-messenger-uses-event-aggregator-or-mediator-pattern
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Util.SeeingSharpMessenger.CustomPublishExceptionHandler">
+            <summary>
+            Gets or sets a custom exception handler which is used globally.
+            Return true to skip default exception behavior (exception is thrown to publisher by default).
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.#cctor">
+            <summary>
+            Initializes the <see cref="T:SeeingSharp.Util.SeeingSharpMessenger" /> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.SeeingSharpMessenger"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.GetByName(System.String)">
+            <summary>
+            Gets the SeeingSharpMessenger by the given name.
+            </summary>
+            <param name="messengerName">The name of the messenger.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.TryGetByName(System.String)">
+            <summary>
+            Gets the SeeingSharpMessenger by the given name.
+            </summary>
+            <param name="messengerName">The name of the messenger.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.ApplyForGlobalSynchronization(SeeingSharp.Util.ObjectThread)">
+            <summary>
+            Sets all required threading properties based on the given target thread.
+            The name of the messenger is directly taken from the given ObjectThread.
+            </summary>
+            <param name="targetThread">The thread on which this Messanger should work on.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.ApplyForGlobalSynchronization(SeeingSharp.Util.SeeingSharpMessageThreadingBehavior,System.String,System.Threading.SynchronizationContext)">
+            <summary>
+            Sets all required synchronization properties.
+            </summary>
+            <param name="checkBehavior">Defines the checking behavior for Publish calls.</param>
+            <param name="messengerName">The name by which this messenger should be registered.</param>
+            <param name="syncContext">The synchronization context to be used.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.DiscardGlobalSynchronization">
+            <summary>
+            Clears all synchronization options.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.GetAllSubscriptions">
+            <summary>
+            Gets a collection containing all active subscriptions.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.WaitForMessageAsync``1">
+            <summary>
+            Waits for the given message.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeAll(System.Object)">
+            <summary>
+            Subscribes all receiver-methods of the given target object to this Messenger.
+            </summary>
+            <param name="targetObject">The target object which is to subscribe..</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Subscribe``1(System.Action{``0})">
+            <summary>
+            Subscribes to the given MessageType.
+            </summary>
+            <typeparam name="MessageType">Type of the message.</typeparam>
+            <param name="Messenger">Action to perform on incoming message.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeWhen``1(System.Func{``0,System.Boolean},System.Action{``0})">
+            <summary>
+            Subscribes the given MessageType and executes the action only when the condition is true.
+            </summary>
+            <typeparam name="MessageType">The type of the message type.</typeparam>
+            <param name="condition">The condition.</param>
+            <param name="Messenger">The messenger.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Subscribe(System.Delegate,System.Type)">
+            <summary>
+            Subscribes to the given message type.
+            </summary>
+            <param name="messageType">The type of the message.</param>
+            <param name="Messenger">Action to perform on incoming message.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Unsubscribe(SeeingSharp.Util.MessageSubscription)">
+            <summary>
+            Clears the given MessageSubscription.
+            </summary>
+            <param name="messageSubscription">The subscription to clear.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.CountSubscriptionsForMessage``1">
+            <summary>
+            Counts all message subscriptions for the given message type.
+            </summary>
+            <typeparam name="MessageType">The type of the message for which to count all subscriptions.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.BeginPublish``1">
+            <summary>
+            Sends the given message to all subscribers (asynchonous processing).
+            There is no possibility here to wait for the answer.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.BeginPublish``1(``0)">
+            <summary>
+            Sends the given message to all subscribers (asynchonous processing).
+            There is no possibility here to wait for the answer.
+            </summary>
+            <typeparam name="MessageType">The type of the essage type.</typeparam>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.PublishAsync``1">
+            <summary>
+            Sends the given message to all subscribers (asynchonous processing).
+            The returned task waits for all synchronous subscriptions.
+            </summary>
+            <typeparam name="MessageType">The type of the message.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.PublishAsync``1(``0)">
+            <summary>
+            Sends the given message to all subscribers (asynchonous processing).
+            The returned task waits for all synchronous subscriptions.
+            </summary>
+            <typeparam name="MessageType">The type of the message.</typeparam>
+            <param name="message">The message to be sent.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Publish``1">
+            <summary>
+            Sends the given message to all subscribers (synchonous processing).
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Publish``1(``0)">
+            <summary>
+            Sends the given message to all subscribers (synchonous processing).
+            </summary>
+            <typeparam name="MessageType">Type of the message.</typeparam>
+            <param name="message">The message to send.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.PublishInternal``1(``0,System.Boolean)">
+            <summary>
+            Sends the given message to all subscribers (synchonous processing).
+            </summary>
+            <typeparam name="MessageType">Type of the message.</typeparam>
+            <param name="message">The message to send.</param>
+            <param name="isInitialCall">Is this one the initial call to publish? (false if we are coming from async routing)</param>
+        </member>
+        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.CompareSynchronizationContexts">
+            <summary>
+            Compares the SynchronizationContext of the current thread and of this messenger instance.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.SyncContext">
+            <summary>
+            Gets or sets the synchronization context on which to publish all messages.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.ThreadingBehavior">
+            <summary>
+            Gets the current threading behavior of this Messenger.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.MainThreadName">
+            <summary>
+            Gets the name of the associated thread.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.CountSubscriptions">
+            <summary>
+            Counts all message subscriptions.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.CountGlobalMessengers">
+            <summary>
+            Gets the total count of globally registered messengers.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.DataObjectValidationError.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.DataObjectValidationError"/> class.
+            </summary>
+            <param name="propertyInternalName">Name of the property internal.</param>
+            <param name="propertyPublicName">Name of the property public.</param>
+            <param name="errorMessage">The error message.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.DataObjectValidator.Validate(SeeingSharp.Util.PropertyChangedBase)">
+            <summary>
+            Validates the given dataobject.
+            </summary>
+            <param name="dataObject">The object to be validated.</param>
+        </member>
+        <member name="T:SeeingSharp.Util.SeeingSharpMessageThreadingBehavior">
+            <summary>
+            This enum describes the threading behavior of a Messenger.
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Util.SeeingSharpMessageThreadingBehavior.Ignore">
+            <summary>
+            Ignore threading. Just use default lock on registration list.
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Util.SeeingSharpMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls">
+            <summary>
+            Ensures that the main SynchronizationContext is set when 
+            this Messenger is used on synchronous calls.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.TplBasedLoop.#ctor(System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.TplBasedLoop"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.TplBasedLoop.RunAsync(System.Threading.CancellationToken)">
+            <summary>
+            Starts running the mainloop.
+            </summary>
+            <param name="cancelToken"></param>
+            <returns></returns>
         </member>
         <member name="M:SeeingSharp.Util.IndexBasedDynamicCollection`1.#ctor">
             <summary>
@@ -1718,13 +2207,6 @@
             Initializes the <see cref="T:SeeingSharp.Util.CommonExtensions" /> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.CommonExtensions.DumpToDesktop(System.Drawing.Bitmap,System.String)">
-            <summary>
-            Writes the given bitmap to the desktop.
-            </summary>
-            <param name="bitmap">The bitmap to write to the desktop.</param>
-            <param name="fileName">The target file name.</param>
-        </member>
         <member name="M:SeeingSharp.Util.CommonExtensions.GetTrueElapsedMilliseconds(System.Diagnostics.Stopwatch)">
             <summary>
             Gets most exact value of elapsed milliseconds from the given stopwatch.
@@ -1818,27 +2300,12 @@
             <param name="sender">The sender parameter.</param>
             <param name="eventArgs">The event args parameter.</param>
         </member>
-        <member name="M:SeeingSharp.Util.CommonExtensions.GetPixelSize(System.Windows.UIElement,System.Windows.Size)">
+        <member name="M:SeeingSharp.Util.CommonExtensions.GetOrReturnNull(Windows.Storage.StorageFolder,System.String)">
             <summary>
-            Gets the pixel size of the given UIElement.
+            Gets the file with the given name or returns null if the file does not exist.
             </summary>
-            <param name="uiElement">The UIElement to get the pixel size from.</param>
-            <param name="minSize">The minimum size to be returned.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonExtensions.GetPixelLocation(System.Windows.UIElement,System.Windows.Point)">
-            <summary>
-            Transporms the given wpf point to pure pixel coordinates.
-            </summary>
-            <param name="uiElement">The ui element on which to transform the coordinate.</param>
-            <param name="wpfPoint">The wpf point to be transformed.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonExtensions.HandleCreateDisposeOnControl(System.Windows.Forms.Control,System.Func{System.IDisposable})">
-            <summary>
-            Creates create and dipsose calls for the live scope of the given control.
-            If the control is loaded, then the object is created. If the control is unloaded, then dispose will be called.
-            </summary>
-            <param name="control">The control on which to create/attach the object</param>
-            <param name="createMethod">The create method.</param>
+            <param name="storageFolder">The folder from which to get the file.</param>
+            <param name="fileName">The name of the file.</param>
         </member>
         <member name="M:SeeingSharp.Util.CommonExtensions.ReadAllBytes(System.IO.Stream)">
             <summary>
@@ -1865,6 +2332,13 @@
             <summary>
             Converts all items from the given source enumeration to the given target enumeration.
             </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.CommonExtensions.FireAndForget(Windows.Foundation.IAsyncAction)">
+            <summary>
+            "Forgets" the given task, but still tries to dispatch exception somewhere the user / developer
+            can see them.
+            </summary>
+            <param name="asyncAction">The action to be fired.</param>
         </member>
         <member name="M:SeeingSharp.Util.CommonExtensions.FireAndForget(System.Threading.Tasks.Task)">
             <summary>
@@ -1906,396 +2380,19 @@
             <param name="state">The parameter of the delegate.</param>
             <param name="delayTime">The total time to wait.</param>
         </member>
-        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector3(System.Xml.XmlReader)">
+        <member name="M:SeeingSharp.Util.UIGestureCatcher.#ctor(Windows.UI.Xaml.UIElement)">
             <summary>
-            Reads a vector from the given xml reader.
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.UIGestureCatcher" /> class.
             </summary>
-            <param name="xmlReader">The xml reader.</param>
         </member>
-        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector3(System.Xml.XmlReader,System.IFormatProvider)">
+        <member name="M:SeeingSharp.Util.UIGestureCatcher.Stop">
             <summary>
-            Reads a vector from the given xml reader.
+            Stops gesture capturing.
             </summary>
-            <param name="xmlReader">The xml reader.</param>
-            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
         </member>
-        <member name="M:SeeingSharp.Util._CommonExtensions.ReadElementContentAsVector3(System.Xml.XmlReader)">
+        <member name="M:SeeingSharp.Util.UIGestureCatcher.CanRaiseEvent">
             <summary>
-            Reads a vector from the given xml reader.
-            </summary>
-            <param name="xmlReader">The xml reader.</param>
-        </member>
-        <member name="M:SeeingSharp.Util._CommonExtensions.ReadElementContentAsVector3(System.Xml.XmlReader,System.IFormatProvider)">
-            <summary>
-            Reads a vector from the given xml reader.
-            </summary>
-            <param name="xmlReader">The xml reader.</param>
-            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.#ctor(System.Uri)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.UriResourceLink"/> class.
-            </summary>
-            <param name="uri">The uri from which to read.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.#ctor(SeeingSharp.Util.AssemblyResourceUriBuilder)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.UriResourceLink"/> class.
-            </summary>
-            <param name="uriBuilder">The URI builder.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.op_Implicit(System.Uri)~SeeingSharp.Util.UriResourceLink">
-            <summary>
-            Performs an implicit conversion from <see cref="T:System.Uri"/> to <see cref="T:SeeingSharp.Util.UriResourceLink"/>.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.op_Implicit(SeeingSharp.Util.AssemblyResourceUriBuilder)~SeeingSharp.Util.UriResourceLink">
-            <summary>
-            Performs an implicit conversion from <see cref="T:SeeingSharp.Util.AssemblyResourceUriBuilder"/> to <see cref="T:SeeingSharp.Util.UriResourceLink"/>.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.ToString">
-            <summary>
-            Returns a <see cref="T:System.String" /> that represents this instance.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.GetForAnotherFile(System.String)">
-            <summary>
-            Gets an object pointing to a file at the same location (e. g. the same directory).
-            </summary>
-            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.OpenOutputStream">
-            <summary>
-            Opens an output stream to the current stream source.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.OpenInputStreamAsync">
-            <summary>
-            Opens the input stream to the described resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.OpenInputStream">
-            <summary>
-            Opens a stream to the resource.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.UriResourceLink.FileExtension">
-            <summary>
-            Gets the file extension of the resource we target to.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.UriResourceLink.SupportsAsync">
-            <summary>
-            Are async operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.UriResourceLink.SupportsSync">
-            <summary>
-            Are synchronous operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.#ctor(SeeingSharp.Util.AssemblyResourceLink)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.AssemblyResourceLinkSource" /> class.
-            </summary>
-            <param name="resourceLink">The link to the resource.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.op_Implicit(SeeingSharp.Util.AssemblyResourceLink)~SeeingSharp.Util.AssemblyResourceLinkSource">
-            <summary>
-            Performs an implicit conversion from <see cref="T:SeeingSharp.Util.AssemblyResourceLink"/> to <see cref="T:SeeingSharp.Util.AssemblyResourceLinkSource"/>.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.ToString">
-            <summary>
-            Returns a <see cref="T:System.String" /> that represents this instance.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.GetForAnotherFile(System.String)">
-            <summary>
-            Gets an object pointing to a file at the same location (e. g. the same directory).
-            </summary>
-            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenOutputStream">
-            <summary>
-            Opens an output stream to the current stream source.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenInputStreamAsync">
-            <summary>
-            Opens the input stream to the described resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenInputStream">
-            <summary>
-            Opens a stream to the resource.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.AssemblyResourceLinkSource.FileExtension">
-            <summary>
-            Gets the file extension of the resource we target to.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.AssemblyResourceLinkSource.SupportsAsync">
-            <summary>
-            Are async operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.AssemblyResourceLinkSource.SupportsSync">
-            <summary>
-            Are synchronous operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.#ctor(System.Func{System.IO.Stream},System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.StreamFactoryResourceLink" /> class.
-            </summary>
-            <param name="streamFactory">The factory method which creates the stream object.</param>
-            <param name="fileName">The name of the virtual file.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.op_Implicit(System.Func{System.IO.Stream})~SeeingSharp.Util.StreamFactoryResourceLink">
-            <summary>
-            Performs an implicit conversion from <see cref="T:System.Func`1"/> to <see cref="T:SeeingSharp.Util.StreamFactoryResourceLink"/>.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.ToString">
-            <summary>
-            Returns a <see cref="T:System.String" /> that represents this instance.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.GetForAnotherFile(System.String)">
-            <summary>
-            Gets an object pointing to a file at the same location (e. g. the same directory).
-            </summary>
-            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenOutputStream">
-            <summary>
-            Opens an output stream to the current stream source.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenInputStreamAsync">
-            <summary>
-            Opens the input stream to the described resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenInputStream">
-            <summary>
-            Opens a stream to the resource.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.StreamFactoryResourceLink.FileExtension">
-            <summary>
-            Gets the file extension of the resource we target to.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.StreamFactoryResourceLink.SupportsAsync">
-            <summary>
-            Are async operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.StreamFactoryResourceLink.SupportsSync">
-            <summary>
-            Are synchronous operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.DesktopFileSystemResourceLink" /> class.
-            </summary>
-            <param name="filePath">The path to the physical file.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.op_Implicit(System.String)~SeeingSharp.Util.DesktopFileSystemResourceLink">
-            <summary>
-            Performs an implicit conversion from <see cref="T:System.String"/> to <see cref="T:SeeingSharp.Util.DesktopFileSystemResourceLink"/>.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.ToString">
-            <summary>
-            Returns a <see cref="T:System.String" /> that represents this instance.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.GetForAnotherFile(System.String)">
-            <summary>
-            Gets an object pointing to a file at the same location (e. g. the same directory).
-            </summary>
-            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.OpenOutputStream">
-            <summary>
-            Opens an output stream to the current stream source.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.OpenInputStreamAsync">
-            <summary>
-            Opens the input stream to the described resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.OpenInputStream">
-            <summary>
-            Opens a stream to the resource.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.DesktopFileSystemResourceLink.FileExtension">
-            <summary>
-            Gets the file extension of the resource we target to.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.DesktopFileSystemResourceLink.FilePath">
-            <summary>
-            Gets the path to the file.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.DesktopFileSystemResourceLink.SupportsAsync">
-            <summary>
-            Are async operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.DesktopFileSystemResourceLink.SupportsSync">
-            <summary>
-            Are synchronous operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.CommandManagerHelper">
-            <summary>
-            This class contains methods for the CommandManager that help avoid memory leaks by
-            using weak references.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DataObjectValidationError.#ctor(System.String,System.String,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.DataObjectValidationError"/> class.
-            </summary>
-            <param name="propertyInternalName">Name of the property internal.</param>
-            <param name="propertyPublicName">Name of the property public.</param>
-            <param name="errorMessage">The error message.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DataObjectValidator.Validate(SeeingSharp.Util.PropertyChangedBase)">
-            <summary>
-            Validates the given dataobject.
-            </summary>
-            <param name="dataObject">The object to be validated.</param>
-        </member>
-        <member name="T:SeeingSharp.Util.DelegateCommand">
-            <summary>
-            This class allows delegating the commanding logic to methods passed as parameters,
-            and enables a View to bind commands to objects that are not part of the element tree.
-            </summary>
-        </member>
-        <member name="E:SeeingSharp.Util.DelegateCommand.CanExecuteChanged">
-            <summary>
-            Raised when the command changes its state.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.#ctor(System.Action)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.DelegateCommand"/> class.
-            </summary>
-            <param name="executeMethod">The action to execute.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.#ctor(System.Action,System.Func{System.Boolean})">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.DelegateCommand"/> class.
-            </summary>
-            <param name="executeMethod">The action to execute.</param>
-            <param name="canExecuteMethod">The can execute method.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.#ctor(System.Action,System.Func{System.Boolean},System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.DelegateCommand"/> class.
-            </summary>
-            <param name="executeMethod">The execute method.</param>
-            <param name="canExecuteMethod">The can execute method.</param>
-            <param name="isAutomaticRequeryDisabled">if set to <c>true</c> [is automatic requery disabled].</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.CanExecute">
-            <summary>
-            Method to determine if the command can be executed
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.Execute">
-            <summary>
-            Execution of the command
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.RaiseCanExecuteChanged">
-            <summary>
-            Raises the CanExecuteChaged event
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.System#Windows#Input#ICommand#CanExecute(System.Object)">
-            <summary>
-            Can execute this command?
-            </summary>
-            <param name="parameter">A parameter passed to the query.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.System#Windows#Input#ICommand#Execute(System.Object)">
-            <summary>
-            Executes the command.
-            </summary>
-            <param name="parameter">A parameter passed to the query.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand.OnCanExecuteChanged">
-            <summary>
-                Protected virtual method to raise CanExecuteChanged event
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.DelegateCommand.IsAutomaticRequeryDisabled">
-            <summary>
-            Property to enable or disable CommandManager's automatic requery on this command
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.DelegateCommand`1">
-            <summary>
-                This class allows delegating the commanding logic to methods passed as parameters,
-                and enables a View to bind commands to objects that are not part of the element tree.
-            </summary>
-            <typeparam name="T">Type of the parameter passed to the delegates</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand`1.#ctor(System.Action{`0})">
-            <summary>
-                Constructor
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand`1.#ctor(System.Action{`0},System.Func{`0,System.Boolean})">
-            <summary>
-                Constructor
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand`1.#ctor(System.Action{`0},System.Func{`0,System.Boolean},System.Boolean)">
-            <summary>
-                Constructor
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand`1.CanExecute(`0)">
-            <summary>
-                Method to determine if the command can be executed
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand`1.Execute(`0)">
-            <summary>
-                Execution of the command
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand`1.RaiseCanExecuteChanged">
-            <summary>
-                Raises the CanExecuteChaged event
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.DelegateCommand`1.OnCanExecuteChanged">
-            <summary>
-                Protected virtual method to raise CanExecuteChanged event
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.DelegateCommand`1.IsAutomaticRequeryDisabled">
-            <summary>
-                Property to enable or disable CommandManager's automatic requery on this command
-            </summary>
-        </member>
-        <member name="E:SeeingSharp.Util.DelegateCommand`1.CanExecuteChanged">
-            <summary>
-                ICommand.CanExecuteChanged implementation
+            Can we raise an event (=> Checks time interval since last event.
             </summary>
         </member>
         <member name="T:SeeingSharp.Util.ReusableMemoryStream">
@@ -2323,266 +2420,6 @@
         <member name="T:SeeingSharp.Util.AssignOriginalObjectAfterCloneAttribute">
             <summary>
             Inidicates that this field will get a reference to the original object after being cloned from it using CommonTools.Clone
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.SeeingSharpMessage">
-            <summary>
-            Base class of all messages sent and received through ApplicationMessenger class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetAsyncRoutingTargetThreads">
-            <summary>
-            Gets a list containing all target threads for message routing.
-            An empty list means that no routing logic applies.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetDocumentationString(System.Type)">
-            <summary>
-            Gets a documentation string for the given message type.
-            </summary>
-            <param name="messageType">The message type to get a documentation for.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetDocumentationString(System.Type,System.Int32)">
-            <summary>
-            Gets a documentation string for the given message type.
-            </summary>
-            <param name="messageType">The message type to get a documentation for.</param>
-            <param name="maxColumnCount">Maximum count of columns for the generated text.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetMessagePropertyDescription(System.Reflection.PropertyInfo)">
-            <summary>
-            Generates the documentation for the given message property.
-            </summary>
-            <param name="propertyInfo">The property information object.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetAsyncRoutingTargetThreadsOfMessageType(System.Type)">
-            <summary>
-            Gets a list containing all target threads for message routing.
-            An empty list means that no routing logic applies.
-            </summary>
-            <param name="messageType">The type of the message.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetPossibleSourceThreads">
-            <summary>
-            Gets a list containing all possible source threads of this message.
-            An empty list means that every thread can fire this message
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.GetPossibleSourceThreadsOfMessageType(System.Type)">
-            <summary>
-            Gets a list containing all possible source threads of this message.
-            An empty list means that every thread can fire this message
-            </summary>
-            <param name="messageType">The type of the message.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessage.WrapText(System.String,System.Int32,System.String)">
-            <summary>
-            Helper method which wraps the given text for display within documentation string.
-            </summary>
-            <param name="text">The text to be wrapped.</param>
-            <param name="maxCharactersPerLine">The maximum count of characters in one line.</param>
-            <param name="lineHeader">The line header to append on the beginning.</param>
-        </member>
-        <member name="T:SeeingSharp.Util.SeeingSharpMessenger">
-            <summary>
-            Main class for sending/receiving messages.
-            This class followes the Messenger pattern but modifies it on some parts like 
-            thread synchronization.
-            What 'messenger' actually is, see here a short explanation: http://stackoverflow.com/questions/22747954/mvvm-light-toolkit-messenger-uses-event-aggregator-or-mediator-pattern
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Util.SeeingSharpMessenger.CustomPublishExceptionHandler">
-            <summary>
-            Gets or sets a custom exception handler which is used globally.
-            Return true to skip default exception behavior (exception is thrown to publisher by default).
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.#cctor">
-            <summary>
-            Initializes the <see cref="T:SeeingSharp.Util.SeeingSharpMessenger" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.SeeingSharpMessenger"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.GetByName(System.String)">
-            <summary>
-            Gets the SeeingSharpMessenger by the given name.
-            </summary>
-            <param name="messengerName">The name of the messenger.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.TryGetByName(System.String)">
-            <summary>
-            Gets the SeeingSharpMessenger by the given name.
-            </summary>
-            <param name="messengerName">The name of the messenger.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.ApplyForGlobalSynchronization(SeeingSharp.Util.ObjectThread)">
-            <summary>
-            Sets all required threading properties based on the given target thread.
-            The name of the messenger is directly taken from the given ObjectThread.
-            </summary>
-            <param name="targetThread">The thread on which this Messanger should work on.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.ApplyForGlobalSynchronization(SeeingSharp.Util.SeeingSharpMessageThreadingBehavior,System.String,System.Threading.SynchronizationContext)">
-            <summary>
-            Sets all required synchronization properties.
-            </summary>
-            <param name="checkBehavior">Defines the checking behavior for Publish calls.</param>
-            <param name="messengerName">The name by which this messenger should be registered.</param>
-            <param name="syncContext">The synchronization context to be used.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.DiscardGlobalSynchronization">
-            <summary>
-            Clears all synchronization options.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.GetAllSubscriptions">
-            <summary>
-            Gets a collection containing all active subscriptions.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.WaitForMessageAsync``1">
-            <summary>
-            Waits for the given message.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeAllOnControl(System.Windows.Forms.Control)">
-            <summary>
-            Subscribes all receiver-methods of the given target object to this Messenger.
-            Subscribe and unsubscribe is automatically called when the control is created/destroyed.
-            </summary>
-            <param name="target">The target win.forms control.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeAll(System.Object)">
-            <summary>
-            Subscribes all receiver-methods of the given target object to this Messenger.
-            </summary>
-            <param name="targetObject">The target object which is to subscribe..</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Subscribe``1(System.Action{``0})">
-            <summary>
-            Subscribes to the given MessageType.
-            </summary>
-            <typeparam name="MessageType">Type of the message.</typeparam>
-            <param name="Messenger">Action to perform on incoming message.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeWhen``1(System.Func{``0,System.Boolean},System.Action{``0})">
-            <summary>
-            Subscribes the given MessageType and executes the action only when the condition is true.
-            </summary>
-            <typeparam name="MessageType">The type of the message type.</typeparam>
-            <param name="condition">The condition.</param>
-            <param name="Messenger">The messenger.</param>
-            <returns></returns>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Subscribe(System.Delegate,System.Type)">
-            <summary>
-            Subscribes to the given message type.
-            </summary>
-            <param name="messageType">The type of the message.</param>
-            <param name="Messenger">Action to perform on incoming message.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeOnControl``1(System.Windows.Forms.Control,System.Action{``0})">
-            <summary>
-            Subscribes to the given MessageType during the livetime of the given control.
-            Events OnHandleCreated and OnHandleDestroyed are used for subscribing / unsubscribing.
-            </summary>
-            <typeparam name="MessageType">Type of the message.</typeparam>
-            <param name="Messenger">Action to perform on incoming message.</param>
-            <param name="target">The target control.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Unsubscribe(SeeingSharp.Util.MessageSubscription)">
-            <summary>
-            Clears the given MessageSubscription.
-            </summary>
-            <param name="messageSubscription">The subscription to clear.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.CountSubscriptionsForMessage``1">
-            <summary>
-            Counts all message subscriptions for the given message type.
-            </summary>
-            <typeparam name="MessageType">The type of the message for which to count all subscriptions.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.BeginPublish``1">
-            <summary>
-            Sends the given message to all subscribers (asynchonous processing).
-            There is no possibility here to wait for the answer.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.BeginPublish``1(``0)">
-            <summary>
-            Sends the given message to all subscribers (asynchonous processing).
-            There is no possibility here to wait for the answer.
-            </summary>
-            <typeparam name="MessageType">The type of the essage type.</typeparam>
-            <param name="message">The message.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.PublishAsync``1">
-            <summary>
-            Sends the given message to all subscribers (asynchonous processing).
-            The returned task waits for all synchronous subscriptions.
-            </summary>
-            <typeparam name="MessageType">The type of the message.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.PublishAsync``1(``0)">
-            <summary>
-            Sends the given message to all subscribers (asynchonous processing).
-            The returned task waits for all synchronous subscriptions.
-            </summary>
-            <typeparam name="MessageType">The type of the message.</typeparam>
-            <param name="message">The message to be sent.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Publish``1">
-            <summary>
-            Sends the given message to all subscribers (synchonous processing).
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Publish``1(``0)">
-            <summary>
-            Sends the given message to all subscribers (synchonous processing).
-            </summary>
-            <typeparam name="MessageType">Type of the message.</typeparam>
-            <param name="message">The message to send.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.PublishInternal``1(``0,System.Boolean)">
-            <summary>
-            Sends the given message to all subscribers (synchonous processing).
-            </summary>
-            <typeparam name="MessageType">Type of the message.</typeparam>
-            <param name="message">The message to send.</param>
-            <param name="isInitialCall">Is this one the initial call to publish? (false if we are coming from async routing)</param>
-        </member>
-        <member name="M:SeeingSharp.Util.SeeingSharpMessenger.CompareSynchronizationContexts">
-            <summary>
-            Compares the SynchronizationContext of the current thread and of this messenger instance.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.SyncContext">
-            <summary>
-            Gets or sets the synchronization context on which to publish all messages.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.ThreadingBehavior">
-            <summary>
-            Gets the current threading behavior of this Messenger.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.MainThreadName">
-            <summary>
-            Gets the name of the associated thread.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.CountSubscriptions">
-            <summary>
-            Counts all message subscriptions.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.SeeingSharpMessenger.CountGlobalMessengers">
-            <summary>
-            Gets the total count of globally registered messengers.
             </summary>
         </member>
         <member name="T:SeeingSharp.Util.MessagePublishException">
@@ -2675,27 +2512,6 @@
             Gets the name of the target object.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Util.MessageSubscription.TargetMethodName">
-            <summary>
-            Gets the name of the target method.
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.SeeingSharpMessageThreadingBehavior">
-            <summary>
-            This enum describes the threading behavior of a Messenger.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Util.SeeingSharpMessageThreadingBehavior.Ignore">
-            <summary>
-            Ignore threading. Just use default lock on registration list.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Util.SeeingSharpMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls">
-            <summary>
-            Ensures that the main SynchronizationContext is set when 
-            this Messenger is used on synchronous calls.
-            </summary>
-        </member>
         <member name="T:SeeingSharp.Util.ICheckDisposed">
             <summary>
             An interface which can return the disposed state of an object.
@@ -2715,6 +2531,17 @@
             <summary>
             A key for all german speaking regions.
             </summary>
+        </member>
+        <member name="T:SeeingSharp.Util.DelegateCommand">
+            <summary>
+            A delegate command without any parameters.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Util.DelegateCommand`1">
+            <summary>
+            A delegate command which receives one parameter.
+            </summary>
+            <typeparam name="T">The expected type of the parameter.</typeparam>
         </member>
         <member name="E:SeeingSharp.Util.PropertyChangedBase.PropertyChanged">
             <summary>
@@ -2875,13 +2702,6 @@
             Gets a common data error without html tags.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Util.ViewModelBase.System#ComponentModel#IDataErrorInfo#Item(System.String)">
-            <summary>
-            Gets the <see cref="T:System.String"/> with the specified column name.
-            This part of the interface IDataErrorInfo is implemented explicit because
-            it may be a misunderstandig to access an error by an indexer.
-            </summary>
-        </member>
         <member name="P:SeeingSharp.Util.ViewModelBase.Messenger">
             <summary>
             Gets the Messenger of the UI thread.
@@ -2895,6 +2715,53 @@
         <member name="P:SeeingSharp.Util.BooleanToVisibilityConverter.IsReversed">
             <summary>
             If set to True, conversion is reversed: True will become Collapsed.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.PerformanceCalculatorBase.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.PerformanceCalculatorBase"/> class.
+            </summary>
+            <param name="calculatorName">Name of the calculator.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.PerformanceCalculatorBase.Calculate(System.DateTime,System.DateTime,System.DateTime,System.TimeSpan)">
+            <summary>
+            Calculates a new kpi value based on given timestamp parameters.
+            </summary>
+            <param name="keyTimeStamp">The timestamp which is used for the result object.</param>
+            <param name="minTimeStamp">The timestamp which is the minimum for current calculation step.</param>
+            <param name="maxTimeStamp">The maximum timestamp up to which to calculate the next kpi.</param>
+            <param name="calculationInterval">The interval from which to take all values from.</param>
+        </member>
+        <member name="P:SeeingSharp.Util.PerformanceCalculatorBase.Parent">
+            <summary>
+            Gets the parent kpi container.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.PerformanceCalculatorBase.CalculatorName">
+            <summary>
+            Gets the name of this calculator.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.PerformanceAnalyzeResultBase.#ctor(SeeingSharp.Util.PerformanceCalculatorBase,System.DateTime)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.PerformanceAnalyzeResultBase"/> class.
+            </summary>
+            <param name="calculator">The Calculator this result object belongs to.</param>
+            <param name="keyTimestamp">The key of this result object..</param>
+        </member>
+        <member name="P:SeeingSharp.Util.PerformanceAnalyzeResultBase.Calculator">
+            <summary>
+            Gets the calculator this value was generated on.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.PerformanceAnalyzeResultBase.CalculatorName">
+            <summary>
+            Gets the name of the calculator.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Util.PerformanceAnalyzeResultBase.KeyTimestamp">
+            <summary>
+            Gets the key of this kpi.
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.PerformanceAnalyzer.#ctor(System.TimeSpan,System.TimeSpan)">
@@ -3040,53 +2907,6 @@
             Handles the given result object for the UI layer.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.PerformanceAnalyzeResultBase.#ctor(SeeingSharp.Util.PerformanceCalculatorBase,System.DateTime)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.PerformanceAnalyzeResultBase"/> class.
-            </summary>
-            <param name="calculator">The Calculator this result object belongs to.</param>
-            <param name="keyTimestamp">The key of this result object..</param>
-        </member>
-        <member name="P:SeeingSharp.Util.PerformanceAnalyzeResultBase.Calculator">
-            <summary>
-            Gets the calculator this value was generated on.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.PerformanceAnalyzeResultBase.CalculatorName">
-            <summary>
-            Gets the name of the calculator.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.PerformanceAnalyzeResultBase.KeyTimestamp">
-            <summary>
-            Gets the key of this kpi.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.PerformanceCalculatorBase.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.PerformanceCalculatorBase"/> class.
-            </summary>
-            <param name="calculatorName">Name of the calculator.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.PerformanceCalculatorBase.Calculate(System.DateTime,System.DateTime,System.DateTime,System.TimeSpan)">
-            <summary>
-            Calculates a new kpi value based on given timestamp parameters.
-            </summary>
-            <param name="keyTimeStamp">The timestamp which is used for the result object.</param>
-            <param name="minTimeStamp">The timestamp which is the minimum for current calculation step.</param>
-            <param name="maxTimeStamp">The maximum timestamp up to which to calculate the next kpi.</param>
-            <param name="calculationInterval">The interval from which to take all values from.</param>
-        </member>
-        <member name="P:SeeingSharp.Util.PerformanceCalculatorBase.Parent">
-            <summary>
-            Gets the parent kpi container.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.PerformanceCalculatorBase.CalculatorName">
-            <summary>
-            Gets the name of this calculator.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Util.DurationPerformanceCalculator.#ctor(System.String)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.DurationPerformanceCalculator"/> class.
@@ -3160,105 +2980,6 @@
         <member name="P:SeeingSharp.Util.FlowRatePerformanceResult.Value">
             <summary>
             Gets the value that was calculated.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceUriBuilder.#ctor(System.String,System.Boolean,System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.AssemblyResourceUriBuilder"/> class.
-            </summary>
-            <param name="assemblyName">Name of the assembly.</param>
-            <param name="isMainAssembly">if set to <c>true</c> [is main assembly].</param>
-            <param name="filePath">The file path.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceUriBuilder.ToString">
-            <summary>
-            Returns a <see cref="T:System.String" /> that represents this instance.
-            </summary>
-            <returns>
-            A <see cref="T:System.String" /> that represents this instance.
-            </returns>
-        </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceUriBuilder.GetUri">
-            <summary>
-            Builds the Uri object.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Util.ResourceLink"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.WriteAllBytesToDummyFile(System.String)">
-            <summary>
-            Writes the contents of this resource to the given dummy file.
-            </summary>
-            <param name="fileName">Name of the dummy file.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.ReadCompleteToString">
-            <summary>
-            Reads the complete resource to a new string.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.ReadCompleteToStringAsync">
-            <summary>
-            Reads the complete resource to a new string.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.GetForAnotherFile(System.String)">
-            <summary>
-            Gets an object pointing to a file at the same location (e. g. the same directory).
-            </summary>
-            <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.OpenOutputStream">
-            <summary>
-            Opens an output stream to the current stream source.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.OpenInputStreamAsync">
-            <summary>
-            Opens the input stream to the described resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.OpenInputStream">
-            <summary>
-            Opens a stream to the resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.GetExtensionFromFileName(System.String)">
-            <summary>
-            Gets the name of the extension from the given file name.
-            </summary>
-            <param name="fileName">Name of the file.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.op_Implicit(System.String)~SeeingSharp.Util.ResourceLink">
-            <summary>
-            Performs an implicit conversion from <see cref="T:System.String"/> to <see cref="T:SeeingSharp.Util.ResourceLink"/>.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.op_Implicit(SeeingSharp.Util.AssemblyResourceUriBuilder)~SeeingSharp.Util.ResourceLink">
-            <summary>
-            Performs an implicit conversion from <see cref="T:SeeingSharp.Util.AssemblyResourceUriBuilder"/> to <see cref="T:SeeingSharp.Util.ResourceLink"/>.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.op_Implicit(System.Uri)~SeeingSharp.Util.ResourceLink">
-            <summary>
-            Performs an implicit conversion from <see cref="T:System.Uri"/> to <see cref="T:SeeingSharp.Util.ResourceLink"/>.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.ResourceLink.FileExtension">
-            <summary>
-            Gets the file extension of the resource we target to.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.ResourceLink.SupportsAsync">
-            <summary>
-            Are async operations supported on this ResourceLink?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.ResourceLink.SupportsSync">
-            <summary>
-            Are synchronous operations supported on this ResourceLink?
             </summary>
         </member>
         <member name="E:SeeingSharp.Util.ObjectThread.Starting">
@@ -6296,28 +6017,6 @@
             <param name="green">The green.</param>
             <param name="blue">The blue.</param>
         </member>
-        <member name="M:SeeingSharp.Color4.#ctor(System.Windows.Media.Color)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Color4" /> struct.
-            </summary>
-            <param name="wpfColor">Color of the WPF.</param>
-        </member>
-        <member name="M:SeeingSharp.Color4.#ctor(System.Drawing.Color)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Color"/> struct.
-            </summary>
-            <param name="gdiColor">Color of the GDI.</param>
-        </member>
-        <member name="M:SeeingSharp.Color4.ToGdiColor">
-            <summary>
-            Generates a gdi color object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Color4.ToArgb">
-            <summary>
-            Converts this value to a argb value
-            </summary>
-        </member>
         <member name="F:SeeingSharp.Color4.Black">
             <summary>
             The Black color (0, 0, 0, 1).
@@ -8177,6 +7876,12 @@
             <returns>
             The result of the operator.
             </returns>
+        </member>
+        <member name="M:SeeingSharp.MathExtensions.GetAllPoints(System.Collections.Generic.IEnumerable{SeeingSharp.Line})">
+            <summary>
+            Gets all points contained in given line collection.
+            </summary>
+            <param name="lines">A list containing all lines.</param>
         </member>
         <member name="T:SeeingSharp.MovementAnimationHelper">
             <summary>
@@ -14199,12 +13904,6 @@
             </summary>
             <param name="value">The value.</param>
             <returns>The result of the conversion.</returns>
-        </member>
-        <member name="M:SeeingSharp.MathExtensions.GetAllPoints(System.Collections.Generic.IEnumerable{SeeingSharp.Line})">
-            <summary>
-            Gets all points contained in given line collection.
-            </summary>
-            <param name="lines">A list containing all lines.</param>
         </member>
         <member name="M:SeeingSharp.Matrix4x4Ex.CreateOrthoLH(System.Single,System.Single,System.Single,System.Single,System.Numerics.Matrix4x4@)">
             <summary>

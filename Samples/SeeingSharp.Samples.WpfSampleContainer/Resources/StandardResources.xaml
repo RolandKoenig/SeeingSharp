@@ -23,10 +23,4 @@
         </Border>
     </ControlTemplate>
 
-    <Style TargetType="prop:PropertyGrid" >
-        <Setter Property="CategoryControlTemplate" Value="{DynamicResource PropertyGridCategoryControlTemplate}"/>
-        <Setter Property="CategoryControlType" Value="Expander"/>
-        <Setter Property="MaxHeight" Value="500" />
-    </Style>    
-    
 </ResourceDictionary>

@@ -7,7 +7,14 @@
     <authors>RolandK</authors>
     <owners>RolandK</owners>
     <description>
-      The base library of Seeing#.
+      This library contains most of the base classes like
+      SeeingSharpApplication, classes for different patterns
+      and so on..
+
+      Supported targets:
+        - Classic Desktop (.Net 4.6)
+        - Windows 8.1 and upwards
+        - Windows Phone 8.1 and upwards
     </description>
     <releaseNotes>
     </releaseNotes>
@@ -21,13 +28,19 @@
     <licenseUrl>https://github.com/RolandKoenig/SeeingSharp/blob/master/LICENSE</licenseUrl>
     <copyright>Copyright  2015</copyright>
     <dependencies>
-        <group targetFramework="net46">
-          <dependency id="Newtonsoft.Json" version="7.0.1" />
-          <dependency id="PropertyTools.Wpf" version="2015.1.49" />
-        </group>
+      <group targetFramework="net46">
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
+      </group>
+      <group targetFramework="portable-win8+wpa81">
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
+        <dependency id="System.Numerics.Vectors" version="4.0.0" />
+      </group>
     </dependencies>
     <references>
       <group targetFramework="net46">
+        <reference file="SeeingSharp.dll" />
+      </group>
+      <group targetFramework="portable-win8+wpa81">
         <reference file="SeeingSharp.dll" />
       </group>
     </references>

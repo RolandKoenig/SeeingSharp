@@ -7,7 +7,14 @@
     <authors>RolandK</authors>
     <owners>RolandK</owners>
     <description>
-      The multimedia library of Seeing#.
+      This library contains all multimedia functionality 
+      of seeing# like Direct3D 11 rendering, video rendering,
+      sound playing and so on...
+
+      Supported targets:
+      - Classic Desktop (.Net 4.6)
+      - Windows 8.1 and upwards
+      - Windows Phone 8.1 and upwards
     </description>
     <releaseNotes>
     </releaseNotes>
@@ -21,30 +28,51 @@
     <licenseUrl>https://github.com/RolandKoenig/SeeingSharp/blob/master/LICENSE</licenseUrl>
     <copyright>Copyright  2015</copyright>
     <dependencies>
-        <group targetFramework="net46">
-          <dependency id="AssimpNet" version="3.3.1" />
-          <dependency id="Newtonsoft.Json" version="7.0.1" />
-          <dependency id="PropertyTools.Wpf" version="2015.1.49" />
-          <dependency id="Rx-Core" version="2.2.5" />
-          <dependency id="Rx-Interfaces" version="2.2.5" />
-          <dependency id="Rx-Linq" version="2.2.5" />
-          <dependency id="Rx-Main" version="2.2.5" />
-          <dependency id="Rx-PlatformServices" version="2.2.5" />
-          <dependency id="SharpDX" version="3.0.0-beta01" />
-          <dependency id="SharpDX.D3DCompiler" version="3.0.0-beta01" />
-          <dependency id="SharpDX.Direct2D1" version="3.0.0-beta01" />
-          <dependency id="SharpDX.Direct3D11" version="3.0.0-beta01" />
-          <dependency id="SharpDX.Direct3D9" version="3.0.0-beta01" />
-          <dependency id="SharpDX.DXGI" version="3.0.0-beta01" />
-          <dependency id="SharpDX.Mathematics" version="3.0.0-beta01" />
-          <dependency id="SharpDX.MediaFoundation" version="3.0.0-beta01" />
-          <dependency id="SharpDX.XAudio2" version="3.0.0-beta01" />
-          <dependency id="SharpDX.XInput" version="3.0.0-beta01" />
-          <dependency id="SeeingSharp" version="1.0.0-beta" />
-        </group>
+      <group targetFramework="net46">
+        <dependency id="AssimpNet" version="3.3.1" />
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
+        <dependency id="Rx-Core" version="2.2.5" />
+        <dependency id="Rx-Interfaces" version="2.2.5" />
+        <dependency id="Rx-Linq" version="2.2.5" />
+        <dependency id="Rx-Main" version="2.2.5" />
+        <dependency id="Rx-PlatformServices" version="2.2.5" />
+        <dependency id="SharpDX" version="3.0.0-beta01" />
+        <dependency id="SharpDX.D3DCompiler" version="3.0.0-beta01" />
+        <dependency id="SharpDX.Direct3D9" version="3.0.0-beta01" />
+        <dependency id="SharpDX.Direct2D1" version="3.0.0-beta01" />
+        <dependency id="SharpDX.Direct3D11" version="3.0.0-beta01" />
+        <dependency id="SharpDX.DXGI" version="3.0.0-beta01" />
+        <dependency id="SharpDX.Mathematics" version="3.0.0-beta01" />
+        <dependency id="SharpDX.MediaFoundation" version="3.0.0-beta01" />
+        <dependency id="SharpDX.XAudio2" version="3.0.0-beta01" />
+        <dependency id="SharpDX.XInput" version="3.0.0-beta01" />
+        <dependency id="SeeingSharp" version="1.0.0-beta" />
+        <dependency id="System.Numerics.Vectors" version="4.0.0" />
+      </group>
+      <group targetFramework="portable-win8+wpa81">
+        <dependency id="Newtonsoft.Json" version="7.0.1" />
+        <dependency id="Rx-Core" version="2.2.5" />
+        <dependency id="Rx-Interfaces" version="2.2.5" />
+        <dependency id="Rx-Linq" version="2.2.5" />
+        <dependency id="Rx-Main" version="2.2.5" />
+        <dependency id="Rx-PlatformServices" version="2.2.5" />
+        <dependency id="SharpDX" version="3.0.0-beta01" />
+        <dependency id="SharpDX.Direct2D1" version="3.0.0-beta01" />
+        <dependency id="SharpDX.Direct3D11" version="3.0.0-beta01" />
+        <dependency id="SharpDX.DXGI" version="3.0.0-beta01" />
+        <dependency id="SharpDX.Mathematics" version="3.0.0-beta01" />
+        <dependency id="SharpDX.MediaFoundation" version="3.0.0-beta01" />
+        <dependency id="SharpDX.XAudio2" version="3.0.0-beta01" />
+        <dependency id="SharpDX.XInput" version="3.0.0-beta01" />
+        <dependency id="SeeingSharp" version="1.0.0-beta" />
+        <dependency id="System.Numerics.Vectors" version="4.0.0" />
+      </group>
     </dependencies>
     <references>
       <group targetFramework="net46">
+        <reference file="SeeingSharp.Multimedia.dll" />
+      </group>
+      <group targetFramework="portable-win8+wpa81">
         <reference file="SeeingSharp.Multimedia.dll" />
       </group>
     </references>

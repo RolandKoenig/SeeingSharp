@@ -27,7 +27,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace SeeingSharp.Util._Threading
+namespace SeeingSharp.Util
 {
     // Provides a task scheduler that ensures a maximum concurrency level while  
     // running on top of the thread pool. 

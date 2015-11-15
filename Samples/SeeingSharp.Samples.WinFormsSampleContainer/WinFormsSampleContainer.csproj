@@ -87,14 +87,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="PropertyTools, Version=2015.1.49.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\PropertyTools.Wpf.2015.1.49\lib\net45\PropertyTools.dll</HintPath>
-    </Reference>
-    <Reference Include="PropertyTools.Wpf, Version=2015.1.49.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\packages\PropertyTools.Wpf.2015.1.49\lib\net45\PropertyTools.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
@@ -157,7 +149,6 @@
     <None Include="..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
-    <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\DataSources\SeeingSharp.Util.ActivityPerformanceValueContainer.datasource" />
     <None Include="Properties\DataSources\SeeingSharp.Util.DurationKpiResult.datasource" />
