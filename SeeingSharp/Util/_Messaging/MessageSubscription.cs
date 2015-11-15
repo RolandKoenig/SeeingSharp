@@ -101,7 +101,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Is this subscription valid?
         /// </summary>
-        [Browsable(false)]
         public bool IsDisposed
         {
             get
@@ -116,7 +115,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Gets the corresponding Messenger object.
         /// </summary>
-        [Browsable(false)]
         public SeeingSharpMessenger Messenger
         {
             get { return m_Messenger; }
@@ -125,7 +123,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Gets the type of the message.
         /// </summary>
-        [Browsable(false)]
         public Type MessageType
         {
             get { return m_messageType; }

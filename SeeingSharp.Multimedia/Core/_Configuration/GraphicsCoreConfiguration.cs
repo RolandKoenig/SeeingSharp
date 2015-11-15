@@ -39,7 +39,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets or sets the target hardware.
         /// </summary>
-        [Browsable(false)]
         public TargetHardware TargetHardware
         {
             get;
@@ -49,14 +48,12 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Can enable debug mode for all created devices.
         /// </summary>
-        [Browsable(false)]
         public bool DebugEnabled
         {
             get;
             set;
         }
 
-        [Browsable(false)]
         public bool PerformanceMeasuringEnabled
         {
             get;

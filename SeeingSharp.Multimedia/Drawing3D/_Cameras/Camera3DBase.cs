@@ -21,7 +21,6 @@
 */
 #endregion
 
-using PropertyTools.DataAnnotations;
 using System;
 using System.Numerics;
 using System.Collections.Generic;
@@ -291,7 +290,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
             UpdateCamera();
         }
 
-        [Browsable(true)]
         public bool InvertScreenMove
         {
             get { return m_invertScreenMove; }
@@ -301,7 +299,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Retrieves the view-matrix.
         /// </summary>
-        [Browsable(false)]
         public Matrix4x4 View
         {
             get { return m_view; }
@@ -310,7 +307,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets the view-projection matrix.
         /// </summary>
-        [Browsable(false)]
         public Matrix4x4 ViewProjection
         {
             get { return m_viewProj; }
@@ -319,7 +315,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Retrieves or sets the direction / target.
         /// </summary>
-        [Converter(typeof(Vector3ToMultilineStringConverter))]
         public Vector3 Direction
         {
             get { return m_look; }
@@ -328,7 +323,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Retrieves a vector, wich is targeting right.
         /// </summary>
-        [Converter(typeof(Vector3ToMultilineStringConverter))]
         public Vector3 Right
         {
             get { return m_right; }
@@ -337,7 +331,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Retrieves a vector, wich is targiting upwards.
         /// </summary>
-        [Converter(typeof(Vector3ToMultilineStringConverter))]
         public Vector3 Up
         {
             get { return m_up; }
@@ -346,7 +339,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets or sets the vector that points up.
         /// </summary>
-        [Converter(typeof(Vector3ToMultilineStringConverter))]
         public Vector3 UpVector
         {
             get { return m_upVector; }
@@ -366,7 +358,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// 
         /// The angles are radian values!
         /// </summary>
-        [Converter(typeof(Vector2ToMultilineStringConverter))]
         public Vector2 TargetRotation
         {
             get { return new Vector2(m_hRotation, m_vRotation); }
@@ -391,7 +382,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets or sets the target position.
         /// </summary>
-        [Converter(typeof(Vector3ToMultilineStringConverter))]
         public Vector3 Target
         {
             get { return m_relativeTarget + m_position; }
@@ -401,7 +391,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets or sets the relative target position.
         /// </summary>
-        [Converter(typeof(Vector3ToMultilineStringConverter))]
         public Vector3 RelativeTarget
         {
             get { return m_relativeTarget; }
@@ -445,7 +434,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Retrieves or sets the position of the camera.
         /// </summary>
-        [Converter(typeof(Vector3ToMultilineStringConverter))]
         public Vector3 Position
         {
             get { return m_position; }
@@ -460,7 +448,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Retrieves projection-matrix.
         /// </summary>
-        [Browsable(false)]
         public Matrix4x4 Projection
         {
             get
@@ -472,7 +459,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Width of the screen.
         /// </summary>
-        [ReadOnly(true)]
         public int ScreenWidth
         {
             get { return m_screenWidth; }
@@ -482,7 +468,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Height of the screen.
         /// </summary>
-        [ReadOnly(true)]
         public int ScreenHeight
         {
             get { return m_screenHeight; }
@@ -493,7 +478,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Did the state of the camera change last time?
         /// Set this flag to false to reset the value.
         /// </summary>
-        [Browsable(false)]
         public bool StateChanged
         {
             get;

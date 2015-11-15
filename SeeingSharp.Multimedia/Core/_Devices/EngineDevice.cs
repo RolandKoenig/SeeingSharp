@@ -283,7 +283,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Checks for standard antialiasing support.
         /// </summary>
-        [Category(CATEGORY_ADAPTER)]
         public bool IsStandardAntialiasingPossible
         {
             get 
@@ -295,7 +294,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the exception occurred during initialization of the driver (if any).
         /// </summary>
-        [Browsable(false)]
         public Exception InitializationException
         {
             get { return m_initializationException; }
@@ -304,7 +302,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the description of this adapter.
         /// </summary>
-        [Category(CATEGORY_ADAPTER)]
         public string AdapterDescription
         {
             get { return m_adapter.Description1.Description.Replace("\0", ""); }
@@ -313,13 +310,11 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Is this device loaded successfully.
         /// </summary>
-        [Category(CATEGORY_ADAPTER)]
         public bool IsLoadedSuccessfully
         {
             get { return m_initializationException == null; }
         }
 
-        [Category(CATEGORY_ADAPTER)]
         public bool IsSoftware
         {
             get { return m_isSoftwareAdapter; }

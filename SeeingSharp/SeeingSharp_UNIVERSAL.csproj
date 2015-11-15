@@ -61,8 +61,6 @@
     <Compile Include="..\Misc\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridAutoRefreshBehavior.cs" />
-    <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
     <Compile Include="Checking\Ensure.Collections.cs" />
     <Compile Include="Checking\Ensure.cs" />
@@ -247,6 +245,7 @@
   <ItemGroup>
     <Folder Include="Behaviors\_WinForms\" />
     <Folder Include="Behaviors\_WinRT\" />
+    <Folder Include="Behaviors\_Wpf\" />
     <Folder Include="Util\_Mvvm\_Attributes\" />
     <Folder Include="View\" />
   </ItemGroup>

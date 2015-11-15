@@ -54,14 +54,6 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="PropertyTools, Version=2015.1.49.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\net45\PropertyTools.dll</HintPath>
-    </Reference>
-    <Reference Include="PropertyTools.Wpf, Version=2015.1.49.0, Culture=neutral, PublicKeyToken=ea0c9f2b460934d0, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\net45\PropertyTools.Wpf.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -100,8 +92,6 @@
     <Compile Include="..\Misc\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
-    <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridAutoRefreshBehavior.cs" />
-    <Compile Include="Behaviors\_Wpf\SeeingSharpPropertyGridBehavior.cs" />
     <Compile Include="Bootstrapper\TranslationBootstrapper.cs" />
     <Compile Include="Checking\Ensure.Collections.cs" />
     <Compile Include="Checking\Ensure.IO.cs" />
@@ -218,8 +208,6 @@
     <Compile Include="Util\_Performance\_Duration\DurationPerformanceResult.cs" />
     <Compile Include="Util\_Performance\_FlowRate\FlowRatePerformanceCalculator.cs" />
     <Compile Include="Util\_Performance\_FlowRate\FlowRatePerformanceResult.cs" />
-    <Compile Include="Util\_PropertyTools\SeeingSharpPropertyControlFactory.cs" />
-    <Compile Include="Util\_PropertyTools\SeeingSharpPropertyItemFactory.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceUriBuilder.cs" />
     <Compile Include="Util\_IO\ResourceLink.cs" />
     <Compile Include="Util\_Threading\LimitedConcurrencyLevelTaskScheduler.cs" />
@@ -306,6 +294,7 @@
   <ItemGroup>
     <Folder Include="Behaviors\_WinForms\" />
     <Folder Include="Behaviors\_WinRT\" />
+    <Folder Include="Behaviors\_Wpf\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

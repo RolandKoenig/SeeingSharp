@@ -319,9 +319,6 @@
       <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\portable-net45+wp80+win8+wpa81+dnxcore50\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PropertyTools">
-      <HintPath>..\packages\PropertyTools.Wpf.2015.1.49\lib\portable-net40+net45+sl5+wp8+win8\PropertyTools.dll</HintPath>
-    </Reference>
     <Reference Include="SharpDX, Version=3.0.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
       <HintPath>..\packages\SharpDX.3.0.0-beta01\lib\portable-net45+netcore45+wpa81+MonoAndroid1+MonoTouch1\SharpDX.dll</HintPath>
       <Private>True</Private>

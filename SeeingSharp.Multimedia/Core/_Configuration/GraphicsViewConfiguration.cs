@@ -22,7 +22,6 @@
 #endregion
 
 using SeeingSharp.Util;
-using PropertyTools.DataAnnotations;
 using System;
 using System.Xml.Serialization;
 
@@ -87,14 +86,12 @@ namespace SeeingSharp.Multimedia.Core
             ResetCommand = new DelegateCommand(resetAction);
         }
 
-        [Category(CATEOGRY_COMMON)]
         public DelegateCommand ResetCommand
         {
             get;
             private set;
         }
 
-        [Browsable(false)]
         internal bool ViewNeedsRefresh
         {
             get { return m_viewNeedsRefresh; }
@@ -104,7 +101,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Is wireframe rendering enabled?
         /// </summary>
-        [Category(CATEGORY_QUALITY)]
         public bool WireframeEnabled
         {
             get;
@@ -114,7 +110,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Try to enable antialiasing?
         /// </summary>
-        [Category(CATEGORY_QUALITY)]
         public bool AntialiasingEnabled
         {
             get { return m_antialiasingEnabled; }
@@ -133,8 +128,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// The quality level for antialiasing (if antialiasing is enabled).
         /// </summary>
-        [Category(CATEGORY_QUALITY)]
-        [EnableBy("AntialiasingEnabled")]
         public AntialiasingQualityLevel AntialiasingQuality
         {
             get { return m_antialiasingQuality; }
@@ -150,8 +143,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(CATEGORY_DETAILS)]
-        [Slidable(0.0, 1.0)]
         public float GeneratedColorGradientFactor
         {
             get { return m_generatedColorGradientFactor; }
@@ -165,8 +156,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(CATEGORY_DETAILS)]
-        [Slidable(0.0, 1.0)]
         public float GeneratedBorderFactor
         {
             get { return m_generatedBorderFactor; }
@@ -180,8 +169,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(CATEGORY_DETAILS)]
-        [Slidable(0.0, 1.0)]
         public float AccentuationFactor
         {
             get { return m_accentuationFactor; }
@@ -195,8 +182,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(CATEGORY_DETAILS)]
-        [Slidable(0.0, 1.0)]
         public float AmbientFactor
         {
             get { return m_ambientFactor; }
@@ -210,8 +195,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(CATEGORY_DETAILS)]
-        [Slidable(0.0, 1.0)]
         public float LightPower
         {
             get { return m_lightPower; }
@@ -225,8 +208,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(CATEGORY_DETAILS)]
-        [Slidable(0.0, 5.0)]
         public float StrongLightFactor
         {
             get { return m_strongLightFactor; }
@@ -246,7 +227,6 @@ namespace SeeingSharp.Multimedia.Core
         internal bool ShowTexturesInternal;
 
         [XmlAttribute]
-        [Category(CATEGORY_DETAILS)]
         public bool ShowTextures
         {
             get { return ShowTexturesInternal; }
@@ -265,7 +245,6 @@ namespace SeeingSharp.Multimedia.Core
         /// Only relevant in UWP-Apps!
         /// </summary>
         [XmlAttribute]
-        [Category(CATEGORY_DETAILS)]
         public bool AlphaEnabledSwapChain
         {
             get { return m_alphaEnabledSwapChain; }
@@ -283,7 +262,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets current device configuration.
         /// </summary>
-        [Browsable(false)]
         public GraphicsDeviceConfiguration DeviceConfiguration
         {
             get { return m_deviceConfig; }
@@ -293,7 +271,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets current core configuration.
         /// </summary>
-        [Browsable(false)]
         public GraphicsCoreConfiguration CoreConfiguration
         {
             get 

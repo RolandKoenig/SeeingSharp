@@ -29,21 +29,5 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp
 {
-#if WINRT || UNIVERSAL
-    public class CategoryAttribute : Attribute
-    {
-        public CategoryAttribute(string category)
-        {
 
-        }
-    }
-
-    public class BrowsableAttribute : Attribute
-    {
-        public BrowsableAttribute(bool isBrowsable = true)
-        {
-
-        }
-    }
-#endif
 }

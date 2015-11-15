@@ -309,7 +309,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Suppress all change reports (calls to PropertyChanged event)?
         /// </summary>
-        [Browsable(false)]
         public bool SuppressChangeReports
         {
             get
@@ -329,7 +328,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Does this model contain any error?
         /// </summary>
-        [Browsable(false)]
         public bool ContainsErrors
         {
             get
@@ -343,7 +341,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Gets a common data error text for this model.
         /// </summary>
-        [Browsable(false)]
         public string Error
         {
             get
@@ -365,7 +362,6 @@ namespace SeeingSharp.Util
         /// <summary>
         /// Gets a common data error without html tags.
         /// </summary>
-        [Browsable(false)]
         public string ErrorWithoutHtml
         {
             get

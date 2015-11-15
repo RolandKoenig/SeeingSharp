@@ -41,7 +41,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets or sets the texture quality level.
         /// </summary>
-        [Browsable(true)]
         public TextureQuality TextureQuality
         {
             get;
@@ -51,7 +50,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets or sets the geometry quality level.
         /// </summary>
-        [Browsable(true)]
         public GeometryQuality GeometryQuality
         {
             get;
@@ -61,7 +59,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets current core configuration.
         /// </summary>
-        [Browsable(false)]
         public GraphicsCoreConfiguration CoreConfiguration
         {
             get { return m_coreConfig; }

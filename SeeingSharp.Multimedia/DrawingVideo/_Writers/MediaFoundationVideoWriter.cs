@@ -219,7 +219,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// Gets the total count of frames rendered.
         /// </summary>
-        [Browsable(false)]
         public int CountRenderedFrames
         {
             get { return m_frameIndex; }
@@ -248,7 +247,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// Internal use: FlipY during rendering?
         /// </summary>
-        [Browsable(false)]
         protected virtual bool FlipY
         {
             get { return false; }

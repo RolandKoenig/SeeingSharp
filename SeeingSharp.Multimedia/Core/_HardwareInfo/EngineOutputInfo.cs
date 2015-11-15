@@ -46,19 +46,16 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the name of the output device.
         /// </summary>
-        [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]
         public string DeviceName
         {
             get { return m_outputDescription.DeviceName; }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]
         public bool IsAttachedToDesktop
         {
             get { return m_outputDescription.IsAttachedToDesktop; }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]
         public string DesktopResolution
         {
             get
@@ -70,7 +67,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]
         public string DesktopLocation
         {
             get
@@ -79,7 +75,6 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO)]
         public string Rotation
         {
             get { return m_outputDescription.Rotation.ToString(); }

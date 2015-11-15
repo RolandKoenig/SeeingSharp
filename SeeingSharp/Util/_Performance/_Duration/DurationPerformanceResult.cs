@@ -43,13 +43,10 @@ namespace SeeingSharp.Util
             this.SumMinTicks = sumMinTicks;
         }
 
-        [Browsable(false)]
         public long SumMaxTicks { get; set; }
 
-        [Browsable(false)]
         public long SumAverageTicks { get; set; }
 
-        [Browsable(false)]
         public long SumMinTicks { get; set; }
 
         /// <summary>
@@ -64,25 +61,21 @@ namespace SeeingSharp.Util
             }
         }
 
-        [Browsable(false)]
         public TimeSpan SumMax
         {
             get { return TimeSpan.FromTicks(SumMaxTicks); }
         }
 
-        [Browsable(false)]
         public long SumMaxMS
         {
             get { return (long)Math.Round(this.SumMax.TotalMilliseconds); }
         }
 
-        [Browsable(false)]
         public TimeSpan SumMin
         {
             get { return TimeSpan.FromTicks(SumMinTicks); }
         }
 
-        [Browsable(false)]
         public long SumMinMS
         {
             get { return (long)Math.Round(this.SumMin.TotalMilliseconds); }

@@ -27,7 +27,6 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using PropertyTools.DataAnnotations;
 using SeeingSharp.Util;
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
@@ -180,7 +179,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// Gets the target file this VideoWriter is writing to.
         /// </summary>
-        [Browsable(false)]
         public ResourceLink TargetFile
         {
             get { return m_targetFile; }
@@ -189,7 +187,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// Has rendering started?
         /// </summary>
-        [Browsable(false)]
         public bool HasStarted
         {
             get { return m_hasStarted; }
@@ -198,7 +195,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// Has rendering finished?
         /// </summary>
-        [Browsable(false)]
         public bool HasFinished
         {
             get { return m_hasFinished; }
@@ -207,7 +203,6 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// The RenderLoop this VideoWriter is currently associated to.
         /// </summary>
-        [Browsable(false)]
         public RenderLoop AssociatedRenderLoop
         {
             get;
@@ -217,31 +212,26 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <summary>
         /// Gets the current video size.
         /// </summary>
-        [Browsable(false)]
         public Size2 VideoSize
         {
             get { return m_videoSize; }
         }
 
-        [Browsable(false)]
         public Exception LastStartException
         {
             get { return m_startException; }
         }
 
-        [Browsable(false)]
         public Exception LastDrawException
         {
             get { return m_drawException; }
         }
 
-        [Browsable(false)]
         public Exception LastFinishException
         {
             get { return m_finishExeption; }
         }
 
-        [Browsable(false)]
         public string ErrorText
         {
             get

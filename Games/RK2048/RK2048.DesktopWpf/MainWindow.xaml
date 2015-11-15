@@ -4,7 +4,6 @@
         xmlns:view="clr-namespace:SeeingSharp.Multimedia.Views;assembly=SeeingSharp.Multimedia"
         xmlns:main="clr-namespace:RK2048"
         xmlns:prop="http://propertytools.org/wpf"
-        xmlns:fsbehaviors="clr-namespace:SeeingSharp.Behaviors;assembly=SeeingSharp"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         Title="RK 2048"  Width="800" Height="600" MinWidth="800" MinHeight="600"
         Icon="/Assets/Icon.ico">
@@ -33,36 +32,6 @@
                     </MenuItem.Header>
                 </MenuItem>
 
-                <MenuItem HorizontalAlignment="Right" Margin="0,0,5,0">
-                    <MenuItem.Header>
-                        <StackPanel Orientation="Horizontal" Background="Transparent">
-                            <Image Source="/Assets/Icons/Cog.png" Margin="0,0,2,0" MaxHeight="16"/>
-                            <TextBlock Text="{x:Static main:Translatables.MENU_CONFIG}" />
-                        </StackPanel>
-                    </MenuItem.Header>
-                    
-                    <MenuItem>
-                        <MenuItem.Template>
-                            <ControlTemplate>
-                                <prop:PropertyGrid SelectedObject="{Binding RenderLoop.ViewConfiguration, ElementName=m_rendererElement}"
-				                                 TabVisibility="Collapsed">
-                                    <i:Interaction.Behaviors>
-                                        <fsbehaviors:SeeingSharpPropertyGridBehavior />
-                                    </i:Interaction.Behaviors>
-                                </prop:PropertyGrid>
-                            </ControlTemplate>
-                        </MenuItem.Template>
-                    </MenuItem>
-                </MenuItem>
-                
-                <!--<MenuItem Click="OnCmdWeb_Click" HorizontalAlignment="Right">
-                    <MenuItem.Header>
-                        <StackPanel Orientation="Horizontal" Background="Transparent">
-                            <Image Source="/Assets/Icons/Help.png" Margin="0,0,2,0" MaxHeight="16"/>
-                            <TextBlock Text="{x:Static main:Translatables.MENU_HELP}" />
-                        </StackPanel>
-                    </MenuItem.Header>
-                </MenuItem>-->
             </Menu>
         </StackPanel>
 

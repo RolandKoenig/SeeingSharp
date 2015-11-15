@@ -97,7 +97,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets all outputs supported by this adapter.
         /// </summary>
-        [Browsable(false)]
         public List<EngineOutputInfo> Outputs
         {
             get { return m_outputs; }
@@ -106,7 +105,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the corresponding adapter.
         /// </summary>
-        [Browsable(false)]
         internal DxgiAdapter Adapter
         {
             get { return m_adapter; }
@@ -115,19 +113,16 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the index of the adapter.
         /// </summary>
-        [Category(TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO)]
         public int AdapterIndex
         {
             get { return m_adapterIndex; }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO)]
         public string MaxFeatureLevelD3D11
         {
             get { return m_d3d11FeatureLevel.ToString(); }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO)]
         public bool IsSoftwareAdapter
         {
             get { return m_isSoftware; }
@@ -136,25 +131,21 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the description of the adapter.
         /// </summary>
-        [Category(TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO)]
         public string AdapterDescription
         {
             get { return m_adapterDescription.Description; }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO)]
         public string DedicatedSystemMemory
         {
             get { return m_adapterDescription.DedicatedSystemMemory.ToString(); }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO)]
         public string DedicatedVideoMemory
         {
             get { return m_adapterDescription.DedicatedVideoMemory.ToString(); }
         }
 
-        [Category(TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO)]
         public string SharedSystemMemory
         {
             get { return m_adapterDescription.SharedSystemMemory.ToString(); }
