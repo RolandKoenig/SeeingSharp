@@ -58,51 +58,6 @@ namespace SeeingSharp.Tests
             Load_DummyData_GenericPart(tableSource, tableImporter, tableImporter.CreateDefaultConfig(tableSource), "CSV");
         }
 
-        [Fact]
-        [Trait("Category", TEST_CATEGORY)]
-        public void Load_DummyData_Xlsx()
-        {
-            ResourceLink tableSource = new AssemblyResourceLink(
-                typeof(TableDataTests), "Resources.TableData.DummyData.xlsx");
-
-            XlsxTableImporter tableImporter = new XlsxTableImporter();
-            Load_DummyData_GenericPart(tableSource, tableImporter, tableImporter.CreateDefaultConfig(tableSource), "Table_01");
-        }
-
-        [Fact]
-        [Trait("Category", TEST_CATEGORY)]
-        public void Load_DataWithFormulasAndLinks_Xlsx()
-        {
-            // Define data source
-            ResourceLink tableSource = new AssemblyResourceLink(
-                typeof(TableDataTests), "Resources.TableData.Excel_WithFormulasAndLinks.xlsx");
-
-            // Import the excel file
-            XlsxTableImporter tableImporter = new XlsxTableImporter();
-            List<Tuple<string, string>> xlsxData = new List<Tuple<string, string>>();
-            using(ITableFile tableFile = tableImporter.OpenTableFile(tableSource, tableImporter.CreateDefaultConfig(tableSource)))
-            {
-                using(ITableRowReader rowReader = tableFile.OpenReader("Table_01"))
-                {
-                    rowReader.ReadAllRows()
-                        .ForEachInEnumeration((actRow) =>
-                        {
-                            xlsxData.Add(new Tuple<string, string>(
-                                actRow.ReadFieldAsString(0),
-                                actRow.ReadFieldAsString(1)));
-                        });
-                }
-            }
-
-            // Check all data that we've read from the excel sheet
-            Assert.True(xlsxData.Count == 20);
-            foreach(var actDataRow in xlsxData)
-            {
-                Assert.True(actDataRow.Item1 == actDataRow.Item2);
-            }
-            Assert.True(xlsxData[3].Item1 == "87");
-        }
-
         /// <summary>
         /// Internal helper method for all "LoadSimple" tests.
         /// </summary>

@@ -22,11 +22,14 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+
+#if DESKTOP
+using System.ComponentModel.DataAnnotations;
+#endif
 
 namespace SeeingSharp.Util
 {
@@ -40,6 +43,7 @@ namespace SeeingSharp.Util
         {
             if (dataObject == null) { throw new ArgumentNullException("dataObject"); }
 
+#if DESKTOP
             ValidationContext validationContext = new ValidationContext(dataObject);
             List<DataObjectValidationError> errors = new List<DataObjectValidationError>(4);
             List<ValidationResult> results = new List<ValidationResult>(4);
@@ -65,6 +69,9 @@ namespace SeeingSharp.Util
             }
 
             return errors;
+#else
+            return new List<DataObjectValidationError>();
+#endif
         }
     }
 }

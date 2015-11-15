@@ -172,12 +172,6 @@
     <Compile Include="Util\TableData\_Csv\CsvTableRow.cs" />
     <Compile Include="Util\TableData\_Csv\CsvTableRowReader.cs" />
     <Compile Include="Util\TableData\_Csv\CsvUtil.cs" />
-    <Compile Include="Util\TableData\_OpenXml\XlsxTableRow.cs" />
-    <Compile Include="Util\TableData\_OpenXml\XlsxTableRowReader.cs" />
-    <Compile Include="Util\TableData\_OpenXml\XlsxImporterConfig.cs" />
-    <Compile Include="Util\TableData\_OpenXml\XlsxTableFile.cs" />
-    <Compile Include="Util\TableData\_OpenXml\XlsxTableHeaderRow.cs" />
-    <Compile Include="Util\TableData\_OpenXml\XlsxTableImporter.cs" />
     <Compile Include="Util\TplBasedLoop.cs" />
     <Compile Include="Util\_Collections\RingBuffer.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceFileAttribute.cs" />

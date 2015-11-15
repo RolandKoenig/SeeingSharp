@@ -12,21 +12,21 @@
     <AssemblyName>SeeingSharp</AssemblyName>
     <DefaultLanguage>de-DE</DefaultLanguage>
     <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{BC8A1FFA-BEE3-4634-8014-F334798102B3};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <BaseIntermediateOutputPath>obj.Universal</BaseIntermediateOutputPath>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <TargetPlatformIdentifier>Windows</TargetPlatformIdentifier>
-    <TargetPlatformVersion>8.1</TargetPlatformVersion>
+    <TargetFrameworkProfile>Profile32</TargetFrameworkProfile>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin.Universal\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;UNIVERSAL;NETFX_CORE;WINDOWS_APP</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;UNIVERSAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
@@ -42,7 +42,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin.Universal\Release\</OutputPath>
-    <DefineConstants>TRACE;UNIVERSAL;NETFX_CORE;WINDOWS_APP</DefineConstants>
+    <DefineConstants>TRACE;UNIVERSAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
@@ -247,7 +247,6 @@
   <ItemGroup>
     <Folder Include="Behaviors\_WinForms\" />
     <Folder Include="Behaviors\_WinRT\" />
-    <Folder Include="Util\TableData\_OpenXml\" />
     <Folder Include="Util\_Mvvm\_Attributes\" />
     <Folder Include="View\" />
   </ItemGroup>
@@ -273,7 +272,11 @@
       <Private>True</Private>
     </Reference>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\WindowsXaml\v$(VisualStudioVersion)\Microsoft.Windows.UI.Xaml.CSharp.targets" />
+  <ItemGroup>
+    <TargetPlatform Include="Windows, Version=8.1" />
+    <TargetPlatform Include="WindowsPhoneApp, Version=8.1" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
