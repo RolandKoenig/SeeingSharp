@@ -40,12 +40,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
     {
         private const int INSTANCE_BUFFER_MAX_SIZE = 1024 * 8;
 
-        //Resources for Direct3D 11 rendering
+        #region  Resources for Direct3D 11 rendering
         private LoadedStructureInfo[] m_loadedStructures;
+        #endregion
 
-        //Generic resources
+        #region Generic resources
         private BoundingBox m_boundingBox;
         private ObjectType m_objectType;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GeometryResource"/> class.

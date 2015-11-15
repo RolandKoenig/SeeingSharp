@@ -29,35 +29,13 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
-            this.seeingSharpRendererControl1 = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_barTools = new System.Windows.Forms.ToolStrip();
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
             this.m_cmdOpen = new System.Windows.Forms.ToolStripButton();
             this.m_dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
+            this.m_panGraphics = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_barTools.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // seeingSharpRendererControl1
-            // 
-            this.seeingSharpRendererControl1.DiscardRendering = true;
-            this.seeingSharpRendererControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.seeingSharpRendererControl1.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
-            this.seeingSharpRendererControl1.Location = new System.Drawing.Point(0, 27);
-            this.seeingSharpRendererControl1.Name = "seeingSharpRendererControl1";
-            this.seeingSharpRendererControl1.Size = new System.Drawing.Size(712, 383);
-            this.seeingSharpRendererControl1.TabIndex = 0;
-            this.seeingSharpRendererControl1.Text = "seeingSharpRendererControl1";
-            this.seeingSharpRendererControl1.ViewConfiguration.AccentuationFactor = 0F;
-            this.seeingSharpRendererControl1.ViewConfiguration.AlphaEnabledSwapChain = false;
-            this.seeingSharpRendererControl1.ViewConfiguration.AmbientFactor = 0.2F;
-            this.seeingSharpRendererControl1.ViewConfiguration.AntialiasingEnabled = true;
-            this.seeingSharpRendererControl1.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
-            this.seeingSharpRendererControl1.ViewConfiguration.GeneratedBorderFactor = 1F;
-            this.seeingSharpRendererControl1.ViewConfiguration.GeneratedColorGradientFactor = 1F;
-            this.seeingSharpRendererControl1.ViewConfiguration.LightPower = 0.8F;
-            this.seeingSharpRendererControl1.ViewConfiguration.ShowTextures = true;
-            this.seeingSharpRendererControl1.ViewConfiguration.StrongLightFactor = 1.5F;
-            this.seeingSharpRendererControl1.ViewConfiguration.WireframeEnabled = false;
             // 
             // m_barTools
             // 
@@ -89,12 +67,32 @@
             this.m_cmdOpen.Text = "Open";
             this.m_cmdOpen.Click += new System.EventHandler(this.OnCmdOpen_Click);
             // 
+            // m_panGraphics
+            // 
+            this.m_panGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_panGraphics.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
+            this.m_panGraphics.Location = new System.Drawing.Point(0, 27);
+            this.m_panGraphics.Name = "m_panGraphics";
+            this.m_panGraphics.Size = new System.Drawing.Size(712, 383);
+            this.m_panGraphics.TabIndex = 0;
+            this.m_panGraphics.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_panGraphics.ViewConfiguration.AlphaEnabledSwapChain = false;
+            this.m_panGraphics.ViewConfiguration.AmbientFactor = 0.2F;
+            this.m_panGraphics.ViewConfiguration.AntialiasingEnabled = true;
+            this.m_panGraphics.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
+            this.m_panGraphics.ViewConfiguration.GeneratedBorderFactor = 1F;
+            this.m_panGraphics.ViewConfiguration.GeneratedColorGradientFactor = 1F;
+            this.m_panGraphics.ViewConfiguration.LightPower = 0.8F;
+            this.m_panGraphics.ViewConfiguration.ShowTextures = true;
+            this.m_panGraphics.ViewConfiguration.StrongLightFactor = 1.5F;
+            this.m_panGraphics.ViewConfiguration.WireframeEnabled = false;
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(712, 432);
-            this.Controls.Add(this.seeingSharpRendererControl1);
+            this.Controls.Add(this.m_panGraphics);
             this.Controls.Add(this.m_barStatus);
             this.Controls.Add(this.m_barTools);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -109,7 +107,7 @@
 
         #endregion
 
-        private SeeingSharp.Multimedia.Views.SeeingSharpRendererControl seeingSharpRendererControl1;
+        private SeeingSharp.Multimedia.Views.SeeingSharpRendererControl m_panGraphics;
         private System.Windows.Forms.ToolStrip m_barTools;
         private System.Windows.Forms.StatusStrip m_barStatus;
         private System.Windows.Forms.ToolStripButton m_cmdOpen;

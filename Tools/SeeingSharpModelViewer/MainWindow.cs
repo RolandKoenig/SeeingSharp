@@ -1,6 +1,7 @@
 ﻿using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.View;
+using SeeingSharpModelViewer.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,6 +16,8 @@ namespace SeeingSharpModelViewer
 {
     public partial class MainWindow : SeeingSharpForm
     {
+        private SceneManager m_sceneManager;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -26,6 +29,8 @@ namespace SeeingSharpModelViewer
 
             if (SeeingSharpApplication.IsInitialized)
             {
+                m_sceneManager = new SceneManager(m_panGraphics.Scene, m_panGraphics.Camera);
+
                 this.Text = $"{SeeingSharpApplication.Current.ProductName} - {SeeingSharpApplication.Current.ProductVersion}";
 
                 m_dlgOpenFile.Filter =
