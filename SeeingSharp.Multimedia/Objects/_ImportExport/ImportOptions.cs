@@ -33,7 +33,7 @@ namespace SeeingSharp.Multimedia.Objects
         public ImportOptions()
         {
             this.ResourceCoordinateSystem = CoordinateSystem.LeftHanded_UpY;
-            this.ResizeFactor = 1.0f;
+            this.ResizeFactor = 0.00001f;
         }
 
         /// <summary>

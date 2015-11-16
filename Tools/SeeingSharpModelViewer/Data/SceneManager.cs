@@ -19,6 +19,11 @@ namespace SeeingSharpModelViewer.Data
         private Camera3DBase m_camera;
         #endregion
 
+        #region Loaded data
+        //private ResourceLink m_currentFile;
+        //private ImportedModelContainer m_currentFileContent;
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneManager"/> class.
         /// </summary>
@@ -34,6 +39,11 @@ namespace SeeingSharpModelViewer.Data
 
             InitializeAsync()
                 .FireAndForget();
+        }
+
+        public async Task ImportFileAsync(ResourceLink resourceLink)
+        {
+            await m_scene.ImportAsync(resourceLink);
         }
 
         /// <summary>

@@ -38,11 +38,11 @@ namespace SeeingSharpModelViewer
             }
         }
 
-        private void OnCmdOpen_Click(object sender, EventArgs e)
+        private async void OnCmdOpen_Click(object sender, EventArgs e)
         {
             if(m_dlgOpenFile.ShowDialog(this) == DialogResult.OK)
             {
-
+                await m_sceneManager.ImportFileAsync(m_dlgOpenFile.FileName);
             }
         }
     }
