@@ -45,7 +45,8 @@ namespace SeeingSharp.Samples.Base.MFSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_MF, "Camera Capture",
         Constants.SAMPLE_MF_CAMERACAPTURE_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/MFSamples/CameraCaptureSample.cs")]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/MFSamples/CameraCaptureSample.cs",
+        SampleTargetPlatform.All)]
     public class CameraCaptureSample : SampleBase
     {
         private AsyncRealtimeVideoReader m_videoReader;

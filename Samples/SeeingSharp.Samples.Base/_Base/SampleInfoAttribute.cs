@@ -34,7 +34,7 @@ namespace SeeingSharp.Samples.Base
     {
         public SampleInfoAttribute(
             string category, string name, int orderID, string codeUrl, 
-            SampleTargetPlatform targetPlatform = SampleTargetPlatform.All)
+            SampleTargetPlatform targetPlatform)
         {
             this.Category = category;
             this.Name = name;

@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>UniversalWindowsSampleContainer</RootNamespace>
     <AssemblyName>UniversalWindowsSampleContainer</AssemblyName>
-    <DefaultLanguage>en</DefaultLanguage>
+    <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion>10.0.10240.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
@@ -18,9 +18,10 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <PackageCertificateKeyFile>UniversalWindowsSampleContainer_StoreKey.pfx</PackageCertificateKeyFile>
-    <PackageCertificateThumbprint>DC2DC8909F3B9164EED83EE7D9006712AF850A32</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>3C4BCEF2207A2B58CABFB9542BA13DA0AA6CF68A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>
@@ -91,7 +92,7 @@
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>false</Prefer32Bit>
     <UseDotNetNativeToolchain>true</UseDotNetNativeToolchain>
-    <EnableGatekeeperAnalysis>false</EnableGatekeeperAnalysis>
+    <EnableGatekeeperAnalysis>true</EnableGatekeeperAnalysis>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
@@ -101,6 +102,7 @@
     <None Include="..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
+    <None Include="Open Source Developer, Roland Koenig.pfx" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

@@ -103,10 +103,8 @@ namespace SeeingSharp.Infrastructure
             m_typesByContract.TryGetValue(contractType, out typesByContract);
             if (typesByContract != null) { return new List<Type>(typesByContract); }
             else
-            { 
-
-
-                return new List<Type>(); 
+            {
+                return new List<Type>();
             }
         }
 

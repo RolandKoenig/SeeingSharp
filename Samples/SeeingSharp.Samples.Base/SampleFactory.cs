@@ -55,12 +55,12 @@ namespace SeeingSharp.Samples.Base
             // Query for all sample types
             m_sampleTypes = new List<Tuple<SampleDescription, Type>>();
             foreach (Type actSampleType in SeeingSharpApplication.Current.TypeQuery
-                .GetTypesByContract(typeof(SampleBase))) 
+                .GetTypesByContract(typeof(SampleBase)))
             {
                 SampleInfoAttribute actInfoAttrib = actSampleType.GetTypeInfo().GetCustomAttribute<SampleInfoAttribute>();
                 if (actInfoAttrib == null) { continue; }
 
-                if(!DoesSampleSupportCurrentPlatform(actInfoAttrib))
+                if (!DoesSampleSupportCurrentPlatform(actInfoAttrib))
                 {
                     continue;
                 }

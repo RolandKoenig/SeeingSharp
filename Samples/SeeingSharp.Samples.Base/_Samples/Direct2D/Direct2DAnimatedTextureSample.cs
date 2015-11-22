@@ -45,7 +45,8 @@ namespace SeeingSharp.Samples.Base.Direct2D
     [SampleInfo(
         Constants.SAMPLEGROUP_DIRECT2D, "Draw to Texture (animated)",
         Constants.SAMPLE_DIRECT2D_D2DANIMTEXTURE_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/Direct2D/Direct2DAnimatedTextureSample.cs")]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/Direct2D/Direct2DAnimatedTextureSample.cs",
+        SampleTargetPlatform.All)]
     public class Direct2DAnimatedTextureSample : SampleBase
     {
         private StandardBitmapResource m_starBitmap;

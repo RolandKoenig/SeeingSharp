@@ -175,6 +175,9 @@ namespace SeeingSharp.Samples.Base.BasicSamples
 
                         // Define animation
                         palletObject.BuildAnimationSequence()
+                            .Delay(randomizer.Next(100, 1000))
+                            .Apply();
+                        palletObject.BuildAnimationSequence()
                             .Scale3DTo(0.5f, TimeSpan.FromSeconds(2.0))
                             .WaitFinished()
                             .Scale3DTo(1f, TimeSpan.FromSeconds(2.0))
