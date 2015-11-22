@@ -20,7 +20,7 @@
     <PackageCertificateKeyFile>UniversalWindowsSampleContainer_StoreKey.pfx</PackageCertificateKeyFile>
     <PackageCertificateThumbprint>3C4BCEF2207A2B58CABFB9542BA13DA0AA6CF68A</PackageCertificateThumbprint>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
-    <AppxBundlePlatforms>x86|x64</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <AppxBundle>Always</AppxBundle>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
