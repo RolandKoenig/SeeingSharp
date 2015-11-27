@@ -201,6 +201,22 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        /// <summary>
+        /// Resumes rendering when in supendet state.
+        /// </summary>
+        public void Resume()
+        {
+            EngineMainLoop.Current.Resume();
+        }
+
+        /// <summary>
+        /// Suspends rendering completely.
+        /// </summary>
+        public void Suspend()
+        {
+            EngineMainLoop.Current.Suspend();
+        }
+
         public static void Touch()
         {
             if(!GraphicsCore.IsInitialized)

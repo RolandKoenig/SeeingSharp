@@ -460,6 +460,11 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_handlerD2D.DeviceContext; }
         }
+
+        internal DXGI.Device3 DeviceDxgi
+        {
+            get { return m_handlerDXGI.Device; }
+        }
 #endif
 
         /// <summary>

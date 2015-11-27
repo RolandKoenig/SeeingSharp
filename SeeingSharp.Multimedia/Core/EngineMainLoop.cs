@@ -47,6 +47,8 @@ namespace SeeingSharp.Multimedia.Core
         #endregion
 
         #region main thread synchronization
+        //private Task m_suspendWaiter;
+        //private TaskCompletionSource<object> m_suspendWaiterSource;
         private Task m_runningTask;
         private ConcurrentQueue<Action> m_globalLoopAwaiters;
         #endregion
@@ -80,6 +82,33 @@ namespace SeeingSharp.Multimedia.Core
 
             m_scenesForUnload = new List<Scene>();
             m_scenesForUnloadLock = new object();
+        }
+
+        /// <summary>
+        /// Suspends rendering completely.
+        /// </summary>
+        public void Suspend()
+        {
+            //if(m_suspendWaiter == null)
+            //{
+            //    m_suspendWaiterSource = new TaskCompletionSource<object>();
+            //    m_suspendWaiter = m_suspendWaiterSource.Task;
+
+            //    CommonTools.MaximumDelay(2000);
+            //}
+        }
+
+        /// <summary>
+        /// Resumes rendering when in supendet state.
+        /// </summary>
+        public void Resume()
+        {
+            //if(m_suspendWaiter != null)
+            //{
+            //    m_suspendWaiterSource.TrySetResult(null);
+            //    m_suspendWaiterSource = null;
+            //    m_suspendWaiter = null;
+            //}
         }
 
         /// <summary>
@@ -269,6 +298,22 @@ namespace SeeingSharp.Multimedia.Core
                         // Wait some time and try rendering again
                         await Task.Delay(1000);
                     }
+
+//                    // Handle suspend / resume
+//                    Task suspendWaiter = m_suspendWaiter;
+//                    if(suspendWaiter != null)
+//                    {
+//#if UNIVERSAL
+//                        // Call Trim on all devices
+//                        foreach(EngineDevice actDevice in GraphicsCore.Current.Devices)
+//                        {
+//                            if(actDevice.DeviceDxgi != null) { actDevice.DeviceDxgi.Trim(); }
+//                        }
+//#endif
+
+//                        // Wait for resuming
+//                        await suspendWaiter;
+//                    }
                 }
 
                 // Stop all generic input handlers

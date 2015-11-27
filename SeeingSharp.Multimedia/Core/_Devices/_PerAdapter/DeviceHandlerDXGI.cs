@@ -37,14 +37,14 @@ namespace SeeingSharp.Multimedia.Core
         private DXGI.Factory2 m_factory;
 #endif
         private DXGI.Adapter1 m_adapter;
-        private DXGI.Device1 m_device;
+        private DXGI.Device3 m_device;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceHandlerDXGI"/> class.
         /// </summary>
         internal DeviceHandlerDXGI(DXGI.Adapter1 adapter, D3D11.Device device)
         {
-            m_device = device.QueryInterface<DXGI.Device1>();
+            m_device = device.QueryInterface<DXGI.Device3>();
             m_adapter = adapter;
 
 #if DESKTOP
@@ -87,7 +87,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the DXGI device.
         /// </summary>
-        internal DXGI.Device1 Device
+        internal DXGI.Device3 Device
         {
             get { return m_device; }
         }

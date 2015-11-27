@@ -37,6 +37,7 @@ namespace UniversalWindowsSampleContainer
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.Resuming += OnResuming;
         }
 
         /// <summary>
@@ -124,6 +125,11 @@ namespace UniversalWindowsSampleContainer
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
+        private void OnResuming(object sender, object e)
+        {
+            GraphicsCore.Current.Resume();
+        }
+
         /// <summary>
         /// Invoked when application execution is being suspended.  Application state is saved
         /// without knowing whether the application will be terminated or resumed with the contents
@@ -134,6 +140,9 @@ namespace UniversalWindowsSampleContainer
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
+
+            GraphicsCore.Current.Suspend();
+
             //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
