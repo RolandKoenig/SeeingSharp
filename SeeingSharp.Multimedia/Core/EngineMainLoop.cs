@@ -47,8 +47,9 @@ namespace SeeingSharp.Multimedia.Core
         #endregion
 
         #region main thread synchronization
-        //private Task m_suspendWaiter;
-        //private TaskCompletionSource<object> m_suspendWaiterSource;
+        private Task m_suspendWaiter;
+        private TaskCompletionSource<object> m_suspendWaiterSource;
+        private TaskCompletionSource<object> m_suspendCallWaiterSource;
         private Task m_runningTask;
         private ConcurrentQueue<Action> m_globalLoopAwaiters;
         #endregion
@@ -87,15 +88,16 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Suspends rendering completely.
         /// </summary>
-        public void Suspend()
+        public Task SuspendAsync()
         {
-            //if(m_suspendWaiter == null)
-            //{
-            //    m_suspendWaiterSource = new TaskCompletionSource<object>();
-            //    m_suspendWaiter = m_suspendWaiterSource.Task;
+            if (m_suspendWaiter == null)
+            {
+                m_suspendCallWaiterSource = new TaskCompletionSource<object>();
+                m_suspendWaiterSource = new TaskCompletionSource<object>();
+                m_suspendWaiter = m_suspendWaiterSource.Task;
+            }
 
-            //    CommonTools.MaximumDelay(2000);
-            //}
+            return m_suspendCallWaiterSource.Task;
         }
 
         /// <summary>
@@ -103,12 +105,14 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void Resume()
         {
-            //if(m_suspendWaiter != null)
-            //{
-            //    m_suspendWaiterSource.TrySetResult(null);
-            //    m_suspendWaiterSource = null;
-            //    m_suspendWaiter = null;
-            //}
+            if (m_suspendWaiter != null)
+            {
+                if (!m_suspendCallWaiterSource.Task.IsCompleted) { m_suspendCallWaiterSource.TrySetResult(null); }
+
+                m_suspendWaiterSource.TrySetResult(null);
+                m_suspendWaiterSource = null;
+                m_suspendWaiter = null;
+            }
         }
 
         /// <summary>
@@ -299,21 +303,23 @@ namespace SeeingSharp.Multimedia.Core
                         await Task.Delay(1000);
                     }
 
-//                    // Handle suspend / resume
-//                    Task suspendWaiter = m_suspendWaiter;
-//                    if(suspendWaiter != null)
-//                    {
-//#if UNIVERSAL
-//                        // Call Trim on all devices
-//                        foreach(EngineDevice actDevice in GraphicsCore.Current.Devices)
-//                        {
-//                            if(actDevice.DeviceDxgi != null) { actDevice.DeviceDxgi.Trim(); }
-//                        }
-//#endif
+                    // Handle suspend / resume
+                    Task suspendWaiter = m_suspendWaiter;
+                    if (suspendWaiter != null)
+                    {
+                        m_suspendCallWaiterSource.TrySetResult(null);
 
-//                        // Wait for resuming
-//                        await suspendWaiter;
-//                    }
+#if UNIVERSAL
+                        // Call Trim on all devices
+                        foreach(EngineDevice actDevice in GraphicsCore.Current.Devices)
+                        {
+                            if(actDevice.DeviceDxgi != null) { actDevice.DeviceDxgi.Trim(); }
+                        }
+#endif
+
+                        // Wait for resuming
+                        await suspendWaiter;
+                    }
                 }
 
                 // Stop all generic input handlers

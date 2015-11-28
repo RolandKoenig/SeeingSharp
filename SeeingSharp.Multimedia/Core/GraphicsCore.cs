@@ -212,9 +212,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Suspends rendering completely.
         /// </summary>
-        public void Suspend()
+        public Task SuspendAsync()
         {
-            EngineMainLoop.Current.Suspend();
+            return EngineMainLoop.Current.SuspendAsync();
         }
 
         public static void Touch()

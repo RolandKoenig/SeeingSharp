@@ -137,11 +137,11 @@ namespace UniversalWindowsSampleContainer
         /// </summary>
         /// <param name="sender">The source of the suspend request.</param>
         /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
 
-            GraphicsCore.Current.Suspend();
+            await GraphicsCore.Current.SuspendAsync();
 
             //TODO: Save application state and stop any background activity
             deferral.Complete();
