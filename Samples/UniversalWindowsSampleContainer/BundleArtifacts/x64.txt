@@ -1,0 +1,2 @@
+MainPackage=D:\Projects\GitHub\RolandKoenig\SeeingSharp\Samples\UniversalWindowsSampleContainer\bin\x64\Release\UniversalWindowsSampleContainer_1.1.19.0_x64.appx
+SymbolPackage=D:\Projects\GitHub\RolandKoenig\SeeingSharp\Samples\UniversalWindowsSampleContainer\AppPackages\UniversalWindowsSampleContainer_1.1.19.0\UniversalWindowsSampleContainer_1.1.19.0_x64.appxsym
