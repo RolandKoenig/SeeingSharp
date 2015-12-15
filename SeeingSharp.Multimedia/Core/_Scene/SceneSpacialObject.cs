@@ -365,25 +365,25 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Updates all dependencies of this object. Override this to change default behavior.
+        /// Updates all children of this object. Override this to change default behavior.
         /// </summary>
         /// <param name="updateState">The current update state.</param>
-        /// <param name="dependencies">The full dependency list that should be updated.</param>
-        protected override void UpdateDependenciesInternal(SceneRelatedUpdateState updateState, List<SceneObject> dependencies)
+        /// <param name="children">The full list of children that should be updated.</param>
+        protected override void UpdateChildrenInternal(SceneRelatedUpdateState updateState, List<SceneObject> children)
         {
             updateState.ForceTransformUpdatesOnChilds = m_forceTransformUpdateOnChilds;
             m_forceTransformUpdateOnChilds = false;
             try
             {
-                int dependencyCount = dependencies.Count;
-                for (int loop = 0; loop < dependencies.Count; loop++)
+                int dependencyCount = children.Count;
+                for (int loop = 0; loop < children.Count; loop++)
                 {
                     // Forward current transform matrix to child objects
                     Matrix4Stack currentWorld = updateState.World;
                     currentWorld.Push(m_transform);
                     try
                     {
-                        dependencies[loop].Update(updateState);
+                        children[loop].Update(updateState);
                     }
                     finally
                     {

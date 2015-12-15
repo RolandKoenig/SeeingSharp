@@ -330,7 +330,7 @@ namespace SeeingSharp.Multimedia.Core
                     }
                 }
 
-                // Call default update method in parallel for each object
+                // Call default update method for each object
                 int updateListLength = m_sceneObjectsNotStatic.Count;
                 SceneObject[] updateList = m_sceneObjectsNotStatic.GetBackingArray();
                 for(int actIndex = 0; actIndex < updateListLength; actIndex++)

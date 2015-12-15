@@ -76,7 +76,7 @@ namespace SeeingSharp.Multimedia.Core
                 // Add dependency
                 foreach(var actDependencyInfo in modelContainer.ObjectDependencies)
                 {
-                    actDependencyInfo.Item1.AddDependency(
+                    actDependencyInfo.Item1.AddChild(
                         actDependencyInfo.Item2);
                 }
             });

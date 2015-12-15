@@ -61,8 +61,8 @@ namespace SeeingSharp.Multimedia.Core
         #endregion
 
         #region Collections for describing object hierarchies
-        private List<SceneObject> m_dependencies;
-        private SceneObject m_owner;
+        private List<SceneObject> m_children;
+        private SceneObject m_parent;
         #endregion
 
         /// <summary>
@@ -72,8 +72,8 @@ namespace SeeingSharp.Multimedia.Core
         {
             m_targetDetailLevel = DetailLevel.All;
 
-            m_dependencies = new List<SceneObject>();
-            m_owner = null;
+            m_children = new List<SceneObject>();
+            m_parent = null;
 
             m_behaviors = new List<SceneObjectBehavior>();
             m_animationHandler = new AnimationHandler(this);
@@ -179,73 +179,74 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Check all dependencies of this object.
+        /// Checks whether this object is the parent of the given one.
         /// </summary>
         /// <param name="other">The object to check for.</param>
-        /// <returns>true if the given object is a dependency of this one.</returns>
-        public bool DependsOn(SceneObject other)
+        /// <returns>true if the given object is a children of this one.</returns>
+        public bool IsParentOf(SceneObject other)
         {
-            foreach (SceneObject actDependency in m_dependencies)
+            foreach (SceneObject actChild in m_children)
             {
-                if (actDependency == other) { return true; }
-                if (actDependency.DependsOn(other)) { return true; }
+                if (actChild == other) { return true; }
+                if (actChild.IsParentOf(other)) { return true; }
             }
 
             return false;
         }
 
         /// <summary>
-        /// Determines whether this object already contains this dependency (no lower level check).
+        /// Determines whether this object already contains this child (no lower level check).
         /// </summary>
-        /// <param name="dependency">The dependency to check for.</param>
-        public virtual bool DependsOnSingleLevel(SceneObject dependency)
+        /// <param name="objectToCheck">The object to check for.</param>
+        public virtual bool IsParentOfOnSingleLevel(SceneObject objectToCheck)
         {
-            return m_dependencies.Contains(dependency);
+            return m_children.Contains(objectToCheck);
         }
 
         /// <summary>
-        /// Queries for all dependencies (also lower level).
+        /// Queries for all children (also lower level).
         /// </summary>
-        public IEnumerable<SceneObject> GetAllDependencies()
+        public IEnumerable<SceneObject> GetAllChildren()
         {
-            foreach (SceneObject actDependency in m_dependencies)
+            foreach (SceneObject actChild in m_children)
             {
-                yield return actDependency;
+                yield return actChild;
 
-                foreach (SceneObject actLowerDependency in actDependency.GetAllDependencies())
+                foreach (SceneObject actLowerChild in actChild.GetAllChildren())
                 {
-                    yield return actLowerDependency;
+                    yield return actLowerChild;
                 }
             }
         }
 
         /// <summary>
-        /// Adds the given object as a dependency.
+        /// Adds the given object as a child.
         /// </summary>
-        /// <param name="dependency">The object which is be be located under this one within object hierarchy.</param>
-        public virtual void AddDependency(SceneObject dependency)
+        /// <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
+        public virtual void AddChild(SceneObject childToAdd)
         {
-            if (dependency.Scene != this.Scene) { throw new SeeingSharpGraphicsException("Dependency musst have the same scene!"); }
-            if (dependency.m_owner != null) { throw new SeeingSharpGraphicsException("Dependency has already an owner!"); }
-            if (dependency.DependsOn(this)) { throw new SeeingSharpGraphicsException("Cyclic dependency detected!"); }
-            if (m_dependencies.Contains(dependency)) { throw new SeeingSharpGraphicsException("Dependency is already added!"); }
+            if(childToAdd == this) { throw new SeeingSharpGraphicsException("Cyclic parent/child relationship detected!"); }
+            if (childToAdd.Scene != this.Scene) { throw new SeeingSharpGraphicsException("Child musst have the same scene!"); }
+            if (childToAdd.m_parent != null) { throw new SeeingSharpGraphicsException("Child has already an owner!"); }
+            if (childToAdd.IsParentOf(this)) { throw new SeeingSharpGraphicsException("Cyclic parent/child relationship detected!"); }
+            if (m_children.Contains(childToAdd)) { throw new SeeingSharpGraphicsException("Child is already added!"); }
 
-            // Create owner-dependency relation
-            m_dependencies.Add(dependency);
-            dependency.m_owner = this;
+            // Create parent/child relation
+            m_children.Add(childToAdd);
+            childToAdd.m_parent = this;
         }
 
         /// <summary>
-        /// Removes the given object from the dependency list.
+        /// Removes the given object from the list of children.
         /// </summary>
-        /// <param name="dependency">The object which is to be removed from the dependency list.</param>
-        public virtual void RemoveDependency(SceneObject dependency)
+        /// <param name="childToRemove">The object which is to be removed from the list of children.</param>
+        public virtual void RemoveDependency(SceneObject childToRemove)
         {
-            if (dependency.Scene!= this.Scene) { throw new ArgumentException("Dependency musst have the same scene!"); }
+            if (childToRemove.Scene!= this.Scene) { throw new ArgumentException("Child musst have the same scene!"); }
 
-            // Destroy owner-dependency relation
-            m_dependencies.Remove(dependency);
-            if (dependency.m_owner == this) { dependency.m_owner = this; }
+            // Destroy parent/child relation
+            m_children.Remove(childToRemove);
+            if (childToRemove.m_parent == this) { childToRemove.m_parent = this; }
         }
 
         /// <summary>
@@ -372,8 +373,20 @@ namespace SeeingSharp.Multimedia.Core
                 actBehavior.Update(updateState);
             }
 
+            // Update current animation state
+            if (m_animationHandler != null)
+            {
+                m_animationHandler.Update(updateState);
+            }
+
             // Update the object
             UpdateInternal(updateState);
+
+            // Update all dependencies finally
+            if (m_children.Count > 0)
+            {
+                UpdateChildrenInternal(updateState, m_children);
+            }
         }
 
         /// <summary>
@@ -385,16 +398,9 @@ namespace SeeingSharp.Multimedia.Core
         public void UpdateOverall(SceneRelatedUpdateState updateState)
         {
             // Update all dependencies finally
-            if (m_dependencies.Count > 0)
+            if (m_children.Count > 0)
             {
-                UpdateDependenciesInternal(updateState, m_dependencies);
-            }
-
-            // TODO: Move animation handler update back to standard update (=> But make it threadsafe!)
-            // Update current animation state
-            if (m_animationHandler != null)
-            {
-                m_animationHandler.Update(updateState);
+                UpdateChildrenOverallInternal(updateState, m_children);
             }
 
             // Update all behaviors first
@@ -460,16 +466,30 @@ namespace SeeingSharp.Multimedia.Core
         protected abstract void UpdateForViewInternal(SceneRelatedUpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset);
 
         /// <summary>
-        /// Updates all dependencies of this object. Override this to change default behavior.
+        /// Updates all children of this object. Override this to change default behavior.
         /// </summary>
         /// <param name="updateState">The current update state.</param>
-        /// <param name="dependencies">The full dependency list that should be updated.</param>
-        protected virtual void UpdateDependenciesInternal(SceneRelatedUpdateState updateState, List<SceneObject> dependencies)
+        /// <param name="children">The full list of children that should be updated.</param>
+        protected virtual void UpdateChildrenInternal(SceneRelatedUpdateState updateState, List<SceneObject> children)
         {
             // Trigger updates of all dependencies
-            foreach (SceneObject actDependency in m_dependencies)
+            foreach (SceneObject actDependency in m_children)
             {
                 actDependency.Update(updateState);
+            }
+        }
+
+        /// <summary>
+        /// Updates all children of this object (overall update). Override this to change default behavior.
+        /// </summary>
+        /// <param name="updateState">The current update state.</param>
+        /// <param name="children">The full list of children that should be updated.</param>
+        protected virtual void UpdateChildrenOverallInternal(SceneRelatedUpdateState updateState, List<SceneObject> children)
+        {
+            // Trigger updates of all dependencies
+            foreach (SceneObject actDependency in m_children)
+            {
+                actDependency.UpdateOverall(updateState);
             }
         }
 
@@ -602,7 +622,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public bool HasOwner
         {
-            get { return m_owner != null; }
+            get { return m_parent != null; }
         }
 
         /// <summary>
@@ -610,7 +630,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public int CountDependencies
         {
-            get { return m_dependencies.Count; }
+            get { return m_children.Count; }
         }
     }
 }
