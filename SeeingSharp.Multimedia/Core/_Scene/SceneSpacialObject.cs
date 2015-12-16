@@ -371,12 +371,13 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="children">The full list of children that should be updated.</param>
         protected override void UpdateChildrenInternal(SceneRelatedUpdateState updateState, List<SceneObject> children)
         {
-            updateState.ForceTransformUpdatesOnChilds = m_forceTransformUpdateOnChilds;
+            bool prevForceState = updateState.ForceTransformUpdatesOnChilds;
+            updateState.ForceTransformUpdatesOnChilds = prevForceState || m_forceTransformUpdateOnChilds;
             m_forceTransformUpdateOnChilds = false;
             try
             {
-                int dependencyCount = children.Count;
-                for (int loop = 0; loop < children.Count; loop++)
+                int childCount = children.Count;
+                for (int loop = 0; loop < childCount; loop++)
                 {
                     // Forward current transform matrix to child objects
                     Matrix4Stack currentWorld = updateState.World;
@@ -393,7 +394,7 @@ namespace SeeingSharp.Multimedia.Core
             }
             finally
             {
-                updateState.ForceTransformUpdatesOnChilds = false;
+                updateState.ForceTransformUpdatesOnChilds = prevForceState;
             }
         }
 

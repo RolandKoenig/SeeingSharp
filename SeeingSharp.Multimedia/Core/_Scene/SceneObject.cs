@@ -620,7 +620,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the total count of owners where this object is a direct dependency of.
         /// </summary>
-        public bool HasOwner
+        public bool HasParent
         {
             get { return m_parent != null; }
         }

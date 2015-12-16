@@ -57,6 +57,7 @@
     <Compile Include="_Samples\BasicSamples\AsyncAnimationSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsAnimatedSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsSample.cs" />
+    <Compile Include="_Samples\BasicSamples\ParentChildSample.cs" />
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
     <Compile Include="_Samples\BasicSamples\SkyboxRenderingSample.cs" />
@@ -75,6 +76,7 @@
     <Content Include="Assets\SampleImages\Basics_AsyncAnimation.png" />
     <Content Include="Assets\SampleImages\Basics_Pallets.png" />
     <Content Include="Assets\SampleImages\Basics_PalletsAnimated.png" />
+    <Content Include="Assets\SampleImages\Basics_Parent_Child.png" />
     <Content Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Content Include="Assets\SampleImages\Direct2D_Simple_Effect.png" />
     <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture_%28animated%29.png" />

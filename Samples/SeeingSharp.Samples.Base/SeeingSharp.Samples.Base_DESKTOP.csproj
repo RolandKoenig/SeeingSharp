@@ -57,6 +57,7 @@
     <Compile Include="_Samples\BasicSamples\AsyncAnimationSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsAnimatedSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsSample.cs" />
+    <Compile Include="_Samples\BasicSamples\ParentChildSample.cs" />
     <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
@@ -105,6 +106,7 @@
     <Resource Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Resource Include="Assets\SampleImages\Direct2D_Draw_to_Texture_%28animated%29.png" />
     <Resource Include="Assets\SampleImages\Direct2D_Simple_Effect.png" />
+    <Resource Include="Assets\SampleImages\Basics_Parent_Child.png" />
     <Content Include="Assets\Textures\Background.png" />
   </ItemGroup>
   <ItemGroup>

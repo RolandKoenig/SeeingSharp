@@ -50,6 +50,7 @@ namespace SeeingSharp.Samples.Base
         public const int SAMPLE_BASICS_TRANSPARENTPALLETS_ORDER = 6;
         public const int SAMPLE_BASICS_PALLETS_ORDER = 7;
         public const int SAMPLE_BASICS_PALLETS_ANIMATED_ORDER = 8;
+        public const int SAMPLE_BASICS_PARENT_CHILD_ORDER = 9;
         #endregion
 
         #region parameters for Media Foundation samples

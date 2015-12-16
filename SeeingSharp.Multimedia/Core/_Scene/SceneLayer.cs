@@ -335,13 +335,19 @@ namespace SeeingSharp.Multimedia.Core
                 SceneObject[] updateList = m_sceneObjectsNotStatic.GetBackingArray();
                 for(int actIndex = 0; actIndex < updateListLength; actIndex++)
                 {
-                    updateList[actIndex].Update(updateState);
+                    if (!updateList[actIndex].HasParent)
+                    {
+                        updateList[actIndex].Update(updateState);
+                    }
                 }
 
                 // Call overall updates on all objects
                 for (int loop = 0; loop < updateListLength; loop++)
                 {
-                    updateList[loop].UpdateOverall(updateState);
+                    if (!updateList[loop].HasParent)
+                    {
+                        updateList[loop].UpdateOverall(updateState);
+                    }
                 }
 
                 //Now update all view specific references
