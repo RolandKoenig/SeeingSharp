@@ -50,15 +50,16 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <Button Margin="0,30,0,0" Foreground="White"
+                    <!--<Button Margin="0,30,0,0" Foreground="White"
                             Click="OnCmdShowSource_Click">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Width="48" Padding="5" Foreground="White"
                                        Text="" FontFamily="Segoe MDL2 Assets" />
                             <TextBlock Foreground="White" Text="Sourcecode Online" />
                         </StackPanel>
-                    </Button>
+                    </Button>-->
                     <Button Foreground="White"
+                            Margin="0,30,0,0"
                             Click="OnCmdShowProjectHomepage_Click">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Width="48" Padding="5" Foreground="White"
@@ -87,7 +88,7 @@
                                                        BottomStatusBar="{Binding ElementName=MainStatusBar}"/>
                         </i:Interaction.Behaviors>
                     </SwapChainPanel>
-
+   
                     <!-- Define listbox which shows all categories -->
                     <StackPanel Orientation="Vertical"
                                 VerticalAlignment="Top" HorizontalAlignment="Stretch" >
@@ -122,6 +123,13 @@
                                      HorizontalAlignment="Stretch"
                                      IsIndeterminate="True"
                                      Visibility="Collapsed"/>
+
+                        <Button HorizontalAlignment="Left"
+                            Background="#99D3D3D3"
+                            VerticalAlignment="Top"
+                            Margin="5"
+                            Content="Show Source" 
+                            Click="OnCmdShowSource_Click"/>
                     </StackPanel>
                 </Grid>
             </SplitView.Content>

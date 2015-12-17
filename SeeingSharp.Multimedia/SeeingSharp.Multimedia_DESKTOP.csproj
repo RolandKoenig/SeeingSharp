@@ -302,7 +302,6 @@
     <Compile Include="Drawing3D\_Resources\_Shaders\ShaderResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Shaders\VertexShaderResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\BitmapTextureResource.cs" />
-    <Compile Include="Drawing3D\_Resources\_Textures\ChangeableTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\Direct2DTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\DrawingBrushTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\LinearGradientTextureResource.cs" />
