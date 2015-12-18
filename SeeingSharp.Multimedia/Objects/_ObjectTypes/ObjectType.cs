@@ -42,9 +42,6 @@ namespace SeeingSharp.Multimedia.Objects
         /// Builds all vertex structures for the given detail level.
         /// </summary>
         /// <param name="buildOptions">Some generic options for structure building</param>
-        public virtual VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
-        {
-            return null;
-        }
+        public abstract VertexStructure[] BuildStructure(StructureBuildOptions buildOptions);
     }
 }

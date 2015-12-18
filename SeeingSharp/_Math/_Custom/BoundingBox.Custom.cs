@@ -523,5 +523,20 @@ namespace SeeingSharp
         {
             get { return this.CornerH; }
         }
+
+        public float Width
+        {
+            get { return this.Maximum.X - this.Minimum.X; }
+        }
+
+        public float Height
+        {
+            get { return this.Maximum.Y - this.Minimum.Y; }
+        }
+
+        public float Depth
+        {
+            get { return this.Maximum.Y - this.Minimum.Y; }
+        }
     }
 }

@@ -22,6 +22,7 @@
 #endregion
 
 using SeeingSharp.Util;
+using SeeingSharp.Checking;
 using System;
 using System.Numerics;
 using System.Collections.Generic;
@@ -641,20 +642,31 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Clones this object
         /// </summary>
-        public VertexStructure Clone()
+        public VertexStructure Clone(bool copyGeometryData = true, int capacityMultiplier = 1)
         {
+            capacityMultiplier.EnsurePositiveAndNotZero(nameof(capacityMultiplier));
+
+            // Create new VertexStructure object
             int vertexCount = m_vertices.Count;
             int indexCount = m_indices.Count;
+            VertexStructure result = new VertexStructure(
+                vertexCount * capacityMultiplier, 
+                (indexCount / 3) * capacityMultiplier);
 
-            VertexStructure result = new VertexStructure(vertexCount, indexCount / 3);
-            for (int loop = 0; loop < vertexCount; loop++)
+            // Copy geometry
+            if (copyGeometryData)
             {
-                result.m_vertices.Add(m_vertices[loop]);
+                for (int loop = 0; loop < vertexCount; loop++)
+                {
+                    result.m_vertices.Add(m_vertices[loop]);
+                }
+                for (int loop = 0; loop < indexCount; loop++)
+                {
+                    result.m_indices.Add(m_indices[loop]);
+                }
             }
-            for (int loop = 0; loop < indexCount; loop++)
-            {
-                result.m_indices.Add(m_indices[loop]);
-            }
+
+            // Copy metadata
             result.m_materialProperties = m_materialProperties.Clone();
             result.m_description = m_description;
             result.m_name = m_name;
