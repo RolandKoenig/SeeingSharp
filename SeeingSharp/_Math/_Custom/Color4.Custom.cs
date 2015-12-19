@@ -27,6 +27,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Numerics;
+using SeeingSharp.Checking;
 
 namespace SeeingSharp
 {
@@ -62,6 +63,17 @@ namespace SeeingSharp
         public Color4 ChangeAlphaTo(float newAlpha)
         {
             this.Alpha = newAlpha;
+            return this;
+        }
+
+        public Color4 ChangeColorByLight(float changeFactor)
+        {
+            changeFactor.EnsureInRange(0.000001f, 0.4999999f, nameof(changeFactor));
+
+            this.Red = this.Red < 0.5f ? this.Red + changeFactor : this.Red - changeFactor;
+            this.Green = this.Green < 0.5f ? this.Green + changeFactor : this.Green - changeFactor;
+            this.Blue = this.Blue < 0.5f ? this.Blue + changeFactor : this.Blue - changeFactor;
+
             return this;
         }
 

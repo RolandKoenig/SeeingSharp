@@ -182,7 +182,7 @@ namespace SeeingSharp.Tests.Rendering
                 // Get and configure the camera
                 PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
                 camera.Position = new Vector3(0f, 5f, -7f);
-                camera.Target = new Vector3(0f, 0f, 0f);
+                camera.Target = new Vector3(0f, 1f, 0f);
                 camera.UpdateCamera();
 
                 // Define scene
@@ -190,7 +190,7 @@ namespace SeeingSharp.Tests.Rendering
                 {
                     PalletType palType = new PalletType();
                     palType.ContentHeight = 0f;
-                    StackedObjectType stackedType = new StackedObjectType(palType, 5);
+                    StackedObjectType stackedType = new StackedObjectType(palType, 10);
 
                     NamedOrGenericKey geoResource = manipulator.AddResource<GeometryResource>(
                         () => new GeometryResource(stackedType));
@@ -204,11 +204,11 @@ namespace SeeingSharp.Tests.Rendering
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
                 screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
-                screenshot.DumpToDesktop("Blub.png");
+                //screenshot.DumpToDesktop("Blub.png");
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
-                    screenshot, Properties.Resources.ReferenceImage_SimpleObject);
+                    screenshot, Properties.Resources.ReferenceImage_SimpleObject_StackedGeometry);
                 Assert.True(isNearEqual, "Difference to reference image is to big!");
             }
 

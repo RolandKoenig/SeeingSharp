@@ -81,6 +81,10 @@ namespace SeeingSharp.Multimedia.Objects
                         // Change vertex properties based on stack position
                         Vertex changedVertex = actVertex;
                         changedVertex.Position = changedVertex.Position + localCorrection;
+                        if (loop % 2 == 1)
+                        {
+                            changedVertex.Color = changedVertex.Color.ChangeColorByLight(0.05f);
+                        }
 
                         // Add the vertex
                         result[loopStruct].AddVertex(changedVertex);
