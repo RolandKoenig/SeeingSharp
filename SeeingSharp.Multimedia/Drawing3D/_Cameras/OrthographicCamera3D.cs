@@ -1,7 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2015 Roland König (RolandK)
@@ -19,12 +19,12 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
 using System;
-using System.Numerics;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 
 namespace SeeingSharp.Multimedia.Drawing3D
@@ -41,7 +41,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public OrthographicCamera3D()
             : base()
         {
-
         }
 
         /// <summary>
@@ -52,7 +51,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public OrthographicCamera3D(int width, int height)
             : base(width, height)
         {
-
         }
 
         /// <summary>
@@ -89,7 +87,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="viewMatrix">The calculated view matrix.</param>
         /// <param name="projMatrix">The calculated projection matrix.</param>
         protected override void CalculateViewProjectionMatrices(
-            Vector3 position, Vector3 target, Vector3 upVector, float zNear, float zFar, int screenWidth, int screenHeight, 
+            Vector3 position, Vector3 target, Vector3 upVector, float zNear, float zFar, int screenWidth, int screenHeight,
             out Matrix4x4 viewMatrix, out Matrix4x4 projMatrix)
         {
             if (m_zoomFactor <= ZOOM_FACTOR_MIN) { m_zoomFactor = ZOOM_FACTOR_MIN; }
@@ -110,7 +108,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="dist">The Distance you want to zoom.</param>
         public override void Zoom(float dist)
         {
-            m_zoomFactor = m_zoomFactor + dist;
+            while (Math.Abs(dist) > 1f)
+            {
+                m_zoomFactor = m_zoomFactor + (float)Math.Sign(dist) * (m_zoomFactor / 10f);
+                dist = dist - (float)Math.Sign(dist);
+            }
+            m_zoomFactor = m_zoomFactor + dist * m_zoomFactor;
+
             base.UpdateCamera();
         }
 
@@ -122,7 +126,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             get { return m_zoomFactor; }
             set
             {
-                if(m_zoomFactor != value)
+                if (m_zoomFactor != value)
                 {
                     m_zoomFactor = value;
                     base.UpdateCamera();
