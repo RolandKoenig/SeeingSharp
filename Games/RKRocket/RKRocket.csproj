@@ -99,6 +99,7 @@
     <Content Include="Assets\Bitmaps\BulletGreen_128x128.png" />
     <Content Include="Assets\Bitmaps\BulletRed_128x128.png" />
     <Content Include="Assets\Bitmaps\BulletYellow_128x128.png" />
+    <Content Include="Assets\Bitmaps\Rocket_205x329.LicenseInfo.txt" />
     <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
     <Content Include="Assets\Sounds\Explosion.LicenseInfo.txt" />
@@ -188,7 +189,7 @@
     <None Include="RKRocket_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Bitmaps\Rocket_254x512.png" />
+    <Content Include="Assets\Bitmaps\Rocket_205x329.png" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100.png" />

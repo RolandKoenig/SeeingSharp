@@ -57,7 +57,7 @@ namespace RKRocket
         public static readonly StandardBitmapResource Bitmap_Player = new StandardBitmapResource(
             new AssemblyResourceUriBuilder(
                 "RKRocket", true,
-                "Assets/Bitmaps/Rocket_254x512.png"));
+                "Assets/Bitmaps/Rocket_205x329.png"));
         public static readonly StandardBitmapResource Bitmap_Projectile = new StandardBitmapResource(
             new AssemblyResourceUriBuilder(
                 "RKRocket", true,

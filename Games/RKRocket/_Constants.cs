@@ -48,8 +48,8 @@ namespace RKRocket
         #endregion
 
         #region player rocket properties
-        public const float GFX_ROCKET_VPIXEL_WIDTH = 105f;
-        public const float GFX_ROCKET_VPIXEL_HEIGHT = 120f;
+        public const float GFX_ROCKET_VPIXEL_WIDTH = 102f;
+        public const float GFX_ROCKET_VPIXEL_HEIGHT = 164f;
         public const float GFX_ROCKET_VPIXEL_Y_CENTER = 1000f;
         public const float SIM_ROCKET_MAX_X_MOVEMENT = 1000f;
         public const int SIM_ROCKET_MAX_HEALTH = 10;
