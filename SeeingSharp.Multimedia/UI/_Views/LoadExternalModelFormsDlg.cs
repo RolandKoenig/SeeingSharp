@@ -20,37 +20,62 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
 using SeeingSharp.Multimedia.Core;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace SeeingSharp.Multimedia.Objects
+namespace SeeingSharp.Multimedia.UI
 {
-    public class ImportOptions
+    public partial class LoadExternalModelFormsDlg : Form
     {
-        /// <summary>
-        /// Initializes a new instance of the <see cref="ImportOptions"/> class.
-        /// </summary>
-        public ImportOptions()
+        public LoadExternalModelFormsDlg()
         {
-            this.ResourceCoordinateSystem = CoordinateSystem.LeftHanded_UpY;
-            this.ResizeFactor = 1f;
-            //this.ResizeFactor = 0.00001f;
+            InitializeComponent();
+
+            m_dataSource.DataSource = new LoadExternalModelVM();
+            m_dlgOpenFile.Filter = GraphicsCore.Current.ImportersAndExporters.GetOpenFileDialogFilter();
         }
 
         /// <summary>
-        /// Gets or sets the resize factor.
-        /// This is needed to transform coordinate from one measure unit to another.
+        /// Updates the state of the dialog.
         /// </summary>
-        public float ResizeFactor
+        private void UpdateDialogState()
         {
-            get;
-            set;
+
         }
 
-        public CoordinateSystem ResourceCoordinateSystem
+        protected override void OnLoad(EventArgs e)
         {
-            get;
-            set;
+            base.OnLoad(e);
+
+            this.UpdateDialogState();
+        }
+
+        private void OnCmdFilePath_Click(object sender, EventArgs e)
+        {
+            if(m_dlgOpenFile.ShowDialog(this) == DialogResult.OK)
+            {
+
+            }
+
+            this.UpdateDialogState();
+        }
+
+        private void OnCmdOK_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void OnCmdCancel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

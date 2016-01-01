@@ -400,6 +400,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="ResourceKeys.cs" />
+    <Compile Include="UI\_ViewModels\LoadExternalModelVM.cs" />
+    <Compile Include="UI\_Views\LoadExternalModelFormsDlg.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UI\_Views\LoadExternalModelFormsDlg.Designer.cs">
+      <DependentUpon>LoadExternalModelFormsDlg.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Video\MediaPlayerComponent.cs">
       <SubType>Component</SubType>
@@ -410,6 +417,7 @@
     <SeeingSharp-VertexShader-Min4_0 Include="Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl" />
     <SeeingSharp-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl" />
     <SeeingSharp-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessBlur.hlsl" />
+    <Content Include="Resources\Icons\Cancel_16x16.png" />
     <Content Include="Resources\Shaders\Postprocessing\_structures.hlsl" />
     <Compile Include="Views\SeeingSharpRendererControl.cs">
       <SubType>Component</SubType>
@@ -431,6 +439,9 @@
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UI\_Views\LoadExternalModelFormsDlg.resx">
+      <DependentUpon>LoadExternalModelFormsDlg.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +476,7 @@
     <None Include="packages.SeeingSharp.Multimedia_DESKTOP.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\SeeingSharp.Multimedia.UI.LoadExternalModelVM.datasource" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)Build\SeeingSharp.Common.targets" />

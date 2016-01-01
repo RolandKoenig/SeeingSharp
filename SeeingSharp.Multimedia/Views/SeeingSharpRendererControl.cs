@@ -532,8 +532,11 @@ namespace SeeingSharp.Multimedia.Views
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void OnRenderLoopCameraChanged(object sender, EventArgs e)
         {
-            // Updates currently active input handlers
-            InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+            if (!DesignMode)
+            {
+                // Updates currently active input handlers
+                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
+            }
         }
 
         /// <summary>
