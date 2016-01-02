@@ -114,6 +114,9 @@
     <Resource Include="Ressources\Textures\SkyBox.dds" />
     <EmbeddedResource Include="Ressources\Models\ModelTextured.png" />
     <EmbeddedResource Include="Ressources\Bitmaps\Logo.png" />
+    <Content Include="Ressources\Bitmaps\Boom.LicenseInfo.txt" />
+    <EmbeddedResource Include="Ressources\Bitmaps\Boom.png" />
+    <Content Include="Ressources\ReferenceRenderings\SimpleBitmap_Animated.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleGeometry2D_Ellipse.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleGeometry2D.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleObject_StackedGeometry.png" />

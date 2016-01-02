@@ -379,10 +379,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
             // Render the bitmap
             if (bitmapFrameCount > 1)
             {
-                // Render tiled bitmap
+                // Get the native bitmap object first
+                // (if not, we may not have loaded it already and therefore
+                //  missing size information)
+                D2D.Bitmap nativeBitmap = bitmap.GetBitmap(m_device);
+
+                // Calculate source rectangle
                 int framesX = bitmap.FrameCountX;
                 int xFrameIndex = frameIndex % framesX;
-                int yFrameIndex = (framesX - xFrameIndex) / framesX;
+                int yFrameIndex = (frameIndex - xFrameIndex) / framesX;
                 int singleFrameWidth = bitmap.SingleFramePixelWidth;
                 int singleFrameHeight = bitmap.SingleFramePixelHeight;
                 SharpDX.RectangleF sourceRectangle = new SharpDX.RectangleF(
@@ -390,8 +395,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
                     yFrameIndex * singleFrameHeight,
                     singleFrameWidth, singleFrameHeight);
 
+                // Render tiled bitmap
                 m_renderTarget.DrawBitmap(
-                    bitmap.GetBitmap(m_device),
+                    nativeBitmap,
                     destinationRectangle.ToDXRectangle(),
                     opacity,
                     (D2D.BitmapInterpolationMode)interpolationMode,
@@ -430,24 +436,32 @@ namespace SeeingSharp.Multimedia.Drawing2D
             frameIndex.EnsureInRange(0, bitmapFrameCount - 1, nameof(frameIndex));
 
             // Render the bitmap
-            SharpDX.RectangleF destinationRectangle = new SharpDX.RectangleF(
-                destinationOrigin.X, destinationOrigin.Y,
-                bitmap.PixelWidth, bitmap.PixelHeight);
             if (bitmapFrameCount > 1)
             {
-                // Render tiled bitmap
-                int framesX = bitmap.FrameCountX;
-                int xFrameIndex = frameIndex % framesX;
-                int yFrameIndex = (framesX - xFrameIndex) / framesX;
+                // Get the native bitmap object first
+                // (if not, we may not have loaded it already and therefore
+                //  missing size information)
+                D2D.Bitmap nativeBitmap = bitmap.GetBitmap(m_device);
+
+                // Calculate destination rectangle
                 int singleFrameWidth = bitmap.SingleFramePixelWidth;
                 int singleFrameHeight = bitmap.SingleFramePixelHeight;
+                SharpDX.RectangleF destinationRectangle = new SharpDX.RectangleF(
+                    destinationOrigin.X, destinationOrigin.Y,
+                    singleFrameWidth, singleFrameHeight);
+
+                // Calculate source rectangle
+                int framesX = bitmap.FrameCountX;
+                int xFrameIndex = frameIndex % framesX;
+                int yFrameIndex = (frameIndex - xFrameIndex) / framesX;
                 SharpDX.RectangleF sourceRectangle = new SharpDX.RectangleF(
                     xFrameIndex * singleFrameWidth,
                     yFrameIndex * singleFrameHeight,
                     singleFrameWidth, singleFrameHeight);
 
+                // Render tiled bitmap
                 m_renderTarget.DrawBitmap(
-                    bitmap.GetBitmap(m_device),
+                    nativeBitmap,
                     destinationRectangle,
                     opacity,
                     (D2D.BitmapInterpolationMode)interpolationMode,
@@ -455,6 +469,10 @@ namespace SeeingSharp.Multimedia.Drawing2D
             }
             else
             {
+                SharpDX.RectangleF destinationRectangle = new SharpDX.RectangleF(
+                    destinationOrigin.X, destinationOrigin.Y,
+                    bitmap.PixelWidth, bitmap.PixelHeight);
+
                 // Render non-tiled bitmap
                 m_renderTarget.DrawBitmap(
                     bitmap.GetBitmap(m_device),

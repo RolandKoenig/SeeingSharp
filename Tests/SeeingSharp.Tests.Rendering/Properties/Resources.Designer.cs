@@ -203,6 +203,16 @@ namespace SeeingSharp.Tests.Rendering.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_SimpleBitmap_Animated {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_SimpleBitmap_Animated", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ReferenceImage_SimpleBitmap_Transparency {
             get {
                 object obj = ResourceManager.GetObject("ReferenceImage_SimpleBitmap_Transparency", resourceCulture);

@@ -491,5 +491,49 @@ namespace SeeingSharp.Tests.Rendering
 
             }
         }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Render_SimpleBitmap_Animated()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (StandardBitmapResource bitmap = new StandardBitmapResource(
+                new AssemblyResourceLink(this.GetType(), "Ressources.Bitmaps.Boom.png"),
+                frameCountX: 8, frameCountY: 8))
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                // Perform rendering
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+                await memRenderTarget.RenderLoop.Register2DDrawingLayerAsync((graphics) =>
+                {
+                    // 2D rendering is made here
+                    for (int loop = 0; loop < 8; loop++)
+                    {
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 10f), frameIndex: 7);
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 100f), frameIndex: 15);
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 200f), frameIndex: 23);
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 300f), frameIndex: 31);
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 400f), frameIndex: 39);
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 500f), frameIndex: 47);
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 600f), frameIndex: 55);
+                        graphics.DrawBitmap(bitmap, new Vector2(100f * loop, 700f), frameIndex: 63);
+                    }
+                });
+
+                //await AsyncResourceLoader.Current.WaitForAllFinishedAsync();
+                await memRenderTarget.AwaitRenderAsync();
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                //screenshot.DumpToDesktop("Blub.png");
+
+                // Calculate and check difference
+                float diff = BitmapComparison.CalculatePercentageDifference(
+                    screenshot, Properties.Resources.ReferenceImage_SimpleBitmap_Animated);
+                Assert.True(diff < 0.02, "Difference to reference image is to big!");
+
+            }
+        }
     }
 }
