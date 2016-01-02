@@ -139,5 +139,33 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 return m_dpiY;
             }
         }
+
+        public override int FrameCountX
+        {
+            get { return 1; }
+        }
+
+        public override int FrameCountY
+        {
+            get { return 1; }
+        }
+
+        public override int TotalFrameCount
+        {
+            get
+            {
+                return 1;
+            }
+        }
+
+        public override int SingleFramePixelWidth
+        {
+            get { return m_bitmapSize.Width; }
+        }
+
+        public override int SingleFramePixelHeight
+        {
+            get { return m_bitmapSize.Height; }
+        }
     }
 }

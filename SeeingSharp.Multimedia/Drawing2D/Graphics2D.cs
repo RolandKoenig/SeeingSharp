@@ -358,71 +358,54 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Draws the given bitmap.
         /// </summary>
         /// <param name="bitmap">The bitmap.</param>
-        /// <param name="opacity">The opacity.</param>
-        /// <param name="interpolationMode">The interpolation mode.</param>
-        public void DrawBitmap(
-            BitmapResource bitmap,
-            float opacity = 1f,
-            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
-        {
-            bitmap.EnsureNotNull("bitmap");
-            opacity.EnsureInRange(0f, 1f, "opacity");
-
-            m_renderTarget.DrawBitmap(
-                bitmap.GetBitmap(m_device),
-                opacity,
-                (D2D.BitmapInterpolationMode)interpolationMode);
-        }
-
-        /// <summary>
-        /// Draws the given bitmap.
-        /// </summary>
-        /// <param name="bitmap">The bitmap.</param>
         /// <param name="destinationRectangle">The target rectangle where to draw the bitmap.</param>
         /// <param name="opacity">The opacity.</param>
         /// <param name="interpolationMode">The interpolation mode.</param>
+        /// <param name="frameIndex">The frame of the bitmap to be rendered.</param>
         public void DrawBitmap(
             BitmapResource bitmap,
             RectangleF destinationRectangle,
             float opacity = 1f,
-            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
+            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor, 
+            int frameIndex = 0)
         {
             bitmap.EnsureNotNull("bitmap");
             destinationRectangle.EnsureNotEmpty("destinationRectangle");
             opacity.EnsureInRange(0f, 1f, "opacity");
 
-            m_renderTarget.DrawBitmap(
-                bitmap.GetBitmap(m_device),
-                destinationRectangle.ToDXRectangle(),
-                opacity, 
-                (D2D.BitmapInterpolationMode)interpolationMode);
-        }
+            int bitmapFrameCount = bitmap.TotalFrameCount;
+            frameIndex.EnsureInRange(0, bitmapFrameCount - 1, nameof(frameIndex));
 
-        /// <summary>
-        /// Draws the given bitmap.
-        /// </summary>
-        /// <param name="bitmap">The bitmap.</param>
-        /// <param name="destinationRectangle">The target rectangle where to draw the bitmap.</param>
-        /// <param name="sourceRectangle">The area which to take from the bitmap.</param>
-        /// <param name="opacity">The opacity.</param>
-        /// <param name="interpolationMode">The interpolation mode.</param>
-        public void DrawBitmap(
-            BitmapResource bitmap,
-            RectangleF destinationRectangle,
-            RectangleF sourceRectangle,
-            float opacity = 1f,
-            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
-        {
-            bitmap.EnsureNotNull("bitmap");
-            destinationRectangle.EnsureNotEmpty("destinationRectangle");
-            opacity.EnsureInRange(0f, 1f, "opacity");
+            // Render the bitmap
+            if (bitmapFrameCount > 1)
+            {
+                // Render tiled bitmap
+                int framesX = bitmap.FrameCountX;
+                int xFrameIndex = frameIndex % framesX;
+                int yFrameIndex = (framesX - xFrameIndex) / framesX;
+                int singleFrameWidth = bitmap.SingleFramePixelWidth;
+                int singleFrameHeight = bitmap.SingleFramePixelHeight;
+                SharpDX.RectangleF sourceRectangle = new SharpDX.RectangleF(
+                    xFrameIndex * singleFrameWidth,
+                    yFrameIndex * singleFrameHeight,
+                    singleFrameWidth, singleFrameHeight);
 
-            m_renderTarget.DrawBitmap(
-                bitmap.GetBitmap(m_device),
-                destinationRectangle.ToDXRectangle(),
-                opacity,
-                (D2D.BitmapInterpolationMode)interpolationMode,
-                sourceRectangle.ToDXRectangle());
+                m_renderTarget.DrawBitmap(
+                    bitmap.GetBitmap(m_device),
+                    destinationRectangle.ToDXRectangle(),
+                    opacity,
+                    (D2D.BitmapInterpolationMode)interpolationMode,
+                    sourceRectangle);
+            }
+            else
+            {
+                // Render non-tiled bitmap
+                m_renderTarget.DrawBitmap(
+                    bitmap.GetBitmap(m_device),
+                    destinationRectangle.ToDXRectangle(),
+                    opacity,
+                    (D2D.BitmapInterpolationMode)interpolationMode);
+            }
         }
 
         /// <summary>
@@ -432,50 +415,53 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="destinationOrigin">The point where to start rendering.</param>
         /// <param name="opacity">The opacity.</param>
         /// <param name="interpolationMode">The interpolation mode.</param>
+        /// <param name="frameIndex">The frame of the bitmap to be rendered.</param>
         public void DrawBitmap(
             BitmapResource bitmap,
             Vector2 destinationOrigin,
             float opacity = 1f,
-            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
+            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor,
+            int frameIndex = 0)
         {
             bitmap.EnsureNotNull("bitmap");
             opacity.EnsureInRange(0f, 1f, "opacity");
 
-            m_renderTarget.DrawBitmap(
-                bitmap.GetBitmap(m_device),
-                new SharpDX.RectangleF(
-                    destinationOrigin.X, destinationOrigin.Y,
-                    bitmap.PixelWidth, bitmap.PixelHeight),
-                opacity, 
-                (D2D.BitmapInterpolationMode)interpolationMode);
-        }
+            int bitmapFrameCount = bitmap.TotalFrameCount;
+            frameIndex.EnsureInRange(0, bitmapFrameCount - 1, nameof(frameIndex));
 
-        /// <summary>
-        /// Draws the given bitmap.
-        /// </summary>
-        /// <param name="bitmap">The bitmap.</param>
-        /// <param name="destinationOrigin">The point where to start rendering.</param>
-        /// <param name="opacity">The opacity.</param>
-        /// <param name="sourceRectangle">The area which to take from the bitmap.</param>
-        /// <param name="interpolationMode">The interpolation mode.</param>
-        public void DrawBitmap(
-            BitmapResource bitmap,
-            Vector2 destinationOrigin,
-            RectangleF sourceRectangle,
-            float opacity = 1f,
-            BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor)
-        {
-            bitmap.EnsureNotNull("bitmap");
-            opacity.EnsureInRange(0f, 1f, "opacity");
+            // Render the bitmap
+            SharpDX.RectangleF destinationRectangle = new SharpDX.RectangleF(
+                destinationOrigin.X, destinationOrigin.Y,
+                bitmap.PixelWidth, bitmap.PixelHeight);
+            if (bitmapFrameCount > 1)
+            {
+                // Render tiled bitmap
+                int framesX = bitmap.FrameCountX;
+                int xFrameIndex = frameIndex % framesX;
+                int yFrameIndex = (framesX - xFrameIndex) / framesX;
+                int singleFrameWidth = bitmap.SingleFramePixelWidth;
+                int singleFrameHeight = bitmap.SingleFramePixelHeight;
+                SharpDX.RectangleF sourceRectangle = new SharpDX.RectangleF(
+                    xFrameIndex * singleFrameWidth,
+                    yFrameIndex * singleFrameHeight,
+                    singleFrameWidth, singleFrameHeight);
 
-            m_renderTarget.DrawBitmap(
-                bitmap.GetBitmap(m_device),
-                new SharpDX.RectangleF(
-                    destinationOrigin.X, destinationOrigin.Y,
-                    bitmap.PixelWidth, bitmap.PixelHeight),
-                opacity,
-                (D2D.BitmapInterpolationMode)interpolationMode,
-                sourceRectangle.ToDXRectangle());
+                m_renderTarget.DrawBitmap(
+                    bitmap.GetBitmap(m_device),
+                    destinationRectangle,
+                    opacity,
+                    (D2D.BitmapInterpolationMode)interpolationMode,
+                    sourceRectangle);
+            }
+            else
+            {
+                // Render non-tiled bitmap
+                m_renderTarget.DrawBitmap(
+                    bitmap.GetBitmap(m_device),
+                    destinationRectangle,
+                    opacity,
+                    (D2D.BitmapInterpolationMode)interpolationMode);
+            }
         }
 
 #if UNIVERSAL
@@ -500,33 +486,6 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 d2dImage,
                 destinationOrigin.ToDXVector(),
                 null,
-                D2D.InterpolationMode.Linear,
-                D2D.CompositeMode.SourceOver);
-        }
-
-        /// <summary>
-        /// Draws the given image.
-        /// </summary>
-        /// <param name="image">The source of pixel data to be rendered.</param>
-        /// <param name="destinationOrigin">The origin point where to draw the image.</param>
-        /// <param name="sourceRectangle">The area which to take from the bitmap.</param>
-        public void DrawImage(
-            IImage image,
-            Vector2 destinationOrigin,
-            RectangleF sourceRectangle)
-        {
-            image.EnsureNotNull("bitmap");
-
-            IImageInternal internalImage = image as IImageInternal;
-            internalImage.EnsureNotNull("internalImage");
-
-            D2D.Image d2dImage = internalImage.GetImageObject(m_device) as D2D.Image;
-            d2dImage.EnsureNotNull("d2dImage");
-     
-            m_deviceContext.DrawImage(
-                d2dImage,
-                destinationOrigin.ToDXVector(),
-                sourceRectangle.ToDXRectangle(),
                 D2D.InterpolationMode.Linear,
                 D2D.CompositeMode.SourceOver);
         }

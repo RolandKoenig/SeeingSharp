@@ -64,5 +64,30 @@ namespace SeeingSharp.Multimedia.Drawing2D
         {
             get;
         }
+
+        public abstract int TotalFrameCount
+        {
+            get;
+        }
+
+        public abstract int FrameCountX
+        {
+            get;
+        }
+
+        public abstract int FrameCountY
+        {
+            get;
+        }
+
+        public abstract int SingleFramePixelWidth
+        {
+            get;
+        }
+
+        public abstract int SingleFramePixelHeight
+        {
+            get;
+        }
     }
 }

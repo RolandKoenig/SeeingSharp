@@ -22,6 +22,7 @@
 #endregion
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Util;
+using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -47,10 +48,15 @@ namespace SeeingSharp.Multimedia.Drawing2D
 
         #region Configuration
         private ResourceLink m_resourceLink;
+        private int m_framesX;
+        private int m_framesY;
+        private int m_totalFrameCount;
         #endregion
 
         #region RuntimeValues
         private bool m_firstLoadDone;
+        private int m_framePixelWidth;
+        private int m_framePixelHeight;
         private int m_pixelWidth;
         private int m_pixelHeight;
         private double m_dpiX;
@@ -61,8 +67,13 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// Initializes a new instance of the <see cref="StandardBitmapResource"/> class.
         /// </summary>
         /// <param name="resource">The resource from w.</param>
-        public StandardBitmapResource(ResourceLink resource)
+        /// <param name="frameCountX">Total count of frames in x direction.</param>
+        /// <param name="frameCountY">Total count of frames in y direction.</param>
+        public StandardBitmapResource(ResourceLink resource, int frameCountX = 1, int frameCountY = 1)
         {
+            frameCountX.EnsurePositiveAndNotZero(nameof(frameCountX));
+            frameCountY.EnsurePositiveAndNotZero(nameof(frameCountY));
+
             m_loadedBitmaps = new D2D.Bitmap[GraphicsCore.Current.DeviceCount];
             m_resourceLink = resource;
 
@@ -72,6 +83,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
             m_pixelHeight = 0;
             m_dpiX = 96.0;
             m_dpyY = 96.0;
+            m_framesX = frameCountX;
+            m_framesY = frameCountY;
+            m_totalFrameCount = m_framesX * m_framesY;
         }
 
         public override string ToString()
@@ -101,6 +115,16 @@ namespace SeeingSharp.Multimedia.Drawing2D
                         m_firstLoadDone = true;
                         m_pixelWidth = bitmapSource.Size.Width;
                         m_pixelHeight = bitmapSource.Size.Height;
+                        if(m_totalFrameCount > 1)
+                        {
+                            m_framePixelWidth = m_pixelWidth / m_framesX;
+                            m_framePixelHeight = m_pixelHeight / m_framesY;
+                        }
+                        else
+                        {
+                            m_framePixelWidth = m_pixelWidth;
+                            m_framePixelHeight = m_pixelHeight;
+                        }
                         bitmapSource.GetResolution(out m_dpiX, out m_dpyY);
                     }
 
@@ -172,6 +196,37 @@ namespace SeeingSharp.Multimedia.Drawing2D
             {
                 return m_dpyY;
             }
+        }
+
+        public override int FrameCountX
+        {
+            get{ return m_framesX; }
+        }
+
+        public override int FrameCountY
+        {
+            get
+            {
+                return m_framesY;
+            }
+        }
+
+        public override int TotalFrameCount
+        {
+            get
+            {
+                return m_totalFrameCount;
+            }
+        }
+
+        public override int SingleFramePixelWidth
+        {
+            get { return m_framePixelWidth; }
+        }
+
+        public override int SingleFramePixelHeight
+        {
+            get { return m_framePixelHeight; }
         }
     }
 }
