@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,45 @@ namespace SeeingSharp.Multimedia.Core
 {
     public static class Extensions
     {
+        /// <summary>
+        /// Removes this object from the scene.
+        /// No further animations possible because animations are updated by the scene.
+        /// </summary>
+        public static IAnimationSequenceBuilder<ObjectType> RemoveObjectFromScene<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder)
+            where ObjectType : SceneObject
+        {
+            SceneObject targetObject = builder.TargetObject;
+            builder.CallAction(() =>
+                {
+                    if(targetObject.Scene == null) { return; }
+
+                    targetObject.Scene.ManipulateSceneAsync((manipulator) =>
+                    {
+                        manipulator.Remove(targetObject);
+                    }).FireAndForget();
+                });
+            return builder;
+        }
+
+        /// <summary>
+        /// Removes the given object from the scene.
+        /// </summary>
+        public static IAnimationSequenceBuilder<ObjectType> RemoveObjectFromScene<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder, SceneObject objectToRemove)
+            where ObjectType : class
+        {
+            builder.CallAction(() =>
+            {
+                if (objectToRemove.Scene == null) { return; }
+
+                objectToRemove.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    manipulator.Remove(objectToRemove);
+                }).FireAndForget();
+            });
+
+            return builder;
+        }
+
         /// <summary>
         /// Waits some time before continueing with next animation sequence.
         /// </summary>
@@ -170,11 +210,25 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="valueSetter">The value setter.</param>
         /// <param name="totalIncrease">The value to increase in total.</param>
         /// <param name="duration">Total duration to wait.</param>
-        /// <returns></returns>
         public static IAnimationSequenceBuilder<ObjectType> ChangeFloatBy<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder, Func<float> valueGetter, Action<float> valueSetter, float totalIncrease, TimeSpan duration)
             where ObjectType : class
         {
             builder.Add(new ChangeFloatByAnimation(builder.TargetObject, valueGetter, valueSetter, totalIncrease, duration));
+            return builder;
+        }
+
+        /// <summary>
+        /// Increases a int value by a given total increase value over the given duration.
+        /// </summary>
+        /// <param name="builder">The AnimationSequenceBuilder object.</param>
+        /// <param name="valueGetter">The value getter.</param>
+        /// <param name="valueSetter">The value setter.</param>
+        /// <param name="totalIncrease">The value to increase in total.</param>
+        /// <param name="duration">Total duration to wait.</param>
+        public static IAnimationSequenceBuilder<ObjectType> ChangeIntBy<ObjectType>(this IAnimationSequenceBuilder<ObjectType> builder, Func<int> valueGetter, Action<int> valueSetter, int totalIncrease, TimeSpan duration)
+            where ObjectType : class
+        {
+            builder.Add(new ChangeIntByAnimation(builder.TargetObject, valueGetter, valueSetter, totalIncrease, duration));
             return builder;
         }
     }

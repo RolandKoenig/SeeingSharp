@@ -63,6 +63,13 @@ namespace RKRocket
         public const float SIM_PROJECTILE_BRAKE_RETARDATION = 550f;
         #endregion
 
+        #region projectile properties
+        public const float GFX_EXPLOSION_VPIXEL_WIDTH = 100f;
+        public const float GFX_EXPLOSION_VPIXEL_HEIGHT = 100f;
+        public const int SIM_EXPLOSION_FRAME_COUNT = 64;
+        public const double SIM_EXPLOSION_DURATION_MS = 350.0;
+        #endregion
+
         #region background properties
         public const float GFX_BACKGROUND_STAR_VPIXEL_WIDTH = 24f;
         public const float GFX_BACKGROUND_STAR_VPIXEL_HEIGHT = 24f;

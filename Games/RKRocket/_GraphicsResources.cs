@@ -62,6 +62,12 @@ namespace RKRocket
             new AssemblyResourceUriBuilder(
                 "RKRocket", true,
                 "Assets/Bitmaps/BulletYellow_128x128.png"));
+        public static readonly StandardBitmapResource Bitmap_Explosion = new StandardBitmapResource(
+            new AssemblyResourceUriBuilder(
+                "RKRocket", true,
+                "Assets/Bitmaps/Boom.png"),
+            frameCountX: 8,
+            frameCountY: 8);
 
         // All possible block colors within an array of bitmaps
         public static readonly StandardBitmapResource[] Bitmap_Blocks = new StandardBitmapResource[]

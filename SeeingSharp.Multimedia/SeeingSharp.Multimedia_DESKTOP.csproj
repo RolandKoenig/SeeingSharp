@@ -180,6 +180,7 @@
     <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Rotate.cs" />
     <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Scale.cs" />
     <Compile Include="Core\_Animations\_Standard\CallActionAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\ChangeIntByAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\ChangeFloatByAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\DelayAnimation.cs" />
     <Compile Include="Core\_Animations\_Standard\LazyAnimation.cs" />

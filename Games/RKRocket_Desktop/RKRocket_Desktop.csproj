@@ -138,6 +138,9 @@
     <Compile Include="..\RKRocket\Game\_Entities\BlockEntity.cs">
       <Link>Game\_Entities\BlockEntity.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\ExplosionEntity.cs">
+      <Link>Game\_Entities\ExplosionEntity.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Game\_Entities\FragmentEntity.cs">
       <Link>Game\_Entities\FragmentEntity.cs</Link>
     </Compile>
@@ -185,6 +188,9 @@
     </Compile>
     <Compile Include="..\RKRocket\Game\_Systems\CollisionSystem.cs">
       <Link>Game\_Systems\CollisionSystem.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Systems\ExplosionSystem.cs">
+      <Link>Game\_Systems\ExplosionSystem.cs</Link>
     </Compile>
     <Compile Include="..\RKRocket\Game\_Systems\FragmentSystem.cs">
       <Link>Game\_Systems\FragmentSystem.cs</Link>
@@ -335,9 +341,6 @@
     <Resource Include="..\RKRocket\Assets\Bitmaps\BulletYellow_128x128.png">
       <Link>Assets\Bitmaps\BulletYellow_128x128.png</Link>
     </Resource>
-    <Resource Include="..\RKRocket\Assets\Bitmaps\Rocket_254x512.png">
-      <Link>Assets\Bitmaps\Rocket_254x512.png</Link>
-    </Resource>
     <Resource Include="..\RKRocket\Assets\Bitmaps\StarColored_128x128.png">
       <Link>Assets\Bitmaps\StarColored_128x128.png</Link>
     </Resource>
@@ -346,6 +349,18 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\RKRocket\Assets\Bitmaps\Boom.LicenseInfo.txt">
+      <Link>Assets\Bitmaps\Boom.LicenseInfo.txt</Link>
+    </None>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\Boom.png">
+      <Link>Assets\Bitmaps\Boom.png</Link>
+    </Resource>
+    <Content Include="..\RKRocket\Assets\Bitmaps\Rocket_205x329.LicenseInfo.txt">
+      <Link>Assets\Bitmaps\Rocket_205x329.LicenseInfo.txt</Link>
+    </Content>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\Rocket_205x329.png">
+      <Link>Assets\Bitmaps\Rocket_205x329.png</Link>
+    </Resource>
     <Content Include="..\RKRocket\Assets\Sounds\Explosion.LicenseInfo.txt">
       <Link>Assets\Sounds\Explosion.LicenseInfo.txt</Link>
     </Content>

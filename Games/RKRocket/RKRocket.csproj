@@ -96,6 +96,8 @@
     <Content Include="Assets\Bitmaps\BlockBlue_128x44.png" />
     <Content Include="Assets\Bitmaps\BlockRed_128x44.png" />
     <Content Include="Assets\Bitmaps\BlockYellow_128x44.png" />
+    <Content Include="Assets\Bitmaps\Boom.png" />
+    <None Include="Assets\Bitmaps\Boom.LicenseInfo.txt" />
     <Content Include="Assets\Bitmaps\BulletGreen_128x128.png" />
     <Content Include="Assets\Bitmaps\BulletRed_128x128.png" />
     <Content Include="Assets\Bitmaps\BulletYellow_128x128.png" />
@@ -128,6 +130,7 @@
     </Compile>
     <Compile Include="Behaviors\ApplyGameSceneBehavior.cs" />
     <Compile Include="Bootstrapper\GameBootstrapper.cs" />
+    <Compile Include="Game\_Entities\ExplosionEntity.cs" />
     <Compile Include="Game\_Messages\MessageBlockStartsLeaving.cs" />
     <Compile Include="Game\_Messages\MessageBlocksFallOneCellDown.cs" />
     <Compile Include="Game\_Messages\MessageLevelStarted.cs" />
@@ -138,6 +141,7 @@
     <Compile Include="Game\_Messages\MessageScoreChanged.cs" />
     <Compile Include="Game\_Misc.cs" />
     <Compile Include="Game\_Systems\AudioSystem.cs" />
+    <Compile Include="Game\_Systems\ExplosionSystem.cs" />
     <Compile Include="Game\_Systems\FragmentSystem.cs" />
     <Compile Include="Game\_Entities\FragmentEntity.cs" />
     <Compile Include="Game\_Systems\CollisionSystem.cs" />
