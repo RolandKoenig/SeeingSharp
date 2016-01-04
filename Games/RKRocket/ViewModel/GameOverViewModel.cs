@@ -39,6 +39,7 @@ namespace RKRocket.ViewModel
         {
             this.Reason = reason;
             this.ReachedScore = reachedScore;
+            this.Name = string.Empty;
 
             this.CommandPostScore = new DelegateCommand(OnCommandPostScore_Execute);
             this.CommandCancel = new DelegateCommand(OnCommandCancel_Execute);
@@ -83,7 +84,7 @@ namespace RKRocket.ViewModel
         {
             get;
             set;
-        } = string.Empty;
+        }
 
         public GameOverReason Reason
         {

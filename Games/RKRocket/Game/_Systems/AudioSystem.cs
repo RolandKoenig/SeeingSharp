@@ -33,22 +33,45 @@ namespace RKRocket.Game
 {
     public class AudioSystem : SceneLogicalObject
     {
-        private CachedSoundFile m_soundShoot;
+        #region Resources for this system
+        private CachedSoundFile m_soundExplosion;
+        private CachedSoundFile m_soundLaserFire;
+        #endregion
 
         public AudioSystem()
         {
-            CachedSoundFile.FromResourceAsync(
+            this.LoadAudioFiles();
+        }
+
+        /// <summary>
+        /// Loads the audio files.
+        /// </summary>
+        private async void LoadAudioFiles()
+        {
+            m_soundExplosion = await CachedSoundFile.FromResourceAsync(
                 new AssemblyResourceUriBuilder(
                     "RKRocket", true,
-                    "Assets/Sounds/Explosion.wav"))
-                .ContinueWith((givenTask) => m_soundShoot = givenTask.Result);
+                    "Assets/Sounds/Explosion.wav"));
+            m_soundLaserFire = await CachedSoundFile.FromResourceAsync(
+                new AssemblyResourceUriBuilder(
+                    "RKRocket", true,
+                    "Assets/Sounds/LaserFire.wav"));
         }
 
         private void OnMessage_Received(MessageProjectileShooted message)
         {
-            if(m_soundShoot != null)
+            if(m_soundLaserFire != null)
             {
-                GraphicsCore.Current.SoundManager.PlaySoundAsync(m_soundShoot)
+                GraphicsCore.Current.SoundManager.PlaySoundAsync(m_soundLaserFire)
+                    .FireAndForget();
+            }
+        }
+
+        private void OnMessage_Received(MessageCollisionProjectileToPlayerDetected message)
+        {
+            if(m_soundExplosion != null)
+            {
+                GraphicsCore.Current.SoundManager.PlaySoundAsync(m_soundExplosion)
                     .FireAndForget();
             }
         }

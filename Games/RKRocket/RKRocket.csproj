@@ -104,8 +104,10 @@
     <Content Include="Assets\Bitmaps\Rocket_205x329.LicenseInfo.txt" />
     <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
-    <Content Include="Assets\Sounds\Explosion.LicenseInfo.txt" />
-    <Resource Include="Assets\Sounds\Explosion.wav" />
+    <None Include="Assets\Sounds\Explosion.LicenseInfo.txt" />
+    <None Include="Assets\Sounds\LaserFire.LicenseInfo.txt" />
+    <Content Include="Assets\Sounds\LaserFire.wav" />
+    <Content Include="Assets\Sounds\Explosion.wav" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\Levels\Level_001.json" />
     <Content Include="Assets\Levels\Level_002.json" />
@@ -164,6 +166,9 @@
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Game\_Systems\ScoreSystem.cs" />
     <Compile Include="ViewModel\_Messages\MessageHighScorePosted.cs" />
+    <Compile Include="View\GameOverView.xaml.cs">
+      <DependentUpon>GameOverView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="_Translatables.cs" />
     <Compile Include="ViewModel\GameOverViewModel.cs" />
     <Compile Include="ViewModel\HighScoreViewModel.cs" />
@@ -213,6 +218,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="MainPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GameOverView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
