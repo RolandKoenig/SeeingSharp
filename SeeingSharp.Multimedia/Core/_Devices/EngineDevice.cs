@@ -486,7 +486,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the DXGI factory object.
         /// </summary>
-        internal DXGI.Factory1 FactoryDxgi
+        internal DXGI.Factory2 FactoryDxgi
         {
             get { return m_handlerDXGI.Factory; }
         }

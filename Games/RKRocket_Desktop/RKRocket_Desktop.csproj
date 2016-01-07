@@ -30,7 +30,7 @@
     <PublisherName>Roland König</PublisherName>
     <SuiteName>Seeing# Games</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>5</ApplicationRevision>
+    <ApplicationRevision>6</ApplicationRevision>
     <ApplicationVersion>0.7.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -248,6 +248,12 @@
     <Compile Include="View\GameOverForm.Designer.cs">
       <DependentUpon>GameOverForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\PerformanceMeasureForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\PerformanceMeasureForm.Designer.cs">
+      <DependentUpon>PerformanceMeasureForm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="View\MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </EmbeddedResource>
@@ -263,6 +269,9 @@
     </Compile>
     <EmbeddedResource Include="View\GameOverForm.resx">
       <DependentUpon>GameOverForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\PerformanceMeasureForm.resx">
+      <DependentUpon>PerformanceMeasureForm.cs</DependentUpon>
     </EmbeddedResource>
     <Resource Include="..\RKRocket\Assets\Levels\Level_004.json">
       <Link>Assets\Levels\Level_004.json</Link>

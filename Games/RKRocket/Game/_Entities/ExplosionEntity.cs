@@ -53,7 +53,7 @@ namespace RKRocket.Game
                 .ChangeIntBy(
                     () => m_actFrameIndex,
                     (actValue) => m_actFrameIndex = actValue,
-                    Constants.SIM_EXPLOSION_FRAME_COUNT,
+                    Constants.SIM_EXPLOSION_FRAME_COUNT - 1,
                     TimeSpan.FromMilliseconds(Constants.SIM_EXPLOSION_DURATION_MS))
                 .WaitFinished()
                 .RemoveObjectFromScene()

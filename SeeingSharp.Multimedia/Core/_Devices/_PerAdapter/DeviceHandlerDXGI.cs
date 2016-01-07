@@ -30,11 +30,7 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class DeviceHandlerDXGI
     {
-#if DESKTOP
-        private DXGI.Factory1 m_factory;
-#else
         private DXGI.Factory2 m_factory;
-#endif
         private DXGI.Adapter1 m_adapter;
         private DXGI.Device3 m_device;
 
@@ -46,11 +42,7 @@ namespace SeeingSharp.Multimedia.Core
             m_device = device.QueryInterface<DXGI.Device3>();
             m_adapter = adapter;
 
-#if DESKTOP
-            m_factory = m_adapter.GetParent<DXGI.Factory1>();
-#else
             m_factory = m_adapter.GetParent<DXGI.Factory2>();
-#endif
         }
 
         /// <summary>
@@ -63,16 +55,6 @@ namespace SeeingSharp.Multimedia.Core
             m_device = CommonTools.DisposeObject(m_device);
         }
 
-#if DESKTOP
-        /// <summary>
-        /// Gets current factory object.
-        /// </summary>
-        /// <value>The factory.</value>
-        internal DXGI.Factory1 Factory
-        {
-            get { return m_factory; }
-        }
-#else
         /// <summary>
         /// Gets current factory object.
         /// </summary>
@@ -81,7 +63,6 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_factory; }
         }
-#endif
 
         /// <summary>
         /// Gets the DXGI device.

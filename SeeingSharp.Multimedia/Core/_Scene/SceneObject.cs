@@ -29,8 +29,6 @@ using System.Threading;
 using SeeingSharp.Checking;
 using SeeingSharp.Util;
 
-//Some namespace mappings
-
 namespace SeeingSharp.Multimedia.Core
 {
     public abstract partial class SceneObject : IDisposable, IAnimatableObject

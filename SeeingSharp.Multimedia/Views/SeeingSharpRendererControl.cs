@@ -53,7 +53,7 @@ namespace SeeingSharp.Multimedia.Views
 
         #region Resources for Direct3D 11
         private DXGI.Factory m_factory;
-        private DXGI.SwapChain m_swapChain;
+        private DXGI.SwapChain1 m_swapChain;
         private D3D11.Device m_renderDevice;
         private D3D11.DeviceContext m_renderDeviceContext;
         private D3D11.RenderTargetView m_renderTarget;
@@ -491,7 +491,7 @@ namespace SeeingSharp.Multimedia.Views
         private void OnRenderLoop_Present(EngineDevice device)
         {
             //Present all rendered stuff on screen
-            m_swapChain.Present(0, DXGI.PresentFlags.None);
+            m_swapChain.Present(0, DXGI.PresentFlags.DoNotWait, new DXGI.PresentParameters());
         }
 
         /// <summary>

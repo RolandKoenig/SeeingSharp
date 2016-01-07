@@ -181,5 +181,11 @@ namespace RKRocket.View
         {
             this.UpdateDialogState();
         }
+
+        private void OnCmdPerformanceInfo_Click(object sender, EventArgs e)
+        {
+            PerformanceMeasureForm perfForm = new PerformanceMeasureForm();
+            perfForm.Show();
+        }
     }
 }
