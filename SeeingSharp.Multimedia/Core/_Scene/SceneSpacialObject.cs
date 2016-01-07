@@ -1,16 +1,16 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2016 Roland König (RolandK)
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,27 +19,28 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
+
+using System;
+using System.Collections.Generic;
+using System.Numerics;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Util;
-using System;
-using System.Numerics;
-using System.Collections.Generic;
 
 namespace SeeingSharp.Multimedia.Core
 {
-    public abstract class SceneSpacialObject : 
+    public abstract class SceneSpacialObject :
         SceneObject,
         IAnimatableObjectEulerRotation, IAnimatableObjectPosition, IAnimatableObjectQuaternion, IAnimatableObjectScaling,
         IAnimatableObjectOpacity, IAnimatableObjectAccentuation
     {
         #region Resource keys
         private NamedOrGenericKey KEY_SCENE_RENDER_PARAMETERS = GraphicsCore.GetNextGenericResourceKey();
-        #endregion
+        #endregion Resource keys
 
         #region Resources for rendering
         private IndexBasedDynamicCollection<ObjectRenderParameters> m_renderParameters;
-        #endregion
+        #endregion Resources for rendering
 
         #region Spacial parameters
         private SpacialTransformationType m_transformationType;
@@ -54,7 +55,7 @@ namespace SeeingSharp.Multimedia.Core
         private SceneSpacialObject m_transformSourceObject;
         private bool m_transformParamsChanged;
         private bool m_forceTransformUpdateOnChilds;
-        #endregion
+        #endregion Spacial parameters
 
         #region Rendering parameters
         private Color4 m_color;
@@ -62,7 +63,7 @@ namespace SeeingSharp.Multimedia.Core
         private float m_opacity;
         private float m_borderPart;
         private float m_borderMultiplyer;
-        #endregion
+        #endregion Rendering parameters
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneSpacialObject"/> class.
@@ -275,7 +276,7 @@ namespace SeeingSharp.Multimedia.Core
             if (m_transformParamsChanged || updateState.ForceTransformUpdatesOnChilds)
             {
                 m_transformParamsChanged = false;
-                m_forceTransformUpdateOnChilds = true;
+                m_forceTransformUpdateOnChilds = this.HasChilds;
                 doRecreateShaderParameters = true;
 
                 // Calculate new transformation matrix
@@ -334,7 +335,7 @@ namespace SeeingSharp.Multimedia.Core
                         break;
 
                     case SpacialTransformationType.Translation:
-                        m_transform = 
+                        m_transform =
                             Matrix4x4.CreateTranslation(m_position) *
                             updateState.World.Top;
                         break;
@@ -417,7 +418,7 @@ namespace SeeingSharp.Multimedia.Core
             base.UnloadResources();
 
             // Mark all local resources for unloading
-            foreach(var actRenderParameters in m_renderParameters)
+            foreach (var actRenderParameters in m_renderParameters)
             {
                 actRenderParameters.MarkForUnloading();
             }
@@ -466,7 +467,6 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected virtual void OnOpacityChanged()
         {
-
         }
 
         /// <summary>
@@ -596,7 +596,7 @@ namespace SeeingSharp.Multimedia.Core
         public Vector3 RotationUp
         {
             get { return m_rotationUp; }
-            set 
+            set
             {
                 m_rotationUp = value;
                 m_transformParamsChanged = true;

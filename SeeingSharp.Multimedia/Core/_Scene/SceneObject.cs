@@ -1,16 +1,16 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2016 Roland König (RolandK)
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,18 +19,17 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
-using SeeingSharp.Util;
-using SeeingSharp.Checking;
+#endregion License information (SeeingSharp and all based games/applications)
+
 using System;
-using System.Numerics;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Numerics;
 using System.Threading;
+using SeeingSharp.Checking;
+using SeeingSharp.Util;
 
 //Some namespace mappings
-using D3D11 = SharpDX.Direct3D11;
 
 namespace SeeingSharp.Multimedia.Core
 {
@@ -43,26 +42,26 @@ namespace SeeingSharp.Multimedia.Core
         private object m_tag1;
         private object m_tag2;
         private bool m_isStatic;
-        #endregion
+        #endregion Generic members
 
         #region Some information about parent containers
         private Scene m_scene;
         private SceneLayer m_sceneLayer;
         private IEnumerable<MessageSubscription> m_sceneMessageSubscriptions;
-        #endregion
+        #endregion Some information about parent containers
 
         #region Members for behaviors
         private List<SceneObjectBehavior> m_behaviors;
-        #endregion
+        #endregion Members for behaviors
 
         #region Members for animations
         private AnimationHandler m_animationHandler;
-        #endregion
+        #endregion Members for animations
 
         #region Collections for describing object hierarchies
         private List<SceneObject> m_children;
         private SceneObject m_parent;
-        #endregion
+        #endregion Collections for describing object hierarchies
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SceneObject"/> class.
@@ -101,7 +100,7 @@ namespace SeeingSharp.Multimedia.Core
             m_sceneLayer = sceneLayer;
 
             // Register message handlers
-            if(m_scene.Messenger != null)
+            if (m_scene.Messenger != null)
             {
                 m_sceneMessageSubscriptions = m_scene.Messenger.SubscribeAll(this);
             }
@@ -120,7 +119,7 @@ namespace SeeingSharp.Multimedia.Core
 
             // Remember old scene
             Scene oldScene = m_scene;
-   
+
             // Clear message subscriptions
             if (m_sceneMessageSubscriptions != null)
             {
@@ -157,7 +156,7 @@ namespace SeeingSharp.Multimedia.Core
             where BehaviorType : SceneObjectBehavior
         {
             Type typeToSearch = typeof(BehaviorType);
-            foreach(SceneObjectBehavior actBehavior in m_behaviors)
+            foreach (SceneObjectBehavior actBehavior in m_behaviors)
             {
                 if (actBehavior.GetType() == typeToSearch) { return actBehavior as BehaviorType; }
             }
@@ -224,7 +223,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
         public virtual void AddChild(SceneObject childToAdd)
         {
-            if(childToAdd == this) { throw new SeeingSharpGraphicsException("Cyclic parent/child relationship detected!"); }
+            if (childToAdd == this) { throw new SeeingSharpGraphicsException("Cyclic parent/child relationship detected!"); }
             if (childToAdd.Scene != this.Scene) { throw new SeeingSharpGraphicsException("Child musst have the same scene!"); }
             if (childToAdd.m_parent != null) { throw new SeeingSharpGraphicsException("Child has already an owner!"); }
             if (childToAdd.IsParentOf(this)) { throw new SeeingSharpGraphicsException("Cyclic parent/child relationship detected!"); }
@@ -241,7 +240,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="childToRemove">The object which is to be removed from the list of children.</param>
         public virtual void RemoveDependency(SceneObject childToRemove)
         {
-            if (childToRemove.Scene!= this.Scene) { throw new ArgumentException("Child musst have the same scene!"); }
+            if (childToRemove.Scene != this.Scene) { throw new ArgumentException("Child musst have the same scene!"); }
 
             // Destroy parent/child relation
             m_children.Remove(childToRemove);
@@ -269,7 +268,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal void ClearVisibilityStageData()
         {
-            foreach(VisibilityCheckData actCheckData in m_visibilityData)
+            foreach (VisibilityCheckData actCheckData in m_visibilityData)
             {
                 actCheckData.FilterStageData.Clear();
             }
@@ -350,7 +349,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="resourceCollection">The collection to be filled,</param>
         public virtual void GetReferencedResources(SingleInstanceCollection<Resource> resourceCollection)
         {
-
         }
 
         /// <summary>
@@ -432,7 +430,6 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public virtual void UnloadResources()
         {
-
         }
 
         /// <summary>
@@ -440,7 +437,6 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected virtual void OnAddedToScene(Scene newScene)
         {
-
         }
 
         /// <summary>
@@ -448,7 +444,6 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected virtual void OnRemovedFromScene(Scene oldScene)
         {
-
         }
 
         /// <summary>
@@ -526,10 +521,10 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Is this object visible for picking-test?
         /// </summary>
-        public bool IsPickingTestVisible 
+        public bool IsPickingTestVisible
         {
-            get; 
-            set; 
+            get;
+            set;
         }
 
         /// <summary>
@@ -547,10 +542,10 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public SeeingSharpMessenger Messenger
         {
-            get 
+            get
             {
                 if (m_scene == null) { return null; }
-                return m_scene.Messenger; 
+                return m_scene.Messenger;
             }
         }
 
@@ -561,10 +556,10 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public SynchronizationContext SynchronizationContext
         {
-            get 
+            get
             {
                 if (m_scene == null) { return null; }
-                return m_scene.SynchronizationContext; 
+                return m_scene.SynchronizationContext;
             }
         }
 
@@ -617,11 +612,23 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Gets the total count of owners where this object is a direct dependency of.
+        /// Does this object have a parent?
         /// </summary>
         public bool HasParent
         {
             get { return m_parent != null; }
+        }
+
+        /// <summary>
+        /// Does this object have any child?
+        /// </summary>
+        public bool HasChilds
+        {
+            get
+            {
+                List<SceneObject> childs = m_children;
+                return (childs != null) && (childs.Count > 0);
+            }
         }
 
         /// <summary>
