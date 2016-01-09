@@ -361,6 +361,10 @@
     <Content Include="..\RKRocket\Assets\Sounds\LaserFire.LicenseInfo.txt">
       <Link>Assets\Sounds\LaserFire.LicenseInfo.txt</Link>
     </Content>
+    <Content Include="Assets\Sounds\BlogHit.LicenseInfo.txt" />
+    <Content Include="Assets\Sounds\BlogHit2.LicenseInfo.txt" />
+    <Resource Include="Assets\Sounds\BlogHit2.wav" />
+    <Resource Include="Assets\Sounds\BlogHit.wav" />
     <Resource Include="..\RKRocket\Assets\Sounds\LaserFire.wav">
       <Link>Assets\Sounds\LaserFire.wav</Link>
     </Resource>

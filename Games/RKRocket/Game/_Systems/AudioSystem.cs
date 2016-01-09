@@ -36,6 +36,8 @@ namespace RKRocket.Game
         #region Resources for this system
         private CachedSoundFile m_soundExplosion;
         private CachedSoundFile m_soundLaserFire;
+        private CachedSoundFile m_soundBlogHit;
+        private CachedSoundFile m_soundBlogHit2;
         #endregion
 
         public AudioSystem()
@@ -48,14 +50,22 @@ namespace RKRocket.Game
         /// </summary>
         private async void LoadAudioFiles()
         {
-            m_soundExplosion = await CachedSoundFile.FromResourceAsync(
-                new AssemblyResourceUriBuilder(
-                    "RKRocket", true,
-                    "Assets/Sounds/Explosion.wav"));
             m_soundLaserFire = await CachedSoundFile.FromResourceAsync(
                 new AssemblyResourceUriBuilder(
                     "RKRocket", true,
                     "Assets/Sounds/LaserFire.wav"));
+            m_soundBlogHit = await CachedSoundFile.FromResourceAsync(
+                new AssemblyResourceUriBuilder(
+                    "RKRocket", true,
+                    "Assets/Sounds/BlogHit.wav"));
+            m_soundBlogHit2 = await CachedSoundFile.FromResourceAsync(
+                new AssemblyResourceUriBuilder(
+                    "RKRocket", true,
+                    "Assets/Sounds/BlogHit2.wav"));
+            m_soundExplosion = await CachedSoundFile.FromResourceAsync(
+                new AssemblyResourceUriBuilder(
+                    "RKRocket", true,
+                    "Assets/Sounds/Explosion.wav"));
         }
 
         private void OnMessage_Received(MessageProjectileShooted message)
@@ -72,6 +82,23 @@ namespace RKRocket.Game
             if(m_soundExplosion != null)
             {
                 GraphicsCore.Current.SoundManager.PlaySoundAsync(m_soundExplosion)
+                    .FireAndForget();
+            }
+        }
+
+        private void OnMessage_Received(MessageCollisionProjectileToBlockDetected message)
+        {
+            if(m_soundBlogHit != null)
+            {
+                // Choose the sound file
+                CachedSoundFile soundtoPlay = m_soundBlogHit;
+                if(message.Block.Points > 1)
+                {
+                    soundtoPlay = m_soundBlogHit2;
+                }
+
+                // Play the sound
+                GraphicsCore.Current.SoundManager.PlaySoundAsync(soundtoPlay)
                     .FireAndForget();
             }
         }

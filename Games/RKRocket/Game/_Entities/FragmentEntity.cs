@@ -78,6 +78,9 @@ namespace RKRocket.Game
             m_position = 
                 m_position + 
                 m_direction * (float)(m_speed * updateState.UpdateTime.TotalSeconds);
+
+            // Simulate gravity
+            m_direction = Vector2.Normalize(m_direction + new Vector2(0f, 0.05f));
         }
 
         /// <summary>
@@ -94,7 +97,7 @@ namespace RKRocket.Game
                 m_position.Y - Constants.FRAGMENT_VPIXEL_HEIGHT / 2f,
                 Constants.FRAGMENT_VPIXEL_WIDTH,
                 Constants.FRAGMENT_VPIXEL_HEIGHT);
-            graphics.FillRectangle(destRectangle, m_fragmentBrush);
+            graphics.FillRoundedRectangle(destRectangle, 20f, 20f, m_fragmentBrush);
         }
 
         /// <summary>

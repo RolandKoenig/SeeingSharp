@@ -236,5 +236,10 @@ namespace RKRocket.Game
         {
             get { return m_position.Y >= 25f; }
         }
+
+        public int Points
+        {
+            get { return m_points; }
+        }
     }
 }

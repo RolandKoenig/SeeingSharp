@@ -106,6 +106,10 @@
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
     <None Include="Assets\Sounds\Explosion.LicenseInfo.txt" />
     <None Include="Assets\Sounds\LaserFire.LicenseInfo.txt" />
+    <None Include="Assets\Sounds\BlogHit.LicenseInfo.txt" />
+    <Content Include="Assets\Sounds\BlogHit.wav" />
+    <None Include="Assets\Sounds\BlogHit2.LicenseInfo.txt" />
+    <Content Include="Assets\Sounds\BlogHit2.wav" />
     <Content Include="Assets\Sounds\LaserFire.wav" />
     <Content Include="Assets\Sounds\Explosion.wav" />
     <Content Include="Properties\Default.rd.xml" />
