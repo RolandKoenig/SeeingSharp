@@ -46,11 +46,11 @@ float4 main(PSInputPostprocess input) : SV_Target
 
 	// Perofrm edge detection using kernel filter method
 	float2 ox = float2(Thickness / ScreenPixelSize.x, 0.0);
-		float2 oy = float2(0.0, Thickness / ScreenPixelSize.y);
-		float2 uv = input.tex.xy;
-		float2 PP = uv - oy;
-		float4 CC = SpriteTexture.Sample(SpriteTextureSampler, PP - ox); float g00 = getGray(CC);
-		CC = SpriteTexture.Sample(SpriteTextureSampler, PP);    float g01 = getGray(CC);
+	float2 oy = float2(0.0, Thickness / ScreenPixelSize.y);
+	float2 uv = input.tex.xy;
+	float2 PP = uv - oy;
+	float4 CC = SpriteTexture.Sample(SpriteTextureSampler, PP - ox); float g00 = getGray(CC);
+	CC = SpriteTexture.Sample(SpriteTextureSampler, PP);    float g01 = getGray(CC);
 	CC = SpriteTexture.Sample(SpriteTextureSampler, PP + ox); float g02 = getGray(CC);
 	PP = uv;
 	CC = SpriteTexture.Sample(SpriteTextureSampler, PP - ox); float g10 = getGray(CC);

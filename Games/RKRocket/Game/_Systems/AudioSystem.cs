@@ -72,7 +72,7 @@ namespace RKRocket.Game
         {
             if(m_soundLaserFire != null)
             {
-                GraphicsCore.Current.SoundManager.PlaySoundAsync(m_soundLaserFire)
+                GraphicsCore.Current.SoundManager.PlaySoundAsync(m_soundLaserFire, 0.4f)
                     .FireAndForget();
             }
         }

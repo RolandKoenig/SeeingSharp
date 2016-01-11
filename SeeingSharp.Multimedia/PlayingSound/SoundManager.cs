@@ -71,9 +71,11 @@ namespace SeeingSharp.Multimedia.PlayingSound
         /// Plays the given sound.
         /// </summary>
         /// <param name="soundFile">The sound file to be played.</param>
-        public async Task PlaySoundAsync(CachedSoundFile soundFile)
+        /// <param name="volume">The volume of the sound to be played.</param>
+        public async Task PlaySoundAsync(CachedSoundFile soundFile, float volume = 1f)
         {
-            soundFile.EnsureNotNullOrDisposed("soundFile");
+            soundFile.EnsureNotNullOrDisposed(nameof(soundFile));
+            volume.EnsurePositive(nameof(volume));
 
             // Play the sound on the device
             using (var sourceVoice = new XA.SourceVoice(m_xaudioDevice.Device, soundFile.Format, true))
@@ -84,6 +86,7 @@ namespace SeeingSharp.Multimedia.PlayingSound
                 // Start voice playing
                 TaskCompletionSource<object> complSource = new TaskCompletionSource<object>();
                 sourceVoice.SubmitSourceBuffer(soundFile.AudioBuffer, soundFile.DecodedPacketsInfo);
+                sourceVoice.SetVolume(volume);
                 sourceVoice.BufferEnd += (pointer) =>
                 {
                     complSource.TrySetResult(null);
