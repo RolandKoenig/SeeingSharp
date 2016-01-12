@@ -45,9 +45,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         private EngineDevice m_device;
         private D2D.RenderTarget m_renderTarget;
         private Size2F m_screenPixelSize;
-#if UNIVERSAL
         private D2D.DeviceContext1 m_deviceContext;
-#endif
         #endregion Main view related properties
 
         #region Transform settings
@@ -68,10 +66,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             m_device = device;
             m_renderTarget = renderTarget;
             m_screenPixelSize = screenSize;
-
-#if UNIVERSAL
             m_deviceContext = m_renderTarget as D2D.DeviceContext1;
-#endif
         }
 
         /// <summary>
@@ -482,7 +477,6 @@ namespace SeeingSharp.Multimedia.Drawing2D
             }
         }
 
-#if UNIVERSAL
         /// <summary>
         /// Draws the given image.
         /// </summary>
@@ -507,7 +501,6 @@ namespace SeeingSharp.Multimedia.Drawing2D
                 D2D.InterpolationMode.Linear,
                 D2D.CompositeMode.SourceOver);
         }
-#endif
 
         /// <summary>
         /// Gets the device which is used for rendering.

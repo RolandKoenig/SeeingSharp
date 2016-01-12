@@ -25,11 +25,7 @@
 using D2D = SharpDX.Direct2D1;
 
 //Some type mappings
-#if UNIVERSAL
 using D2dFactory = SharpDX.Direct2D1.Factory2;
-#else
-using D2dFactory = SharpDX.Direct2D1.Factory;
-#endif
 
 namespace SeeingSharp.Multimedia.Core
 {

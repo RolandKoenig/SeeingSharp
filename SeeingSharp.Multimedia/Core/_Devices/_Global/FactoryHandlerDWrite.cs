@@ -30,8 +30,9 @@ namespace SeeingSharp.Multimedia.Core
     {
         private GraphicsCore m_core;
 
-        //Resources for DirectWrite
+        #region Resources for DirectWrite
         private DWrite.Factory m_factory;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FactoryHandlerDWrite"/> class.

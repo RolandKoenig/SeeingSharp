@@ -37,13 +37,7 @@ using D2D = SharpDX.Direct2D1;
 namespace SeeingSharp.Multimedia.Core
 {
     /// <summary>
-    /// This class provides a generic way to draw Direct2D content into a Direct3D texture (typically the render target).
-    ///   - The first way over Device and DeviceContext works on UNIVERSAL build
-    ///     see https://msdn.microsoft.com/en-us/library/windows/desktop/hh780339(v=vs.85).aspx 
-    ///   - The second way for direct rendering on the render target works on windows 8 (Desktop and Store)
-    ///   - In Windows 7, the platform update is needed to to the default way
-    ///     http://msdn.microsoft.com/en-us/library/windows/desktop/jj863687(v=vs.85).aspx
-    ///   - Otherwhiese, the Fallback-Method is used (render Direct2D content to a shared texture, then render it onto the render target)
+    /// This class makes a Direct3D 11 texture available for 2D rendering with Direct2D.
     /// </summary>
     class Direct2DOverlayRenderer : IDisposable
     {
@@ -60,13 +54,7 @@ namespace SeeingSharp.Multimedia.Core
 
         #region Own 2D render target resource
         private D2D.RenderTarget m_renderTarget2D;
-        #endregion
-
-        #region Only set if we need it (e. g. Win7, Win 2008 platforms)
-        private ResourceDictionary m_resourceDict;
-#if UNIVERSAL
         private D2D.Bitmap1 m_renderTargetBitmap;
-#endif
         #endregion
 
         /// <summary>
@@ -86,21 +74,7 @@ namespace SeeingSharp.Multimedia.Core
         public void Dispose()
         {
             // Dispose all created objects
-#if DESKTOP
-            GraphicsHelper.SafeDispose(ref m_renderTarget2D);
-#endif
-
-#if UNIVERSAL
             GraphicsHelper.SafeDispose(ref m_renderTargetBitmap);
-#endif
-
-            // Unload all created resources
-            if (m_resourceDict != null)
-            {
-                m_resourceDict.UnloadResources();
-                m_resourceDict.Clear();
-                m_resourceDict = null;
-            }
         }
 
         /// <summary>
@@ -113,7 +87,7 @@ namespace SeeingSharp.Multimedia.Core
                 (float)viewWidth / dpiScaling.ScaleFactorX,
                 (float)viewHeight / dpiScaling.ScaleFactorY);
 
-#if UNIVERSAL
+            // Create the render target
             using (DXGI.Surface dxgiSurface = m_renderTarget3D.QueryInterface<DXGI.Surface>())
             {
                 D2D.BitmapProperties1 bitmapProperties = new D2D.BitmapProperties1();
@@ -126,42 +100,15 @@ namespace SeeingSharp.Multimedia.Core
                 m_renderTarget2D = m_device.DeviceContextD2D;
                 m_graphics2D = new Graphics2D(m_device, m_device.DeviceContextD2D, scaledScreenSize);
             }
-#else
-            // Try to create a Direct2D render target based on the Direct3D 11 texture directly
-            //  => This should work starting with windows 8
-            try
-            {
-                using (DXGI.Surface dxgiSurface = m_renderTarget3D.QueryInterface<DXGI.Surface>())
-                {
-                    m_renderTarget2D = new D2D.RenderTarget(
-                        m_device.Core.FactoryD2D,
-                        dxgiSurface,
-                        new D2D.RenderTargetProperties()
-                        {
-                            MinLevel = D2D.FeatureLevel.Level_10,
-                            Type = D2D.RenderTargetType.Default, //m_device.IsSoftware ? D2D.RenderTargetType.Software : D2D.RenderTargetType.Hardware,
-                            Usage = D2D.RenderTargetUsage.ForceBitmapRemoting,
-                            PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, D2D.AlphaMode.Premultiplied),
-                            DpiX = dpiScaling.DpiX,
-                            DpiY = dpiScaling.DpiY
-                        });
-                    m_graphics2D = new Graphics2D(m_device, m_renderTarget2D, scaledScreenSize);
-                    return;
-                }
-            }
-            catch (Exception) { }
-#endif
-            }
+        }
 
         /// <summary>
         /// Begins the draw.
         /// </summary>
         public void BeginDraw(RenderState renderState)
         {
-#if UNIVERSAL
             m_device.DeviceContextD2D.Target = m_renderTargetBitmap;
             m_device.DeviceContextD2D.DotsPerInch = m_renderTargetBitmap.DotsPerInch;
-#endif
 
             // Start Direct2D rendering
             m_renderTarget2D.BeginDraw();
@@ -174,10 +121,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             // Finish Direct2D drawing
             m_renderTarget2D.EndDraw();
-
-#if UNIVERSAL
             m_device.DeviceContextD2D.Target = null;
-#endif
         }
 
         /// <summary>

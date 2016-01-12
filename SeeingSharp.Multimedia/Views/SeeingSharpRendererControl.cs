@@ -43,7 +43,7 @@ using GDI = System.Drawing;
 
 namespace SeeingSharp.Multimedia.Views
 {
-    public partial class SeeingSharpRendererControl : Control, ISeeingSharpPainter, IInputEnabledView
+    public partial class SeeingSharpRendererControl : Panel, ISeeingSharpPainter, IInputEnabledView
     {
         private const string TEXT_GRAPHICS_NOT_INITIALIZED = "Graphics not initialized!";
 

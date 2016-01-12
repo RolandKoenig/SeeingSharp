@@ -75,6 +75,8 @@ namespace RKRocket.View
             {
                 m_lblScore.Margin = new Padding(0, 3, 0, 3);
             }
+
+            m_panChildDialog.Visible = m_renderPanel.Scene.IsPaused;
         }
 
         protected override void OnLoad(EventArgs e)
@@ -121,6 +123,8 @@ namespace RKRocket.View
                     }
                 },
                 TimeSpan.FromMilliseconds(300.0));
+
+
         }
 
         /// <summary>

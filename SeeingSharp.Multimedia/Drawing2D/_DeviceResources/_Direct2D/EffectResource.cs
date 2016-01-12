@@ -20,7 +20,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-#if UNIVERSAL
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -111,5 +110,3 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
     }
 }
-
-#endif

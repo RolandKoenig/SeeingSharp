@@ -591,11 +591,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the Direct2D factory object.
         /// </summary>
-#if UNIVERSAL
         internal D2D.Factory2 FactoryD2D;
-#else
-        internal D2D.Factory FactoryD2D;
-#endif 
 
         /// <summary>
         /// Gets the DirectWrite factory object.

@@ -29,12 +29,6 @@ using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
 using D3D = SharpDX.Direct3D;
 
-#if DESKTOP
-using D3dDevice = SharpDX.Direct3D11.Device;
-#else
-using D3dDevice = SharpDX.Direct3D11.Device1;
-#endif
-
 namespace SeeingSharp.Multimedia.Core
 {
     // Overview Feature levels:
@@ -48,15 +42,17 @@ namespace SeeingSharp.Multimedia.Core
     /// </summary>
     public class DeviceHandlerD3D11
     {
-        // Resources from Direct3D11 api
+        #region Resources from Direct3D11 api
         private DXGI.Adapter1 m_dxgiAdapter;
-        private D3dDevice m_device;
+        private D3D11.Device1 m_device;
         private D3D11.DeviceContext m_immediateContext;
+        #endregion
 
-        // Parameters of created device
+        #region Parameters of created device
         private D3D11.DeviceCreationFlags m_creationFlags;
         private D3D.FeatureLevel m_featureLevel;
         private HardwareDriverLevel m_driverLevel;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceHandlerD3D11"/> class.
@@ -122,7 +118,7 @@ namespace SeeingSharp.Multimedia.Core
                     // Try to create the device using current parameters
                     using (D3D11.Device device = new D3D11.Device(dxgiAdapter, direct3D11Flags, featureLevel))
                     {
-                        m_device = device.QueryInterface<D3dDevice>();
+                        m_device = device.QueryInterface<D3D11.Device1>();
                     }
 
                     // Device successfully created, save all parameters and break this loop
@@ -181,7 +177,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the Direct3D 11 device.
         /// </summary>
-        internal D3dDevice Device
+        internal D3D11.Device1 Device
         {
             get { return m_device; }
         }

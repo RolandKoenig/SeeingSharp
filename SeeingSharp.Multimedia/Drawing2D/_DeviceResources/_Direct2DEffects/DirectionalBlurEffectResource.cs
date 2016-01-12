@@ -20,24 +20,25 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Multimedia.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Multimedia.Core;
 
 // Namespace mappings
 using D2D = SharpDX.Direct2D1;
 
 namespace SeeingSharp.Multimedia.Drawing2D
 {
-    public class GaussianBlurEffectResource : EffectResource
+    public class DirectionalBlurEffectResource : EffectResource
     {
-        public GaussianBlurEffectResource(IImage sourceImage)
+        public DirectionalBlurEffectResource(IImage sourceImage)
             : base(sourceImage)
         {
             this.StandardDeviation = 1f;
+            this.Angle = 0f;
         }
 
         /// <summary>
@@ -46,11 +47,18 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="device">The device on which to load the effect instance.</param>
         protected override D2D.Effect BuildEffect(EngineDevice device)
         {
-            D2D.Effects.GaussianBlur blurEffect = new D2D.Effects.GaussianBlur(device.DeviceContextD2D);
-            blurEffect.BorderMode = D2D.BorderMode.Soft;
-            blurEffect.Optimization = D2D.GaussianBlurOptimization.Quality;
-            blurEffect.StandardDeviation = this.StandardDeviation;
-            return blurEffect;
+            D2D.Effects.DirectionalBlur dirBlurEffect = new D2D.Effects.DirectionalBlur(device.DeviceContextD2D);
+            dirBlurEffect.Angle = this.Angle;
+            dirBlurEffect.BorderMode = D2D.BorderMode.Soft;
+            dirBlurEffect.StandardDeviation = this.StandardDeviation;
+            dirBlurEffect.Optimization = D2D.DirectionalBlurOptimization.Balanced;
+            return dirBlurEffect;
+        }
+
+        public float Angle
+        {
+            get;
+            set;
         }
 
         public float StandardDeviation

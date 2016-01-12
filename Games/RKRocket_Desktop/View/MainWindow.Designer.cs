@@ -43,18 +43,20 @@
             this.m_barMenu = new System.Windows.Forms.MenuStrip();
             this.m_mnuGame = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuStartNew = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.m_cmdPerformanceInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuInfoAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_panBorder1 = new System.Windows.Forms.Panel();
             this.m_panBorder2 = new System.Windows.Forms.Panel();
+            this.m_panChildDialog = new System.Windows.Forms.Panel();
             this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
-            this.m_cmdPerformanceInfo = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barStatus.SuspendLayout();
             this.m_barMenu.SuspendLayout();
+            this.m_renderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -182,6 +184,18 @@
             this.m_mnuStartNew.Text = "Start New";
             this.m_mnuStartNew.Click += new System.EventHandler(this.OnMnuStartNew_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(234, 6);
+            // 
+            // m_cmdPerformanceInfo
+            // 
+            this.m_cmdPerformanceInfo.Name = "m_cmdPerformanceInfo";
+            this.m_cmdPerformanceInfo.Size = new System.Drawing.Size(237, 26);
+            this.m_cmdPerformanceInfo.Text = "Show Performance Info";
+            this.m_cmdPerformanceInfo.Click += new System.EventHandler(this.OnCmdPerformanceInfo_Click);
+            // 
             // m_mnuExit
             // 
             this.m_mnuExit.Name = "m_mnuExit";
@@ -200,16 +214,19 @@
             // m_mnuInfoAbout
             // 
             this.m_mnuInfoAbout.Name = "m_mnuInfoAbout";
-            this.m_mnuInfoAbout.Size = new System.Drawing.Size(181, 26);
+            this.m_mnuInfoAbout.Size = new System.Drawing.Size(125, 26);
             this.m_mnuInfoAbout.Text = "About";
             // 
             // m_renderPanel
             // 
+            this.m_renderPanel.Controls.Add(this.m_panChildDialog);
             this.m_renderPanel.DiscardRendering = true;
             this.m_renderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_renderPanel.Location = new System.Drawing.Point(0, 76);
+            this.m_renderPanel.Margin = new System.Windows.Forms.Padding(0);
             this.m_renderPanel.Name = "m_renderPanel";
+            this.m_renderPanel.Padding = new System.Windows.Forms.Padding(100);
             this.m_renderPanel.Size = new System.Drawing.Size(882, 477);
             this.m_renderPanel.TabIndex = 2;
             this.m_renderPanel.ViewConfiguration.AccentuationFactor = 0F;
@@ -242,21 +259,19 @@
             this.m_panBorder2.Size = new System.Drawing.Size(882, 1);
             this.m_panBorder2.TabIndex = 4;
             // 
+            // m_panChildDialog
+            // 
+            this.m_panChildDialog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_panChildDialog.Location = new System.Drawing.Point(100, 100);
+            this.m_panChildDialog.Margin = new System.Windows.Forms.Padding(0);
+            this.m_panChildDialog.Name = "m_panChildDialog";
+            this.m_panChildDialog.Size = new System.Drawing.Size(682, 277);
+            this.m_panChildDialog.TabIndex = 5;
+            this.m_panChildDialog.Visible = false;
+            // 
             // m_dataSource
             // 
             this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
-            // 
-            // m_cmdPerformanceInfo
-            // 
-            this.m_cmdPerformanceInfo.Name = "m_cmdPerformanceInfo";
-            this.m_cmdPerformanceInfo.Size = new System.Drawing.Size(237, 26);
-            this.m_cmdPerformanceInfo.Text = "Show Performance Info";
-            this.m_cmdPerformanceInfo.Click += new System.EventHandler(this.OnCmdPerformanceInfo_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(234, 6);
             // 
             // MainWindow
             // 
@@ -276,6 +291,7 @@
             this.m_barStatus.PerformLayout();
             this.m_barMenu.ResumeLayout(false);
             this.m_barMenu.PerformLayout();
+            this.m_renderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -305,6 +321,7 @@
         private System.Windows.Forms.ToolStripStatusLabel m_lblScoreValue;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem m_cmdPerformanceInfo;
+        private System.Windows.Forms.Panel m_panChildDialog;
     }
 }
 
