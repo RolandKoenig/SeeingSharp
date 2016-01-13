@@ -115,5 +115,13 @@ namespace RKRocket.Game
             get { return m_position; }
             set { m_position = value; }
         }
+
+        protected override int RenderZOrder
+        {
+            get
+            {
+                return Constants.ZORDER_FRAGMENT;
+            }
+        }
     }
 }

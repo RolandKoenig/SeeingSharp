@@ -141,6 +141,9 @@
     <Compile Include="..\RKRocket\Game\_Entities\ExplosionEntity.cs">
       <Link>Game\_Entities\ExplosionEntity.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\ForegroundEntity.cs">
+      <Link>Game\_Entities\ForegroundEntity.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Game\_Entities\FragmentEntity.cs">
       <Link>Game\_Entities\FragmentEntity.cs</Link>
     </Compile>

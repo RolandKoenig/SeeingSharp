@@ -241,5 +241,13 @@ namespace RKRocket.Game
         {
             get { return m_points; }
         }
+
+        protected override int RenderZOrder
+        {
+            get
+            {
+                return Constants.ZORDER_BLOCK;
+            }
+        }
     }
 }

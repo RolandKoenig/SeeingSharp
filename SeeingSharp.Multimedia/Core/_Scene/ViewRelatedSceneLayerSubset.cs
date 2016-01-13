@@ -336,7 +336,7 @@ namespace SeeingSharp.Multimedia.Core
                     // Check for consistency: Does unsubscribe-count match true unsubscriptions using IsSubscribed flag
                     if(givenUnsubscribeCount != trueUnsubscribeCount)
                     {
-                        throw new SeeingSharpException("Inconsistency: Given unsubscribe count does not mache true count of unsubscriptions!");
+                        throw new SeeingSharpException("Inconsistency: Given unsubscribe count does not mach true count of unsubscriptions!");
                     }
                 }
             }
@@ -543,17 +543,47 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Subscribes the given object to the given render pass.
         /// </summary>
-        internal RenderPassSubscription SubscribeForPass(RenderPassInfo passInfo, SceneObject sceneObject, Action<RenderState> renderMethod)
+        internal RenderPassSubscription SubscribeForPass(
+            RenderPassInfo passInfo, 
+            SceneObject sceneObject, Action<RenderState> renderMethod,
+            int zOrder)
         {
             if (!m_isSubscribeUnsubscribeAllowed) { throw new SeeingSharpException("Subscription is not allowed currently!"); }
 
             var subscriptionProperties = m_objectsPerPassDict[passInfo];
 
             // Append new subscription to subscription list
-            var newSubscription = new RenderPassSubscription(this, passInfo, sceneObject, renderMethod);
-            newSubscription.SubscriptionIndex = subscriptionProperties.Subscriptions.Count;
-            subscriptionProperties.Subscriptions.Add(newSubscription);
-         
+            List<RenderPassSubscription> subscriptions = subscriptionProperties.Subscriptions;
+            int subscriptionsCount = subscriptions.Count;
+            RenderPassSubscription newSubscription = new RenderPassSubscription(this, passInfo, sceneObject, renderMethod, zOrder);
+            if (!passInfo.IsSorted)
+            {
+                // No sort, so put the new subscription to the end of the collection
+                newSubscription.SubscriptionIndex = subscriptionsCount;
+                subscriptions.Add(newSubscription);
+            }
+            else
+            {
+                // Perform BinaryInsert to the correct position
+                int newIndex = CommonTools.BinaryInsert(subscriptions, newSubscription, SubscriptionZOrderComparer.Instance);
+
+                // Increment all subscription indices after the inserted position
+                subscriptionsCount++;
+                RenderPassSubscription actSubscription;
+                for (int loop = newIndex; loop < subscriptionsCount; loop++)
+                {
+                    actSubscription = subscriptions[loop];
+                    if (actSubscription.SubscriptionIndex != loop)
+                    {
+                        actSubscription.SubscriptionIndex = loop;
+                        subscriptions[loop] = actSubscription;
+
+                        actSubscription.SceneObject.UpdateSubscription(actSubscription, this);
+                    }
+                }
+                newSubscription = subscriptions[newIndex];
+            }
+
             return newSubscription;
         }
 
@@ -823,6 +853,22 @@ namespace SeeingSharp.Multimedia.Core
         {
             internal int UnsubscribeCallCount = 0;
             internal List<RenderPassSubscription> Subscriptions = new List<RenderPassSubscription>(DEFAULT_PASS_SUBSCRIPTION_LENGTH);
+        }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        /// <summary>
+        /// Helper for sorting render pass subscriptions by z order.
+        /// </summary>
+        private class SubscriptionZOrderComparer : IComparer<RenderPassSubscription>
+        {
+            public static readonly SubscriptionZOrderComparer Instance = new SubscriptionZOrderComparer();
+
+            public int Compare(RenderPassSubscription x, RenderPassSubscription y)
+            {
+                return x.ZOrder.CompareTo(y.ZOrder);
+            }
         }
     }
 }

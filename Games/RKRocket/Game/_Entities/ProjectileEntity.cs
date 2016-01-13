@@ -208,5 +208,13 @@ namespace RKRocket.Game
         {
             get { return m_relevantForPlayerCollision && (m_currentSpeed > 0f); }
         }
+
+        protected override int RenderZOrder
+        {
+            get
+            {
+                return Constants.ZORDER_PROJECTILE;
+            }
+        }
     }
 }

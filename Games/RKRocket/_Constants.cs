@@ -34,6 +34,16 @@ namespace RKRocket
         public const string GAME_SCENE_NAME = "RocketScene";
         public const string GAME_SHORT_NAME = "RKRocket";
 
+        #region Z-Ordering 
+        public const int ZORDER_BACKGROUND = -1000;
+        public const int ZORDER_BLOCK = 10;
+        public const int ZORDER_FRAGMENT = 15;
+        public const int ZORDER_PLAYER = 18;
+        public const int ZORDER_EXPLOSION = 19;
+        public const int ZORDER_PROJECTILE = 20;
+        public const int ZORDER_FOREGROUND = 1000;
+        #endregion
+
         #region Debug constants
         public const bool RENDER_COLLISION_GEOMETRY = false;
         #endregion

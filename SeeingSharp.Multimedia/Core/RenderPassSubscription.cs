@@ -34,6 +34,7 @@ namespace SeeingSharp.Multimedia.Core
         internal RenderPassInfo RenderPass;
         internal SceneObject SceneObject;
         internal Action<RenderState> RenderMethod;
+        internal int ZOrder;
 
         /// <summary>
         /// Very important variable to find the subscription in the host collection!
@@ -52,7 +53,11 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="renderPass">The render pass on which to register.</param>
         /// <param name="sceneObject">The scene object which should be registered.</param>
         /// <param name="renderMethod">The render method which is to be registered.</param>
-        internal RenderPassSubscription(ViewRelatedSceneLayerSubset layerViewSubset, RenderPassInfo renderPass, SceneObject sceneObject, Action<RenderState> renderMethod)
+        /// <param name="zOrder">The z-order for sorting if the subsciptions of this pass get sorted by it.</param>
+        internal RenderPassSubscription(
+            ViewRelatedSceneLayerSubset layerViewSubset, RenderPassInfo renderPass, 
+            SceneObject sceneObject, Action<RenderState> renderMethod,
+            int zOrder)
         {
             LayerViewSubset = layerViewSubset;
             RenderPass = renderPass;
@@ -60,6 +65,7 @@ namespace SeeingSharp.Multimedia.Core
             RenderMethod = renderMethod;
             IsSubscribed = true;
             SubscriptionIndex = 0;
+            ZOrder = zOrder;
         }
 
         /// <summary>
@@ -79,16 +85,6 @@ namespace SeeingSharp.Multimedia.Core
         public void Unsubscribe()
         {
             LayerViewSubset.UnsubscribeForPass(this);
-
-            //if (SceneObject != null)
-            //{
-            //    IsSubscribed = false;
-            //    //
-            //    //LayerViewSubset = null;
-            //    //RenderPass = null;
-            //    //SceneObject = null;
-            //    //RenderMethod = null;
-            //}
         }
     }
 }

@@ -48,11 +48,18 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Subscribes on the given render pass with the given action.
         /// </summary>
-        protected internal void SubscribeToPass(RenderPassInfo renderPass, ViewRelatedSceneLayerSubset layerViewSubset, Action<RenderState> renderAction)
+        /// <param name="renderPass">The render pass to which to subscribe.</param>
+        /// <param name="renderAction">The action which performs rendering.</param>
+        /// <param name="layerViewSubset">The ViewRelatedSceneLayerSubset to which to subscribe.</param>
+        /// <param name="zOrder">The z order if sorting is enabled for this pass (default = 0).</param>
+        protected internal void SubscribeToPass(
+            RenderPassInfo renderPass, 
+            ViewRelatedSceneLayerSubset layerViewSubset, Action<RenderState> renderAction,
+            int zOrder = 0)
         {
             List<RenderPassSubscription> subscriptionList = m_viewRelatedSubscriptions[layerViewSubset.ViewIndex];
 
-            subscriptionList.Add(layerViewSubset.SubscribeForPass(renderPass, this, renderAction));
+            subscriptionList.Add(layerViewSubset.SubscribeForPass(renderPass, this, renderAction, zOrder));
         }
 
         /// <summary>
@@ -75,8 +82,8 @@ namespace SeeingSharp.Multimedia.Core
             {
                 RenderPassSubscription currentSubscriptionInfo = subscriptionList[loop];
                 if ((currentSubscriptionInfo.SceneObject == newSubscriptionInfo.SceneObject) &&
-                   (currentSubscriptionInfo.RenderPass == newSubscriptionInfo.RenderPass) &&
-                   (currentSubscriptionInfo.RenderMethod == newSubscriptionInfo.RenderMethod))
+                    (currentSubscriptionInfo.RenderPass == newSubscriptionInfo.RenderPass) &&
+                    (currentSubscriptionInfo.RenderMethod == newSubscriptionInfo.RenderMethod))
                 {
                     subscriptionList[loop] = newSubscriptionInfo;
                     entryCount++;

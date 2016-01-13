@@ -43,7 +43,8 @@ namespace RKRocket.Game
                 base.SubscribeToPass(
                     RenderPassInfo.PASS_2D_OVERLAY,
                     layerViewSubset,
-                    OnRender_2DOverlay);
+                    OnRender_2DOverlay,
+                    zOrder: this.RenderZOrder);
             }
         }
 
@@ -70,5 +71,13 @@ namespace RKRocket.Game
         /// Contains all 2D rendering logic for this object.
         /// </summary>
         protected abstract void OnRender_2DOverlay(RenderState renderState);
+
+        /// <summary>
+        /// The z order for rendering (2D rendering is sorted by this value).
+        /// </summary>
+        protected virtual int RenderZOrder
+        {
+            get { return 0; }
+        }
     }
 }

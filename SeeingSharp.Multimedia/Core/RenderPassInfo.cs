@@ -27,16 +27,23 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class RenderPassInfo
     {
+        #region All available render passes
         public static readonly RenderPassInfo PASS_PLAIN_RENDER = new RenderPassInfo("DefaultPlainRender");
         public static readonly RenderPassInfo PASS_LINE_RENDER = new RenderPassInfo("LineRender");
         public static readonly RenderPassInfo PASS_TRANSPARENT_RENDER = new RenderPassInfo("DefaultTransparentRender");
         public static readonly RenderPassInfo PASS_SPRITE_BATCH = new RenderPassInfo("SpriteBatchRender");
-        public static readonly RenderPassInfo PASS_2D_OVERLAY = new RenderPassInfo("2D-Overlay");
+        public static readonly RenderPassInfo PASS_2D_OVERLAY = new RenderPassInfo("2D-Overlay", isSorted: true);
+        #endregion
 
+        #region Static collection which holds all render passes
         private static List<RenderPassInfo> s_renderPasses;
         private static ReadOnlyCollection<RenderPassInfo> s_renderPassesPublic;
+        #endregion
 
+        #region Render pass properties
         private string m_name;
+        private bool m_isSorted;
+        #endregion
 
         /// <summary>
         /// Initializes the <see cref="RenderPassInfo" /> class.
@@ -56,9 +63,10 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderPassInfo" /> class.
         /// </summary>
-        internal RenderPassInfo(string name)
+        internal RenderPassInfo(string name, bool isSorted = false)
         {
             m_name = name;
+            m_isSorted = isSorted;
         }
 
         /// <summary>
@@ -86,6 +94,11 @@ namespace SeeingSharp.Multimedia.Core
         public string Name
         {
             get { return m_name; }
+        }
+
+        public bool IsSorted
+        {
+            get { return m_isSorted; }
         }
     }
 }

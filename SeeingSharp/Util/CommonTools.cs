@@ -419,12 +419,39 @@ namespace SeeingSharp.Util
         /// </summary>
         /// <param name="targetList">The list to be modified.</param>
         /// <param name="newItem">The new item to be inserted.</param>
-        public static void BinaryInsert<T>(List<T> targetList, T newItem)
+        public static int BinaryInsert<T>(List<T> targetList, T newItem)
         {
             int targetIndex = targetList.BinarySearch(newItem);
-            if(targetIndex <= 0)
+            if (targetIndex < 0)
             {
                 targetList.Insert(~targetIndex, newItem);
+                return ~targetIndex;
+            }
+            else
+            {
+                targetList.Insert(targetIndex, newItem);
+                return targetIndex;
+            }
+        }
+
+        /// <summary>
+        /// Inserts the given object using a binary search algorithm.
+        /// </summary>
+        /// <param name="targetList">The list to be modified.</param>
+        /// <param name="newItem">The new item to be inserted.</param>
+        /// <param name="comparer">The comparer which is used for the binary search method.</param>
+        public static int BinaryInsert<T>(List<T> targetList, T newItem, IComparer<T> comparer)
+        {
+            int targetIndex = targetList.BinarySearch(newItem, comparer);
+            if (targetIndex < 0)
+            {
+                targetList.Insert(~targetIndex, newItem);
+                return ~targetIndex;
+            }
+            else 
+            {
+                targetList.Insert(targetIndex, newItem);
+                return targetIndex;
             }
         }
 
@@ -448,8 +475,6 @@ namespace SeeingSharp.Util
         public static void SafeDispose<T>(ref T toDispose)
             where T : class, IDisposable
         {
-
-
             toDispose = DisposeObject(toDispose);
         }
 

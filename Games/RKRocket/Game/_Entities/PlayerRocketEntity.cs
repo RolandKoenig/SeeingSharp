@@ -227,5 +227,13 @@ namespace RKRocket.Game
                 return new Vector2(m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER);
             }
         }
+
+        protected override int RenderZOrder
+        {
+            get
+            {
+                return Constants.ZORDER_PLAYER;
+            }
+        }
     }
 }

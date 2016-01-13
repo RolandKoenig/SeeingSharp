@@ -76,5 +76,13 @@ namespace RKRocket.Game
                 destinationRect,
                 frameIndex: m_actFrameIndex);
         }
+
+        protected override int RenderZOrder
+        {
+            get
+            {
+                return Constants.ZORDER_EXPLOSION;
+            }
+        }
     }
 }
