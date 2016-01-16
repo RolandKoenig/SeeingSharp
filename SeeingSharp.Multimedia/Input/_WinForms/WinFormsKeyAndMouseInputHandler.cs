@@ -281,6 +281,8 @@ namespace SeeingSharp.Multimedia.Input
         {
             m_lastMousePoint = m_currentControl.PointToClient(Cursor.Position);
             m_isMouseInside = true;
+
+            m_stateMouseOrPointer.NotifyMouseInside(true);
         }
 
         /// <summary>
@@ -353,6 +355,8 @@ namespace SeeingSharp.Multimedia.Input
             m_lastMousePoint = System.Drawing.Point.Empty;
             m_isMouseInside = false;
             m_controlDown = false;
+
+            m_stateMouseOrPointer.NotifyMouseInside(false);
         }
 
         /// <summary>

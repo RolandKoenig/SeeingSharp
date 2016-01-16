@@ -72,6 +72,10 @@ namespace RKRocket
             new AssemblyResourceUriBuilder(
                 "RKRocket", true,
                 "Assets/Bitmaps/BlueClouds.png"));
+        public static readonly StandardBitmapResource Bitmap_TargetCross = new StandardBitmapResource(
+            new AssemblyResourceUriBuilder(
+                "RKRocket", true,
+                "Assets/Bitmaps/Target.png"));
 
         // All possible block colors within an array of bitmaps
         public static readonly StandardBitmapResource[] Bitmap_Blocks = new StandardBitmapResource[]

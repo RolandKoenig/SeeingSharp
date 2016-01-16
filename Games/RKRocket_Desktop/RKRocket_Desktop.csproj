@@ -153,6 +153,9 @@
     <Compile Include="..\RKRocket\Game\_Entities\ProjectileEntity.cs">
       <Link>Game\_Entities\ProjectileEntity.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Game\_Entities\TargetCrossEntity.cs">
+      <Link>Game\_Entities\TargetCrossEntity.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessageBlocksFallOneCellDown.cs">
       <Link>Game\_Messages\MessageBlocksFallOneCellDown.cs</Link>
     </Compile>
@@ -173,6 +176,9 @@
     </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessageNewGame.cs">
       <Link>Game\_Messages\MessageNewGame.cs</Link>
+    </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessagePauseStateChanged.cs">
+      <Link>Game\_Messages\MessagePauseStateChanged.cs</Link>
     </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessagePlayerHealthChanged.cs">
       <Link>Game\_Messages\MessagePlayerHealthChanged.cs</Link>

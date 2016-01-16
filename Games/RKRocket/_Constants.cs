@@ -41,6 +41,7 @@ namespace RKRocket
         public const int ZORDER_PLAYER = 18;
         public const int ZORDER_EXPLOSION = 19;
         public const int ZORDER_PROJECTILE = 20;
+        public const int ZORDER_TARGET_CROSS = 100;
         public const int ZORDER_FOREGROUND = 1000;
         #endregion
 
@@ -55,6 +56,11 @@ namespace RKRocket
 
         #region Level properties
         public static readonly TimeSpan LEVEL_MIN_TIME_WITHOUT_BLOCKS = TimeSpan.FromSeconds(2.0);
+        #endregion
+
+        #region Target cross properties
+        public const float GFX_TARGET_CROSS_WIDTH = 50f;
+        public const float GFX_TARGET_CROSS_HEIGHT = 50f;
         #endregion
 
         #region player rocket properties

@@ -36,6 +36,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using RKRocket.Game;
 
 namespace RKRocket.View
 {
@@ -44,6 +45,8 @@ namespace RKRocket.View
         #region State
         private MainUIViewModel m_viewModel;
         private int m_dropDownOpenCount;
+        private bool m_mouseInsideRenderPanel;
+        private bool m_curserVisibleState = true;
         #endregion
 
         /// <summary>
@@ -76,7 +79,26 @@ namespace RKRocket.View
                 m_lblScore.Margin = new Padding(0, 3, 0, 3);
             }
 
+            // Show the current child panel if the game is paused
             m_panChildDialog.Visible = m_renderPanel.Scene.IsPaused;
+
+            // Show/Hide cursor based on pause state and cursor location
+            if (m_renderPanel.Scene.IsPaused || (!m_mouseInsideRenderPanel))
+            {
+                if (!m_curserVisibleState)
+                {
+                    Cursor.Show();
+                    m_curserVisibleState = true;
+                }
+            }
+            else
+            {
+                if (m_curserVisibleState)
+                {
+                    Cursor.Hide();
+                    m_curserVisibleState = false;
+                }
+            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -123,8 +145,6 @@ namespace RKRocket.View
                     }
                 },
                 TimeSpan.FromMilliseconds(300.0));
-
-
         }
 
         /// <summary>
@@ -181,6 +201,11 @@ namespace RKRocket.View
             }
         }
 
+        private void OnMessage_Received(MessagePauseStateChanged message)
+        {
+            this.UpdateDialogState();
+        }
+
         private void OnBarStatus_SizeChanged(object sender, EventArgs e)
         {
             this.UpdateDialogState();
@@ -190,6 +215,23 @@ namespace RKRocket.View
         {
             PerformanceMeasureForm perfForm = new PerformanceMeasureForm();
             perfForm.Show();
+        }
+
+        private void OnRenderPanel_MouseEnter(object sender, EventArgs e)
+        {
+            m_mouseInsideRenderPanel = true;
+            this.UpdateDialogState();
+        }
+
+        private void OnRenderPanel_MouseLeave(object sender, EventArgs e)
+        {
+            m_mouseInsideRenderPanel = false;
+            this.UpdateDialogState();
+        }
+
+        private void OnRefreshTimer_Tick(object sender, EventArgs e)
+        {
+            this.UpdateDialogState();
         }
     }
 }

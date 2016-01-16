@@ -49,10 +49,11 @@
             this.m_mnuInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuInfoAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
+            this.m_panChildDialog = new System.Windows.Forms.Panel();
             this.m_panBorder1 = new System.Windows.Forms.Panel();
             this.m_panBorder2 = new System.Windows.Forms.Panel();
-            this.m_panChildDialog = new System.Windows.Forms.Panel();
             this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
+            this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barStatus.SuspendLayout();
             this.m_barMenu.SuspendLayout();
@@ -240,6 +241,18 @@
             this.m_renderPanel.ViewConfiguration.ShowTextures = true;
             this.m_renderPanel.ViewConfiguration.StrongLightFactor = 1.5F;
             this.m_renderPanel.ViewConfiguration.WireframeEnabled = false;
+            this.m_renderPanel.MouseEnter += new System.EventHandler(this.OnRenderPanel_MouseEnter);
+            this.m_renderPanel.MouseLeave += new System.EventHandler(this.OnRenderPanel_MouseLeave);
+            // 
+            // m_panChildDialog
+            // 
+            this.m_panChildDialog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_panChildDialog.Location = new System.Drawing.Point(100, 100);
+            this.m_panChildDialog.Margin = new System.Windows.Forms.Padding(0);
+            this.m_panChildDialog.Name = "m_panChildDialog";
+            this.m_panChildDialog.Size = new System.Drawing.Size(682, 277);
+            this.m_panChildDialog.TabIndex = 5;
+            this.m_panChildDialog.Visible = false;
             // 
             // m_panBorder1
             // 
@@ -259,19 +272,15 @@
             this.m_panBorder2.Size = new System.Drawing.Size(882, 1);
             this.m_panBorder2.TabIndex = 4;
             // 
-            // m_panChildDialog
-            // 
-            this.m_panChildDialog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_panChildDialog.Location = new System.Drawing.Point(100, 100);
-            this.m_panChildDialog.Margin = new System.Windows.Forms.Padding(0);
-            this.m_panChildDialog.Name = "m_panChildDialog";
-            this.m_panChildDialog.Size = new System.Drawing.Size(682, 277);
-            this.m_panChildDialog.TabIndex = 5;
-            this.m_panChildDialog.Visible = false;
-            // 
             // m_dataSource
             // 
             this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
+            // 
+            // m_refreshTimer
+            // 
+            this.m_refreshTimer.Enabled = true;
+            this.m_refreshTimer.Interval = 300;
+            this.m_refreshTimer.Tick += new System.EventHandler(this.OnRefreshTimer_Tick);
             // 
             // MainWindow
             // 
@@ -322,6 +331,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem m_cmdPerformanceInfo;
         private System.Windows.Forms.Panel m_panChildDialog;
+        private System.Windows.Forms.Timer m_refreshTimer;
     }
 }
 

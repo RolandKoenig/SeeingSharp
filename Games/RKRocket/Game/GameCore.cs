@@ -86,7 +86,11 @@ namespace RKRocket.Game
         /// </summary>
         private void UpdateStates()
         {
-            m_gameScene.IsPaused = m_isGameOver || m_isMenuOpened;
+            bool newPauseState = m_isGameOver || m_isMenuOpened;
+            if(newPauseState != m_gameScene.IsPaused)
+            {
+                m_gameScene.IsPaused = newPauseState;
+            }
         }
 
         /// <summary>
@@ -110,6 +114,9 @@ namespace RKRocket.Game
             // Append the background
             manipulator.Add(new BackgroundEntity());
             manipulator.Add(new ForegroundEntity());
+
+            // Append some other objects
+            manipulator.Add(new TargetCrossEntity());
 
             // Create and append the player
             m_playerRocket = new PlayerRocketEntity();
