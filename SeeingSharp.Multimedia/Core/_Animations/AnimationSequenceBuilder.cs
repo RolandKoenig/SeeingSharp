@@ -83,9 +83,28 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
         /// </summary>
-        public void Apply()
+        /// <param name="actionToCall">The action to be called after animation has finished.</param>
+        /// <param name="cancelAction">The action to be called when the animation gets canceled.</param>
+        /// <param name="ignorePause">Should this animation ignore pause stateß</param>
+        public void Apply(Action actionToCall = null, Action cancelAction = null, bool? ignorePause = null)
         {
             if (m_ownerAnimationHandler == null) { throw new SeeingSharpGraphicsException("Unable to finish AnimationSequenceBuilder: No default AnimationHandler found!"); }
+
+            // Append 'CallAction' on demand
+            if ((actionToCall != null) || (cancelAction != null))
+            {
+                this.WaitFinished()
+                    .CallAction(actionToCall, cancelAction);
+            }
+
+            // Change the 'Ignore pause state'
+            if(ignorePause != null)
+            {
+                foreach(IAnimation actAnimation in m_sequenceList)
+                {
+                    actAnimation.IgnorePauseState = ignorePause.Value;
+                }
+            }
 
             m_ownerAnimationHandler.BeginAnimation(m_sequenceList);
             m_applied = true;
@@ -94,60 +113,31 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
         /// </summary>
-        public void ApplyAsSecondary()
+        /// <param name="actionToCall">The action to be called after animation has finished.</param>
+        /// <param name="cancelAction">The action to be called when the animation gets canceled.</param>
+        /// <param name="ignorePause">Should this animation ignore pause stateß</param>
+        public void ApplyAsSecondary(Action actionToCall, Action cancelAction, bool? ignorePause = null)
         {
             if (m_ownerAnimationHandler == null) { throw new SeeingSharpGraphicsException("Unable to finish AnimationSequenceBuilder: No default AnimationHandler found!"); }
+
+            // Append 'CallAction' on demand
+            if ((actionToCall != null) || (cancelAction != null))
+            {
+                this.WaitFinished()
+                    .CallAction(actionToCall, cancelAction);
+            }
+
+            // Change the 'Ignore pause state'
+            if (ignorePause != null)
+            {
+                foreach (IAnimation actAnimation in m_sequenceList)
+                {
+                    actAnimation.IgnorePauseState = ignorePause.Value;
+                }
+            }
 
             m_ownerAnimationHandler.BeginSecondaryAnimation(m_sequenceList);
             m_applied = true;
-        }
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
-        /// <param name="actionToCall">The action to be called after animation has finished.</param>
-        public void Apply(Action actionToCall)
-        {
-            this.Apply(actionToCall, (Action)null);
-        }
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
-        /// <param name="actionToCall">The action to be called after animation has finished.</param>
-        /// <param name="cancelAction">The action to be called when the animation gets canceled.</param>
-        public void Apply(Action actionToCall, Action cancelAction)
-        {
-            if (m_ownerAnimationHandler == null) { throw new SeeingSharpGraphicsException("Unable to finish AnimationSequenceBuilder: No default AnimationHandler found!"); }
-
-            this.WaitFinished()
-                .CallAction(actionToCall, cancelAction);
-
-            this.Apply();
-        }
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
-        /// <param name="actionToCall">The action to be called after animation has finished.</param>
-        public void ApplyAsSecondary(Action actionToCall)
-        {
-            this.ApplyAsSecondary(actionToCall, (Action)null);
-        }
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
-        /// <param name="actionToCall">The action to be called after animation has finished.</param>
-        /// <param name="cancelAction">The action to be called when the animation gets canceled.</param>
-        public void ApplyAsSecondary(Action actionToCall, Action cancelAction)
-        {
-            if (m_ownerAnimationHandler == null) { throw new SeeingSharpGraphicsException("Unable to finish AnimationSequenceBuilder: No default AnimationHandler found!"); }
-
-            this.WaitFinished()
-                .CallAction(actionToCall, cancelAction);
-
-            this.ApplyAsSecondary();
         }
 
         /// <summary>
@@ -183,7 +173,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Finishes the animation and starts from beginning.
         /// </summary>
-        public void ApplyAndRewind()
+        /// <param name="ignorePause">Should this animation ignore pause stateß</param>
+        public void ApplyAndRewind(bool? ignorePause = null)
         {
             if (m_ownerAnimationHandler == null) { throw new SeeingSharpGraphicsException("Unable to finish AnimationSequenceBuilder: No default AnimationHandler found!"); }
 
@@ -205,6 +196,15 @@ namespace SeeingSharp.Multimedia.Core
             // Apend rewind action to the sequence
             this.WaitFinished()
                 .CallAction(rewindAction);
+
+            // Change the 'Ignore pause state'
+            if (ignorePause != null)
+            {
+                foreach (IAnimation actAnimation in m_sequenceList)
+                {
+                    actAnimation.IgnorePauseState = ignorePause.Value;
+                }
+            }
 
             // Start the animation
             m_ownerAnimationHandler.BeginAnimation(m_sequenceList);

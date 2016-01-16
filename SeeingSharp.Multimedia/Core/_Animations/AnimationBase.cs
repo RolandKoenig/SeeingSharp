@@ -362,5 +362,14 @@ namespace SeeingSharp.Multimedia.Core
                 }
             }
         }
+
+        /// <summary>
+        /// Should this animation ignore pause state?
+        /// </summary>
+        public bool IgnorePauseState
+        {
+            get;
+            set;
+        }
     }
 }

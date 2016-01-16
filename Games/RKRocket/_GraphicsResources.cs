@@ -68,6 +68,10 @@ namespace RKRocket
                 "Assets/Bitmaps/Boom.png"),
             frameCountX: 8,
             frameCountY: 8);
+        public static readonly StandardBitmapResource Bitmap_Cloud = new StandardBitmapResource(
+            new AssemblyResourceUriBuilder(
+                "RKRocket", true,
+                "Assets/Bitmaps/BlueClouds.png"));
 
         // All possible block colors within an array of bitmaps
         public static readonly StandardBitmapResource[] Bitmap_Blocks = new StandardBitmapResource[]

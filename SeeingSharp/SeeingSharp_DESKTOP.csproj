@@ -222,6 +222,7 @@
     <Compile Include="_Math\_Custom\Polygon2D.cs" />
     <Compile Include="_Math\_Custom\Ray.Custom.cs" />
     <Compile Include="_Math\_Custom\Ray2D.cs" />
+    <Compile Include="_Math\_Custom\RectangleF.Custom.cs" />
     <Compile Include="_Math\_Custom\Size2.Custom.cs" />
     <Compile Include="_Math\_Custom\_Misc.cs" />
     <Compile Include="_Math\_Mechanics\MovementAnimationHelper.cs" />

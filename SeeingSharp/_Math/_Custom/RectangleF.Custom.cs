@@ -26,24 +26,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeeingSharp.Multimedia.Core
+namespace SeeingSharp
 {
-    public interface IAnimationUpdateState
+    public partial struct RectangleF
     {
-        TimeSpan UpdateTime
+        /// <summary>Pushes the edges of the Rectangle out by the horizontal and vertical values specified.</summary>
+        /// <param name="horizontalAmount">Value to push the sides out by.</param>
+        /// <param name="verticalAmount">Value to push the top and bottom out by.</param>
+        public void Inflate(float horizontalAmount, float verticalAmount)
         {
-            get;
-        }
-
-        int UpdateTimeMilliseconds
-        {
-            get;
-        }
-
-        bool IgnorePauseState
-        {
-            get;
-            set;
+            X -= horizontalAmount;
+            Y -= verticalAmount;
+            Width += horizontalAmount * 2;
+            Height += verticalAmount * 2;
         }
     }
 }

@@ -486,13 +486,13 @@ namespace SeeingSharp.Multimedia.Drawing2D
             IImage image,
             Vector2 destinationOrigin)
         {
-            image.EnsureNotNull("bitmap");
+            image.EnsureNotNull(nameof(image));
 
             IImageInternal internalImage = image as IImageInternal;
-            internalImage.EnsureNotNull("internalImage");
+            internalImage.EnsureNotNull(nameof(internalImage));
 
             D2D.Image d2dImage = internalImage.GetImageObject(m_device) as D2D.Image;
-            d2dImage.EnsureNotNull("d2dImage");
+            d2dImage.EnsureNotNull(nameof(d2dImage));
 
             m_deviceContext.DrawImage(
                 d2dImage,

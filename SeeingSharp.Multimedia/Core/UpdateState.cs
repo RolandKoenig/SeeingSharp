@@ -94,5 +94,11 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_updateTimeMilliseconds; }
         }
+
+        public bool IgnorePauseState
+        {
+            get;
+            set;
+        }
     }
 }

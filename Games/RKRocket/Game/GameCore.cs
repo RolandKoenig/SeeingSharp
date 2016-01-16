@@ -109,6 +109,7 @@ namespace RKRocket.Game
 
             // Append the background
             manipulator.Add(new BackgroundEntity());
+            manipulator.Add(new ForegroundEntity());
 
             // Create and append the player
             m_playerRocket = new PlayerRocketEntity();

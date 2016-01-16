@@ -30,7 +30,7 @@ namespace SeeingSharp
     /// Although automatic casting from a to System.Drawing.Rectangle is provided by this class.
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
-    public struct RectangleF : IEquatable<RectangleF>
+    public partial struct RectangleF : IEquatable<RectangleF>
     {
         private float _left;
         private float _top;

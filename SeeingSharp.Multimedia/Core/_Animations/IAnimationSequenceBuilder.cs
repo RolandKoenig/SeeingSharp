@@ -40,20 +40,10 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
         /// </summary>
-        void Apply();
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
-        /// <param name="actionToCall">The action to be called after animation has finished.</param>
-        void Apply(Action actionToCall);
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
         /// <param name="actionToCall">The action to be called after animation has finished.</param>
         /// <param name="cancelAction">The action to be called when the animation gets canceled.</param>
-        void Apply(Action actionToCall, Action cancelAction);
+        /// <param name="ignorePause">Should this animation ignore pause stateß</param>
+        void Apply(Action actionToCall = null, Action cancelAction = null, bool? ignorePause = null);
 
         /// <summary>
         /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
@@ -64,25 +54,16 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Finishes the animation and starts from beginning.
         /// </summary>
-        void ApplyAndRewind();
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
-        void ApplyAsSecondary();
-
-        /// <summary>
-        /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-        /// </summary>
-        /// <param name="actionToCall">The action to be called after animation has finished.</param>
-        void ApplyAsSecondary(Action actionToCall);
+        /// <param name="ignorePause">Should this animation ignore pause stateß</param>
+        void ApplyAndRewind(bool? ignorePause = null);
 
         /// <summary>
         /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
         /// </summary>
         /// <param name="actionToCall">The action to be called after animation has finished.</param>
         /// <param name="cancelAction">The action to be called when the animation gets canceled.</param>
-        void ApplyAsSecondary(Action actionToCall, Action cancelAction);
+        /// <param name="ignorePause">Should this animation ignore pause stateß</param>
+        void ApplyAsSecondary(Action actionToCall = null, Action cancelAction = null, bool? ignorePause = null);
 
         /// <summary>
         /// Finishes the AnimationSequence and adds it to the AninationHandler it was created with.

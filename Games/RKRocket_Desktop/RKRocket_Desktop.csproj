@@ -361,6 +361,15 @@
     </Resource>
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\BlueClouds.png">
+      <Link>Assets\Bitmaps\BlueClouds.png</Link>
+    </Resource>
+    <Content Include="..\RKRocket\Assets\Bitmaps\Target.LicenseInfo.txt">
+      <Link>Assets\Bitmaps\Target.LicenseInfo.txt</Link>
+    </Content>
+    <Resource Include="..\RKRocket\Assets\Bitmaps\Target.png">
+      <Link>Assets\Bitmaps\Target.png</Link>
+    </Resource>
     <Content Include="..\RKRocket\Assets\Sounds\LaserFire.LicenseInfo.txt">
       <Link>Assets\Sounds\LaserFire.LicenseInfo.txt</Link>
     </Content>

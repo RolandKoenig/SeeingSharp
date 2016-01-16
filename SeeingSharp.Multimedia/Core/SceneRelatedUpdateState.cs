@@ -42,6 +42,7 @@ namespace SeeingSharp.Multimedia.Core
 
         #region parameters for single update step
         private bool m_isPaused;
+        private bool m_ignorePauseState;
         private UpdateState m_updateState;
         private Matrix4Stack m_world;
         private SceneLayer m_sceneLayer;
@@ -67,6 +68,7 @@ namespace SeeingSharp.Multimedia.Core
         internal void OnStartSceneUpdate(Scene targetScene, UpdateState updateState, List<InputStateBase> unfilteredInputStates)
         {
             m_isPaused = targetScene.IsPaused;
+            m_ignorePauseState = updateState.IgnorePauseState;
 
             m_world.ResetStackToIdentity();
 
@@ -141,7 +143,7 @@ namespace SeeingSharp.Multimedia.Core
             {
                 m_updateState.EnsureNotNull("m_updateState");
 
-                if (m_isPaused) { return TimeSpan.Zero; }
+                if (m_isPaused && (!m_ignorePauseState)) { return TimeSpan.Zero; }
                 return m_updateState.UpdateTime;
             }
         }
@@ -155,7 +157,7 @@ namespace SeeingSharp.Multimedia.Core
             {
                 m_updateState.EnsureNotNull("m_updateState");
 
-                if (m_isPaused) { return 0; }
+                if (m_isPaused && (!m_ignorePauseState)) { return 0; }
                 return m_updateState.UpdateTimeMilliseconds;
             }
         }
@@ -183,6 +185,12 @@ namespace SeeingSharp.Multimedia.Core
         public bool IsPaused
         {
             get { return m_isPaused; }
+        }
+
+        public bool IgnorePauseState
+        {
+            get { return m_ignorePauseState; }
+            set { m_ignorePauseState = value; }
         }
 
         /// <summary>

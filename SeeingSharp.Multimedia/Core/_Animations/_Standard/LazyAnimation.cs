@@ -128,5 +128,11 @@ namespace SeeingSharp.Multimedia.Core
             get;
             set;
         }
+
+        public bool IgnorePauseState
+        {
+            get;
+            set;
+        }
     }
 }

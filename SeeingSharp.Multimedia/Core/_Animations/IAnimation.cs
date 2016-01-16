@@ -71,5 +71,10 @@ namespace SeeingSharp.Multimedia.Core
         /// Is this animation a blocking animation?
         /// </summary>
         bool IsBlockingAnimation { get; }
+
+        /// <summary>
+        /// Should this animation ignore pause state?
+        /// </summary>
+        bool IgnorePauseState { get; set; }
     }
 }

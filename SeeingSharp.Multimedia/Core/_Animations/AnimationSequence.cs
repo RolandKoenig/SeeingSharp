@@ -363,6 +363,7 @@ namespace SeeingSharp.Multimedia.Core
         public AnimationUpdateResult Update(IAnimationUpdateState updateState, AnimationState animationState)
         {
             int countAnimationsFinished = 0;
+            bool prevIgnorePauseState = updateState.IgnorePauseState;
 
             PreCheckExecutionInternal();
             try
@@ -466,6 +467,8 @@ namespace SeeingSharp.Multimedia.Core
             }
             finally
             {
+                updateState.IgnorePauseState = prevIgnorePauseState;
+
                 PostCheckExecutionInternal();
             }
 
@@ -653,6 +656,7 @@ namespace SeeingSharp.Multimedia.Core
                     actIndex++;
 
                     // Call update of the animation
+                    updateState.IgnorePauseState = actAnimation.IgnorePauseState;
                     actAnimation.Update(updateState, animationStateInner);
 
                     // Decrement current animation index if the current one is finished now
@@ -789,6 +793,15 @@ namespace SeeingSharp.Multimedia.Core
         {
             get { return m_defaultCycleTime; }
             set { m_defaultCycleTime = value; }
+        }
+
+        /// <summary>
+        /// Should this animation ignore pause state?
+        /// </summary>
+        public bool IgnorePauseState
+        {
+            get;
+            set;
         }
     }
 }
