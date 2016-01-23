@@ -152,6 +152,7 @@ namespace SeeingSharp.Multimedia.Input
 
             // Register all events
             m_painter.TargetPanel.PointerExited += OnTargetPanel_PointerExited;
+            m_painter.TargetPanel.PointerEntered += OnTargetPanel_PointerEntered;
             m_painter.TargetPanel.PointerWheelChanged += OnTargetPanel_PointerWheelChanged;
             m_painter.TargetPanel.PointerPressed += OnTargetPanel_PointerPressed;
             m_painter.TargetPanel.PointerReleased += OnTargetPanel_PointerReleased;
@@ -201,6 +202,7 @@ namespace SeeingSharp.Multimedia.Input
 
             // Deregister all events
             m_painter.TargetPanel.PointerExited -= OnTargetPanel_PointerExited;
+            m_painter.TargetPanel.PointerEntered -= OnTargetPanel_PointerEntered;
             m_painter.TargetPanel.PointerWheelChanged -= OnTargetPanel_PointerWheelChanged;
             m_painter.TargetPanel.PointerPressed -= OnTargetPanel_PointerPressed;
             m_painter.TargetPanel.PointerReleased -= OnTargetPanel_PointerReleased;
@@ -498,6 +500,17 @@ namespace SeeingSharp.Multimedia.Input
         private void OnTargetPanel_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             StopCameraDragging();
+
+            m_stateMouseOrPointer.NotifyInside(false);
+
+            System.Diagnostics.Debug.WriteLine("Mouse exited");
+        }
+
+        private void OnTargetPanel_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Mouse entered");
+
+            m_stateMouseOrPointer.NotifyInside(true);
         }
     }
 }

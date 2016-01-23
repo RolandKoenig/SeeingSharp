@@ -46,7 +46,7 @@ namespace SeeingSharp.Multimedia.Input
         private bool[] m_buttonsHit;        // Only for one frame at true
         private bool[] m_buttonsDown;       // All following frames the mouse is down
         private bool[] m_buttonsUp;         // True on the frame when the button changes to up
-        private bool m_isMouseInside;
+        private bool m_isInside;
         #endregion
 
         /// <summary>
@@ -154,9 +154,9 @@ namespace SeeingSharp.Multimedia.Input
             m_wheelDelta += wheelDelta;
         }
 
-        internal void NotifyMouseInside(bool isMouseInside)
+        internal void NotifyInside(bool isMouseInside)
         {
-            m_isMouseInside = isMouseInside;
+            m_isInside = isMouseInside;
         }
 
         /// <summary>
@@ -172,7 +172,7 @@ namespace SeeingSharp.Multimedia.Input
             result.m_screenSizePixel = m_screenSizePixel;
             result.m_positionPixel = m_positionPixel;
             result.m_wheelDelta = m_wheelDelta;
-            result.m_isMouseInside = m_isMouseInside;
+            result.m_isInside = m_isInside;
             for (int loop = 0; loop < BUTTON_COUNT; loop++)
             {
                 result.m_buttonsDown[loop] = m_buttonsDown[loop];
@@ -274,9 +274,9 @@ namespace SeeingSharp.Multimedia.Input
             get { return m_wheelDelta; }
         }
 
-        public bool IsMouseInsideView
+        public bool IsInsideView
         {
-            get { return m_isMouseInside; }
+            get { return m_isInside; }
         }
     }
 }

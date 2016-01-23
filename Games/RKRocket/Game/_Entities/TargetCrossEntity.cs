@@ -63,7 +63,7 @@ namespace RKRocket.Game
 
             m_mouseAvailable =
                 (mouseState != MouseOrPointerState.Dummy) &&
-                (mouseState.IsMouseInsideView);
+                (mouseState.IsInsideView);
             if(m_mouseAvailable)
             {
                 m_relativeMousePos = mouseState.PositionRelative;

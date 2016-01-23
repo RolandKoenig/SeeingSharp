@@ -285,6 +285,7 @@
     <Resource Include="..\RKRocket\Assets\Levels\Level_004.json">
       <Link>Assets\Levels\Level_004.json</Link>
     </Resource>
+    <Resource Include="Assets\Levels\Level_005.json" />
     <None Include="Properties\DataSources\RKRocket.ViewModel.GameOverViewModel.datasource" />
     <None Include="RKRocket_Desktop_TemporaryKey.pfx" />
     <Resource Include="..\RKRocket\Assets\Levels\Level_001.json">

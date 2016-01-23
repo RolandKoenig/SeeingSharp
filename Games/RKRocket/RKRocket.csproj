@@ -106,6 +106,7 @@
     <None Include="Assets\Bitmaps\Rocket_205x329.LicenseInfo.txt" />
     <Content Include="Assets\Bitmaps\StarColored_128x128.png" />
     <Content Include="Assets\Bitmaps\StarGray_128x128.png" />
+    <Content Include="Assets\Levels\Level_005.json" />
     <None Include="Assets\Sounds\Explosion.LicenseInfo.txt" />
     <None Include="Assets\Sounds\LaserFire.LicenseInfo.txt" />
     <None Include="Assets\Sounds\BlogHit.LicenseInfo.txt" />

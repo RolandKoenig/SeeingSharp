@@ -79,8 +79,14 @@ namespace RKRocket.View
                 m_lblScore.Margin = new Padding(0, 3, 0, 3);
             }
 
-            // Show the current child panel if the game is paused
-            m_panChildDialog.Visible = m_renderPanel.Scene.IsPaused;
+            // Show performance info dialog in debug build only
+#if DEBUG
+            m_mnuPerformanceInfo.Visible = true;
+            m_splitPerformanceInfo.Visible = true;
+#else
+            m_mnuPerformanceInfo.Visible = false;
+            m_splitPerformanceInfo.Visible = false;
+#endif
 
             // Show/Hide cursor based on pause state and cursor location
             if (m_renderPanel.Scene.IsPaused || (!m_mouseInsideRenderPanel))
@@ -192,13 +198,11 @@ namespace RKRocket.View
         /// <param name="message">the message to be processed.</param>
         private void OnMessage_Received(MessageGameOverDialogRequest message)
         {
-            using (GameOverForm dlgGameOver = new GameOverForm())
-            {
-                dlgGameOver.ViewModel = message.ViewModel;
-                dlgGameOver.StartPosition = FormStartPosition.CenterParent;
+            GameOverForm dlgGameOver = new GameOverForm();
+            dlgGameOver.ViewModel = message.ViewModel;
+            dlgGameOver.StartPosition = FormStartPosition.CenterParent;
 
-                dlgGameOver.ShowDialog(this);
-            }
+            dlgGameOver.Show(this);
         }
 
         private void OnMessage_Received(MessagePauseStateChanged message)

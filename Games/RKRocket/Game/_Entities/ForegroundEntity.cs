@@ -82,16 +82,17 @@ namespace RKRocket.Game
                             () => m_foregroundScaling,
                             (value) => m_foregroundScaling = value,
                             200f,
-                            TimeSpan.FromSeconds(3.0))
+                            TimeSpan.FromSeconds(5.0))
                         .WaitFinished()
-                        .WaitUntilTimePassed(TimeSpan.FromSeconds(0.5))
+                        .WaitUntilTimePassed(TimeSpan.FromSeconds(1.5))
                         .WaitFinished()
                         .ChangeFloatBy(
                             () => m_foregroundScaling,
                             (value) => m_foregroundScaling = value,
                             -200f,
-                            TimeSpan.FromSeconds(3.0))
+                            TimeSpan.FromSeconds(5.0))
                         .WaitFinished()
+                        .WaitUntilTimePassed(TimeSpan.FromSeconds(1.5))
                         .ApplyAndRewind(ignorePause: true);
                 }
                 else

@@ -43,21 +43,19 @@
             this.m_barMenu = new System.Windows.Forms.MenuStrip();
             this.m_mnuGame = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuStartNew = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-            this.m_cmdPerformanceInfo = new System.Windows.Forms.ToolStripMenuItem();
+            this.m_splitPerformanceInfo = new System.Windows.Forms.ToolStripSeparator();
+            this.m_mnuPerformanceInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuExit = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuInfo = new System.Windows.Forms.ToolStripMenuItem();
             this.m_mnuInfoAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.m_renderPanel = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
-            this.m_panChildDialog = new System.Windows.Forms.Panel();
             this.m_panBorder1 = new System.Windows.Forms.Panel();
             this.m_panBorder2 = new System.Windows.Forms.Panel();
-            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.m_dataSource = new System.Windows.Forms.BindingSource(this.components);
             toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barStatus.SuspendLayout();
             this.m_barMenu.SuspendLayout();
-            this.m_renderPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).BeginInit();
             this.SuspendLayout();
             // 
@@ -169,8 +167,8 @@
             // 
             this.m_mnuGame.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_mnuStartNew,
-            this.toolStripSeparator2,
-            this.m_cmdPerformanceInfo,
+            this.m_splitPerformanceInfo,
+            this.m_mnuPerformanceInfo,
             toolStripSeparator1,
             this.m_mnuExit});
             this.m_mnuGame.Name = "m_mnuGame";
@@ -185,17 +183,17 @@
             this.m_mnuStartNew.Text = "Start New";
             this.m_mnuStartNew.Click += new System.EventHandler(this.OnMnuStartNew_Click);
             // 
-            // toolStripSeparator2
+            // m_splitPerformanceInfo
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(234, 6);
+            this.m_splitPerformanceInfo.Name = "m_splitPerformanceInfo";
+            this.m_splitPerformanceInfo.Size = new System.Drawing.Size(234, 6);
             // 
-            // m_cmdPerformanceInfo
+            // m_mnuPerformanceInfo
             // 
-            this.m_cmdPerformanceInfo.Name = "m_cmdPerformanceInfo";
-            this.m_cmdPerformanceInfo.Size = new System.Drawing.Size(237, 26);
-            this.m_cmdPerformanceInfo.Text = "Show Performance Info";
-            this.m_cmdPerformanceInfo.Click += new System.EventHandler(this.OnCmdPerformanceInfo_Click);
+            this.m_mnuPerformanceInfo.Name = "m_mnuPerformanceInfo";
+            this.m_mnuPerformanceInfo.Size = new System.Drawing.Size(237, 26);
+            this.m_mnuPerformanceInfo.Text = "Show Performance Info";
+            this.m_mnuPerformanceInfo.Click += new System.EventHandler(this.OnCmdPerformanceInfo_Click);
             // 
             // m_mnuExit
             // 
@@ -220,7 +218,6 @@
             // 
             // m_renderPanel
             // 
-            this.m_renderPanel.Controls.Add(this.m_panChildDialog);
             this.m_renderPanel.DiscardRendering = true;
             this.m_renderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
@@ -244,16 +241,6 @@
             this.m_renderPanel.MouseEnter += new System.EventHandler(this.OnRenderPanel_MouseEnter);
             this.m_renderPanel.MouseLeave += new System.EventHandler(this.OnRenderPanel_MouseLeave);
             // 
-            // m_panChildDialog
-            // 
-            this.m_panChildDialog.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_panChildDialog.Location = new System.Drawing.Point(100, 100);
-            this.m_panChildDialog.Margin = new System.Windows.Forms.Padding(0);
-            this.m_panChildDialog.Name = "m_panChildDialog";
-            this.m_panChildDialog.Size = new System.Drawing.Size(682, 277);
-            this.m_panChildDialog.TabIndex = 5;
-            this.m_panChildDialog.Visible = false;
-            // 
             // m_panBorder1
             // 
             this.m_panBorder1.BackColor = System.Drawing.Color.Gainsboro;
@@ -272,15 +259,15 @@
             this.m_panBorder2.Size = new System.Drawing.Size(882, 1);
             this.m_panBorder2.TabIndex = 4;
             // 
-            // m_dataSource
-            // 
-            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
-            // 
             // m_refreshTimer
             // 
             this.m_refreshTimer.Enabled = true;
             this.m_refreshTimer.Interval = 300;
             this.m_refreshTimer.Tick += new System.EventHandler(this.OnRefreshTimer_Tick);
+            // 
+            // m_dataSource
+            // 
+            this.m_dataSource.DataSource = typeof(RKRocket.ViewModel.MainUIViewModel);
             // 
             // MainWindow
             // 
@@ -300,7 +287,6 @@
             this.m_barStatus.PerformLayout();
             this.m_barMenu.ResumeLayout(false);
             this.m_barMenu.PerformLayout();
-            this.m_renderPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -328,9 +314,8 @@
         private System.Windows.Forms.ToolStripMenuItem m_mnuInfoAbout;
         private System.Windows.Forms.ToolStripStatusLabel m_lblMaxReached;
         private System.Windows.Forms.ToolStripStatusLabel m_lblScoreValue;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
-        private System.Windows.Forms.ToolStripMenuItem m_cmdPerformanceInfo;
-        private System.Windows.Forms.Panel m_panChildDialog;
+        private System.Windows.Forms.ToolStripSeparator m_splitPerformanceInfo;
+        private System.Windows.Forms.ToolStripMenuItem m_mnuPerformanceInfo;
         private System.Windows.Forms.Timer m_refreshTimer;
     }
 }
