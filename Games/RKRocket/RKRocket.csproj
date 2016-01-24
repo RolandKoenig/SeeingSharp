@@ -140,7 +140,6 @@
     </Compile>
     <Compile Include="Behaviors\ApplyGameSceneBehavior.cs" />
     <Compile Include="Behaviors\XInputButtonClickBehavior.cs" />
-    <Compile Include="Behaviors\_Misc.cs" />
     <Compile Include="Bootstrapper\GameBootstrapper.cs" />
     <Compile Include="Game\_Entities\ExplosionEntity.cs" />
     <Compile Include="Game\_Entities\ForegroundEntity.cs" />

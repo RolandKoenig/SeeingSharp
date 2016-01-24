@@ -51,7 +51,7 @@ namespace SeeingSharp.Multimedia.Input
     /// Controller buttons do not manifest crosstalk.
     /// </summary>
     [Flags]
-    public enum GamepadButton : short
+    public enum GamepadButton
     {
         Y = short.MinValue,
         None = 0,

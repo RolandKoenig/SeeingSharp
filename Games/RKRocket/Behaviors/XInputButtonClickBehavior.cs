@@ -71,32 +71,7 @@ namespace RKRocket.Behaviors
             if (!e.AnyRelevantState) { return; }
 
             // Get the button which we are listening for
-            GamepadButton listeningButton = GamepadButton.A;
-            switch(ControllerButton)
-            {
-                case XInputControllerButton.A:
-                    listeningButton = GamepadButton.A;
-                    break;
-
-                case XInputControllerButton.B:
-                    listeningButton = GamepadButton.B;
-                    break;
-
-                case XInputControllerButton.X:
-                    listeningButton = GamepadButton.X;
-                    break;
-
-                case XInputControllerButton.Y:
-                    listeningButton = GamepadButton.Y;
-                    break;
-
-                case XInputControllerButton.Start:
-                    listeningButton = GamepadButton.Start;
-                    break;
-
-                default:
-                    return;
-            }
+            GamepadButton listeningButton = this.ControllerButton;
 
             // Check button state
             bool buttonPressed = e.DefaultGamepad.IsButtonHit(listeningButton);
@@ -123,7 +98,7 @@ namespace RKRocket.Behaviors
             get { return m_associatedObject; }
         }
 
-        public XInputControllerButton ControllerButton
+        public GamepadButton ControllerButton
         {
             get;
             set;
