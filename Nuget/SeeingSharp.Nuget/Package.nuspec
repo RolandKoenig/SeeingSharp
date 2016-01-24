@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SeeingSharp</id>
-    <version>1.0.0-beta03</version>
+    <version>1.0.0</version>
     <title>Seeing# Base</title>
     <authors>RolandK</authors>
     <owners>RolandK</owners>
@@ -29,10 +29,10 @@
     <copyright>Copyright  2015</copyright>
     <dependencies>
       <group targetFramework="net46">
-        <dependency id="Newtonsoft.Json" version="7.0.1" />
+        <dependency id="Newtonsoft.Json" version="8.0.2" />
       </group>
       <group targetFramework="portable-win8+wpa81">
-        <dependency id="Newtonsoft.Json" version="7.0.1" />
+        <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="System.Numerics.Vectors" version="4.0.0" />
       </group>
     </dependencies>

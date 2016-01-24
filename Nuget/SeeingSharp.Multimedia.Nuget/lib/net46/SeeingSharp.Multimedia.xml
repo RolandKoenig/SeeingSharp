@@ -6,13 +6,7 @@
     <members>
         <member name="T:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer">
             <summary>
-            This class provides a generic way to draw Direct2D content into a Direct3D texture (typically the render target).
-              - The first way over Device and DeviceContext works on UNIVERSAL build
-                see https://msdn.microsoft.com/en-us/library/windows/desktop/hh780339(v=vs.85).aspx 
-              - The second way for direct rendering on the render target works on windows 8 (Desktop and Store)
-              - In Windows 7, the platform update is needed to to the default way
-                http://msdn.microsoft.com/en-us/library/windows/desktop/jj863687(v=vs.85).aspx
-              - Otherwhiese, the Fallback-Method is used (render Direct2D content to a shared texture, then render it onto the render target)
+            This class makes a Direct3D 11 texture available for 2D rendering with Direct2D.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.#ctor(SeeingSharp.Multimedia.Core.EngineDevice,SharpDX.Direct3D11.Texture2D,System.Int32,System.Int32,SeeingSharp.Multimedia.Core.DpiScaling)">
@@ -64,6 +58,16 @@
         <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.#ctor">
             <summary>
             Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.Core.EngineMainLoop"/> class from being created.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.SuspendAsync">
+            <summary>
+            Suspends rendering completely.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.Resume">
+            <summary>
+            Resumes rendering when in supendet state.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.WaitForNextPassedLoop">
@@ -161,6 +165,16 @@
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.GraphicsCore"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Resume">
+            <summary>
+            Resumes rendering when in supendet state.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.SuspendAsync">
+            <summary>
+            Suspends rendering completely.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.InitializeDefaultAsync">
@@ -915,7 +929,7 @@
             Initializes the <see cref="T:SeeingSharp.Multimedia.Core.RenderPassInfo" /> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.RenderPassInfo.#ctor(System.String)">
+        <member name="M:SeeingSharp.Multimedia.Core.RenderPassInfo.#ctor(System.String,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.RenderPassInfo" /> class.
             </summary>
@@ -948,7 +962,7 @@
             A special flag for optimizing unsubscription process.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.RenderPassSubscription.#ctor(SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset,SeeingSharp.Multimedia.Core.RenderPassInfo,SeeingSharp.Multimedia.Core.SceneObject,System.Action{SeeingSharp.Multimedia.Core.RenderState})">
+        <member name="M:SeeingSharp.Multimedia.Core.RenderPassSubscription.#ctor(SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset,SeeingSharp.Multimedia.Core.RenderPassInfo,SeeingSharp.Multimedia.Core.SceneObject,System.Action{SeeingSharp.Multimedia.Core.RenderState},System.Int32)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.RenderPassSubscription" /> struct.
             </summary>
@@ -956,6 +970,7 @@
             <param name="renderPass">The render pass on which to register.</param>
             <param name="sceneObject">The scene object which should be registered.</param>
             <param name="renderMethod">The render method which is to be registered.</param>
+            <param name="zOrder">The z-order for sorting if the subsciptions of this pass get sorted by it.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.RenderPassSubscription.ToString">
             <summary>
@@ -1487,6 +1502,11 @@
             Is this animation canceled?
             </summary>
         </member>
+        <member name="P:SeeingSharp.Multimedia.Core.AnimationBase.IgnorePauseState">
+            <summary>
+            Should this animation ignore pause state?
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.AnimationHandler.#ctor(System.Object)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.AnimationHandler"/> class.
@@ -1701,6 +1721,11 @@
             Gets or sets the default cycletime (cycles time in continous calculation model).
             </summary>
         </member>
+        <member name="P:SeeingSharp.Multimedia.Core.AnimationSequence.IgnorePauseState">
+            <summary>
+            Should this animation ignore pause state?
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.#ctor(SeeingSharp.Multimedia.Core.AnimationHandler)">
             <summary>
             Initializes a new instance of the AnimationSequenceBuilder class.
@@ -1726,41 +1751,21 @@
             Adds an AnimationSequence to the builder.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.Apply">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAsSecondary">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.Apply(System.Action)">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-            <param name="actionToCall">The action to be called after animation has finished.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.Apply(System.Action,System.Action)">
+        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.Apply(System.Action,System.Action,System.Nullable{System.Boolean})">
             <summary>
             Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
             </summary>
             <param name="actionToCall">The action to be called after animation has finished.</param>
             <param name="cancelAction">The action to be called when the animation gets canceled.</param>
+            <param name="ignorePause">Should this animation ignore pause stateß</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAsSecondary(System.Action)">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-            <param name="actionToCall">The action to be called after animation has finished.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAsSecondary(System.Action,System.Action)">
+        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAsSecondary(System.Action,System.Action,System.Nullable{System.Boolean})">
             <summary>
             Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
             </summary>
             <param name="actionToCall">The action to be called after animation has finished.</param>
             <param name="cancelAction">The action to be called when the animation gets canceled.</param>
+            <param name="ignorePause">Should this animation ignore pause stateß</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAsync">
             <summary>
@@ -1774,10 +1779,11 @@
             The caller can await the finish of this animation using the returned task object.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAndRewind">
+        <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAndRewind(System.Nullable{System.Boolean})">
             <summary>
             Finishes the animation and starts from beginning.
             </summary>
+            <param name="ignorePause">Should this animation ignore pause stateß</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.AnimationSequenceBuilder`1.ApplyAsSecondaryAndRewind">
             <summary>
@@ -1866,29 +1872,24 @@
             Is this animation a blocking animation?
             </summary>
         </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IAnimation.IgnorePauseState">
+            <summary>
+            Should this animation ignore pause state?
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.Add(SeeingSharp.Multimedia.Core.IAnimation)">
             <summary>
             Adds an AnimationSequence to this builder.
             </summary>
             <param name="animationSequence">The animation sequence to be added.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.Apply">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.Apply(System.Action)">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-            <param name="actionToCall">The action to be called after animation has finished.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.Apply(System.Action,System.Action)">
+        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.Apply(System.Action,System.Action,System.Nullable{System.Boolean})">
             <summary>
             Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
             </summary>
             <param name="actionToCall">The action to be called after animation has finished.</param>
             <param name="cancelAction">The action to be called when the animation gets canceled.</param>
+            <param name="ignorePause">Should this animation ignore pause stateß</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAsync">
             <summary>
@@ -1896,28 +1897,19 @@
             The caller can await the finish of this animation using the returned task object.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAndRewind">
+        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAndRewind(System.Nullable{System.Boolean})">
             <summary>
             Finishes the animation and starts from beginning.
             </summary>
+            <param name="ignorePause">Should this animation ignore pause stateß</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAsSecondary">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAsSecondary(System.Action)">
-            <summary>
-            Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
-            </summary>
-            <param name="actionToCall">The action to be called after animation has finished.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAsSecondary(System.Action,System.Action)">
+        <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAsSecondary(System.Action,System.Action,System.Nullable{System.Boolean})">
             <summary>
             Finishes the AnimationSequence and adds it to the AninationHandler it was created with.
             </summary>
             <param name="actionToCall">The action to be called after animation has finished.</param>
             <param name="cancelAction">The action to be called when the animation gets canceled.</param>
+            <param name="ignorePause">Should this animation ignore pause stateß</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder`1.ApplyAsSecondaryAsync">
             <summary>
@@ -2821,6 +2813,32 @@
             Called when this animation was finished.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.ChangeIntByAnimation.#ctor(System.Object,System.Func{System.Int32},System.Action{System.Int32},System.Int32,System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.ChangeIntByAnimation" /> class.
+            </summary>
+            <param name="targetObject">The target object.</param>
+            <param name="getValueFunc">The get value func.</param>
+            <param name="setValueAction">The set value action.</param>
+            <param name="increaseTotal">The increase total.</param>
+            <param name="timeSpan">The timespan.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.ChangeIntByAnimation.OnStartAnimation">
+            <summary>
+            Called when animation starts.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.ChangeIntByAnimation.OnCurrentTimeUpdated(SeeingSharp.Multimedia.Core.IAnimationUpdateState,SeeingSharp.Multimedia.Core.AnimationState)">
+            <summary>
+            Called each time the CurrentTime value gets updated.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.ChangeIntByAnimation.IsBlockingAnimation">
+            <summary>
+            Is this animation a blocking animation?
+            If true, all following animation have to wait for finish-event.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.ChangeFloatByAnimation.#ctor(System.Object,System.Func{System.Single},System.Action{System.Single},System.Single,System.TimeSpan)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.ChangeFloatByAnimation" /> class.
@@ -2993,6 +3011,17 @@
             If true, all following animation have to wait for finish-event.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Extensions.RemoveObjectFromScene``1(SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder{``0})">
+            <summary>
+            Removes this object from the scene.
+            No further animations possible because animations are updated by the scene.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Extensions.RemoveObjectFromScene``1(SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder{``0},SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Removes the given object from the scene.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.Extensions.Delay``1(SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder{``0},System.Int32)">
             <summary>
             Waits some time before continueing with next animation sequence.
@@ -3073,7 +3102,16 @@
             <param name="valueSetter">The value setter.</param>
             <param name="totalIncrease">The value to increase in total.</param>
             <param name="duration">Total duration to wait.</param>
-            <returns></returns>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Extensions.ChangeIntBy``1(SeeingSharp.Multimedia.Core.IAnimationSequenceBuilder{``0},System.Func{System.Int32},System.Action{System.Int32},System.Int32,System.TimeSpan)">
+            <summary>
+            Increases a int value by a given total increase value over the given duration.
+            </summary>
+            <param name="builder">The AnimationSequenceBuilder object.</param>
+            <param name="valueGetter">The value getter.</param>
+            <param name="valueSetter">The value setter.</param>
+            <param name="totalIncrease">The value to increase in total.</param>
+            <param name="duration">Total duration to wait.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObjectBehavior.#ctor">
             <summary>
@@ -3374,6 +3412,16 @@
             </summary>
             <param name="core">The core.</param>
             <param name="engineDevice">The engine device.</param>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD2D.Device">
+            <summary>
+            Gets a reference to the Direct2D view to the device.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD2D.DeviceContext">
+            <summary>
+            Gets a reference to the device DeviceContext for rendering.
+            </summary>
         </member>
         <member name="T:SeeingSharp.Multimedia.Core.DeviceHandlerD3D11">
             <summary>
@@ -5051,35 +5099,35 @@
             </summary>
             <param name="behaviorType">The type of the behavior to get.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.DependsOn(SeeingSharp.Multimedia.Core.SceneObject)">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.IsParentOf(SeeingSharp.Multimedia.Core.SceneObject)">
             <summary>
-            Check all dependencies of this object.
+            Checks whether this object is the parent of the given one.
             </summary>
             <param name="other">The object to check for.</param>
-            <returns>true if the given object is a dependency of this one.</returns>
+            <returns>true if the given object is a children of this one.</returns>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.DependsOnSingleLevel(SeeingSharp.Multimedia.Core.SceneObject)">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.IsParentOfOnSingleLevel(SeeingSharp.Multimedia.Core.SceneObject)">
             <summary>
-            Determines whether this object already contains this dependency (no lower level check).
+            Determines whether this object already contains this child (no lower level check).
             </summary>
-            <param name="dependency">The dependency to check for.</param>
+            <param name="objectToCheck">The object to check for.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.GetAllDependencies">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.GetAllChildren">
             <summary>
-            Queries for all dependencies (also lower level).
+            Queries for all children (also lower level).
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.AddDependency(SeeingSharp.Multimedia.Core.SceneObject)">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.AddChild(SeeingSharp.Multimedia.Core.SceneObject)">
             <summary>
-            Adds the given object as a dependency.
+            Adds the given object as a child.
             </summary>
-            <param name="dependency">The object which is be be located under this one within object hierarchy.</param>
+            <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.RemoveDependency(SeeingSharp.Multimedia.Core.SceneObject)">
             <summary>
-            Removes the given object from the dependency list.
+            Removes the given object from the list of children.
             </summary>
-            <param name="dependency">The object which is to be removed from the dependency list.</param>
+            <param name="childToRemove">The object which is to be removed from the list of children.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.IsVisible(SeeingSharp.Multimedia.Core.ViewInformation)">
             <summary>
@@ -5200,12 +5248,19 @@
             <param name="updateState">Current state of the update pass.</param>
             <param name="layerViewSubset">The layer view subset wich called this update method.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.UpdateDependenciesInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Core.SceneObject})">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.UpdateChildrenInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Core.SceneObject})">
             <summary>
-            Updates all dependencies of this object. Override this to change default behavior.
+            Updates all children of this object. Override this to change default behavior.
             </summary>
             <param name="updateState">The current update state.</param>
-            <param name="dependencies">The full dependency list that should be updated.</param>
+            <param name="children">The full list of children that should be updated.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.UpdateChildrenOverallInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Core.SceneObject})">
+            <summary>
+            Updates all children of this object (overall update). Override this to change default behavior.
+            </summary>
+            <param name="updateState">The current update state.</param>
+            <param name="children">The full list of children that should be updated.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.IsLoaded(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
@@ -5277,9 +5332,14 @@
             Gets or sets the target detail level.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.SceneObject.HasOwner">
+        <member name="P:SeeingSharp.Multimedia.Core.SceneObject.HasParent">
             <summary>
-            Gets the total count of owners where this object is a direct dependency of.
+            Does this object have a parent?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.SceneObject.HasChilds">
+            <summary>
+            Does this object have any child?
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.SceneObject.CountDependencies">
@@ -5293,10 +5353,14 @@
             </summary>
             <param name="layerViewSubset">The layer view subset.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.SubscribeToPass(SeeingSharp.Multimedia.Core.RenderPassInfo,SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset,System.Action{SeeingSharp.Multimedia.Core.RenderState})">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.SubscribeToPass(SeeingSharp.Multimedia.Core.RenderPassInfo,SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset,System.Action{SeeingSharp.Multimedia.Core.RenderState},System.Int32)">
             <summary>
             Subscribes on the given render pass with the given action.
             </summary>
+            <param name="renderPass">The render pass to which to subscribe.</param>
+            <param name="renderAction">The action which performs rendering.</param>
+            <param name="layerViewSubset">The ViewRelatedSceneLayerSubset to which to subscribe.</param>
+            <param name="zOrder">The z order if sorting is enabled for this pass (default = 0).</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.UpdateSubscription(SeeingSharp.Multimedia.Core.RenderPassSubscription,SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset)">
             <summary>
@@ -5460,12 +5524,12 @@
             </summary>
             <param name="updateState">Current update state.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneSpacialObject.UpdateDependenciesInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Core.SceneObject})">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneSpacialObject.UpdateChildrenInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Core.SceneObject})">
             <summary>
-            Updates all dependencies of this object. Override this to change default behavior.
+            Updates all children of this object. Override this to change default behavior.
             </summary>
             <param name="updateState">The current update state.</param>
-            <param name="dependencies">The full dependency list that should be updated.</param>
+            <param name="children">The full list of children that should be updated.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneSpacialObject.TriggerRecreateOfParameters">
             <summary>
@@ -5653,7 +5717,7 @@
             </summary>
             <param name="renderState">The RenderState object holding all relevant data for current render pass</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset.SubscribeForPass(SeeingSharp.Multimedia.Core.RenderPassInfo,SeeingSharp.Multimedia.Core.SceneObject,System.Action{SeeingSharp.Multimedia.Core.RenderState})">
+        <member name="M:SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset.SubscribeForPass(SeeingSharp.Multimedia.Core.RenderPassInfo,SeeingSharp.Multimedia.Core.SceneObject,System.Action{SeeingSharp.Multimedia.Core.RenderState},System.Int32)">
             <summary>
             Subscribes the given object to the given render pass.
             </summary>
@@ -5715,6 +5779,11 @@
         <member name="T:SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset.PassSubscribionProperties">
             <summary>
             Helper class holding some information abount subscriptions per pass.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset.SubscriptionZOrderComparer">
+            <summary>
+            Helper for sorting render pass subscriptions by z order.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.VisibilityCheckData.#ctor">
@@ -6238,15 +6307,7 @@
             <param name="drawOptions">Some draw options to be passed to Direct2D.</param>
             <param name="measuringMode">Sets the measuring mode to be passed to Direct2D.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawBitmap(SeeingSharp.Multimedia.Drawing2D.BitmapResource,System.Single,SeeingSharp.Multimedia.Drawing2D.BitmapInterpolationMode)">
-            <summary>
-            Draws the given bitmap.
-            </summary>
-            <param name="bitmap">The bitmap.</param>
-            <param name="opacity">The opacity.</param>
-            <param name="interpolationMode">The interpolation mode.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawBitmap(SeeingSharp.Multimedia.Drawing2D.BitmapResource,SeeingSharp.RectangleF,System.Single,SeeingSharp.Multimedia.Drawing2D.BitmapInterpolationMode)">
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawBitmap(SeeingSharp.Multimedia.Drawing2D.BitmapResource,SeeingSharp.RectangleF,System.Single,SeeingSharp.Multimedia.Drawing2D.BitmapInterpolationMode,System.Int32)">
             <summary>
             Draws the given bitmap.
             </summary>
@@ -6254,18 +6315,9 @@
             <param name="destinationRectangle">The target rectangle where to draw the bitmap.</param>
             <param name="opacity">The opacity.</param>
             <param name="interpolationMode">The interpolation mode.</param>
+            <param name="frameIndex">The frame of the bitmap to be rendered.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawBitmap(SeeingSharp.Multimedia.Drawing2D.BitmapResource,SeeingSharp.RectangleF,SeeingSharp.RectangleF,System.Single,SeeingSharp.Multimedia.Drawing2D.BitmapInterpolationMode)">
-            <summary>
-            Draws the given bitmap.
-            </summary>
-            <param name="bitmap">The bitmap.</param>
-            <param name="destinationRectangle">The target rectangle where to draw the bitmap.</param>
-            <param name="sourceRectangle">The area which to take from the bitmap.</param>
-            <param name="opacity">The opacity.</param>
-            <param name="interpolationMode">The interpolation mode.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawBitmap(SeeingSharp.Multimedia.Drawing2D.BitmapResource,System.Numerics.Vector2,System.Single,SeeingSharp.Multimedia.Drawing2D.BitmapInterpolationMode)">
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawBitmap(SeeingSharp.Multimedia.Drawing2D.BitmapResource,System.Numerics.Vector2,System.Single,SeeingSharp.Multimedia.Drawing2D.BitmapInterpolationMode,System.Int32)">
             <summary>
             Draws the given bitmap.
             </summary>
@@ -6273,16 +6325,14 @@
             <param name="destinationOrigin">The point where to start rendering.</param>
             <param name="opacity">The opacity.</param>
             <param name="interpolationMode">The interpolation mode.</param>
+            <param name="frameIndex">The frame of the bitmap to be rendered.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawBitmap(SeeingSharp.Multimedia.Drawing2D.BitmapResource,System.Numerics.Vector2,SeeingSharp.RectangleF,System.Single,SeeingSharp.Multimedia.Drawing2D.BitmapInterpolationMode)">
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.Graphics2D.DrawImage(SeeingSharp.Multimedia.Drawing2D.IImage,System.Numerics.Vector2)">
             <summary>
-            Draws the given bitmap.
+            Draws the given image.
             </summary>
-            <param name="bitmap">The bitmap.</param>
-            <param name="destinationOrigin">The point where to start rendering.</param>
-            <param name="opacity">The opacity.</param>
-            <param name="sourceRectangle">The area which to take from the bitmap.</param>
-            <param name="interpolationMode">The interpolation mode.</param>
+            <param name="image">The source of pixel data to be rendered.</param>
+            <param name="destinationOrigin">The origin point where to draw the image.</param>
         </member>
         <member name="P:SeeingSharp.Multimedia.Drawing2D.Graphics2D.Device">
             <summary>
@@ -6417,11 +6467,46 @@
             Gets the geometry object.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.DirectionalBlurEffectResource.BuildEffect(SeeingSharp.Multimedia.Core.EngineDevice)">
+            <summary>
+            Builds the effect.
+            </summary>
+            <param name="device">The device on which to load the effect instance.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.GaussianBlurEffectResource.BuildEffect(SeeingSharp.Multimedia.Core.EngineDevice)">
+            <summary>
+            Builds the effect.
+            </summary>
+            <param name="device">The device on which to load the effect instance.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing2D.BitmapResource.SeeingSharp#Multimedia#Drawing2D#IImageInternal#GetImageObject(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Gets the input object for an effect.
             </summary>
             <param name="device">The device for which to get the input.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.EffectResource.#ctor(SeeingSharp.Multimedia.Drawing2D.IImage[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing2D.EffectResource"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.EffectResource.SeeingSharp#Multimedia#Drawing2D#IImageInternal#GetImageObject(SeeingSharp.Multimedia.Core.EngineDevice)">
+            <summary>
+            Gets the input object for an effect.
+            </summary>
+            <param name="device">The device for which to get the input.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.EffectResource.BuildEffect(SeeingSharp.Multimedia.Core.EngineDevice)">
+            <summary>
+            Builds the effect.
+            </summary>
+            <param name="device">The device on which to load the effect instance.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.EffectResource.UnloadResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+            <summary>
+            Unloads all resources loaded on the given device.
+            </summary>
+            <param name="engineDevice">The device for which to unload the resource.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing2D.RadialGradientBrushResource.#ctor(System.Numerics.Vector2,System.Numerics.Vector2,System.Single,System.Single,SeeingSharp.Multimedia.Drawing2D.GradientStop[],SeeingSharp.Multimedia.Drawing2D.ExtendMode,SeeingSharp.Multimedia.Drawing2D.Gamma,System.Single)">
             <summary>
@@ -6483,11 +6568,13 @@
             loaded from a ResourceLink (e. g. a file).
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing2D.StandardBitmapResource.#ctor(SeeingSharp.Util.ResourceLink)">
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.StandardBitmapResource.#ctor(SeeingSharp.Util.ResourceLink,System.Int32,System.Int32)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing2D.StandardBitmapResource"/> class.
             </summary>
             <param name="resource">The resource from w.</param>
+            <param name="frameCountX">Total count of frames in x direction.</param>
+            <param name="frameCountY">Total count of frames in y direction.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing2D.StandardBitmapResource.GetBitmap(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
@@ -8305,44 +8392,6 @@
             6 for cubemap textures.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ChangeableTextureResource.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.StandardTextureResource" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ChangeableTextureResource.LoadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
-            <summary>
-            Loads the resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ChangeableTextureResource.UnloadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
-            <summary>
-            Unloads the resource.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.ChangeableTextureResource.Texture">
-            <summary>
-            Gets the texture object.
-            </summary>
-            <exception cref="T:System.NotImplementedException"></exception>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.ChangeableTextureResource.TextureView">
-            <summary>
-            Gets a ShaderResourceView targeting the texture.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.ChangeableTextureResource.IsLoaded">
-            <summary>
-            Is the object loaded correctly?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.ChangeableTextureResource.ArraySize">
-            <summary>
-            Gets the size of the texture array.
-            1 for normal textures.
-            6 for cubemap textures.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.Direct2DTextureResource.#ctor(SeeingSharp.Multimedia.Drawing2D.Custom2DDrawingLayer,System.Int32,System.Int32)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.Direct2DTextureResource"/> class.
@@ -9683,56 +9732,11 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile.#ctor">
+        <member name="M:SeeingSharp.Multimedia.Objects.StackedObjectType.BuildStructure(SeeingSharp.Multimedia.Objects.StructureBuildOptions)">
             <summary>
-            Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile"/> class from being created.
+            Builds all vertex structures for the given detail level.
             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile.Dispose">
-            <summary>
-            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile.FromResourceAsync(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Loads a sound file from the given resource.
-            </summary>
-            <param name="resource">The resource to load.</param>
-        </member>
-        <member name="T:SeeingSharp.Multimedia.PlayingSound.SoundManager">
-            <summary>
-            This class manages all currently playing sounds.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.PlayingSound.SoundManager.PlaySoundAsync(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Plays the given sound.
-            </summary>
-            <param name="resource">The file to be played.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.PlayingSound.SoundManager.PlaySoundAsync(SeeingSharp.Multimedia.PlayingSound.CachedSoundFile)">
-            <summary>
-            Plays the given sound.
-            </summary>
-            <param name="soundFile">The sound file to be played.</param>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.PlayingSound.SoundManager.CountPlaying">
-            <summary>
-            Gets the total count of currently playing sounds.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.SeeingSharpGraphicsException.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.SeeingSharpGraphicsException" /> class.
-            </summary>
-            <param name="message">The message.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.SeeingSharpGraphicsException.#ctor(System.String,System.Exception)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.SeeingSharpGraphicsException" /> class.
-            </summary>
-            <param name="message">The message.</param>
-            <param name="innerException">The inner exception.</param>
+            <param name="buildOptions">Some generic options for structure building</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.GenericObject.#ctor(SeeingSharp.Util.NamedOrGenericKey)">
             <summary>
@@ -10807,7 +10811,7 @@
             <param name="startVertex">The vertex index on which to start.</param>
             <param name="vertexCount">Total count of vertices to be updated.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.Clone">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.Clone(System.Boolean,System.Int32)">
             <summary>
             Clones this object
             </summary>
@@ -11443,6 +11447,12 @@
             This is needed to transform coordinate from one measure unit to another.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.SeeingSharpAssimpIOSystem.#ctor(SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.SeeingSharpAssimpIOSystem"/> class.
+            </summary>
+            <param name="originalSource">The original source.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ImportedObjectInfo.#ctor(SeeingSharp.Multimedia.Core.SceneObject,SeeingSharp.BoundingBox)">
             <summary>
             Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ImportedObjectInfo"/> class from being created.
@@ -11513,6 +11523,44 @@
             <summary>
             Creates a default import options object for this importer.
             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportModel(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
+            <summary>
+            Imports a model from the given file.
+            </summary>
+            <param name="sourceFile">The source file to be loaded.</param>
+            <param name="importOptions">Some configuration for the importer.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.CreateDefaultImportOptions">
+            <summary>
+            Creates a default import options object for this importer.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportGeometry(SeeingSharp.Multimedia.Objects.ImportedModelContainer,Assimp.Scene,SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Imports all meshes (=> geometry) from the given scene.
+            </summary>
+            <param name="container">The target container object.</param>
+            <param name="importedScene">The scene to be imported.</param>
+            <param name="sourceFile">The original source file.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportMaterials(SeeingSharp.Multimedia.Objects.ImportedModelContainer,Assimp.Scene,SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Imports all materials from the given scene.
+            </summary>
+            <param name="container">The target container object.</param>
+            <param name="importedScene">The scene to be imported.</param>
+            <param name="sourceFile">The original source file</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportObject(SeeingSharp.Multimedia.Objects.ImportedModelContainer,Assimp.Scene,Assimp.Node,SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Imports this given node (=> object) from the given scene.
+            </summary>
+            <param name="container">The target container object.</param>
+            <param name="importedScene">The scene to be imported.</param>
+            <param name="currentNode"></param>
+            <param name="parentObject"></param>
         </member>
         <member name="T:SeeingSharp.Multimedia.Objects.XglImporter">
             <summary>
@@ -12026,30 +12074,114 @@
             Gets or sets the material of the content.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile"/> class from being created.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile.Dispose">
+            <summary>
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.PlayingSound.CachedSoundFile.FromResourceAsync(SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Loads a sound file from the given resource.
+            </summary>
+            <param name="resource">The resource to load.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.PlayingSound.SoundManager">
+            <summary>
+            This class manages all currently playing sounds.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.PlayingSound.SoundManager.PlaySoundAsync(SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Plays the given sound.
+            </summary>
+            <param name="resource">The file to be played.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.PlayingSound.SoundManager.PlaySoundAsync(SeeingSharp.Multimedia.PlayingSound.CachedSoundFile,System.Single)">
+            <summary>
+            Plays the given sound.
+            </summary>
+            <param name="soundFile">The sound file to be played.</param>
+            <param name="volume">The volume of the sound to be played.</param>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.PlayingSound.SoundManager.CountPlaying">
+            <summary>
+            Gets the total count of currently playing sounds.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.SeeingSharpGraphicsException.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.SeeingSharpGraphicsException" /> class.
+            </summary>
+            <param name="message">The message.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.SeeingSharpGraphicsException.#ctor(System.String,System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.SeeingSharpGraphicsException" /> class.
+            </summary>
+            <param name="message">The message.</param>
+            <param name="innerException">The inner exception.</param>
+        </member>
         <member name="T:SeeingSharp.Multimedia.Properties.Resources">
             <summary>
-              Eine stark typisierte Ressourcenklasse zum Suchen von lokalisierten Zeichenfolgen usw.
+              A strongly-typed resource class, for looking up localized strings, etc.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Properties.Resources.ResourceManager">
             <summary>
-              Gibt die zwischengespeicherte ResourceManager-Instanz zurück, die von dieser Klasse verwendet wird.
+              Returns the cached ResourceManager instance used by this class.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Properties.Resources.Culture">
             <summary>
-              Überschreibt die CurrentUICulture-Eigenschaft des aktuellen Threads für alle
-              Ressourcenzuordnungen, die diese stark typisierte Ressourcenklasse verwenden.
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Properties.Resources.Blank_16x16">
             <summary>
-              Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Properties.Resources.Cancel_16x16">
+            <summary>
+              Looks up a localized resource of type System.Drawing.Bitmap.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Properties.Resources.Empty">
             <summary>
-              Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
+              Looks up a localized resource of type System.Drawing.Bitmap.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelVM.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.UI.LoadExternalModelVM"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.UpdateDialogState">
+            <summary>
+            Updates the state of the dialog.
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="E:SeeingSharp.Multimedia.Views.MediaPlayerComponent.StateChanged">

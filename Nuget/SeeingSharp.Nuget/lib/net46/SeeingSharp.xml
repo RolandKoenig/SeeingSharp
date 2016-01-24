@@ -728,6 +728,14 @@
             <param name="targetList">The list to be modified.</param>
             <param name="newItem">The new item to be inserted.</param>
         </member>
+        <member name="M:SeeingSharp.Util.CommonTools.BinaryInsert``1(System.Collections.Generic.List{``0},``0,System.Collections.Generic.IComparer{``0})">
+            <summary>
+            Inserts the given object using a binary search algorithm.
+            </summary>
+            <param name="targetList">The list to be modified.</param>
+            <param name="newItem">The new item to be inserted.</param>
+            <param name="comparer">The comparer which is used for the binary search method.</param>
+        </member>
         <member name="M:SeeingSharp.Util.CommonTools.BinaryRemove``1(System.Collections.Generic.List{``0},``0)">
             <summary>
             Removes the given object using binary search algorithm.
@@ -8121,6 +8129,224 @@
             </summary>
             <param name="otherRay">The other ray to check.</param>
         </member>
+        <member name="T:SeeingSharp.RectangleF">
+            <summary>
+            Define a RectangleF. This structure is slightly different from System.Drawing.RectangleF as It is 
+            internally storing Left,Top,Right,Bottom instead of Left,Top,Width,Height.
+            Although automatic casting from a to System.Drawing.Rectangle is provided by this class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Inflate(System.Single,System.Single)">
+            <summary>Pushes the edges of the Rectangle out by the horizontal and vertical values specified.</summary>
+            <param name="horizontalAmount">Value to push the sides out by.</param>
+            <param name="verticalAmount">Value to push the top and bottom out by.</param>
+        </member>
+        <member name="F:SeeingSharp.RectangleF.Empty">
+            <summary>
+            An empty rectangle
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.RectangleF"/> struct.
+            </summary>
+            <param name="x">The left.</param>
+            <param name="y">The top.</param>
+            <param name="width">The width.</param>
+            <param name="height">The height.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Int32,System.Int32)">
+            <summary>
+            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
+            </summary>
+            <param name="x">X point coordinate.</param>
+            <param name="y">Y point coordinate.</param>
+            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Single,System.Single)">
+            <summary>
+            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
+            </summary>
+            <param name="x">X point coordinate.</param>
+            <param name="y">Y point coordinate.</param>
+            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2)">
+            <summary>
+            Checks, if specified <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
+            </summary> 
+            <param name="vector2D">Coordinate <see cref="T:System.Numerics.Vector2"/>.</param>
+            <returns><c>true</c> if <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Point)">
+            <summary>
+            Checks, if specified <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
+            </summary>
+            <param name="point">Coordinate <see cref="T:SeeingSharp.Point"/>.</param> 
+            <returns><c>true</c> if <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Left">
+            <summary>
+            Gets or sets the left.
+            </summary>
+            <value>The left.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Top">
+            <summary>
+            Gets or sets the top.
+            </summary>
+            <value>The top.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Right">
+            <summary>
+            Gets or sets the right.
+            </summary>
+            <value>The right.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Bottom">
+            <summary>
+            Gets or sets the bottom.
+            </summary>
+            <value>The bottom.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.X">
+            <summary>
+            Gets the left position.
+            </summary>
+            <value>The left position.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Y">
+            <summary>
+            Gets the top position.
+            </summary>
+            <value>The top position.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Width">
+            <summary>
+            Gets the width.
+            </summary>
+            <value>The width.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Height">
+            <summary>
+            Gets the height.
+            </summary>
+            <value>The height.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Location">
+            <summary>Gets or sets the upper-left value of the Rectangle.</summary>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Center">
+            <summary>Gets the Point that specifies the center of the rectangle.</summary>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.IsEmpty">
+            <summary>Gets a value that indicates whether the Rectangle is empty.</summary>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Offset(SeeingSharp.Point)">
+            <summary>Changes the position of the Rectangle.</summary>
+            <param name="amount">The values to adjust the position of the Rectangle by.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Offset(System.Int32,System.Int32)">
+            <summary>Changes the position of the Rectangle.</summary>
+            <param name="offsetX">Change in the x-position.</param>
+            <param name="offsetY">Change in the y-position.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Inflate(System.Int32,System.Int32)">
+            <summary>Pushes the edges of the Rectangle out by the horizontal and vertical values specified.</summary>
+            <param name="horizontalAmount">Value to push the sides out by.</param>
+            <param name="verticalAmount">Value to push the top and bottom out by.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2@,System.Boolean@)">
+            <summary>Determines whether this Rectangle contains a specified Point.</summary>
+            <param name="value">The Point to evaluate.</param>
+            <param name="result">[OutAttribute] true if the specified Point is contained within this Rectangle; false otherwise.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Rectangle)">
+            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
+            <param name="value">The Rectangle to evaluate.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.RectangleF@,System.Boolean@)">
+            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
+            <param name="value">The Rectangle to evaluate.</param>
+            <param name="result">[OutAttribute] On exit, is true if this Rectangle entirely contains the specified Rectangle, or false if not.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF)">
+            <summary>Determines whether a specified Rectangle intersects with this Rectangle.</summary>
+            <param name="value">The Rectangle to evaluate.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF@,System.Boolean@)">
+            <summary>
+            Determines whether a specified Rectangle intersects with this Rectangle.
+            </summary>
+            <param name="value">The Rectangle to evaluate</param>
+            <param name="result">[OutAttribute] true if the specified Rectangle intersects with this one; false otherwise.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.
+            </summary>
+            <param name="value1">The first Rectangle to compare.</param>
+            <param name="value2">The second Rectangle to compare.</param>
+            <returns>Rectangle.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
+            <summary>Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.</summary>
+            <param name="value1">The first Rectangle to compare.</param>
+            <param name="value2">The second Rectangle to compare.</param>
+            <param name="result">[OutAttribute] The area where the two first parameters overlap.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Creates a new Rectangle that exactly contains two other rectangles.
+            </summary>
+            <param name="value1">The first Rectangle to contain.</param>
+            <param name="value2">The second Rectangle to contain.</param>
+            <returns>Rectangle.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
+            <summary>
+            Creates a new Rectangle that exactly contains two other rectangles.
+            </summary>
+            <param name="value1">The first Rectangle to contain.</param>
+            <param name="value2">The second Rectangle to contain.</param>
+            <param name="result">[OutAttribute] The Rectangle that must be the union of the first two rectangles.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+            	<c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Equals(SeeingSharp.RectangleF)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.op_Equality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Implements the operator ==.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>The result of the operator.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.op_Inequality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Implements the operator !=.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>The result of the operator.</returns>
+        </member>
         <member name="T:SeeingSharp.Size2">
             <summary>
             Structure using the same layout than Size2 from System.Drawing namespace.
@@ -13634,219 +13860,6 @@
             <returns>The result of the operator.</returns>
         </member>
         <member name="M:SeeingSharp.Rectangle.op_Inequality(SeeingSharp.Rectangle,SeeingSharp.Rectangle)">
-            <summary>
-            Implements the operator !=.
-            </summary>
-            <param name="left">The left.</param>
-            <param name="right">The right.</param>
-            <returns>The result of the operator.</returns>
-        </member>
-        <member name="T:SeeingSharp.RectangleF">
-            <summary>
-            Define a RectangleF. This structure is slightly different from System.Drawing.RectangleF as It is 
-            internally storing Left,Top,Right,Bottom instead of Left,Top,Width,Height.
-            Although automatic casting from a to System.Drawing.Rectangle is provided by this class.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.RectangleF.Empty">
-            <summary>
-            An empty rectangle
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.#ctor(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.RectangleF"/> struct.
-            </summary>
-            <param name="x">The left.</param>
-            <param name="y">The top.</param>
-            <param name="width">The width.</param>
-            <param name="height">The height.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Int32,System.Int32)">
-            <summary>
-            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
-            </summary>
-            <param name="x">X point coordinate.</param>
-            <param name="y">Y point coordinate.</param>
-            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Single,System.Single)">
-            <summary>
-            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
-            </summary>
-            <param name="x">X point coordinate.</param>
-            <param name="y">Y point coordinate.</param>
-            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2)">
-            <summary>
-            Checks, if specified <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
-            </summary> 
-            <param name="vector2D">Coordinate <see cref="T:System.Numerics.Vector2"/>.</param>
-            <returns><c>true</c> if <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Point)">
-            <summary>
-            Checks, if specified <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
-            </summary>
-            <param name="point">Coordinate <see cref="T:SeeingSharp.Point"/>.</param> 
-            <returns><c>true</c> if <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Left">
-            <summary>
-            Gets or sets the left.
-            </summary>
-            <value>The left.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Top">
-            <summary>
-            Gets or sets the top.
-            </summary>
-            <value>The top.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Right">
-            <summary>
-            Gets or sets the right.
-            </summary>
-            <value>The right.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Bottom">
-            <summary>
-            Gets or sets the bottom.
-            </summary>
-            <value>The bottom.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.X">
-            <summary>
-            Gets the left position.
-            </summary>
-            <value>The left position.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Y">
-            <summary>
-            Gets the top position.
-            </summary>
-            <value>The top position.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Width">
-            <summary>
-            Gets the width.
-            </summary>
-            <value>The width.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Height">
-            <summary>
-            Gets the height.
-            </summary>
-            <value>The height.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Location">
-            <summary>Gets or sets the upper-left value of the Rectangle.</summary>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Center">
-            <summary>Gets the Point that specifies the center of the rectangle.</summary>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.IsEmpty">
-            <summary>Gets a value that indicates whether the Rectangle is empty.</summary>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Offset(SeeingSharp.Point)">
-            <summary>Changes the position of the Rectangle.</summary>
-            <param name="amount">The values to adjust the position of the Rectangle by.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Offset(System.Int32,System.Int32)">
-            <summary>Changes the position of the Rectangle.</summary>
-            <param name="offsetX">Change in the x-position.</param>
-            <param name="offsetY">Change in the y-position.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Inflate(System.Int32,System.Int32)">
-            <summary>Pushes the edges of the Rectangle out by the horizontal and vertical values specified.</summary>
-            <param name="horizontalAmount">Value to push the sides out by.</param>
-            <param name="verticalAmount">Value to push the top and bottom out by.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2@,System.Boolean@)">
-            <summary>Determines whether this Rectangle contains a specified Point.</summary>
-            <param name="value">The Point to evaluate.</param>
-            <param name="result">[OutAttribute] true if the specified Point is contained within this Rectangle; false otherwise.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Rectangle)">
-            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
-            <param name="value">The Rectangle to evaluate.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.RectangleF@,System.Boolean@)">
-            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
-            <param name="value">The Rectangle to evaluate.</param>
-            <param name="result">[OutAttribute] On exit, is true if this Rectangle entirely contains the specified Rectangle, or false if not.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF)">
-            <summary>Determines whether a specified Rectangle intersects with this Rectangle.</summary>
-            <param name="value">The Rectangle to evaluate.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF@,System.Boolean@)">
-            <summary>
-            Determines whether a specified Rectangle intersects with this Rectangle.
-            </summary>
-            <param name="value">The Rectangle to evaluate</param>
-            <param name="result">[OutAttribute] true if the specified Rectangle intersects with this one; false otherwise.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
-            <summary>
-            Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.
-            </summary>
-            <param name="value1">The first Rectangle to compare.</param>
-            <param name="value2">The second Rectangle to compare.</param>
-            <returns>Rectangle.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
-            <summary>Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.</summary>
-            <param name="value1">The first Rectangle to compare.</param>
-            <param name="value2">The second Rectangle to compare.</param>
-            <param name="result">[OutAttribute] The area where the two first parameters overlap.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
-            <summary>
-            Creates a new Rectangle that exactly contains two other rectangles.
-            </summary>
-            <param name="value1">The first Rectangle to contain.</param>
-            <param name="value2">The second Rectangle to contain.</param>
-            <returns>Rectangle.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
-            <summary>
-            Creates a new Rectangle that exactly contains two other rectangles.
-            </summary>
-            <param name="value1">The first Rectangle to contain.</param>
-            <param name="value2">The second Rectangle to contain.</param>
-            <param name="result">[OutAttribute] The Rectangle that must be the union of the first two rectangles.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Equals(System.Object)">
-            <summary>
-            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
-            </summary>
-            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
-            <returns>
-            	<c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Equals(SeeingSharp.RectangleF)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.GetHashCode">
-            <summary>
-            Returns a hash code for this instance.
-            </summary>
-            <returns>
-            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-            </returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.op_Equality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
-            <summary>
-            Implements the operator ==.
-            </summary>
-            <param name="left">The left.</param>
-            <param name="right">The right.</param>
-            <returns>The result of the operator.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.op_Inequality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
             <summary>
             Implements the operator !=.
             </summary>
