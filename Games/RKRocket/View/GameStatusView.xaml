@@ -2,6 +2,8 @@
     x:Class="RKRocket.View.GameStatusView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:localBeh="using:RKRocket.Behaviors"
     xmlns:local="using:RKRocket.View"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -29,7 +31,11 @@
         <Button Content="&#xE700;" Width="48"
                 Foreground="White"
                 FontFamily="Segoe MDL2 Assets" FontSize="26" 
-                Command="{x:Bind Path=ViewModel.CommandSwitchPaneVisibility, Mode=OneTime}"/>
+                Command="{x:Bind Path=ViewModel.CommandSwitchPaneVisibility, Mode=OneTime}">
+            <i:Interaction.Behaviors>
+                <localBeh:XInputButtonClickBehavior ControllerButton="Start"/>
+            </i:Interaction.Behaviors>
+        </Button>
         <TextBlock Margin="10,0,0,0">Level:</TextBlock>
         <TextBlock Margin="20,0,0,0" Text="{x:Bind Path=ViewModel.CurrentLevel, Mode=OneWay}" />
         <TextBlock Margin="50,0,0,0">Score:</TextBlock>

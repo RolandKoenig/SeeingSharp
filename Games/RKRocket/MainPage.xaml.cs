@@ -29,6 +29,15 @@ namespace RKRocket
             this.InitializeComponent();
         }
 
+        private async void OnCmdShowProjectHomepage_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.ViewModel.Game.Scene.IsPaused)
+            {
+                await Windows.System.Launcher.LaunchUriAsync(
+                    new Uri("https://github.com/RolandKoenig/SeeingSharp"));
+            }
+        }
+
         public MainUIViewModel ViewModel
         {
             get { return this.DataContext as MainUIViewModel; }

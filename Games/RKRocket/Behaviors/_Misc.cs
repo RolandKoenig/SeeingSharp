@@ -1,6 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-
-<!--
+﻿#region License information (SeeingSharp and all based games/applications)
+/*
     Seeing# and all games/applications distributed together with it. 
     More info at 
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
@@ -19,7 +18,22 @@
 
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
--->
-<packages>
-  <package id="System.Numerics.Vectors" version="4.0.0" targetFramework="win81" />
-</packages>
+*/
+#endregion
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RKRocket.Behaviors
+{
+    public enum XInputControllerButton
+    {
+        A,
+        B,
+        X,
+        Y,
+        Start
+    }
+}

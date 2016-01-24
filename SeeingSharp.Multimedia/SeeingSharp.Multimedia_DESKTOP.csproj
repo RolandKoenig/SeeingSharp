@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="Core\Direct2DOverlayRenderer.cs" />
     <Compile Include="Core\EngineMainLoop.cs" />
+    <Compile Include="Core\GenericInputEventArgs.cs" />
     <Compile Include="Core\GraphicsCore.cs" />
     <Compile Include="Core\GraphicsHelper.cs" />
     <Compile Include="Core\RenderLoop.cs" />

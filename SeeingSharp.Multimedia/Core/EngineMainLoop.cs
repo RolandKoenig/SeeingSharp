@@ -68,6 +68,17 @@ namespace SeeingSharp.Multimedia.Core
         private ConcurrentQueue<Drawing2DResourceBase> m_drawing2DResourcesToUnload;
         #endregion
 
+        #region Events        
+        /// <summary>
+        /// Occurs each pass within the MainLoop and holds information about generic 
+        /// input states (like Gampepad).
+        /// Be carefull with subscribing/unsubscribing because this event is raised
+        /// by ThreadPoolThreads.
+        /// See http://www.codeproject.com/Articles/37474/Threadsafe-Events
+        /// </summary>
+        public event EventHandler<GenericInputEventArgs> GenericInput;
+        #endregion
+
         /// <summary>
         /// Prevents a default instance of the <see cref="EngineMainLoop"/> class from being created.
         /// </summary>
@@ -257,6 +268,12 @@ namespace SeeingSharp.Multimedia.Core
                             {
                                 actGenericInputHandler.UpdateMovement();
                                 inputStates.AddRange(actGenericInputHandler.GetInputStates());
+                            }
+
+                            // Raise generic input event (if registered)
+                            if (this.GenericInput != null)
+                            {
+                                this.GenericInput.Raise(this, new GenericInputEventArgs(inputStates));
                             }
 
                             // Clear unreferenced Scenes finally

@@ -38,7 +38,18 @@
                 <StackPanel Orientation="Vertical" 
                             Margin="0,38,0,0"
                             Background="#997D7E81">
-
+                    <Button Foreground="White"
+                            Margin="0,30,0,0"
+                            Click="OnCmdShowProjectHomepage_Click">
+                        <i:Interaction.Behaviors>
+                            <localBeh:XInputButtonClickBehavior ControllerButton="A"/>
+                        </i:Interaction.Behaviors>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Width="48" Padding="5" Foreground="White"
+                                       Text="" FontFamily="Segoe MDL2 Assets" />
+                            <TextBlock Foreground="White" Text="Project Homepage" />
+                        </StackPanel>
+                    </Button>
                 </StackPanel>
             </SplitView.Pane>
         </SplitView>

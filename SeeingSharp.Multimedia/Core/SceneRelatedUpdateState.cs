@@ -92,8 +92,9 @@ namespace SeeingSharp.Multimedia.Core
                     // TODO: Move this call to another location because
                     // we have a conflict with the UI thread which may register/deregister
                     // a view
-                    if ((actInputState.RelatedView == null) ||
-                        (m_owner.IsViewRegistered(actInputState.RelatedView)))
+                    ViewInformation relatedView = actInputState.RelatedView;
+                    if ((relatedView == null) ||
+                        (m_owner.IsViewRegistered(relatedView)))
                     {
                         m_inputStates.Add(actInputState);
 
