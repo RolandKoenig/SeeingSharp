@@ -68,6 +68,8 @@ namespace RKRocket.Game
         {
             if (updateState.IsPaused) { return; }
 
+            float prevXPos = m_xPos;
+
             // Get input states
             MouseOrPointerState mouseState = updateState.DefaultMouseOrPointer;
             GamepadState gamepadState = updateState.DefaultGamepad;
@@ -159,6 +161,12 @@ namespace RKRocket.Game
                     .FireAndForget();
 
                 base.Messenger.Publish<MessageProjectileShooted>();
+            }
+
+            // X Location has changed
+            if(prevXPos != m_xPos)
+            {
+                base.Messenger.Publish(new MessagePlayerXLocationChanged(m_xPos));
             }
         }
 

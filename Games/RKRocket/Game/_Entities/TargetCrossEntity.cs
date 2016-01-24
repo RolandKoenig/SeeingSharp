@@ -43,6 +43,7 @@ namespace RKRocket.Game
         #region Game properties
         private Vector2 m_relativeMousePos;
         private bool m_mouseAvailable;
+        private float m_playerXLocation;
         #endregion
 
         /// <summary>
@@ -81,7 +82,7 @@ namespace RKRocket.Game
                 Graphics2D graphics = renderState.Graphics2D;
 
                 Vector2 targetLocation = new Vector2(
-                    graphics.ScreenSize.Width * m_relativeMousePos.X,
+                    m_playerXLocation, 
                     graphics.ScreenSize.Height * m_relativeMousePos.Y);
                 graphics.DrawBitmap(
                     m_targetCrossBitmap,
@@ -92,6 +93,11 @@ namespace RKRocket.Game
                         Constants.GFX_TARGET_CROSS_HEIGHT),
                     opacity: 0.5f);
             }
+        }
+
+        private void OnMessage_Received(MessagePlayerXLocationChanged message)
+        {
+            m_playerXLocation = message.NewXLocation;
         }
 
         protected override int RenderZOrder

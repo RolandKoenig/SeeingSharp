@@ -183,6 +183,9 @@
     <Compile Include="..\RKRocket\Game\_Messages\MessagePlayerHealthChanged.cs">
       <Link>Game\_Messages\MessagePlayerHealthChanged.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Game\_Messages\MessagePlayerXLocationChanged.cs">
+      <Link>Game\_Messages\MessagePlayerXLocationChanged.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\Game\_Messages\MessageProjectileShooted.cs">
       <Link>Game\_Messages\MessageProjectileShooted.cs</Link>
     </Compile>

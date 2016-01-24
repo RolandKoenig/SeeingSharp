@@ -151,6 +151,7 @@
     <Compile Include="Game\_Messages\MessageNewGame.cs" />
     <Compile Include="Game\_Messages\MessagePauseStateChanged.cs" />
     <Compile Include="Game\_Messages\MessagePlayerHealthChanged.cs" />
+    <Compile Include="Game\_Messages\MessagePlayerXLocationChanged.cs" />
     <Compile Include="Game\_Messages\MessageProjectileShooted.cs" />
     <Compile Include="Game\_Messages\MessageScoreChanged.cs" />
     <Compile Include="Game\_Misc.cs" />
