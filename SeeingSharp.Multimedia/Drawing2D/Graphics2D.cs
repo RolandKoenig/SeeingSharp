@@ -45,7 +45,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         private EngineDevice m_device;
         private D2D.RenderTarget m_renderTarget;
         private Size2F m_screenPixelSize;
-        private D2D.DeviceContext1 m_deviceContext;
+        private D2D.DeviceContext m_deviceContext;
         #endregion Main view related properties
 
         #region Transform settings
@@ -66,7 +66,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             m_device = device;
             m_renderTarget = renderTarget;
             m_screenPixelSize = screenSize;
-            m_deviceContext = m_renderTarget as D2D.DeviceContext1;
+            m_deviceContext = m_renderTarget as D2D.DeviceContext;
         }
 
         /// <summary>

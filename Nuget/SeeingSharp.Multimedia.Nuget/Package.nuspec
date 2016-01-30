@@ -33,7 +33,6 @@
     <copyright>Copyright  2015</copyright>
     <dependencies>
       <group targetFramework="net46">
-        <dependency id="AssimpNet" version="3.3.1" />
         <dependency id="Newtonsoft.Json" version="8.0.2" />
         <dependency id="Rx-Core" version="2.2.5" />
         <dependency id="Rx-Interfaces" version="2.2.5" />

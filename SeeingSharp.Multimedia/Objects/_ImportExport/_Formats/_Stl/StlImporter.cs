@@ -65,7 +65,9 @@ namespace SeeingSharp.Multimedia.Objects
         private static readonly Regex VERTEX_REGEX = new Regex(@"vertex\s*(\S*)\s*(\S*)\s*(\S*)");
         #endregion
 
+        #region Just for caching
         private List<Vector3> m_cachedPoints = new List<Vector3>(3);
+        #endregion
 
         /// <summary>
         /// Imports a model from the given file.
