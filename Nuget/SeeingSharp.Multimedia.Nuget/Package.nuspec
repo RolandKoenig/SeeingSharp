@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SeeingSharp.Multimedia</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Seeing# Multimedia</title>
     <authors>RolandK</authors>
     <owners>RolandK</owners>
@@ -13,8 +13,12 @@
 
       Supported targets:
       - Classic Desktop (.Net 4.6)
-      - Windows 8.1 and upwards
-      - Windows Phone 8.1 and upwards
+      - Windows 8.1 Apps and upwards
+      - Windows Phone 8.1 Apps and upwards
+      
+      Supported OS for rendering:
+      - Windows 7 with Platform Update
+      - Windows 8 and newer
     </description>
     <releaseNotes>
     </releaseNotes>
@@ -46,7 +50,7 @@
         <dependency id="SharpDX.MediaFoundation" version="3.0.1" />
         <dependency id="SharpDX.XAudio2" version="3.0.1" />
         <dependency id="SharpDX.XInput" version="3.0.1" />
-        <dependency id="SeeingSharp" version="1.0.0" />
+        <dependency id="SeeingSharp" version="1.0.1" />
       </group>
       <group targetFramework="portable-win8+wpa81">
         <dependency id="Newtonsoft.Json" version="8.0.2" />
@@ -63,7 +67,7 @@
         <dependency id="SharpDX.MediaFoundation" version="3.0.1" />
         <dependency id="SharpDX.XAudio2" version="3.0.1" />
         <dependency id="SharpDX.XInput" version="3.0.1" />
-        <dependency id="SeeingSharp" version="1.0.0" />
+        <dependency id="SeeingSharp" version="1.0.1" />
         <dependency id="System.Numerics.Vectors" version="4.0.0" />
       </group>
     </dependencies>

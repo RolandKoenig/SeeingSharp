@@ -30,7 +30,7 @@
     <PublisherName>Roland König</PublisherName>
     <SuiteName>Seeing# Games</SuiteName>
     <OpenBrowserOnPublish>false</OpenBrowserOnPublish>
-    <ApplicationRevision>7</ApplicationRevision>
+    <ApplicationRevision>8</ApplicationRevision>
     <ApplicationVersion>0.7.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -74,13 +74,13 @@
     <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>ED732881BACC6B098E72BA8388F0881567AE4187</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>2F9632A76E14176CF4C9B2F17673116AD105BACB</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>RKRocket_Desktop_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>Open Source Developer, Roland Koenig.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
@@ -290,7 +290,6 @@
     </Resource>
     <Resource Include="Assets\Levels\Level_005.json" />
     <None Include="Properties\DataSources\RKRocket.ViewModel.GameOverViewModel.datasource" />
-    <None Include="RKRocket_Desktop_TemporaryKey.pfx" />
     <Resource Include="..\RKRocket\Assets\Levels\Level_001.json">
       <Link>Assets\Levels\Level_001.json</Link>
     </Resource>

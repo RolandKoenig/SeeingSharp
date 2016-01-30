@@ -55,6 +55,15 @@
             registered RenderLoops.
             </summary>
         </member>
+        <member name="E:SeeingSharp.Multimedia.Core.EngineMainLoop.GenericInput">
+            <summary>
+            Occurs each pass within the MainLoop and holds information about generic 
+            input states (like Gampepad).
+            Be carefull with subscribing/unsubscribing because this event is raised
+            by ThreadPoolThreads.
+            See http://www.codeproject.com/Articles/37474/Threadsafe-Events
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.#ctor">
             <summary>
             Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.Core.EngineMainLoop"/> class from being created.
@@ -160,6 +169,16 @@
         <member name="P:SeeingSharp.Multimedia.Core.EngineMainLoop.RegisteredRenderLoopCount">
             <summary>
             Gets the total count of registered RenderLoop objects.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.GenericInputEventArgs.DefaultGamepad">
+            <summary>
+            Gets the current default gamepad state.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.GenericInputEventArgs.InputStates">
+            <summary>
+            Gets a list containing all generic input states.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean)">
@@ -3534,11 +3553,6 @@
             Gets current factory object.
             </summary>
             <value>The factory.</value>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerDXGI.Device">
-            <summary>
-            Gets the DXGI device.
-            </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerDXGI.Adapter">
             <summary>

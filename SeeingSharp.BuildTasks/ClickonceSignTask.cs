@@ -78,6 +78,13 @@ namespace SeeingSharp.BuildTasks
             }
             string mageToolPath = Path.Combine(winSdkPath, "Bin\\mage.exe");
             string signToolPath = Path.Combine(winSdkPath, "Bin\\signtool.exe");
+            if((!File.Exists(mageToolPath)) ||
+               (!File.Exists(signToolPath)))
+            {
+                base.Log.LogError("Mage.exe or Signtool.exe not found!");
+                return false;
+            }
+
 
             // Get the directory with certificate information
             string certDirectory = this.CertInformationDirectory;

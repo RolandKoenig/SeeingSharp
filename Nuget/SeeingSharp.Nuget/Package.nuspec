@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SeeingSharp</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Seeing# Base</title>
     <authors>RolandK</authors>
     <owners>RolandK</owners>
@@ -13,8 +13,8 @@
 
       Supported targets:
         - Classic Desktop (.Net 4.6)
-        - Windows 8.1 and upwards
-        - Windows Phone 8.1 and upwards
+        - Windows 8.1 Apps and upwards
+        - Windows Phone 8.1 Apps and upwards
     </description>
     <releaseNotes>
     </releaseNotes>
