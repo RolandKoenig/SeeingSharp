@@ -423,15 +423,15 @@ namespace SeeingSharp.Multimedia.Core
             get { return m_core; }
         }
 
-#if DESKTOP
         /// <summary>
         /// Gets the Direct3D 11 device object.
         /// </summary>
-        internal D3D11.Device DeviceD3D11
+        internal D3D11.Device1 DeviceD3D11
         {
             get { return m_handlerD3D11.Device; }
         }
 
+#if DESKTOP
         internal D3D9.DeviceEx DeviceD3D9
         {
             get { return m_handlerD3D9.Device; }
@@ -452,14 +452,6 @@ namespace SeeingSharp.Multimedia.Core
             get { return m_handlerD2D.DeviceContext; }
         }
 #else
-        /// <summary>
-        /// Gets the Direct3D 11 device object.
-        /// </summary>
-        internal D3D11.Device1 DeviceD3D11
-        {
-            get { return m_handlerD3D11.Device; }
-        }
-
         internal D2D.Device DeviceD2D
         {
             get { return m_handlerD2D.Device; }
