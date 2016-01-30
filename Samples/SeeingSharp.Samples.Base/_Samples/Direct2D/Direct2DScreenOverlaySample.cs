@@ -96,7 +96,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
                 manipulator.AddDrawingLayer(draw2DAction);
 
                 // Create floor
-                SampleSceneBuilder.BuildStandardConveyorFloor(
+                SampleSceneBuilder.BuildStandardFloor(
                     manipulator, Scene.DEFAULT_LAYER_NAME);
 
                 // Create pallet geometry resource

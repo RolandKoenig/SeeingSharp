@@ -62,7 +62,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
             await targetRenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
             {
                 // Create floor
-                SampleSceneBuilder.BuildStandardConveyorFloor(
+                SampleSceneBuilder.BuildStandardFloor(
                     manipulator, Scene.DEFAULT_LAYER_NAME);
 
                 // Define texture and material resource

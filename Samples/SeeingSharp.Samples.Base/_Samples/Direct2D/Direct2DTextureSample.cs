@@ -84,7 +84,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
             await targetRenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
             {
                 // Create floor
-                SampleSceneBuilder.BuildStandardConveyorFloor(
+                SampleSceneBuilder.BuildStandardFloor(
                     manipulator, Scene.DEFAULT_LAYER_NAME);
 
                 // Define Direct2D texture resource

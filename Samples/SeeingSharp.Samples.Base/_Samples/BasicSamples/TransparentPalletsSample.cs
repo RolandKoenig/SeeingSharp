@@ -66,7 +66,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                 await scene.ManipulateSceneAsync((manipulator) =>
                 {
                     // Create floor
-                    SampleSceneBuilder.BuildStandardConveyorFloor(
+                    SampleSceneBuilder.BuildStandardFloor(
                         manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Create the wall in the middle

@@ -40,7 +40,7 @@ namespace SeeingSharp.Samples.Base
         /// </summary>
         /// <param name="newScene">The scenegraph to be updated.</param>
         /// <param name="newCamera">The camera to be updated.</param>
-        public static void BuildStandardConveyorFloor(SceneManipulator manipulator, string sceneLayer)
+        public static void BuildStandardFloor(SceneManipulator manipulator, string sceneLayer)
         {
             SceneLayer bgLayer = manipulator.AddLayer("BACKGROUND");
             manipulator.SetLayerOrderID(bgLayer, 0);

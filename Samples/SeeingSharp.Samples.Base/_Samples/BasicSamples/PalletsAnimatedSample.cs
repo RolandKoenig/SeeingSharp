@@ -83,7 +83,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                         () => new GeometryResource(pType));
 
                     // Create floor
-                    SampleSceneBuilder.BuildStandardConveyorFloor(
+                    SampleSceneBuilder.BuildStandardFloor(
                         manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Build the wall object

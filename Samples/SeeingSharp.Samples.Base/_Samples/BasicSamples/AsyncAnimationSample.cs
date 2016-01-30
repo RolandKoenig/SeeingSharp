@@ -47,6 +47,8 @@ namespace SeeingSharp.Samples.Base.BasicSamples
         SampleTargetPlatform.All)]
     public class AsyncAnimationPalletSample : SampleBase
     {
+        private const int MAX_COUNT_BANANAS = 15;
+
         private RenderLoop m_renderLoop;
 
         /// <summary>
@@ -70,7 +72,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                 await scene.ManipulateSceneAsync((manipulator) =>
                 {
                     // Create floor
-                    SampleSceneBuilder.BuildStandardConveyorFloor(
+                    SampleSceneBuilder.BuildStandardFloor(
                         manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Define banana object
@@ -105,12 +107,21 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                 GenericObject newGenericObject = null;
                 await renderLoop.Scene.ManipulateSceneAsync((manipulator) =>
                 {
-                    newGenericObject = manipulator.AddGeneric(resGeometry);
+                    int bananaCount = manipulator.GetSceneObjects(Scene.DEFAULT_LAYER_NAME)
+                        .Count((actObject) => actObject.Tag1 as string == "Banana");
+                    if (bananaCount < MAX_COUNT_BANANAS)
+                    {
+                        newGenericObject = manipulator.AddGeneric(resGeometry);
+                        newGenericObject.Tag1 = "Banana";
+                    }
                 });
                 if (base.IsClosed) { return; }
 
                 // Attach move behavior on the created object.
-                AttachMoveBehavior(newGenericObject);
+                if (newGenericObject != null)
+                {
+                    AttachMoveBehavior(newGenericObject);
+                }
             }
         }
 
