@@ -29,5 +29,6 @@ This one is the most complex library in this project. It contains the graphics e
 For now, there are included the following applications.
  - RK 2048: A simple 3D-game which is running all most current windows platforms
  - RK Kinect Lounge: A photo viewer which can be controlled using the Kinect technology
+ - RK Rocket: A simple 2D shooting game (uses Direct2D)
  - WPF and Win.Forms Sample Containers
  
