@@ -326,6 +326,7 @@
     <Compile Include="Input\_States\MouseOrPointerState.cs" />
     <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
     <Compile Include="Input\_States\_Enum.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
     <Compile Include="Objects\_ObjectTypes\StackedObjectType.cs" />
     <Compile Include="PlayingSound\CachedSoundFile.cs" />
     <Compile Include="PlayingSound\SoundManager.cs" />

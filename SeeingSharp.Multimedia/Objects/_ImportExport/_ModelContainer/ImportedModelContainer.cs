@@ -31,13 +31,17 @@ namespace SeeingSharp.Multimedia.Objects
 {
     public class ImportedModelContainer
     {
+        #region Static id counter 
         private static int s_maxContainerID;
+        #endregion
 
-        private ImportOptions m_importOptions;
+        #region All model data
         private int m_importID = 0;
+        private ImportOptions m_importOptions;
         private List<SceneObject> m_objects;
         private List<Tuple<SceneObject, SceneObject>> m_objectDependencies;
         private List<ImportedResourceInfo> m_importedResources;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ImportedModelContainer" /> class.
