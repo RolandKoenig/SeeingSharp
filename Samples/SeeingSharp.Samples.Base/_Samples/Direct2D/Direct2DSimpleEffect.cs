@@ -20,7 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-#if UNIVERSAL
+
 using System;
 using System.Numerics;
 using System.Collections.Generic;
@@ -128,4 +128,3 @@ namespace SeeingSharp.Samples.Base.Direct2D
         }
     }
 }
-#endif

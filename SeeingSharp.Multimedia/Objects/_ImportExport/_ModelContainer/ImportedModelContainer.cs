@@ -39,7 +39,7 @@ namespace SeeingSharp.Multimedia.Objects
         private int m_importID = 0;
         private ImportOptions m_importOptions;
         private List<SceneObject> m_objects;
-        private List<Tuple<SceneObject, SceneObject>> m_objectDependencies;
+        private List<Tuple<SceneObject, SceneObject>> m_parentChildRelationships;
         private List<ImportedResourceInfo> m_importedResources;
         #endregion
 
@@ -50,7 +50,7 @@ namespace SeeingSharp.Multimedia.Objects
         {
             m_importOptions = importOptions;
             m_objects = new List<SceneObject>();
-            m_objectDependencies = new List<Tuple<SceneObject, SceneObject>>();
+            m_parentChildRelationships = new List<Tuple<SceneObject, SceneObject>>();
             m_importedResources = new List<ImportedResourceInfo>();
 
             m_importID = Interlocked.Increment(ref s_maxContainerID);
@@ -114,9 +114,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Gets the hierarchy information of the loaded objects.
         /// </summary>
-        public List<Tuple<SceneObject, SceneObject>> ObjectDependencies
+        public List<Tuple<SceneObject, SceneObject>> ParentChildRelationships
         {
-            get { return m_objectDependencies; }
+            get { return m_parentChildRelationships; }
         }
 
         /// <summary>

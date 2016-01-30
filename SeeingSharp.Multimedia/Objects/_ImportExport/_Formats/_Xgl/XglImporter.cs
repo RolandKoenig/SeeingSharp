@@ -413,7 +413,7 @@ namespace SeeingSharp.Multimedia.Objects
                 // Add dependency (parent => child)
                 if (parentObject != null)
                 {
-                    container.ObjectDependencies.Add(Tuple.Create<SceneObject, SceneObject>(
+                    container.ParentChildRelationships.Add(Tuple.Create<SceneObject, SceneObject>(
                         parentObject, newObject));
                 }
             };

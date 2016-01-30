@@ -65,7 +65,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
         /// <param name="targetRenderLoop">The target render loop.</param>
         public override async Task OnStartupAsync(RenderLoop targetRenderLoop)
         {
-            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+            targetRenderLoop.EnsureNotNull(nameof(targetRenderLoop));
 
             // Build dummy scene
             Scene scene = targetRenderLoop.Scene;
@@ -87,63 +87,15 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                         manipulator, Scene.DEFAULT_LAYER_NAME);
 
                     // Build the wall object
-                    PalletsAppendWallObjectToScene(manipulator, SIDE_LENGTH);
+                    AppendWallObjectToScene(manipulator, SIDE_LENGTH);
 
                     // Trigger building of the pallet stack
-                    PalletsBuildPalletCube(manipulator, new NamedOrGenericKey[] { resPalletGeometry }, SIDE_LENGTH);
+                    BuildPalletCubes(manipulator, new NamedOrGenericKey[] { resPalletGeometry }, SIDE_LENGTH);
                 });
 
                 // Configure camera
                 camera.Position = new Vector3(30f, 30f, 30f);
                 camera.Target = new Vector3(0f, 10f, 0f);
-                camera.UpdateCamera();
-            }
-        }
-
-        public static async void BuildPalletsDemoTextured(RenderLoop renderLoop)
-        {
-            // Build dummy scene
-            Scene scene = renderLoop.Scene;
-            Camera3DBase camera = renderLoop.Camera as Camera3DBase;
-
-            // Build scene initially if we are on first load
-            if (scene.CountObjects <= 0)
-            {
-                await scene.ManipulateSceneAsync((manipulator) =>
-                {
-                    NamedOrGenericKey resMaterialLogo = manipulator.AddSimpleColoredMaterial(
-                        new AssemblyResourceUriBuilder(
-                            "SeeingSharp.Samples.Base", false, 
-                            "Textures/LogoTexture.png"));
-
-                    // Create pallet geometry resource
-                    SingleMaterialPalletType pType = new SingleMaterialPalletType();
-                    pType.ContentColor = Color4.Transparent;
-                    var resPalletGeometry = manipulator.AddResource<GeometryResource>(
-                        () => new GeometryResource(pType));
-                    SingleMaterialPalletType pType2 = new SingleMaterialPalletType();
-                    pType2.ContentColor = Color4.Transparent;
-                    pType2.PalletMaterial = resMaterialLogo;
-                    var resPalletGeometry2 = manipulator.AddResource<GeometryResource>(
-                        () => new GeometryResource(pType2));
-
-                    // Create floor
-                    SampleSceneBuilder.BuildStandardConveyorFloor(
-                        manipulator, Scene.DEFAULT_LAYER_NAME);
-
-                    // Build the wall object
-                    PalletsAppendWallObjectToScene(manipulator, SIDE_LENGTH);
-
-                    // Trigger building of the pallet stack
-                    PalletsBuildPalletCube(
-                        manipulator,
-                        new NamedOrGenericKey[] { resPalletGeometry, resPalletGeometry2 },
-                        SIDE_LENGTH);
-                });
-
-                // Configure camera
-                camera.Position = new Vector3(30f, 30f, 30f);
-                camera.Target = new Vector3(0f, 0f, 0f);
                 camera.UpdateCamera();
             }
         }
@@ -154,7 +106,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
         /// <param name="manipulator">Current scene manipulator object.</param>
         /// <param name="sideLength">The side length of the pallet cube.</param>
         /// <param name="camera">The camera to be manipulated too.</param>
-        private static void PalletsBuildPalletCube(SceneManipulator manipulator, NamedOrGenericKey[] resPalletGeometrys, int sideLength)
+        private static void BuildPalletCubes(SceneManipulator manipulator, NamedOrGenericKey[] resPalletGeometrys, int sideLength)
         {
             // Build the scene
             Vector3 startPosition = new Vector3(-sideLength * SPACE_X / 2f, 0f, -sideLength * SPACE_Z / 2f);
@@ -177,7 +129,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
             }
         }
 
-        private static void PalletsAppendWallObjectToScene(SceneManipulator manipulator, int sideLength)
+        private static void AppendWallObjectToScene(SceneManipulator manipulator, int sideLength)
         {
             // Define wall object (define geometry and create object for the scene).
             var resWallTexture = manipulator.AddTexture(
