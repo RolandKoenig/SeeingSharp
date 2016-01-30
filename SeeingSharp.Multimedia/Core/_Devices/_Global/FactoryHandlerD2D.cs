@@ -24,17 +24,13 @@
 //Some namespace mappings
 using D2D = SharpDX.Direct2D1;
 
-//Some type mappings
-using D2dFactory = SharpDX.Direct2D1.Factory2;
-
 namespace SeeingSharp.Multimedia.Core
 {
     public class FactoryHandlerD2D
     {
-        private GraphicsCore m_core;
-
-        //Resources form Direct2D api
-        private D2dFactory m_factory;
+        #region Resources form Direct2D api
+        private D2D.Factory2 m_factory;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FactoryHandlerD2D"/> class.
@@ -42,11 +38,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="core">The core.</param>
         internal FactoryHandlerD2D(GraphicsCore core)
         {
-            //Update member variables
-            m_core = core;
-
             //Create the factory object
-            m_factory = new D2dFactory(
+            m_factory = new D2D.Factory2(
                 D2D.FactoryType.SingleThreaded,
                 core.IsDebugEnabled ? D2D.DebugLevel.Information : D2D.DebugLevel.None);
         }
@@ -62,7 +55,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the factory object.
         /// </summary>
-        internal D2dFactory Factory
+        internal D2D.Factory2 Factory
         {
             get { return m_factory; }
         }

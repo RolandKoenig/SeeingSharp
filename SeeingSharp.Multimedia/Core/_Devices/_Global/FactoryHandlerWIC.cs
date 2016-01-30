@@ -29,27 +29,24 @@ using System.Threading.Tasks;
 //Some namespace mappings
 using WIC = SharpDX.WIC;
 
-//Some type mappings
-using WicFactory = SharpDX.WIC.ImagingFactory;
-
 namespace SeeingSharp.Multimedia.Core
 {
     public class FactoryHandlerWIC
     {
-        private WicFactory m_imagingFactory;
+        private WIC.ImagingFactory m_imagingFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FactoryHandlerWIC" /> class.
         /// </summary>
         internal FactoryHandlerWIC()
         {
-            m_imagingFactory = new WicFactory();
+            m_imagingFactory = new WIC.ImagingFactory();
         }
 
         /// <summary>
         /// Gets the WIC factory object.
         /// </summary>
-        internal WicFactory Factory
+        internal WIC.ImagingFactory Factory
         {
             get { return m_imagingFactory; }
         }

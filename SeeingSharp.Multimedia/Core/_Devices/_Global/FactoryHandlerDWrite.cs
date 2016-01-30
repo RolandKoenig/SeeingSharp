@@ -28,8 +28,6 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class FactoryHandlerDWrite
     {
-        private GraphicsCore m_core;
-
         #region Resources for DirectWrite
         private DWrite.Factory m_factory;
         #endregion
@@ -40,9 +38,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="core">The core.</param>
         internal FactoryHandlerDWrite(GraphicsCore core)
         {
-            //Update member variables
-            m_core = core;
-
             //Create DirectWrite Factory object
             m_factory = new DWrite.Factory(DWrite.FactoryType.Shared);
         }
