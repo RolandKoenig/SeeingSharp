@@ -67,7 +67,7 @@ namespace SeeingSharp.Tests.Rendering
                 // Import Fox model
                 StlImportOptions importOptions = new StlImportOptions();
                 importOptions.ResourceCoordinateSystem = CoordinateSystem.LeftHanded_UpZ;
-                var loadedObjects = await memRenderTarget.Scene.ImportAsync(
+                IEnumerable<SceneObject> loadedObjects = await memRenderTarget.Scene.ImportAsync(
                     new AssemblyResourceLink(
                         typeof(ModelLoadingAndRenderingTests),
                         "Ressources.Models.Fox.stl"),
@@ -78,8 +78,6 @@ namespace SeeingSharp.Tests.Rendering
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
-
-                //screenshot.DumpToDesktop(TEST_DUMMY_FILE_NAME);
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
@@ -120,8 +118,6 @@ namespace SeeingSharp.Tests.Rendering
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
-
-                //screenshot.DumpToDesktop(TEST_DUMMY_FILE_NAME);
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(

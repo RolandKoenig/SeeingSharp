@@ -38,6 +38,7 @@ namespace SeeingSharp.Samples.Base
         public const string SAMPLEGROUP_BASIC = "Basics";
         public const string SAMPLEGROUP_MF = "Media Foundation";
         public const string SAMPLEGROUP_DIRECT2D = "Direct2D";
+        public const string SAMPLEGROUP_INPUT = "Input";
         #endregion
 
         #region parameters for Basic samples
@@ -64,5 +65,8 @@ namespace SeeingSharp.Samples.Base
         public const int SAMPLE_DIRECT2D_SIMPLE_EFFECT = 104;
         #endregion
 
+        #region parameters for Input samples
+        public const int SAMPLE_INPUT_XBOX_CONTROLLER = 301;
+        #endregion
     }
 }

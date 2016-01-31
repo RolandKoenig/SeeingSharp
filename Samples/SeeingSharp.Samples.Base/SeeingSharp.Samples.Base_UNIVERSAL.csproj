@@ -68,6 +68,7 @@
     <Compile Include="_Samples\Direct2D\Direct2DAnimatedTextureSample.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DSimpleEffect.cs" />
     <Compile Include="_Samples\Direct2D\Direct2DTextureSample.cs" />
+    <Compile Include="_Samples\Input\XBoxControllerInputSample.cs" />
     <Compile Include="_Samples\MFSamples\CameraCaptureSample.cs" />
     <Compile Include="_Samples\MFSamples\VideoTextureSample.cs" />
   </ItemGroup>
@@ -77,6 +78,7 @@
     <Content Include="Assets\SampleImages\Basics_Pallets.png" />
     <Content Include="Assets\SampleImages\Basics_PalletsAnimated.png" />
     <Content Include="Assets\SampleImages\Basics_Parent_Child.png" />
+    <Content Include="Assets\SampleImages\Input_XboxController.png" />
     <Content Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Content Include="Assets\SampleImages\Direct2D_Simple_Effect.png" />
     <Content Include="Assets\SampleImages\Direct2D_Draw_to_Texture_%28animated%29.png" />
