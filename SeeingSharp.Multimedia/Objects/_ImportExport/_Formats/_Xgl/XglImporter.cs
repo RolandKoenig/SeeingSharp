@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+
 #if DESKTOP
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
@@ -164,9 +165,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public ImportOptions CreateDefaultImportOptions()
         {
-            ImportOptions result = new ImportOptions();
-            result.ResourceCoordinateSystem = CoordinateSystem.RightHanded_UpZ;
-            return result;
+            return new XglImportOptions();
         }
 
         /// <summary>

@@ -47,7 +47,14 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="importOptions">Some configuration for the importer.</param>
         public ImportedModelContainer ImportModel(ResourceLink sourceFile, ImportOptions importOptions)
         {
-            ImportedModelContainer result = new ImportedModelContainer(importOptions);
+            // Get import options
+            ACImportOptions acImportOptions = importOptions as ACImportOptions;
+            if (acImportOptions == null)
+            {
+                throw new SeeingSharpException("Invalid import options for ACImporter!");
+            }
+
+            ImportedModelContainer result = new ImportedModelContainer(acImportOptions);
 
             // Get needed resource key
             NamedOrGenericKey resGeometry = GraphicsCore.GetNextGenericResourceKey();
@@ -68,7 +75,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public ImportOptions CreateDefaultImportOptions()
         {
-            return new ImportOptions();
+            return new ACImportOptions();
         }
     }
 }
