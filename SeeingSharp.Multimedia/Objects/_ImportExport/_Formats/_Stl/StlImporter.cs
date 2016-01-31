@@ -76,13 +76,20 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="sourceFile">The source file to be loaded.</param>
         public ImportedModelContainer ImportModel(ResourceLink sourceFile, ImportOptions importOptions)
         {
+            // Get import options
+            StlImportOptions stlImportOptions = importOptions as StlImportOptions;
+            if(stlImportOptions == null)
+            {
+                throw new SeeingSharpException("Invalid import options for StlImporter!");
+            }
+
             ImportedModelContainer result = null;
             try
             {
                 // Try to read in BINARY format first
                 using (Stream inStream = sourceFile.OpenInputStream())
                 {
-                    result = this.TryReadBinary(inStream, importOptions);
+                    result = this.TryReadBinary(inStream, stlImportOptions);
                 }
 
                 // Read in ASCII format (if binary did not work)
@@ -90,7 +97,7 @@ namespace SeeingSharp.Multimedia.Objects
                 {
                     using (Stream inStream = sourceFile.OpenInputStream())
                     {
-                        result = this.TryReadAscii(inStream, importOptions);
+                        result = this.TryReadAscii(inStream, stlImportOptions);
                     }
                 }
             }
@@ -113,7 +120,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public ImportOptions CreateDefaultImportOptions()
         {
-            return new ImportOptions();
+            return new StlImportOptions();
         }
 
         /// <summary>
@@ -232,7 +239,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Reads a facet.
         /// </summary>
-        private void ReadFacet(StreamReader reader, string normalString, VertexStructure newStructure)
+        private void ReadFacet(StreamReader reader, string normalString, VertexStructure newStructure, StlImportOptions importOptions)
         {
             m_cachedPoints.Clear();
 
@@ -271,19 +278,41 @@ namespace SeeingSharp.Multimedia.Objects
                     break;
 
                 case 3:
-                    newStructure.AddTriangle(
-                        new Vertex(m_cachedPoints[0], Color4.Transparent, Vector2.Zero, normal),
-                        new Vertex(m_cachedPoints[1], Color4.Transparent, Vector2.Zero, normal),
-                        new Vertex(m_cachedPoints[2], Color4.Transparent, Vector2.Zero, normal));
+                    if (importOptions.ChangeTriangleOrder)
+                    {
+                        newStructure.AddTriangle(
+                            new Vertex(m_cachedPoints[2], Color4.Transparent, Vector2.Zero, normal),
+                            new Vertex(m_cachedPoints[1], Color4.Transparent, Vector2.Zero, normal),
+                            new Vertex(m_cachedPoints[0], Color4.Transparent, Vector2.Zero, normal));
+                    }
+                    else
+                    {
+                        newStructure.AddTriangle(
+                            new Vertex(m_cachedPoints[0], Color4.Transparent, Vector2.Zero, normal),
+                            new Vertex(m_cachedPoints[1], Color4.Transparent, Vector2.Zero, normal),
+                            new Vertex(m_cachedPoints[2], Color4.Transparent, Vector2.Zero, normal));
+                    }
                     break;
 
                 default:
                     int[] indices = new int[pointCount];
-                    for(int loop=0; loop< pointCount; loop++)
+                    if (importOptions.ChangeTriangleOrder)
                     {
-                        indices[loop] = newStructure.AddVertex(
-                            new Vertex(m_cachedPoints[loop], Color4.Transparent, Vector2.Zero, normal));
+                        for (int loop = pointCount - 1; loop > -1; loop--)
+                        {
+                            indices[loop] = newStructure.AddVertex(
+                                new Vertex(m_cachedPoints[loop], Color4.Transparent, Vector2.Zero, normal));
+                        }
                     }
+                    else
+                    {
+                        for (int loop = 0; loop < pointCount; loop++)
+                        {
+                            indices[loop] = newStructure.AddVertex(
+                                new Vertex(m_cachedPoints[loop], Color4.Transparent, Vector2.Zero, normal));
+                        }
+                    }
+
                     newStructure.AddPolygonByCuttingEars(indices);
                     break;
             }
@@ -292,7 +321,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Reads a triangle from a binary STL file.
         /// </summary>
-        private void ReadTriangle(BinaryReader reader, VertexStructure vertexStructure)
+        private void ReadTriangle(BinaryReader reader, VertexStructure vertexStructure, StlImportOptions importOptions)
         {
             float ni = ReadFloat(reader);
             float nj = ReadFloat(reader);
@@ -314,8 +343,10 @@ namespace SeeingSharp.Multimedia.Objects
             float z3 = ReadFloat(reader);
             var v3 = new Vector3(x3, y3, z3);
 
+            // Try to read color information
             var attrib = Convert.ToString(ReadUInt16(reader), 2).PadLeft(16, '0').ToCharArray();
             var hasColor = attrib[0].Equals('1');
+            Color currentColor = Color.Transparent;
             if (hasColor)
             {
                 int blue = attrib[15].Equals('1') ? 1 : 0;
@@ -339,26 +370,29 @@ namespace SeeingSharp.Multimedia.Objects
                 red = attrib[1].Equals('1') ? red + 16 : red;
                 int r = red * 8;
 
-                var currentColor = new Color(Convert.ToByte(r), Convert.ToByte(g), Convert.ToByte(b));
+                currentColor = new Color(Convert.ToByte(r), Convert.ToByte(g), Convert.ToByte(b));
+            }
 
+            if (importOptions.ChangeTriangleOrder)
+            {
                 vertexStructure.AddTriangle(
-                    new Vertex(v1, currentColor, Vector2.Zero, normal),
+                    new Vertex(v3, currentColor, Vector2.Zero, normal),
                     new Vertex(v2, currentColor, Vector2.Zero, normal),
-                    new Vertex(v3, currentColor, Vector2.Zero, normal));
+                    new Vertex(v1, currentColor, Vector2.Zero, normal));
             }
             else
             {
                 vertexStructure.AddTriangle(
-                    new Vertex(v1, Color4.Transparent, Vector2.Zero, normal),
-                    new Vertex(v2, Color4.Transparent, Vector2.Zero, normal),
-                    new Vertex(v3, Color4.Transparent, Vector2.Zero, normal));
+                    new Vertex(v1, currentColor, Vector2.Zero, normal),
+                    new Vertex(v2, currentColor, Vector2.Zero, normal),
+                    new Vertex(v3, currentColor, Vector2.Zero, normal));
             }
         }
 
         /// <summary>
         /// Reads the model in ASCII format from the specified stream.
         /// </summary>
-        private ImportedModelContainer TryReadAscii(Stream stream, ImportOptions importOptions)
+        private ImportedModelContainer TryReadAscii(Stream stream, StlImportOptions importOptions)
         {
             using (var reader = new StreamReader(stream, ENCODING, false, 128, true))
             {
@@ -388,7 +422,7 @@ namespace SeeingSharp.Multimedia.Objects
 
                             // Geometry data
                         case "facet":
-                            this.ReadFacet(reader, values, newStructure);
+                            this.ReadFacet(reader, values, newStructure, importOptions);
                             break;
 
                             // End of file
@@ -404,7 +438,13 @@ namespace SeeingSharp.Multimedia.Objects
                 result.ImportedResources.Add(new ImportedResourceInfo(
                     geoResourceKey,
                     () => new GeometryResource(newStructure)));
-                result.Objects.Add(new GenericObject(geoResourceKey));
+                GenericObject geoObject = new GenericObject(geoResourceKey);
+                result.Objects.Add(geoObject);
+
+                // Append an object which transform the whole coordinate system
+                ScenePivotObject rootObject = result.CreateAndAddRootObject();
+                result.ParentChildRelationships.Add(new Tuple<SceneObject, SceneObject>(rootObject, geoObject));
+
                 return result;
             }
         }
@@ -412,7 +452,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Reads the model from the specified binary stream.
         /// </summary>
-        private ImportedModelContainer TryReadBinary(Stream stream, ImportOptions importOptions)
+        private ImportedModelContainer TryReadBinary(Stream stream, StlImportOptions importOptions)
         {
             // Check length
             long length = stream.Length;
@@ -441,7 +481,7 @@ namespace SeeingSharp.Multimedia.Objects
                 VertexStructure newStructure = new VertexStructure((int)numberTriangles * 3, (int)numberTriangles);
                 for (int loop = 0; loop < numberTriangles; loop++)
                 {
-                    this.ReadTriangle(reader, newStructure);
+                    this.ReadTriangle(reader, newStructure, importOptions);
                 }
 
                 // Generate result container
@@ -451,7 +491,13 @@ namespace SeeingSharp.Multimedia.Objects
                 result.ImportedResources.Add(new ImportedResourceInfo(
                     geoResourceKey,
                     () => new GeometryResource(newStructure)));
-                result.Objects.Add(new GenericObject(geoResourceKey));
+                GenericObject geoObject = new GenericObject(geoResourceKey);
+                result.Objects.Add(geoObject);
+
+                // Append an object which transform the whole coordinate system
+                ScenePivotObject rootObject = result.CreateAndAddRootObject();
+                result.ParentChildRelationships.Add(new Tuple<SceneObject, SceneObject>(rootObject, geoObject));
+
                 return result;
             }
         }

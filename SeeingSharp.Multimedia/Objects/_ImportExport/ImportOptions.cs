@@ -33,7 +33,6 @@ namespace SeeingSharp.Multimedia.Objects
         {
             this.ResourceCoordinateSystem = CoordinateSystem.LeftHanded_UpY;
             this.ResizeFactor = 1f;
-            //this.ResizeFactor = 0.00001f;
         }
 
         /// <summary>
@@ -51,5 +50,31 @@ namespace SeeingSharp.Multimedia.Objects
             get;
             set;
         }
+
+        /// <summary>
+        /// Should triangle order be changes by the import logic?
+        /// </summary>
+        public bool ChangeTriangleOrder
+        {
+            get
+            {
+                switch (this.ResourceCoordinateSystem)
+                {
+                    case CoordinateSystem.LeftHanded_UpY:
+                    case CoordinateSystem.RightHanded_UpZ:
+                        return false;
+
+                    case CoordinateSystem.LeftHanded_UpZ:
+                    case CoordinateSystem.RightHanded_UpY:
+                        return true;
+
+                    default:
+                        throw new SeeingSharpGraphicsException(string.Format(
+                            "Unknown coordinate system {0}!",
+                            this.ResourceCoordinateSystem));
+                }
+            }
+        }
+
     }
 }

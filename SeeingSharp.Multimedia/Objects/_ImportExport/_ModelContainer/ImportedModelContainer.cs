@@ -72,11 +72,14 @@ namespace SeeingSharp.Multimedia.Objects
                     break;
 
                 case CoordinateSystem.LeftHanded_UpZ:
-                    rootObject.TransformationType = SpacialTransformationType.None;
+                    rootObject.Scaling = new Vector3(1f, -1f, 1f);
+                    rootObject.RotationEuler = new Vector3(-EngineMath.RAD_90DEG, 0f, 0f);
+                    rootObject.TransformationType = SpacialTransformationType.ScalingTranslationEulerAngles;
                     break;
 
                 case CoordinateSystem.RightHanded_UpY:
-                    rootObject.TransformationType = SpacialTransformationType.None;
+                    rootObject.Scaling = new Vector3(1f, 1f, -1f);
+                    rootObject.TransformationType = SpacialTransformationType.ScalingTranslation;
                     break;
 
                 case CoordinateSystem.RightHanded_UpZ:
@@ -132,24 +135,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public bool ChangeTriangleOrder
         {
-            get
-            {
-                switch(m_importOptions.ResourceCoordinateSystem)
-                {
-                    case CoordinateSystem.LeftHanded_UpY:
-                    case CoordinateSystem.RightHanded_UpZ:
-                        return false;
-
-                    case CoordinateSystem.LeftHanded_UpZ:
-                    case CoordinateSystem.RightHanded_UpY:
-                        return true;
-
-                    default:
-                        throw new SeeingSharpGraphicsException(string.Format(
-                            "Unknown coordinate system {0}!",
-                            m_importOptions.ResourceCoordinateSystem));
-                }
-            }
+            get { return m_importOptions.ChangeTriangleOrder; }
         }
 
         /// <summary>

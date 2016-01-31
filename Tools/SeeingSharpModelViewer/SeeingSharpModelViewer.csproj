@@ -108,14 +108,6 @@
     <Resource Include="Assets\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\..\packages\AssimpNet.3.3.1\lib\Assimp32.dll">
-      <Link>Assimp32.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\packages\AssimpNet.3.3.1\lib\Assimp64.dll">
-      <Link>Assimp64.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="Assets\Icons\Save16x16.png" />
     <Content Include="Assets\Icons\Open16x16.png" />
     <Content Include="Assets\Icons\Help16x16.png" />

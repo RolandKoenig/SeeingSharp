@@ -50,6 +50,49 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
+        public async Task LoadAndRender_StlFile()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                // Get and configure the camera
+                PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
+                camera.Position = new Vector3(-4f, 4f, -4f);
+                camera.Target = new Vector3(2f, 0f, 2f);
+                camera.UpdateCamera();
+
+                // Import Fox model
+                StlImportOptions importOptions = new StlImportOptions();
+                importOptions.ResourceCoordinateSystem = CoordinateSystem.LeftHanded_UpZ;
+                var loadedObjects = await memRenderTarget.Scene.ImportAsync(
+                    new AssemblyResourceLink(
+                        typeof(ModelLoadingAndRenderingTests),
+                        "Ressources.Models.Fox.stl"),
+                    importOptions);
+
+                // Wait for it to be visible
+                await memRenderTarget.Scene.WaitUntilVisibleAsync(loadedObjects, memRenderTarget.RenderLoop);
+
+                // Take screenshot
+                GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+
+                //screenshot.DumpToDesktop(TEST_DUMMY_FILE_NAME);
+
+                // Calculate and check difference
+                bool isNearEqual = BitmapComparison.IsNearEqual(
+                    screenshot, Properties.Resources.ReferenceImage_ModelStl);
+                Assert.True(isNearEqual, "Difference to reference image is to big!");
+            }
+
+            // Finishing checks
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task LoadAndRender_ACFlatShadedObject()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();

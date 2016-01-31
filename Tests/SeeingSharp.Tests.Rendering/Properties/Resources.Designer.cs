@@ -163,6 +163,16 @@ namespace SeeingSharp.Tests.Rendering.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ReferenceImage_ModelStl {
+            get {
+                object obj = ResourceManager.GetObject("ReferenceImage_ModelStl", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ReferenceImage_PostProcess_EdgeDetect {
             get {
                 object obj = ResourceManager.GetObject("ReferenceImage_PostProcess_EdgeDetect", resourceCulture);

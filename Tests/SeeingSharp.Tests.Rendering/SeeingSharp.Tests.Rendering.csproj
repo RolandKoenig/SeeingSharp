@@ -125,6 +125,7 @@
     <Content Include="Ressources\ReferenceRenderings\SimpleBitmap_Transparency.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleObject_Transparent.png" />
     <Content Include="Ressources\ReferenceRenderings\SimpleObject_VideoTexture.png" />
+    <Content Include="Ressources\ReferenceRenderings\ModelStl.png" />
     <Content Include="Ressources\ReferenceRenderings\VideoFrameWmv_Seek.png" />
     <Content Include="Ressources\ReferenceRenderings\VideoFrameMp4.png" />
     <Content Include="Ressources\ReferenceRenderings\VideoFrameWmv.png" />
@@ -151,6 +152,7 @@
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
     <None Include="packages.config" />
+    <EmbeddedResource Include="Ressources\Models\Fox.stl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
