@@ -21,7 +21,6 @@
 */
 #endregion
 
-#if DESKTOP
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
@@ -53,24 +52,28 @@ namespace SeeingSharp.Multimedia.Objects
     [SupportedFileFormat("zgl", "SGI OpenGL render library format (compressed)")]
     public class XglImporter : IModelImporter
     {
+        #region Internal resource names
         private const string RES_CLASS_TEXTURE = "Tex";
         private const string RES_CLASS_MESH = "Mesh";
+        #endregion
 
-        // All common nodes
+        #region All common nodes
         private const string NODE_NAME_DATA = "DATA";
         private const string NODE_NAME_BACKGROUND = "BACKGROUND";
         private const string NODE_NAME_LIGHTING = "LIGHTING";
         private const string NODE_NAME_TEXTURE = "TEXTURE";
         private const string NODE_NAME_MESH = "MESH";
         private const string NODE_NAME_OBJECT = "OBJECT";
+        #endregion
 
-        // All nodes containing texture information
+        #region All nodes containing texture information
         private const string NODE_NAME_TEXTURE_RGBA = "TEXTURERGBA";
         private const string NODE_NAME_TEXTURE_RGB = "TEXTURERGB";
         private const string NODE_NAME_TEXTURE_MODULATE = "MODULATE";
         private const string NODE_NAME_TEXTURE_REPEAT = "REPEAT";
+        #endregion
 
-        // All nodes containing mesh information
+        #region All nodes containing mesh information
         private const string NODE_NAME_MAT = "MAT";
         private const string NODE_NAME_MAT_DIFFUSE = "DIFF";
         private const string NODE_NAME_NORMAL = "N";
@@ -83,13 +86,15 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_FACE_POINT_REF = "PREF";
         private const string NODE_NAME_FACE_NORMAL_REF = "NREF";
         private const string NODE_NAME_PATCH = "PATCH";
+        #endregion
 
-        // All nodes containing object information
+        #region All nodes containing object information
         private const string NODE_NAME_MESHREF = "MESHREF";
         private const string NODE_NAME_TRANS_FORWARD = "FORWARD";
         private const string NODE_NAME_TRANS_UP = "UP";
         private const string NODE_NAME_TRANS_POSITION = "POSITION";
-        
+        #endregion
+
         /// <summary>
         /// Imports a model from the given file.
         /// </summary>
@@ -464,4 +469,3 @@ namespace SeeingSharp.Multimedia.Objects
         }
     }
 }
-#endif

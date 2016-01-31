@@ -29,6 +29,9 @@ using System.Threading;
 
 namespace SeeingSharp.Multimedia.Objects
 {
+    /// <summary>
+    /// Container for imported model data.
+    /// </summary>
     public class ImportedModelContainer
     {
         #region Static id counter 
@@ -107,7 +110,7 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         /// <summary>
-        /// Gets a collection containing all objects.
+        /// Gets a collection containing all imported objects.
         /// </summary>
         public List<SceneObject> Objects
         {
@@ -115,7 +118,7 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         /// <summary>
-        /// Gets the hierarchy information of the loaded objects.
+        /// Gets the hierarchy information of the imported objects.
         /// </summary>
         public List<Tuple<SceneObject, SceneObject>> ParentChildRelationships
         {
@@ -123,7 +126,7 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         /// <summary>
-        /// Gets a collection containing all resources.
+        /// Gets a collection containing all imported resources.
         /// </summary>
         public List<ImportedResourceInfo> ImportedResources
         {
@@ -132,6 +135,7 @@ namespace SeeingSharp.Multimedia.Objects
 
         /// <summary>
         /// Should triangle order be changes by the import logic?
+        /// (This property is handled by the importer)
         /// </summary>
         public bool ChangeTriangleOrder
         {
@@ -139,7 +143,8 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         /// <summary>
-        /// 
+        /// The resize factor for imported geometry.
+        /// (This property is handled by the importer)
         /// </summary>
         public float ResizeFactor 
         { 

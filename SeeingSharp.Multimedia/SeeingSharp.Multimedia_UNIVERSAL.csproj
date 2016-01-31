@@ -226,7 +226,6 @@
     <Compile Include="Drawing3D\_Resources\_Textures\StandardTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\VideoTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\VideoThumbnailTextureResource.cs" />
-    <Compile Include="Drawing3D\_Resources\_TransitionEffects\TransitionEffectResource.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\LineVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\StandardVertex.cs" />
     <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />
@@ -252,6 +251,7 @@
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglMaterialInfo.cs" />
     <Compile Include="PlayingSound\CachedSoundFile.cs" />
     <Compile Include="PlayingSound\SoundManager.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
