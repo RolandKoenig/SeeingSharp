@@ -1,16 +1,16 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# and all games/applications distributed together with it. 
-    More info at 
+    Seeing# and all games/applications distributed together with it.
+    More info at
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2016 Roland König (RolandK)
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Lesser General Public License as published
     by the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
-    
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -19,20 +19,20 @@
     You should have received a copy of the GNU Lesser General Public License
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Numerics;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Util;
-using System;
-using System.Numerics;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
 
 // Some namespace mappings
 using DXGI = SharpDX.DXGI;
@@ -55,7 +55,7 @@ namespace SeeingSharp.Multimedia.Objects
         #region Internal resource names
         private const string RES_CLASS_TEXTURE = "Tex";
         private const string RES_CLASS_MESH = "Mesh";
-        #endregion
+        #endregion Internal resource names
 
         #region All common nodes
         private const string NODE_NAME_DATA = "DATA";
@@ -64,14 +64,14 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_TEXTURE = "TEXTURE";
         private const string NODE_NAME_MESH = "MESH";
         private const string NODE_NAME_OBJECT = "OBJECT";
-        #endregion
+        #endregion All common nodes
 
         #region All nodes containing texture information
         private const string NODE_NAME_TEXTURE_RGBA = "TEXTURERGBA";
         private const string NODE_NAME_TEXTURE_RGB = "TEXTURERGB";
         private const string NODE_NAME_TEXTURE_MODULATE = "MODULATE";
         private const string NODE_NAME_TEXTURE_REPEAT = "REPEAT";
-        #endregion
+        #endregion All nodes containing texture information
 
         #region All nodes containing mesh information
         private const string NODE_NAME_MAT = "MAT";
@@ -86,14 +86,14 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_FACE_POINT_REF = "PREF";
         private const string NODE_NAME_FACE_NORMAL_REF = "NREF";
         private const string NODE_NAME_PATCH = "PATCH";
-        #endregion
+        #endregion All nodes containing mesh information
 
         #region All nodes containing object information
         private const string NODE_NAME_MESHREF = "MESHREF";
         private const string NODE_NAME_TRANS_FORWARD = "FORWARD";
         private const string NODE_NAME_TRANS_UP = "UP";
         private const string NODE_NAME_TRANS_POSITION = "POSITION";
-        #endregion
+        #endregion All nodes containing object information
 
         /// <summary>
         /// Imports a model from the given file.
@@ -102,6 +102,13 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="importOptions">Some configuration for the importer.</param>
         public ImportedModelContainer ImportModel(ResourceLink sourceFile, ImportOptions importOptions)
         {
+            // Get import options
+            XglImportOptions xglImportOptions = importOptions as XglImportOptions;
+            if (xglImportOptions == null)
+            {
+                throw new SeeingSharpException("Invalid import options for ACImporter!");
+            }
+
             ImportedModelContainer result = new ImportedModelContainer(importOptions);
 
             // Append an object which transform the whole coordinate system
@@ -133,21 +140,21 @@ namespace SeeingSharp.Multimedia.Objects
                                 break;
 
                             case NODE_NAME_MESH:
-                                ImportMesh(inStreamXml, result);
+                                ImportMesh(inStreamXml, result, xglImportOptions);
                                 break;
 
                             case NODE_NAME_OBJECT:
-                                ImportObject(inStreamXml, result, rootObject);
+                                ImportObject(inStreamXml, result, rootObject, xglImportOptions);
                                 break;
                         }
                     }
-                    catch(Exception ex)
+                    catch (Exception ex)
                     {
                         // Get current line and column
                         int currentLine = 0;
                         int currentColumn = 0;
                         IXmlLineInfo lineInfo = inStreamXml as IXmlLineInfo;
-                        if(lineInfo != null)
+                        if (lineInfo != null)
                         {
                             currentLine = lineInfo.LineNumber;
                             currentColumn = lineInfo.LinePosition;
@@ -170,7 +177,10 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public ImportOptions CreateDefaultImportOptions()
         {
-            return new XglImportOptions();
+            XglImportOptions options = new XglImportOptions();
+            options.ResizeFactor = 0.01f;
+            options.ResourceCoordinateSystem = CoordinateSystem.RightHanded_UpZ;
+            return options;
         }
 
         /// <summary>
@@ -186,7 +196,7 @@ namespace SeeingSharp.Multimedia.Objects
             byte[] textureBuffer = null;
             DXGI.Format format = DXGI.Format.R8G8B8A8_UNorm;
 
-            while(inStreamXml.Read())
+            while (inStreamXml.Read())
             {
                 // Ending condition
                 if ((inStreamXml.NodeType == XmlNodeType.EndElement) &&
@@ -199,7 +209,7 @@ namespace SeeingSharp.Multimedia.Objects
                 if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
 
                 // Read all texture data
-                switch(inStreamXml.Name)
+                switch (inStreamXml.Name)
                 {
                     case NODE_NAME_TEXTURE_RGBA:
                         width = Int32.Parse(inStreamXml.GetAttribute("WIDTH"));
@@ -209,7 +219,7 @@ namespace SeeingSharp.Multimedia.Objects
                         inStreamXml.ReadContentAsBinHex(textureBuffer, 0, textureBuffer.Length);
                         format = DXGI.Format.R8G8B8A8_UNorm;
                         break;
-                   
+
                     case NODE_NAME_TEXTURE_RGB:
                         width = Int32.Parse(inStreamXml.GetAttribute("WIDTH"));
                         height = Int32.Parse(inStreamXml.GetAttribute("HEIGHT"));
@@ -218,7 +228,7 @@ namespace SeeingSharp.Multimedia.Objects
                         inStreamXml.Read();
                         inStreamXml.ReadContentAsBinHex(textureBufferDummy, 0, textureBufferDummy.Length);
                         int loop2 = 0;
-                        for (int loop = 0; loop < textureBufferDummy.Length; loop+= 3)
+                        for (int loop = 0; loop < textureBufferDummy.Length; loop += 3)
                         {
                             textureBuffer[loop2] = textureBufferDummy[loop];
                             textureBuffer[loop2 + 1] = textureBufferDummy[loop + 1];
@@ -259,7 +269,8 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         /// <param name="inStreamXml">The xml reader object.</param>
         /// <param name="container">The container where to import to.</param>
-        private void ImportMesh(XmlReader inStreamXml, ImportedModelContainer container)
+        /// <param name="xglImportOptions">Current import options.</param>
+        private void ImportMesh(XmlReader inStreamXml, ImportedModelContainer container, XglImportOptions xglImportOptions)
         {
             string id = inStreamXml.GetAttribute("ID");
             VertexStructure actVertexStructure = new VertexStructure();
@@ -283,9 +294,9 @@ namespace SeeingSharp.Multimedia.Objects
                 // Continue condition
                 if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
 
-                switch(inStreamXml.Name)
+                switch (inStreamXml.Name)
                 {
-                        // Handle new material node
+                    // Handle new material node
                     case NODE_NAME_MAT:
                         currentMaterial = new XglMaterialInfo();
                         currentMaterial.ID = Int32.Parse(inStreamXml.GetAttribute("ID"));
@@ -298,7 +309,7 @@ namespace SeeingSharp.Multimedia.Objects
                         currentMaterial.Diffuse = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
                         break;
 
-                        // Read next normal
+                    // Read next normal
                     case NODE_NAME_NORMAL:
                         if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
                         actNormalIndex++;
@@ -308,24 +319,24 @@ namespace SeeingSharp.Multimedia.Objects
                         actVertexStructure.Vertices[actNormalIndex] = actTempVertex;
                         break;
 
-                        // Read next point
+                    // Read next point
                     case NODE_NAME_POINT:
                         if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
                         actVertexIndex++;
                         actTempVertex = actVertexStructure.EnsureVertexAt(actVertexIndex);
                         inStreamXml.Read();
-                        actTempVertex.Position = inStreamXml.ReadContentAsVector3() / 1000f;
+                        actTempVertex.Position = inStreamXml.ReadContentAsVector3() * xglImportOptions.ResizeFactor;
                         actVertexStructure.Vertices[actVertexIndex] = actTempVertex;
                         break;
 
-                        // Read next face
+                    // Read next face
                     case NODE_NAME_FACE:
                         actFaceReferences[0] = 0;
                         actFaceReferences[1] = 0;
                         actFaceReferences[2] = 0;
                         int loop = 0;
                         int referencedMat = -1;
-                        while(inStreamXml.Read())
+                        while (inStreamXml.Read())
                         {
                             // Ending condition
                             if ((inStreamXml.NodeType == XmlNodeType.EndElement) &&
@@ -336,12 +347,12 @@ namespace SeeingSharp.Multimedia.Objects
                             if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
 
                             // Read next face index
-                            if(inStreamXml.Name == NODE_NAME_FACE_MATERIAL_REF)
+                            if (inStreamXml.Name == NODE_NAME_FACE_MATERIAL_REF)
                             {
                                 inStreamXml.Read();
                                 referencedMat = inStreamXml.ReadContentAsInt();
                             }
-                            else if(inStreamXml.Name == NODE_NAME_FACE_POINT_REF)
+                            else if (inStreamXml.Name == NODE_NAME_FACE_POINT_REF)
                             {
                                 if (loop >= 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
                                 inStreamXml.Read();
@@ -351,12 +362,12 @@ namespace SeeingSharp.Multimedia.Objects
                         }
                         if (loop != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
                         actVertexStructure.AddTriangle(actFaceReferences[0], actFaceReferences[1], actFaceReferences[2]);
-                        
-                        // Apply material 
+
+                        // Apply material
                         XglMaterialInfo faceMaterial = null;
-                        if(localMaterialInfos.TryGetValue(referencedMat, out faceMaterial))
+                        if (localMaterialInfos.TryGetValue(referencedMat, out faceMaterial))
                         {
-                            for(int actFaceLoc=0 ; actFaceLoc<3; actFaceLoc++)
+                            for (int actFaceLoc = 0; actFaceLoc < 3; actFaceLoc++)
                             {
                                 int actVertexIndexInner = actFaceReferences[actFaceLoc];
                                 actTempVertex = actVertexStructure.Vertices[actVertexIndexInner];
@@ -383,7 +394,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Imports the texture node where the xml reader is currently located.
         /// </summary>
-        private void ImportObject(XmlReader inStreamXml, ImportedModelContainer container, SceneObject parentObject)
+        private void ImportObject(XmlReader inStreamXml, ImportedModelContainer container, SceneObject parentObject, XglImportOptions xglImportOptions)
         {
             Vector3 upVector = Vector3.UnitY;
             Vector3 forwardVector = Vector3.UnitZ;
@@ -435,11 +446,11 @@ namespace SeeingSharp.Multimedia.Objects
                 // Continue condition
                 if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
 
-                switch(inStreamXml.Name)
+                switch (inStreamXml.Name)
                 {
                     case NODE_NAME_OBJECT:
                         actionFinalizeObject();
-                        ImportObject(inStreamXml, container, newObject);
+                        ImportObject(inStreamXml, container, newObject, xglImportOptions);
                         break;
 
                     case NODE_NAME_TRANS_FORWARD:
@@ -454,7 +465,7 @@ namespace SeeingSharp.Multimedia.Objects
 
                     case NODE_NAME_TRANS_POSITION:
                         inStreamXml.Read();
-                        positionVector = inStreamXml.ReadContentAsVector3() / 1000f;
+                        positionVector = inStreamXml.ReadContentAsVector3() * xglImportOptions.ResizeFactor;
                         break;
 
                     case NODE_NAME_MESHREF:
