@@ -87,6 +87,11 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_FACE_POINT_REF = "PREF";
         private const string NODE_NAME_FACE_NORMAL_REF = "NREF";
         private const string NODE_NAME_PATCH = "PATCH";
+        private const string NODE_NAME_AMB = "AMB";
+        private const string NODE_NAME_EMISS = "EMISS";
+        private const string NODE_NAME_SPEC = "SPEC";
+        private const string NODE_NAME_ALPHA = "ALPHA";
+        private const string NODE_NAME_SHINE = "SHINE";
         #endregion All nodes containing mesh information
 
         #region All nodes containing object information
@@ -215,8 +220,7 @@ namespace SeeingSharp.Multimedia.Objects
             string id = inStreamXml.GetAttribute("ID");
             int width = 0;
             int height = 0;
-            byte[] textureBuffer = null;
-            DXGI.Format format = DXGI.Format.R8G8B8A8_UNorm;
+            MemoryMappedTexture32bpp inMemoryTexture = null;
 
             while (inStreamXml.Read())
             {
@@ -231,35 +235,58 @@ namespace SeeingSharp.Multimedia.Objects
                 if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
 
                 // Read all texture data
+                
                 switch (inStreamXml.Name)
                 {
                     case NODE_NAME_TEXTURE_RGBA:
                         width = Int32.Parse(inStreamXml.GetAttribute("WIDTH"));
                         height = Int32.Parse(inStreamXml.GetAttribute("HEIGHT"));
-                        textureBuffer = new byte[width * height * 4];
-                        inStreamXml.Read();
-                        inStreamXml.ReadContentAsBinHex(textureBuffer, 0, textureBuffer.Length);
-                        format = DXGI.Format.R8G8B8A8_UNorm;
+
+                        unsafe
+                        {
+                            inMemoryTexture = new MemoryMappedTexture32bpp(new Size2(width, height));
+                            byte* inMemoryTextureP = (byte*)inMemoryTexture.Pointer.ToPointer();
+
+                            int fullSize = width * height * 4;
+                            byte[] sourceBuffer = new byte[fullSize];
+                            inStreamXml.Read();
+                            inStreamXml.ReadContentAsBinHex(sourceBuffer, 0, fullSize);
+                            for (int loop = 0; loop < fullSize; loop += 4)
+                            {
+                                // Target format is BGRA (default one in Seeing#)
+                                
+                                inMemoryTextureP[loop + 2] = sourceBuffer[loop];
+                                inMemoryTextureP[loop + 1] = sourceBuffer[loop + 1];
+                                inMemoryTextureP[loop + 0] = sourceBuffer[loop + 2];
+                                inMemoryTextureP[loop + 3] = sourceBuffer[loop + 3];
+                            }
+                        }
                         break;
 
                     case NODE_NAME_TEXTURE_RGB:
                         width = Int32.Parse(inStreamXml.GetAttribute("WIDTH"));
                         height = Int32.Parse(inStreamXml.GetAttribute("HEIGHT"));
-                        byte[] textureBufferDummy = new byte[width * height * 3];
-                        textureBuffer = new byte[width * height * 4];
-                        inStreamXml.Read();
-                        inStreamXml.ReadContentAsBinHex(textureBufferDummy, 0, textureBufferDummy.Length);
-                        int loop2 = 0;
-                        for (int loop = 0; loop < textureBufferDummy.Length; loop += 3)
-                        {
-                            textureBuffer[loop2] = textureBufferDummy[loop];
-                            textureBuffer[loop2 + 1] = textureBufferDummy[loop + 1];
-                            textureBuffer[loop2 + 2] = textureBufferDummy[loop + 2];
-                            textureBuffer[loop2 + 3] = 255;
 
-                            loop2 += 4;
+                        unsafe
+                        {
+                            inMemoryTexture = new MemoryMappedTexture32bpp(new Size2(width, height));
+                            byte* inMemoryTextureP = (byte*)inMemoryTexture.Pointer.ToPointer();
+
+                            int fullSize = width * height * 3;
+                            int loopTarget = 0;
+                            byte[] sourceBuffer = new byte[fullSize];
+                            inStreamXml.Read();
+                            inStreamXml.ReadContentAsBinHex(sourceBuffer, 0, fullSize);
+                            for (int loop = 0; loop < fullSize; loop += 3)
+                            {
+                                // Target format is BGRA (default one in Seeing#)
+                                inMemoryTextureP[loopTarget + 2] = sourceBuffer[loop];
+                                inMemoryTextureP[loopTarget + 1] = sourceBuffer[loop + 1];
+                                inMemoryTextureP[loopTarget + 0] = sourceBuffer[loop + 2];
+                                inMemoryTextureP[loopTarget + 3] = 255;
+                                loopTarget += 4;
+                            }
                         }
-                        format = DXGI.Format.R8G8B8A8_UNorm;
                         break;
 
                     case NODE_NAME_TEXTURE_MODULATE:
@@ -269,21 +296,22 @@ namespace SeeingSharp.Multimedia.Objects
                         break;
 
                     default:
-                        throw new SeeingSharpGraphicsException(string.Format(
-                            "Unknown element {0} in xgl file!",
-                            inStreamXml.Name));
+                        //throw new SeeingSharpGraphicsException(string.Format(
+                        //    "Unknown element {0} in xgl file!",
+                        //    inStreamXml.Name));
+                        break;
                 }
             }
 
             // Check values
             if (width < 0) { throw new SeeingSharpGraphicsException("Unable to read with of a texture!"); }
             if (height < 0) { throw new SeeingSharpGraphicsException("Unable to read height of a texture!"); }
-            if (textureBuffer == null) { throw new SeeingSharpGraphicsException("Unable to read the contents of a texture!"); }
+            if (inMemoryTexture == null) { throw new SeeingSharpGraphicsException("Unable to read the contents of a texture!"); }
 
             // Add the imported texture
             container.ImportedResources.Add(new ImportedResourceInfo(
                 container.GetResourceKey(RES_CLASS_TEXTURE, id),
-                () => new StandardTextureResource(textureBuffer, width, height, format)));
+                () => new StandardTextureResource(inMemoryTexture)));
         }
 
         /// <summary>
@@ -397,6 +425,24 @@ namespace SeeingSharp.Multimedia.Objects
                                 actVertexStructure.Vertices[actVertexIndexInner] = actTempVertex;
                             }
                         }
+                        break;
+
+                    case NODE_NAME_AMB:
+                        break;
+
+                    case NODE_NAME_EMISS:
+                        break;
+
+                    case NODE_NAME_SPEC:
+                        break;
+
+                    case NODE_NAME_ALPHA:
+                        break;
+
+                    case NODE_NAME_SHINE:
+                        break;
+
+                    case NODE_NAME_PATCH:
                         break;
 
                     default:

@@ -22,6 +22,7 @@
 #endregion
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Util;
+using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -35,20 +36,21 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class StandardTextureResource : TextureResource
     {
-#region Given configuration
+        #region configuration
         private ResourceLink m_resourceLinkHighQuality;
         private ResourceLink m_resourceLinkLowQuality;
-#endregion
+        private MemoryMappedTexture32bpp m_inMemoryTexture;
+        #endregion
 
-#region Loaded resources
+        #region Loaded resources
         private D3D11.Texture2D m_texture;
         private D3D11.ShaderResourceView m_textureView;
-#endregion
+        #endregion
 
-#region Runtime
+        #region Runtime
         private bool m_isCubeTexture;
         private bool m_isRenderTarget;
-#endregion
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardTextureResource" /> class.
@@ -59,9 +61,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
             m_resourceLinkLowQuality = textureSource;
         }
 
-        internal StandardTextureResource(byte[] textureBytes, int width, int height, DXGI.Format textureFormat)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StandardTextureResource" /> class.
+        /// </summary>
+        internal StandardTextureResource(MemoryMappedTexture32bpp inMemoryTexture)
         {
+            inMemoryTexture.EnsureNotNull(nameof(inMemoryTexture));
 
+            m_inMemoryTexture = inMemoryTexture;
         }
 
         /// <summary>
@@ -87,9 +94,16 @@ namespace SeeingSharp.Multimedia.Drawing3D
             // Load the texture
             try
             {
-                using (Stream inStream = source.OpenInputStream())
+                if (source != null)
                 {
-                    m_texture = GraphicsHelper.LoadTexture2D(device, inStream);
+                    using (Stream inStream = source.OpenInputStream())
+                    {
+                        m_texture = GraphicsHelper.LoadTexture2D(device, inStream);
+                    }
+                }
+                else if (m_inMemoryTexture != null)
+                {
+                    m_texture = GraphicsHelper.LoadTexture2DFromMappedTexture(device, m_inMemoryTexture);
                 }
             }
             catch(Exception)

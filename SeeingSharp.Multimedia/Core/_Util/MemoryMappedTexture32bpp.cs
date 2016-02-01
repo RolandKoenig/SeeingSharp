@@ -33,7 +33,7 @@ namespace SeeingSharp.Multimedia.Core
 {
     public unsafe class MemoryMappedTexture32bpp : IDisposable
     {
-        #region The native structure, where we store all ObjectIDs uploaded from graphics hardware
+        #region The native structure of this texture
         private IntPtr m_pointer;
         private int* m_pointerNative;
         private Size2 m_size;
