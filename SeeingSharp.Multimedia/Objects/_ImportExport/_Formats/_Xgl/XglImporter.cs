@@ -36,6 +36,7 @@ using SeeingSharp.Util;
 
 // Some namespace mappings
 using DXGI = SharpDX.DXGI;
+using System.IO.Compression;
 
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
@@ -116,56 +117,77 @@ namespace SeeingSharp.Multimedia.Objects
 
             // Load current model by walking through xml nodes
             using (Stream inStream = sourceFile.OpenInputStream())
-            using (XmlReader inStreamXml = XmlReader.Create(inStream, new XmlReaderSettings() { CloseInput = false }))
             {
-                while (inStreamXml.Read())
+                // Handle compressed xgl files (extension zgl)
+                Stream nextStream = inStream;
+                if(sourceFile.FileExtension.Equals("zgl", StringComparison.OrdinalIgnoreCase))
                 {
-                    try
+                    // Skip the first bytes in case of compression
+                    //  see https://github.com/assimp/assimp/blob/master/code/XGLLoader.cpp
+                    inStream.ReadByte();
+                    inStream.ReadByte();
+                    nextStream = new System.IO.Compression.DeflateStream(inStream, CompressionMode.Decompress);
+                }
+
+                // Read all xml data
+                try
+                {
+                    using (XmlReader inStreamXml = XmlReader.Create(nextStream, new XmlReaderSettings() { CloseInput = false }))
                     {
-                        if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
-
-                        switch (inStreamXml.Name)
+                        while (inStreamXml.Read())
                         {
-                            case NODE_NAME_DATA:
-                                break;
+                            try
+                            {
+                                if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
 
-                            case NODE_NAME_BACKGROUND:
-                                break;
+                                switch (inStreamXml.Name)
+                                {
+                                    case NODE_NAME_DATA:
+                                        break;
 
-                            case NODE_NAME_LIGHTING:
-                                break;
+                                    case NODE_NAME_BACKGROUND:
+                                        break;
 
-                            case NODE_NAME_TEXTURE:
-                                ImportTexture(inStreamXml, result);
-                                break;
+                                    case NODE_NAME_LIGHTING:
+                                        break;
 
-                            case NODE_NAME_MESH:
-                                ImportMesh(inStreamXml, result, xglImportOptions);
-                                break;
+                                    case NODE_NAME_TEXTURE:
+                                        ImportTexture(inStreamXml, result);
+                                        break;
 
-                            case NODE_NAME_OBJECT:
-                                ImportObject(inStreamXml, result, rootObject, xglImportOptions);
-                                break;
+                                    case NODE_NAME_MESH:
+                                        ImportMesh(inStreamXml, result, xglImportOptions);
+                                        break;
+
+                                    case NODE_NAME_OBJECT:
+                                        ImportObject(inStreamXml, result, rootObject, xglImportOptions);
+                                        break;
+                                }
+                            }
+                            catch (Exception ex)
+                            {
+                                // Get current line and column
+                                int currentLine = 0;
+                                int currentColumn = 0;
+                                IXmlLineInfo lineInfo = inStreamXml as IXmlLineInfo;
+                                if (lineInfo != null)
+                                {
+                                    currentLine = lineInfo.LineNumber;
+                                    currentColumn = lineInfo.LinePosition;
+                                }
+
+                                // Throw an exception with more detail where the error was raised originally
+                                throw new SeeingSharpGraphicsException(string.Format(
+                                    "Unable to read file {0} because of an error while reading xml at {1}",
+                                    sourceFile,
+                                    currentLine + ", " + currentColumn), ex);
+                            }
                         }
                     }
-                    catch (Exception ex)
-                    {
-                        // Get current line and column
-                        int currentLine = 0;
-                        int currentColumn = 0;
-                        IXmlLineInfo lineInfo = inStreamXml as IXmlLineInfo;
-                        if (lineInfo != null)
-                        {
-                            currentLine = lineInfo.LineNumber;
-                            currentColumn = lineInfo.LinePosition;
-                        }
-
-                        // Throw an exception with more detail where the error was raised originally
-                        throw new SeeingSharpGraphicsException(string.Format(
-                            "Unable to read file {0} because of an error while reading xml at {1}",
-                            sourceFile,
-                            currentLine + ", " + currentColumn), ex);
-                    }
+                }
+                finally
+                {
+                    if(inStream != nextStream) { nextStream.Dispose(); }
                 }
             }
 
