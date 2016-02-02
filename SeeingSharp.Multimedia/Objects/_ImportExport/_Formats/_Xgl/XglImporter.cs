@@ -24,6 +24,9 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+
+// Some namespace mappings
+using System.IO.Compression;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -34,10 +37,6 @@ using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Util;
 
-// Some namespace mappings
-using DXGI = SharpDX.DXGI;
-using System.IO.Compression;
-
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
     targetType: typeof(SeeingSharp.Multimedia.Objects.XglImporter),
@@ -45,6 +44,25 @@ using System.IO.Compression;
 
 namespace SeeingSharp.Multimedia.Objects
 {
+    // Hirarchy in XGL file:
+    //
+    //  WORLD
+    //   - Data
+    //   - Background
+    //   - Lights
+    //   - Textures
+    //   - Meshes
+    //     - Points
+    //     - Normals
+    //     - Materials
+    //     - Patches
+    //       - Faces
+    //         - Vertices
+    //           -
+    //         - MaterialRef
+    //         - TextureRef
+    //   - Objects
+
     /// <summary>
     /// An importer which loads files in xgl format.
     /// See http://web.archive.org/web/20060218030828/http://www.xglspec.org/
@@ -84,6 +102,7 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_FACE_VERTEX_2 = "FV2";
         private const string NODE_NAME_FACE_VERTEX_3 = "FV3";
         private const string NODE_NAME_FACE_MATERIAL_REF = "MATREF";
+        private const string NODE_NAME_FACE_TEXTUREREF_REF = "TEXTUREREF";
         private const string NODE_NAME_FACE_POINT_REF = "PREF";
         private const string NODE_NAME_FACE_NORMAL_REF = "NREF";
         private const string NODE_NAME_PATCH = "PATCH";
@@ -128,7 +147,7 @@ namespace SeeingSharp.Multimedia.Objects
             {
                 // Handle compressed xgl files (extension zgl)
                 Stream nextStream = inStream;
-                if(sourceFile.FileExtension.Equals("zgl", StringComparison.OrdinalIgnoreCase))
+                if (sourceFile.FileExtension.Equals("zgl", StringComparison.OrdinalIgnoreCase))
                 {
                     // Skip the first bytes in case of compression
                     //  see https://github.com/assimp/assimp/blob/master/code/XGLLoader.cpp
@@ -198,7 +217,7 @@ namespace SeeingSharp.Multimedia.Objects
                 }
                 finally
                 {
-                    if(inStream != nextStream) { nextStream.Dispose(); }
+                    if (inStream != nextStream) { nextStream.Dispose(); }
                 }
             }
 
@@ -241,13 +260,12 @@ namespace SeeingSharp.Multimedia.Objects
                 if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
 
                 // Read all texture data
-                
+
                 switch (inStreamXml.Name)
                 {
                     case NODE_NAME_TEXTURE_RGBA:
                         width = Int32.Parse(inStreamXml.GetAttribute("WIDTH"));
                         height = Int32.Parse(inStreamXml.GetAttribute("HEIGHT"));
-
                         unsafe
                         {
                             inMemoryTexture = new MemoryMappedTexture32bpp(new Size2(width, height));
@@ -260,7 +278,7 @@ namespace SeeingSharp.Multimedia.Objects
                             for (int loop = 0; loop < fullSize; loop += 4)
                             {
                                 // Target format is BGRA (default one in Seeing#)
-                                
+
                                 inMemoryTextureP[loop + 2] = sourceBuffer[loop];
                                 inMemoryTextureP[loop + 1] = sourceBuffer[loop + 1];
                                 inMemoryTextureP[loop + 0] = sourceBuffer[loop + 2];
@@ -272,7 +290,6 @@ namespace SeeingSharp.Multimedia.Objects
                     case NODE_NAME_TEXTURE_RGB:
                         width = Int32.Parse(inStreamXml.GetAttribute("WIDTH"));
                         height = Int32.Parse(inStreamXml.GetAttribute("HEIGHT"));
-
                         unsafe
                         {
                             inMemoryTexture = new MemoryMappedTexture32bpp(new Size2(width, height));
@@ -393,6 +410,7 @@ namespace SeeingSharp.Multimedia.Objects
                         actFaceReferences[2] = 0;
                         int loop = 0;
                         int referencedMat = -1;
+                        int referencedTexture = -1;
                         while (inStreamXml.Read())
                         {
                             // Ending condition
@@ -409,6 +427,11 @@ namespace SeeingSharp.Multimedia.Objects
                                 inStreamXml.Read();
                                 referencedMat = inStreamXml.ReadContentAsInt();
                             }
+                            else if (inStreamXml.Name == NODE_NAME_FACE_TEXTUREREF_REF)
+                            {
+                                inStreamXml.Read();
+                                referencedTexture = inStreamXml.ReadContentAsInt();
+                            }
                             else if (inStreamXml.Name == NODE_NAME_FACE_POINT_REF)
                             {
                                 if (loop >= 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
@@ -418,7 +441,6 @@ namespace SeeingSharp.Multimedia.Objects
                             }
                             else
                             {
-
                             }
                         }
                         if (loop != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
@@ -466,6 +488,8 @@ namespace SeeingSharp.Multimedia.Objects
                         break;
 
                     case NODE_NAME_SURFACE:
+                        // If this tag is present, faces will be visible from both sides. If this flag is absent, faces will be visible from only one side as described in the <F> tag
+
                         break;
 
                     default:
