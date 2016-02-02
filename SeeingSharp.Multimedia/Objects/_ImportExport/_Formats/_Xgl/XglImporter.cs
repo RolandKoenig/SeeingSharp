@@ -47,7 +47,7 @@ namespace SeeingSharp.Multimedia.Objects
 {
     /// <summary>
     /// An importer which loads files in xgl format.
-    /// See http://vizstream.aveva.com/release/vsplatform/XGLSpec.htm
+    /// See http://web.archive.org/web/20060218030828/http://www.xglspec.org/
     /// </summary>
     [SupportedFileFormat("xgl", "SGI OpenGL render library format")]
     [SupportedFileFormat("zgl", "SGI OpenGL render library format (compressed)")]
@@ -92,11 +92,14 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_SPEC = "SPEC";
         private const string NODE_NAME_ALPHA = "ALPHA";
         private const string NODE_NAME_SHINE = "SHINE";
+        private const string NODE_NAME_TC = "TC";
+        private const string NODE_NAME_SURFACE = "SURFACE";
         #endregion All nodes containing mesh information
 
         #region All nodes containing object information
         private const string NODE_NAME_MESHREF = "MESHREF";
         private const string NODE_NAME_TRANS_FORWARD = "FORWARD";
+        private const string NODE_NAME_TRANSFORM = "TRANSFORM";
         private const string NODE_NAME_TRANS_UP = "UP";
         private const string NODE_NAME_TRANS_POSITION = "POSITION";
         #endregion All nodes containing object information
@@ -166,6 +169,9 @@ namespace SeeingSharp.Multimedia.Objects
 
                                     case NODE_NAME_OBJECT:
                                         ImportObject(inStreamXml, result, rootObject, xglImportOptions);
+                                        break;
+
+                                    default:
                                         break;
                                 }
                             }
@@ -327,6 +333,7 @@ namespace SeeingSharp.Multimedia.Objects
             int minVertexID = int.MaxValue;
             int actVertexIndex = -1;
             int actNormalIndex = -1;
+            int actTextureIndex = -1;
             Vertex actTempVertex = Vertex.Empty;
             int[] actFaceReferences = new int[3];
             Dictionary<int, XglMaterialInfo> localMaterialInfos = new Dictionary<int, XglMaterialInfo>();
@@ -409,6 +416,10 @@ namespace SeeingSharp.Multimedia.Objects
                                 actFaceReferences[loop] = inStreamXml.ReadContentAsInt() - minVertexID;
                                 loop++;
                             }
+                            else
+                            {
+
+                            }
                         }
                         if (loop != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
                         actVertexStructure.AddTriangle(actFaceReferences[0], actFaceReferences[1], actFaceReferences[2]);
@@ -443,6 +454,18 @@ namespace SeeingSharp.Multimedia.Objects
                         break;
 
                     case NODE_NAME_PATCH:
+                        break;
+
+                    case NODE_NAME_TC:
+                        if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
+                        actTextureIndex++;
+                        actTempVertex = actVertexStructure.EnsureVertexAt(actTextureIndex);
+                        inStreamXml.Read();
+                        actTempVertex.TexCoord = inStreamXml.ReadContentAsVector2();
+                        actVertexStructure.Vertices[actTextureIndex] = actTempVertex;
+                        break;
+
+                    case NODE_NAME_SURFACE:
                         break;
 
                     default:
@@ -539,6 +562,12 @@ namespace SeeingSharp.Multimedia.Objects
                     case NODE_NAME_MESHREF:
                         inStreamXml.Read();
                         meshID = inStreamXml.ReadContentAsString();
+                        break;
+
+                    case NODE_NAME_TRANSFORM:
+                        break;
+
+                    default:
                         break;
                 }
             }

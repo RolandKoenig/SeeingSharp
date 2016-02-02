@@ -66,6 +66,32 @@ namespace SeeingSharp.Util
         /// Reads a vector from the given xml reader.
         /// </summary>
         /// <param name="xmlReader">The xml reader.</param>
+        public static Vector2 ReadContentAsVector2(this XmlReader xmlReader)
+        {
+            return ReadContentAsVector2(xmlReader, CULTURE_EN.NumberFormat);
+        }
+
+        /// <summary>
+        /// Reads a vector from the given xml reader.
+        /// </summary>
+        /// <param name="xmlReader">The xml reader.</param>
+        /// <param name="formatProvider">The <see cref="IFormatProvider"/> for parsing <see cref="System.Single"/> values.</param>
+        public static Vector2 ReadContentAsVector2(this XmlReader xmlReader, IFormatProvider formatProvider)
+        {
+            string[] components = xmlReader.ReadContentAsString().Split(',');
+            if (components.Length != 2) { throw new SeeingSharpException("Invalid vector2 format in xml file!"); }
+
+            Vector2 result = new Vector2();
+            result.X = float.Parse(components[0], formatProvider);
+            result.Y = float.Parse(components[1], formatProvider);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Reads a vector from the given xml reader.
+        /// </summary>
+        /// <param name="xmlReader">The xml reader.</param>
         public static Vector3 ReadElementContentAsVector3(this XmlReader xmlReader)
         {
             return ReadElementContentAsVector3(xmlReader, CULTURE_EN.NumberFormat);
