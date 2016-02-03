@@ -994,6 +994,11 @@ namespace SeeingSharp.Multimedia.Objects
             get { return m_vertexCollection; }
         }
 
+        internal List<Vertex> VerticesInternal
+        {
+            get { return m_vertices; }
+        }
+
         /// <summary>
         /// Gets a collection containing all indices.
         /// </summary>

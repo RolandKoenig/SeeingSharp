@@ -48,20 +48,35 @@ namespace SeeingSharp.Multimedia.Objects
     //
     //  WORLD
     //   - Data
-    //   - Background
+    //   - Background (BACKGROUND)
+    //     - Backcolor (BACKCOLOR)
     //   - Lights
-    //   - Textures
-    //   - Meshes
-    //     - Points
-    //     - Normals
-    //     - Materials
-    //     - Patches
-    //       - Faces
-    //         - Vertices
-    //           -
-    //         - MaterialRef
-    //         - TextureRef
-    //   - Objects
+    //   - Textures (TEXTURE)
+    //     - Modulate (MODULATE)
+    //     - Repeat (REPEAT)
+    //     - Colors (TEXTURERGBA, TEXTURERGB)
+    //   - Meshes (MESH)
+    //     - IsBothSide? (SURFACE)
+    //     - Points (P)
+    //     - Normals (N)
+    //     - Materials (MAT)
+    //       - Diffuse (DIFF)
+    //       - Ambient (AMB)
+    //       - Emissive (EMISS)
+    //       - Specular (SPEC)
+    //       - Alpha (ALPHA)
+    //       - Shininess (SHINE)
+    //     - Patches (PATCH)
+    //       - Faces (F)
+    //         - Vertices (FV1, FV2, FV3)
+    //         - MaterialRef (MATREF)
+    //         - TextureRef (TEXTUREREF)
+    //   - Objects (OBJECT)
+    //     - Transform (TRANSFORM)
+    //       - Forward
+    //       - Up
+    //       - Position
+    //     - MeshReference (MESHREF)
 
     /// <summary>
     /// An importer which loads files in xgl format.
@@ -73,6 +88,7 @@ namespace SeeingSharp.Multimedia.Objects
     {
         #region Internal resource names
         private const string RES_CLASS_TEXTURE = "Tex";
+        private const string RES_CLASS_MATERIAL = "Mat";
         private const string RES_CLASS_MESH = "Mesh";
         #endregion Internal resource names
 
@@ -92,9 +108,17 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_TEXTURE_REPEAT = "REPEAT";
         #endregion All nodes containing texture information
 
-        #region All nodes containing mesh information
+        #region All nodes containing material information
         private const string NODE_NAME_MAT = "MAT";
         private const string NODE_NAME_MAT_DIFFUSE = "DIFF";
+        private const string NODE_NAME_MAT_AMB = "AMB";
+        private const string NODE_NAME_MAT_EMISS = "EMISS";
+        private const string NODE_NAME_MAT_SPEC = "SPEC";
+        private const string NODE_NAME_MAT_ALPHA = "ALPHA";
+        private const string NODE_NAME_MAT_SHINE = "SHINE";
+        #endregion
+
+        #region All nodes containing mesh information
         private const string NODE_NAME_NORMAL = "N";
         private const string NODE_NAME_POINT = "P";
         private const string NODE_NAME_FACE = "F";
@@ -106,11 +130,6 @@ namespace SeeingSharp.Multimedia.Objects
         private const string NODE_NAME_FACE_POINT_REF = "PREF";
         private const string NODE_NAME_FACE_NORMAL_REF = "NREF";
         private const string NODE_NAME_PATCH = "PATCH";
-        private const string NODE_NAME_AMB = "AMB";
-        private const string NODE_NAME_EMISS = "EMISS";
-        private const string NODE_NAME_SPEC = "SPEC";
-        private const string NODE_NAME_ALPHA = "ALPHA";
-        private const string NODE_NAME_SHINE = "SHINE";
         private const string NODE_NAME_TC = "TC";
         private const string NODE_NAME_SURFACE = "SURFACE";
         #endregion All nodes containing mesh information
@@ -332,9 +351,13 @@ namespace SeeingSharp.Multimedia.Objects
             if (inMemoryTexture == null) { throw new SeeingSharpGraphicsException("Unable to read the contents of a texture!"); }
 
             // Add the imported texture
+            var resKeyTexture = container.GetResourceKey(RES_CLASS_TEXTURE, id);
             container.ImportedResources.Add(new ImportedResourceInfo(
-                container.GetResourceKey(RES_CLASS_TEXTURE, id),
+                resKeyTexture,
                 () => new StandardTextureResource(inMemoryTexture)));
+            container.ImportedResources.Add(new ImportedResourceInfo(
+                container.GetResourceKey(RES_CLASS_MATERIAL, id),
+                () => new SimpleColoredMaterialResource(resKeyTexture)));
         }
 
         /// <summary>
@@ -354,7 +377,6 @@ namespace SeeingSharp.Multimedia.Objects
             Vertex actTempVertex = Vertex.Empty;
             int[] actFaceReferences = new int[3];
             Dictionary<int, XglMaterialInfo> localMaterialInfos = new Dictionary<int, XglMaterialInfo>();
-            XglMaterialInfo currentMaterial = null;
 
             while (inStreamXml.Read())
             {
@@ -370,31 +392,23 @@ namespace SeeingSharp.Multimedia.Objects
 
                 switch (inStreamXml.Name)
                 {
-                    // Handle new material node
+                    case NODE_NAME_SURFACE:
+                        // If this tag is present, faces will be visible from both sides. If this flag is absent, faces will be visible from only one side as described in the <F> tag
+                        break;
+
                     case NODE_NAME_MAT:
-                        currentMaterial = new XglMaterialInfo();
-                        currentMaterial.ID = Int32.Parse(inStreamXml.GetAttribute("ID"));
-                        localMaterialInfos[currentMaterial.ID] = currentMaterial;
+                        // Read the next material
+                        XglMaterialInfo materialInfo = ImportMaterial(inStreamXml, container, xglImportOptions);
+                        localMaterialInfos[materialInfo.ID] = materialInfo;
                         break;
 
-                    case NODE_NAME_MAT_DIFFUSE:
-                        if (currentMaterial == null) { continue; }
-                        inStreamXml.Read();
-                        currentMaterial.Diffuse = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
+                    case NODE_NAME_PATCH:
+                        // A patch is a group of faces
+                        // We don't need to handle this one
                         break;
 
-                    // Read next normal
-                    case NODE_NAME_NORMAL:
-                        if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
-                        actNormalIndex++;
-                        actTempVertex = actVertexStructure.EnsureVertexAt(actNormalIndex);
-                        inStreamXml.Read();
-                        actTempVertex.Normal = inStreamXml.ReadContentAsVector3();
-                        actVertexStructure.Vertices[actNormalIndex] = actTempVertex;
-                        break;
-
-                    // Read next point
                     case NODE_NAME_POINT:
+                        // Read next point
                         if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
                         actVertexIndex++;
                         actTempVertex = actVertexStructure.EnsureVertexAt(actVertexIndex);
@@ -403,12 +417,32 @@ namespace SeeingSharp.Multimedia.Objects
                         actVertexStructure.Vertices[actVertexIndex] = actTempVertex;
                         break;
 
-                    // Read next face
+                    case NODE_NAME_NORMAL:
+                        // Read next normal
+                        if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
+                        actNormalIndex++;
+                        actTempVertex = actVertexStructure.EnsureVertexAt(actNormalIndex);
+                        inStreamXml.Read();
+                        actTempVertex.Normal = inStreamXml.ReadContentAsVector3();
+                        actVertexStructure.Vertices[actNormalIndex] = actTempVertex;
+                        break;
+
+                    case NODE_NAME_TC:
+                        // Read next texture coordinate
+                        if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
+                        actTextureIndex++;
+                        actTempVertex = actVertexStructure.EnsureVertexAt(actTextureIndex);
+                        inStreamXml.Read();
+                        actTempVertex.TexCoord = inStreamXml.ReadContentAsVector2();
+                        actVertexStructure.Vertices[actTextureIndex] = actTempVertex;
+                        break;
+
                     case NODE_NAME_FACE:
+                        // Read next face
                         actFaceReferences[0] = 0;
                         actFaceReferences[1] = 0;
                         actFaceReferences[2] = 0;
-                        int loop = 0;
+                        int loopFacePoint = 0;
                         int referencedMat = -1;
                         int referencedTexture = -1;
                         while (inStreamXml.Read())
@@ -434,16 +468,17 @@ namespace SeeingSharp.Multimedia.Objects
                             }
                             else if (inStreamXml.Name == NODE_NAME_FACE_POINT_REF)
                             {
-                                if (loop >= 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
+                                if (loopFacePoint >= 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
                                 inStreamXml.Read();
-                                actFaceReferences[loop] = inStreamXml.ReadContentAsInt() - minVertexID;
-                                loop++;
+                                actFaceReferences[loopFacePoint] = inStreamXml.ReadContentAsInt() - minVertexID;
+                                loopFacePoint++;
                             }
                             else
                             {
+
                             }
                         }
-                        if (loop != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
+                        if (loopFacePoint != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
                         actVertexStructure.AddTriangle(actFaceReferences[0], actFaceReferences[1], actFaceReferences[2]);
 
                         // Apply material
@@ -460,38 +495,6 @@ namespace SeeingSharp.Multimedia.Objects
                         }
                         break;
 
-                    case NODE_NAME_AMB:
-                        break;
-
-                    case NODE_NAME_EMISS:
-                        break;
-
-                    case NODE_NAME_SPEC:
-                        break;
-
-                    case NODE_NAME_ALPHA:
-                        break;
-
-                    case NODE_NAME_SHINE:
-                        break;
-
-                    case NODE_NAME_PATCH:
-                        break;
-
-                    case NODE_NAME_TC:
-                        if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
-                        actTextureIndex++;
-                        actTempVertex = actVertexStructure.EnsureVertexAt(actTextureIndex);
-                        inStreamXml.Read();
-                        actTempVertex.TexCoord = inStreamXml.ReadContentAsVector2();
-                        actVertexStructure.Vertices[actTextureIndex] = actTempVertex;
-                        break;
-
-                    case NODE_NAME_SURFACE:
-                        // If this tag is present, faces will be visible from both sides. If this flag is absent, faces will be visible from only one side as described in the <F> tag
-
-                        break;
-
                     default:
                         //throw new SeeingSharpGraphicsException(string.Format(
                         //    "Unknown element {0} in xgl file!",
@@ -504,6 +507,57 @@ namespace SeeingSharp.Multimedia.Objects
             container.ImportedResources.Add(new ImportedResourceInfo(
                 container.GetResourceKey(RES_CLASS_MESH, id),
                 () => new GeometryResource(actVertexStructure)));
+        }
+
+        /// <summary>
+        /// Imports the mode node where the xml reader is currently located.
+        /// </summary>
+        /// <param name="inStreamXml">The xml reader object.</param>
+        /// <param name="container">The container where to import to.</param>
+        /// <param name="xglImportOptions">Current import options.</param>
+        private XglMaterialInfo ImportMaterial(XmlReader inStreamXml, ImportedModelContainer container, XglImportOptions xglImportOptions)
+        {
+            XglMaterialInfo result = new XglMaterialInfo();
+            result.ID = Int32.Parse(inStreamXml.GetAttribute("ID"));
+
+            while (inStreamXml.Read())
+            {
+                // Ending condition
+                if ((inStreamXml.NodeType == XmlNodeType.EndElement) &&
+                    (inStreamXml.Name == NODE_NAME_MAT))
+                {
+                    break;
+                }
+
+                // Continue condition
+                if (inStreamXml.NodeType != XmlNodeType.Element) { continue; }
+
+                switch (inStreamXml.Name)
+                {
+                    case NODE_NAME_MAT_DIFFUSE:
+                        if (result == null) { continue; }
+                        inStreamXml.Read();
+                        result.Diffuse = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
+                        break;
+
+                    case NODE_NAME_MAT_AMB:
+                        break;
+
+                    case NODE_NAME_MAT_EMISS:
+                        break;
+
+                    case NODE_NAME_MAT_SPEC:
+                        break;
+
+                    case NODE_NAME_MAT_ALPHA:
+                        break;
+
+                    case NODE_NAME_MAT_SHINE:
+                        break;
+                }
+            }
+
+            return result;
         }
 
         /// <summary>

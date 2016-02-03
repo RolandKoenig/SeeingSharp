@@ -247,6 +247,7 @@
     <Compile Include="Input\_States\KeyboardState.cs" />
     <Compile Include="Input\_States\MouseOrPointerState.cs" />
     <Compile Include="Input\_States\_Enum.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImportOptions.cs" />
