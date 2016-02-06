@@ -87,13 +87,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 () =>
                 {
                     VertexStructure structure = new VertexStructure();
-                    structure.BuildRect4V(
+                    structure.FirstSurface.BuildRect4V(
                         new Vector3(-1f, -1f, 0f),
                         new Vector3(1f, -1f, 0f),
                         new Vector3(1f, 1f, 0f),
                         new Vector3(-1f, 1f, 0f),
                         Color4.Transparent);
-                    structure.Material = KEY_MATERIAL;
+                    structure.FirstSurface.Material = KEY_MATERIAL;
                     return new GeometryResource(structure);
                 });
 

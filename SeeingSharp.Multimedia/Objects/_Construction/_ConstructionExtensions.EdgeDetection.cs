@@ -40,17 +40,18 @@ namespace SeeingSharp.Multimedia.Objects
 
             //Build the structure based on the found edges
             Vector3 lightNormal = Vector3.Normalize(lightDirection);
+            VertexStructureSurface actSurface = result.FirstSurface;
             foreach (Line actEdge in shadowVolumeEdges)
             {
                 Line targetEdge = new Line(
                     actEdge.StartPosition + lightNormal * shadowVolumeLength,
                     actEdge.EndPosition + lightNormal * shadowVolumeLength);
 
-                result.AddTriangle(
+                actSurface.AddTriangle(
                     new Vertex(actEdge.StartPosition, Color4.White),
                     new Vertex(actEdge.EndPosition, Color4.White),
                     new Vertex(targetEdge.EndPosition, Color4.White));
-                result.AddTriangle(
+                actSurface.AddTriangle(
                     new Vertex(targetEdge.EndPosition, Color4.White),
                     new Vertex(targetEdge.StartPosition, Color4.White),
                     new Vertex(actEdge.StartPosition, Color4.White));
@@ -70,49 +71,53 @@ namespace SeeingSharp.Multimedia.Objects
             List<Line> foundEndges = new List<Line>(2048);
             List<Line> edgesToRemove = new List<Line>(2048);
             foreach (VertexStructure actStructure in structures)
-            {
-                foreach (Triangle actTriangle in actStructure.Triangles)
+            { 
+                foreach (VertexStructureSurface actSurface in actStructure.Surfaces)
                 {
-                    if (Vector3.Dot(viewDirection, actStructure.Vertices[actTriangle.Index1].Normal) >= 0)
+                    foreach (Triangle actTriangle in actSurface.Triangles)
                     {
-                        Line[] actEdges = actTriangle.GetEdges(actStructure);
-                        for (int loopEdge = 0; loopEdge < actEdges.Length; loopEdge++)
+                        if (Vector3.Dot(viewDirection, actStructure.Vertices[actTriangle.Index1].Normal) >= 0)
                         {
-                            Line actEdge = actEdges[loopEdge];
-
-                            //Was this edge already removed?
-                            bool alreadyRemoved = false;
-                            foreach (Line edgesRemoved in edgesToRemove)
+                            Line[] actEdges = actTriangle.GetEdges(actStructure);
+                            for (int loopEdge = 0; loopEdge < actEdges.Length; loopEdge++)
                             {
-                                if (edgesRemoved.EqualsWithTolerance(actEdge))
-                                {
-                                    alreadyRemoved = true;
-                                    break;
-                                }
-                            }
-                            if (alreadyRemoved) { continue; }
+                                Line actEdge = actEdges[loopEdge];
 
-                            //Was this edge already added?
-                            bool alreadyAdded = false;
-                            for (int loopShadowEdge = 0; loopShadowEdge < foundEndges.Count; loopShadowEdge++)
-                            {
-                                if (foundEndges[loopShadowEdge].EqualsWithTolerance(actEdge))
+                                //Was this edge already removed?
+                                bool alreadyRemoved = false;
+                                foreach (Line edgesRemoved in edgesToRemove)
                                 {
-                                    //Remove the edge because it can't be member of the contour when it is found twice
-                                    alreadyAdded = true;
-                                    foundEndges.RemoveAt(loopShadowEdge);
-                                    edgesToRemove.Add(actEdge);
-                                    break;
+                                    if (edgesRemoved.EqualsWithTolerance(actEdge))
+                                    {
+                                        alreadyRemoved = true;
+                                        break;
+                                    }
                                 }
-                            }
-                            if (alreadyAdded) { continue; }
+                                if (alreadyRemoved) { continue; }
 
-                            //Add the edge to the result list finally
-                            foundEndges.Add(actEdge);
+                                //Was this edge already added?
+                                bool alreadyAdded = false;
+                                for (int loopShadowEdge = 0; loopShadowEdge < foundEndges.Count; loopShadowEdge++)
+                                {
+                                    if (foundEndges[loopShadowEdge].EqualsWithTolerance(actEdge))
+                                    {
+                                        //Remove the edge because it can't be member of the contour when it is found twice
+                                        alreadyAdded = true;
+                                        foundEndges.RemoveAt(loopShadowEdge);
+                                        edgesToRemove.Add(actEdge);
+                                        break;
+                                    }
+                                }
+                                if (alreadyAdded) { continue; }
+
+                                //Add the edge to the result list finally
+                                foundEndges.Add(actEdge);
+                            }
                         }
                     }
                 }
             }
+
             return foundEndges;
         }
     }

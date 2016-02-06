@@ -60,15 +60,16 @@ namespace RK2048.Graphics
                     new AssemblyResourceUriBuilder("RK2048", true, string.Format("Assets/Textures/Tile{0}.Low.png", Constants.TILE_VALUE_BY_ID[loopID])));
 
                 // Define current vertex structure
-                VertexStructure tileStructure = new VertexStructure(1024 * 3, 1024);
-                tileStructure.BuildCubeSides16V(cubeStart, cubeSize, Constants.COLOR_TILE_BASE)
+                VertexStructure tileStructure = new VertexStructure(1024 * 3);
+                tileStructure.AddSurface(1024);
+                tileStructure.FirstSurface.BuildCubeSides16V(cubeStart, cubeSize, Constants.COLOR_TILE_BASE)
                     .DisableTexture();
-                tileStructure.BuildCubeBottom4V(cubeSize, cubeSize, Constants.COLOR_TILE_BASE)
+                tileStructure.FirstSurface.BuildCubeBottom4V(cubeSize, cubeSize, Constants.COLOR_TILE_BASE)
                     .DisableTexture();
-                tileStructure.BuildCubeTop4V(cubeStart, cubeSize, Constants.COLOR_TILE_BASE);
+                tileStructure.FirstSurface.BuildCubeTop4V(cubeStart, cubeSize, Constants.COLOR_TILE_BASE);
                  
                 //tileStructure.BuildTextGeometry("2", TextGeometryOptions.Default);
-                tileStructure.Material = resTileMaterial;
+                tileStructure.FirstSurface.Material = resTileMaterial;
 
                 // Append the resource to the scene
                 manipulator.AddResource(

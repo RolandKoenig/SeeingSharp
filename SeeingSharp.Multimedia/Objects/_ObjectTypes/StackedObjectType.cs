@@ -89,12 +89,18 @@ namespace SeeingSharp.Multimedia.Objects
                         // Add the vertex
                         result[loopStruct].AddVertex(changedVertex);
                     }
-                    foreach(Triangle actTriangle in structuresFromChild[loopStruct].Triangles)
+
+                    // 
+                    foreach(VertexStructureSurface actSurfaceFromChild in structuresFromChild[loopStruct].Surfaces)
                     {
-                        result[loopStruct].AddTriangle(
-                            baseVertex + actTriangle.Index1,
-                            baseVertex + actTriangle.Index2,
-                            baseVertex + actTriangle.Index3);
+                        VertexStructureSurface newSurface = result[loopStruct].AddSurface(actSurfaceFromChild.CountTriangles);
+                        foreach (Triangle actTriangle in actSurfaceFromChild.Triangles)
+                        {
+                            newSurface.AddTriangle(
+                                baseVertex + actTriangle.Index1,
+                                baseVertex + actTriangle.Index2,
+                                baseVertex + actTriangle.Index3);
+                        }
                     }
                 }
 

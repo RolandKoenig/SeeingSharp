@@ -269,6 +269,7 @@ namespace SeeingSharp.Multimedia.Objects
             ReadLine(reader, "endfacet");
 
             // Overtake geometry data
+            VertexStructureSurface targetSurfae = newStructure.FirstSurface;
             int pointCount = m_cachedPoints.Count;
             switch (m_cachedPoints.Count)
             {
@@ -280,14 +281,14 @@ namespace SeeingSharp.Multimedia.Objects
                 case 3:
                     if (importOptions.ChangeTriangleOrder)
                     {
-                        newStructure.AddTriangle(
+                        targetSurfae.AddTriangle(
                             new Vertex(m_cachedPoints[2], Color4.Transparent, Vector2.Zero, normal),
                             new Vertex(m_cachedPoints[1], Color4.Transparent, Vector2.Zero, normal),
                             new Vertex(m_cachedPoints[0], Color4.Transparent, Vector2.Zero, normal));
                     }
                     else
                     {
-                        newStructure.AddTriangle(
+                        targetSurfae.AddTriangle(
                             new Vertex(m_cachedPoints[0], Color4.Transparent, Vector2.Zero, normal),
                             new Vertex(m_cachedPoints[1], Color4.Transparent, Vector2.Zero, normal),
                             new Vertex(m_cachedPoints[2], Color4.Transparent, Vector2.Zero, normal));
@@ -313,7 +314,7 @@ namespace SeeingSharp.Multimedia.Objects
                         }
                     }
 
-                    newStructure.AddPolygonByCuttingEars(indices);
+                    targetSurfae.AddPolygonByCuttingEars(indices);
                     break;
             }
         }
@@ -373,16 +374,17 @@ namespace SeeingSharp.Multimedia.Objects
                 currentColor = new Color(Convert.ToByte(r), Convert.ToByte(g), Convert.ToByte(b));
             }
 
+            VertexStructureSurface targetSurface = vertexStructure.FirstSurface;
             if (importOptions.ChangeTriangleOrder)
             {
-                vertexStructure.AddTriangle(
+                targetSurface.AddTriangle(
                     new Vertex(v3, currentColor, Vector2.Zero, normal),
                     new Vertex(v2, currentColor, Vector2.Zero, normal),
                     new Vertex(v1, currentColor, Vector2.Zero, normal));
             }
             else
             {
-                vertexStructure.AddTriangle(
+                targetSurface.AddTriangle(
                     new Vertex(v1, currentColor, Vector2.Zero, normal),
                     new Vertex(v2, currentColor, Vector2.Zero, normal),
                     new Vertex(v3, currentColor, Vector2.Zero, normal));
@@ -478,7 +480,8 @@ namespace SeeingSharp.Multimedia.Objects
                 }
 
                 // Read geometry data
-                VertexStructure newStructure = new VertexStructure((int)numberTriangles * 3, (int)numberTriangles);
+                VertexStructure newStructure = new VertexStructure((int)numberTriangles * 3);
+                newStructure.AddSurface((int)numberTriangles);
                 for (int loop = 0; loop < numberTriangles; loop++)
                 {
                     this.ReadTriangle(reader, newStructure, importOptions);

@@ -348,8 +348,8 @@
     <Compile Include="Objects\_Construction\TextureData.cs" />
     <Compile Include="Objects\_Construction\Triangle.cs" />
     <Compile Include="Objects\_Construction\Vertex.cs" />
-    <Compile Include="Objects\_Construction\VertexStructure.Builders.cs" />
-    <Compile Include="Objects\_Construction\VertexStructure.Builders.Text.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.Text.cs" />
     <Compile Include="Objects\_Construction\VertexStructure.cs" />
     <Compile Include="Objects\_Construction\_ComplexBuilding\SimplePolygon2DGeometrySink.cs" />
     <Compile Include="Objects\_Construction\_ComplexBuilding\VertexStructureTextRenderer.cs" />
@@ -374,7 +374,6 @@
     <Compile Include="Objects\_ImportExport\_Attributes.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImporter.cs" />
     <Compile Include="Objects\_Misc.cs" />
-    <Compile Include="Objects\_ObjectTypes\SingleMaterialPalletType.cs" />
     <Compile Include="Objects\_ObjectTypes\_Loaders\ACFileLoader.cs" />
     <Compile Include="Objects\_ObjectTypes\GenericObjectType.cs" />
     <Compile Include="Objects\_ObjectTypes\Grid3DType.cs" />

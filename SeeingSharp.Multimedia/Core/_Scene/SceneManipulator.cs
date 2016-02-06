@@ -260,7 +260,7 @@ namespace SeeingSharp.Multimedia.Core
         public GenericObject Add3DText(string textToDisplay, TextGeometryOptions textOptions)
         {
             VertexStructure newStructure = new VertexStructure();
-            newStructure.BuildTextGeometry(
+            newStructure.FirstSurface.BuildTextGeometry(
                 textToDisplay,
                 textOptions);
             var resTextGeometry = this.AddResource(() => new GeometryResource(newStructure));

@@ -104,11 +104,10 @@ namespace SeeingSharp.Multimedia.Objects
             {
                 // Create dummy VertexStructure
                 VertexStructure dummyStructure = new VertexStructure();
-                dummyStructure.BuildCube24V(
+                dummyStructure.FirstSurface.BuildCube24V(
                     new Vector3(),
                     new Vector3(1f, 1f, 1f),
                     Color4.Transparent);
-                dummyStructure.TextureName = "Dummy";
                 return new VertexStructure[] { dummyStructure };
             }
         }
@@ -149,19 +148,20 @@ namespace SeeingSharp.Multimedia.Objects
                 transformStack.TranslateLocal(objInfo.Translation);
 
                 // Build structures material by material
+                VertexStructure structure = new VertexStructure();
                 for (int actMaterialIndex = 0; actMaterialIndex < acMaterials.Count; actMaterialIndex++)
                 {
                     ACMaterialInfo actMaterial = acMaterials[actMaterialIndex];
 
                     // Create and configure vertex structure
-                    VertexStructure structure = new VertexStructure();
-                    structure.Material = NamedOrGenericKey.Empty;
-                    structure.TextureKey = !string.IsNullOrEmpty(objInfo.Texture) ? new NamedOrGenericKey(objInfo.Texture) : NamedOrGenericKey.Empty;
-                    structure.MaterialProperties.DiffuseColor = actMaterial.Diffuse;
-                    structure.MaterialProperties.AmbientColor = actMaterial.Ambient;
-                    structure.MaterialProperties.EmissiveColor = actMaterial.Emissive;
-                    structure.MaterialProperties.Shininess = actMaterial.Shininess;
-                    structure.MaterialProperties.Specular = actMaterial.Specular;
+                    VertexStructureSurface actStructSurface = structure.AddSurface();
+                    actStructSurface.Material = NamedOrGenericKey.Empty;
+                    actStructSurface.TextureKey = !string.IsNullOrEmpty(objInfo.Texture) ? new NamedOrGenericKey(objInfo.Texture) : NamedOrGenericKey.Empty;
+                    actStructSurface.MaterialProperties.DiffuseColor = actMaterial.Diffuse;
+                    actStructSurface.MaterialProperties.AmbientColor = actMaterial.Ambient;
+                    actStructSurface.MaterialProperties.EmissiveColor = actMaterial.Emissive;
+                    actStructSurface.MaterialProperties.Shininess = actMaterial.Shininess;
+                    actStructSurface.MaterialProperties.Specular = actMaterial.Specular;
 
                     // Initialize local index table (needed for vertex reuse)
                     int oneSideVertexCount = objInfo.Vertices.Count;
@@ -176,7 +176,7 @@ namespace SeeingSharp.Multimedia.Objects
                     {
                         // Get the vertex index on which to start
                         int startVertexIndex = structure.CountVertices;
-                        int startTriangleIndex = structure.CountTriangles;
+                        int startTriangleIndex = actStructSurface.CountTriangles;
 
                         // Only handle surfaces of the current material
                         if (actSurface.Material != actMaterialIndex) { continue; }
@@ -241,7 +241,7 @@ namespace SeeingSharp.Multimedia.Objects
                         {
                             case 3:
                                 // Front side
-                                structure.AddTriangle(
+                                actStructSurface.AddTriangle(
                                     onStructureReferencedVertices[0],
                                     onStructureReferencedVertices[1],
                                     onStructureReferencedVertices[2]);
@@ -249,7 +249,7 @@ namespace SeeingSharp.Multimedia.Objects
                                 // Back side
                                 if (actSurface.IsTwoSided)
                                 {
-                                    structure.AddTriangle(
+                                    actStructSurface.AddTriangle(
                                         onStructureReferencedVertices[5],
                                         onStructureReferencedVertices[4],
                                         onStructureReferencedVertices[3]);
@@ -258,11 +258,11 @@ namespace SeeingSharp.Multimedia.Objects
 
                             case 4:
                                 // Front side
-                                structure.AddTriangle(
+                                actStructSurface.AddTriangle(
                                     onStructureReferencedVertices[0],
                                     onStructureReferencedVertices[1],
                                     onStructureReferencedVertices[2]);
-                                structure.AddTriangle(
+                                actStructSurface.AddTriangle(
                                     onStructureReferencedVertices[2],
                                     onStructureReferencedVertices[3],
                                     onStructureReferencedVertices[0]);
@@ -270,11 +270,11 @@ namespace SeeingSharp.Multimedia.Objects
                                 // Back side
                                 if (actSurface.IsTwoSided)
                                 {
-                                    structure.AddTriangle(
+                                    actStructSurface.AddTriangle(
                                         onStructureReferencedVertices[6],
                                         onStructureReferencedVertices[5],
                                         onStructureReferencedVertices[4]);
-                                    structure.AddTriangle(
+                                    actStructSurface.AddTriangle(
                                         onStructureReferencedVertices[4],
                                         onStructureReferencedVertices[7],
                                         onStructureReferencedVertices[6]);
@@ -285,13 +285,13 @@ namespace SeeingSharp.Multimedia.Objects
                                 if (!actSurface.IsTwoSided)
                                 {
                                     // Front side
-                                    structure.AddPolygonByCuttingEars(onStructureReferencedVertices);
+                                    actStructSurface.AddPolygonByCuttingEars(onStructureReferencedVertices);
                                 }
                                 else
                                 {
                                     // Front and back side
-                                    structure.AddPolygonByCuttingEars(onStructureReferencedVertices.Subset(0, oneSideSurfaceVertexCount));
-                                    structure.AddPolygonByCuttingEars(onStructureReferencedVertices.Subset(oneSideSurfaceVertexCount, oneSideSurfaceVertexCount));
+                                    actStructSurface.AddPolygonByCuttingEars(onStructureReferencedVertices.Subset(0, oneSideSurfaceVertexCount));
+                                    actStructSurface.AddPolygonByCuttingEars(onStructureReferencedVertices.Subset(oneSideSurfaceVertexCount, oneSideSurfaceVertexCount));
                                 }
                                 break;
                         }
@@ -299,8 +299,8 @@ namespace SeeingSharp.Multimedia.Objects
                         // Perform shading
                         if (actSurface.IsFlatShaded)
                         {
-                            structure.CalculateNormalsFlat(
-                                startTriangleIndex, structure.CountTriangles - startTriangleIndex);
+                            actStructSurface.CalculateNormalsFlat(
+                                startTriangleIndex, actStructSurface.CountTriangles - startTriangleIndex);
                         }
                         else
                         {
@@ -324,7 +324,14 @@ namespace SeeingSharp.Multimedia.Objects
                     standardShadedVertices.Clear();
 
                     // Append generated VertexStructure to the output collection
-                    if (structure.CountTriangles > 0) { outputStructures.Add(structure); }
+                    if(structure.CountVertices > 0)
+                    {
+                        outputStructures.Add(structure);
+                    }
+                    if (actStructSurface.CountTriangles <= 0)
+                    {
+                        structure.RemoveSurface(actStructSurface);
+                    }
                 }
 
                 //Fill in all child object data

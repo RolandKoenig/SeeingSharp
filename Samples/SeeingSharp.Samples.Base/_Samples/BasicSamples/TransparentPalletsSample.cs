@@ -93,12 +93,12 @@ namespace SeeingSharp.Samples.Base.BasicSamples
             var resWallMaterial = manipulator.AddSimpleColoredMaterial(resWallTexture);
 
             VertexStructure wallStructure = new VertexStructure();
-            wallStructure.EnableTextureTileMode(new Vector2(2f, 2f));
-            wallStructure.BuildCube24V(
+            wallStructure.FirstSurface.EnableTextureTileMode(new Vector2(2f, 2f));
+            wallStructure.FirstSurface.BuildCube24V(
                 new Vector3(-0.1f, 0f, -13f),
                 new Vector3(0.2f, 10f, 26f),
                 Color4.Gray);
-            wallStructure.Material = resWallMaterial;
+            wallStructure.FirstSurface.Material = resWallMaterial;
             var resWallGeometry = manipulator.AddGeometry(wallStructure);
             GenericObject wallObject = manipulator.AddGeneric(resWallGeometry, new Vector3(6.3f, 0f, 0f));
             wallObject.DisableShaderGeneratedBorder();

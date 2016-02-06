@@ -99,6 +99,7 @@ namespace SeeingSharp.Multimedia.Objects
             // Prepare result array
             VertexStructure[] result = new VertexStructure[1];
             result[0] = new VertexStructure();
+            VertexStructureSurface surface = result[0].AddSurface();
 
             //Build pallet
             #region -----------------------------------------------------------
@@ -119,45 +120,44 @@ namespace SeeingSharp.Multimedia.Objects
                     Color4 actColor = loop % 2 == 0 ? m_palletColor : m_palletCollor2;
                     float actYCoord = m_palletHeight * loop;
 
-                    result[0].Material = m_palletMaterial;
+                    surface.Material = m_palletMaterial;
 
                     //Build 3 board on bottom
-                    result[0].BuildCube24V(new Vector3(0f, actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
-                    result[0].BuildCube24V(new Vector3(middleFrontBegin, actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
-                    result[0].BuildCube24V(new Vector3(lastBeginSmall, actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(0f, actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(middleFrontBegin, actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(lastBeginSmall, actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
 
                     //Build 9 footers
-                    result[0].BuildCubeSides16V(new Vector3(0f, m_boardHeight + actYCoord, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(0f, m_boardHeight + actYCoord, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(0f, m_boardHeight + actYCoord, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight + actYCoord, 0f), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight + actYCoord, middleSideBegin), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight + actYCoord, lastBeginBig), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight + actYCoord, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight + actYCoord, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight + actYCoord, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(0f, m_boardHeight + actYCoord, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(0f, m_boardHeight + actYCoord, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(0f, m_boardHeight + actYCoord, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight + actYCoord, 0f), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight + actYCoord, middleSideBegin), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight + actYCoord, lastBeginBig), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight + actYCoord, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight + actYCoord, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight + actYCoord, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), actColor);
 
                     //Build boards above footers
-                    result[0].BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight + actYCoord, 0f), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight + actYCoord, middleSideBegin), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), actColor);
-                    result[0].BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight + actYCoord, lastBeginBig), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight + actYCoord, 0f), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight + actYCoord, middleSideBegin), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), actColor);
+                    surface.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight + actYCoord, lastBeginBig), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), actColor);
 
                     //Build top boards
                     float localYPos = m_palletHeight - m_boardHeight;
-                    result[0].BuildCube24V(new Vector3(0f, localYPos + actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
-                    result[0].BuildCube24V(new Vector3(middleFrontBegin, localYPos + actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
-                    result[0].BuildCube24V(new Vector3(m_width - m_bigFooterWidth, localYPos + actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
-                    result[0].BuildCube24V(new Vector3(quarterFrontBegin, localYPos + actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
-                    result[0].BuildCube24V(new Vector3(threeQuarterFrontBegin, localYPos + actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(0f, localYPos + actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(middleFrontBegin, localYPos + actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(m_width - m_bigFooterWidth, localYPos + actYCoord, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(quarterFrontBegin, localYPos + actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
+                    surface.BuildCube24V(new Vector3(threeQuarterFrontBegin, localYPos + actYCoord, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), actColor);
                 }
             }
             else
             {
-                result[0] = new VertexStructure(24, 100);
                 for (int loop = 0; loop < m_palletCount; loop++)
                 {
                     Color4 actColor = loop % 2 == 0 ? m_palletColor : m_palletCollor2;
-                    result[0].BuildCube24V(
+                    surface.BuildCube24V(
                         new Vector3(0f, m_palletHeight * loop, 0f),
                         new Vector3(m_width, m_palletHeight, m_depth),
                         actColor);

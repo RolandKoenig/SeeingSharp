@@ -78,12 +78,18 @@ namespace SeeingSharp.Multimedia.Objects
         {
             for (int loop = 0; loop < m_vertexStructures.Length; loop++)
             {
-                m_vertexStructures[loop].Material = materialToApply;
+                foreach (VertexStructureSurface actSurface in m_vertexStructures[loop].Surfaces)
+                {
+                    actSurface.Material = materialToApply;
+                }
             }
 
             for (int loop = 0; loop < m_vertexStructuresLowDetail.Length; loop++)
             {
-                m_vertexStructuresLowDetail[loop].Material = materialToApply;
+                foreach (VertexStructureSurface actSurface in m_vertexStructuresLowDetail[loop].Surfaces)
+                {
+                    actSurface.Material = materialToApply;
+                }
             }
         }
 
@@ -96,17 +102,23 @@ namespace SeeingSharp.Multimedia.Objects
         {
             for (int loop = 0; loop < m_vertexStructures.Length; loop++)
             {
-                if (m_vertexStructures[loop].Material == materialNameOld)
+                foreach (VertexStructureSurface actSurface in m_vertexStructures[loop].Surfaces)
                 {
-                    m_vertexStructures[loop].Material = materialNameNew;
+                    if (actSurface.Material == materialNameOld)
+                    {
+                        actSurface.Material = materialNameNew;
+                    }
                 }
             }
 
             for (int loop = 0; loop < m_vertexStructuresLowDetail.Length; loop++)
             {
-                if (m_vertexStructuresLowDetail[loop].Material == materialNameOld)
+                foreach (VertexStructureSurface actSurface in m_vertexStructuresLowDetail[loop].Surfaces)
                 {
-                    m_vertexStructuresLowDetail[loop].Material = materialNameNew;
+                    if (actSurface.Material == materialNameOld)
+                    {
+                        actSurface.Material = materialNameNew;
+                    }
                 }
             }
         }

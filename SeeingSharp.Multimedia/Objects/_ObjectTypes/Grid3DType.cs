@@ -53,8 +53,9 @@ namespace SeeingSharp.Multimedia.Objects
         public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
         {
             List<VertexStructure> result = new List<VertexStructure>();
+            result[0] = new VertexStructure();
 
-            //Calculate parameters
+            // Calculate parameters
             Vector3 firstCoordinate = new Vector3(
                 -((TilesX * TileWidth) / 2f),
                 0f,
@@ -66,10 +67,10 @@ namespace SeeingSharp.Multimedia.Objects
             float fieldWidthHalf = fieldWidth / 2f;
             float fieldDepthHalf = fieldDepth / 2f;
 
-            //Define lower ground structure
-            VertexStructure lowerGround = new VertexStructure();
+            // Define lower ground structure
             if (this.GenerateGround)
             {
+                VertexStructureSurface lowerGround = result[0].AddSurface();
                 lowerGround.EnableTextureTileMode(new Vector2(TileWidth, TileWidth));
                 lowerGround.BuildRect4V(
                     new Vector3(-fieldWidthHalf, -0.01f, -fieldDepthHalf),
@@ -79,18 +80,17 @@ namespace SeeingSharp.Multimedia.Objects
                     new Vector3(0f, 1f, 0f),
                     this.GroundColor);
                 lowerGround.Material = this.GroundMaterial;
-                result.Add(lowerGround);
             }
 
-            //Define line structures
-            VertexStructure genStructureDefaultLine = new VertexStructure();
-            VertexStructure genStructureGroupLine = new VertexStructure();
+            // Define line structures
+            VertexStructureSurface genStructureDefaultLine = result[0].AddSurface();
+            VertexStructureSurface genStructureGroupLine = result[0].AddSurface();
             for (int actTileX = 0; actTileX < TilesX + 1; actTileX++)
             {
                 Vector3 localStart = firstCoordinate + new Vector3(actTileX * tileWidthX, 0f, 0f);
                 Vector3 localEnd = localStart + new Vector3(0f, 0f, tileWidthZ * TilesZ);
 
-                VertexStructure targetStruture = actTileX % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
+                VertexStructureSurface targetStruture = actTileX % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
                 float devider = actTileX % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
                 targetStruture.BuildRect4V(
                     localStart - new Vector3(tileWidthX / devider, 0f, 0f),
@@ -104,7 +104,7 @@ namespace SeeingSharp.Multimedia.Objects
                 Vector3 localStart = firstCoordinate + new Vector3(0f, 0f, actTileZ * tileWidthZ);
                 Vector3 localEnd = localStart + new Vector3(tileWidthX * TilesX, 0f, 0f);
 
-                VertexStructure targetStruture = actTileZ % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
+                VertexStructureSurface targetStruture = actTileZ % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
                 float devider = actTileZ % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
                 targetStruture.BuildRect4V(
                     localStart + new Vector3(0f, 0f, tileWidthZ / devider),
@@ -115,10 +115,10 @@ namespace SeeingSharp.Multimedia.Objects
             }
             genStructureDefaultLine.Material = this.LineMaterial;
             genStructureGroupLine.Material = this.LineMaterial;
-            if (genStructureDefaultLine.CountTriangles > 0) { result.Add(genStructureDefaultLine); }
-            if (genStructureGroupLine.CountTriangles > 0) { result.Add(genStructureGroupLine); }
+            if (genStructureDefaultLine.CountTriangles == 0) { result[0].RemoveSurface(genStructureDefaultLine); }
+            if (genStructureGroupLine.CountTriangles == 0) { result[0].RemoveSurface(genStructureGroupLine); }
 
-            //Return all generated structures
+            // Return all generated structures
             return result.ToArray();
         }
 

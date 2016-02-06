@@ -32,9 +32,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets or creates the material resource for the given VertexStructure object.
         /// </summary>
-        internal static MaterialResource GetOrCreateMaterialResourceAndEnsureLoaded(this ResourceDictionary resourceDict, VertexStructure targetStructure)
+        internal static MaterialResource GetOrCreateMaterialResourceAndEnsureLoaded(this ResourceDictionary resourceDict, VertexStructureSurface targetSurface)
         {
-            MaterialResource materialResource = GetOrCreateMaterialResource(resourceDict, targetStructure);
+            MaterialResource materialResource = GetOrCreateMaterialResource(resourceDict, targetSurface);
             if (!materialResource.IsLoaded)
             {
                 materialResource.LoadResource();
@@ -46,10 +46,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Gets or creates the material resource for the given VertexStructure object.
         /// </summary>
-        internal static MaterialResource GetOrCreateMaterialResource(this ResourceDictionary resourceDict, VertexStructure targetStructure)
+        internal static MaterialResource GetOrCreateMaterialResource(this ResourceDictionary resourceDict, VertexStructureSurface targetSurface)
         {
-            NamedOrGenericKey materialKey = targetStructure.Material;
-            NamedOrGenericKey textureKey = targetStructure.TextureKey;
+            NamedOrGenericKey materialKey = targetSurface.Material;
+            NamedOrGenericKey textureKey = targetSurface.TextureKey;
 
             // Get the material if it is already created
             if ((!materialKey.IsEmpty) && (resourceDict.ContainsResource(materialKey))) { return resourceDict.GetResource<MaterialResource>(materialKey); }
@@ -78,20 +78,20 @@ namespace SeeingSharp.Multimedia.Drawing3D
                        (!string.IsNullOrEmpty(textureKey.NameKey)))
                     {
                         // Try to find and create the texture resource by its name
-                        if (targetStructure.ResourceLink != null)
+                        if (targetSurface.ResourceLink != null)
                         {
-                            var textureResourceLink = targetStructure.ResourceLink.GetForAnotherFile(textureKey.NameKey);
+                            var textureResourceLink = targetSurface.ResourceLink.GetForAnotherFile(textureKey.NameKey);
                            
                             resourceDict.AddResource<StandardTextureResource>(
                                 textureKey,
                                 new StandardTextureResource(
-                                    targetStructure.ResourceLink.GetForAnotherFile(textureKey.NameKey)));
+                                    targetSurface.ResourceLink.GetForAnotherFile(textureKey.NameKey)));
                         }
-                        else if (targetStructure.ResourceSourceAssembly != null)
+                        else if (targetSurface.ResourceSourceAssembly != null)
                         {
                             var textureResourceLink = new AssemblyResourceLink(
-                                targetStructure.ResourceSourceAssembly,
-                                targetStructure.ResourceSourceAssembly.GetName().Name + ".Resources.Textures",
+                                targetSurface.ResourceSourceAssembly,
+                                targetSurface.ResourceSourceAssembly.GetName().Name + ".Resources.Textures",
                                 textureKey.NameKey);
                             if (textureResourceLink.IsValid())
                             {
@@ -180,8 +180,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
         internal static GeometryResource AddTextGeometry(this ResourceDictionary resourceDiciontary, string textToAdd, TextGeometryOptions textGeometryOptions)
         {
             VertexStructure newStructure = new VertexStructure();
-            newStructure.BuildTextGeometry(textToAdd, textGeometryOptions);
-            newStructure.Material = textGeometryOptions.SurfaceMaterial;
+            newStructure.FirstSurface.BuildTextGeometry(textToAdd, textGeometryOptions);
+            newStructure.FirstSurface.Material = textGeometryOptions.SurfaceMaterial;
             return resourceDiciontary.AddGeometry(newStructure);
         }
 
@@ -191,8 +191,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
         internal static GeometryResource AddTextGeometry(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, string textToAdd, TextGeometryOptions textGeometryOptions)
         {
             VertexStructure newStructure = new VertexStructure();
-            newStructure.BuildTextGeometry(textToAdd, textGeometryOptions);
-            newStructure.Material = textGeometryOptions.SurfaceMaterial;
+            newStructure.FirstSurface.BuildTextGeometry(textToAdd, textGeometryOptions);
+            newStructure.FirstSurface.Material = textGeometryOptions.SurfaceMaterial;
             return resourceDiciontary.AddGeometry(resourceKey, newStructure);
         }
 

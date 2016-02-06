@@ -479,7 +479,7 @@ namespace SeeingSharp.Multimedia.Objects
                             }
                         }
                         if (loopFacePoint != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
-                        actVertexStructure.AddTriangle(actFaceReferences[0], actFaceReferences[1], actFaceReferences[2]);
+                        actVertexStructure.FirstSurface.AddTriangle(actFaceReferences[0], actFaceReferences[1], actFaceReferences[2]);
 
                         // Apply material
                         XglMaterialInfo faceMaterial = null;

@@ -92,13 +92,16 @@ namespace SeeingSharp.Multimedia.Objects
         public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
         {
             bool createContent = m_contentHeight > 0f;
-            
-            // Prepare result array
-            VertexStructure[] result = null;
-            if (createContent) { result = new VertexStructure[2]; }
-            else { result = new VertexStructure[1]; }
 
-            //Build pallet
+            // Prepare result array
+            VertexStructure[] result = new VertexStructure[1];
+            result[0] = new VertexStructure();
+
+            VertexStructureSurface surfacePallet = result[0].AddSurface();
+            VertexStructureSurface surfaceContent = null;
+            if (createContent) { surfaceContent = result[0].AddSurface(); }
+
+            // Build pallet
             #region -----------------------------------------------------------
             if (buildOptions.IsHighDetail)
             {
@@ -112,72 +115,61 @@ namespace SeeingSharp.Multimedia.Objects
                 float quarterFrontBegin = ((m_bigFooterWidth / 2f) + ((middleFront - (m_bigFooterWidth / 2f)) / 2f)) - (m_smallFooterWidth / 2f);// +(middleFront / 2f - m_smallFooterWidth / 2f);
                 float threeQuarterFrontBegin = middleFront + (middleFront - quarterFrontBegin - m_smallFooterWidth);//(middleFront / 2f) * 3f - m_smallFooterWidth / 2f;
 
-                result[0] = new VertexStructure(408, 612);
-                result[0].Material = m_palletMaterial;
+                surfacePallet.Material = m_palletMaterial;
 
                 //Build 3 board on bottom
-                result[0].BuildCube24V(new Vector3(0f, 0f, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(middleFrontBegin, 0f, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(lastBeginSmall, 0f, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(0f, 0f, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(middleFrontBegin, 0f, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(lastBeginSmall, 0f, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
 
                 //Build 9 footers
-                result[0].BuildCubeSides16V(new Vector3(0f, m_boardHeight, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(0f, m_boardHeight, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(0f, m_boardHeight, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight, 0f), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight, middleSideBegin), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight, lastBeginBig), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(0f, m_boardHeight, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(0f, m_boardHeight, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(0f, m_boardHeight, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight, 0f), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight, middleSideBegin), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(middleFrontBegin, m_boardHeight, lastBeginBig), new Vector3(m_bigFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
 
                 //Build boards above footers
-                result[0].BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, 0f), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, middleSideBegin), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, lastBeginBig), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, 0f), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, middleSideBegin), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, lastBeginBig), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
 
                 //Build top boards
                 float localYPos = m_palletHeight - m_boardHeight;
-                result[0].BuildCube24V(new Vector3(0f, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(middleFrontBegin, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(m_width - m_bigFooterWidth, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(quarterFrontBegin, localYPos, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
-                result[0].BuildCube24V(new Vector3(threeQuarterFrontBegin, localYPos, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(0f, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(middleFrontBegin, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(m_width - m_bigFooterWidth, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(quarterFrontBegin, localYPos, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
+                surfacePallet.BuildCube24V(new Vector3(threeQuarterFrontBegin, localYPos, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
             }
             else
             {
-                result[0] = new VertexStructure(24, 100);
-                result[0].BuildCube24V(
+                surfacePallet.BuildCube24V(
                     new Vector3(0f, 0f, 0f), 
                     new Vector3(m_width, m_palletHeight, m_depth), 
                     m_palletColor);
             }
             #endregion -----------------------------------------------------------
 
-            //Build content
+            // Build content
             #region -----------------------------------------------------------
             if (createContent)
             {
-                result[1] = new VertexStructure();
-                result[1].Material = m_contentMaterial;
-                result[1].BuildCubeSides16V(new Vector3(0f, m_palletHeight, 0f), new Vector3(m_width, m_contentHeight, m_depth), m_contentColor);
-                result[1].BuildCubeTop4V(new Vector3(0f, m_palletHeight, 0f), new Vector3(m_width, m_contentHeight, m_depth), m_contentColor);
-                result[1].BuildCubeBottom4V(new Vector3(0f, m_palletHeight, 0f), new Vector3(m_width, m_contentHeight, m_depth), m_contentColor);
+                surfaceContent.Material = m_contentMaterial;
+                surfaceContent.BuildCubeSides16V(new Vector3(0f, m_palletHeight, 0f), new Vector3(m_width, m_contentHeight, m_depth), m_contentColor);
+                surfaceContent.BuildCubeTop4V(new Vector3(0f, m_palletHeight, 0f), new Vector3(m_width, m_contentHeight, m_depth), m_contentColor);
+                surfaceContent.BuildCubeBottom4V(new Vector3(0f, m_palletHeight, 0f), new Vector3(m_width, m_contentHeight, m_depth), m_contentColor);
             }
             #endregion -----------------------------------------------------------
 
             Matrix4x4 rotMatrix = Matrix4x4.CreateRotationY(EngineMath.RAD_90DEG);
-
             result[0].UpdateVerticesUsingRelocationBy(new Vector3(-m_width / 2f, 0f, -m_depth / 2f));
             result[0].CalculateTangentsAndBinormals();
             result[0].TransformVertices(rotMatrix);
-
-            if (createContent)
-            {
-                result[1].UpdateVerticesUsingRelocationBy(new Vector3(-m_width / 2f, 0f, -m_depth / 2f));
-                result[1].CalculateTangentsAndBinormals();
-                result[1].TransformVertices(rotMatrix);
-            }
 
             return result;
         }

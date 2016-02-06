@@ -180,65 +180,63 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
         {
-            List<VertexStructure> result = new List<VertexStructure>();
+            VertexStructure[] result = new VertexStructure[1];
+            result[0] = new VertexStructure();
 
-            //Hold dictionary containg materials and corresponding structures
-            Dictionary<NamedOrGenericKey, VertexStructure> materialRelated = new Dictionary<NamedOrGenericKey, VertexStructure>();
+            // Hold dictionary containg materials and corresponding structures
+            Dictionary<NamedOrGenericKey, VertexStructureSurface> materialRelated = new Dictionary<NamedOrGenericKey, VertexStructureSurface>();
 
-            //Build bottom structure
-            VertexStructure bottomStructure = new VertexStructure();
-            bottomStructure.Material = m_bottomMaterial;
-            materialRelated[m_bottomMaterial] = bottomStructure;
-            result.Add(bottomStructure);
+            // Build bottom structure
+            VertexStructureSurface bottomSurface = result[0].AddSurface();
+            bottomSurface.Material = m_bottomMaterial;
+            materialRelated[m_bottomMaterial] = bottomSurface;
 
-            //Calculate half vector of total ground size.
+            // Calculate half vector of total ground size.
             Vector2 totalHalfSize = new Vector2(m_totalSizeWithoutBorder.X / 2f, m_totalSizeWithoutBorder.Y / 2f);
             Vector2 tileHalfSize = new Vector2(m_tileSize.X / 2f, m_tileSize.Y / 2f);
 
-            //Build all tiles
+            // Build all tiles
             foreach (FloorTile actTile in m_groundTiles)
             {
-                //Get the material of the tile
+                // Get the material of the tile
                 NamedOrGenericKey actMaterial = actTile.Material;
                 if (actMaterial.IsEmpty) { actMaterial = m_groundMaterial; }
 
-                //Get VertexStructure object
-                VertexStructure actVertexStructure = null;
-                if (materialRelated.ContainsKey(actMaterial)) { actVertexStructure = materialRelated[actMaterial]; }
+                // Get surface object
+                VertexStructureSurface actSurface = null;
+                if (materialRelated.ContainsKey(actMaterial)) { actSurface = materialRelated[actMaterial]; }
                 else
                 {
-                    actVertexStructure = new VertexStructure();
-                    actVertexStructure.Material = actMaterial;
-                    materialRelated[actMaterial] = actVertexStructure;
-                    result.Add(actVertexStructure);
+                    actSurface = result[0].AddSurface();
+                    actSurface.Material = actMaterial;
+                    materialRelated[actMaterial] = actSurface;
                 }
 
-                //Get position of the tile
+                // Get position of the tile
                 Vector3 tilePosition = new Vector3(
                     (actTile.XPos * m_tileSize.X) - totalHalfSize.X,
                     0f,
                     (actTile.YPos * m_tileSize.Y) - totalHalfSize.Y);
 
-                //Add tile information to current VertexStructures
-                actVertexStructure.BuildCubeTop4V(
+                // Add tile information to current VertexStructures
+                actSurface.BuildCubeTop4V(
                     new Vector3(tilePosition.X, -m_height, tilePosition.Z),
                     new Vector3(m_tileSize.X, m_height, m_tileSize.Y),
                     Color4.White);
-                bottomStructure.BuildCubeBottom4V(
+                bottomSurface.BuildCubeBottom4V(
                     new Vector3(tilePosition.X, -m_height, tilePosition.Z),
                     new Vector3(m_tileSize.X, m_height, m_tileSize.Y),
                     Color4.White);
             }
 
-            //Build all borders
-            VertexStructure borderStructure = null;
-            if (materialRelated.ContainsKey(m_borderMaterial)) { borderStructure = materialRelated[m_borderMaterial]; }
+            // Build all borders
+            VertexStructureSurface borderSurface = null;
+            if (materialRelated.ContainsKey(m_borderMaterial)) { borderSurface = materialRelated[m_borderMaterial]; }
             else
             {
-                borderStructure = new VertexStructure();
-                borderStructure.Material = m_borderMaterial;
-                materialRelated[m_borderMaterial] = borderStructure;
-                result.Add(borderStructure);
+                borderSurface = result[0].AddSurface();
+                borderSurface.Material = m_borderMaterial;
+                materialRelated[m_borderMaterial] = borderSurface;
             }
             foreach (BorderInformation actBorder in m_borders)
             {
@@ -253,7 +251,7 @@ namespace SeeingSharp.Multimedia.Objects
                     switch (actBorder.Location)
                     {
                         case BorderLocation.Left:
-                            borderStructure.BuildRect4V(
+                            borderSurface.BuildRect4V(
                                 new Vector3(tilePosition.X, -m_height, tilePosition.Z),
                                 new Vector3(tilePosition.X, 0f, tilePosition.Z),
                                 new Vector3(tilePosition.X, 0f, tilePosition.Z + m_tileSize.Y),
@@ -261,7 +259,7 @@ namespace SeeingSharp.Multimedia.Objects
                             break;
 
                         case BorderLocation.Top:
-                            borderStructure.BuildRect4V(
+                            borderSurface.BuildRect4V(
                                 new Vector3(tilePosition.X, -m_height, tilePosition.Z + m_tileSize.Y),
                                 new Vector3(tilePosition.X, 0f, tilePosition.Z + m_tileSize.Y),
                                 new Vector3(tilePosition.X + m_tileSize.X, 0f, tilePosition.Z + m_tileSize.Y),
@@ -269,7 +267,7 @@ namespace SeeingSharp.Multimedia.Objects
                             break;
 
                         case BorderLocation.Right:
-                            borderStructure.BuildRect4V(
+                            borderSurface.BuildRect4V(
                                 new Vector3(tilePosition.X + m_tileSize.X, -m_height, tilePosition.Z + m_tileSize.Y),
                                 new Vector3(tilePosition.X + m_tileSize.X, 0f, tilePosition.Z + m_tileSize.Y),
                                 new Vector3(tilePosition.X + m_tileSize.X, 0f, tilePosition.Z),
@@ -277,7 +275,7 @@ namespace SeeingSharp.Multimedia.Objects
                             break;
 
                         case BorderLocation.Bottom:
-                            borderStructure.BuildRect4V(
+                            borderSurface.BuildRect4V(
                                 new Vector3(tilePosition.X + m_tileSize.X, -m_height, tilePosition.Z),
                                 new Vector3(tilePosition.X + m_tileSize.X, 0f, tilePosition.Z),
                                 new Vector3(tilePosition.X, 0f, tilePosition.Z),
@@ -292,7 +290,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             //Return all generated VertexStructures
-            return result.ToArray();
+            return result;
         }
 
         /// <summary>

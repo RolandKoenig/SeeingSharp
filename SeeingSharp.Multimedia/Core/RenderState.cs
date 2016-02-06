@@ -460,7 +460,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal int DeviceIndex;
 
-        internal int LastRenderBlockID;
+        //internal int LastRenderBlockID;
 
         /// <summary>
         /// Gets or sets the current render target for 2D rendering.

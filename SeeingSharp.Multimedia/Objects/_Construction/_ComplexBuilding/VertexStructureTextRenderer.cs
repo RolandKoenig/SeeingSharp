@@ -34,16 +34,16 @@ namespace SeeingSharp.Multimedia.Objects
 {
     internal class VertexStructureTextRenderer : TextRendererBase
     {
-        private VertexStructure m_target;
+        private VertexStructureSurface m_targetSurface;
         private TextGeometryOptions m_geometryOptions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VertexStructureTextRenderer" /> class.
         /// </summary>
-        public VertexStructureTextRenderer(VertexStructure targetStructure, TextGeometryOptions textGeometryOptions)
+        public VertexStructureTextRenderer(VertexStructureSurface targetSurface, TextGeometryOptions textGeometryOptions)
             : base()
         {
-            m_target = targetStructure;
+            m_targetSurface = targetSurface;
             m_geometryOptions = textGeometryOptions;
         }
 
@@ -101,6 +101,7 @@ namespace SeeingSharp.Multimedia.Objects
 
             // Structure for caching the result
             VertexStructure tempStructure = new VertexStructure();
+            VertexStructureSurface tempSurface = tempStructure.AddSurface();
 
             // Create the text surface
             if (m_geometryOptions.MakeSurface)
@@ -184,7 +185,7 @@ namespace SeeingSharp.Multimedia.Objects
                                 polygonForRendering.Vertices[loop].X,
                                 0f,
                                 polygonForRendering.Vertices[loop].Y);
-                            tempStructure.BuildCube24V(actVertexLocation, pointRenderSize, colorToUse);
+                            tempSurface.BuildCube24V(actVertexLocation, pointRenderSize, colorToUse);
                         }
                     }
 
@@ -205,7 +206,7 @@ namespace SeeingSharp.Multimedia.Objects
                             if (indexEnumerator.MoveNext()) { index2 = indexEnumerator.Current; } else { break; }
                             if (indexEnumerator.MoveNext()) { index3 = indexEnumerator.Current; } else { break; }
 
-                            tempStructure.AddTriangle(
+                            tempSurface.AddTriangle(
                                 (int)(actBaseIndex + index3),
                                 (int)(actBaseIndex + index2),
                                 (int)(actBaseIndex + index1));
@@ -215,7 +216,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Make volumetric outlines
-            int triangleCountWithoutSide = tempStructure.CountTriangles;
+            int triangleCountWithoutSide = tempSurface.CountTriangles;
             if (m_geometryOptions.MakeVolumetricText)
             {
                 // Add all side surfaces
@@ -223,7 +224,7 @@ namespace SeeingSharp.Multimedia.Objects
                 {
                     foreach (Line2D actLine in actPolygon.Lines)
                     {
-                        tempStructure.BuildRect4V(
+                        tempSurface.BuildRect4V(
                             new Vector3(actLine.StartPosition.X, -m_geometryOptions.VolumetricTextDepth, actLine.StartPosition.Y),
                             new Vector3(actLine.EndPosition.X, -m_geometryOptions.VolumetricTextDepth, actLine.EndPosition.Y),
                             new Vector3(actLine.EndPosition.X, 0f, actLine.EndPosition.Y),
@@ -238,22 +239,18 @@ namespace SeeingSharp.Multimedia.Objects
             {
                 for (int loop = 0; loop < triangleCountWithoutSide; loop++)
                 {
-                    Triangle triangle = tempStructure.Triangles[loop];
+                    Triangle triangle = tempSurface.Triangles[loop];
                     Vertex vertex0 = tempStructure.Vertices[triangle.Index1];
                     Vertex vertex1 = tempStructure.Vertices[triangle.Index2];
                     Vertex vertex2 = tempStructure.Vertices[triangle.Index3];
                     Vector3 changeVector = new Vector3(0f, -m_geometryOptions.VolumetricTextDepth, 0f);
 
-                    tempStructure.AddTriangle(
+                    tempSurface.AddTriangle(
                         vertex2.Copy(vertex2.Position - changeVector, Vector3.Negate(vertex2.Normal)),
                         vertex1.Copy(vertex1.Position - changeVector, Vector3.Negate(vertex1.Normal)),
                         vertex0.Copy(vertex0.Position - changeVector, Vector3.Negate(vertex0.Normal)));
                 }
             }
-
-            // Mirror vertex order to mach standard 3d orientation
-            // tempStructure.UpdateVerticesUsingRelocationFunc((actVector) => Vector3.Transform(actVector, Matrix.Scaling(1f, 1f, -1f)));
-            tempStructure.Material = m_geometryOptions.SurfaceMaterial;
 
             // Scale the text using given scale factor
             if (m_geometryOptions.VerticesScaleFactor > 0f)
@@ -279,7 +276,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Merge temporary structure to target structure
-            m_target.AddStructure(tempStructure);
+            m_targetSurface.AddStructure(tempStructure);
 
             return SDX.Result.Ok;
         }

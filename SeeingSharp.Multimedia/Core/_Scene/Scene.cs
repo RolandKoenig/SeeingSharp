@@ -886,7 +886,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="renderState">State of the render.</param>
         internal void HandleRenderResources(RenderState renderState)
         {
-            renderState.LastRenderBlockID = -1;
+            //renderState.LastRenderBlockID = -1;
 
             // Get current resource dictionary
             ResourceDictionary resources = m_registeredResourceDicts[renderState.DeviceIndex];
@@ -912,7 +912,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="renderState">The current render state.</param>
         internal void Render(RenderState renderState)
         {
-            renderState.LastRenderBlockID = -1;
+            //renderState.LastRenderBlockID = -1;
 
             // Get current resource dictionary
             ResourceDictionary resources = m_registeredResourceDicts[renderState.DeviceIndex];

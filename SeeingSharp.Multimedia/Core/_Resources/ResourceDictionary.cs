@@ -100,7 +100,7 @@ namespace SeeingSharp.Multimedia.Core
             else if(resourceType == typeof(GeometryResource))
             {
                 VertexStructure dummyStructure = new VertexStructure();
-                dummyStructure.BuildCube24V(
+                dummyStructure.FirstSurface.BuildCube24V(
                     Vector3.Zero,
                     new Vector3(1f, 1f, 1f),
                     Color4.White);

@@ -152,16 +152,22 @@ namespace SeeingSharp.Multimedia.Drawing3D
             {
                 LoadedStructureInfo structureToDraw = m_loadedStructures[loop];
 
-                if (renderState.LastRenderBlockID != structureToDraw.RenderBlockID)
-                {
-                    // Apply new vertex buffer
-                    deviceContext.InputAssembler.InputLayout = structureToDraw.InputLayout;
-                    deviceContext.InputAssembler.SetIndexBuffer(structureToDraw.IndexBuffer, indexBufferFormat, 0);
-                    deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(structureToDraw.VertexBuffer, structureToDraw.SizePerVertex, 0));
+                // Apply new vertex buffer
+                deviceContext.InputAssembler.InputLayout = structureToDraw.InputLayout;
+                deviceContext.InputAssembler.SetIndexBuffer(structureToDraw.IndexBuffer, indexBufferFormat, 0);
+                deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(structureToDraw.VertexBuffer, structureToDraw.SizePerVertex, 0));
 
-                    // Register current render block
-                    renderState.LastRenderBlockID = structureToDraw.RenderBlockID;
-                }
+
+                //if (renderState.LastRenderBlockID != structureToDraw.RenderBlockID)
+                //{
+                //    // Apply new vertex buffer
+                //    deviceContext.InputAssembler.InputLayout = structureToDraw.InputLayout;
+                //    deviceContext.InputAssembler.SetIndexBuffer(structureToDraw.IndexBuffer, indexBufferFormat, 0);
+                //    deviceContext.InputAssembler.SetVertexBuffers(0, new D3D11.VertexBufferBinding(structureToDraw.VertexBuffer, structureToDraw.SizePerVertex, 0));
+
+                //    // Register current render block
+                //    renderState.LastRenderBlockID = structureToDraw.RenderBlockID;
+                //}
 
                 // Apply material
                 renderState.ApplyMaterial(structureToDraw.Material);
@@ -212,30 +218,30 @@ namespace SeeingSharp.Multimedia.Drawing3D
             }
             m_boundingBox = new BoundingBox(vertexLocations);
 
-            //Load specialized data
-            List<VertexStructure> currentStructures = new List<VertexStructure>();
-            int actVertexCount = 0;
-            int actIndexCount = 0;
-            for (int loop = 0; loop < structures.Length; loop++)
-            {
-                //Load VertexBuffer and IndexBuffer if we are unable to group further
-                VertexStructure actStructure = structures[loop];
-                if (actVertexCount + actStructure.CountVertices >= (int)int.MaxValue)
-                {
-                    VertexStructure[] structuresToLoad = currentStructures.ToArray();
-                    currentStructures.Clear();
-                }
+            ////Load specialized data
+            //List<VertexStructure> currentStructures = new List<VertexStructure>();
+            //int actVertexCount = 0;
+            //int actIndexCount = 0;
+            //for (int loop = 0; loop < structures.Length; loop++)
+            //{
+            //    //Load VertexBuffer and IndexBuffer if we are unable to group further
+            //    VertexStructure actStructure = structures[loop];
+            //    if (actVertexCount + actStructure.CountVertices >= (int)int.MaxValue)
+            //    {
+            //        VertexStructure[] structuresToLoad = currentStructures.ToArray();
+            //        currentStructures.Clear();
+            //    }
 
-                //Append current structure to current cache
-                actVertexCount += actStructure.CountVertices;
-                actIndexCount += actStructure.CountIndexes;
-                currentStructures.Add(actStructure);
-            }
-            if (currentStructures.Count > 0)
-            {
-                VertexStructure[] structuresToLoad = currentStructures.ToArray();
-                currentStructures.Clear();
-            }
+            //    //Append current structure to current cache
+            //    actVertexCount += actStructure.CountVertices;
+            //    actIndexCount += actStructure.CountIndexes;
+            //    currentStructures.Add(actStructure);
+            //}
+            //if (currentStructures.Count > 0)
+            //{
+            //    VertexStructure[] structuresToLoad = currentStructures.ToArray();
+            //    currentStructures.Clear();
+            //}
 
             //Build geometry
             m_loadedStructures = BuildBuffers(device, structures, resources);
@@ -265,106 +271,153 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="resources">The current resource dictionary</param>
         protected virtual LoadedStructureInfo[] BuildBuffers(EngineDevice device, VertexStructure[] structures, ResourceDictionary resources)
         {
-            List<LoadedStructureInfo> result = new List<LoadedStructureInfo>();
+            List<LoadedStructureInfo> result = new List<LoadedStructureInfo>(structures.Length * 2);
 
-            // Get all used materials and associate corresponding vertex structures
-            List<Tuple<MaterialResource, VertexStructure>> structureMaterialTuples = new List<Tuple<MaterialResource, VertexStructure>>();
-            foreach (var actStructure in structures)
+            int structuresCount = structures.Length;
+            for(int loopStruct = 0; loopStruct<structuresCount; loopStruct++)
             {
-                MaterialResource actMaterialResource = resources.GetOrCreateMaterialResourceAndEnsureLoaded(actStructure);
-                structureMaterialTuples.Add(Tuple.Create(actMaterialResource, actStructure));
-            }
-            int structureCount = structureMaterialTuples.Count;
+                VertexStructure actStructure = structures[loopStruct];
+                if(actStructure.CountVertices == 0) { continue; }
+                if(actStructure.CountSurfaces == 0) { continue; }
 
-            // Sort structures by material
-            structureMaterialTuples.Sort((left, right) => left.Item1.GetHashCode().CompareTo(right.Item1.GetHashCode()));
+                // Create the vertex buffer first
+                D3D11.Buffer vertexBuffer = GraphicsHelper.CreateImmutableVertexBuffer(
+                    device,
+                    StandardVertex.FromVertexStructure(actStructure));
 
-            // Define variables for VertexBuffer building
-            int countVertices = 0;
-            int actBaseVertex = 0;
-            List<StandardVertex[]> allCurrentVertices = new List<StandardVertex[]>();
-            List<int[]> allCurrentIndices = new List<int[]>();
-            int currentRenderBlockStart = 0;
-            for (int loop = 0; loop < structureCount; loop++)
-            {
-                VertexStructure actStructure = structureMaterialTuples[loop].Item2;
+                // Sort all surfaces by material
+                List<VertexStructureSurface> surfaceList = new List<VertexStructureSurface>(actStructure.Surfaces);
+                surfaceList.Sort((left, right) => left.MaterialProperties.GetHashCode().CompareTo(right.MaterialProperties.GetHashCode()));
 
-                // Update index and vertex collections
-                actBaseVertex = countVertices;
-                countVertices += actStructure.CountVertices;
-
-                // Append vertex data to current buffer
-                allCurrentVertices.Add(StandardVertex.FromVertexStructure(actStructure));
-
-                // Append index data to current buffer
-                int[] indexArray = actStructure.GetIndexArray();
-                if (actBaseVertex > 0)
+                int surfaceCount = surfaceList.Count;
+                for(int loopSurface =0; loopSurface<surfaceCount; loopSurface++)
                 {
-                    for (int loopInner = 0; loopInner < indexArray.Length; loopInner++)
-                    {
-                        indexArray[loopInner] = (int)(indexArray[loopInner] + actBaseVertex);
-                    }
-                }
-                allCurrentIndices.Add(indexArray);
+                    VertexStructureSurface actSurface = surfaceList[loopSurface];
+                    if(actSurface.CountTriangles == 0) { continue; }
 
-                // Finish buffers / finish loop
-                int nextIndex = loop + 1;
-                if ((nextIndex >= structureCount) ||
-                    (countVertices + structureMaterialTuples[nextIndex].Item2.CountVertices > int.MaxValue - 100))
-                {
-                    countVertices = 0;
-                    int actRenderBlockID = resources.GetNextRenderBlockID();
+                    int[] indexArray = actSurface.GetIndexArray();
+                    D3D11.Buffer indexBuffer = GraphicsHelper.CreateImmutableIndexBuffer(device, indexArray);
 
-                    // Build vertex and index buffers
-                    D3D11.Buffer vertexBuffer = GraphicsHelper.CreateImmutableVertexBuffer(device, allCurrentVertices.ToArray());
-                    D3D11.Buffer indexBuffer = GraphicsHelper.CreateImmutableIndexBuffer(device, allCurrentIndices.ToArray());
+                    // Get or create the material
+                    MaterialResource actMaterialResource = resources.GetOrCreateMaterialResourceAndEnsureLoaded(actSurface);
 
-                    // Build render blocks per contained material
-                    MaterialResource actMaterial = null;
-                    List<VertexStructure> localStructures = new List<VertexStructure>();
-                    int countIndicesInner = 0;
-                    int countVerticesInner = 0;
-                    int lastVertexCount = 0;
-                    int lastIndexCount = 0;
-                    for (int loopBlock = currentRenderBlockStart; loopBlock <= loop; loopBlock++)
-                    {
-                        VertexStructure actStructureBlock = structureMaterialTuples[loopBlock].Item2;
-                        localStructures.Add(actStructureBlock);
-
-                        countIndicesInner += actStructureBlock.CountIndexes;
-                        countVerticesInner += actStructureBlock.CountVertices;
-
-                        actMaterial = structureMaterialTuples[loopBlock].Item1;
-                        if ((loopBlock == loop) ||
-                           (actMaterial != structureMaterialTuples[loopBlock + 1].Item1))
-                        {
-                            // Create some information about the loaded structures
-                            LoadedStructureInfo newStructureInfo = new LoadedStructureInfo();
-                            newStructureInfo.RenderBlockID = actRenderBlockID;
-                            newStructureInfo.SizePerVertex = StandardVertex.Size;
-                            newStructureInfo.VertexStructures = localStructures.ToArray();
-                            newStructureInfo.IndexCount = countIndicesInner;
-                            newStructureInfo.StartIndex = lastIndexCount;
-                            newStructureInfo.Material = actMaterial;
-                            newStructureInfo.VertexBuffer = vertexBuffer;
-                            newStructureInfo.IndexBuffer = indexBuffer;
-                            newStructureInfo.InputLayout = newStructureInfo.Material.GenerateInputLayout(
-                                device, StandardVertex.InputElements, MaterialApplyInstancingMode.SingleObject);
-                            result.Add(newStructureInfo);
-
-                            // Reset counter variables
-                            lastIndexCount += countIndicesInner;
-                            lastVertexCount += countVerticesInner;
-                            countIndicesInner = 0;
-                            countVerticesInner = 0;
-                        }
-                    }
-
-                    currentRenderBlockStart = loop + 1;
+                    // Create some information about the loaded structures
+                    LoadedStructureInfo newStructureInfo = new LoadedStructureInfo();
+                    //newStructureInfo.RenderBlockID = actRenderBlockID;
+                    newStructureInfo.SizePerVertex = StandardVertex.Size;
+                    newStructureInfo.VertexStructures = new VertexStructure[] { actStructure };
+                    newStructureInfo.IndexCount = indexArray.Length;
+                    newStructureInfo.StartIndex = 0;
+                    newStructureInfo.Material = actMaterialResource;
+                    newStructureInfo.VertexBuffer = vertexBuffer;
+                    newStructureInfo.IndexBuffer = indexBuffer;
+                    newStructureInfo.InputLayout = newStructureInfo.Material.GenerateInputLayout(
+                        device, StandardVertex.InputElements, MaterialApplyInstancingMode.SingleObject);
+                    result.Add(newStructureInfo);
                 }
             }
 
             return result.ToArray();
+            //List<LoadedStructureInfo> result = new List<LoadedStructureInfo>();
+
+            //// Get all used materials and associate corresponding vertex structures
+            //List<Tuple<MaterialResource, VertexStructure>> structureMaterialTuples = new List<Tuple<MaterialResource, VertexStructure>>();
+            //foreach (var actStructure in structures)
+            //{
+            //    MaterialResource actMaterialResource = resources.GetOrCreateMaterialResourceAndEnsureLoaded(actStructure);
+            //    structureMaterialTuples.Add(Tuple.Create(actMaterialResource, actStructure));
+            //}
+            //int structureCount = structureMaterialTuples.Count;
+
+            //// Sort structures by material
+            //structureMaterialTuples.Sort((left, right) => left.Item1.GetHashCode().CompareTo(right.Item1.GetHashCode()));
+
+            //// Define variables for VertexBuffer building
+            //int countVertices = 0;
+            //int actBaseVertex = 0;
+            //List<StandardVertex[]> allCurrentVertices = new List<StandardVertex[]>();
+            //List<int[]> allCurrentIndices = new List<int[]>();
+            //int currentRenderBlockStart = 0;
+            //for (int loop = 0; loop < structureCount; loop++)
+            //{
+            //    VertexStructure actStructure = structureMaterialTuples[loop].Item2;
+
+            //    // Update index and vertex collections
+            //    actBaseVertex = countVertices;
+            //    countVertices += actStructure.CountVertices;
+
+            //    // Append vertex data to current buffer
+            //    allCurrentVertices.Add(StandardVertex.FromVertexStructure(actStructure));
+
+            //    // Append index data to current buffer
+            //    int[] indexArray = actStructure.GetIndexArray();
+            //    if (actBaseVertex > 0)
+            //    {
+            //        for (int loopInner = 0; loopInner < indexArray.Length; loopInner++)
+            //        {
+            //            indexArray[loopInner] = (int)(indexArray[loopInner] + actBaseVertex);
+            //        }
+            //    }
+            //    allCurrentIndices.Add(indexArray);
+
+            //    // Finish buffers / finish loop
+            //    int nextIndex = loop + 1;
+            //    if ((nextIndex >= structureCount) ||
+            //        (countVertices + structureMaterialTuples[nextIndex].Item2.CountVertices > int.MaxValue - 100))
+            //    {
+            //        countVertices = 0;
+            //        int actRenderBlockID = resources.GetNextRenderBlockID();
+
+            //        // Build vertex and index buffers
+            //        D3D11.Buffer vertexBuffer = GraphicsHelper.CreateImmutableVertexBuffer(device, allCurrentVertices.ToArray());
+            //        D3D11.Buffer indexBuffer = GraphicsHelper.CreateImmutableIndexBuffer(device, allCurrentIndices.ToArray());
+
+            //        // Build render blocks per contained material
+            //        MaterialResource actMaterial = null;
+            //        List<VertexStructure> localStructures = new List<VertexStructure>();
+            //        int countIndicesInner = 0;
+            //        int countVerticesInner = 0;
+            //        int lastVertexCount = 0;
+            //        int lastIndexCount = 0;
+            //        for (int loopBlock = currentRenderBlockStart; loopBlock <= loop; loopBlock++)
+            //        {
+            //            VertexStructure actStructureBlock = structureMaterialTuples[loopBlock].Item2;
+            //            localStructures.Add(actStructureBlock);
+
+            //            countIndicesInner += actStructureBlock.CountIndexes;
+            //            countVerticesInner += actStructureBlock.CountVertices;
+
+            //            actMaterial = structureMaterialTuples[loopBlock].Item1;
+            //            if ((loopBlock == loop) ||
+            //               (actMaterial != structureMaterialTuples[loopBlock + 1].Item1))
+            //            {
+            //                // Create some information about the loaded structures
+            //                LoadedStructureInfo newStructureInfo = new LoadedStructureInfo();
+            //                newStructureInfo.RenderBlockID = actRenderBlockID;
+            //                newStructureInfo.SizePerVertex = StandardVertex.Size;
+            //                newStructureInfo.VertexStructures = localStructures.ToArray();
+            //                newStructureInfo.IndexCount = countIndicesInner;
+            //                newStructureInfo.StartIndex = lastIndexCount;
+            //                newStructureInfo.Material = actMaterial;
+            //                newStructureInfo.VertexBuffer = vertexBuffer;
+            //                newStructureInfo.IndexBuffer = indexBuffer;
+            //                newStructureInfo.InputLayout = newStructureInfo.Material.GenerateInputLayout(
+            //                    device, StandardVertex.InputElements, MaterialApplyInstancingMode.SingleObject);
+            //                result.Add(newStructureInfo);
+
+            //                // Reset counter variables
+            //                lastIndexCount += countIndicesInner;
+            //                lastVertexCount += countVerticesInner;
+            //                countIndicesInner = 0;
+            //                countVerticesInner = 0;
+            //            }
+            //        }
+
+            //        currentRenderBlockStart = loop + 1;
+            //    }
+            //}
+
+            //return result.ToArray();
         }
 
         /// <summary>
@@ -396,7 +449,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         //*********************************************************************
         protected class LoadedStructureInfo
         {
-            public int RenderBlockID;
+            //public int RenderBlockID;
             public VertexStructure[] VertexStructures;
             public D3D11.Buffer VertexBuffer;
             public D3D11.Buffer IndexBuffer;

@@ -247,6 +247,8 @@
     <Compile Include="Input\_States\KeyboardState.cs" />
     <Compile Include="Input\_States\MouseOrPointerState.cs" />
     <Compile Include="Input\_States\_Enum.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.Text.cs" />
     <Compile Include="Objects\_Construction\VertexStructureSurface.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
@@ -275,8 +277,6 @@
     <Compile Include="Objects\_Construction\TextureData.cs" />
     <Compile Include="Objects\_Construction\Triangle.cs" />
     <Compile Include="Objects\_Construction\Vertex.cs" />
-    <Compile Include="Objects\_Construction\VertexStructure.Builders.cs" />
-    <Compile Include="Objects\_Construction\VertexStructure.Builders.Text.cs" />
     <Compile Include="Objects\_Construction\VertexStructure.cs" />
     <Compile Include="Objects\_Construction\_ComplexBuilding\SimplePolygon2DGeometrySink.cs" />
     <Compile Include="Objects\_Construction\_ComplexBuilding\VertexStructureTextRenderer.cs" />
@@ -300,7 +300,6 @@
     <Compile Include="Objects\_ObjectTypes\ObjectType.cs" />
     <Compile Include="Objects\_ObjectTypes\PalletStackType.cs" />
     <Compile Include="Objects\_ObjectTypes\PalletType.cs" />
-    <Compile Include="Objects\_ObjectTypes\SingleMaterialPalletType.cs" />
     <Compile Include="Objects\_ObjectTypes\_Floor\FloorTile.cs" />
     <Compile Include="Objects\_ObjectTypes\_Floor\FloorTileInfo.cs" />
     <Compile Include="Objects\_ObjectTypes\_Floor\FloorType.cs" />
