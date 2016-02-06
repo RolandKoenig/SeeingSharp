@@ -61,7 +61,7 @@ namespace RK2048.Graphics
 
                 // Define current vertex structure
                 VertexStructure tileStructure = new VertexStructure(1024 * 3);
-                tileStructure.AddSurface(1024);
+                tileStructure.CreateSurface(1024);
                 tileStructure.FirstSurface.BuildCubeSides16V(cubeStart, cubeSize, Constants.COLOR_TILE_BASE)
                     .DisableTexture();
                 tileStructure.FirstSurface.BuildCubeBottom4V(cubeSize, cubeSize, Constants.COLOR_TILE_BASE)

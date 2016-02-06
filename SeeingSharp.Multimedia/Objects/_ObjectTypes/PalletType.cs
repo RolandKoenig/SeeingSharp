@@ -89,17 +89,16 @@ namespace SeeingSharp.Multimedia.Objects
         /// Builds the structure needed for the pallet
         /// </summary>
         /// <param name="buildOptions">Some generic options for structure building</param>
-        public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
+        public override VertexStructure BuildStructure(StructureBuildOptions buildOptions)
         {
             bool createContent = m_contentHeight > 0f;
 
             // Prepare result array
-            VertexStructure[] result = new VertexStructure[1];
-            result[0] = new VertexStructure();
+            VertexStructure result = new VertexStructure();
 
-            VertexStructureSurface surfacePallet = result[0].AddSurface();
+            VertexStructureSurface surfacePallet = result.CreateSurface();
             VertexStructureSurface surfaceContent = null;
-            if (createContent) { surfaceContent = result[0].AddSurface(); }
+            if (createContent) { surfaceContent = result.CreateSurface(); }
 
             // Build pallet
             #region -----------------------------------------------------------
@@ -167,9 +166,9 @@ namespace SeeingSharp.Multimedia.Objects
             #endregion -----------------------------------------------------------
 
             Matrix4x4 rotMatrix = Matrix4x4.CreateRotationY(EngineMath.RAD_90DEG);
-            result[0].UpdateVerticesUsingRelocationBy(new Vector3(-m_width / 2f, 0f, -m_depth / 2f));
-            result[0].CalculateTangentsAndBinormals();
-            result[0].TransformVertices(rotMatrix);
+            result.UpdateVerticesUsingRelocationBy(new Vector3(-m_width / 2f, 0f, -m_depth / 2f));
+            result.CalculateTangentsAndBinormals();
+            result.TransformVertices(rotMatrix);
 
             return result;
         }

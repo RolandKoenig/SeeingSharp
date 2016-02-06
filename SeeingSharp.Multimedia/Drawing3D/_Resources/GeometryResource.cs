@@ -62,9 +62,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="GeometryResource"/> class.
         /// </summary>
-        /// <param name="vertexStructures">The vertex structures.</param>
-        public GeometryResource(params VertexStructure[] vertexStructures)
-            : this(new GenericObjectType(vertexStructures))
+        /// <param name="vertexStructure">The vertex structures.</param>
+        public GeometryResource(VertexStructure vertexStructure)
+            : this(new GenericObjectType(vertexStructure))
         {
 
         }
@@ -122,7 +122,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Redefines the content of this geometry resource.
         /// </summary>
-        public void Redefine(ResourceDictionary resources, params VertexStructure[] vertexStructures)
+        public void Redefine(ResourceDictionary resources, VertexStructure vertexStructures)
         {
             this.Redefine(resources, new GenericObjectType(vertexStructures));
         }
@@ -205,7 +205,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
         protected override void LoadResourceInternal(EngineDevice device, ResourceDictionary resources)
         {
             // Build structures
-            VertexStructure[] structures = m_objectType.BuildStructure(new StructureBuildOptions(device.SupportedDetailLevel));
+            VertexStructure[] structures = new VertexStructure[]
+            {
+                m_objectType.BuildStructure(new StructureBuildOptions(device.SupportedDetailLevel))
+            };
 
             // Build BoundingBox around all vertices
             List<Vector3> vertexLocations = new List<Vector3>();

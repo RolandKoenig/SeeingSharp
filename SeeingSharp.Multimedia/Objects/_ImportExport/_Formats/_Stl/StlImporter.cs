@@ -481,7 +481,7 @@ namespace SeeingSharp.Multimedia.Objects
 
                 // Read geometry data
                 VertexStructure newStructure = new VertexStructure((int)numberTriangles * 3);
-                newStructure.AddSurface((int)numberTriangles);
+                newStructure.CreateSurface((int)numberTriangles);
                 for (int loop = 0; loop < numberTriangles; loop++)
                 {
                     this.ReadTriangle(reader, newStructure, importOptions);

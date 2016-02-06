@@ -50,57 +50,50 @@ namespace SeeingSharp.Multimedia.Objects
         /// Builds all vertex structures for the given detail level.
         /// </summary>
         /// <param name="buildOptions">Some generic options for structure building</param>
-        public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
+        public override VertexStructure BuildStructure(StructureBuildOptions buildOptions)
         {
-            VertexStructure[] structuresFromChild = m_objTypeToStack.BuildStructure(buildOptions);
-            structuresFromChild.EnsureNotNullOrEmpty(nameof(structuresFromChild));
+            VertexStructure structureFromChild = m_objTypeToStack.BuildStructure(buildOptions);
+            structureFromChild.EnsureNotNull(nameof(structureFromChild));
 
-            BoundingBox childStructBox = structuresFromChild.GenerateBoundingBox();
+            BoundingBox childStructBox = structureFromChild.GenerateBoundingBox();
             Vector3 correctionVector = -childStructBox.GetBottomCenter();
-            
+
             // Copy metadata infomration of the VertexStructures
-            VertexStructure[] result = new VertexStructure[structuresFromChild.Length];
-            for(int loopStruct=0; loopStruct<result.Length; loopStruct++)
-            {
-                result[loopStruct] = structuresFromChild[loopStruct].Clone(
-                    copyGeometryData: false,
-                    capacityMultiplier: m_stackSize);
-            }
+            VertexStructure result = structureFromChild.Clone(
+                copyGeometryData: false,
+                capacityMultiplier: m_stackSize);
 
             // Build geometry
-            for(int loop=0; loop<m_stackSize; loop++)
+            for (int loop = 0; loop < m_stackSize; loop++)
             {
                 float actYCorrection = childStructBox.Height * loop;
                 Vector3 localCorrection = new Vector3(correctionVector.X, correctionVector.Y + actYCorrection, correctionVector.Z);
 
-                for(int loopStruct =0; loopStruct<result.Length; loopStruct++)
+                int baseVertex = loop * structureFromChild.CountVertices;
+                foreach (Vertex actVertex in structureFromChild.Vertices)
                 {
-                    int baseVertex = loop * structuresFromChild[loopStruct].CountVertices;
-                    foreach(Vertex actVertex in structuresFromChild[loopStruct].Vertices)
+                    // Change vertex properties based on stack position
+                    Vertex changedVertex = actVertex;
+                    changedVertex.Position = changedVertex.Position + localCorrection;
+                    if (loop % 2 == 1)
                     {
-                        // Change vertex properties based on stack position
-                        Vertex changedVertex = actVertex;
-                        changedVertex.Position = changedVertex.Position + localCorrection;
-                        if (loop % 2 == 1)
-                        {
-                            changedVertex.Color = changedVertex.Color.ChangeColorByLight(0.05f);
-                        }
-
-                        // Add the vertex
-                        result[loopStruct].AddVertex(changedVertex);
+                        changedVertex.Color = changedVertex.Color.ChangeColorByLight(0.05f);
                     }
 
-                    // 
-                    foreach(VertexStructureSurface actSurfaceFromChild in structuresFromChild[loopStruct].Surfaces)
+                    // Add the vertex
+                    result.AddVertex(changedVertex);
+                }
+
+                // Clone all surfaces
+                foreach (VertexStructureSurface actSurfaceFromChild in structureFromChild.Surfaces)
+                {
+                    VertexStructureSurface newSurface = result.CreateSurface(actSurfaceFromChild.CountTriangles);
+                    foreach (Triangle actTriangle in actSurfaceFromChild.Triangles)
                     {
-                        VertexStructureSurface newSurface = result[loopStruct].AddSurface(actSurfaceFromChild.CountTriangles);
-                        foreach (Triangle actTriangle in actSurfaceFromChild.Triangles)
-                        {
-                            newSurface.AddTriangle(
-                                baseVertex + actTriangle.Index1,
-                                baseVertex + actTriangle.Index2,
-                                baseVertex + actTriangle.Index3);
-                        }
+                        newSurface.AddTriangle(
+                            baseVertex + actTriangle.Index1,
+                            baseVertex + actTriangle.Index2,
+                            baseVertex + actTriangle.Index3);
                     }
                 }
 

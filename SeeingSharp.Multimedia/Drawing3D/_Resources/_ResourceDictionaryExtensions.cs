@@ -129,17 +129,17 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Adds a new geometry resource.
         /// </summary>
-        internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, params VertexStructure[] structures)
+        internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, VertexStructure structure)
         {
-            return resourceDiciontary.AddResource(new GeometryResource(structures));
+            return resourceDiciontary.AddResource(new GeometryResource(structure));
         }
 
         /// <summary>
         /// Adds a new geometry resource.
         /// </summary>
-        internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, params VertexStructure[] structures)
+        internal static GeometryResource AddGeometry(this ResourceDictionary resourceDiciontary, NamedOrGenericKey resourceKey, VertexStructure structure)
         {
-            return resourceDiciontary.AddResource(resourceKey, new GeometryResource(structures));
+            return resourceDiciontary.AddResource(resourceKey, new GeometryResource(structure));
         }
 
         /// <summary>

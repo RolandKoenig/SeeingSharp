@@ -26,48 +26,38 @@ namespace SeeingSharp.Multimedia.Objects
 {
     public class GenericObjectType : ObjectType
     {
-        private VertexStructure[] m_vertexStructures;
-        private VertexStructure[] m_vertexStructuresLowDetail;
+        private VertexStructure m_vertexStructure;
+        private VertexStructure m_vertexStructureLowDetail;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericObjectType"/> class.
         /// </summary>
-        /// <param name="vertexStructures">The vertex structures.</param>
-        public GenericObjectType(VertexStructure[] vertexStructures)
-        {
-            m_vertexStructures = vertexStructures;
-            m_vertexStructuresLowDetail = vertexStructures;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericObjectType"/> class.
-        /// </summary>
-        /// <param name="vertexStructures">The vertex structures.</param>
-        /// <param name="vertexStructuresLowDetail">The vertex structures for low detail level.</param>
-        public GenericObjectType(VertexStructure[] vertexStructures, VertexStructure[] vertexStructuresLowDetail)
-        {
-            m_vertexStructures = vertexStructures;
-            m_vertexStructuresLowDetail = vertexStructuresLowDetail;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="GenericObjectType"/> class.
-        /// </summary>
-        /// <param name="vertexStructure">The vertex structure.</param>
+        /// <param name="vertexStructure">The vertex structures.</param>
         public GenericObjectType(VertexStructure vertexStructure)
-            : this(new VertexStructure[] { vertexStructure })
         {
+            m_vertexStructure = vertexStructure;
+            m_vertexStructureLowDetail = vertexStructure;
+        }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GenericObjectType"/> class.
+        /// </summary>
+        /// <param name="vertexStructure">The vertex structures.</param>
+        /// <param name="vertexStructureLowDetail">The vertex structures for low detail level.</param>
+        public GenericObjectType(VertexStructure vertexStructure, VertexStructure vertexStructureLowDetail)
+        {
+            m_vertexStructure = vertexStructure;
+            m_vertexStructureLowDetail = vertexStructureLowDetail;
         }
 
         /// <summary>
         /// Builds the structure.
         /// </summary>
         /// <param name="buildOptions">Some generic options for structure building</param>
-        public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
+        public override VertexStructure BuildStructure(StructureBuildOptions buildOptions)
         {
-            if (buildOptions.IsHighDetail) { return m_vertexStructures; }
-            else { return m_vertexStructuresLowDetail; }
+            if (buildOptions.IsHighDetail) { return m_vertexStructure; }
+            else { return m_vertexStructureLowDetail; }
         }
 
         /// <summary>
@@ -76,20 +66,14 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="materialToApply">The materials to apply.</param>
         public void ApplyMaterialForAll(NamedOrGenericKey materialToApply)
         {
-            for (int loop = 0; loop < m_vertexStructures.Length; loop++)
+            foreach (VertexStructureSurface actSurface in m_vertexStructure.Surfaces)
             {
-                foreach (VertexStructureSurface actSurface in m_vertexStructures[loop].Surfaces)
-                {
-                    actSurface.Material = materialToApply;
-                }
+                actSurface.Material = materialToApply;
             }
 
-            for (int loop = 0; loop < m_vertexStructuresLowDetail.Length; loop++)
+            foreach (VertexStructureSurface actSurface in m_vertexStructureLowDetail.Surfaces)
             {
-                foreach (VertexStructureSurface actSurface in m_vertexStructuresLowDetail[loop].Surfaces)
-                {
-                    actSurface.Material = materialToApply;
-                }
+                actSurface.Material = materialToApply;
             }
         }
 
@@ -100,25 +84,19 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="materialNameNew">The new material to be converted to.</param>
         public void ConvertMaterial(NamedOrGenericKey materialNameOld, NamedOrGenericKey materialNameNew)
         {
-            for (int loop = 0; loop < m_vertexStructures.Length; loop++)
+            foreach (VertexStructureSurface actSurface in m_vertexStructure.Surfaces)
             {
-                foreach (VertexStructureSurface actSurface in m_vertexStructures[loop].Surfaces)
+                if (actSurface.Material == materialNameOld)
                 {
-                    if (actSurface.Material == materialNameOld)
-                    {
-                        actSurface.Material = materialNameNew;
-                    }
+                    actSurface.Material = materialNameNew;
                 }
             }
 
-            for (int loop = 0; loop < m_vertexStructuresLowDetail.Length; loop++)
+            foreach (VertexStructureSurface actSurface in m_vertexStructureLowDetail.Surfaces)
             {
-                foreach (VertexStructureSurface actSurface in m_vertexStructuresLowDetail[loop].Surfaces)
+                if (actSurface.Material == materialNameOld)
                 {
-                    if (actSurface.Material == materialNameOld)
-                    {
-                        actSurface.Material = materialNameNew;
-                    }
+                    actSurface.Material = materialNameNew;
                 }
             }
         }
@@ -126,17 +104,17 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Gets the array containing all loaded vertex structures.
         /// </summary>
-        public VertexStructure[] VertexStructures
+        public VertexStructure VertexStructure
         {
-            get { return m_vertexStructures; }
+            get { return m_vertexStructure; }
         }
 
         /// <summary>
         /// Gets an array containing all loaded vertex structures for low detail level.
         /// </summary>
-        public VertexStructure[] VertexStructuresLowDetail
+        public VertexStructure VertexStructureLowDetail
         {
-            get { return m_vertexStructuresLowDetail; }
+            get { return m_vertexStructureLowDetail; }
         }
     }
 }

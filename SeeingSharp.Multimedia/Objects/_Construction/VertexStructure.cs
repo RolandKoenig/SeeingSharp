@@ -79,11 +79,137 @@ namespace SeeingSharp.Multimedia.Objects
             m_surfaceCollection = new SurfaceCollection(m_surfaces);
         }
 
-        public VertexStructureSurface AddSurface(int triangleCapacity = 512)
+        /// <summary>
+        /// Creates the surface on this VertexStructure.
+        /// </summary>
+        /// <param name="triangleCapacity">The triangle capacity.</param>
+        public VertexStructureSurface CreateSurface(int triangleCapacity = 512)
         {
             VertexStructureSurface newSurface = new VertexStructureSurface(this, triangleCapacity);
             m_surfaces.Add(newSurface);
             return newSurface;
+        }
+
+        /// <summary>
+        /// Tries to get an existing surface using given MaterialProperties.
+        /// If none exists, then a new surface is created.
+        /// </summary>
+        /// <param name="matProperties">The material properties.</param>
+        /// <param name="triangleCapacity">The triangle capacity.</param>
+        public VertexStructureSurface CreateOrGetExistingSurface(MaterialProperties matProperties, int triangleCapacity = 512)
+        {
+            foreach(VertexStructureSurface actSurface in m_surfaces)
+            {
+                if(actSurface.MaterialProperties == matProperties) { return actSurface; }
+            }
+
+            return CreateSurface(triangleCapacity);
+        }
+
+        /// <summary>
+        /// Realigns all given structures to their center coordinate.
+        /// </summary>
+        public void RealignToCenter()
+        {
+            BoundingBox fullBoundingBox = this.GenerateBoundingBox();
+            Vector3 fullCenter = fullBoundingBox.GetMiddleCenter();
+            Vector3 targetCenter = new Vector3(0f, 0f, 0f);
+
+            Vector3 moveToTargetCenter = targetCenter - fullCenter;
+
+            this.UpdateVerticesUsingRelocationBy(moveToTargetCenter);
+        }
+
+        public void RealignToFloorCenter()
+        {
+
+            BoundingBox fullBoundingBox = this.GenerateBoundingBox();
+            Vector3 fullCenter = fullBoundingBox.GetMiddleCenter();
+            Vector3 targetCenter = new Vector3(0f, fullBoundingBox.GetSize().Y / 2f, 0f);
+
+            Vector3 moveToTargetCenter = targetCenter - fullCenter;
+
+            this.UpdateVerticesUsingRelocationBy(moveToTargetCenter);
+        }
+
+        /// <summary>
+        /// Fits to centered cube.
+        /// </summary>
+        public void FitToCenteredCube()
+        {
+            FitToCenteredCuboid(1f, 1f, 1f, FitToCuboidMode.MaintainAspectRatio, SpacialOriginLocation.Center);
+        }
+
+        /// <summary>
+        /// Fits to centered cube.
+        /// </summary>
+        public void FitToCenteredCube(float cubeSideLength)
+        {
+            FitToCenteredCuboid(cubeSideLength, cubeSideLength, cubeSideLength, FitToCuboidMode.MaintainAspectRatio, SpacialOriginLocation.Center);
+        }
+
+        /// <summary>
+        /// Fits to centered cube.
+        /// </summary>
+        public void FitToCenteredCube(float cubeSideLength, FitToCuboidMode mode)
+        {
+            FitToCenteredCuboid(cubeSideLength, cubeSideLength, cubeSideLength, mode, SpacialOriginLocation.Center);
+        }
+
+        /// <summary>
+        /// Fits to centered cube.
+        /// </summary>
+        public void FitToCenteredCube(float cubeSideLength, FitToCuboidMode mode, SpacialOriginLocation fitOrigin)
+        {
+            FitToCenteredCuboid(cubeSideLength, cubeSideLength, cubeSideLength, mode, fitOrigin);
+        }
+
+        /// <summary>
+        /// Fits to centered cube.
+        /// </summary>
+        public void FitToCenteredCuboid(float cubeSideLengthX, float cubeSideLengthY, float cubeSideLengthZ, FitToCuboidMode fitMode, SpacialOriginLocation fitOrigin)
+        {
+            //Get whole bounding box
+            BoundingBox boundingBox = this.GenerateBoundingBox();
+            Vector3 boundingBoxSize = boundingBox.GetSize();
+            if (boundingBox.IsEmpty()) { return; }
+            if (boundingBoxSize.X <= 0f) { return; }
+            if (boundingBoxSize.Y <= 0f) { return; }
+            if (boundingBoxSize.Z <= 0f) { return; }
+
+            Vector3 targetCornerALocation = new Vector3(
+                -boundingBoxSize.X / 2f,
+                -boundingBoxSize.Y / 2f,
+                -boundingBoxSize.Z / 2f);
+
+            // Calculate resize factors
+            float resizeFactorX = cubeSideLengthX / boundingBoxSize.X;
+            float resizeFactorY = cubeSideLengthY / boundingBoxSize.Y;
+            float resizeFactorZ = cubeSideLengthZ / boundingBoxSize.Z;
+            if (fitMode == FitToCuboidMode.MaintainAspectRatio)
+            {
+                resizeFactorX = Math.Min(resizeFactorX, Math.Min(resizeFactorY, resizeFactorZ));
+                resizeFactorY = resizeFactorX;
+                resizeFactorZ = resizeFactorX;
+            }
+
+            targetCornerALocation.X = targetCornerALocation.X * resizeFactorX;
+            targetCornerALocation.Y = targetCornerALocation.Y * resizeFactorY;
+            targetCornerALocation.Z = targetCornerALocation.Z * resizeFactorZ;
+            switch (fitOrigin)
+            {
+                case SpacialOriginLocation.LowerCenter:
+                    targetCornerALocation.Y = 0f;
+                    break;
+            }
+
+            //Bring the structure to origin based location and then scale it
+            this.UpdateVerticesUsingRelocationBy(Vector3.Negate(boundingBox.CornerA));
+            this.UpdateVerticesUsingRelocationFunc((actPosition) => new Vector3(
+                actPosition.X * resizeFactorX,
+                actPosition.Y * resizeFactorY,
+                actPosition.Z * resizeFactorZ));
+            this.UpdateVerticesUsingRelocationBy(targetCornerALocation);
         }
 
         public void RemoveSurface(VertexStructureSurface surface)
@@ -150,15 +276,6 @@ namespace SeeingSharp.Multimedia.Objects
 
             distance = 0f;
             return false;
-        }
-
-        /// <summary>
-        /// Generates a bounding box surrounding all given structures.
-        /// </summary>
-        /// <param name="structures">Structures to generate a bounding box for.</param>
-        public static BoundingBox GenerateBoundingBox(params VertexStructure[] structures)
-        {
-            return structures.GenerateBoundingBox();
         }
 
         /// <summary>
@@ -483,7 +600,7 @@ namespace SeeingSharp.Multimedia.Objects
         {
             get
             {
-                if(m_surfaces.Count == 0) { AddSurface(); }
+                if(m_surfaces.Count == 0) { CreateSurface(); }
                 return m_surfaces[0];
             }
         }

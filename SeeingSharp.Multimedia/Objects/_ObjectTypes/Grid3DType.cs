@@ -50,10 +50,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Builds the structures.
         /// </summary>
-        public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
+        public override VertexStructure BuildStructure(StructureBuildOptions buildOptions)
         {
-            List<VertexStructure> result = new List<VertexStructure>();
-            result[0] = new VertexStructure();
+            VertexStructure result = new VertexStructure();
 
             // Calculate parameters
             Vector3 firstCoordinate = new Vector3(
@@ -70,7 +69,7 @@ namespace SeeingSharp.Multimedia.Objects
             // Define lower ground structure
             if (this.GenerateGround)
             {
-                VertexStructureSurface lowerGround = result[0].AddSurface();
+                VertexStructureSurface lowerGround = result.CreateSurface();
                 lowerGround.EnableTextureTileMode(new Vector2(TileWidth, TileWidth));
                 lowerGround.BuildRect4V(
                     new Vector3(-fieldWidthHalf, -0.01f, -fieldDepthHalf),
@@ -83,8 +82,8 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Define line structures
-            VertexStructureSurface genStructureDefaultLine = result[0].AddSurface();
-            VertexStructureSurface genStructureGroupLine = result[0].AddSurface();
+            VertexStructureSurface genStructureDefaultLine = result.CreateSurface();
+            VertexStructureSurface genStructureGroupLine = result.CreateSurface();
             for (int actTileX = 0; actTileX < TilesX + 1; actTileX++)
             {
                 Vector3 localStart = firstCoordinate + new Vector3(actTileX * tileWidthX, 0f, 0f);
@@ -115,11 +114,11 @@ namespace SeeingSharp.Multimedia.Objects
             }
             genStructureDefaultLine.Material = this.LineMaterial;
             genStructureGroupLine.Material = this.LineMaterial;
-            if (genStructureDefaultLine.CountTriangles == 0) { result[0].RemoveSurface(genStructureDefaultLine); }
-            if (genStructureGroupLine.CountTriangles == 0) { result[0].RemoveSurface(genStructureGroupLine); }
+            if (genStructureDefaultLine.CountTriangles == 0) { result.RemoveSurface(genStructureDefaultLine); }
+            if (genStructureGroupLine.CountTriangles == 0) { result.RemoveSurface(genStructureGroupLine); }
 
             // Return all generated structures
-            return result.ToArray();
+            return result;
         }
 
         public NamedOrGenericKey LineMaterial

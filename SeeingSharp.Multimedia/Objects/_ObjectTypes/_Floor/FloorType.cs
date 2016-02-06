@@ -178,16 +178,15 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Builds the structure.
         /// </summary>
-        public override VertexStructure[] BuildStructure(StructureBuildOptions buildOptions)
+        public override VertexStructure BuildStructure(StructureBuildOptions buildOptions)
         {
-            VertexStructure[] result = new VertexStructure[1];
-            result[0] = new VertexStructure();
+            VertexStructure result = new VertexStructure();
 
             // Hold dictionary containg materials and corresponding structures
             Dictionary<NamedOrGenericKey, VertexStructureSurface> materialRelated = new Dictionary<NamedOrGenericKey, VertexStructureSurface>();
 
             // Build bottom structure
-            VertexStructureSurface bottomSurface = result[0].AddSurface();
+            VertexStructureSurface bottomSurface = result.CreateSurface();
             bottomSurface.Material = m_bottomMaterial;
             materialRelated[m_bottomMaterial] = bottomSurface;
 
@@ -207,7 +206,7 @@ namespace SeeingSharp.Multimedia.Objects
                 if (materialRelated.ContainsKey(actMaterial)) { actSurface = materialRelated[actMaterial]; }
                 else
                 {
-                    actSurface = result[0].AddSurface();
+                    actSurface = result.CreateSurface();
                     actSurface.Material = actMaterial;
                     materialRelated[actMaterial] = actSurface;
                 }
@@ -234,7 +233,7 @@ namespace SeeingSharp.Multimedia.Objects
             if (materialRelated.ContainsKey(m_borderMaterial)) { borderSurface = materialRelated[m_borderMaterial]; }
             else
             {
-                borderSurface = result[0].AddSurface();
+                borderSurface = result.CreateSurface();
                 borderSurface.Material = m_borderMaterial;
                 materialRelated[m_borderMaterial] = borderSurface;
             }

@@ -49,7 +49,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public static ObjectType ImportObjectType(Stream inStream)
         {
-            VertexStructure[] structures = ImportVertexStructures(inStream);
+            VertexStructure structures = ImportVertexStructure(inStream);
             return new GenericObjectType(structures);
         }
 
@@ -61,18 +61,18 @@ namespace SeeingSharp.Multimedia.Objects
         {
             using (Stream inStream = resourceLink.OpenInputStream())
             {
-                VertexStructure[] structures = ImportVertexStructures(inStream, resourceLink);
-                return new GenericObjectType(structures);
+                VertexStructure structure = ImportVertexStructure(inStream, resourceLink);
+                return new GenericObjectType(structure);
             }
         }
 
         /// <summary>
-        /// Imports VertexStructures from the given stream.
+        /// Imports a VertexStructure from the given stream.
         /// </summary>
         /// <param name="inStream">The stream to load the data from.</param>
-        public static VertexStructure[] ImportVertexStructures(Stream inStream)
+        public static VertexStructure ImportVertexStructure(Stream inStream)
         {
-            return ImportVertexStructures(inStream, null);
+            return ImportVertexStructure(inStream, null);
         }
 
         /// <summary>
@@ -80,22 +80,14 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         /// <param name="inStream">The stream to load the data from.</param>
         /// <param name="originalSource">The original source of the generated geometry.</param>
-        public static VertexStructure[] ImportVertexStructures(Stream inStream, ResourceLink originalSource)
+        public static VertexStructure ImportVertexStructure(Stream inStream, ResourceLink originalSource)
         {
             try
             {
                 // Load the file and generate all VertexStructures
                 ACFileInfo fileInfo = LoadFile(inStream);
-                VertexStructure[] result = GenerateStructures(fileInfo);
-
-                // Apply the original source on each generated structure
-                if (result != null)
-                {
-                    for (int loop = 0; loop < result.Length; loop++)
-                    {
-                        result[loop].ResourceLink = originalSource;
-                    }
-                }
+                VertexStructure result = GenerateStructure(fileInfo);
+                result.ResourceLink = originalSource;
 
                 // return the result
                 return result;
@@ -108,16 +100,16 @@ namespace SeeingSharp.Multimedia.Objects
                     new Vector3(),
                     new Vector3(1f, 1f, 1f),
                     Color4.Transparent);
-                return new VertexStructure[] { dummyStructure };
+                return dummyStructure;
             }
         }
 
         /// <summary>
         /// Generates all vertex structures needed for this object
         /// </summary>
-        private static VertexStructure[] GenerateStructures(ACFileInfo fileInfo)
+        private static VertexStructure GenerateStructure(ACFileInfo fileInfo)
         {
-            List<VertexStructure> result = new List<VertexStructure>();
+            VertexStructure result = new VertexStructure();
 
             // Create all vertex structures
             Matrix4Stack transformStack = new Matrix4Stack();
@@ -126,7 +118,7 @@ namespace SeeingSharp.Multimedia.Objects
                 FillVertexStructure(result, fileInfo.Materials, actObject, transformStack);
             }
 
-            return result.ToArray();
+            return result;
         }
 
         /// <summary>
@@ -134,9 +126,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         /// <param name="objInfo">The object information from the AC file.</param>
         /// <param name="acMaterials">A list containing all materials from the AC file.</param>
-        /// <param name="outputStructures">The VertexStructure list to be filled.</param>
+        /// <param name="structure">The VertexStructure to be filled.</param>
         /// <param name="transformStack">Current matrix stack (for stacked objects).</param>
-        private static void FillVertexStructure(List<VertexStructure> outputStructures, List<ACMaterialInfo> acMaterials, ACObjectInfo objInfo, Matrix4Stack transformStack)
+        private static void FillVertexStructure(VertexStructure structure, List<ACMaterialInfo> acMaterials, ACObjectInfo objInfo, Matrix4Stack transformStack)
         {
             List<Tuple<int, int>> standardShadedVertices = new List<Tuple<int, int>>();
 
@@ -148,13 +140,14 @@ namespace SeeingSharp.Multimedia.Objects
                 transformStack.TranslateLocal(objInfo.Translation);
 
                 // Build structures material by material
-                VertexStructure structure = new VertexStructure();
                 for (int actMaterialIndex = 0; actMaterialIndex < acMaterials.Count; actMaterialIndex++)
                 {
                     ACMaterialInfo actMaterial = acMaterials[actMaterialIndex];
 
+                    VertexStructureSurface actStructSurface = structure.CreateOrGetExistingSurface(actMaterial.CreateMaterialProperties());
+                    bool isNewSurface = actStructSurface.CountTriangles == 0;
+
                     // Create and configure vertex structure
-                    VertexStructureSurface actStructSurface = structure.AddSurface();
                     actStructSurface.Material = NamedOrGenericKey.Empty;
                     actStructSurface.TextureKey = !string.IsNullOrEmpty(objInfo.Texture) ? new NamedOrGenericKey(objInfo.Texture) : NamedOrGenericKey.Empty;
                     actStructSurface.MaterialProperties.DiffuseColor = actMaterial.Diffuse;
@@ -324,11 +317,8 @@ namespace SeeingSharp.Multimedia.Objects
                     standardShadedVertices.Clear();
 
                     // Append generated VertexStructure to the output collection
-                    if(structure.CountVertices > 0)
-                    {
-                        outputStructures.Add(structure);
-                    }
-                    if (actStructSurface.CountTriangles <= 0)
+                    if ((actStructSurface.CountTriangles <= 0) &&
+                        (isNewSurface))
                     {
                         structure.RemoveSurface(actStructSurface);
                     }
@@ -337,7 +327,7 @@ namespace SeeingSharp.Multimedia.Objects
                 //Fill in all child object data
                 foreach (ACObjectInfo actObjInfo in objInfo.Childs)
                 {
-                    FillVertexStructure(outputStructures, acMaterials, actObjInfo, transformStack);
+                    FillVertexStructure(structure, acMaterials, actObjInfo, transformStack);
                 }
             }
             finally
@@ -793,6 +783,17 @@ namespace SeeingSharp.Multimedia.Objects
             public Color4 Emissive;
             public Color4 Specular;
             public float Shininess;
+
+            public MaterialProperties CreateMaterialProperties()
+            {
+                MaterialProperties result = new MaterialProperties();
+                result.DiffuseColor = Diffuse;
+                result.AmbientColor = Ambient;
+                result.EmissiveColor = Emissive;
+                result.Specular = Specular;
+                result.Shininess = Shininess;
+                return result;
+            }
         }
 
         //*********************************************************************

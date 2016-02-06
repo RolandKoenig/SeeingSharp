@@ -101,7 +101,7 @@ namespace SeeingSharp.Multimedia.Objects
 
             // Structure for caching the result
             VertexStructure tempStructure = new VertexStructure();
-            VertexStructureSurface tempSurface = tempStructure.AddSurface();
+            VertexStructureSurface tempSurface = tempStructure.CreateSurface();
 
             // Create the text surface
             if (m_geometryOptions.MakeSurface)
