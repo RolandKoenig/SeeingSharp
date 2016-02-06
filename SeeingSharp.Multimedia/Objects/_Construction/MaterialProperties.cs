@@ -21,25 +21,65 @@
 */
 #endregion
 using SeeingSharp.Util;
+using System;
 using System.Reflection;
 
 namespace SeeingSharp.Multimedia.Objects
 {
-    public class MaterialProperties
+    public class MaterialProperties : IEquatable<MaterialProperties>
     {
-        private NamedOrGenericKey m_key;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="MaterialProperties" /> class.
-        /// </summary>
-        public MaterialProperties()
-        {
-            m_key = NamedOrGenericKey.Empty;
-        }
-
         public MaterialProperties Clone()
         {
             return base.MemberwiseClone() as MaterialProperties;
+        }
+
+        public override bool Equals(object obj)
+        {
+            MaterialProperties other = obj as MaterialProperties;
+            if(other == null) { return false; }
+
+            return this.Equals(other);
+        }
+
+        /// <summary>
+        /// Indicates whether the current object is equal to another object of the same type.
+        /// </summary>
+        public bool Equals(MaterialProperties other)
+        {
+            return
+                (this.Key == other.Key) &&
+                (this.TextureKey == other.TextureKey) &&
+                (this.DiffuseColor == other.DiffuseColor) &&
+                (this.AmbientColor == other.AmbientColor) &&
+                (this.EmissiveColor == other.EmissiveColor) &&
+                (this.Specular == other.Specular) &&
+                (this.Shininess == other.Shininess) &&
+                (this.ResourceSourceAssembly == other.ResourceSourceAssembly) &&
+                (this.ResourceLink == other.ResourceLink);
+        }
+
+        public override int GetHashCode()
+        {
+            return
+                this.Key.GetHashCode() ^
+                this.TextureKey.GetHashCode() ^
+                this.DiffuseColor.GetHashCode() ^
+                this.AmbientColor.GetHashCode() ^
+                this.EmissiveColor.GetHashCode() ^
+                this.Specular.GetHashCode() ^
+                this.Shininess.GetHashCode() ^
+                (this.ResourceLink != null ? this.ResourceLink.GetHashCode() : int.MaxValue) ^
+                (this.ResourceSourceAssembly != null ? this.ResourceSourceAssembly.GetHashCode() : int.MaxValue);
+        }
+
+        public static bool operator ==(MaterialProperties left, MaterialProperties right)
+        {
+            return left.Equals(right);
+        }
+
+        public static bool operator !=(MaterialProperties left, MaterialProperties right)
+        {
+            return !left.Equals(right);
         }
 
         /// <summary>
@@ -65,12 +105,8 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public NamedOrGenericKey Key
         {
-            get { return m_key; }
-            set
-            {
-                if (value == null) { m_key = NamedOrGenericKey.Empty; }
-                else { m_key = value; }
-            }
+            get;
+            set;
         }
 
         /// <summary>
