@@ -668,6 +668,7 @@ namespace SeeingSharp.Multimedia.Objects
         public MaterialProperties MaterialProperties
         {
             get { return m_materialProperties; }
+            internal set { m_materialProperties = value; }
         }
 
         /// <summary>

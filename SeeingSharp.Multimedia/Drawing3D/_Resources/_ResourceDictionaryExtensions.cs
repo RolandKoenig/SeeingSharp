@@ -67,7 +67,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
             if(textureKey.IsEmpty)
             {
                 // Create a default material without any texture
-                return resourceDict.AddResource<SimpleColoredMaterialResource>(materialKey, new SimpleColoredMaterialResource());
+                SimpleColoredMaterialResource result = resourceDict.AddResource<SimpleColoredMaterialResource>(materialKey, new SimpleColoredMaterialResource());
+                result.MaterialDiffuseColor = targetSurface.MaterialProperties.DiffuseColor;
+                return result;
             }
             else
             {
@@ -117,11 +119,19 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 // Create a default textured material 
                 if (!textureKey.IsEmpty)
                 {
-                    return resourceDict.AddResource<SimpleColoredMaterialResource>(materialKey, new SimpleColoredMaterialResource(textureKey));
+                    SimpleColoredMaterialResource result = resourceDict.AddResource<SimpleColoredMaterialResource>(
+                        materialKey, 
+                        new SimpleColoredMaterialResource(textureKey));
+                    result.MaterialDiffuseColor = targetSurface.MaterialProperties.DiffuseColor;
+                    return result;
                 }
                 else
                 {
-                    return resourceDict.AddResource<SimpleColoredMaterialResource>(materialKey, new SimpleColoredMaterialResource());
+                    SimpleColoredMaterialResource result = resourceDict.AddResource<SimpleColoredMaterialResource>(
+                        materialKey,
+                        new SimpleColoredMaterialResource());
+                    result.MaterialDiffuseColor = targetSurface.MaterialProperties.DiffuseColor;
+                    return result;
                 }
             }
         }

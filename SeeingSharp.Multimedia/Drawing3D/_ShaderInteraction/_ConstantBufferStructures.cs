@@ -84,7 +84,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// A material color that can be processed by the shader.
         /// (e. g. ForcedColor shader)
         /// </summary>
-        public Vector4 MaterialColor;
+        public Vector4 MaterialDiffuseColor;
 
         /// <summary>
         /// The reciprocal as described in FXAA Whitepaper (see NVidia SDK 11, FXAA sample).

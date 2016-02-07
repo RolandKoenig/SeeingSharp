@@ -15,7 +15,7 @@ PSOutput main(PSInputStandard input)
 	float initialTextureA = textureColor.a;
 	textureColor.a = clamp(textureColor.a * Texture0Factor + AddToAlpha, 0.0, 1.0);
 
-    //// Calculate the pixel color based on vertex colors and border logic
+    // Calculate the pixel color based on vertex colors and border logic
     float distanceToCamera = distance(CameraPosition, input.pos3D);
     float4 pixelColor = ApplyColorBorders(input.col, distanceToCamera, input.tex.xy);
     

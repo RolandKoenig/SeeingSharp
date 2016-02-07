@@ -41,6 +41,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
 
         #region Some configuration
         private NamedOrGenericKey m_textureKey;
+        private Color4 m_materialDiffuseColor;
         private float m_clipFactor;
         private float m_maxClipDistance;
         private float m_addToAlpha;
@@ -67,6 +68,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             m_maxClipDistance = 1000f;
             m_adjustTextureCoordinates = false;
             m_addToAlpha = 0f;
+            m_materialDiffuseColor = Color4.White;
         }
 
         /// <summary>
@@ -151,7 +153,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
                         MaxClipDistance = m_maxClipDistance,
                         Texture0Factor = m_textureResource != null ? 1f : 0f,
                         AdjustTextureCoordinates = m_adjustTextureCoordinates ? 1f : 0f,
-                        AddToAlpha = m_addToAlpha
+                        AddToAlpha = m_addToAlpha,
+                        MaterialDiffuseColor = m_materialDiffuseColor
                     });
                 m_cbPerMaterialDataChanged = false;
             }
@@ -259,6 +262,19 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 if(m_addToAlpha != value)
                 {
                     m_addToAlpha = value;
+                    m_cbPerMaterialDataChanged = true;
+                }
+            }
+        }
+
+        public Color4 MaterialDiffuseColor
+        {
+            get { return m_materialDiffuseColor; }
+            set
+            {
+                if(m_materialDiffuseColor != value)
+                {
+                    m_materialDiffuseColor = value;
                     m_cbPerMaterialDataChanged = true;
                 }
             }

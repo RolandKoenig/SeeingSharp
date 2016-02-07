@@ -376,7 +376,7 @@ namespace SeeingSharp.Multimedia.Objects
             int actTextureIndex = -1;
             Vertex actTempVertex = Vertex.Empty;
             int[] actFaceReferences = new int[3];
-            Dictionary<int, XglMaterialInfo> localMaterialInfos = new Dictionary<int, XglMaterialInfo>();
+            Dictionary<int, MaterialProperties> localMaterialInfos = new Dictionary<int, MaterialProperties>();
 
             while (inStreamXml.Read())
             {
@@ -398,8 +398,8 @@ namespace SeeingSharp.Multimedia.Objects
 
                     case NODE_NAME_MAT:
                         // Read the next material
-                        XglMaterialInfo materialInfo = ImportMaterial(inStreamXml, container, xglImportOptions);
-                        localMaterialInfos[materialInfo.ID] = materialInfo;
+                        var materialAndID = ImportMaterial(inStreamXml, container, xglImportOptions);
+                        localMaterialInfos[materialAndID.Item1] = materialAndID.Item2;
                         break;
 
                     case NODE_NAME_PATCH:
@@ -412,6 +412,7 @@ namespace SeeingSharp.Multimedia.Objects
                         if (minVertexID == int.MaxValue) { minVertexID = Int32.Parse(inStreamXml.GetAttribute("ID")); }
                         actVertexIndex++;
                         actTempVertex = actVertexStructure.EnsureVertexAt(actVertexIndex);
+                        actTempVertex.Color = Color4.White;
                         inStreamXml.Read();
                         actTempVertex.Position = inStreamXml.ReadContentAsVector3() * xglImportOptions.ResizeFactor;
                         actVertexStructure.Vertices[actVertexIndex] = actTempVertex;
@@ -478,21 +479,24 @@ namespace SeeingSharp.Multimedia.Objects
 
                             }
                         }
-                        if (loopFacePoint != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
-                        actVertexStructure.FirstSurface.AddTriangle(actFaceReferences[0], actFaceReferences[1], actFaceReferences[2]);
 
-                        // Apply material
-                        XglMaterialInfo faceMaterial = null;
-                        if (localMaterialInfos.TryGetValue(referencedMat, out faceMaterial))
+                        // Get the correct material
+                        MaterialProperties referencedMatObject = MaterialProperties.Empty;
+                        if(referencedMat > -1)
                         {
-                            for (int actFaceLoc = 0; actFaceLoc < 3; actFaceLoc++)
-                            {
-                                int actVertexIndexInner = actFaceReferences[actFaceLoc];
-                                actTempVertex = actVertexStructure.Vertices[actVertexIndexInner];
-                                actTempVertex.Color = faceMaterial.Diffuse;
-                                actVertexStructure.Vertices[actVertexIndexInner] = actTempVertex;
-                            }
+                            localMaterialInfos.TryGetValue(referencedMat, out referencedMatObject);
                         }
+                        if(referencedTexture > -1)
+                        {
+                            referencedMatObject = referencedMatObject.Clone();
+                            referencedMatObject.TextureKey = container.GetResourceKey(RES_CLASS_TEXTURE, referencedTexture.ToString());
+                        }
+
+                        // Add the triangle
+                        if (loopFacePoint != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
+                        actVertexStructure
+                            .CreateOrGetExistingSurface(referencedMatObject)
+                            .AddTriangle(actFaceReferences[0], actFaceReferences[1], actFaceReferences[2]);
                         break;
 
                     default:
@@ -515,11 +519,10 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="inStreamXml">The xml reader object.</param>
         /// <param name="container">The container where to import to.</param>
         /// <param name="xglImportOptions">Current import options.</param>
-        private XglMaterialInfo ImportMaterial(XmlReader inStreamXml, ImportedModelContainer container, XglImportOptions xglImportOptions)
+        private Tuple<int, MaterialProperties> ImportMaterial(XmlReader inStreamXml, ImportedModelContainer container, XglImportOptions xglImportOptions)
         {
-            XglMaterialInfo result = new XglMaterialInfo();
-            result.ID = Int32.Parse(inStreamXml.GetAttribute("ID"));
-
+            int resultID = Int32.Parse(inStreamXml.GetAttribute("ID"));
+            MaterialProperties result = new MaterialProperties();
             while (inStreamXml.Read())
             {
                 // Ending condition
@@ -537,27 +540,39 @@ namespace SeeingSharp.Multimedia.Objects
                     case NODE_NAME_MAT_DIFFUSE:
                         if (result == null) { continue; }
                         inStreamXml.Read();
-                        result.Diffuse = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
+                        result.DiffuseColor = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
                         break;
 
                     case NODE_NAME_MAT_AMB:
+                        if (result == null) { continue; }
+                        inStreamXml.Read();
+                        result.AmbientColor = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
                         break;
 
                     case NODE_NAME_MAT_EMISS:
+                        if (result == null) { continue; }
+                        inStreamXml.Read();
+                        result.EmissiveColor = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
                         break;
 
                     case NODE_NAME_MAT_SPEC:
+                        if (result == null) { continue; }
+                        inStreamXml.Read();
+                        result.SpecularColor = new Color4(inStreamXml.ReadContentAsVector3(), 1f);
                         break;
 
                     case NODE_NAME_MAT_ALPHA:
                         break;
 
                     case NODE_NAME_MAT_SHINE:
+                        if (result == null) { continue; }
+                        inStreamXml.Read();
+                        result.Shininess = inStreamXml.ReadContentAsFloat();
                         break;
                 }
             }
 
-            return result;
+            return Tuple.Create(resultID, result);
         }
 
         /// <summary>

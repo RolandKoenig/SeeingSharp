@@ -47,7 +47,7 @@ cbuffer cbPerObject : register ( b2 )
 // Buffer with per material data
 cbuffer cbPerMaterial : register ( b3 )
 {
-	float4    MaterialColor;
+	float4    MaterialDiffuseColor;
 	float4    TextureReciprocal;
 	float     Texture0Factor;
 	float     MaxClipDistance;

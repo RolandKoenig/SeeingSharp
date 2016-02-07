@@ -154,7 +154,7 @@ namespace SeeingSharp.Multimedia.Objects
                     actStructSurface.MaterialProperties.AmbientColor = actMaterial.Ambient;
                     actStructSurface.MaterialProperties.EmissiveColor = actMaterial.Emissive;
                     actStructSurface.MaterialProperties.Shininess = actMaterial.Shininess;
-                    actStructSurface.MaterialProperties.Specular = actMaterial.Specular;
+                    actStructSurface.MaterialProperties.SpecularColor = actMaterial.Specular;
 
                     // Initialize local index table (needed for vertex reuse)
                     int oneSideVertexCount = objInfo.Vertices.Count;
@@ -790,7 +790,7 @@ namespace SeeingSharp.Multimedia.Objects
                 result.DiffuseColor = Diffuse;
                 result.AmbientColor = Ambient;
                 result.EmissiveColor = Emissive;
-                result.Specular = Specular;
+                result.SpecularColor = Specular;
                 result.Shininess = Shininess;
                 return result;
             }

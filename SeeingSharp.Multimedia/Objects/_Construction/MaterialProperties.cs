@@ -28,6 +28,16 @@ namespace SeeingSharp.Multimedia.Objects
 {
     public class MaterialProperties : IEquatable<MaterialProperties>
     {
+        /// <summary>
+        /// Gets an empty material.
+        /// </summary>
+        public static readonly MaterialProperties Empty = new MaterialProperties();
+
+        public MaterialProperties()
+        {
+            this.DiffuseColor = Color4.White;
+        }
+
         public MaterialProperties Clone()
         {
             return base.MemberwiseClone() as MaterialProperties;
@@ -46,13 +56,15 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public bool Equals(MaterialProperties other)
         {
+            if(other == null) { return false; }
+
             return
                 (this.Key == other.Key) &&
                 (this.TextureKey == other.TextureKey) &&
                 (this.DiffuseColor == other.DiffuseColor) &&
                 (this.AmbientColor == other.AmbientColor) &&
                 (this.EmissiveColor == other.EmissiveColor) &&
-                (this.Specular == other.Specular) &&
+                (this.SpecularColor == other.SpecularColor) &&
                 (this.Shininess == other.Shininess) &&
                 (this.ResourceSourceAssembly == other.ResourceSourceAssembly) &&
                 (this.ResourceLink == other.ResourceLink);
@@ -66,7 +78,7 @@ namespace SeeingSharp.Multimedia.Objects
                 this.DiffuseColor.GetHashCode() ^
                 this.AmbientColor.GetHashCode() ^
                 this.EmissiveColor.GetHashCode() ^
-                this.Specular.GetHashCode() ^
+                this.SpecularColor.GetHashCode() ^
                 this.Shininess.GetHashCode() ^
                 (this.ResourceLink != null ? this.ResourceLink.GetHashCode() : int.MaxValue) ^
                 (this.ResourceSourceAssembly != null ? this.ResourceSourceAssembly.GetHashCode() : int.MaxValue);
@@ -74,11 +86,17 @@ namespace SeeingSharp.Multimedia.Objects
 
         public static bool operator ==(MaterialProperties left, MaterialProperties right)
         {
+            if(Object.ReferenceEquals(left, right)) { return true; }
+            if(Object.ReferenceEquals(left, null)) { return false; }
+
             return left.Equals(right);
         }
 
         public static bool operator !=(MaterialProperties left, MaterialProperties right)
         {
+            if (Object.ReferenceEquals(left, right)) { return false; }
+            if (Object.ReferenceEquals(left, null)) { return true; }
+
             return !left.Equals(right);
         }
 
@@ -142,7 +160,7 @@ namespace SeeingSharp.Multimedia.Objects
             set;
         }
 
-        public Color4 Specular
+        public Color4 SpecularColor
         {
             get;
             set;

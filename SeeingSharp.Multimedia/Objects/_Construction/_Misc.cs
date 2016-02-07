@@ -46,6 +46,13 @@ namespace SeeingSharp.Multimedia.Objects
         V
     }
 
+    public enum MaterialType
+    {
+        SeeingSharpCommon,
+
+        LoadedMeshCommon
+    }
+
     public enum TextureCoordinateCalculationAlignment
     {
         XAxis,

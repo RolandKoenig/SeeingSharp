@@ -36,13 +36,15 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class SingleForcedColorMaterialResource : MaterialResource
     {
-        // Static resource keys
+        #region Static resource keys
         private static readonly NamedOrGenericKey RES_KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
-        // Resource members
+        #region Resource members
         private VertexShaderResource m_vertexShader;
         private PixelShaderResource m_pixelShader;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SingleForcedColorMaterialResource" /> class.

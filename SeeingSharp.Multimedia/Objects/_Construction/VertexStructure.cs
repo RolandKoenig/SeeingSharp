@@ -103,7 +103,9 @@ namespace SeeingSharp.Multimedia.Objects
                 if(actSurface.MaterialProperties == matProperties) { return actSurface; }
             }
 
-            return CreateSurface(triangleCapacity);
+            VertexStructureSurface result = CreateSurface(triangleCapacity);
+            result.MaterialProperties = matProperties;
+            return result;
         }
 
         /// <summary>

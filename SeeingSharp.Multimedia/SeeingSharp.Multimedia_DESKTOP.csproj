@@ -365,7 +365,6 @@
     <Compile Include="Objects\_ImportExport\_Formats\_Assimp\SeeingSharpAssimpIOStream.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Assimp\SeeingSharpAssimpIOSystem.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Assimp\_Extensions.cs" />
-    <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglMaterialInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedObjectInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedResourceInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedModelContainer.cs" />
