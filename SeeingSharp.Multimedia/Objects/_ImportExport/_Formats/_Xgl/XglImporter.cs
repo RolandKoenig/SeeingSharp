@@ -492,6 +492,14 @@ namespace SeeingSharp.Multimedia.Objects
                             referencedMatObject.TextureKey = container.GetResourceKey(RES_CLASS_TEXTURE, referencedTexture.ToString());
                         }
 
+                        //for (int actFaceLoc = 0; actFaceLoc < 3; actFaceLoc++)
+                        //{
+                        //    int actVertexIndexInner = actFaceReferences[actFaceLoc];
+                        //    actTempVertex = actVertexStructure.Vertices[actVertexIndexInner];
+                        //    actTempVertex.Color = referencedMatObject.DiffuseColor;
+                        //    actVertexStructure.Vertices[actVertexIndexInner] = actTempVertex;
+                        //}
+
                         // Add the triangle
                         if (loopFacePoint != 3) { throw new SeeingSharpGraphicsException("Invalid face index count!"); }
                         actVertexStructure

@@ -349,7 +349,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                     LoadedStructureInfo lastStructureInfo = result.Count > 0 ? result[result.Count - 1] : null;
                     if ((lastStructureInfo != null) &&
                         (lastStructureInfo.IndexBuffer == null) &&
-                        (actSurface.MaterialProperties == lastStructureInfo.MaterialProperties))
+                        (actSurface.MaterialProperties.Equals(lastStructureInfo.MaterialProperties)))
                     {
                         LoadedStructureInfo actStructureInfo = result[result.Count - 1];
                         actStructureInfo.IndexCount = actStructureInfo.IndexCount + indexArray.Length;

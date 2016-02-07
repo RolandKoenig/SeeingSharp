@@ -61,10 +61,13 @@ namespace SeeingSharp.Util
             m_hint = null;
         }
 
-        public NamedOrGenericKey(Type referencedType)
-            : this(referencedType.FullName)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="NamedOrGenericKey" /> struct.
+        /// </summary>
+        /// <param name="targetType">The type which to bind to the key (FullTypeName is used).</param>
+        public NamedOrGenericKey(Type targetType)
+            : this(targetType.FullName)
         {
-
         }
 
         /// <summary>

@@ -23,6 +23,7 @@
 using SeeingSharp.Util;
 using System;
 using System.Reflection;
+using System.Text;
 
 namespace SeeingSharp.Multimedia.Objects
 {
@@ -36,6 +37,24 @@ namespace SeeingSharp.Multimedia.Objects
         public MaterialProperties()
         {
             this.DiffuseColor = Color4.White;
+        }
+
+        /// <summary>
+        /// Gets a key string which is equal for all materials which share the same properties.
+        /// It is much unlikely that materials with different properties gets same results.
+        /// </summary>
+        public string GetDynamicResourceKey()
+        {
+            StringBuilder resultBuilder = new StringBuilder(100);
+            resultBuilder.Append("DyamicMaterial|");
+            resultBuilder.Append(this.AmbientColor.GetHashCode().ToString());
+            resultBuilder.Append(this.DiffuseColor.GetHashCode().ToString());
+            resultBuilder.Append(this.EmissiveColor.GetHashCode().ToString());
+            resultBuilder.Append(this.Key.GetHashCode().ToString());
+            resultBuilder.Append(this.Shininess.GetHashCode().ToString());
+            resultBuilder.Append(this.SpecularColor.GetHashCode().ToString());
+            resultBuilder.Append(this.TextureKey.GetHashCode().ToString());
+            return resultBuilder.ToString();
         }
 
         public MaterialProperties Clone()
@@ -65,9 +84,7 @@ namespace SeeingSharp.Multimedia.Objects
                 (this.AmbientColor == other.AmbientColor) &&
                 (this.EmissiveColor == other.EmissiveColor) &&
                 (this.SpecularColor == other.SpecularColor) &&
-                (this.Shininess == other.Shininess) &&
-                (this.ResourceSourceAssembly == other.ResourceSourceAssembly) &&
-                (this.ResourceLink == other.ResourceLink);
+                (this.Shininess == other.Shininess);
         }
 
         public override int GetHashCode()
@@ -79,9 +96,7 @@ namespace SeeingSharp.Multimedia.Objects
                 this.AmbientColor.GetHashCode() ^
                 this.EmissiveColor.GetHashCode() ^
                 this.SpecularColor.GetHashCode() ^
-                this.Shininess.GetHashCode() ^
-                (this.ResourceLink != null ? this.ResourceLink.GetHashCode() : int.MaxValue) ^
-                (this.ResourceSourceAssembly != null ? this.ResourceSourceAssembly.GetHashCode() : int.MaxValue);
+                this.Shininess.GetHashCode();
         }
 
         public static bool operator ==(MaterialProperties left, MaterialProperties right)
@@ -98,24 +113,6 @@ namespace SeeingSharp.Multimedia.Objects
             if (Object.ReferenceEquals(left, null)) { return true; }
 
             return !left.Equals(right);
-        }
-
-        /// <summary>
-        /// Gets or sets the resource source assembly.
-        /// </summary>
-        public Assembly ResourceSourceAssembly
-        {
-            get;
-            set;
-        }
-
-        /// <summary>
-        /// Gets or sets the original source of this geometry / material.
-        /// </summary>
-        public ResourceLink ResourceLink
-        {
-            get;
-            set;
         }
 
         /// <summary>

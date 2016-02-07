@@ -54,11 +54,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
             // Get the material if it is already created
             if ((!materialKey.IsEmpty) && (resourceDict.ContainsResource(materialKey))) { return resourceDict.GetResource<MaterialResource>(materialKey); }
 
-            // Generate a material key
-            if(materialKey.IsEmpty)
+            // Generate a dynamic material key
+            if (materialKey.IsEmpty)
             {
-                if (textureKey.IsEmpty) { materialKey = new NamedOrGenericKey(typeof(SimpleColoredMaterialResource)); }
-                else { materialKey = new NamedOrGenericKey("Generated Material: " + textureKey.Description); }
+                materialKey = new NamedOrGenericKey(targetSurface.MaterialProperties.GetDynamicResourceKey());
             }
 
             // Get the material if it is already created

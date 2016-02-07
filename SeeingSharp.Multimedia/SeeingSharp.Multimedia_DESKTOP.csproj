@@ -416,6 +416,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\" />
+    <Folder Include="Objects\_ImportExport\_Formats\_Cmo\" />
     <Folder Include="Resources\Models\" />
   </ItemGroup>
   <ItemGroup>
