@@ -50,14 +50,6 @@
                             </DataTemplate>
                         </ListBox.ItemTemplate>
                     </ListBox>
-                    <!--<Button Margin="0,30,0,0" Foreground="White"
-                            Click="OnCmdShowSource_Click">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock Width="48" Padding="5" Foreground="White"
-                                       Text="" FontFamily="Segoe MDL2 Assets" />
-                            <TextBlock Foreground="White" Text="Sourcecode Online" />
-                        </StackPanel>
-                    </Button>-->
                     <Button Foreground="White"
                             Margin="0,30,0,0"
                             Click="OnCmdShowProjectHomepage_Click">
