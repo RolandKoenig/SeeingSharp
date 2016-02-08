@@ -8,7 +8,10 @@ The base library is separated into the following projects:
 All libraries are optimized to work on most current Windows platforms containing Windows tablets (also ARM based), Desktop and Server Systems and Windows Phone (starting 8.1). The libraries are separated in 
  - a "DESKTOP" version optimized for Windows.Forms and WPF.
  - a "UNIVERSAL" version optimized for Windows Store and Windows Phone Store.
- 
+
+You can download the current stable version of Seeing# using Nuget:
+https://www.nuget.org/packages?q=SeeingSharp
+
 ### Library SeeingSharp
 This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
 
