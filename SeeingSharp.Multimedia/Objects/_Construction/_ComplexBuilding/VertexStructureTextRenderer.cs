@@ -219,14 +219,20 @@ namespace SeeingSharp.Multimedia.Objects
             int triangleCountWithoutSide = tempSurface.CountTriangles;
             if (m_geometryOptions.MakeVolumetricText)
             {
+                float volumetricTextDepth = m_geometryOptions.VolumetricTextDepth;
+                if(m_geometryOptions.VerticesScaleFactor > 0f)
+                {
+                    volumetricTextDepth = volumetricTextDepth / m_geometryOptions.VerticesScaleFactor;
+                }
+
                 // Add all side surfaces
-                foreach (Polygon2D actPolygon in geometryExtruder.GeneratedPolygons)
+                    foreach (Polygon2D actPolygon in geometryExtruder.GeneratedPolygons)
                 {
                     foreach (Line2D actLine in actPolygon.Lines)
                     {
                         tempSurface.BuildRect4V(
-                            new Vector3(actLine.StartPosition.X, -m_geometryOptions.VolumetricTextDepth, actLine.StartPosition.Y),
-                            new Vector3(actLine.EndPosition.X, -m_geometryOptions.VolumetricTextDepth, actLine.EndPosition.Y),
+                            new Vector3(actLine.StartPosition.X, -volumetricTextDepth, actLine.StartPosition.Y),
+                            new Vector3(actLine.EndPosition.X, -volumetricTextDepth, actLine.EndPosition.Y),
                             new Vector3(actLine.EndPosition.X, 0f, actLine.EndPosition.Y),
                             new Vector3(actLine.StartPosition.X, 0f, actLine.StartPosition.Y),
                             m_geometryOptions.VolumetricSideSurfaceVertexColor);
@@ -252,6 +258,9 @@ namespace SeeingSharp.Multimedia.Objects
                 }
             }
 
+            // TODO: Make this configurable
+            tempStructure.ToggleCoordinateSystem();
+
             // Scale the text using given scale factor
             if (m_geometryOptions.VerticesScaleFactor > 0f)
             {
@@ -265,9 +274,6 @@ namespace SeeingSharp.Multimedia.Objects
 
                 tempStructure.UpdateVerticesUsingRelocationFunc((actVector) => Vector3.Transform(actVector, transformMatrix.Top));
             }
-
-            // TODO: Make this configurable
-            tempStructure.ToggleCoordinateSystem();
 
             // Calculate all normals before adding to target structure
             if (m_geometryOptions.CalculateNormals)

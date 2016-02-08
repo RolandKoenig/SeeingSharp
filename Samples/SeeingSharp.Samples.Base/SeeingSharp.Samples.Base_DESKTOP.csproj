@@ -58,6 +58,7 @@
     <Compile Include="_Samples\BasicSamples\PalletsAnimatedSample.cs" />
     <Compile Include="_Samples\BasicSamples\PalletsSample.cs" />
     <Compile Include="_Samples\BasicSamples\ParentChildSample.cs" />
+    <Compile Include="_Samples\BasicSamples\Text3DSample.cs" />
     <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
@@ -109,6 +110,7 @@
     <Resource Include="Assets\SampleImages\Direct2D_Simple_Effect.png" />
     <Resource Include="Assets\SampleImages\Basics_Parent_Child.png" />
     <Resource Include="Assets\SampleImages\Input_XboxController.png" />
+    <Resource Include="Assets\SampleImages\Basics_Text3D.png" />
     <Content Include="Assets\Textures\Background.png" />
   </ItemGroup>
   <ItemGroup>

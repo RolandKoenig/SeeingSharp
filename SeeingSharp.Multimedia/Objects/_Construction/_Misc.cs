@@ -76,13 +76,6 @@ namespace SeeingSharp.Multimedia.Objects
         LowerCenter
     }
 
-    public enum TextGeometryAlignment
-    {
-        LowerLeft,
-
-        MiddleCenter
-    }
-
     public enum FontGeometryWeight
     {
         Bold,
@@ -114,10 +107,9 @@ namespace SeeingSharp.Multimedia.Objects
             MakeVolumetricText = true,
             MakeBackSurface = true,
             MakeSurface = true,
-            VolumetricTextDepth = 0.5f,
+            VolumetricTextDepth = 0.2f,
             VolumetricSideSurfaceVertexColor = Color4.White,
             CalculateNormals = true,
-            Alignment = TextGeometryAlignment.LowerLeft,
             VertexTransform = Matrix4x4.Identity
         };
 
@@ -136,7 +128,6 @@ namespace SeeingSharp.Multimedia.Objects
         public bool MakeSurface;
         public float VolumetricTextDepth;
         public bool CalculateNormals;
-        public TextGeometryAlignment Alignment;
         public Matrix4x4 VertexTransform;
     }
 }

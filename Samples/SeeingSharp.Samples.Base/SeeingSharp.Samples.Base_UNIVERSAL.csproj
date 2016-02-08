@@ -61,6 +61,7 @@
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
     <Compile Include="_Samples\BasicSamples\SkyboxRenderingSample.cs" />
+    <Compile Include="_Samples\BasicSamples\Text3DSample.cs" />
     <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\TransparentPalletsSample.cs" />
     <Compile Include="_Samples\CategoryMetadata.cs" />
@@ -78,6 +79,7 @@
     <Content Include="Assets\SampleImages\Basics_Pallets.png" />
     <Content Include="Assets\SampleImages\Basics_PalletsAnimated.png" />
     <Content Include="Assets\SampleImages\Basics_Parent_Child.png" />
+    <Content Include="Assets\SampleImages\Basics_Text3D.png" />
     <Content Include="Assets\SampleImages\Input_XboxController.png" />
     <Content Include="Assets\SampleImages\Basics_TexturedPallet.png" />
     <Content Include="Assets\SampleImages\Direct2D_Simple_Effect.png" />

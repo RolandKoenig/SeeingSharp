@@ -44,13 +44,14 @@ namespace SeeingSharp.Samples.Base
         #region parameters for Basic samples
         public const int SAMPLE_BASICS_ROTATINGPALLET_ORDER = 1;
         public const int SAMPLE_BASICS_TEXTUREDPALLET_ORDER = 2;
-        public const int SAMPLE_BASICS_SKYBOX_ORDER = 3;
-        public const int SAMPLE_BASCIS_SINGLEMODEL_ORDER = 4;
-        public const int SAMPLE_BASICS_ASYNCANIM_ORDER = 5;
-        public const int SAMPLE_BASICS_TRANSPARENTPALLETS_ORDER = 6;
-        public const int SAMPLE_BASICS_PALLETS_ORDER = 7;
-        public const int SAMPLE_BASICS_PALLETS_ANIMATED_ORDER = 8;
-        public const int SAMPLE_BASICS_PARENT_CHILD_ORDER = 9;
+        public const int SAMPLE_BASICS_TEXT_3D_ORDER = 3;
+        public const int SAMPLE_BASICS_SKYBOX_ORDER = 4;
+        public const int SAMPLE_BASCIS_SINGLEMODEL_ORDER = 5;
+        public const int SAMPLE_BASICS_ASYNCANIM_ORDER = 6;
+        public const int SAMPLE_BASICS_TRANSPARENTPALLETS_ORDER = 7;
+        public const int SAMPLE_BASICS_PALLETS_ORDER = 8;
+        public const int SAMPLE_BASICS_PALLETS_ANIMATED_ORDER = 9;
+        public const int SAMPLE_BASICS_PARENT_CHILD_ORDER = 10;
         #endregion
 
         #region parameters for Media Foundation samples
