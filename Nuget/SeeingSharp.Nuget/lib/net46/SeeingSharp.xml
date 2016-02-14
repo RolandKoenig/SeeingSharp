@@ -687,20 +687,6 @@
             </summary>
             <param name="fileName">The file name from which to get the category.</param>
         </member>
-        <member name="M:SeeingSharp.Util.CommonTools.DeserializeJsonFromResourceAsync``1(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Deserializes a json object from the given resource.
-            </summary>
-            <typeparam name="T">The type of the object.</typeparam>
-            <param name="resourceLink">The link to the resource.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.SerializeToJsonString``1(``0,System.Boolean)">
-            <summary>
-            Serializes the given object to a json formatted string.
-            </summary>
-            <param name="obj">The object to be serialized.</param>
-            <param name="indent">Append empty spaces to produce easy readable json?</param>
-        </member>
         <member name="M:SeeingSharp.Util.CommonTools.DeserializeFromXmlFile``1(System.String)">
             <summary>
             Deserializes an object of the given type from the given storage file.
@@ -852,17 +838,6 @@
             Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
-        <member name="F:SeeingSharp.Util.SerializerRepository.DEFAULT_JSON">
-            <summary>
-            Gets the default JsonSerializer which can be used to serialize complex object graphs.
-            The serializer should be threadsafe, see http://json.codeplex.com/discussions/110461
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SerializerRepository.#cctor">
-            <summary>
-            Initializes the <see cref="T:SeeingSharp.Util.SerializerRepository"/> class.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Util.SerializerRepository.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.SerializerRepository"/> class.
@@ -884,18 +859,6 @@
             <summary>
             Gets the current instance of the serializer collection.
             </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.SerializerRepository.SeeingSharpJsonContractResolver">
-            <summary>
-            Base class for creating a custom contract resolver that looks at each property to see if
-            it is allowed to be serialized.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SerializerRepository.SeeingSharpJsonContractResolver.GetSerializableMembers(System.Type)">
-            <summary>
-            Gets the serializable members for the type.
-            </summary>
-            <param name="objectType">The type to get serializable members for.</param>
         </member>
         <member name="T:SeeingSharp.Util.TableData.ITableFile">
             <summary>
@@ -1489,6 +1452,12 @@
             </summary>
             <param name="nameKey">A key in form of a name.</param>
         </member>
+        <member name="M:SeeingSharp.Util.NamedOrGenericKey.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.NamedOrGenericKey" /> struct.
+            </summary>
+            <param name="targetType">The type which to bind to the key (FullTypeName is used).</param>
+        </member>
         <member name="M:SeeingSharp.Util.NamedOrGenericKey.ToString">
             <summary>
             Returns a <see cref="T:System.String" /> that represents this instance.
@@ -1921,6 +1890,19 @@
             <param name="xmlReader">The xml reader.</param>
         </member>
         <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector3(System.Xml.XmlReader,System.IFormatProvider)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
+        </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector2(System.Xml.XmlReader)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+        </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector2(System.Xml.XmlReader,System.IFormatProvider)">
             <summary>
             Reads a vector from the given xml reader.
             </summary>

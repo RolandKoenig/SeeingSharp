@@ -4373,41 +4373,6 @@
             <param name="sceneObjects">The scene objects.</param>
             <param name="viewInfo">The view information.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.Scene.PerformTransitionAsync(System.Action{SeeingSharp.Multimedia.Core.SceneManipulator},SeeingSharp.Util.NamedOrGenericKey)">
-             <summary>
-             Triggers transition logic from the current scene state to another one.
-             The given action gets processed directly before scene update process and is responsible
-             to define the target state.
-            
-             Be carefull: The action is called by worker-threads of SeeingSharp!
-            
-             The given transition effect gets executed to visually swap between current
-             to target state.
-             </summary>
-             <param name="defineNewStateAction">
-             The action which is able to manipulate the scene.
-             This one defines the target state of the transition
-             </param>
-             <param name="transissionEffectRessource">The transission effect ressource.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.Scene.PerformTransitionAsync(System.Action{SeeingSharp.Multimedia.Core.SceneManipulator},SeeingSharp.Util.NamedOrGenericKey,System.TimeSpan)">
-             <summary>
-             Triggers transition logic from the current scene state to another one.
-             The given action gets processed directly before scene update process and is responsible
-             to define the target state.
-            
-             Be carefull: The action is called by worker-threads of SeeingSharp!
-            
-             The given transition effect gets executed to visually swap between current
-             to target state.
-             </summary>
-             <param name="defineNewStateAction">
-             The action which is able to manipulate the scene.
-             This one defines the target state of the transition
-             </param>
-             <param name="transissionEffectRessource">The transission effect ressource.</param>
-             <param name="effectDuration">The total duration of the transition effect.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Core.Scene.ManipulateSceneAsync(System.Action{SeeingSharp.Multimedia.Core.SceneManipulator})">
              <summary>
              Triggers scene manipulation using the given lambda action.
@@ -7595,11 +7560,11 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.GeometryResource"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.#ctor(SeeingSharp.Multimedia.Objects.VertexStructure[])">
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.#ctor(SeeingSharp.Multimedia.Objects.VertexStructure)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.GeometryResource"/> class.
             </summary>
-            <param name="vertexStructures">The vertex structures.</param>
+            <param name="vertexStructure">The vertex structures.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.Intersects(SeeingSharp.Ray,SeeingSharp.Multimedia.Core.PickingOptions,System.Single@)">
             <summary>
@@ -7614,7 +7579,7 @@
             Redefines the content of this geometry resource.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.Redefine(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructure[])">
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.Redefine(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructure)">
             <summary>
             Redefines the content of this geometry resource.
             </summary>
@@ -7906,12 +7871,12 @@
             <param name="textureSourceHighQuality">The source of the texture which should be loaded.</param>
             <param name="textureSourceLowQuality">The source of the texture with low quality.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.SceneManipulatorExtensions.AddGeometry(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Objects.VertexStructure[])">
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.SceneManipulatorExtensions.AddGeometry(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Objects.VertexStructure)">
             <summary>
             Adds a new geometry resource to the scene.
             </summary>
             <param name="sceneManipulator">The manipulator of the scene.</param>
-            <param name="vertexStructures">The structures which define the geometry.</param>
+            <param name="vertexStructure">The structures which define the geometry.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.SceneManipulatorExtensions.AddGeometry(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Objects.ObjectType)">
             <summary>
@@ -8201,22 +8166,22 @@
             <param name="passID">The ID of the current pass (starting with 0)</param>
             <returns>True, if rendering should continue with next pass. False if postprocess effect is finished.</returns>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.GetOrCreateMaterialResourceAndEnsureLoaded(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructure)">
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.GetOrCreateMaterialResourceAndEnsureLoaded(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructureSurface)">
             <summary>
             Gets or creates the material resource for the given VertexStructure object.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.GetOrCreateMaterialResource(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructure)">
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.GetOrCreateMaterialResource(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructureSurface)">
             <summary>
             Gets or creates the material resource for the given VertexStructure object.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddGeometry(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructure[])">
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddGeometry(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Multimedia.Objects.VertexStructure)">
             <summary>
             Adds a new geometry resource.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddGeometry(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Util.NamedOrGenericKey,SeeingSharp.Multimedia.Objects.VertexStructure[])">
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddGeometry(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Util.NamedOrGenericKey,SeeingSharp.Multimedia.Objects.VertexStructure)">
             <summary>
             Adds a new geometry resource.
             </summary>
@@ -8601,6 +8566,11 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.StandardTextureResource" /> class.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.StandardTextureResource.#ctor(SeeingSharp.Multimedia.Core.MemoryMappedTexture32bpp)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.StandardTextureResource" /> class.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.StandardTextureResource.#ctor(SeeingSharp.Util.ResourceLink,SeeingSharp.Util.ResourceLink)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.StandardTextureResource" /> class.
@@ -8854,7 +8824,7 @@
             this factor.
             </summary>
         </member>
-        <member name="F:SeeingSharp.Multimedia.Drawing3D.CBPerMaterial.MaterialColor">
+        <member name="F:SeeingSharp.Multimedia.Drawing3D.CBPerMaterial.MaterialDiffuseColor">
             <summary>
             A material color that can be processed by the shader.
             (e. g. ForcedColor shader)
@@ -9746,6 +9716,670 @@
             <param name="sender"></param>
             <param name="e"></param>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructureSurface">
+            <summary>
+            A set of triangles of a VertexStructure which share the 
+            same material settings.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Clone(SeeingSharp.Multimedia.Objects.VertexStructure,System.Boolean,System.Int32,System.Int32)">
+            <summary>
+            Clones this object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddStructure(SeeingSharp.Multimedia.Objects.VertexStructure)">
+            <summary>
+            Adds all vertices and surfaces of the given structure to this one.
+            All surfaces of the given structure are merged to this single surface.
+            </summary>
+            <param name="structure">The structure.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddTriangle(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Adds a triangle
+            </summary>
+            <param name="index1">Index of the first vertex</param>
+            <param name="index2">Index of the second vertex</param>
+            <param name="index3">Index of the third vertex</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddTriangle(SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex)">
+            <summary>
+            Adds a triangle
+            </summary>
+            <param name="v1">First vertex</param>
+            <param name="v2">Second vertex</param>
+            <param name="v3">Third vertex</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddTriangleAndCalculateNormalsFlat(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Adds a triangle and calculates normals for it.
+            </summary>
+            <param name="index1">Index of the first vertex</param>
+            <param name="index2">Index of the second vertex</param>
+            <param name="index3">Index of the third vertex</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddTriangleAndCalculateNormalsFlat(SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex)">
+            <summary>
+            Adds a triangle
+            </summary>
+            <param name="v1">First vertex</param>
+            <param name="v2">Second vertex</param>
+            <param name="v3">Third vertex</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEars(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.Vertex})">
+            <summary>
+            Adds the given polygon using the cutting ears algorythm for triangulation.
+            </summary>
+            <param name="vertices">The vertices to add.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEars(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Adds the given polygon using the cutting ears algorythm for triangulation.
+            </summary>
+            <param name="indices">The indices of the polygon's edges.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.Vertex})">
+            <summary>
+            Adds the given polygon using the cutting ears algorythm for triangulation.
+            </summary>
+            <param name="vertices">The vertices to add.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{System.Int32})">
+            <summary>
+            Adds the given polygon using the cutting ears algorythm for triangulation.
+            </summary>
+            <param name="indices">The indices of the polygon's edges.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForFaceBinormals">
+            <summary>
+            Builds a line list containing a line for each face binormal.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForFaceNormals">
+            <summary>
+            Builds a line list containing a line for each face normal.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForFaceTangents">
+            <summary>
+            Builds a line list containing a line for each face tangent.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForVertexBinormals">
+            <summary>
+            Builds a list list containing a list for each vertex binormal.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForVertexNormals">
+            <summary>
+            Builds a list list containing a list for each vertex normal.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForVertexTangents">
+            <summary>
+            Builds a list list containing a list for each vertex tangent.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForWireframeView">
+            <summary>
+            Build a line list containing all lines for wireframe display.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.SetExtendedMaterialProperties``1(``0)">
+            <summary>
+            Sets the extended material properties.
+            </summary>
+            <typeparam name="T">The type of properties to set.</typeparam>
+            <param name="properties">The properties to set.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.GetExtendedMaterialProperties``1">
+            <summary>
+            Gets extended material properties of the given type.
+            </summary>
+            <typeparam name="T">The type of properties to get.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.ToggleCoordinateSystemInternal">
+            <summary>
+            Toggles all vertices and indexes from left to right handed or right to left handed system.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.GetIndexArray">
+            <summary>
+            Gets an index array
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CalculateNormalsFlat">
+            <summary>
+            Recalculates all normals
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CalculateNormalsFlat(SeeingSharp.Multimedia.Objects.Triangle)">
+            <summary>
+            Calculates normals for the given treangle.
+            </summary>
+            <param name="actTriangle">The triangle for which to calculate the normal (flat).</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CalculateNormalsFlat(System.Int32,System.Int32)">
+            <summary>
+            Calculates normals for the given treangle.
+            </summary>
+            <param name="countTriangles">Total count of triangles.</param>
+            <param name="startTriangleIndex">The triangle on which to start.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CalculateTangentsAndBinormals">
+            <summary>
+            Calculates tangents for all vectors.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Material">
+            <summary>
+            Gets the name of the material.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.DiffuseColor">
+            <summary>
+            Gets or sets the diffuse color of the material.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TextureName">
+            <summary>
+            Gets or sets the name of the texture (used for the NamedOrGenericKey structure behind).
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TextureKey">
+            <summary>
+            Gets or sets the key of the texture.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.MaterialProperties">
+            <summary>
+            Gets or sets the material properties object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Triangles">
+            <summary>
+            Retrieves a collection of triangles
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Indices">
+            <summary>
+            Gets a collection containing all indices.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CountIndexes">
+            <summary>
+            Retrieves total count of all indexes within this structure
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CountTriangles">
+            <summary>
+            Retrieves total count of all triangles within this structure
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.ResourceSourceAssembly">
+            <summary>
+            Gets or sets the resource source assembly.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.ResourceLink">
+            <summary>
+            Gets or sets the original source of this geometry.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Enumerator">
+            <summary>
+            Enumerator of TriangleCollection
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Enumerator.#ctor(System.Collections.Generic.List{System.Int32})">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Enumerator.Dispose">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Enumerator.MoveNext">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Enumerator.Reset">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Enumerator.System#Collections#IEnumerator#Current">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Enumerator.Current">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection">
+            <summary>
+            Contains all triangles of a VertexStructure object
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.#ctor(System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{SeeingSharp.Multimedia.Objects.Vertex})">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.System#Collections#IEnumerable#GetEnumerator">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.Add(System.Int32,System.Int32,System.Int32)">
+            <summary>
+            Adds a treangle to this vertex structure
+            </summary>
+            <param name="index1">Index of the first vertex</param>
+            <param name="index2">Index of the second vertex</param>
+            <param name="index3">Index of the third vertex</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.Add(SeeingSharp.Multimedia.Objects.Triangle)">
+            <summary>
+            Adds a treangle to this vertex structure
+            </summary>
+            <param name="triangle"></param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.GetEnumerator">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.ToIndexArray">
+            <summary>
+            Gets an array containing all indices
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.ToIndexArray(System.Int32)">
+            <summary>
+            Gets an array containing all indices
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.TriangleCollection.Item(System.Int32)">
+            <summary>
+            Retrieves the triangle at the given index
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructureSurface.IndexCollection">
+            <summary>
+            Contains all indices of a VertexStructure object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.IndexCollection.System#Collections#IEnumerable#GetEnumerator">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.IndexCollection.GetEnumerator">
+             <summary>
+            
+             </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.IndexCollection.Item(System.Int32)">
+            <summary>
+            Returns the index at ghe given index
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.EnableTextureTileMode(System.Numerics.Vector2)">
+            <summary>
+            Enables texture tile mode.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.DisableTextureTileMode">
+            <summary>
+            Disables texture tile mode.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.Intersects(SeeingSharp.Ray,SeeingSharp.Multimedia.Core.PickingOptions,System.Single@)">
+            <summary>
+            Performs a simple picking test against all triangles of this object.
+            </summary>
+            <param name="pickingRay">The picking ray.</param>
+            <param name="distance">Additional picking options.</param>
+            <param name="pickingOptions">The distance if picking succeeds.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildColumn24V(System.Numerics.Vector3,System.Single,System.Single)">
+            <summary>
+            Builds a column using 24 vertices.
+            </summary>
+            <param name="bottomMiddle">The bottom middle point.</param>
+            <param name="size">Size on the ground.</param>
+            <param name="height">Total height of the column.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildXAxisAlignedRect(System.Numerics.Vector3,System.Numerics.Vector3,System.Single)">
+            <summary>
+            Builds a x-axis aligned rectangle.
+            </summary>
+            <param name="startPoint">Start point (left center).</param>
+            <param name="destinationPoint">Destination point (right center).</param>
+            <param name="size">The size of the rectangle.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildZAxisAlignedRect(System.Numerics.Vector3,System.Numerics.Vector3,System.Single)">
+            <summary>
+            Builds a z-axis aligned rectangle.
+            </summary>
+            <param name="startPoint">Start point (left center).</param>
+            <param name="destinationPoint">Destination point (right center).</param>
+            <param name="size">The size of the rectangle.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildConeFullV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
+            <summary>
+            Builds a cone into the structure with correct texture coordinates and normals.
+            </summary>
+            <param name="bottomMiddle">Coordinate of bottom middle.</param>
+            <param name="radius">The radius of the cone.</param>
+            <param name="height">The height of the cone.</param>
+            <param name="countOfSegments">Total count of segments to generate.</param>
+            <param name="color">The color for the generated vertices.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCylinderFullV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
+            <summary>
+            Builds a cylinder into the structure with correct texture coordinates and normals.
+            </summary>
+            <param name="bottomMiddle">Coordinate of bottom middle.</param>
+            <param name="radius">The radius of the cylinder.</param>
+            <param name="height">The height of the cylinder.</param>
+            <param name="countOfSegments">Total count of segments to generate.</param>
+            <param name="color">The color to be applied on the vertices.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCylinderTopV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
+            <summary>
+            Builds a cylinder into the structure with correct texture coordinates and normals.
+            </summary>
+            <param name="bottomMiddle">Coordinate of bottom middle.</param>
+            <param name="radius">The radius of the cylinder.</param>
+            <param name="height">The height of the cylinder.</param>
+            <param name="countOfSegments">Total count of segments to generate.</param>
+            <param name="color">The color to be applied on the vertices.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCylinderSidesV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
+            <summary>
+            Builds a cylinder into the structure with correct texture coordinates and normals.
+            </summary>
+            <param name="bottomMiddle">Coordinate of bottom middle.</param>
+            <param name="radius">The radius of the cylinder.</param>
+            <param name="height">The height of the cylinder.</param>
+            <param name="countOfSegments">Total count of segments to generate.</param>
+            <param name="color">The color to be applied on the vertices.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCylinderBottomV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
+            <summary>
+            Builds a cylinder into the structure with correct texture coordinates and normals.
+            </summary>
+            <param name="bottomMiddle">Coordinate of bottom middle.</param>
+            <param name="radius">The radius of the cylinder.</param>
+            <param name="height">The height of the cylinder.</param>
+            <param name="countOfSegments">Total count of segments to generate.</param>
+            <param name="color">The color to be applied on the vertices.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCylinderV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4,System.Boolean,System.Boolean,System.Boolean)">
+            <summary>
+            Builds a cylinder into the structure with correct texture coordinates and normals.
+            </summary>
+            <param name="bottomMiddle">Coordinate of bottom middle.</param>
+            <param name="radius">The radius of the cylinder.</param>
+            <param name="height">The height of the cylinder.</param>
+            <param name="countOfSegments">Total count of segments to generate.</param>
+            <param name="color">The color to be applied on the vertices.</param>
+            <param name="buildBottom">Build bottom of the cylinder.</param>
+            <param name="buildSides">Build sides of the cylinder.</param>
+            <param name="buildTop">Build top side of the cylinder.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildShpere(System.Int32,System.Int32,System.Double,SeeingSharp.Color4)">
+            <summary>
+            Builds a sphere geometry.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube8V(System.Numerics.Vector3,System.Numerics.Vector3)">
+            <summary>
+            Builds a cube into a vertex structure (this cube is built up of just 8 vertices, so not texturing is supported)
+            </summary>
+            <param name="start">Start point of the cube (left-lower-front point)</param>
+            <param name="size">Size of the cube</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube8V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
+            <summary>
+            Builds a cube into a vertex structure (this cube is built up of just 8 vertices, so no texturing is supported)
+            </summary>
+            <param name="start">Start point of the cube (left-lower-front point)</param>
+            <param name="size">Size of the cube</param>
+            <param name="color">Color of the cube</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube24V(System.Numerics.Vector3,System.Numerics.Vector3)">
+            <summary>
+            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
+            </summary>
+            <param name="start">Start point of the cube</param>
+            <param name="size">Size of the cube</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube24V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
+            <summary>
+            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
+            </summary>
+            <param name="start">Start point of the cube</param>
+            <param name="size">Size of the cube</param>
+            <param name="color">Color of the cube</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube24V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Single,SeeingSharp.Color4)">
+            <summary>
+            Builds a cube of 4 vertices and a defined hight.
+            </summary>
+            <param name="topA"></param>
+            <param name="topB"></param>
+            <param name="topC"></param>
+            <param name="topD"></param>
+            <param name="heigh"></param>
+            <param name="color"></param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube24V(SeeingSharp.BoundingBox,SeeingSharp.Color4)">
+            <summary>
+            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
+            </summary>
+            <param name="box">Box defining bounds of generated cube.</param>
+            <param name="color">Color of generated vertices.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube24V(SeeingSharp.BoundingBox)">
+            <summary>
+            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
+            </summary>
+            <param name="box">Box defining bounds of generated cube.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube24V(System.Numerics.Vector3,System.Single,SeeingSharp.Color4)">
+            <summary>
+            Builds a cube on the given point with the given color.
+            </summary>
+            <param name="centerLocation">The location to draw the cube at.</param>
+            <param name="sideLength">The side length of the cube.</param>
+            <param name="color">The color to be used.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCube24V(System.Numerics.Vector3,System.Single,System.Single,SeeingSharp.Color4)">
+            <summary>
+            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
+            </summary>
+            <param name="bottomCenter">Bottom center point of the cube.</param>
+            <param name="width">Width (and depth) of the cube.</param>
+            <param name="height">Height of the cube.</param>
+            <param name="color">Color of the cube</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Multimedia.Objects.TextureCoordinateCalculationAlignment,SeeingSharp.Multimedia.Objects.TextureCoordinateCalculationAlignment,System.Single)">
+            <summary>
+            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCubeTop4V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
+            <summary>
+            Builds the top side of a cube into this VertexStructure (Built up of 4 vertices, so texture coordinates and normals are set)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCubeBottom4V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
+            <summary>
+            Builds the bottom side of a cube into this VertexStructure (Built up of 4 vertices, so texture coordinates and normals are set)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildCubeSides16V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
+            <summary>
+            Builds cube sides into this VertexStructure (these sides are built up of  16 vertices, so texture coordinates and normals are set)
+            </summary>
+            <param name="start">Start poiint of the cube</param>
+            <param name="size">Size of the cube</param>
+            <param name="color">Color of the cube</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3)">
+            <summary>
+            Build a single rectangle into the vertex structure
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
+            <summary>
+            Build a single rectangle into the vertex structure (Supports texturing)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3)">
+            <summary>
+            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
+            <summary>
+            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4,System.Numerics.Vector2,System.Numerics.Vector2)">
+            <summary>
+            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.RecorderTriangleIndices">
+            <summary>
+            Changes the index order of each triangle.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.SphereGetPosition(System.Double,System.Double,System.Double)">
+            <summary>
+            Helper method for spehere creation.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.SphereGetTextureCoordinate(System.Double,System.Double)">
+            <summary>
+            Helper method for spehere creation.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildTextGeometry(System.String)">
+            <summary>
+            Builds the text geometry for the given string.
+            </summary>
+            <param name="stringToBuild">The string to build within the geometry.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildTextGeometry(System.String,SeeingSharp.Multimedia.Objects.TextGeometryOptions)">
+            <summary>
+            Builds the text geometry for the given string.
+            </summary>
+            <param name="stringToBuild">The string to build within the geometry.</param>
+            <param name="geometryOptions">Some configuration for geometry creation.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildPlainPolygon(System.Numerics.Vector3[])">
+            <summary>
+            Builds a plain polygon using the given coordinates.
+            </summary>
+            <param name="coordinates">The coordinates to build the polygon from.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.StLImporter">
+            <summary>
+            Provides an importer for StereoLithography .StL files.
+            </summary>
+            <remarks>
+            The format is documented on <a href="http://en.wikipedia.org/wiki/STL_(file_format)">Wikipedia</a>.
+            </remarks>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ImportModel(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
+            <summary>
+            Imports a model from the given file.
+            </summary>
+            <param name="importOptions">Some configuration for the importer.</param>
+            <param name="sourceFile">The source file to be loaded.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.CreateDefaultImportOptions">
+            <summary>
+            Creates a default import options object for this importer.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ParseLine(System.String,System.String@,System.String@)">
+            <summary>
+            Parses the ID and values from the specified line.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ParseNormal(System.String)">
+            <summary>
+            Parses a normal string.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ReadFloat(System.IO.BinaryReader)">
+            <summary>
+            Reads a float (4 byte)
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ReadLine(System.IO.StreamReader,System.String)">
+            <summary>
+            Reads a line from the stream reader.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ReadUInt16(System.IO.BinaryReader)">
+            <summary>
+            Reads a 16-bit unsigned integer.
+            </summary>
+            <param name="reader">
+            The reader.
+            </param>
+            <returns>
+            The unsigned integer.
+            </returns>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ReadUInt32(System.IO.BinaryReader)">
+            <summary>
+            Reads a 32-bit unsigned integer.
+            </summary>
+            <param name="reader">
+            The reader.
+            </param>
+            <returns>
+            The unsigned integer.
+            </returns>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.TryParseVertex(System.String,System.Numerics.Vector3@)">
+            <summary>
+            Tries to parse a vertex from a string.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ReadFacet(System.IO.StreamReader,System.String,SeeingSharp.Multimedia.Objects.VertexStructure,SeeingSharp.Multimedia.Objects.StlImportOptions)">
+            <summary>
+            Reads a facet.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.ReadTriangle(System.IO.BinaryReader,SeeingSharp.Multimedia.Objects.VertexStructure,SeeingSharp.Multimedia.Objects.StlImportOptions)">
+            <summary>
+            Reads a triangle from a binary STL file.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.TryReadAscii(System.IO.Stream,SeeingSharp.Multimedia.Objects.StlImportOptions)">
+            <summary>
+            Reads the model in ASCII format from the specified stream.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.StLImporter.TryReadBinary(System.IO.Stream,SeeingSharp.Multimedia.Objects.StlImportOptions)">
+            <summary>
+            Reads the model from the specified binary stream.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.StackedObjectType.BuildStructure(SeeingSharp.Multimedia.Objects.StructureBuildOptions)">
             <summary>
             Builds all vertex structures for the given detail level.
@@ -10183,19 +10817,20 @@
             Gets or sets the binormal vector.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.MaterialProperties.#ctor">
+        <member name="F:SeeingSharp.Multimedia.Objects.MaterialProperties.Empty">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.MaterialProperties" /> class.
+            Gets an empty material.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.MaterialProperties.ResourceSourceAssembly">
+        <member name="M:SeeingSharp.Multimedia.Objects.MaterialProperties.GetDynamicResourceKey">
             <summary>
-            Gets or sets the resource source assembly.
+            Gets a key string which is equal for all materials which share the same properties.
+            It is much unlikely that materials with different properties gets same results.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.MaterialProperties.ResourceLink">
+        <member name="M:SeeingSharp.Multimedia.Objects.MaterialProperties.Equals(SeeingSharp.Multimedia.Objects.MaterialProperties)">
             <summary>
-            Gets or sets the original source of this geometry / material.
+            Indicates whether the current object is equal to another object of the same type.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Objects.MaterialProperties.Key">
@@ -10365,15 +11000,70 @@
             Gets or sets the diffuse color
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.EnableTextureTileMode(System.Numerics.Vector2)">
+        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructure">
             <summary>
-            Enables texture tile mode.
+            Describes a 3D geometry in memory.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.DisableTextureTileMode">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.#ctor">
             <summary>
-            Disables texture tile mode.
+            Creates a new Vertex structure object
             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.#ctor(System.Int32)">
+            <summary>
+            Creates a new Vertex structure object
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CreateSurface(System.Int32)">
+            <summary>
+            Creates the surface on this VertexStructure.
+            </summary>
+            <param name="triangleCapacity">The triangle capacity.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CreateOrGetExistingSurface(SeeingSharp.Multimedia.Objects.MaterialProperties,System.Int32)">
+            <summary>
+            Tries to get an existing surface using given MaterialProperties.
+            If none exists, then a new surface is created.
+            </summary>
+            <param name="matProperties">The material properties.</param>
+            <param name="triangleCapacity">The triangle capacity.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.RealignToCenter">
+            <summary>
+            Realigns all given structures to their center coordinate.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.FitToCenteredCube">
+            <summary>
+            Fits to centered cube.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.FitToCenteredCube(System.Single)">
+            <summary>
+            Fits to centered cube.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.FitToCenteredCube(System.Single,SeeingSharp.Multimedia.Objects.FitToCuboidMode)">
+            <summary>
+            Fits to centered cube.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.FitToCenteredCube(System.Single,SeeingSharp.Multimedia.Objects.FitToCuboidMode,SeeingSharp.Multimedia.Objects.SpacialOriginLocation)">
+            <summary>
+            Fits to centered cube.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.FitToCenteredCuboid(System.Single,System.Single,System.Single,SeeingSharp.Multimedia.Objects.FitToCuboidMode,SeeingSharp.Multimedia.Objects.SpacialOriginLocation)">
+            <summary>
+            Fits to centered cube.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.EnsureVertexAt(System.Int32)">
+            <summary>
+            Ensures that there is a vertex at the given index and returns it.
+            </summary>
+            <param name="index">The index to get the vertex from.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.EnableBuildTimeTransform(System.Numerics.Matrix4x4)">
             <summary>
@@ -10399,273 +11089,6 @@
             <param name="distance">Additional picking options.</param>
             <param name="pickingOptions">The distance if picking succeeds.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildColumn24V(System.Numerics.Vector3,System.Single,System.Single)">
-            <summary>
-            Builds a column using 24 vertices.
-            </summary>
-            <param name="bottomMiddle">The bottom middle point.</param>
-            <param name="size">Size on the ground.</param>
-            <param name="height">Total height of the column.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildXAxisAlignedRect(System.Numerics.Vector3,System.Numerics.Vector3,System.Single)">
-            <summary>
-            Builds a x-axis aligned rectangle.
-            </summary>
-            <param name="startPoint">Start point (left center).</param>
-            <param name="destinationPoint">Destination point (right center).</param>
-            <param name="size">The size of the rectangle.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildZAxisAlignedRect(System.Numerics.Vector3,System.Numerics.Vector3,System.Single)">
-            <summary>
-            Builds a z-axis aligned rectangle.
-            </summary>
-            <param name="startPoint">Start point (left center).</param>
-            <param name="destinationPoint">Destination point (right center).</param>
-            <param name="size">The size of the rectangle.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildConeFullV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
-            <summary>
-            Builds a cone into the structure with correct texture coordinates and normals.
-            </summary>
-            <param name="bottomMiddle">Coordinate of bottom middle.</param>
-            <param name="radius">The radius of the cone.</param>
-            <param name="height">The height of the cone.</param>
-            <param name="countOfSegments">Total count of segments to generate.</param>
-            <param name="color">The color for the generated vertices.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCylinderFullV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
-            <summary>
-            Builds a cylinder into the structure with correct texture coordinates and normals.
-            </summary>
-            <param name="bottomMiddle">Coordinate of bottom middle.</param>
-            <param name="radius">The radius of the cylinder.</param>
-            <param name="height">The height of the cylinder.</param>
-            <param name="countOfSegments">Total count of segments to generate.</param>
-            <param name="color">The color to be applied on the vertices.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCylinderTopV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
-            <summary>
-            Builds a cylinder into the structure with correct texture coordinates and normals.
-            </summary>
-            <param name="bottomMiddle">Coordinate of bottom middle.</param>
-            <param name="radius">The radius of the cylinder.</param>
-            <param name="height">The height of the cylinder.</param>
-            <param name="countOfSegments">Total count of segments to generate.</param>
-            <param name="color">The color to be applied on the vertices.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCylinderSidesV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
-            <summary>
-            Builds a cylinder into the structure with correct texture coordinates and normals.
-            </summary>
-            <param name="bottomMiddle">Coordinate of bottom middle.</param>
-            <param name="radius">The radius of the cylinder.</param>
-            <param name="height">The height of the cylinder.</param>
-            <param name="countOfSegments">Total count of segments to generate.</param>
-            <param name="color">The color to be applied on the vertices.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCylinderBottomV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4)">
-            <summary>
-            Builds a cylinder into the structure with correct texture coordinates and normals.
-            </summary>
-            <param name="bottomMiddle">Coordinate of bottom middle.</param>
-            <param name="radius">The radius of the cylinder.</param>
-            <param name="height">The height of the cylinder.</param>
-            <param name="countOfSegments">Total count of segments to generate.</param>
-            <param name="color">The color to be applied on the vertices.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCylinderV(System.Numerics.Vector3,System.Single,System.Single,System.Int32,SeeingSharp.Color4,System.Boolean,System.Boolean,System.Boolean)">
-            <summary>
-            Builds a cylinder into the structure with correct texture coordinates and normals.
-            </summary>
-            <param name="bottomMiddle">Coordinate of bottom middle.</param>
-            <param name="radius">The radius of the cylinder.</param>
-            <param name="height">The height of the cylinder.</param>
-            <param name="countOfSegments">Total count of segments to generate.</param>
-            <param name="color">The color to be applied on the vertices.</param>
-            <param name="buildBottom">Build bottom of the cylinder.</param>
-            <param name="buildSides">Build sides of the cylinder.</param>
-            <param name="buildTop">Build top side of the cylinder.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildShpere(System.Int32,System.Int32,System.Double,SeeingSharp.Color4)">
-            <summary>
-            Builds a sphere geometry.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube8V(System.Numerics.Vector3,System.Numerics.Vector3)">
-            <summary>
-            Builds a cube into a vertex structure (this cube is built up of just 8 vertices, so not texturing is supported)
-            </summary>
-            <param name="start">Start point of the cube (left-lower-front point)</param>
-            <param name="size">Size of the cube</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube8V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
-            <summary>
-            Builds a cube into a vertex structure (this cube is built up of just 8 vertices, so no texturing is supported)
-            </summary>
-            <param name="start">Start point of the cube (left-lower-front point)</param>
-            <param name="size">Size of the cube</param>
-            <param name="color">Color of the cube</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube24V(System.Numerics.Vector3,System.Numerics.Vector3)">
-            <summary>
-            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
-            </summary>
-            <param name="start">Start point of the cube</param>
-            <param name="size">Size of the cube</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube24V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
-            <summary>
-            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
-            </summary>
-            <param name="start">Start point of the cube</param>
-            <param name="size">Size of the cube</param>
-            <param name="color">Color of the cube</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube24V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Single,SeeingSharp.Color4)">
-            <summary>
-            Builds a cube of 4 vertices and a defined hight.
-            </summary>
-            <param name="topA"></param>
-            <param name="topB"></param>
-            <param name="topC"></param>
-            <param name="topD"></param>
-            <param name="heigh"></param>
-            <param name="color"></param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube24V(SeeingSharp.BoundingBox,SeeingSharp.Color4)">
-            <summary>
-            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
-            </summary>
-            <param name="box">Box defining bounds of generated cube.</param>
-            <param name="color">Color of generated vertices.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube24V(SeeingSharp.BoundingBox)">
-            <summary>
-            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
-            </summary>
-            <param name="box">Box defining bounds of generated cube.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube24V(System.Numerics.Vector3,System.Single,SeeingSharp.Color4)">
-            <summary>
-            Builds a cube on the given point with the given color.
-            </summary>
-            <param name="centerLocation">The location to draw the cube at.</param>
-            <param name="sideLength">The side length of the cube.</param>
-            <param name="color">The color to be used.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCube24V(System.Numerics.Vector3,System.Single,System.Single,SeeingSharp.Color4)">
-            <summary>
-            Builds a cube into this VertexStructure (this cube is built up of 24 vertices, so texture coordinates and normals are set)
-            </summary>
-            <param name="bottomCenter">Bottom center point of the cube.</param>
-            <param name="width">Width (and depth) of the cube.</param>
-            <param name="height">Height of the cube.</param>
-            <param name="color">Color of the cube</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Multimedia.Objects.TextureCoordinateCalculationAlignment,SeeingSharp.Multimedia.Objects.TextureCoordinateCalculationAlignment,System.Single)">
-            <summary>
-            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCubeTop4V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
-            <summary>
-            Builds the top side of a cube into this VertexStructure (Built up of 4 vertices, so texture coordinates and normals are set)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCubeBottom4V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
-            <summary>
-            Builds the bottom side of a cube into this VertexStructure (Built up of 4 vertices, so texture coordinates and normals are set)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildCubeSides16V(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
-            <summary>
-            Builds cube sides into this VertexStructure (these sides are built up of  16 vertices, so texture coordinates and normals are set)
-            </summary>
-            <param name="start">Start poiint of the cube</param>
-            <param name="size">Size of the cube</param>
-            <param name="color">Color of the cube</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3)">
-            <summary>
-            Build a single rectangle into the vertex structure
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
-            <summary>
-            Build a single rectangle into the vertex structure (Supports texturing)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3)">
-            <summary>
-            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4)">
-            <summary>
-            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildRect4V(System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Color4,System.Numerics.Vector2,System.Numerics.Vector2)">
-            <summary>
-            Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.RecorderTriangleIndices">
-            <summary>
-            Changes the index order of each triangle.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.SphereGetPosition(System.Double,System.Double,System.Double)">
-            <summary>
-            Helper method for spehere creation.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.SphereGetTextureCoordinate(System.Double,System.Double)">
-            <summary>
-            Helper method for spehere creation.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildTextGeometry(System.String)">
-            <summary>
-            Builds the text geometry for the given string.
-            </summary>
-            <param name="stringToBuild">The string to build within the geometry.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildTextGeometry(System.String,SeeingSharp.Multimedia.Objects.TextGeometryOptions)">
-            <summary>
-            Builds the text geometry for the given string.
-            </summary>
-            <param name="stringToBuild">The string to build within the geometry.</param>
-            <param name="geometryOptions">Some configuration for geometry creation.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildPlainPolygon(System.Numerics.Vector3[])">
-            <summary>
-            Builds a plain polygon using the given coordinates.
-            </summary>
-            <param name="coordinates">The coordinates to build the polygon from.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.#ctor">
-            <summary>
-            Creates a new Vertex structure object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.#ctor(System.Int32,System.Int32)">
-            <summary>
-            Creates a new Vertex structure object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.EnsureVertexAt(System.Int32)">
-            <summary>
-            Ensures that there is a vertex at the given index and returns it.
-            </summary>
-            <param name="index">The index to get the vertex from.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.GenerateBoundingBox(SeeingSharp.Multimedia.Objects.VertexStructure[])">
-            <summary>
-            Generates a bounding box surrounding all given structures.
-            </summary>
-            <param name="structures">Structures to generate a bounding box for.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.GetBottomCenter(SeeingSharp.Multimedia.Objects.VertexStructure[])">
             <summary>
             Gets a vector to the bottom center of given structures.
@@ -10688,62 +11111,6 @@
             </summary>
             <param name="otherStructure">The structure to add to this one.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddPolygonByCuttingEars(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.Vertex})">
-            <summary>
-            Adds the given polygon using the cutting ears algorythm for triangulation.
-            </summary>
-            <param name="vertices">The vertices to add.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddPolygonByCuttingEars(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            Adds the given polygon using the cutting ears algorythm for triangulation.
-            </summary>
-            <param name="indices">The indices of the polygon's edges.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.Vertex})">
-            <summary>
-            Adds the given polygon using the cutting ears algorythm for triangulation.
-            </summary>
-            <param name="vertices">The vertices to add.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{System.Int32})">
-            <summary>
-            Adds the given polygon using the cutting ears algorythm for triangulation.
-            </summary>
-            <param name="indices">The indices of the polygon's edges.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddTriangle(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Adds a triangle
-            </summary>
-            <param name="index1">Index of the first vertex</param>
-            <param name="index2">Index of the second vertex</param>
-            <param name="index3">Index of the third vertex</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddTriangle(SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex)">
-            <summary>
-            Adds a triangle
-            </summary>
-            <param name="v1">First vertex</param>
-            <param name="v2">Second vertex</param>
-            <param name="v3">Third vertex</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddTriangleAndCalculateNormalsFlat(SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex,SeeingSharp.Multimedia.Objects.Vertex)">
-            <summary>
-            Adds a triangle
-            </summary>
-            <param name="v1">First vertex</param>
-            <param name="v2">Second vertex</param>
-            <param name="v3">Third vertex</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddTriangleAndCalculateNormalsFlat(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Adds a triangle and calculates normals for it.
-            </summary>
-            <param name="index1">Index of the first vertex</param>
-            <param name="index2">Index of the second vertex</param>
-            <param name="index3">Index of the third vertex</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.AddVertex">
             <summary>
             Adds a vertex to the structure
@@ -10755,41 +11122,6 @@
             </summary>
             <param name="vertex"></param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildLineListForFaceBinormals">
-            <summary>
-            Builds a line list containing a line for each face binormal.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildLineListForFaceNormals">
-            <summary>
-            Builds a line list containing a line for each face normal.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildLineListForFaceTangents">
-            <summary>
-            Builds a line list containing a line for each face tangent.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildLineListForVertexBinormals">
-            <summary>
-            Builds a list list containing a list for each vertex binormal.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildLineListForVertexNormals">
-            <summary>
-            Builds a list list containing a list for each vertex normal.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildLineListForVertexTangents">
-            <summary>
-            Builds a list list containing a list for each vertex tangent.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.BuildLineListForWireframeView">
-            <summary>
-            Build a line list containing all lines for wireframe display.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CalculateTangentsAndBinormals">
             <summary>
             Calculates tangents for all vectors.
@@ -10799,19 +11131,6 @@
             <summary>
             Recalculates all normals
             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CalculateNormalsFlat(SeeingSharp.Multimedia.Objects.Triangle)">
-            <summary>
-            Calculates normals for the given treangle.
-            </summary>
-            <param name="actTriangle">The triangle for which to calculate the normal (flat).</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CalculateNormalsFlat(System.Int32,System.Int32)">
-            <summary>
-            Calculates normals for the given treangle.
-            </summary>
-            <param name="countTriangles">Total count of triangles.</param>
-            <param name="startTriangleIndex">The triangle on which to start.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CalculateNormals">
             <summary>
@@ -10846,24 +11165,6 @@
             Toggles all vertices and indexes from left to right handed or right to left handed system.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.GetExtendedMaterialProperties``1">
-            <summary>
-            Gets extended material properties of the given type.
-            </summary>
-            <typeparam name="T">The type of properties to get.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.GetIndexArray">
-            <summary>
-            Gets an index array
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.SetExtendedMaterialProperties``1(``0)">
-            <summary>
-            Sets the extended material properties.
-            </summary>
-            <typeparam name="T">The type of properties to set.</typeparam>
-            <param name="properties">The properties to set.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TransformVertices(System.Numerics.Matrix4x4)">
             <summary>
             Transforms positions and normals of all vertices using the given transform matrix
@@ -10886,9 +11187,10 @@
             </summary>
             <param name="calculatePositionFunc">The function to be applied to each coordinate.</param>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.CountTriangles">
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.FirstSurface">
             <summary>
-            Retrieves total count of all triangles within this structure
+            Gets the first surface of  this structure.
+            It there is no surface, then one gets created automatically.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.CountVertices">
@@ -10906,14 +11208,19 @@
             Is this structure empty?
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.Material">
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.Name">
             <summary>
-            Gets the name of the material.
+            The name of this structure
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.DiffuseColor">
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.Vertices">
             <summary>
-            Gets or sets the diffuse color of the material.
+            Gets a collection of vertices.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.VerticesInternal">
+            <summary>
+            Gets a collection of vertices.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.ResourceSourceAssembly">
@@ -10926,164 +11233,10 @@
             Gets or sets the original source of this geometry.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.TextureName">
-            <summary>
-            Gets or sets the name of the texture (used for the NamedOrGenericKey structure behind).
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.TextureKey">
-            <summary>
-            Gets or sets the key of the texture.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.MaterialProperties">
-            <summary>
-            Gets or sets the material properties object.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.Name">
-            <summary>
-            The name of this structure
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.Triangles">
-            <summary>
-            Retrieves a collection of triangles
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.Vertices">
-            <summary>
-            Retrieves a collection of vertices
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.Indices">
-            <summary>
-            Gets a collection containing all indices.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.CountIndexes">
-            <summary>
-            Retrieves total count of all indexes within this structure
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection">
-            <summary>
-            Contains all triangles of a VertexStructure object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.#ctor(System.Collections.Generic.List{System.Int32},System.Collections.Generic.List{SeeingSharp.Multimedia.Objects.Vertex})">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.System#Collections#IEnumerable#GetEnumerator">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Add(System.Int32,System.Int32,System.Int32)">
-            <summary>
-            Adds a treangle to this vertex structure
-            </summary>
-            <param name="index1">Index of the first vertex</param>
-            <param name="index2">Index of the second vertex</param>
-            <param name="index3">Index of the third vertex</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Add(SeeingSharp.Multimedia.Objects.Triangle)">
-            <summary>
-            Adds a treangle to this vertex structure
-            </summary>
-            <param name="triangle"></param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.GetEnumerator">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.ToIndexArray">
-            <summary>
-            Gets an array containing all indices
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.ToIndexArray(System.Int32)">
-            <summary>
-            Gets an array containing all indices
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Item(System.Int32)">
-            <summary>
-            Retrieves the triangle at the given index
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Enumerator">
-            <summary>
-            Enumerator of TriangleCollection
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Enumerator.#ctor(System.Collections.Generic.List{System.Int32})">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Enumerator.Dispose">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Enumerator.MoveNext">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Enumerator.Reset">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Enumerator.System#Collections#IEnumerator#Current">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.TriangleCollection.Enumerator.Current">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructure.IndexCollection">
-            <summary>
-            Contains all indices of a VertexStructure object.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.IndexCollection.System#Collections#IEnumerable#GetEnumerator">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.IndexCollection.GetEnumerator">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.IndexCollection.Item(System.Int32)">
-            <summary>
-            Returns the index at ghe given index
-            </summary>
-        </member>
         <member name="T:SeeingSharp.Multimedia.Objects.VertexStructure.VertexCollection">
             <summary>
             Contains all vertices of a VertexStructure object
             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.VertexCollection.#ctor(System.Collections.Generic.List{SeeingSharp.Multimedia.Objects.Vertex})">
-             <summary>
-            
-             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.VertexCollection.System#Collections#IEnumerable#GetEnumerator">
-             <summary>
-            
-             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.VertexCollection.Add(SeeingSharp.Multimedia.Objects.Vertex)">
             <summary>
@@ -11098,6 +11251,16 @@
         <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.VertexCollection.Item(System.Int32)">
             <summary>
             Returns the vertex at ghe given index
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.VertexStructure.SurfaceCollection">
+            <summary>
+            Contains all vertices of a VertexStructure object
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructure.SurfaceCollection.Item(System.Int32)">
+            <summary>
+            Returns the surface at ghe given index
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.SimplePolygon2DGeometrySink.#ctor(System.Numerics.Vector2)">
@@ -11231,7 +11394,7 @@
             Gets a collection containing all generated polygons.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureTextRenderer.#ctor(SeeingSharp.Multimedia.Objects.VertexStructure,SeeingSharp.Multimedia.Objects.TextGeometryOptions)">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureTextRenderer.#ctor(SeeingSharp.Multimedia.Objects.VertexStructureSurface,SeeingSharp.Multimedia.Objects.TextGeometryOptions)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.VertexStructureTextRenderer" /> class.
             </summary>
@@ -11304,42 +11467,6 @@
             <remarks>
             A single underline can be broken into multiple calls, depending on how the formatting changes attributes. If font sizes/styles change within an underline, the thickness and offset will be averaged weighted according to characters. To get an appropriate starting pixel position, add underline::offset to the baseline. Otherwise there will be no spacing between the text. The x coordinate will always be passed as the left side, regardless of text directionality. This simplifies drawing and reduces the problem of round-off that could potentially cause gaps or a double stamped alpha blend. To avoid alpha overlap, round the end points to the nearest device pixel.
             </remarks>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ConstructionExtensions.GenerateBoundingBox(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.VertexStructure})">
-            <summary>
-            Generates a bounding box out of given vertex structures.
-            </summary>
-            <param name="structures">The structures to buld the box for.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ConstructionExtensions.CalculateNormals(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.VertexStructure})">
-            <summary>
-            Calculates all normals in the given structures.
-            </summary>
-            <param name="structures">The structure where to calculate all normals.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ConstructionExtensions.TransformVertices(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.VertexStructure},System.Numerics.Matrix4x4)">
-            <summary>
-            Transforms positions and normals of all vertices using the given transform matrix
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ConstructionExtensions.RealignToCenter(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.VertexStructure})">
-            <summary>
-            Realigns all given structures to their center coordinate.
-            </summary>
-            <param name="structures">The structures to update.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ConstructionExtensions.FitToCenteredCube(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.VertexStructure})">
-            <summary>
-            Fits to centered cube.
-            </summary>
-            <param name="structures">The structures to perform the fit function on.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ConstructionExtensions.FitToCenteredCube(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.VertexStructure},System.Single)">
-            <summary>
-            Fits to centered cube.
-            </summary>
-            <param name="structures">The structures to perform the fit function on.</param>
-            <param name="cubeSideLength">Fixed cube side length for x, y and z.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ConstructionExtensions.GenerateShadowVolume(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.VertexStructure},System.Numerics.Vector3,System.Single)">
             <summary>
@@ -11461,11 +11588,10 @@
             This is needed to transform coordinate from one measure unit to another.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.SeeingSharpAssimpIOSystem.#ctor(SeeingSharp.Util.ResourceLink)">
+        <member name="P:SeeingSharp.Multimedia.Objects.ImportOptions.ChangeTriangleOrder">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.SeeingSharpAssimpIOSystem"/> class.
+            Should triangle order be changes by the import logic?
             </summary>
-            <param name="originalSource">The original source.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ImportedObjectInfo.#ctor(SeeingSharp.Multimedia.Core.SceneObject,SeeingSharp.BoundingBox)">
             <summary>
@@ -11483,6 +11609,11 @@
             </summary>
             <param name="resourceKey">The key which is used by added the resource to a scene.</param>
             <param name="resourceFactory">The resource factory.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.ImportedModelContainer">
+            <summary>
+            Container for imported model data.
+            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ImportedModelContainer.#ctor(SeeingSharp.Multimedia.Objects.ImportOptions)">
             <summary>
@@ -11503,27 +11634,29 @@
         </member>
         <member name="P:SeeingSharp.Multimedia.Objects.ImportedModelContainer.Objects">
             <summary>
-            Gets a collection containing all objects.
+            Gets a collection containing all imported objects.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.ImportedModelContainer.ObjectDependencies">
+        <member name="P:SeeingSharp.Multimedia.Objects.ImportedModelContainer.ParentChildRelationships">
             <summary>
-            Gets the hierarchy information of the loaded objects.
+            Gets the hierarchy information of the imported objects.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Objects.ImportedModelContainer.ImportedResources">
             <summary>
-            Gets a collection containing all resources.
+            Gets a collection containing all imported resources.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Objects.ImportedModelContainer.ChangeTriangleOrder">
             <summary>
             Should triangle order be changes by the import logic?
+            (This property is handled by the importer)
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Objects.ImportedModelContainer.ResizeFactor">
             <summary>
-            
+            The resize factor for imported geometry.
+            (This property is handled by the importer)
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ACImporter.ImportModel(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
@@ -11538,48 +11671,10 @@
             Creates a default import options object for this importer.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportModel(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
-            <summary>
-            Imports a model from the given file.
-            </summary>
-            <param name="sourceFile">The source file to be loaded.</param>
-            <param name="importOptions">Some configuration for the importer.</param>
-            <returns></returns>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.CreateDefaultImportOptions">
-            <summary>
-            Creates a default import options object for this importer.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportGeometry(SeeingSharp.Multimedia.Objects.ImportedModelContainer,Assimp.Scene,SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Imports all meshes (=> geometry) from the given scene.
-            </summary>
-            <param name="container">The target container object.</param>
-            <param name="importedScene">The scene to be imported.</param>
-            <param name="sourceFile">The original source file.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportMaterials(SeeingSharp.Multimedia.Objects.ImportedModelContainer,Assimp.Scene,SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Imports all materials from the given scene.
-            </summary>
-            <param name="container">The target container object.</param>
-            <param name="importedScene">The scene to be imported.</param>
-            <param name="sourceFile">The original source file</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.AssimpImporter.ImportObject(SeeingSharp.Multimedia.Objects.ImportedModelContainer,Assimp.Scene,Assimp.Node,SeeingSharp.Multimedia.Core.SceneObject)">
-            <summary>
-            Imports this given node (=> object) from the given scene.
-            </summary>
-            <param name="container">The target container object.</param>
-            <param name="importedScene">The scene to be imported.</param>
-            <param name="currentNode"></param>
-            <param name="parentObject"></param>
-        </member>
         <member name="T:SeeingSharp.Multimedia.Objects.XglImporter">
             <summary>
             An importer which loads files in xgl format.
-            See http://vizstream.aveva.com/release/vsplatform/XGLSpec.htm
+            See http://web.archive.org/web/20060218030828/http://www.xglspec.org/
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.XglImporter.ImportModel(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
@@ -11601,72 +11696,25 @@
             <param name="inStreamXml">The xml reader object.</param>
             <param name="container">The container where to import to.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.XglImporter.ImportMesh(System.Xml.XmlReader,SeeingSharp.Multimedia.Objects.ImportedModelContainer)">
+        <member name="M:SeeingSharp.Multimedia.Objects.XglImporter.ImportMesh(System.Xml.XmlReader,SeeingSharp.Multimedia.Objects.ImportedModelContainer,SeeingSharp.Multimedia.Objects.XglImportOptions)">
             <summary>
             Imports the texture node where the xml reader is currently located.
             </summary>
             <param name="inStreamXml">The xml reader object.</param>
             <param name="container">The container where to import to.</param>
+            <param name="xglImportOptions">Current import options.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.XglImporter.ImportObject(System.Xml.XmlReader,SeeingSharp.Multimedia.Objects.ImportedModelContainer,SeeingSharp.Multimedia.Core.SceneObject)">
+        <member name="M:SeeingSharp.Multimedia.Objects.XglImporter.ImportMaterial(System.Xml.XmlReader,SeeingSharp.Multimedia.Objects.ImportedModelContainer,SeeingSharp.Multimedia.Objects.XglImportOptions)">
+            <summary>
+            Imports the mode node where the xml reader is currently located.
+            </summary>
+            <param name="inStreamXml">The xml reader object.</param>
+            <param name="container">The container where to import to.</param>
+            <param name="xglImportOptions">Current import options.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.XglImporter.ImportObject(System.Xml.XmlReader,SeeingSharp.Multimedia.Objects.ImportedModelContainer,SeeingSharp.Multimedia.Core.SceneObject,SeeingSharp.Multimedia.Objects.XglImportOptions)">
             <summary>
             Imports the texture node where the xml reader is currently located.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.PalletType" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.#ctor(SeeingSharp.Util.NamedOrGenericKey,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Creates a new pallet type with given size settings
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.BuildStructure(SeeingSharp.Multimedia.Objects.StructureBuildOptions)">
-            <summary>
-            Builds the structure needed for the pallet
-            </summary>
-            <param name="buildOptions">Some generic options for structure building</param>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.Width">
-            <summary>
-            Gets or sets the width of the object
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.Depth">
-            <summary>
-            Gets or sets the depth of the object
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.PalletHeight">
-            <summary>
-            Gets or sets the height of a pallet
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.ContentHeight">
-            <summary>
-            Gets or sets the height of the content
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.SmallFooterWidth">
-            <summary>
-            Gets or sets the width of the small footer
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.BigFooterWidth">
-            <summary>
-            Gets or sets the width of the big footer
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.BoardHeight">
-            <summary>
-            Gets or sets the height of a board
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.SingleMaterialPalletType.PalletMaterial">
-            <summary>
-            Gets or sets the material of the pallet.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.ImportObjectType(System.Byte[])">
@@ -11686,31 +11734,31 @@
             </summary>
             <param name="resourceLink">The link to the ac file.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.ImportVertexStructures(System.IO.Stream)">
+        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.ImportVertexStructure(System.IO.Stream)">
             <summary>
-            Imports VertexStructures from the given stream.
+            Imports a VertexStructure from the given stream.
             </summary>
             <param name="inStream">The stream to load the data from.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.ImportVertexStructures(System.IO.Stream,SeeingSharp.Util.ResourceLink)">
+        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.ImportVertexStructure(System.IO.Stream,SeeingSharp.Util.ResourceLink)">
             <summary>
             Imports VertexStructures from the given stream.
             </summary>
             <param name="inStream">The stream to load the data from.</param>
             <param name="originalSource">The original source of the generated geometry.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.GenerateStructures(SeeingSharp.Multimedia.Objects.ACFileLoader.ACFileInfo)">
+        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.GenerateStructure(SeeingSharp.Multimedia.Objects.ACFileLoader.ACFileInfo)">
             <summary>
             Generates all vertex structures needed for this object
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.FillVertexStructure(System.Collections.Generic.List{SeeingSharp.Multimedia.Objects.VertexStructure},System.Collections.Generic.List{SeeingSharp.Multimedia.Objects.ACFileLoader.ACMaterialInfo},SeeingSharp.Multimedia.Objects.ACFileLoader.ACObjectInfo,SeeingSharp.Matrix4Stack)">
+        <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.FillVertexStructure(SeeingSharp.Multimedia.Objects.VertexStructure,System.Collections.Generic.List{SeeingSharp.Multimedia.Objects.ACFileLoader.ACMaterialInfo},SeeingSharp.Multimedia.Objects.ACFileLoader.ACObjectInfo,SeeingSharp.Matrix4Stack)">
             <summary>
             Fills the given vertex structure using information from the given AC-File-Objects.
             </summary>
             <param name="objInfo">The object information from the AC file.</param>
             <param name="acMaterials">A list containing all materials from the AC file.</param>
-            <param name="outputStructures">The VertexStructure list to be filled.</param>
+            <param name="structure">The VertexStructure to be filled.</param>
             <param name="transformStack">Current matrix stack (for stacked objects).</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ACFileLoader.LoadFile(System.IO.Stream)">
@@ -11776,24 +11824,18 @@
             Is this surface two sided?
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.GenericObjectType.#ctor(SeeingSharp.Multimedia.Objects.VertexStructure[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.GenericObjectType"/> class.
-            </summary>
-            <param name="vertexStructures">The vertex structures.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.GenericObjectType.#ctor(SeeingSharp.Multimedia.Objects.VertexStructure[],SeeingSharp.Multimedia.Objects.VertexStructure[])">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.GenericObjectType"/> class.
-            </summary>
-            <param name="vertexStructures">The vertex structures.</param>
-            <param name="vertexStructuresLowDetail">The vertex structures for low detail level.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.GenericObjectType.#ctor(SeeingSharp.Multimedia.Objects.VertexStructure)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.GenericObjectType"/> class.
             </summary>
-            <param name="vertexStructure">The vertex structure.</param>
+            <param name="vertexStructure">The vertex structures.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.GenericObjectType.#ctor(SeeingSharp.Multimedia.Objects.VertexStructure,SeeingSharp.Multimedia.Objects.VertexStructure)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.GenericObjectType"/> class.
+            </summary>
+            <param name="vertexStructure">The vertex structures.</param>
+            <param name="vertexStructureLowDetail">The vertex structures for low detail level.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.GenericObjectType.BuildStructure(SeeingSharp.Multimedia.Objects.StructureBuildOptions)">
             <summary>
@@ -11814,12 +11856,12 @@
             <param name="materialNameOld">The material to be converted.</param>
             <param name="materialNameNew">The new material to be converted to.</param>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.GenericObjectType.VertexStructures">
+        <member name="P:SeeingSharp.Multimedia.Objects.GenericObjectType.VertexStructure">
             <summary>
             Gets the array containing all loaded vertex structures.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.GenericObjectType.VertexStructuresLowDetail">
+        <member name="P:SeeingSharp.Multimedia.Objects.GenericObjectType.VertexStructureLowDetail">
             <summary>
             Gets an array containing all loaded vertex structures for low detail level.
             </summary>
@@ -11952,7 +11994,7 @@
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ObjectType.BuildStructure(SeeingSharp.Multimedia.Objects.StructureBuildOptions)">
             <summary>
-            Builds all vertex structures for the given detail level.
+            Builds a VertexStructure using given parameters (like DetailLevel).
             </summary>
             <param name="buildOptions">Some generic options for structure building</param>
         </member>
@@ -12169,33 +12211,6 @@
         <member name="P:SeeingSharp.Multimedia.Properties.Resources.Empty">
             <summary>
               Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelVM.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.UI.LoadExternalModelVM"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.UpdateDialogState">
-            <summary>
-            Updates the state of the dialog.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.components">
-            <summary>
-            Required designer variable.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.Dispose(System.Boolean)">
-            <summary>
-            Clean up any resources being used.
-            </summary>
-            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.UI.LoadExternalModelFormsDlg.InitializeComponent">
-            <summary>
-            Required method for Designer support - do not modify
-            the contents of this method with the code editor.
             </summary>
         </member>
         <member name="E:SeeingSharp.Multimedia.Views.MediaPlayerComponent.StateChanged">

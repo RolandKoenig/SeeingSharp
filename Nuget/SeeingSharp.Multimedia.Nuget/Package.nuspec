@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SeeingSharp.Multimedia</id>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <title>Seeing# Multimedia</title>
     <authors>RolandK</authors>
     <owners>RolandK</owners>
@@ -48,7 +48,7 @@
         <dependency id="SharpDX.MediaFoundation" version="3.0.1" />
         <dependency id="SharpDX.XAudio2" version="3.0.1" />
         <dependency id="SharpDX.XInput" version="3.0.1" />
-        <dependency id="SeeingSharp" version="1.0.2" />
+        <dependency id="SeeingSharp" version="1.0.3" />
       </group>
       <group targetFramework="portable-win8+wpa81">
         <dependency id="Rx-Core" version="2.2.5" />
@@ -64,7 +64,7 @@
         <dependency id="SharpDX.MediaFoundation" version="3.0.1" />
         <dependency id="SharpDX.XAudio2" version="3.0.1" />
         <dependency id="SharpDX.XInput" version="3.0.1" />
-        <dependency id="SeeingSharp" version="1.0.2" />
+        <dependency id="SeeingSharp" version="1.0.3" />
         <dependency id="System.Numerics.Vectors" version="4.0.0" />
       </group>
     </dependencies>
