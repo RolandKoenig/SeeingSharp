@@ -510,6 +510,14 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets a list containing all spacial objects.
+        /// </summary>
+        internal List<SceneSpacialObject> SpacialObjects
+        {
+            get { return m_sceneObjectsSpacial; }
+        }
+
+        /// <summary>
         /// Gets total count of objects within the scene.
         /// </summary>
         public int CountObjects

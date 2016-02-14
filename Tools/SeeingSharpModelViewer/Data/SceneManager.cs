@@ -68,6 +68,11 @@ namespace SeeingSharpModelViewer.Data
             return await m_scene.ImportAsync(resourceLink);
         }
 
+        public Task CloseAsync()
+        {
+            return m_scene.ManipulateSceneAsync(manipulator => manipulator.ClearLayer(Scene.DEFAULT_LAYER_NAME));
+        }
+
         /// <summary>
         /// Initializes the scene for this model viewer.
         /// </summary>

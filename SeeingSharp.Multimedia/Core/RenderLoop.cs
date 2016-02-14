@@ -281,6 +281,70 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Moves the camera to a default location which may see most of the warehouse.
+        /// </summary>
+        /// <param name="horizontalRotation">The horizontal rotation seen from the middle point of the scene.</param>
+        /// <param name="verticalRotation">The vertical rotation seen from the middle point of the scene.</param>
+        public async Task MoveCameraToDefaultLocationAsync(float horizontalRotation, float verticalRotation)
+        {
+            if (m_currentScene == null) { return; }
+            if (m_currentDevice == null) { return; }
+
+            BoundingBox sceneBox = await CalculateSceneBoxAsync();
+            if (sceneBox.IsEmpty()) { return; }
+
+            if (m_currentScene == null) { return; }
+            if (m_currentDevice == null) { return; }
+
+            if (m_camera != null)
+            {
+                await m_currentScene.PerformBeforeUpdateAsync(() =>
+                {
+                    Vector3 bottomCenter = sceneBox.GetBottomCenter();
+                    Vector3 anyEdge = sceneBox.GetTopFrontMiddleCoordinate();
+                    Vector3 centerToEdgeVector = anyEdge - bottomCenter;
+                    float centerToEdgeDistance = centerToEdgeVector.Length();
+
+                    Vector3 direction = Vector3.TransformNormal(
+                        new Vector3(0f, 0f, -1f),
+                        Matrix4x4.CreateFromYawPitchRoll(horizontalRotation, verticalRotation, 0f));
+
+                    m_camera.Position = bottomCenter + direction * (centerToEdgeDistance * 2f);
+                    m_camera.Target = bottomCenter;
+                    m_camera.UpdateCamera();
+                });
+            }
+        }
+
+        /// <summary>
+        /// Calculates a BoundingBox which contains all objects of the scene.
+        /// </summary>
+        public async Task<BoundingBox> CalculateSceneBoxAsync()
+        {
+            BoundingBox result = BoundingBox.Empty;
+
+            if (m_currentScene == null) { return result; }
+            if (m_currentDevice == null) { return result; }
+
+            await m_currentScene.PerformBesideRenderingAsync(() =>
+            {
+                foreach (SceneLayer actLayer in m_currentScene.Layers)
+                {
+                    foreach (SceneSpacialObject actSpacialObject in actLayer.SpacialObjects)
+                    {
+                        BoundingBox actBoundingBox = actSpacialObject.TryGetBoundingBox(m_viewInformation);
+                        if (actBoundingBox.IsEmpty()) { continue; }
+
+                        if (result.IsEmpty()) { result = actBoundingBox; }
+                        else { result.MergeWith(actBoundingBox); }
+                    }
+                }
+            });
+
+            return result;
+        }
+
+        /// <summary>
         /// Finishes the given VideoWriter object and deregisters it from this RenderLoop.
         /// </summary>
         /// <param name="videoWriter">The VideoWriter to be finished.</param>

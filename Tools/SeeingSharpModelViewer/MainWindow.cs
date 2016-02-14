@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.View;
@@ -65,7 +66,17 @@ namespace SeeingSharpModelViewer
             if(m_dlgOpenFile.ShowDialog(this) == DialogResult.OK)
             {
                 await m_sceneManager.ImportFileAsync(m_dlgOpenFile.FileName);
+
+                await m_panGraphics.RenderLoop.WaitForNextFinishedRenderAsync();
+
+                await m_panGraphics.RenderLoop.MoveCameraToDefaultLocationAsync(
+                    EngineMath.RAD_45DEG, EngineMath.RAD_45DEG);
             }
+        }
+
+        private async void OnCmdClose_Click(object sender, EventArgs e)
+        {
+            await m_sceneManager.CloseAsync();
         }
     }
 }
