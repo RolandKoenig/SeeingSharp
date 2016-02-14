@@ -22,7 +22,6 @@
 #endregion
 using SeeingSharp.Util;
 using SeeingSharp.Checking;
-using Newtonsoft.Json;
 using System;
 using System.Numerics;
 using System.Collections.Generic;
@@ -43,7 +42,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <summary>
         /// Initializes a new instance of the <see cref="Camera3DViewPoint"/> class.
         /// </summary>
-        [JsonConstructor]
         public Camera3DViewPoint()
         {
             this.OrthographicZoomFactor = 10f;
@@ -58,11 +56,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             resourceLink.EnsureNotNull("resourceLink");
 
-            using(Stream inStream = resourceLink.OpenInputStream())
-            using(TextReader textReader = new StreamReader(inStream))
-            using(JsonReader jsonReader = new JsonTextReader(textReader))
+            XmlSerializer serializer = SerializerRepository.Current.GetSerializer(typeof(Camera3DViewPoint));
+            using (Stream inStream = resourceLink.OpenInputStream())
             {
-                return SerializerRepository.DEFAULT_JSON.Deserialize<Camera3DViewPoint>(jsonReader);
+                return serializer.Deserialize(inStream) as Camera3DViewPoint;
             }
         }
 
@@ -74,12 +71,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             resourceLink.EnsureNotNull("resourceLink");
 
+            XmlSerializer serializer = SerializerRepository.Current.GetSerializer(typeof(Camera3DViewPoint));
             using (Stream inStream = await resourceLink.OpenInputStreamAsync())
-            using (TextReader textReader = new StreamReader(inStream))
-            using (JsonReader jsonReader = new JsonTextReader(textReader))
             {
-                return await Task.Factory.StartNew(() =>
-                    SerializerRepository.DEFAULT_JSON.Deserialize<Camera3DViewPoint>(jsonReader));
+                return await Task.Run(() => serializer.Deserialize(inStream) as Camera3DViewPoint);
             }
         }
 
@@ -91,11 +86,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             resourceLink.EnsureNotNull("resourceLink");
 
-            using(Stream outStream = resourceLink.OpenOutputStream())
-            using(TextWriter textWriter = new StreamWriter(outStream))
-            using(JsonWriter jsonWriter = new JsonTextWriter(textWriter))
+            XmlSerializer serializer = SerializerRepository.Current.GetSerializer(typeof(Camera3DViewPoint));
+            using (Stream outStream = resourceLink.OpenOutputStream())
             {
-                SerializerRepository.DEFAULT_JSON.Serialize(jsonWriter, this);
+                serializer.Serialize(outStream, this);
             }
         }
 
@@ -110,7 +104,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Gets or sets the CameraType in string form.
         /// </summary>
         [XmlAttribute]
-        [JsonProperty]
         public string CameraTypeString
         {
             get { return this.CameraType.ToString(); }
@@ -128,7 +121,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Gets or sets the position of the ViewPoint.
         /// </summary>
         [XmlElement]
-        [JsonProperty]
         public Vector3 Position
         {
             get;
@@ -139,7 +131,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Gets or sets the rotation of the ViewPoint.
         /// </summary>
         [XmlElement]
-        [JsonProperty]
         public Vector2 Rotation
         {
             get;
@@ -150,7 +141,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Gets or sets the zoom factor if we have a orthographic camera.
         /// </summary>
         [XmlAttribute]
-        [JsonProperty]
         public float OrthographicZoomFactor
         {
             get;

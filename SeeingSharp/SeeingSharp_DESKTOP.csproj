@@ -48,10 +48,6 @@
     <NoWarn>1591</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=8.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.8.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -274,7 +270,6 @@
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
     <EmbeddedResource Include="Resources\frozensky.lang-DE.langXml" />
-    <None Include="packages.SeeingSharp_DESKTOP.config" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Behaviors\_WinForms\" />
