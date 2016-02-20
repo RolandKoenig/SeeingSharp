@@ -37,7 +37,7 @@
     <SuppressXamlWarnings>
     </SuppressXamlWarnings>
     <DocumentationFile>bin.WinRT\Debug\AnyCpu\SeeingSharp.Multimedia.XML</DocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1591;675</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -49,7 +49,7 @@
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <DocumentationFile>bin.WinRT\Release\AnyCpu\SeeingSharp.Multimedia.XML</DocumentationFile>
-    <NoWarn>1591</NoWarn>
+    <NoWarn>1591;675</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="..\Misc\SolutionInfo.cs">
@@ -306,6 +306,18 @@
     <Compile Include="Objects\_ObjectTypes\_Misc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResourceKeys.cs" />
+    <Compile Include="Util\SdxTK\DDS.cs" />
+    <Compile Include="Util\SdxTK\DDSHelper.cs" />
+    <Compile Include="Util\SdxTK\Image.cs" />
+    <Compile Include="Util\SdxTK\ImageDescription.cs" />
+    <Compile Include="Util\SdxTK\MipMapCount.cs" />
+    <Compile Include="Util\SdxTK\MipMapDescription.cs" />
+    <Compile Include="Util\SdxTK\MipMapHelper.cs" />
+    <Compile Include="Util\SdxTK\PixelBuffer.cs" />
+    <Compile Include="Util\SdxTK\PixelBufferArray.cs" />
+    <Compile Include="Util\SdxTK\PixelFormat.cs" />
+    <Compile Include="Util\SdxTK\WICHelper.cs" />
+    <Compile Include="Util\SdxTK\_Misc.cs" />
     <Compile Include="Views\SeeingSharpPanelPainter.cs" />
     <Compile Include="Views\ISeeingSharpPainter.cs" />
     <Compile Include="Views\_Misc.cs" />

@@ -286,6 +286,34 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Creates a new image based on the given raw image data.
+        /// </summary>
+        /// <param name="device">Graphics device.</param>
+        /// <param name="rawImage">Raw image data.</param>
+        internal static D3D11.Texture2D CreateTexture(EngineDevice device, SeeingSharp.Multimedia.Util.SdxTK.Image rawImage)
+        {
+            D3D11.Texture2DDescription textureDescription = new D3D11.Texture2DDescription();
+            textureDescription.Width = rawImage.Description.Width;
+            textureDescription.Height = rawImage.Description.Height;
+            textureDescription.MipLevels = rawImage.Description.MipLevels;
+            textureDescription.ArraySize = rawImage.Description.ArraySize;
+            textureDescription.Format = rawImage.Description.Format;
+            textureDescription.Usage = D3D11.ResourceUsage.Default;
+            textureDescription.SampleDescription = new DXGI.SampleDescription(1, 0);
+            textureDescription.BindFlags = D3D11.BindFlags.ShaderResource;
+            textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
+            textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
+
+            // Special handling for cube textures
+            if (rawImage.Description.Dimension == SeeingSharp.Multimedia.Util.SdxTK.TextureDimension.TextureCube)
+            {
+                textureDescription.OptionFlags = D3D11.ResourceOptionFlags.TextureCube;
+            }
+
+            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription, rawImage.ToDataBox());
+        }
+
+        /// <summary>
         /// Loads the texture2 D from stream.
         /// </summary>
         /// <param name="device">The device on wich to create the texture.</param>

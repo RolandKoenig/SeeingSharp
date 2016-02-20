@@ -119,6 +119,8 @@ namespace SeeingSharp.Tests.Rendering
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
+                //screenshot.DumpToDesktop(TEST_DUMMY_FILE_NAME);
+
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_FlatShadedObject);

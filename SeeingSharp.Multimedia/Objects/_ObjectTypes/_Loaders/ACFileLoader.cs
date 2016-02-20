@@ -197,11 +197,11 @@ namespace SeeingSharp.Multimedia.Objects
                                         objInfo.Vertices[surfaceVertexReferences[loop]].Position,
                                         transformStack.Top);
                                     localIndices[surfaceVertexReferences[loop]] = structure.AddVertex(new Vertex(
-                                        position, actMaterial.Diffuse, actTexCoord, Vector3.Zero));
+                                        position, Color4.White, actTexCoord, Vector3.Zero));
                                     if (actSurface.IsTwoSided)
                                     {
                                         localIndices[surfaceVertexReferences[loop] + oneSideVertexCount] = structure.AddVertex(new Vertex(
-                                            position, actMaterial.Diffuse, actTexCoord, Vector3.Zero));
+                                            position, Color4.White, actTexCoord, Vector3.Zero));
                                     }
                                 }
 
@@ -220,11 +220,11 @@ namespace SeeingSharp.Multimedia.Objects
                                     objInfo.Vertices[surfaceVertexReferences[loop]].Position,
                                     transformStack.Top);
                                 onStructureReferencedVertices[loop] = structure.AddVertex(new Vertex(
-                                    position, actMaterial.Diffuse, actTexCoord, Vector3.Zero));
+                                    position, Color4.White, actTexCoord, Vector3.Zero));
                                 if (actSurface.IsTwoSided)
                                 {
                                     onStructureReferencedVertices[loop + oneSideSurfaceVertexCount] = structure.AddVertex(new Vertex(
-                                        position, actMaterial.Diffuse, actTexCoord, Vector3.Zero));
+                                        position, Color4.White, actTexCoord, Vector3.Zero));
                                 }
                             }
                         }
