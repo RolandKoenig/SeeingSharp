@@ -29,6 +29,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using RKRocket.Data;
+using RKRocket.Util;
 
 namespace RKRocket.Game
 {
@@ -102,7 +103,7 @@ namespace RKRocket.Game
                 m_isLoadingLevel = true;
                 try
                 {
-                    m_currentLevel = await CommonTools.DeserializeJsonFromResourceAsync<LevelData>(
+                    m_currentLevel = await RKRocketSerializerUtil.DeserializeJsonFromResourceAsync<LevelData>(
                         new AssemblyResourceUriBuilder(
                             "RKRocket", true,
                             $"Assets/Levels/Level_{formatedLevelNumber}.json"));

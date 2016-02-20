@@ -216,6 +216,9 @@
     <Compile Include="..\RKRocket\Game\_Systems\ScoreSystem.cs">
       <Link>Game\_Systems\ScoreSystem.cs</Link>
     </Compile>
+    <Compile Include="..\RKRocket\Util\RKRocketSerializerUtil.cs">
+      <Link>Util\RKRocketSerializerUtil.cs</Link>
+    </Compile>
     <Compile Include="..\RKRocket\ViewModel\GameOverViewModel.cs">
       <Link>ViewModel\GameOverViewModel.cs</Link>
     </Compile>

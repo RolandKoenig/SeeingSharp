@@ -178,6 +178,7 @@
     <Compile Include="Game\_Systems\LevelSystem.cs" />
     <Compile Include="Data\LevelData.cs" />
     <Compile Include="Game\_Systems\ScoreSystem.cs" />
+    <Compile Include="Util\RKRocketSerializerUtil.cs" />
     <Compile Include="ViewModel\_Messages\MessageHighScorePosted.cs" />
     <Compile Include="View\GameOverView.xaml.cs">
       <DependentUpon>GameOverView.xaml</DependentUpon>
