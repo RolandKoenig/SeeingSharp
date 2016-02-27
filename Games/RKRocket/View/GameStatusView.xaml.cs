@@ -1,4 +1,5 @@
 ﻿using RKRocket.ViewModel;
+using SeeingSharp.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -18,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace RKRocket.View
 {
-    public sealed partial class GameStatusView : UserControl
+    public sealed partial class GameStatusView : SeeingSharpUserControl
     {
         public GameStatusView()
         {

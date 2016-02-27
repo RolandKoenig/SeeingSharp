@@ -179,6 +179,8 @@
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />
+    <Compile Include="View\_WinRT\SeeingSharpPage.cs" />
+    <Compile Include="View\_WinRT\SeeingSharpUserControl.cs" />
     <Compile Include="_Math\_Custom\BoundingBox.Custom.cs" />
     <Compile Include="_Math\_Custom\BoundingBox2D.cs" />
     <Compile Include="_Math\_Custom\BoundingSphere.Custom.cs" />
@@ -246,11 +248,9 @@
     <Compile Include="_Translatables.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Behaviors\_WinForms\" />
-    <Folder Include="Behaviors\_WinRT\" />
-    <Folder Include="Behaviors\_Wpf\" />
     <Folder Include="Util\_Mvvm\_Attributes\" />
-    <Folder Include="View\" />
+    <Folder Include="View\_WinForms\" />
+    <Folder Include="View\_Wpf\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">

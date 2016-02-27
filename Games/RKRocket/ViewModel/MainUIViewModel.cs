@@ -61,12 +61,11 @@ namespace RKRocket.ViewModel
             m_currentLevel = 1;
             m_currentHealth = Constants.SIM_ROCKET_MAX_HEALTH;
 
-            // Load current game data
-            m_gameData = SeeingSharpApplication.Current.GetSingleton<GameDataContainer>();
-
             // Create core game object
             if (SeeingSharpApplication.IsInitialized)
             {
+                // Load current game data
+                m_gameData = SeeingSharpApplication.Current.GetSingleton<GameDataContainer>();
                 m_game = SeeingSharpApplication.Current.GetSingleton<GameCore>();
 
                 // Attach to all messages 
@@ -83,6 +82,8 @@ namespace RKRocket.ViewModel
         private void OnCommandNewGame_Execute()
         {
             m_game.Scene.Messenger.BeginPublish<MessageNewGame>();
+
+            this.IsPaneVisible = false;
         }
 
         private void OnCommandSwitchPaneVisibility_Execute()

@@ -1,4 +1,5 @@
 ﻿using RKRocket.ViewModel;
+using SeeingSharp.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,7 +23,7 @@ namespace RKRocket
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class MainPage : SeeingSharpPage
     {
         public MainPage()
         {
@@ -36,6 +37,11 @@ namespace RKRocket
                 await Windows.System.Launcher.LaunchUriAsync(
                     new Uri("https://github.com/RolandKoenig/SeeingSharp"));
             }
+        }
+
+        private void OnMessage_Received(MessageGameOverDialogRequest message)
+        {
+
         }
 
         public MainUIViewModel ViewModel

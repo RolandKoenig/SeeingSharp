@@ -27,45 +27,53 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+using Windows.UI.Xaml.Controls;
 
 namespace SeeingSharp.View
 {
-    public class SeeingSharpForm : Form
+    public class SeeingSharpUserControl : UserControl
     {
         #region Message subscriptions
         private IEnumerable<MessageSubscription> m_msgSubscriptions;
         #endregion
 
-        protected override void OnHandleCreated(EventArgs e)
+        public SeeingSharpUserControl()
         {
+            this.Loaded += OnLoaded;
+            this.Unloaded += OnUnloaded;
+        }
+
+        private void OnUnloaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            if (!SeeingSharpApplication.IsInitialized) { return; }
+
             // Register on all messages for which are methods defined here
-            if(SeeingSharpApplication.IsUIEnvironmentInitialized &&
+            if (SeeingSharpApplication.IsUIEnvironmentInitialized &&
                (m_msgSubscriptions == null))
             {
                 m_msgSubscriptions = SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
             }
-            
-            // Perform default event handling
-            base.OnHandleCreated(e);
         }
 
-        protected override void OnHandleDestroyed(EventArgs e)
+        private void OnLoaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
+            if (!SeeingSharpApplication.IsInitialized) { return; }
+
             // Deregister all messages
-            if(m_msgSubscriptions != null)
+            if (m_msgSubscriptions != null)
             {
                 CommonTools.DisposeObjects(m_msgSubscriptions);
                 m_msgSubscriptions = null;
             }
-
-            // Perform default event handling
-            base.OnHandleDestroyed(e);
         }
 
         public SeeingSharpMessenger Messenger
         {
-            get { return SeeingSharpApplication.Current.UIMessenger; }
+            get
+            {
+                if (!SeeingSharpApplication.IsInitialized) { return null; }
+                return SeeingSharpApplication.Current.UIMessenger;
+            }
         }
     }
 }

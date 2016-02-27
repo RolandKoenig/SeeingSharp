@@ -31,6 +31,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using SeeingSharp.Multimedia.Views;
 using SeeingSharp;
+using SeeingSharp.Infrastructure;
 
 namespace RKRocket.Behaviors
 {
@@ -49,6 +50,8 @@ namespace RKRocket.Behaviors
         /// </summary>
         public ApplyGameSceneBehavior()
         {
+            if (!SeeingSharpApplication.IsInitialized) { return; }
+
             m_panelPainter = new SeeingSharpPanelPainter();
 
             // Configure view

@@ -45,7 +45,7 @@ namespace RKRocket.Util
         /// <summary>
         /// Gets the default encoding for scenarios where 1 character should be mapped on 1 byte fixed.
         /// </summary>
-        public static readonly Encoding ENCODING_DEFAULT_1BYTE = Encoding.GetEncoding("IBM437");
+        public static readonly Encoding ENCODING_DEFAULT_1BYTE = Encoding.ASCII;
         /// <summary>
         /// Gets the default encoding for scenarios where 1 character should be mapped to 2 bytes fixed.
         /// </summary>
