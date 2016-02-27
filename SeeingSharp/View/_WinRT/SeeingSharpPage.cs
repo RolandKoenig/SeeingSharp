@@ -47,11 +47,11 @@ namespace SeeingSharp.View
         {
             if (!SeeingSharpApplication.IsInitialized) { return; }
 
-            // Register on all messages for which are methods defined here
-            if (SeeingSharpApplication.IsUIEnvironmentInitialized &&
-               (m_msgSubscriptions == null))
+            // Deregister all messages
+            if (m_msgSubscriptions != null)
             {
-                m_msgSubscriptions = SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
+                CommonTools.DisposeObjects(m_msgSubscriptions);
+                m_msgSubscriptions = null;
             }
         }
 
@@ -59,11 +59,11 @@ namespace SeeingSharp.View
         {
             if (!SeeingSharpApplication.IsInitialized) { return; }
 
-            // Deregister all messages
-            if (m_msgSubscriptions != null)
+            // Register on all messages for which are methods defined here
+            if (SeeingSharpApplication.IsUIEnvironmentInitialized &&
+               (m_msgSubscriptions == null))
             {
-                CommonTools.DisposeObjects(m_msgSubscriptions);
-                m_msgSubscriptions = null;
+                m_msgSubscriptions = SeeingSharpApplication.Current.UIMessenger.SubscribeAll(this);
             }
         }
 

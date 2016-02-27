@@ -148,7 +148,10 @@
             this.Controls.Add(this.m_txtReachedScore);
             this.Controls.Add(this.m_lblReachedScore);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "GameOverForm";
+            this.ShowInTaskbar = false;
             this.Text = "Gameover!";
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.m_dataSourceError)).EndInit();

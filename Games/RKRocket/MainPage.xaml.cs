@@ -1,4 +1,6 @@
-﻿using RKRocket.ViewModel;
+﻿using RKRocket.Game;
+using RKRocket.View;
+using RKRocket.ViewModel;
 using SeeingSharp.View;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,8 @@ namespace RKRocket
         public MainPage()
         {
             this.InitializeComponent();
+
+            CtrlNavFrame.Navigate(typeof(GameStatusView));
         }
 
         private async void OnCmdShowProjectHomepage_Click(object sender, RoutedEventArgs e)
@@ -41,7 +45,9 @@ namespace RKRocket
 
         private void OnMessage_Received(MessageGameOverDialogRequest message)
         {
-
+            CtrlNavFrame.Navigate(
+                typeof(GameOverView),
+                message.ViewModel);
         }
 
         public MainUIViewModel ViewModel

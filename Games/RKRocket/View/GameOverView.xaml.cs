@@ -1,4 +1,6 @@
-﻿using SeeingSharp.View;
+﻿using RKRocket.Game;
+using RKRocket.ViewModel;
+using SeeingSharp.View;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -21,11 +23,36 @@ namespace RKRocket.View
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class GameOverView : SeeingSharpUserControl
+    public sealed partial class GameOverView : SeeingSharpPage
     {
         public GameOverView()
         {
             this.InitializeComponent();
+
+            this.Loaded += OnLoaded;
+        }
+
+        private void OnLoaded(object sender, RoutedEventArgs e)
+        {
+            TxtName.Focus(FocusState.Keyboard);
+        }
+
+        private void OnMessage_Received(MessageNewGame message)
+        {
+            base.Frame.GoBack();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            this.ViewModel = e.Parameter as GameOverViewModel;
+        }
+
+        public GameOverViewModel ViewModel
+        {
+            get { return base.DataContext as GameOverViewModel; }
+            set { this.DataContext = value; }
         }
     }
 }

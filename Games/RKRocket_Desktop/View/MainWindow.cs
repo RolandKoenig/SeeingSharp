@@ -198,11 +198,13 @@ namespace RKRocket.View
         /// <param name="message">the message to be processed.</param>
         private void OnMessage_Received(MessageGameOverDialogRequest message)
         {
-            GameOverForm dlgGameOver = new GameOverForm();
-            dlgGameOver.ViewModel = message.ViewModel;
-            dlgGameOver.StartPosition = FormStartPosition.CenterParent;
+            using (GameOverForm dlgGameOver = new GameOverForm())
+            {
+                dlgGameOver.ViewModel = message.ViewModel;
+                dlgGameOver.StartPosition = FormStartPosition.CenterParent;
 
-            dlgGameOver.Show(this);
+                dlgGameOver.ShowDialog(this);
+            }
         }
 
         private void OnMessage_Received(MessagePauseStateChanged message)

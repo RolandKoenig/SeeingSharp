@@ -35,6 +35,16 @@ namespace RKRocket.ViewModel
 {
     public class GameOverViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="GameOverViewModel"/> class.
+        /// This constructor contains testdata for UI designer.
+        /// </summary>
+        public GameOverViewModel()
+            : this(GameOverReason.HealthAtZero, 100)
+        {
+
+        }
+
         public GameOverViewModel(GameOverReason reason, int reachedScore)
         {
             this.Reason = reason;

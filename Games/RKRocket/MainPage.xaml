@@ -65,8 +65,10 @@
             </SplitView.Pane>
         </SplitView>
 
-        <locView:GameStatusView VerticalAlignment="Top"
+        <Frame Name="CtrlNavFrame">
+            <locView:GameStatusView VerticalAlignment="Top"
                                 HorizontalAlignment="Stretch"
                                 Height="38"/>
+        </Frame>
     </Grid>
 </seeingsharpview:SeeingSharpPage>

@@ -19,7 +19,7 @@ using Windows.UI.Xaml.Navigation;
 
 namespace RKRocket.View
 {
-    public sealed partial class GameStatusView : SeeingSharpUserControl
+    public sealed partial class GameStatusView : SeeingSharpPage
     {
         public GameStatusView()
         {

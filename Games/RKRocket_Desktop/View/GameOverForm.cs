@@ -40,6 +40,16 @@ namespace RKRocket.View
             InitializeComponent();
         }
 
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+            
+            if(e.CloseReason == CloseReason.UserClosing)
+            {
+                this.ViewModel.CommandCancel.Execute();
+            }
+        }
+
         private void OnCmdCancel_Click(object sender, EventArgs e)
         {
             this.ViewModel.CommandCancel.Execute();
