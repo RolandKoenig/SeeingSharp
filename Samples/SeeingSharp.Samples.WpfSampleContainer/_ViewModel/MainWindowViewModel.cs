@@ -52,6 +52,9 @@ namespace WpfSampleContainer
         /// </summary>
         public MainWindowViewModel()
         {
+            if (!SeeingSharpApplication.IsInitialized) { return; }
+            if (SampleFactory.Current == null) { return; }
+            
             // Initialize main collections
             m_allSamples = new List<SampleViewModel>(
                 SampleFactory.Current.GetSampleInfos()
@@ -87,6 +90,9 @@ namespace WpfSampleContainer
         /// <param name="newCategory">The new category.</param>
         private void Handle_SelectedCategoryChanged(string newCategory)
         {
+            if (!SeeingSharpApplication.IsInitialized) { return; }
+            if (SampleFactory.Current == null) { return; }
+
             m_visibleSamples.Clear();
 
             m_allSamples

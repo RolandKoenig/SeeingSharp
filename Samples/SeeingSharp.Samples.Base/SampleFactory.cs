@@ -47,6 +47,8 @@ namespace SeeingSharp.Samples.Base
         /// </summary>
         private SampleFactory()
         {
+            if (!SeeingSharpApplication.IsInitialized) { return; }
+
             // Create and register viewmodel for performance analyziation
             PerformanceAnalysisViewModel performanceAnalyzisViewModel = new PerformanceAnalysisViewModel();
             SeeingSharpApplication.Current.RegisterSingleton(performanceAnalyzisViewModel);

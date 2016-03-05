@@ -409,6 +409,7 @@
     <SeeingSharp-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl" />
     <SeeingSharp-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessBlur.hlsl" />
     <Content Include="Resources\Icons\Cancel_16x16.png" />
+    <Content Include="Resources\Images\GfxNotInitialized.png" />
     <Content Include="Resources\Shaders\Postprocessing\_structures.hlsl" />
     <Compile Include="Views\SeeingSharpRendererControl.cs">
       <SubType>Component</SubType>

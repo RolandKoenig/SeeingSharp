@@ -111,13 +111,13 @@ namespace SeeingSharp.Multimedia.Views
             this.VerticalAlignment = System.Windows.VerticalAlignment.Stretch;
 
             // Load ummy bitmap
-            using (System.Drawing.Bitmap dummyOrig = Properties.Resources.Empty)
+            using (System.Drawing.Bitmap dummyOrig = Properties.Resources.GfxNotInitialized)
             {
                 m_dummyBitmap = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
                     dummyOrig.GetHbitmap(),
                     IntPtr.Zero,
                     System.Windows.Int32Rect.Empty,
-                    BitmapSizeOptions.FromWidthAndHeight(16, 16));
+                    BitmapSizeOptions.FromWidthAndHeight(500, 500));
             }
             this.Source = m_dummyBitmap;
 
