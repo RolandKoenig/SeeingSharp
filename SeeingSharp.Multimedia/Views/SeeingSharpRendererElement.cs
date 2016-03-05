@@ -121,6 +121,9 @@ namespace SeeingSharp.Multimedia.Views
             }
             this.Source = m_dummyBitmap;
 
+            // Break here if we are in design mode
+            if (this.IsInDesignMode()) { return; }
+
             //Create the RenderLoop object
             GraphicsCore.Touch();
             m_renderLoop = new RenderLoop(
@@ -188,6 +191,9 @@ namespace SeeingSharp.Multimedia.Views
             base.OnRenderSizeChanged(sizeInfo);
 
             if (!GraphicsCore.IsInitialized) { return; }
+
+            // Break here if we are in design mode
+            if (this.IsInDesignMode()) { return; }
 
             // Update render size
             m_renderLoop.Camera.SetScreenSize((int)this.RenderSize.Width, (int)this.RenderSize.Height);
@@ -447,6 +453,7 @@ namespace SeeingSharp.Multimedia.Views
         private void OnSystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
         {
             if (m_renderLoop == null) { return; }
+            if (this.IsInDesignMode()) { return; }
 
             switch (e.Reason)
             {
@@ -471,7 +478,8 @@ namespace SeeingSharp.Multimedia.Views
             base.OnPropertyChanged(e);
 
             if (!GraphicsCore.IsInitialized) { return; }
-           
+            if (this.IsInDesignMode()) { return; }
+
             if (e.Property == SeeingSharpRendererElement.SceneProperty) { m_renderLoop.SetScene(this.Scene); }
             else if (e.Property == SeeingSharpRendererElement.CameraProperty) { m_renderLoop.Camera = this.Camera; }
             else if (e.Property == SeeingSharpRendererElement.DrawingLayer2DProperty)
@@ -487,6 +495,7 @@ namespace SeeingSharp.Multimedia.Views
         private void OnThrottledSizeChanged()
         {
             if (!GraphicsCore.IsInitialized) { return; }
+            if (this.IsInDesignMode()) { return; }
 
             Size pixelSize = this.GetPixelSize(new Size(100.0, 100.0));
 
