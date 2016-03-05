@@ -38,3 +38,9 @@ using System.Runtime.InteropServices;
 
 // Die folgende GUID bestimmt die ID der Typbibliothek, wenn dieses Projekt für COM verfügbar gemacht wird
 [assembly: Guid("65900302-9c80-421d-84fe-96d9dda0c742")]
+
+// Custom namespace mapping for wpf
+#if DESKTOP
+[assembly: System.Windows.Markup.XmlnsDefinition("http://www.rolandk.de/wp/seeingsharp/multimedia", "SeeingSharp.Multimedia.Views")]
+[assembly: System.Windows.Markup.XmlnsPrefix("http://www.rolandk.de/wp/seeingsharp/multimedia", "ssharpMulti:")]
+#endif
