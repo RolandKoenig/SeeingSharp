@@ -146,6 +146,8 @@
     <Compile Include="Core\_Scene\PickingInformation.cs" />
     <Compile Include="Core\_Scene\Scene.cs" />
     <Compile Include="Core\_Scene\Scene.ImportExport.cs" />
+    <Compile Include="Core\_Scene\SceneComponent.cs" />
+    <Compile Include="Core\_Scene\SceneComponentBase.cs" />
     <Compile Include="Core\_Scene\SceneLayer.cs" />
     <Compile Include="Core\_Scene\SceneLogicalObject.cs" />
     <Compile Include="Core\_Scene\SceneManipulator.cs" />
@@ -254,6 +256,7 @@
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImportOptions.cs" />
+    <Compile Include="Objects\_ObjectTypes\CubeType.cs" />
     <Compile Include="PlayingSound\CachedSoundFile.cs" />
     <Compile Include="PlayingSound\SoundManager.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
@@ -320,6 +323,7 @@
     <Compile Include="Util\SdxTK\_Misc.cs" />
     <Compile Include="Views\SeeingSharpPanelPainter.cs" />
     <Compile Include="Views\ISeeingSharpPainter.cs" />
+    <Compile Include="Views\_Components\SimpleCenteredCubeComponent.cs" />
     <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Util\SwapChainPanelWrapper.cs" />
     <Compile Include="Views\_Video\MediaPlayerComponent.cs" />

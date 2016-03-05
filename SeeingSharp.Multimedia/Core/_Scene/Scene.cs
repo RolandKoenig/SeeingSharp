@@ -61,6 +61,7 @@ namespace SeeingSharp.Multimedia.Core
         #endregion Members for 2D rendering
 
         #region Async update actions
+        private ThreadSaveQueue<SceneComponentBase> m_attachingComponents;
         private ThreadSaveQueue<Action> m_asyncInvokesBeforeUpdate;
         private ThreadSaveQueue<Action> m_asyncInvokesUpdateBesideRendering;
         #endregion Async update actions
@@ -101,6 +102,7 @@ namespace SeeingSharp.Multimedia.Core
 
             m_drawing2DLayers = new List<Custom2DDrawingLayer>();
 
+            m_attachingComponents = new ThreadSaveQueue<SceneComponentBase>();
             m_asyncInvokesBeforeUpdate = new ThreadSaveQueue<Action>();
             m_asyncInvokesUpdateBesideRendering = new ThreadSaveQueue<Action>();
 
@@ -213,6 +215,17 @@ namespace SeeingSharp.Multimedia.Core
                 if (!actObject.IsVisible(viewInfo)) { return false; }
             }
             return true;
+        }
+
+        /// <summary>
+        /// Attaches the given component to this scene.
+        /// </summary>
+        /// <param name="component">The component to be attached.</param>
+        public void AttachComponent(SceneComponentBase component)
+        {
+            component.EnsureNotNull(nameof(component));
+
+            m_attachingComponents.Enqueue(component);
         }
 
         /// <summary>
@@ -808,6 +821,20 @@ namespace SeeingSharp.Multimedia.Core
 
             try
             {
+                // Attach all components which are comming in 
+                int attachingComponentsCount = m_attachingComponents.Count;
+                if(attachingComponentsCount > 0)
+                {
+                    SceneComponentBase actComponent = null;
+                    int actIndex = 0;
+                    while((actIndex < attachingComponentsCount) &&
+                          m_attachingComponents.Dequeue(out actComponent))
+                    {
+                        actComponent.AttachInternal(new SceneManipulator(this));
+                        actIndex++;
+                    }
+                }
+
                 // Invoke all async action attached to this scene
                 int asyncActionsBeforeUpdateCount = m_asyncInvokesBeforeUpdate.Count;
                 if (asyncActionsBeforeUpdateCount > 0)

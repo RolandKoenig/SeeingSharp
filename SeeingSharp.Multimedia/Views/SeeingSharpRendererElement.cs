@@ -52,12 +52,14 @@ namespace SeeingSharp.Multimedia.Views
 {
     public partial class SeeingSharpRendererElement : Image, IInputEnabledView, ISeeingSharpPainter
     {
+        #region Dependency properties
         public static readonly DependencyProperty SceneProperty =
             DependencyProperty.Register("Scene", typeof(Scene), typeof(SeeingSharpRendererElement), new PropertyMetadata(new Scene()));
         public static readonly DependencyProperty CameraProperty =
             DependencyProperty.Register("Camera", typeof(Camera3DBase), typeof(SeeingSharpRendererElement), new PropertyMetadata(new PerspectiveCamera3D()));
         public static readonly DependencyProperty DrawingLayer2DProperty =
             DependencyProperty.Register("DrawingLayer2D", typeof(Custom2DDrawingLayer), typeof(SeeingSharpRendererElement), new PropertyMetadata(null));
+        #endregion
 
         private static Duration MAX_IMAGE_LOCK_DURATION = new Duration(TimeSpan.FromMilliseconds(100.0));
 
