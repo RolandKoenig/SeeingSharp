@@ -37,22 +37,7 @@ namespace SeeingSharp.Multimedia.Core
 
         internal abstract void DetachInternal(SceneManipulator manipulator, ViewInformation correspondingView, object componentContext);
 
-        internal void Update(SceneRelatedUpdateState updateState, ViewInformation correspondingView, object componentContext)
-        {
-            this.UpdateInternal(updateState, correspondingView, componentContext);
-        }
-
-        /// <summary>
-        /// This update method gets called on each update pass for each scenes 
-        /// this component is attached to.
-        /// </summary>
-        /// <param name="updateState">Current update state.</param>
-        /// <param name="correspondingView">The view which attached this component (may be null).</param>
-        /// <param name="componentContext">The current context generating during Attach call.</param>
-        protected virtual void UpdateInternal(SceneRelatedUpdateState updateState, ViewInformation correspondingView, object componentContext)
-        {
-
-        }
+        internal abstract UpdateInternal(SceneRelatedUpdateState updateState, ViewInformation correspondingView, object componentContext);
 
         /// <summary>
         /// Is this component specific for one view?

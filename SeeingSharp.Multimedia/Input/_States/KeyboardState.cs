@@ -66,6 +66,8 @@ namespace SeeingSharp.Multimedia.Input
         internal void NotifyFocusLost()
         {
             m_focused = false;
+            m_keysDown.Clear();
+            m_keysHit.Clear();
         }
 
         internal void NotifyFocusGot()
@@ -103,6 +105,16 @@ namespace SeeingSharp.Multimedia.Input
             this.m_keysHit.Clear();
 
             return result;
+        }
+
+        public IEnumerable<WinVirtualKey> KeysDown
+        {
+            get { return m_keysDown; }
+        }
+
+        public IEnumerable<WinVirtualKey> KeysHit
+        {
+            get { return m_keysHit; }
         }
 
         public bool IsConnected

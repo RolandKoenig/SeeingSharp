@@ -50,6 +50,14 @@ namespace SeeingSharp.Multimedia.Core
             this.Detach(manipulator, correspondingView, componentContextCasted);
         }
 
+        internal override void UpdateInternal(SceneRelatedUpdateState updateState, ViewInformation correspondingView, object componentContext)
+        {
+            ContextType componentContextCasted = componentContext as ContextType;
+            componentContextCasted.EnsureNotNull(nameof(componentContext));
+
+            this.Update(updateState, correspondingView, componentContextCasted);
+        }
+
         /// <summary>
         /// Attaches this component to a scene.
         /// Be careful, this method gets called from a background thread of seeing#!
@@ -68,5 +76,17 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="componentContext">A context variable containing all createded objects during call of Attach.</param>
         /// <param name="correspondingView">The view which attached this component.</param>
         protected abstract void Detach(SceneManipulator manipulator, ViewInformation correspondingView, ContextType componentContext);
+
+        /// <summary>
+        /// This update method gets called on each update pass for each scenes 
+        /// this component is attached to.
+        /// </summary>
+        /// <param name="updateState">Current update state.</param>
+        /// <param name="correspondingView">The view which attached this component (may be null).</param>
+        /// <param name="componentContext">The current context generating during Attach call.</param>
+        protected virtual void Update(SceneRelatedUpdateState updateState, ViewInformation correspondingView, ContextType componentContext)
+        {
+
+        }
     }
 }

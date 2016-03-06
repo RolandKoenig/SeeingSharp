@@ -60,6 +60,22 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets all input state for this view.
+        /// </summary>
+        /// <param name="viewInfo">The view for which to get all input states.</param>
+        public IEnumerable<InputStateBase> GetInputStates(ViewInformation viewInfo)
+        {
+            int inputStateCount = m_inputStates.Count;
+            for(int loop=0; loop<inputStateCount; loop++)
+            {
+                if(m_inputStates[loop].RelatedView == viewInfo)
+                {
+                    yield return m_inputStates[loop];
+                }
+            }
+        }
+
+        /// <summary>
         /// Called just before the update pass of a scene object starts.
         /// </summary>
         /// <param name="targetScene">The scene for which to prepare this state object</param>

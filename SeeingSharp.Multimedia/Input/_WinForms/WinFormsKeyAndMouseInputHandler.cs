@@ -49,6 +49,7 @@ namespace SeeingSharp.Multimedia.Input
     {
         private const float MOVEMENT = 0.3f;
         private const float ROTATION = 0.01f;
+
         private static readonly Dictionary<Keys, WinVirtualKey> s_keyMappingDict;
 
         #region References to the view

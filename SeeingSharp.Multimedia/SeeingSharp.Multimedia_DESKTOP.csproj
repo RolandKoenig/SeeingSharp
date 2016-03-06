@@ -399,6 +399,7 @@
     <Compile Include="Util\SdxTK\WICHelper.cs" />
     <Compile Include="Util\SdxTK\_Misc.cs" />
     <Compile Include="Core\_SceneComponents\SceneComponent.cs" />
+    <Compile Include="Views\_Components\FreeMovingCameraComponent.cs" />
     <Compile Include="Views\_Components\SimpleCenteredCubeComponent.cs" />
     <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Video\MediaPlayerComponent.cs">

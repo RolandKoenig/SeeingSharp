@@ -37,6 +37,8 @@
                     <local:ApplySampleBehavior BottomStatusBar="{Binding ElementName=BottomStatusBar}" 
                                                MainContentGrid="{Binding ElementName=MainContentGrid}"/>
                 </blend:Interaction.Behaviors>
+
+                <ssharpMulti:FreeMovingCameraComponent />
             </ssharpMulti:SeeingSharpRendererElement>
 
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch"

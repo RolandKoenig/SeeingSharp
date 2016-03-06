@@ -32,6 +32,29 @@ namespace SeeingSharp
 {
     public static class Vector2Ex
     {
+#if DESKTOP
+        public static Vector2 FromWpfPoint(System.Windows.Point point)
+        {
+            return new Vector2(
+                (float)point.X,
+                (float)point.Y);
+        }
+
+        public static Vector2 FromWpfSize(System.Windows.Size size)
+        {
+            return new Vector2(
+                (float)size.Width,
+                (float)size.Height);
+        }
+
+        public static Vector2 FromWpfVector(System.Windows.Vector vector)
+        {
+            return new Vector2(
+                (float)vector.X,
+                (float)vector.Y);
+        }
+#endif
+
         public static Vector2 FromSize2(Size2 size)
         {
             return new Vector2(size.Width, size.Height);

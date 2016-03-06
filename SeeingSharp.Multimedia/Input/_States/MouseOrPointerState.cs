@@ -157,6 +157,16 @@ namespace SeeingSharp.Multimedia.Input
         internal void NotifyInside(bool isMouseInside)
         {
             m_isInside = isMouseInside;
+
+            if (!m_isInside)
+            {
+                for (int loop = 0; loop < BUTTON_COUNT; loop++)
+                {
+                    m_buttonsDown[loop] = false;
+                    m_buttonsHit[loop] = false;
+                    m_buttonsUp[loop] = false;
+                }
+            }
         }
 
         /// <summary>
