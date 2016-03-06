@@ -30,8 +30,8 @@ namespace SeeingSharp.Multimedia.Core
 {
     public abstract class SceneComponentBase
     {
-        internal abstract object AttachInternal(SceneManipulator manipulator);
+        internal abstract object AttachInternal(SceneManipulator manipulator, ViewInformation correspondingView);
 
-        internal abstract void DetachInternal(SceneManipulator manipulator, object componentContext);
+        internal abstract void DetachInternal(SceneManipulator manipulator, ViewInformation correspondingView, object componentContext);
     }
 }

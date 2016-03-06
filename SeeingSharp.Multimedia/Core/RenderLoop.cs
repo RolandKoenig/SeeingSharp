@@ -25,10 +25,13 @@ using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Collections.Concurrent;
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.DrawingVideo;
+using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Checking;
 using SeeingSharp.Util;
@@ -37,7 +40,6 @@ using SeeingSharp.Util;
 using D3D11 = SharpDX.Direct3D11;
 using DXGI = SharpDX.DXGI;
 using D2D = SharpDX.Direct2D1;
-using SeeingSharp.Multimedia.Input;
 
 #if DESKTOP
 using GDI = System.Drawing;
@@ -53,6 +55,7 @@ namespace SeeingSharp.Multimedia.Core
         #region Configuration values
         private SynchronizationContext m_guiSyncContext;
         private GraphicsViewConfiguration m_viewConfiguration;
+        private ObservableCollection<SceneComponentBase> m_sceneComponents;
         private bool m_discardRendering;
         private bool m_discardPresent;
         private Color4 m_clearColor;
@@ -143,21 +146,27 @@ namespace SeeingSharp.Multimedia.Core
             Action<EngineDevice> actionPrepareRendering,
             Action<EngineDevice> actionAfterRendering,
             Action<EngineDevice> actionPresent,
-            Func<IEnumerable<InputStateBase>> actionQueryInputStates = null)
+            Func<IEnumerable<InputStateBase>> actionQueryInputStates = null,
+            bool isDesignMode = false)
         {
             m_afterPresentActions = new ThreadSaveQueue<Action>();
 
             m_guiSyncContext = guiSyncContext;
+            m_sceneComponents = new ObservableCollection<SceneComponentBase>();
+            m_sceneComponents.CollectionChanged += OnSceneComponents_Changed;
 
             m_filters = new List<SceneObjectFilter>();
             m_2dDrawingLayers = new List<Custom2DDrawingLayer>();
 
             // Load DebugDrawingLayer if debug mode is enabled
-            GraphicsCore.Touch();
-            if (GraphicsCore.IsInitialized &&
-                GraphicsCore.Current.IsDebugEnabled)
+            if (!isDesignMode)
             {
-                m_debugDrawingLayer = new DebugDrawingLayer();
+                GraphicsCore.Touch();
+                if (GraphicsCore.IsInitialized &&
+                    GraphicsCore.Current.IsDebugEnabled)
+                {
+                    m_debugDrawingLayer = new DebugDrawingLayer();
+                }
             }
 
             m_viewInformation = new ViewInformation(this);
@@ -185,6 +194,7 @@ namespace SeeingSharp.Multimedia.Core
             m_targetSize = new Size2(0, 0);
 
             if (!GraphicsCore.IsInitialized) { return; }
+            if (isDesignMode) { return; }
 
             // Apply default rendering device for this RenderLoop
             this.SetRenderingDevice(GraphicsCore.Current.DefaultDevice);
@@ -833,6 +843,11 @@ namespace SeeingSharp.Multimedia.Core
                         {
                             Scene localScene = m_currentScene;
                             continuationActions.Add(() => localScene.DeregisterView(m_viewInformation));
+
+                            foreach (SceneComponentBase actComponent in m_sceneComponents)
+                            {
+                                localScene.DetachComponent(actComponent, m_viewInformation);
+                            }
                         }
 
                         // Change scene property
@@ -844,6 +859,11 @@ namespace SeeingSharp.Multimedia.Core
                         {
                             Scene localScene = m_currentScene;
                             continuationActions.Add(() => localScene.RegisterView(m_viewInformation));
+
+                            foreach (SceneComponentBase actComponent in m_sceneComponents)
+                            {
+                                localScene.AttachComponent(actComponent, m_viewInformation);
+                            }
                         }
                     }
                     catch (Exception ex)
@@ -1138,6 +1158,42 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Called when the collection of SceneComponents has changed.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+        private void OnSceneComponents_Changed(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Scene actScene = m_currentScene;
+            if(actScene == null) { return; }
+
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.NewItems != null)
+                    {
+                        foreach (SceneComponentBase actComponent in e.NewItems)
+                        {
+                            actScene.AttachComponent(actComponent, m_viewInformation);
+                        }
+                    }
+                    if (e.OldItems != null)
+                    {
+                        foreach (SceneComponentBase actComponent in e.OldItems)
+                        {
+                            actScene.DetachComponent(actComponent, m_viewInformation);
+                        }
+                    }
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    break;
+            }
+        }
+
+        /// <summary>
         /// Gets an identifyer related to this render looop.
         /// </summary>
         public ViewInformation ViewInformation
@@ -1163,6 +1219,11 @@ namespace SeeingSharp.Multimedia.Core
                 if (m_targetScene != null) { return m_targetScene; }
                 return m_currentScene;
             }
+        }
+
+        public ObservableCollection<SceneComponentBase> SceneComponents
+        {
+            get { return m_sceneComponents; }
         }
 
         /// <summary>

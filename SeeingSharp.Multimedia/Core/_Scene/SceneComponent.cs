@@ -37,17 +37,17 @@ namespace SeeingSharp.Multimedia.Core
     public abstract class SceneComponent<ContextType> : SceneComponentBase
         where ContextType : class
     {
-        internal override object AttachInternal(SceneManipulator manipulator)
+        internal override object AttachInternal(SceneManipulator manipulator, ViewInformation correspondingView)
         {
-            return this.Attach(manipulator);
+            return this.Attach(manipulator, correspondingView);
         }
 
-        internal override void DetachInternal(SceneManipulator manipulator, object componentContext)
+        internal override void DetachInternal(SceneManipulator manipulator, ViewInformation correspondingView, object componentContext)
         {
             ContextType componentContextCasted = componentContext as ContextType;
             componentContextCasted.EnsureNotNull(nameof(componentContext));
 
-            this.Detach(manipulator, componentContextCasted);
+            this.Detach(manipulator, correspondingView, componentContextCasted);
         }
 
         /// <summary>
@@ -56,7 +56,8 @@ namespace SeeingSharp.Multimedia.Core
         /// It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
         /// </summary>
         /// <param name="manipulator">The manipulator of the scene we attach to.</param>
-        protected abstract ContextType Attach(SceneManipulator manipulator);
+        /// <param name="correspondingView">The view which attached this component.</param>
+        protected abstract ContextType Attach(SceneManipulator manipulator, ViewInformation correspondingView);
 
         /// <summary>
         /// Detaches this component from a scene.
@@ -65,6 +66,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="manipulator">The manipulator of the scene we attach to.</param>
         /// <param name="componentContext">A context variable containing all createded objects during call of Attach.</param>
-        protected abstract void Detach(SceneManipulator manipulator, ContextType componentContext);
+        /// <param name="correspondingView">The view which attached this component.</param>
+        protected abstract void Detach(SceneManipulator manipulator, ViewInformation correspondingView, ContextType componentContext);
     }
 }

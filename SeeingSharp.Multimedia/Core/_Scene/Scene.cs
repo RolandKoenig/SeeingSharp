@@ -61,7 +61,7 @@ namespace SeeingSharp.Multimedia.Core
         #endregion Members for 2D rendering
 
         #region Async update actions
-        private ThreadSaveQueue<SceneComponentBase> m_attachingComponents;
+        private ThreadSaveQueue<SceneComponentInfo> m_attachingComponents;
         private ThreadSaveQueue<Action> m_asyncInvokesBeforeUpdate;
         private ThreadSaveQueue<Action> m_asyncInvokesUpdateBesideRendering;
         #endregion Async update actions
@@ -102,7 +102,7 @@ namespace SeeingSharp.Multimedia.Core
 
             m_drawing2DLayers = new List<Custom2DDrawingLayer>();
 
-            m_attachingComponents = new ThreadSaveQueue<SceneComponentBase>();
+            m_attachingComponents = new ThreadSaveQueue<SceneComponentInfo>();
             m_asyncInvokesBeforeUpdate = new ThreadSaveQueue<Action>();
             m_asyncInvokesUpdateBesideRendering = new ThreadSaveQueue<Action>();
 
@@ -221,18 +221,24 @@ namespace SeeingSharp.Multimedia.Core
         /// Attaches the given component to this scene.
         /// </summary>
         /// <param name="component">The component to be attached.</param>
-        public void AttachComponent(SceneComponentBase component)
+        /// <param name="sourceView">The view which attaches the component.</param>
+        public void AttachComponent(SceneComponentBase component, ViewInformation sourceView)
         {
             component.EnsureNotNull(nameof(component));
 
-            m_attachingComponents.Enqueue(component);
+            m_attachingComponents.Enqueue(new SceneComponentInfo()
+            {
+                Component = component,
+                CorrespondingView = sourceView
+            });
         }
 
         /// <summary>
         /// Detaches the given component from this scene.
         /// </summary>
         /// <param name="component">The component to be detached.</param>
-        public void DetachComponent(SceneComponentBase component)
+        /// <param name="sourceView">The view which attached the component initially.</param>
+        public void DetachComponent(SceneComponentBase component, ViewInformation sourceView)
         {
 
         }
@@ -240,7 +246,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Detaches all currently attached components.
         /// </summary>
-        public void DetachAllComponents()
+        /// <param name="sourceView">The view from which we've to detach all components.</param>
+        public void DetachAllComponents(ViewInformation sourceView)
         {
 
         }
@@ -842,16 +849,19 @@ namespace SeeingSharp.Multimedia.Core
                 int attachingComponentsCount = m_attachingComponents.Count;
                 if(attachingComponentsCount > 0)
                 {
-                    SceneComponentBase actComponent = null;
+                    SceneComponentInfo actComponentInfo = default(SceneComponentInfo);
                     int actIndex = 0;
                     while((actIndex < attachingComponentsCount) &&
-                          m_attachingComponents.Dequeue(out actComponent))
+                          m_attachingComponents.Dequeue(out actComponentInfo))
                     {
+                        if(actComponentInfo.Component == null) { continue; }
+
                         SceneManipulator actManipulator = new SceneManipulator(this);
                         actManipulator.IsValid = true;
                         try
                         {
-                            actComponent.AttachInternal(actManipulator);
+                            actComponentInfo.Context = actComponentInfo.Component.AttachInternal(
+                                actManipulator, actComponentInfo.CorrespondingView);
                             actIndex++;
                         }
                         finally
@@ -1228,6 +1238,16 @@ namespace SeeingSharp.Multimedia.Core
         {
             get;
             private set;
+        }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        private struct SceneComponentInfo
+        {
+            public SceneComponentBase Component;
+            public object Context;
+            public ViewInformation CorrespondingView;
         }
     }
 }
