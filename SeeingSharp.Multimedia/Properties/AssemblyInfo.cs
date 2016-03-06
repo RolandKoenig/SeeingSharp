@@ -42,5 +42,6 @@ using System.Runtime.InteropServices;
 // Custom namespace mapping for wpf
 #if DESKTOP
 [assembly: System.Windows.Markup.XmlnsDefinition("http://www.rolandk.de/wp/seeingsharp/multimedia", "SeeingSharp.Multimedia.Views")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://www.rolandk.de/wp/seeingsharp/multimedia", "SeeingSharp.Multimedia.Components")]
 [assembly: System.Windows.Markup.XmlnsPrefix("http://www.rolandk.de/wp/seeingsharp/multimedia", "ssharpMulti")]
 #endif

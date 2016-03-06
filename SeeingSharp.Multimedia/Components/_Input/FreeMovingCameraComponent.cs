@@ -30,7 +30,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SeeingSharp.Multimedia.Views
+namespace SeeingSharp.Multimedia.Components
 {
     public class FreeMovingCameraComponent 
         : SceneComponent<FreeMovingCameraComponent.PerSceneContext>

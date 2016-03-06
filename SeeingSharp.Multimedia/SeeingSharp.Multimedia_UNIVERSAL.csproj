@@ -55,6 +55,8 @@
     <Compile Include="..\Misc\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Components\_Generic\SimpleCenteredCubeComponent.cs" />
+    <Compile Include="Components\_Input\FreeMovingCameraComponent.cs" />
     <Compile Include="Core\Direct2DOverlayRenderer.cs" />
     <Compile Include="Core\EngineMainLoop.cs" />
     <Compile Include="Core\GenericInputEventArgs.cs" />
@@ -325,7 +327,6 @@
     <Compile Include="Util\SdxTK\_Misc.cs" />
     <Compile Include="Views\SeeingSharpPanelPainter.cs" />
     <Compile Include="Views\ISeeingSharpPainter.cs" />
-    <Compile Include="Views\_Components\SimpleCenteredCubeComponent.cs" />
     <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Util\SwapChainPanelWrapper.cs" />
     <Compile Include="Views\_Video\MediaPlayerComponent.cs" />

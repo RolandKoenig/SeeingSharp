@@ -88,7 +88,7 @@ namespace SeeingSharp.Multimedia.Objects
                     writeFactory, stringToBuild,
                     new DWrite.TextFormat(
                         writeFactory, geometryOptions.FontFamily, fontWeight, fontStyle, geometryOptions.FontSize),
-                    float.MaxValue, float.MaxValue);
+                        float.MaxValue, float.MaxValue, 1f, true);
 
                 //Render the text using the vertex structure text renderer
                 using (VertexStructureTextRenderer textRenderer = new VertexStructureTextRenderer(this, geometryOptions))

@@ -37,7 +37,7 @@ namespace SeeingSharp.Multimedia.Core
 
         internal abstract void DetachInternal(SceneManipulator manipulator, ViewInformation correspondingView, object componentContext);
 
-        internal abstract UpdateInternal(SceneRelatedUpdateState updateState, ViewInformation correspondingView, object componentContext);
+        internal abstract void UpdateInternal(SceneRelatedUpdateState updateState, ViewInformation correspondingView, object componentContext);
 
         /// <summary>
         /// Is this component specific for one view?

@@ -30,7 +30,7 @@ using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
 
-namespace SeeingSharp.Multimedia.Views
+namespace SeeingSharp.Multimedia.Components
 {
     public class SimpleCenteredCubeComponent : SceneComponent<SimpleCenteredCubeComponent.PerSceneContext>
     {
