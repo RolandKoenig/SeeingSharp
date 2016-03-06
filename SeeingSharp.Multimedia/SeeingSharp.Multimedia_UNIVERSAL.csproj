@@ -141,13 +141,15 @@
     <Compile Include="Core\_Resources\IRenderableResource.cs" />
     <Compile Include="Core\_Resources\Resource.cs" />
     <Compile Include="Core\_Resources\ResourceDictionary.cs" />
+    <Compile Include="Core\_SceneComponents\SceneComponent.cs" />
+    <Compile Include="Core\_SceneComponents\SceneComponentBase.cs" />
+    <Compile Include="Core\_SceneComponents\SceneComponentFlyweight.cs" />
+    <Compile Include="Core\_SceneComponents\_Misc.cs" />
     <Compile Include="Core\_SceneFilter\SceneObjectFilter.cs" />
     <Compile Include="Core\_SceneFilter\SceneViewboxObjectFilter.cs" />
     <Compile Include="Core\_Scene\PickingInformation.cs" />
     <Compile Include="Core\_Scene\Scene.cs" />
     <Compile Include="Core\_Scene\Scene.ImportExport.cs" />
-    <Compile Include="Core\_Scene\SceneComponent.cs" />
-    <Compile Include="Core\_Scene\SceneComponentBase.cs" />
     <Compile Include="Core\_Scene\SceneLayer.cs" />
     <Compile Include="Core\_Scene\SceneLogicalObject.cs" />
     <Compile Include="Core\_Scene\SceneManipulator.cs" />

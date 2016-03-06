@@ -53,6 +53,10 @@ namespace SeeingSharp.Multimedia.Core
         private SceneSynchronizationContext m_syncContext;
         #endregion Standard members
 
+        #region Some other logical parts of the scene object
+        private SceneComponentFlyweight m_sceneComponents;
+        #endregion
+
         #region Members for 2D rendering
         private Graphics2DTransformMode m_transformMode2D;
         private Size2F m_virtualScreenSize2D;
@@ -61,7 +65,6 @@ namespace SeeingSharp.Multimedia.Core
         #endregion Members for 2D rendering
 
         #region Async update actions
-        private ThreadSaveQueue<SceneComponentInfo> m_attachingComponents;
         private ThreadSaveQueue<Action> m_asyncInvokesBeforeUpdate;
         private ThreadSaveQueue<Action> m_asyncInvokesUpdateBesideRendering;
         #endregion Async update actions
@@ -102,7 +105,8 @@ namespace SeeingSharp.Multimedia.Core
 
             m_drawing2DLayers = new List<Custom2DDrawingLayer>();
 
-            m_attachingComponents = new ThreadSaveQueue<SceneComponentInfo>();
+            m_sceneComponents = new SceneComponentFlyweight(this);
+
             m_asyncInvokesBeforeUpdate = new ThreadSaveQueue<Action>();
             m_asyncInvokesUpdateBesideRendering = new ThreadSaveQueue<Action>();
 
@@ -222,15 +226,9 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="component">The component to be attached.</param>
         /// <param name="sourceView">The view which attaches the component.</param>
-        public void AttachComponent(SceneComponentBase component, ViewInformation sourceView)
+        public void AttachComponent(SceneComponentBase component, ViewInformation sourceView = null)
         {
-            component.EnsureNotNull(nameof(component));
-
-            m_attachingComponents.Enqueue(new SceneComponentInfo()
-            {
-                Component = component,
-                CorrespondingView = sourceView
-            });
+            m_sceneComponents.AttachComponent(component, sourceView);
         }
 
         /// <summary>
@@ -238,18 +236,18 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="component">The component to be detached.</param>
         /// <param name="sourceView">The view which attached the component initially.</param>
-        public void DetachComponent(SceneComponentBase component, ViewInformation sourceView)
+        public void DetachComponent(SceneComponentBase component, ViewInformation sourceView = null)
         {
-
+            m_sceneComponents.AttachComponent(component, sourceView);
         }
 
         /// <summary>
         /// Detaches all currently attached components.
         /// </summary>
         /// <param name="sourceView">The view from which we've to detach all components.</param>
-        public void DetachAllComponents(ViewInformation sourceView)
+        public void DetachAllComponents(ViewInformation sourceView = null)
         {
-
+            m_sceneComponents.DetachAllComponents(sourceView);
         }
 
         /// <summary>
@@ -845,31 +843,9 @@ namespace SeeingSharp.Multimedia.Core
 
             try
             {
-                // Attach all components which are comming in 
-                int attachingComponentsCount = m_attachingComponents.Count;
-                if(attachingComponentsCount > 0)
-                {
-                    SceneComponentInfo actComponentInfo = default(SceneComponentInfo);
-                    int actIndex = 0;
-                    while((actIndex < attachingComponentsCount) &&
-                          m_attachingComponents.Dequeue(out actComponentInfo))
-                    {
-                        if(actComponentInfo.Component == null) { continue; }
-
-                        SceneManipulator actManipulator = new SceneManipulator(this);
-                        actManipulator.IsValid = true;
-                        try
-                        {
-                            actComponentInfo.Context = actComponentInfo.Component.AttachInternal(
-                                actManipulator, actComponentInfo.CorrespondingView);
-                            actIndex++;
-                        }
-                        finally
-                        {
-                            actManipulator.IsValid = false;
-                        }
-                    }
-                }
+                // Update all scene components first 
+                //  These may trigger some further manipulation actions
+                m_sceneComponents.UpdateSceneComponents(updateState);
 
                 // Invoke all async action attached to this scene
                 int asyncActionsBeforeUpdateCount = m_asyncInvokesBeforeUpdate.Count;
@@ -1149,6 +1125,11 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        public int CountAttachedComponents
+        {
+            get { return m_sceneComponents.CountAttached; }
+        }
+
         /// <summary>
         /// Gets total count of resources.
         /// </summary>
@@ -1238,16 +1219,6 @@ namespace SeeingSharp.Multimedia.Core
         {
             get;
             private set;
-        }
-
-        //*********************************************************************
-        //*********************************************************************
-        //*********************************************************************
-        private struct SceneComponentInfo
-        {
-            public SceneComponentBase Component;
-            public object Context;
-            public ViewInformation CorrespondingView;
         }
     }
 }

@@ -27,11 +27,37 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Core
-{
-    public abstract class SceneComponentBase
+{      
+    /// <summary>
+    /// Helper structure which holds informatin about all currently
+    /// attached components.
+    /// </summary>
+    struct SceneComponentInfo
     {
-        internal abstract object AttachInternal(SceneManipulator manipulator, ViewInformation correspondingView);
+        public SceneComponentBase Component;
+        public object Context;
+        public ViewInformation CorrespondingView;
+    }
 
-        internal abstract void DetachInternal(SceneManipulator manipulator, ViewInformation correspondingView, object componentContext);
+    /// <summary>
+    /// Helper structure which holds information about a request
+    /// for a component (attach, detach) which normaly comes
+    /// from the UI thread
+    /// </summary>
+    struct SceneComponentRequest
+    {
+        public SceneComponentRequestType RequestType;
+        public SceneComponentBase Component;
+        public ViewInformation CorrespondingView;
+    }
+
+    /// <summary>
+    /// The type of a component request.
+    /// </summary>
+    enum SceneComponentRequestType
+    {
+        Attach,
+        Detach,
+        DetachAll
     }
 }
