@@ -31,11 +31,14 @@ using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Reactive.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
@@ -50,6 +53,7 @@ using GDI = System.Drawing;
 
 namespace SeeingSharp.Multimedia.Views
 {
+    [ContentProperty("SceneComponents")]
     public partial class SeeingSharpRendererElement : Image, IInputEnabledView, ISeeingSharpPainter
     {
         #region Dependency properties
@@ -69,6 +73,7 @@ namespace SeeingSharp.Multimedia.Views
         private int m_lastRecreateWidth;
         private int m_lastRecreateHeight;
         private IDisposable m_controlObserver;
+        private ObservableCollection<SceneComponentBase> m_sceneComponents;
         #endregion
 
         #region Members for input handling
@@ -101,6 +106,8 @@ namespace SeeingSharp.Multimedia.Views
         public SeeingSharpRendererElement()
         {
             m_inputHandlers = new List<IInputHandler>();
+            m_sceneComponents = new ObservableCollection<SceneComponentBase>();
+            m_sceneComponents.CollectionChanged += OnSceneComponents_Changed;
 
             this.Loaded += OnLoaded;
             this.Unloaded += OnUnloaded;
@@ -482,12 +489,61 @@ namespace SeeingSharp.Multimedia.Views
             if (!GraphicsCore.IsInitialized) { return; }
             if (this.IsInDesignMode()) { return; }
 
-            if (e.Property == SeeingSharpRendererElement.SceneProperty) { m_renderLoop.SetScene(this.Scene); }
+            if (e.Property == SeeingSharpRendererElement.SceneProperty)
+            {
+                // Detach all components from previous scene
+                if((m_renderLoop.Scene != null) &&
+                   (m_renderLoop.Scene != this.Scene))
+                {
+                    foreach (SceneComponentBase actComponent in this.SceneComponents)
+                    {
+                        this.Scene.DetachComponent(actComponent);
+                    }
+                }
+
+                // Apply new scene
+                m_renderLoop.SetScene(this.Scene);
+
+                // Attach all currently registered components to the scene
+                foreach(SceneComponentBase actComponent in this.SceneComponents)
+                {
+                    this.Scene.AttachComponent(actComponent);
+                }
+            }
             else if (e.Property == SeeingSharpRendererElement.CameraProperty) { m_renderLoop.Camera = this.Camera; }
             else if (e.Property == SeeingSharpRendererElement.DrawingLayer2DProperty)
             {
                 if (e.OldValue != null) { await m_renderLoop.Deregister2DDrawingLayerAsync(e.OldValue as Custom2DDrawingLayer); }
                 if (e.NewValue != null) { await m_renderLoop.Register2DDrawingLayerAsync(e.NewValue as Custom2DDrawingLayer); }
+            }
+        }
+
+        private void OnSceneComponents_Changed(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            Scene actScene = this.Scene;
+            switch (e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                case NotifyCollectionChangedAction.Remove:
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.NewItems != null)
+                    {
+                        foreach (SceneComponentBase actComponent in e.NewItems)
+                        {
+                            actScene.AttachComponent(actComponent);
+                        }
+                    }
+                    if (e.OldItems != null)
+                    {
+                        foreach (SceneComponentBase actComponent in e.OldItems)
+                        {
+                            actScene.DetachComponent(actComponent);
+                        }
+                    }
+                    break;
+
+                case NotifyCollectionChangedAction.Reset:
+                    break;
             }
         }
 
@@ -532,6 +588,14 @@ namespace SeeingSharp.Multimedia.Views
         {
             get { return m_renderLoop.DiscardRendering; }
             set { m_renderLoop.DiscardRendering = value; }
+        }
+
+        /// <summary>
+        /// Gets a collection containing all SceneComponents associated to this view.
+        /// </summary>
+        public ObservableCollection<SceneComponentBase> SceneComponents
+        {
+            get { return m_sceneComponents; }
         }
 
         /// <summary>

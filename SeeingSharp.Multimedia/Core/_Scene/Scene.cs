@@ -229,6 +229,23 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Detaches the given component from this scene.
+        /// </summary>
+        /// <param name="component">The component to be detached.</param>
+        public void DetachComponent(SceneComponentBase component)
+        {
+
+        }
+
+        /// <summary>
+        /// Detaches all currently attached components.
+        /// </summary>
+        public void DetachAllComponents()
+        {
+
+        }
+
+        /// <summary>
         /// Triggers scene manipulation using the given lambda action.
         /// The action gets processed directly before scene update process.
         ///
@@ -830,8 +847,17 @@ namespace SeeingSharp.Multimedia.Core
                     while((actIndex < attachingComponentsCount) &&
                           m_attachingComponents.Dequeue(out actComponent))
                     {
-                        actComponent.AttachInternal(new SceneManipulator(this));
-                        actIndex++;
+                        SceneManipulator actManipulator = new SceneManipulator(this);
+                        actManipulator.IsValid = true;
+                        try
+                        {
+                            actComponent.AttachInternal(actManipulator);
+                            actIndex++;
+                        }
+                        finally
+                        {
+                            actManipulator.IsValid = false;
+                        }
                     }
                 }
 

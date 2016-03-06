@@ -31,11 +31,11 @@ using System.Threading.Tasks;
 namespace SeeingSharp.Multimedia.Core
 {
     /// <summary>
-    /// A base class for components which we can easily attach to a 
-    /// renderer element. They can be attached directly from Xaml code.
+    /// A base class for components which we can easily attach to a scene. 
     /// </summary>
-    public abstract class SceneComponent<T> : SceneComponentBase
-        where T : class
+    /// <typeparam name="ContextType">An object of this type holds all members hold per scene.</typeparam>
+    public abstract class SceneComponent<ContextType> : SceneComponentBase
+        where ContextType : class
     {
         internal override object AttachInternal(SceneManipulator manipulator)
         {
@@ -44,7 +44,7 @@ namespace SeeingSharp.Multimedia.Core
 
         internal override void DetachInternal(SceneManipulator manipulator, object componentContext)
         {
-            T componentContextCasted = componentContext as T;
+            ContextType componentContextCasted = componentContext as ContextType;
             componentContextCasted.EnsureNotNull(nameof(componentContext));
 
             this.Detach(manipulator, componentContextCasted);
@@ -53,16 +53,18 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Attaches this component to a scene.
         /// Be careful, this method gets called from a background thread of seeing#!
+        /// It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
         /// </summary>
         /// <param name="manipulator">The manipulator of the scene we attach to.</param>
-        protected abstract T Attach(SceneManipulator manipulator);
+        protected abstract ContextType Attach(SceneManipulator manipulator);
 
         /// <summary>
         /// Detaches this component from a scene.
         /// Be careful, this method gets called from a background thread of seeing#!
+        /// It may also be called from multiple scenes in parallel.
         /// </summary>
         /// <param name="manipulator">The manipulator of the scene we attach to.</param>
         /// <param name="componentContext">A context variable containing all createded objects during call of Attach.</param>
-        protected abstract void Detach(SceneManipulator manipulator, T componentContext);
+        protected abstract void Detach(SceneManipulator manipulator, ContextType componentContext);
     }
 }
