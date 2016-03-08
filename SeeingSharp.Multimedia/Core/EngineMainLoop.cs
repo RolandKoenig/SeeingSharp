@@ -196,10 +196,10 @@ namespace SeeingSharp.Multimedia.Core
                 renderStopWatch.Start();
 
                 // Starts all generic input handlers
-                List<IInputHandler> genericInputHandlers = GraphicsCore.Current.InputHandlers.GetInputHandler(null, null, null);
+                List<IInputHandler> genericInputHandlers = GraphicsCore.Current.InputHandlers.GetInputHandler(null, null);
                 foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
                 {
-                    actGenericInputHandler.Start(null, null);
+                    actGenericInputHandler.Start(null);
                 }
 
                 List<RenderLoop> renderingRenderLoops = new List<RenderLoop>(16);

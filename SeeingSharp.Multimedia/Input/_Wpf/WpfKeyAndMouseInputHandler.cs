@@ -44,7 +44,6 @@ namespace SeeingSharp.Multimedia.Input
     {
 #region Target objects
         private SeeingSharpRendererElement m_rendererElement;
-        private Camera3DBase m_camera;
 #endregion
 
 #region Helper
@@ -78,40 +77,16 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Gets a list containing all supported camera types.
-        /// </summary>
-        public Type[] GetSupportedCameraTypes()
-        {
-            return new Type[]
-            {
-                typeof(Camera3DBase)
-            };
-        }
-
-        /// <summary>
-        /// Gets an array containing all supported input modes.
-        /// </summary>
-        public SeeingSharpInputMode[] GetSupportedInputModes()
-        {
-            return new[]
-            {
-                SeeingSharpInputMode.FreeCameraMovement
-            };
-        }
-
-        /// <summary>
         /// Starts input handling.
         /// </summary>
         /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        /// <param name="cameraObject">The camera object (e. g. Camera3DBase).</param>
-        public void Start(object viewObject, object cameraObject)
+        public void Start(object viewObject)
         {
             m_rendererElement = viewObject as SeeingSharpRendererElement;
-            m_camera = cameraObject as Camera3DBase;
 
             if(m_rendererElement != null)
             {
-                //Register all events needed for mouse camera dragging
+                // Register all events needed for mouse camera dragging
                 m_rendererElement.MouseWheel += OnRendererElement_MouseWheel;
                 m_rendererElement.MouseDown += OnRendererElement_MouseDown;
                 m_rendererElement.MouseUp += OnRendererElement_MouseUp;
@@ -154,7 +129,6 @@ namespace SeeingSharp.Multimedia.Input
             }
 
             m_rendererElement = null;
-            m_camera = null;
 
             m_stateKeyboard = new KeyboardState();
             m_stateMouseOrPointer = new MouseOrPointerState();

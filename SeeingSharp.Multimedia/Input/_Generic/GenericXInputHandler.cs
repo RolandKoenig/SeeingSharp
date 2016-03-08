@@ -73,29 +73,10 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Gets a list containing all supported camera types.
-        /// Null means that this handler is not bound to a view.
-        /// </summary>
-        public Type[] GetSupportedCameraTypes()
-        {
-            return null;
-        }
-
-        /// <summary>
-        /// Gets an array containing all supported input modes.
-        /// Null means that all modes are supported.
-        /// </summary>
-        public SeeingSharpInputMode[] GetSupportedInputModes()
-        {
-            return null;
-        }
-
-        /// <summary>
         /// Starts input handling.
         /// </summary>
         /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        /// <param name="cameraObject">The camera object (e. g. PerspectiveCamera3D).</param>
-        public void Start(object viewObject, object cameraObject)
+        public void Start(object viewObject)
         {
 
         }

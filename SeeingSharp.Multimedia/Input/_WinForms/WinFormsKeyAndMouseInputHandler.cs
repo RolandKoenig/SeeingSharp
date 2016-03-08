@@ -55,7 +55,6 @@ namespace SeeingSharp.Multimedia.Input
         #region References to the view
         private Control m_currentControl;
         private RenderLoop m_renderLoop;
-        private Camera3DBase m_camera;
         private IInputEnabledView m_focusHandler;
         #endregion References to the view
 
@@ -125,30 +124,10 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Gets a list containing all supported camera types.
-        /// </summary>
-        public Type[] GetSupportedCameraTypes()
-        {
-            return new Type[] { typeof(Camera3DBase) };
-        }
-
-        /// <summary>
-        /// Gets an array containing all supported input modes.
-        /// </summary>
-        public SeeingSharpInputMode[] GetSupportedInputModes()
-        {
-            return new[]
-            {
-                SeeingSharpInputMode.FreeCameraMovement
-            };
-        }
-
-        /// <summary>
         /// Starts input handling.
         /// </summary>
         /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        /// <param name="cameraObject">The camera object (e. g. Camera3DBase).</param>
-        public void Start(object viewObject, object cameraObject)
+        public void Start(object viewObject)
         {
              m_currentControl = viewObject as Control;
             if (m_currentControl == null) { throw new ArgumentException("Unable to handle given view object!"); }
@@ -158,9 +137,6 @@ namespace SeeingSharp.Multimedia.Input
 
             m_renderLoop = m_focusHandler.RenderLoop;
             if (m_renderLoop == null) { throw new ArgumentException("Unable to handle given view object!"); }
-
-            m_camera = cameraObject as Camera3DBase;
-            if (m_camera == null) { throw new ArgumentException("Unable to handle given camera object!"); }
 
             m_currentControl.MouseEnter += OnMouseEnter;
             m_currentControl.MouseClick += OnMouseClick;
