@@ -20,7 +20,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
@@ -36,17 +35,17 @@ using System.Threading.Tasks;
 
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(
-    targetType: typeof(SeeingSharp.Samples.Base.BasicSamples.SkyboxRenderingSample),
+    targetType: typeof(SeeingSharp.Samples.Base.BasicSamples.SkyboxSample),
     contractType: typeof(SeeingSharp.Samples.Base.SampleBase))]
 
 namespace SeeingSharp.Samples.Base.BasicSamples
 {
     [SampleInfo(
-        Constants.SAMPLEGROUP_BASIC, "SkyboxRendering",
+        Constants.SAMPLEGROUP_BASIC, "Skybox",
         Constants.SAMPLE_BASICS_SKYBOX_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/SkyboxRenderingSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/SkyboxSample.cs",
         SampleTargetPlatform.All)]
-    public class SkyboxRenderingSample : SampleBase
+    public class SkyboxSample : SampleBase
     {
         /// <summary>
         /// Called when the sample has to startup.

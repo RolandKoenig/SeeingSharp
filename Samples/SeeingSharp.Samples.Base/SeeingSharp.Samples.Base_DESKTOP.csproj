@@ -62,7 +62,7 @@
     <Compile Include="_Samples\BasicSamples\TexturedPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\RotatingPalletSample.cs" />
     <Compile Include="_Samples\BasicSamples\SingleModelSample.cs" />
-    <Compile Include="_Samples\BasicSamples\SkyboxRenderingSample.cs" />
+    <Compile Include="_Samples\BasicSamples\SkyboxSample.cs" />
     <Compile Include="_Samples\BasicSamples\TransparentPalletsSample.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleFactory.cs" />
@@ -167,7 +167,7 @@
     <Resource Include="Assets\SampleImages\Basics_Pallets.png" />
     <Resource Include="Assets\SampleImages\Basics_RotatingPallet.png" />
     <Resource Include="Assets\SampleImages\Basics_SingleModel.png" />
-    <Resource Include="Assets\SampleImages\Basics_SkyboxRendering.png" />
+    <Resource Include="Assets\SampleImages\Basics_Skybox.png" />
     <Resource Include="Assets\SampleImages\Basics_TransparentPallets.png" />
   </ItemGroup>
   <ItemGroup>
