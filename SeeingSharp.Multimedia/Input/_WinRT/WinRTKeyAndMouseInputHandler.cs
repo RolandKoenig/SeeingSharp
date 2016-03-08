@@ -71,9 +71,7 @@ namespace SeeingSharp.Multimedia.Input
         #endregion
 
         #region state variables for camera movement
-        private bool m_isDragging;
         private PointerPoint m_lastDragPoint;
-        private List<VirtualKey> m_pressedKeys;
         #endregion
 
         /// <summary>
@@ -95,8 +93,6 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public WinRTKeyAndMouseInputHandler()
         {
-            m_pressedKeys = new List<VirtualKey>();
-
             m_stateMouseOrPointer = new MouseOrPointerState();
             m_stateKeyboard = new KeyboardState();
         }
@@ -157,8 +153,6 @@ namespace SeeingSharp.Multimedia.Input
             m_painter.TargetPanel.PointerPressed += OnTargetPanel_PointerPressed;
             m_painter.TargetPanel.PointerReleased += OnTargetPanel_PointerReleased;
             m_painter.TargetPanel.PointerMoved += OnTargetPanel_PointerMoved;
-            m_painter.TargetPanel.KeyUp += OnTargetPanel_KeyUp;
-            m_painter.TargetPanel.KeyDown += OnTargetPanel_KeyDown;
 
             // Create the dummy button for focus management
             //  see posts on: https://social.msdn.microsoft.com/Forums/en-US/54e4820d-d782-45d9-a2b1-4e3a13340788/set-focus-on-swapchainpanel-control?forum=winappswithcsharp
@@ -207,8 +201,6 @@ namespace SeeingSharp.Multimedia.Input
             m_painter.TargetPanel.PointerPressed -= OnTargetPanel_PointerPressed;
             m_painter.TargetPanel.PointerReleased -= OnTargetPanel_PointerReleased;
             m_painter.TargetPanel.PointerMoved -= OnTargetPanel_PointerMoved;
-            m_painter.TargetPanel.KeyUp -= OnTargetPanel_KeyUp;
-            m_painter.TargetPanel.KeyDown -= OnTargetPanel_KeyDown;
 
             // Deregister events from CoreWindow
             m_coreWindow.KeyDown -= OnCoreWindow_KeyDown;
@@ -220,63 +212,6 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public void UpdateMovement()
         {
-            if(m_viewInterface.InputMode != SeeingSharpInputMode.FreeCameraMovement) { return; }
-
-            // Define multiplyer
-            float multiplyer = 1f;
-
-            // Perform moving bassed on keyboard
-            foreach (VirtualKey actKey in m_pressedKeys)
-            {
-                switch (actKey)
-                {
-                    case VirtualKey.Up:
-                    case VirtualKey.W:
-                        m_camera.Zoom(MOVEMENT * multiplyer);
-                        break;
-
-                    case VirtualKey.Down:
-                    case VirtualKey.S:
-                        m_camera.Zoom(-MOVEMENT * multiplyer);
-                        break;
-
-                    case VirtualKey.Left:
-                    case VirtualKey.A:
-                        m_camera.Strave(-MOVEMENT * multiplyer);
-                        break;
-
-                    case VirtualKey.Right:
-                    case VirtualKey.D:
-                        m_camera.Strave(MOVEMENT * multiplyer);
-                        break;
-
-                    case VirtualKey.Q:
-                    case VirtualKey.NumberPad3:
-                        m_camera.Move(new Vector3(0f, -MOVEMENT * multiplyer, 0f));
-                        break;
-
-                    case VirtualKey.E:
-                    case VirtualKey.NumberPad9:
-                        m_camera.Move(new Vector3(0f, MOVEMENT * multiplyer, 0f));
-                        break;
-
-                    case VirtualKey.NumberPad4:
-                        m_camera.Rotate(ROTATION, 0f);
-                        break;
-
-                    case VirtualKey.NumberPad2:
-                        m_camera.Rotate(0f, -ROTATION);
-                        break;
-
-                    case VirtualKey.NumberPad6:
-                        m_camera.Rotate(-ROTATION, 0f);
-                        break;
-
-                    case VirtualKey.NumberPad8:
-                        m_camera.Rotate(0f, ROTATION);
-                        break;
-                }
-            }
         }
 
         /// <summary>
@@ -286,34 +221,6 @@ namespace SeeingSharp.Multimedia.Input
         {
             yield return m_stateMouseOrPointer;
             yield return m_stateKeyboard;
-        }
-
-        /// <summary>
-        /// Starts camera dragging.
-        /// </summary>
-        /// <param name="currentPoint"></param>
-        private void StartCameraDragging(PointerPoint currentPoint)
-        {
-            m_isDragging = true;
-            m_lastDragPoint = currentPoint;
-        }
-
-        /// <summary>
-        /// Stops camera dragging.
-        /// </summary>
-        private void StopCameraDragging()
-        {
-            m_isDragging = false;
-        }
-
-        private void OnTargetPanel_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (!m_pressedKeys.Contains(e.Key)) { m_pressedKeys.Add(e.Key); }
-        }
-
-        private void OnTargetPanel_KeyUp(object sender, KeyRoutedEventArgs e)
-        {
-            while (m_pressedKeys.Remove(e.Key)) { }
         }
 
         private void OnDummyButtonForFocus_KeyUp(object sender, KeyRoutedEventArgs e)
@@ -330,7 +237,6 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnDummyButtonForFocus_LostFocus(object sender, RoutedEventArgs e)
         {
-            m_pressedKeys.Clear();
             m_stateKeyboard.NotifyFocusLost();
 
             m_hasFocus = false;
@@ -373,8 +279,6 @@ namespace SeeingSharp.Multimedia.Input
                     pointProperties.IsXButton2Pressed);
             }
 
-            StopCameraDragging();
-
             // Needed here because we loose focus again by default on left mouse button
             e.Handled = true;
         }
@@ -399,8 +303,7 @@ namespace SeeingSharp.Multimedia.Input
                     pointProperties.IsXButton1Pressed,
                     pointProperties.IsXButton2Pressed);
             }
-
-            StartCameraDragging(e.GetCurrentPoint(m_painter.TargetPanel));
+            m_lastDragPoint = currentPoint;
 
             // Needed here because we loose focus again by default on left mouse button
             e.Handled = true;
@@ -435,33 +338,6 @@ namespace SeeingSharp.Multimedia.Input
 
             // Store last drag point
             m_lastDragPoint = currentPoint;
-
-            Camera3DBase camera = m_renderLoop.Camera;
-            if ((camera != null) &&
-                (m_isDragging))
-            {
-                // Set focus on target
-                if (m_dummyButtonForFocus != null)
-                {
-                    m_dummyButtonForFocus.Focus(FocusState.Programmatic);
-                }
-
-                // Move camera if we are in FreeCameraMovement input mode
-                if (m_viewInterface.InputMode == SeeingSharpInputMode.FreeCameraMovement)
-                {
-                    if (pointProperties.IsLeftButtonPressed)
-                    {
-                        camera.Strave((float)((double)moveDistance.X / 50));
-                        camera.UpDown((float)(-(double)moveDistance.Y / 50));
-                    }
-                    else if (pointProperties.IsRightButtonPressed)
-                    {
-                        camera.Rotate(
-                             (float)(-(double)moveDistance.X / 300),
-                             (float)(-(double)moveDistance.Y / 300));
-                    }
-                }
-            }
         }
 
         private void OnTargetPanel_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
@@ -482,16 +358,6 @@ namespace SeeingSharp.Multimedia.Input
                     pointProperties.IsXButton2Pressed);
                 m_stateMouseOrPointer.NotifyMouseWheel(wheelDelta);
             }
-
-            // Handle input modes
-            if (m_viewInterface.InputMode == SeeingSharpInputMode.FreeCameraMovement)
-            {
-                Camera3DBase camera = m_renderLoop.Camera;
-                if (camera != null)
-                {
-                    camera.Zoom((float)(wheelDelta / 100.0));
-                }
-            }
         }
 
         /// <summary>
@@ -499,17 +365,11 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         private void OnTargetPanel_PointerExited(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            StopCameraDragging();
-
             m_stateMouseOrPointer.NotifyInside(false);
-
-            System.Diagnostics.Debug.WriteLine("Mouse exited");
         }
 
         private void OnTargetPanel_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Mouse entered");
-
             m_stateMouseOrPointer.NotifyInside(true);
         }
     }

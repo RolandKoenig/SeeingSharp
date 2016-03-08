@@ -21,6 +21,7 @@
 */
 #endregion
 using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Components;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Views;
 using SeeingSharp.Samples.Base;
@@ -58,6 +59,8 @@ namespace UniversalWindowsSampleContainer
         {
             m_painter = new SeeingSharpPanelPainter();
             m_painter.Camera = new PerspectiveCamera3D();
+            m_painter.RenderLoop.SceneComponents.Add(
+                new FreeMovingCameraComponent());
         }
 
         /// <summary>

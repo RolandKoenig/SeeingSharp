@@ -67,8 +67,6 @@ namespace SeeingSharp.Multimedia.Input
         #region Some helper variables
         private GDI.Point m_lastMousePoint;
         private bool m_isMouseInside;
-        private bool m_controlDown;
-        private List<Keys> m_pressedKeys;
         #endregion Some helper variables
 
         /// <summary>
@@ -104,7 +102,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public WinFormsKeyAndMouseInputHandler()
         {
-            m_pressedKeys = new List<Keys>();
+            //m_pressedKeys = new List<Keys>();
 
             m_stateMouseOrPointer = new MouseOrPointerState();
             m_stateKeyboard = new KeyboardState();
@@ -115,69 +113,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public void UpdateMovement()
         {
-            if (!m_currentControl.Focused)
-            {
-                m_pressedKeys.Clear();
-                m_controlDown = false;
-                return;
-            }
 
-            // Define multiplyer
-            float multiplyer = 1f;
-            if (m_controlDown) { multiplyer = 2f; }
-
-            // Perform moving bassed on keyboard
-            foreach (Keys actKey in m_pressedKeys)
-            {
-                switch (actKey)
-                {
-                    case Keys.Up:
-                    case Keys.W:
-                        m_camera.Zoom(MOVEMENT * multiplyer);
-                        break;
-
-                    case Keys.Down:
-                    case Keys.S:
-                        m_camera.Zoom(-MOVEMENT * multiplyer);
-                        break;
-
-                    case Keys.Left:
-                    case Keys.A:
-                        m_camera.Strave(-MOVEMENT * multiplyer);
-                        break;
-
-                    case Keys.Right:
-                    case Keys.D:
-                        m_camera.Strave(MOVEMENT * multiplyer);
-                        break;
-
-                    case Keys.Q:
-                    case Keys.NumPad3:
-                        m_camera.Move(new Vector3(0f, -MOVEMENT * multiplyer, 0f));
-                        break;
-
-                    case Keys.E:
-                    case Keys.NumPad9:
-                        m_camera.Move(new Vector3(0f, MOVEMENT * multiplyer, 0f));
-                        break;
-
-                    case Keys.NumPad4:
-                        m_camera.Rotate(ROTATION, 0f);
-                        break;
-
-                    case Keys.NumPad2:
-                        m_camera.Rotate(0f, -ROTATION);
-                        break;
-
-                    case Keys.NumPad6:
-                        m_camera.Rotate(-ROTATION, 0f);
-                        break;
-
-                    case Keys.NumPad8:
-                        m_camera.Rotate(0f, ROTATION);
-                        break;
-                }
-            }
         }
 
         /// <summary>
@@ -237,8 +173,6 @@ namespace SeeingSharp.Multimedia.Input
             m_currentControl.KeyDown += OnKeyDown;
             m_currentControl.LostFocus += OnLostFocus;
             m_currentControl.GotFocus += OnGotFocus;
-
-            m_controlDown = false;
         }
 
         /// <summary>
@@ -292,8 +226,6 @@ namespace SeeingSharp.Multimedia.Input
         private void OnMouseClick(object sender, MouseEventArgs e)
         {
             m_currentControl.Focus();
-
-
         }
 
         private void OnMouseDown(object sender, MouseEventArgs e)
@@ -355,7 +287,6 @@ namespace SeeingSharp.Multimedia.Input
         {
             m_lastMousePoint = System.Drawing.Point.Empty;
             m_isMouseInside = false;
-            m_controlDown = false;
 
             m_stateMouseOrPointer.NotifyInside(false);
         }
@@ -369,23 +300,6 @@ namespace SeeingSharp.Multimedia.Input
             {
                 Point moving = new Point(e.X - m_lastMousePoint.X, e.Y - m_lastMousePoint.Y);
                 m_lastMousePoint = e.Location;
-
-                // Perform moving based on mouse
-                switch (e.Button)
-                {
-                    case MouseButtons.Right:
-                        m_camera.Rotate(-moving.X / 200f, -moving.Y / 200f);
-                        break;
-
-                    case MouseButtons.Left:
-                        m_camera.Strave(moving.X / 50f);
-                        m_camera.UpDown(-moving.Y / 50f);
-                        break;
-
-                    case (MouseButtons.Right | MouseButtons.Left):
-                        m_camera.Zoom(moving.Y / -50f);
-                        break;
-                }
 
                 m_stateMouseOrPointer.NotifyMouseLocation(
                     new Vector2((float)e.X, (float)e.Y),
@@ -401,11 +315,6 @@ namespace SeeingSharp.Multimedia.Input
         {
             if (m_isMouseInside)
             {
-                float multiplyer = 1f;
-                if (m_controlDown) { multiplyer = 2f; }
-
-                m_camera.Zoom((e.Delta / 100f) * multiplyer);
-
                 m_stateMouseOrPointer.NotifyMouseWheel(e.Delta);
             }
         }
@@ -415,9 +324,6 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         private void OnKeyUp(object sender, KeyEventArgs e)
         {
-            // Remove the pressed key from the collection
-            while (m_pressedKeys.Contains(e.KeyCode)) { m_pressedKeys.Remove(e.KeyCode); }
-
             // Notify event to keyboard state
             WinVirtualKey actKeyCode = s_keyMappingDict[e.KeyCode];
             if (actKeyCode != WinVirtualKey.None)
@@ -431,11 +337,6 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         private void OnKeyDown(object sender, KeyEventArgs e)
         {
-            // Handle key input
-            if (!m_pressedKeys.Contains(e.KeyCode)) { m_pressedKeys.Add(e.KeyCode); }
-
-            m_controlDown = e.Control;
-
             // Notify event to keyboard state
             WinVirtualKey actKeyCode = s_keyMappingDict[e.KeyCode];
             if (actKeyCode != WinVirtualKey.None)
@@ -449,10 +350,6 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         private void OnLostFocus(object sender, EventArgs e)
         {
-            // Clear all button states
-            m_pressedKeys.Clear();
-            m_controlDown = false;
-
             m_stateKeyboard.NotifyFocusLost();
         }
 
@@ -462,5 +359,4 @@ namespace SeeingSharp.Multimedia.Input
         }
     }
 }
-
 #endif

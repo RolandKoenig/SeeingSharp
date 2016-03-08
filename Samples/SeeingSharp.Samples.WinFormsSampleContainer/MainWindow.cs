@@ -40,6 +40,7 @@ using SeeingSharp.Infrastructure;
 using WinFormsSampleContainer.Views;
 using System.IO;
 using System.Diagnostics;
+using SeeingSharp.Multimedia.Components;
 
 namespace WinFormsSampleContainer
 {
@@ -183,6 +184,10 @@ namespace WinFormsSampleContainer
             base.OnLoad(e);
 
             if (this.DesignMode) { return; }
+
+            // Apply components
+            m_ctrlRenderer.RenderLoop.SceneComponents.Add(
+                new FreeMovingCameraComponent());
 
             // Just a dummy call to trigger initialization
             Assembly test = System.Windows.Application.ResourceAssembly;
