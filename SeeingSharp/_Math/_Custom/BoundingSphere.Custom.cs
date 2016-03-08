@@ -32,5 +32,14 @@ namespace SeeingSharp
     public partial struct BoundingSphere
     {
         public static BoundingSphere Empty = new BoundingSphere();
+
+        public void Transform(Matrix4x4 matrix)
+        {
+            Vector3 center = this.Center;
+            Vector3 otherPoint = center + new Vector3(this.Radius, 0f, 0f);
+
+            this.Center = Vector3.Transform(center, matrix);
+            this.Radius = (Vector3.Transform(otherPoint, matrix) - this.Center).Length();
+        }
     }
 }

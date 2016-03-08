@@ -104,27 +104,13 @@ namespace SeeingSharp.Multimedia.Objects
                 // Get BoundingBox object
                 BoundingBox boundingBox = geometryResource.BoundingBox;
 
-                // Calculate center and radius
-                Vector3 boxCenter = boundingBox.GetMiddleCenter();
-                float radius = (boundingBox.CornerA - boxCenter).Length();
-                switch(base.TransformationType)
-                {
-                    case SpacialTransformationType.ScalingTranslation:
-                    case SpacialTransformationType.ScalingTranslationEulerAngles:
-                    case SpacialTransformationType.ScalingTranslationQuaternion:
-                        boxCenter = boxCenter + base.Position;
-                        radius = radius * base.MaxScaleFactor;
-                        break;
+                // Calculate bounding sphare
+                BoundingSphere result;
+                BoundingSphere.FromBox(ref boundingBox, out result);
 
-                    case SpacialTransformationType.Translation:
-                    case SpacialTransformationType.TranslationEulerAngles:
-                    case SpacialTransformationType.TranslationQuaternion:
-                        boxCenter = boxCenter + base.Position;
-                        break;
-                }
+                result.Transform(this.Transform);
 
-                // Generate the sphere
-                return new BoundingSphere(boxCenter, radius);
+                return result;
             }
             else
             {

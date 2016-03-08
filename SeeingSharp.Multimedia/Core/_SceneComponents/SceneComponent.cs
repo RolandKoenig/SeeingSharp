@@ -33,6 +33,57 @@ namespace SeeingSharp.Multimedia.Core
     /// <summary>
     /// A base class for components which we can easily attach to a scene. 
     /// </summary>
+    public abstract class SceneComponent : SceneComponentBase
+    {
+        internal override object AttachInternal(SceneManipulator manipulator, ViewInformation correspondingView)
+        {
+            this.Attach(manipulator, correspondingView);
+            return null;
+        }
+
+        internal override void DetachInternal(SceneManipulator manipulator, ViewInformation correspondingView, object componentContext)
+        {
+            this.Detach(manipulator, correspondingView);
+        }
+
+        internal override void UpdateInternal(SceneRelatedUpdateState updateState, ViewInformation correspondingView, object componentContext)
+        {
+            this.Update(updateState, correspondingView);
+        }
+
+        /// <summary>
+        /// Attaches this component to a scene.
+        /// Be careful, this method gets called from a background thread of seeing#!
+        /// It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
+        /// </summary>
+        /// <param name="manipulator">The manipulator of the scene we attach to.</param>
+        /// <param name="correspondingView">The view which attached this component.</param>
+        protected abstract void Attach(SceneManipulator manipulator, ViewInformation correspondingView);
+
+        /// <summary>
+        /// Detaches this component from a scene.
+        /// Be careful, this method gets called from a background thread of seeing#!
+        /// It may also be called from multiple scenes in parallel.
+        /// </summary>
+        /// <param name="manipulator">The manipulator of the scene we attach to.</param>
+        /// <param name="correspondingView">The view which attached this component.</param>
+        protected abstract void Detach(SceneManipulator manipulator, ViewInformation correspondingView);
+
+        /// <summary>
+        /// This update method gets called on each update pass for each scenes 
+        /// this component is attached to.
+        /// </summary>
+        /// <param name="updateState">Current update state.</param>
+        /// <param name="correspondingView">The view which attached this component (may be null).</param>
+        protected virtual void Update(SceneRelatedUpdateState updateState, ViewInformation correspondingView)
+        {
+
+        }
+    }
+
+    /// <summary>
+    /// A base class for components which we can easily attach to a scene. 
+    /// </summary>
     /// <typeparam name="ContextType">An object of this type holds all members hold per scene.</typeparam>
     public abstract class SceneComponent<ContextType> : SceneComponentBase
         where ContextType : class

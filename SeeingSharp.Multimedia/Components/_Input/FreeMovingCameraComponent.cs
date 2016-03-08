@@ -32,8 +32,7 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Components
 {
-    public class FreeMovingCameraComponent 
-        : SceneComponent<FreeMovingCameraComponent.PerSceneContext>
+    public class FreeMovingCameraComponent : SceneComponent
     {
         #region Constants
         private const float MOVEMENT = 0.3f;
@@ -47,11 +46,9 @@ namespace SeeingSharp.Multimedia.Components
         /// </summary>
         /// <param name="manipulator">The manipulator of the scene we attach to.</param>
         /// <param name="correspondingView">The view which attached this component.</param>
-        protected override PerSceneContext Attach(SceneManipulator manipulator, ViewInformation correspondingView)
+        protected override void Attach(SceneManipulator manipulator, ViewInformation correspondingView)
         {
-            PerSceneContext context = new PerSceneContext();
 
-            return context;
         }
 
         /// <summary>
@@ -61,10 +58,9 @@ namespace SeeingSharp.Multimedia.Components
         /// </summary>
         /// <param name="manipulator">The manipulator of the scene we attach to.</param>
         /// <param name="correspondingView">The view which attached this component.</param>
-        /// <param name="componentContext">A context variable containing all createded objects during call of Attach.</param>
-        protected override void Detach(SceneManipulator manipulator, ViewInformation correspondingView, PerSceneContext componentContext)
+        protected override void Detach(SceneManipulator manipulator, ViewInformation correspondingView)
         {
-            
+            // nothing to be detached here
         }
 
         /// <summary>
@@ -73,8 +69,7 @@ namespace SeeingSharp.Multimedia.Components
         /// </summary>
         /// <param name="updateState">Current update state.</param>
         /// <param name="correspondingView">The view which attached this component (may be null).</param>
-        /// <param name="componentContext">The current context generating during Attach call.</param>
-        protected override void Update(SceneRelatedUpdateState updateState, ViewInformation correspondingView, PerSceneContext componentContext)
+        protected override void Update(SceneRelatedUpdateState updateState, ViewInformation correspondingView)
         {
             Camera3DBase actCamera = correspondingView.Camera;
             if(actCamera == null) { return; }
@@ -207,17 +202,6 @@ namespace SeeingSharp.Multimedia.Components
         public override bool IsViewSpecific
         {
             get { return true; }
-        }
-
-        //*********************************************************************
-        //*********************************************************************
-        //*********************************************************************        
-        /// <summary>
-        /// All members for this component which are stored per scene.
-        /// </summary>
-        public class PerSceneContext
-        {
-            
         }
     }
 }
