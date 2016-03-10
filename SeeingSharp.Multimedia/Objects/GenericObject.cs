@@ -110,11 +110,6 @@ namespace SeeingSharp.Multimedia.Objects
 
                 result.Transform(this.Transform);
 
-                if(this.Tag1 as string == "Blub")
-                {
-                    Console.WriteLine(result.ToString());
-                }
-
                 return result;
             }
             else

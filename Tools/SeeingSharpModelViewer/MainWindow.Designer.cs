@@ -73,7 +73,6 @@
             // 
             this.m_panGraphics.DiscardRendering = true;
             this.m_panGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_panGraphics.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_panGraphics.Location = new System.Drawing.Point(0, 27);
             this.m_panGraphics.Name = "m_panGraphics";
             this.m_panGraphics.Size = new System.Drawing.Size(712, 383);

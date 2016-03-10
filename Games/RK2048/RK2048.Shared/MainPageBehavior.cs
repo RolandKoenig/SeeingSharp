@@ -47,7 +47,6 @@ namespace RK2048
         public MainPageBehavior()
         {
             m_painter = new SeeingSharpPanelPainter();
-            m_painter.InputMode = SeeingSharpInputMode.NoInput;
         }
 
         public void Attach(DependencyObject associatedObject)

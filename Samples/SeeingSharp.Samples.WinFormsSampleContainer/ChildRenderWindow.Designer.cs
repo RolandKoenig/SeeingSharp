@@ -39,7 +39,6 @@
             // 
             this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_ctrlRenderer.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 27);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
             this.m_ctrlRenderer.Size = new System.Drawing.Size(506, 365);

@@ -220,7 +220,6 @@
             // 
             this.m_renderPanel.DiscardRendering = true;
             this.m_renderPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_renderPanel.InputMode = SeeingSharp.Multimedia.Input.SeeingSharpInputMode.FreeCameraMovement;
             this.m_renderPanel.Location = new System.Drawing.Point(0, 76);
             this.m_renderPanel.Margin = new System.Windows.Forms.Padding(0);
             this.m_renderPanel.Name = "m_renderPanel";
