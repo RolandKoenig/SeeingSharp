@@ -236,7 +236,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Removes the given object from the list of children.
         /// </summary>
         /// <param name="childToRemove">The object which is to be removed from the list of children.</param>
-        public virtual void RemoveDependency(SceneObject childToRemove)
+        public virtual void RemoveChild(SceneObject childToRemove)
         {
             if (childToRemove.Scene != this.Scene) { throw new ArgumentException("Child musst have the same scene!"); }
 
@@ -630,9 +630,9 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Gets the total count of direct dependencies of this object.
+        /// Gets the total count of direct children of this object.
         /// </summary>
-        public int CountDependencies
+        public int CountChildren
         {
             get { return m_children.Count; }
         }
