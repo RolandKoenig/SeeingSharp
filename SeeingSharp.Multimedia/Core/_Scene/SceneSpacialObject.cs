@@ -270,7 +270,8 @@ namespace SeeingSharp.Multimedia.Core
         {
             //Calculates local transform matrix (transforms local space to world space)
             bool doRecreateShaderParameters = false;
-            base.TransormationChanged = m_transformParamsChanged;
+            base.TransormationChanged = 
+                m_transformParamsChanged || updateState.ForceTransformUpdatesOnChilds;
 
             // Update local transform matrix if transform values have changed
             if (m_transformParamsChanged || updateState.ForceTransformUpdatesOnChilds)

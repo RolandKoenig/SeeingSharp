@@ -67,8 +67,6 @@ namespace SeeingSharp.Multimedia.Core
         {
             m_viewInfo = viewInformation;
             m_boundingFrustum = viewInformation.CameraBoundingFrustum;
-
-            var blub = m_boundingFrustum.GetCameraParams();
         }
 
         /// <summary>

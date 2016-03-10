@@ -41,7 +41,7 @@ namespace SeeingSharp.Multimedia.Objects
         // private float m_opacity;
         private bool m_passRelevantValuesChanged;
 
-        //Resources
+        // Resources
         private IndexBasedDynamicCollection<GeometryResource> m_localResources;
 
         /// <summary>
@@ -109,6 +109,11 @@ namespace SeeingSharp.Multimedia.Objects
                 BoundingSphere.FromBox(ref boundingBox, out result);
 
                 result.Transform(this.Transform);
+
+                if(this.Tag1 as string == "Blub")
+                {
+                    Console.WriteLine(result.ToString());
+                }
 
                 return result;
             }
@@ -187,26 +192,6 @@ namespace SeeingSharp.Multimedia.Objects
         {
             return "GenericObject (Geometry: " + m_resGeometryKey + ")";
         }
-
-        ///// <summary>
-        ///// Tries to get the ObjectType.
-        ///// </summary>
-        //public ObjectType GetObjectType()
-        //{
-        //    if (m_geometryResource != null) { return m_geometryResource.ObjectType; }
-        //    else
-        //    {
-        //        if ((base.Resources != null) && (base.Resources.ContainsResource(m_geometry)))
-        //        {
-        //            GeometryResource geometryResource = base.Resources[m_geometry] as GeometryResource;
-        //            if (geometryResource != null)
-        //            {
-        //                return geometryResource.ObjectType;
-        //            }
-        //        }
-        //    }
-        //    return null;
-        //}
 
         /// <summary>
         /// Changes the geometry to the given one.
