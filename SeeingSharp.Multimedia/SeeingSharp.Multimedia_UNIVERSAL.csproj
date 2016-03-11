@@ -56,6 +56,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Components\_Generic\SimpleCenteredCubeComponent.cs" />
+    <Compile Include="Components\_Input\FocusedPointCameraComponent.cs" />
     <Compile Include="Components\_Input\FreeMovingCameraComponent.cs" />
     <Compile Include="Core\Direct2DOverlayRenderer.cs" />
     <Compile Include="Core\EngineMainLoop.cs" />
