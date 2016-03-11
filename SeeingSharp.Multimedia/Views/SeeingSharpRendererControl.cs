@@ -64,7 +64,6 @@ namespace SeeingSharp.Multimedia.Views
 
         #region Members for input handling
         private List<IInputHandler> m_inputHandlers;
-        private SeeingSharpInputMode m_inputMode;
         private bool m_isMouseInside;
         #endregion Members for input handling
 
@@ -665,27 +664,6 @@ namespace SeeingSharp.Multimedia.Views
             {
                 if (m_renderLoop != null) { return m_renderLoop.Device; }
                 else { return null; }
-            }
-        }
-
-        [Browsable(true)]
-        [Category("Rendering")]
-        public SeeingSharpInputMode InputMode
-        {
-            get { return m_inputMode; }
-            set
-            {
-                if ((m_inputMode != value) &&
-                   (m_inputHandlers.Count > 0))
-                {
-                    m_inputMode = value;
-                    InputHandlerFactory.UpdateInputHandlerList(
-                        this, m_inputHandlers, m_renderLoop, false);
-                }
-                else
-                {
-                    m_inputMode = value;
-                }
             }
         }
     }

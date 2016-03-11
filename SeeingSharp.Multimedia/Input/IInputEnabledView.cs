@@ -29,6 +29,10 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Input
 {
+    /// <summary>
+    /// This interfaces is used by Seeing# internally to abstract input relevant
+    /// information of a view.
+    /// </summary>
     public interface IInputEnabledView
     {
         /// <summary>
@@ -40,10 +44,5 @@ namespace SeeingSharp.Multimedia.Input
         /// Does the target control have focus?
         /// </summary>
         bool Focused { get; }
-
-        /// <summary>
-        /// Gets the input mode requested by this view.
-        /// </summary>
-        SeeingSharpInputMode InputMode { get; }
     }
 }

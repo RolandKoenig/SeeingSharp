@@ -64,7 +64,6 @@ namespace SeeingSharp.Multimedia.Views
 
         #region Members for input handling
         private List<IInputHandler> m_inputHandlers;
-        private SeeingSharpInputMode m_inputMode;
         #endregion
 
         #region Resources from Direct3D 11
@@ -600,25 +599,6 @@ namespace SeeingSharp.Multimedia.Views
             {
                 if (m_targetPanel == null) { return null; }
                 return m_targetPanel.Panel; 
-            }
-        }
-
-        public SeeingSharpInputMode InputMode
-        {
-            get { return m_inputMode; }
-            set
-            {
-                if((m_inputMode != value) &&
-                   (m_inputHandlers.Count > 0))
-                {
-                    m_inputMode = value;
-                    InputHandlerFactory.UpdateInputHandlerList(
-                        this, m_inputHandlers, m_renderLoop, false);
-                }
-                else
-                {
-                    m_inputMode = value;
-                }
             }
         }
     }
