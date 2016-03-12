@@ -124,12 +124,9 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Attach all components which are comming in 
-            int attachingComponentsCount = m_componentRequests.Count;
-            if (attachingComponentsCount <= 0) { return; }
             SceneComponentRequest actRequest = default(SceneComponentRequest);
             int actIndex = 0;
-            while ((actIndex < attachingComponentsCount) &&
-                  m_componentRequests.Dequeue(out actRequest))
+            while (m_componentRequests.Dequeue(out actRequest))
             {
                 SceneComponentInfo actComponent;
                 int actComponentIndex = -1;
@@ -143,6 +140,22 @@ namespace SeeingSharp.Multimedia.Core
                         {
                             // We've already attached this component, so skip this request
                             continue;
+                        }
+
+                        // Trigger removing of all components with the same group like the new one
+                        //  (new components replace old components with same group name)
+                        if(!string.IsNullOrEmpty(actRequest.Component.ComponentGroup))
+                        {
+                            foreach(SceneComponentInfo actObsoleteComponent in GetExistingComponentsByGroup(
+                                actRequest.Component.ComponentGroup))
+                            {
+                                m_componentRequests.Enqueue(new SceneComponentRequest()
+                                {
+                                    RequestType = SceneComponentRequestType.Detach,
+                                    Component = actObsoleteComponent.Component,
+                                    CorrespondingView = actObsoleteComponent.CorrespondingView
+                                });
+                            }
                         }
 
                         SceneManipulator actManipulator = new SceneManipulator(m_owner);
@@ -167,7 +180,7 @@ namespace SeeingSharp.Multimedia.Core
 
                     case SceneComponentRequestType.Detach:
                         if (actRequest.Component == null) { continue; }
-                        if (TryGetAttachedComponent(
+                        if (!TryGetAttachedComponent(
                             actRequest.Component, actRequest.CorrespondingView,
                             out actComponent, out actComponentIndex))
                         {
@@ -211,6 +224,18 @@ namespace SeeingSharp.Multimedia.Core
                             }
                         }
                         break;
+                }
+            }
+        }
+
+        private IEnumerable<SceneComponentInfo> GetExistingComponentsByGroup(string groupName)
+        {
+            int attachedComponentCount = m_attachedComponents.Count;
+            for (int loop = 0; loop < m_attachedComponents.Count; loop++)
+            {
+                if(m_attachedComponents[loop].Component.ComponentGroup == groupName)
+                {
+                    yield return m_attachedComponents[loop];
                 }
             }
         }

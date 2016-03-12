@@ -199,6 +199,11 @@ namespace SeeingSharp.Multimedia.Components
             }
         }
 
+        public override string ComponentGroup
+        {
+            get { return Constants.COMPONENT_GROUP_CAMERA; }
+        }
+
         public override bool IsViewSpecific
         {
             get { return true; }

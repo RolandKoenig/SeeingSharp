@@ -58,6 +58,10 @@ namespace SeeingSharp.Multimedia
         public const string PERF_RENDERLOOP_RENDER_2D = "Graphics.RenderLoop.Render.2D (Scene: {0}, View: {1})";
         #endregion
 
+        #region Component group names
+        public const string COMPONENT_GROUP_CAMERA = "Camera";
+        #endregion
+
         #region Constants for occurences per timeunit measuring
         public static string PERF_GLOBAL_FRAMES_FINISHED = "Graphics.Global.FramesRendered";
         #endregion

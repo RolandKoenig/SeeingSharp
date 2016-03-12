@@ -250,6 +250,11 @@ namespace SeeingSharp.Multimedia.Components
             set;
         }
 
+        public override string ComponentGroup
+        {
+            get { return Constants.COMPONENT_GROUP_CAMERA; }
+        }
+
         //*********************************************************************
         //*********************************************************************
         //*********************************************************************

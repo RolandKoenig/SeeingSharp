@@ -21,6 +21,7 @@
 */
 #endregion
 using System;
+using System.Linq;
 using System.Numerics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -851,6 +852,7 @@ namespace SeeingSharp.Multimedia.Core
                         }
 
                         // Change scene property
+                        if(m_currentScene == null) { this.CleanSceneComponentList(); }
                         m_currentScene = m_targetScene;
                         m_targetScene = null;
 
@@ -1158,6 +1160,35 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Cleaing for currently registered components with equal group names.
+        /// </summary>
+        private void CleanSceneComponentList()
+        {
+            if (m_currentScene != null)
+            {
+                throw new SeeingSharpException("Internal error: CleanSceneComponentList must only be called when current scene = null!");
+            }
+
+            List<string> componentGroups = new List<string>(m_sceneComponents.Count);
+            int sceneComponentCount = m_sceneComponents.Count;
+            for(int loop= sceneComponentCount -1; loop>= 0; loop--)
+            {
+                SceneComponentBase actComponent = m_sceneComponents[loop];
+                if(!string.IsNullOrEmpty(actComponent.ComponentGroup))
+                {
+                    if(componentGroups.Contains(actComponent.ComponentGroup))
+                    {
+                        m_sceneComponents.RemoveAt(loop);
+                    }
+                    else
+                    {
+                        componentGroups.Add(actComponent.ComponentGroup);
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// Called when the collection of SceneComponents has changed.
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -1165,8 +1196,8 @@ namespace SeeingSharp.Multimedia.Core
         private void OnSceneComponents_Changed(object sender, NotifyCollectionChangedEventArgs e)
         {
             Scene actScene = m_currentScene;
-            if(actScene == null) { return; }
 
+            List<SceneComponentBase> componentsToRemove = new List<SceneComponentBase>();
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
@@ -1176,20 +1207,47 @@ namespace SeeingSharp.Multimedia.Core
                     {
                         foreach (SceneComponentBase actComponent in e.NewItems)
                         {
-                            actScene.AttachComponent(actComponent, m_viewInformation);
+                            // Get all components with the same group-name
+                            //  .. we've to remove them later
+                            if (!string.IsNullOrEmpty(actComponent.ComponentGroup))
+                            {
+                                componentsToRemove.AddRange(
+                                    m_sceneComponents.Where(
+                                        (actInnerComponent) => 
+                                            (actInnerComponent.ComponentGroup == actComponent.ComponentGroup) &&
+                                            (actInnerComponent != actComponent)));
+                            }
+
+                            // Attach this new component
+                            if (actScene != null)
+                            {
+                                actScene.AttachComponent(actComponent, m_viewInformation);
+                            }
                         }
                     }
                     if (e.OldItems != null)
                     {
-                        foreach (SceneComponentBase actComponent in e.OldItems)
+                        if (actScene != null)
                         {
-                            actScene.DetachComponent(actComponent, m_viewInformation);
+                            foreach (SceneComponentBase actComponent in e.OldItems)
+                            {
+                                actScene.DetachComponent(actComponent, m_viewInformation);
+                            }
                         }
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Reset:
                     break;
+            }
+
+            // Remove components which where replaced by new ones
+            if (componentsToRemove.Count > 0)
+            {
+                foreach (SceneComponentBase actComponentToRemove in componentsToRemove)
+                {
+                    m_sceneComponents.Remove(actComponentToRemove);
+                }
             }
         }
 
