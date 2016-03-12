@@ -37,7 +37,7 @@ namespace SeeingSharp.Multimedia.Components
     {
         #region constants
         private const float SINGLE_ROTATION_H = EngineMath.RAD_180DEG / 100f;
-        private const float SINGLE_ROTATION_V = EngineMath.RAD_90DEG / 100f;
+        private const float SINGLE_ROTATION_V = EngineMath.RAD_180DEG / 100f;
         #endregion
 
         /// <summary>
@@ -165,6 +165,16 @@ namespace SeeingSharp.Multimedia.Components
                         componentContext.CameraHVRotation = componentContext.CameraHVRotation +
                             new Vector2(SINGLE_ROTATION_H, 0f);
                         break;
+
+                    case WinVirtualKey.Q:
+                    case WinVirtualKey.NumPad3:
+                        componentContext.CameraDistance = componentContext.CameraDistance * 1.05f;
+                        break;
+
+                    case WinVirtualKey.E:
+                    case WinVirtualKey.NumPad9:
+                        componentContext.CameraDistance = componentContext.CameraDistance * 0.95f;
+                        break;
                 }
             }
         }
@@ -176,33 +186,38 @@ namespace SeeingSharp.Multimedia.Components
             PerSceneContext componentContext, Camera3DBase actCamera, 
             MouseOrPointerState mouseState)
         {
-            //// Handle mouse move
-            //if (mouseState.MoveDistanceDip != Vector2.Zero)
-            //{
-            //    Vector2 moving = mouseState.MoveDistanceDip;
-            //    if (mouseState.IsButtonDown(MouseButton.Left) &&
-            //        mouseState.IsButtonDown(MouseButton.Right))
-            //    {
-            //        actCamera.Zoom(moving.Y / -50f);
-            //    }
-            //    else if (mouseState.IsButtonDown(MouseButton.Left))
-            //    {
-            //        actCamera.Strave(moving.X / 50f);
-            //        actCamera.UpDown(-moving.Y / 50f);
-            //    }
-            //    else if (mouseState.IsButtonDown(MouseButton.Right))
-            //    {
-            //        actCamera.Rotate(-moving.X / 200f, -moving.Y / 200f);
-            //    }
-            //}
+            // Handle mouse move
+            if (mouseState.MoveDistanceDip != Vector2.Zero)
+            {
+                Vector2 moving = mouseState.MoveDistanceDip;
+                if (mouseState.IsButtonDown(MouseButton.Left) &&
+                    mouseState.IsButtonDown(MouseButton.Right))
+                {
+                    float multiplyer = 1.05f;
+                    if (moving.Y < 0f) { multiplyer = 0.95f; }
+                    componentContext.CameraDistance = componentContext.CameraDistance * multiplyer;
+                }
+                else if (mouseState.IsButtonDown(MouseButton.Left) ||
+                         mouseState.IsButtonDown(MouseButton.Right))
+                {
+                    componentContext.CameraHVRotation = componentContext.CameraHVRotation +
+                        new Vector2(
+                            SINGLE_ROTATION_H * (moving.X / 4f), 
+                            SINGLE_ROTATION_V * (moving.Y / 4f));
+                }
+            }
 
-            //// Handle mouse wheel
-            //if (mouseState.WheelDelta != 0)
-            //{
-            //    float multiplyer = 1f;
-            //    if (isControlKeyDown) { multiplyer = 2f; }
-            //    actCamera.Zoom((mouseState.WheelDelta / 100f) * multiplyer);
-            //}
+            // Handle mouse wheel
+            if (mouseState.WheelDelta != 0)
+            {
+                float multiplyer = 0.95f - (Math.Abs(mouseState.WheelDelta) / 1000f);
+                if (mouseState.WheelDelta < 0 )
+                {
+                    multiplyer = 1.05f + (Math.Abs(mouseState.WheelDelta) / 1000f);
+                }
+
+                componentContext.CameraDistance = componentContext.CameraDistance * multiplyer;
+            }
         }
 
         public Vector3 FocusedLocation
