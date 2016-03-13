@@ -89,6 +89,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.WpfComponentTes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalSampleContainer.WindowsPhone", "Samples\UniversalSampleContainer\UniversalSampleContainer.WindowsPhone\UniversalSampleContainer.WindowsPhone.csproj", "{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.UniversalComponentTest", "Tests\SeeingSharp.UniversalComponentTest\SeeingSharp.UniversalComponentTest.csproj", "{87F67058-3F49-4DD1-B4C3-0FAD214033CA}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{431f8f6a-aa43-4de1-8ec3-744a0396af02}*SharedItemsImports = 4
@@ -521,6 +523,26 @@ Global
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}.Release|x86.ActiveCfg = Release|x86
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}.Release|x86.Build.0 = Release|x86
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}.Release|x86.Deploy.0 = Release|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|ARM.ActiveCfg = Debug|ARM
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|ARM.Build.0 = Debug|ARM
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|ARM.Deploy.0 = Debug|ARM
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|x64.ActiveCfg = Debug|x64
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|x64.Build.0 = Debug|x64
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|x64.Deploy.0 = Debug|x64
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|x86.ActiveCfg = Debug|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|x86.Build.0 = Debug|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Debug|x86.Deploy.0 = Debug|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|Any CPU.ActiveCfg = Release|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|ARM.ActiveCfg = Release|ARM
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|ARM.Build.0 = Release|ARM
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|ARM.Deploy.0 = Release|ARM
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x64.ActiveCfg = Release|x64
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x64.Build.0 = Release|x64
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x64.Deploy.0 = Release|x64
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x86.ActiveCfg = Release|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x86.Build.0 = Release|x86
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -552,5 +574,6 @@ Global
 		{0898C5F2-2F17-4B0A-9C7D-0A0FBD9294F6} = {B0619BB7-B709-4C27-8D6F-1C54090C1320}
 		{73A7B7A2-4698-4CE6-B84C-1E8D64075C61} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02} = {CB7BB534-A7F5-4680-B4FD-EFF5021EE99D}
+		{87F67058-3F49-4DD1-B4C3-0FAD214033CA} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 	EndGlobalSection
 EndGlobal

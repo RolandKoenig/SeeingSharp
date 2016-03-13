@@ -40,6 +40,7 @@ using SeeingSharp.Util;
 //Some namespace mappings
 using DXGI = SharpDX.DXGI;
 using D3D11 = SharpDX.Direct3D11;
+using System.Collections.ObjectModel;
 
 namespace SeeingSharp.Multimedia.Views
 {
@@ -582,6 +583,14 @@ namespace SeeingSharp.Multimedia.Views
                 m_renderLoop.ClearColor = new Color4(
                     value.R, value.G, value.B, value.A);
             }
+        }
+
+        /// <summary>
+        /// Gets a collection containing all SceneComponents associated to this view.
+        /// </summary>
+        public ObservableCollection<SceneComponentBase> SceneComponents
+        {
+            get { return m_renderLoop.SceneComponents; }
         }
 
         /// <summary>

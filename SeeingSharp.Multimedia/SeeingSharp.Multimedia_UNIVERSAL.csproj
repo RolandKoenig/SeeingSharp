@@ -330,6 +330,7 @@
     <Compile Include="Util\SdxTK\_Misc.cs" />
     <Compile Include="Views\SeeingSharpPanelPainter.cs" />
     <Compile Include="Views\ISeeingSharpPainter.cs" />
+    <Compile Include="Views\SeeingSharpRenderPanel.cs" />
     <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Util\SwapChainPanelWrapper.cs" />
     <Compile Include="Views\_Video\MediaPlayerComponent.cs" />

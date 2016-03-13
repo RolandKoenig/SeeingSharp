@@ -9,7 +9,6 @@
         Title="Seeing# WPF Components Test" Height="350" Width="525">
     <Grid>
         <ssharpMulti:SeeingSharpRendererElement>
-            <ssharpMulti:FreeMovingCameraComponent />
             <ssharpMulti:FocusedPointCameraComponent />
             <ssharpMulti:SimpleCenteredCubeComponent />
         </ssharpMulti:SeeingSharpRendererElement>
