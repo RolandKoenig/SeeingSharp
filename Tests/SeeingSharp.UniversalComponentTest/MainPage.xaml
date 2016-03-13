@@ -10,7 +10,10 @@
     mc:Ignorable="d">
 
     <ssharpView:SeeingSharpRenderPanel>
+        <ssharpComp:FocusedPointCameraComponent
+                CameraDistanceMin="3" 
+                CameraDistanceMax="10"
+                CameraDistanceInitial="5"/>
         <ssharpComp:SimpleCenteredCubeComponent />
-        <ssharpComp:FocusedPointCameraComponent />
     </ssharpView:SeeingSharpRenderPanel>
 </Page>

@@ -32,24 +32,25 @@ using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Components
 {
-    public class SimpleCenteredCubeComponent : SceneComponent<SimpleCenteredCubeComponent.PerSceneContext>
+    public class SimpleCenteredCubeComponent 
+        : SceneComponent<SimpleCenteredCubeComponent.PerSceneContext>
     {
         protected override PerSceneContext Attach(SceneManipulator manipulator, ViewInformation correspondingView)
         {
             PerSceneContext context = new PerSceneContext();
-
+    
             NamedOrGenericKey resCubeGeometry = manipulator.AddGeometry(new CubeType());
             context.CubeObject = manipulator.AddGeneric(resCubeGeometry);
             context.CubeObject.Color = Color4.RedColor;
-
+    
             return context;
         }
-
+    
         protected override void Detach(SceneManipulator manipulator, ViewInformation correspondingView, PerSceneContext context)
         {
             manipulator.Remove(context.CubeObject);
         }
-
+    
         //*********************************************************************
         //*********************************************************************
         //*********************************************************************

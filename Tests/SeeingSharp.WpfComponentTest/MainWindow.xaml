@@ -1,4 +1,5 @@
-﻿<Window xmlns:ssharpMulti="http://www.rolandk.de/wp/seeingsharp/multimedia"  x:Class="SeeingSharp.WpfComponentTest.MainWindow"
+﻿<Window x:Class="SeeingSharp.WpfComponentTest.MainWindow"
+        xmlns:ssharpMulti="http://www.rolandk.de/wp/seeingsharp/multimedia"  
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,7 +10,10 @@
         Title="Seeing# WPF Components Test" Height="350" Width="525">
     <Grid>
         <ssharpMulti:SeeingSharpRendererElement>
-            <ssharpMulti:FocusedPointCameraComponent />
+            <ssharpMulti:FocusedPointCameraComponent
+                CameraDistanceMin="3" 
+                CameraDistanceMax="10"
+                CameraDistanceInitial="5"/>
             <ssharpMulti:SimpleCenteredCubeComponent />
         </ssharpMulti:SeeingSharpRendererElement>
     </Grid>
