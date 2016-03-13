@@ -4,6 +4,87 @@
         <name>SeeingSharp.Multimedia</name>
     </assembly>
     <members>
+        <member name="M:SeeingSharp.Multimedia.Components.FocusedObjectCameraComponent.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Components.FocusedObjectCameraComponent"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FocusedPointCameraComponent.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Components.FocusedPointCameraComponent"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FocusedCameraComponent.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Components.FocusedPointCameraComponent"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FocusedCameraComponent.Attach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Attaches this component to a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+            <returns></returns>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FocusedCameraComponent.Detach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation,SeeingSharp.Multimedia.Components.FocusedCameraComponent.PerSceneContext)">
+            <summary>
+            Detaches this component from a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+            <param name="componentContext">A context variable containing all createded objects during call of Attach.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FocusedCameraComponent.UpdateForKeyboard(SeeingSharp.Multimedia.Components.FocusedCameraComponent.PerSceneContext,SeeingSharp.Multimedia.Drawing3D.Camera3DBase,SeeingSharp.Multimedia.Input.KeyboardState)">
+            <summary>
+            Update camera for keyboard input.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FocusedCameraComponent.UpdateForMouse(SeeingSharp.Multimedia.Components.FocusedCameraComponent.PerSceneContext,SeeingSharp.Multimedia.Drawing3D.Camera3DBase,SeeingSharp.Multimedia.Input.MouseOrPointerState)">
+            <summary>
+            Update camera for mouse input.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FreeMovingCameraComponent.Attach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Attaches this component to a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FreeMovingCameraComponent.Detach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Detaches this component from a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FreeMovingCameraComponent.Update(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            This update method gets called on each update pass for each scenes
+            this component is attached to.
+            </summary>
+            <param name="updateState">Current update state.</param>
+            <param name="correspondingView">The view which attached this component (may be null).</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FreeMovingCameraComponent.UpdateForKeyboard(SeeingSharp.Multimedia.Drawing3D.Camera3DBase,SeeingSharp.Multimedia.Input.KeyboardState,System.Boolean@)">
+            <summary>
+            Update camera for keyboard input.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.FreeMovingCameraComponent.UpdateForMouse(SeeingSharp.Multimedia.Drawing3D.Camera3DBase,System.Boolean,SeeingSharp.Multimedia.Input.MouseOrPointerState)">
+            <summary>
+            Update camera for mouse input.
+            </summary>
+        </member>
         <member name="T:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer">
             <summary>
             This class makes a Direct3D 11 texture available for 2D rendering with Direct2D.
@@ -712,7 +793,7 @@
             Raised when it is possible for the UI thread to manipulate current filter list.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.#ctor(System.Threading.SynchronizationContext,System.Func{SeeingSharp.Multimedia.Core.EngineDevice,System.Tuple{SharpDX.Direct3D11.Texture2D,SharpDX.Direct3D11.RenderTargetView,SharpDX.Direct3D11.Texture2D,SharpDX.Direct3D11.DepthStencilView,SharpDX.ViewportF,SeeingSharp.Size2,SeeingSharp.Multimedia.Core.DpiScaling}},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Func{SeeingSharp.Multimedia.Core.EngineDevice,System.Boolean},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Func{System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Input.InputStateBase}})">
+        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.#ctor(System.Threading.SynchronizationContext,System.Func{SeeingSharp.Multimedia.Core.EngineDevice,System.Tuple{SharpDX.Direct3D11.Texture2D,SharpDX.Direct3D11.RenderTargetView,SharpDX.Direct3D11.Texture2D,SharpDX.Direct3D11.DepthStencilView,SharpDX.ViewportF,SeeingSharp.Size2,SeeingSharp.Multimedia.Core.DpiScaling}},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Func{SeeingSharp.Multimedia.Core.EngineDevice,System.Boolean},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Func{System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Input.InputStateBase}},System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.RenderLoop" /> class.
             </summary>
@@ -881,6 +962,18 @@
             <summary>
             Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.CleanSceneComponentList">
+            <summary>
+            Cleaing for currently registered components with equal group names.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.OnSceneComponents_Changed(System.Object,System.Collections.Specialized.NotifyCollectionChangedEventArgs)">
+            <summary>
+            Called when the collection of SceneComponents has changed.
+            </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.RenderLoop.ViewInformation">
             <summary>
@@ -1283,6 +1376,12 @@
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState"/> class.
             </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.GetInputStates(SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Gets all input state for this view.
+            </summary>
+            <param name="viewInfo">The view for which to get all input states.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.OnStartSceneUpdate(SeeingSharp.Multimedia.Core.Scene,SeeingSharp.Multimedia.Core.UpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Input.InputStateBase})">
             <summary>
@@ -4248,6 +4347,66 @@
             The element in the collection at the current position of the enumerator.
             </returns>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Core.SceneComponentFlyweight">
+            <summary>
+            This is mostly logic of the Scene class but experted here 
+            following the Flyweight pattern.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponentFlyweight.#ctor(SeeingSharp.Multimedia.Core.Scene)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.SceneComponentFlyweight"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponentFlyweight.AttachComponent(SeeingSharp.Multimedia.Core.SceneComponentBase,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Attaches the given component to this scene.
+            </summary>
+            <param name="component">The component to be attached.</param>
+            <param name="sourceView">The view which attaches the component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponentFlyweight.DetachComponent(SeeingSharp.Multimedia.Core.SceneComponentBase,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Detaches the given component from this scene.
+            </summary>
+            <param name="component">The component to be detached.</param>
+            <param name="sourceView">The view which attached the component initially.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponentFlyweight.DetachAllComponents(SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Detaches all currently attached components.
+            </summary>
+            <param name="sourceView">The view from which we've to detach all components.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponentFlyweight.UpdateSceneComponents(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState)">
+            <summary>
+            Internal method for updating all scene components.
+            </summary>
+            <param name="updateState">Current update state.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponentFlyweight.TryGetAttachedComponent(SeeingSharp.Multimedia.Core.SceneComponentBase,SeeingSharp.Multimedia.Core.ViewInformation,SeeingSharp.Multimedia.Core.SceneComponentInfo@,System.Int32@)">
+            <summary>
+            Tries the get information about a currently attached component.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.SceneComponentInfo">
+            <summary>
+            Helper structure which holds informatin about all currently
+            attached components.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.SceneComponentRequest">
+            <summary>
+            Helper structure which holds information about a request
+            for a component (attach, detach) which normaly comes
+            from the UI thread
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.SceneComponentRequestType">
+            <summary>
+            The type of a component request.
+            </summary>
+        </member>
         <member name="E:SeeingSharp.Multimedia.Core.SceneObjectFilter.FilterConfigurationChanged">
             <summary>
             An event that notifies changed filter configuration.
@@ -4331,6 +4490,26 @@
             Should this filter be updated on each frame?
             </summary>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Core.SceneComponentBase">
+            <summary>
+            Base class for all scene components.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.SceneComponentBase.ComponentGroup">
+            <summary>
+            If not null or empty, this property indicates which components to the same thing.
+            If you attach a component to a scene where another component with the same group
+            is active, this other component gets detached automatically.
+            
+            This feature was developed initially for various camera controls which 
+            should not be activ simultaneously.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.SceneComponentBase.IsViewSpecific">
+            <summary>
+            Is this component specific for one view?
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.PickingInformation.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.PickingInformation" /> class.
@@ -4391,6 +4570,26 @@
             </summary>
             <param name="sceneObjects">The scene objects.</param>
             <param name="viewInfo">The view information.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Scene.AttachComponent(SeeingSharp.Multimedia.Core.SceneComponentBase,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Attaches the given component to this scene.
+            </summary>
+            <param name="component">The component to be attached.</param>
+            <param name="sourceView">The view which attaches the component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Scene.DetachComponent(SeeingSharp.Multimedia.Core.SceneComponentBase,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Detaches the given component from this scene.
+            </summary>
+            <param name="component">The component to be detached.</param>
+            <param name="sourceView">The view which attached the component initially.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Scene.DetachAllComponents(SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Detaches all currently attached components.
+            </summary>
+            <param name="sourceView">The view from which we've to detach all components.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.Scene.ManipulateSceneAsync(System.Action{SeeingSharp.Multimedia.Core.SceneManipulator})">
              <summary>
@@ -5126,7 +5325,7 @@
             </summary>
             <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.RemoveDependency(SeeingSharp.Multimedia.Core.SceneObject)">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.RemoveChild(SeeingSharp.Multimedia.Core.SceneObject)">
             <summary>
             Removes the given object from the list of children.
             </summary>
@@ -5345,9 +5544,9 @@
             Does this object have any child?
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.SceneObject.CountDependencies">
+        <member name="P:SeeingSharp.Multimedia.Core.SceneObject.CountChildren">
             <summary>
-            Gets the total count of direct dependencies of this object.
+            Gets the total count of direct children of this object.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.CountRenderPassSubscriptions(SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset)">
@@ -6178,6 +6377,71 @@
             Converts the given TimeSpan value to a duration value for media foundation
             </summary>
             <param name="timespan">The timespan.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.SceneComponent">
+            <summary>
+            A base class for components which we can easily attach to a scene. 
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponent.Attach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Attaches this component to a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponent.Detach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Detaches this component from a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponent.Update(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            This update method gets called on each update pass for each scenes 
+            this component is attached to.
+            </summary>
+            <param name="updateState">Current update state.</param>
+            <param name="correspondingView">The view which attached this component (may be null).</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.SceneComponent`1">
+            <summary>
+            A base class for components which we can easily attach to a scene. 
+            </summary>
+            <typeparam name="ContextType">An object of this type holds all members hold per scene.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponent`1.Attach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Attaches this component to a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponent`1.Detach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation,`0)">
+            <summary>
+            Detaches this component from a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="componentContext">A context variable containing all createded objects during call of Attach.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneComponent`1.Update(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,SeeingSharp.Multimedia.Core.ViewInformation,`0)">
+            <summary>
+            This update method gets called on each update pass for each scenes 
+            this component is attached to.
+            </summary>
+            <param name="updateState">Current update state.</param>
+            <param name="correspondingView">The view which attached this component (may be null).</param>
+            <param name="componentContext">The current context generating during Attach call.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing2D.Custom2DDrawingLayer.#ctor">
             <summary>
@@ -9281,23 +9545,10 @@
             Null means that this handler is not bound to a view.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.GetSupportedCameraTypes">
-            <summary>
-            Gets a list containing all supported camera types.
-            Null means that this handler is not bound to a view.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.GetSupportedInputModes">
-            <summary>
-            Gets an array containing all supported input modes.
-            Null means that all modes are supported.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.Start(System.Object,System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.Start(System.Object)">
             <summary>
             Starts input handling.
             </summary>
-            <param name="cameraObject">The camera object (e. g. PerspectiveCamera3D).</param>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.UpdateMovement">
@@ -9497,24 +9748,11 @@
             Null means that this handler is not bound to a view.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.GetSupportedCameraTypes">
-            <summary>
-            Gets a list containing all supported camera types.
-            Null means that this handler is not bound to a view.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.GetSupportedInputModes">
-            <summary>
-            Gets an array containing all supported input modes.
-            Null means that all modes are supported.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.Start(System.Object,System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.Start(System.Object)">
             <summary>
             Starts input handling.
             </summary>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-            <param name="cameraObject">The camera object (e. g. PerspectiveCamera3D).</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.UpdateMovement">
             <summary>
@@ -9526,6 +9764,12 @@
             Querries all current input states.
             </summary>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Input.IInputEnabledView">
+            <summary>
+            This interfaces is used by Seeing# internally to abstract input relevant
+            information of a view.
+            </summary>
+        </member>
         <member name="P:SeeingSharp.Multimedia.Input.IInputEnabledView.RenderLoop">
             <summary>
             Gets the RenderLoop that is currently in use.
@@ -9534,11 +9778,6 @@
         <member name="P:SeeingSharp.Multimedia.Input.IInputEnabledView.Focused">
             <summary>
             Does the target control have focus?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Input.IInputEnabledView.InputMode">
-            <summary>
-            Gets the input mode requested by this view.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.#ctor">
@@ -9555,21 +9794,19 @@
             <param name="renderLoop">The renderloop used by the view object.</param>
             <param name="currentlyDispsoing">Is the view currently disposing?</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.GetInputHandler``2(SeeingSharp.Multimedia.Input.IInputEnabledView)">
+        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.GetInputHandler``1(SeeingSharp.Multimedia.Input.IInputEnabledView)">
             <summary>
             Gets all possible GraphicsInputHandlers for the given view and camera types.
             </summary>
             <typeparam name="ViewType">Gets the type of the view.</typeparam>
-            <typeparam name="CameraType">Gets the type of the camera.</typeparam>
             <param name="viewObject">The view for which to the input handlers.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.GetInputHandler(SeeingSharp.Multimedia.Input.IInputEnabledView,System.Type,System.Type)">
+        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.GetInputHandler(SeeingSharp.Multimedia.Input.IInputEnabledView,System.Type)">
             <summary>
             Gets all possible GraphicsInputHandlers for the given view and camera types.
             Pass null to all parameters to return all generic input handlers.
             </summary>
             <param name="viewObject">The view for which to query the input object.</param>
-            <param name="givenCameraType">The type of the view.</param>
             <param name="givenViewType">The type of the camera.</param>
         </member>
         <member name="P:SeeingSharp.Multimedia.Input.InputHandlerFactory.Count">
@@ -9624,22 +9861,11 @@
             Gets a list containing all supported view types.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.GetSupportedCameraTypes">
-            <summary>
-            Gets a list containing all supported camera types.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.GetSupportedInputModes">
-            <summary>
-            Gets an array containing all supported input modes.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.Start(System.Object,System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.Start(System.Object)">
             <summary>
             Starts input handling.
             </summary>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-            <param name="cameraObject">The camera object (e. g. Camera3DBase).</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.Stop">
             <summary>
@@ -9701,22 +9927,11 @@
             Gets a list containing all supported view types.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.GetSupportedCameraTypes">
-            <summary>
-            Gets a list containing all supported camera types.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.GetSupportedInputModes">
-            <summary>
-            Gets an array containing all supported input modes.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.Start(System.Object,System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.Start(System.Object)">
             <summary>
             Starts input handling.
             </summary>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-            <param name="cameraObject">The camera object (e. g. Camera3DBase).</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.UpdateMovement">
             <summary>
@@ -13631,6 +13846,11 @@
         <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.DiscardRendering">
             <summary>
             Discard rendering?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SceneComponents">
+            <summary>
+            Gets a collection containing all SceneComponents associated to this view.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.Scene">
