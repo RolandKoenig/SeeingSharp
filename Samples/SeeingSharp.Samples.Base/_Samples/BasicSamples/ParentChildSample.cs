@@ -84,12 +84,12 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                 GenericObject actChild = manipulator.AddGeneric(resPalletGeometry);
                 actChild.Position = new Vector3(-2f, 0f, 0f);
                 actChild.Scaling = new Vector3(0.5f, 0.5f, 0.5f);
-                palletObject.AddChild(actChild);
+                manipulator.AddChild(palletObject, actChild);
 
                 actChild = manipulator.AddGeneric(resPalletGeometry);
                 actChild.Position = new Vector3(0f, 0f, 2f);
                 actChild.Scaling = new Vector3(0.5f, 0.5f, 0.5f);
-                palletObject.AddChild(actChild);
+                manipulator.AddChild(palletObject, actChild);
 
                 //********************************
                 // Create second level parent/child relationships
@@ -104,22 +104,22 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                     .WaitFinished()
                     .CallAction(() => actSecondLevelParent.RotationEuler = Vector3.Zero)
                     .ApplyAndRewind();
-                palletObject.AddChild(actSecondLevelParent);
+                manipulator.AddChild(palletObject, actSecondLevelParent);
 
                 GenericObject actSecondLevelChild = manipulator.AddGeneric(resPalletGeometry);
                 actSecondLevelChild.Position = new Vector3(1f, 0f, 0f);
                 actSecondLevelChild.Scaling = new Vector3(0.4f, 0.4f, 0.4f);
-                actSecondLevelParent.AddChild(actSecondLevelChild);
+                manipulator.AddChild(actSecondLevelParent, actSecondLevelChild);
 
                 actSecondLevelChild = manipulator.AddGeneric(resPalletGeometry);
                 actSecondLevelChild.Position = new Vector3(-1f, 0f, 0f);
                 actSecondLevelChild.Scaling = new Vector3(0.4f, 0.4f, 0.4f);
-                actSecondLevelParent.AddChild(actSecondLevelChild);
+                manipulator.AddChild(actSecondLevelParent, actSecondLevelChild);
 
                 actSecondLevelChild = manipulator.AddGeneric(resPalletGeometry);
                 actSecondLevelChild.Position = new Vector3(0f, 0f, 1f);
                 actSecondLevelChild.Scaling = new Vector3(0.4f, 0.4f, 0.4f);
-                actSecondLevelParent.AddChild(actSecondLevelChild);
+                manipulator.AddChild(actSecondLevelParent, actSecondLevelChild);
             });
 
             // Configure camera

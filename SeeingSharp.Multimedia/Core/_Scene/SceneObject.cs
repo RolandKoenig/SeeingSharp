@@ -181,10 +181,16 @@ namespace SeeingSharp.Multimedia.Core
         /// <returns>true if the given object is a children of this one.</returns>
         public bool IsParentOf(SceneObject other)
         {
-            foreach (SceneObject actChild in m_children)
+            other.EnsureNotNull(nameof(other));
+
+            // Caution: This method must be thread safe because
+            //          it is callable on the SceneObject class directly
+
+            SceneObject actParent = other.m_parent;
+            while(actParent != null)
             {
-                if (actChild == other) { return true; }
-                if (actChild.IsParentOf(other)) { return true; }
+                if(actParent == this) { return true; }
+                actParent = actParent.m_parent;
             }
 
             return false;
@@ -194,21 +200,26 @@ namespace SeeingSharp.Multimedia.Core
         /// Determines whether this object already contains this child (no lower level check).
         /// </summary>
         /// <param name="objectToCheck">The object to check for.</param>
-        public virtual bool IsParentOfOnSingleLevel(SceneObject objectToCheck)
+        public bool IsParentOfOnSingleLevel(SceneObject objectToCheck)
         {
-            return m_children.Contains(objectToCheck);
+            objectToCheck.EnsureNotNull(nameof(objectToCheck));
+
+            // Caution: This method must be thread safe because
+            //          it is callable on the SceneObject class directly
+
+            return objectToCheck.m_parent == this;
         }
 
         /// <summary>
         /// Queries for all children (also lower level).
         /// </summary>
-        public IEnumerable<SceneObject> GetAllChildren()
+        internal IEnumerable<SceneObject> GetAllChildrenInternal()
         {
             foreach (SceneObject actChild in m_children)
             {
                 yield return actChild;
 
-                foreach (SceneObject actLowerChild in actChild.GetAllChildren())
+                foreach (SceneObject actLowerChild in actChild.GetAllChildrenInternal())
                 {
                     yield return actLowerChild;
                 }
@@ -219,7 +230,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Adds the given object as a child.
         /// </summary>
         /// <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
-        public virtual void AddChild(SceneObject childToAdd)
+        internal void AddChildInternal(SceneObject childToAdd)
         {
             if (childToAdd == this) { throw new SeeingSharpGraphicsException("Cyclic parent/child relationship detected!"); }
             if (childToAdd.Scene != this.Scene) { throw new SeeingSharpGraphicsException("Child musst have the same scene!"); }
@@ -236,7 +247,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Removes the given object from the list of children.
         /// </summary>
         /// <param name="childToRemove">The object which is to be removed from the list of children.</param>
-        public virtual void RemoveChild(SceneObject childToRemove)
+        internal void RemoveChildInternal(SceneObject childToRemove)
         {
             if (childToRemove.Scene != this.Scene) { throw new ArgumentException("Child musst have the same scene!"); }
 

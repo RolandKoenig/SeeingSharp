@@ -38,7 +38,7 @@ namespace SeeingSharp.Multimedia
         public SeeingSharpGraphicsException(string message)
             : base(message)
         {
-
+          
         }
 
         /// <summary>

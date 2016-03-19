@@ -34,6 +34,7 @@ using Windows.UI.Xaml.Controls;
 using SeeingSharp.Util;
 using Windows.UI.Xaml.Automation.Peers;
 using Windows.UI.Xaml.Automation.Provider;
+using Windows.Foundation;
 
 namespace RKRocket.Behaviors
 {
@@ -48,7 +49,7 @@ namespace RKRocket.Behaviors
             m_associatedButton = m_associatedObject as Button;
 
             // Register generic input event
-            if(m_associatedObject != null)
+            if (m_associatedObject != null)
             {
                 GraphicsCore.Current.MainLoop.GenericInput += OnGraphicsCore_GenericInput;
             }
@@ -85,6 +86,9 @@ namespace RKRocket.Behaviors
                     CoreDispatcherPriority.High,
                     new DispatchedHandler(() =>
                     {
+                        if (!currentButton.IsEnabled) { return; }
+                        if (currentButton.Visibility != Visibility.Visible) { return; }
+
                         ButtonAutomationPeer peer = new ButtonAutomationPeer(currentButton);
                         IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
                         invokeProv.Invoke();

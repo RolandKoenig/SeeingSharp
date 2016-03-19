@@ -75,7 +75,8 @@ namespace SeeingSharp.Multimedia.Core
                 // Apply parent/child relationships
                 foreach(var actDependencyInfo in modelContainer.ParentChildRelationships)
                 {
-                    actDependencyInfo.Item1.AddChild(
+                    manipulator.AddChild(
+                        actDependencyInfo.Item1,
                         actDependencyInfo.Item2);
                 }
             });

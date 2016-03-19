@@ -30,6 +30,7 @@ using System.Threading.Tasks;
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Checking;
 using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Core
@@ -250,6 +251,42 @@ namespace SeeingSharp.Multimedia.Core
             var result = m_owner.Add(sceneObject, layer);
             m_createdObjects.Add(result);
             return result;
+        }
+
+        /// <summary>
+        /// Adds the given object as a child.
+        /// </summary>
+        /// <param name="parent">The object to which to add the child.</param>
+        /// <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
+        public void AddChild(SceneObject parent, SceneObject childToAdd)
+        {
+            parent.EnsureNotNull(nameof(parent));
+            childToAdd.EnsureNotNull(nameof(childToAdd));
+
+            parent.AddChildInternal(childToAdd);
+        }
+
+        /// <summary>
+        /// Removes the given object from the list of children.
+        /// </summary>
+        /// <param name="parent">The object from which to remove the child.</param>
+        /// <param name="childToRemove">The object which is to be removed from the list of children.</param>
+        internal void RemoveChild(SceneObject parent, SceneObject childToRemove)
+        {
+            parent.EnsureNotNull(nameof(parent));
+            childToRemove.EnsureNotNull(nameof(childToRemove));
+
+            parent.RemoveChildInternal(childToRemove);
+        }
+
+        /// <summary>
+        /// Queries for all children (also lower level).
+        /// </summary>
+        internal IEnumerable<SceneObject> GetAllChildren(SceneObject sceneObject)
+        {
+            sceneObject.EnsureNotNull(nameof(sceneObject));
+
+            return sceneObject.GetAllChildrenInternal();
         }
 
         /// <summary>

@@ -41,6 +41,7 @@
                             Background="#997D7E81">
                     <Button Foreground="White"
                             Margin="0,30,0,0"
+                            IsEnabled="{x:Bind Path=ViewModel.IsPaneVisible, Mode=OneWay}"
                             Command="{x:Bind Path=ViewModel.CommandNewGame}">
                         <i:Interaction.Behaviors>
                             <localBeh:XInputButtonClickBehavior ControllerButton="A"/>
