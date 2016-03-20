@@ -38,6 +38,10 @@ namespace SeeingSharp.Multimedia.Input
         public static readonly MouseOrPointerState Dummy = new MouseOrPointerState();
         private static readonly int BUTTON_COUNT = Enum.GetValues(typeof(MouseButton)).Length;
 
+        #region Generic info
+        private MouseOrPointerType m_mouseOrPointerType;
+        #endregion
+
         #region Current state
         private Vector2 m_moveDistancePixel;
         private Vector2 m_positionPixel;
@@ -183,6 +187,7 @@ namespace SeeingSharp.Multimedia.Input
             result.m_positionPixel = m_positionPixel;
             result.m_wheelDelta = m_wheelDelta;
             result.m_isInside = m_isInside;
+            result.m_mouseOrPointerType = m_mouseOrPointerType;
             for (int loop = 0; loop < BUTTON_COUNT; loop++)
             {
                 result.m_buttonsDown[loop] = m_buttonsDown[loop];
@@ -287,6 +292,12 @@ namespace SeeingSharp.Multimedia.Input
         public bool IsInsideView
         {
             get { return m_isInside; }
+        }
+
+        public MouseOrPointerType Type
+        {
+            get { return m_mouseOrPointerType; }
+            internal set { m_mouseOrPointerType = value; }
         }
     }
 }

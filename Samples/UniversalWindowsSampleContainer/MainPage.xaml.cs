@@ -32,7 +32,6 @@ namespace UniversalWindowsSampleContainer
             titleBar.ForegroundColor = Colors.White;
             titleBar.ButtonBackgroundColor = Color.FromArgb(255, 126, 127, 130);
             titleBar.ButtonForegroundColor = Colors.White;
-
         }
 
         private void OnCmdMenuHamburger_Click(object sender, RoutedEventArgs e)

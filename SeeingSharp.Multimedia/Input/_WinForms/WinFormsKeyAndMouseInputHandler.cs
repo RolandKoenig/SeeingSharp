@@ -101,9 +101,9 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public WinFormsKeyAndMouseInputHandler()
         {
-            //m_pressedKeys = new List<Keys>();
-
             m_stateMouseOrPointer = new MouseOrPointerState();
+            m_stateMouseOrPointer.Type = MouseOrPointerType.Mouse;
+
             m_stateKeyboard = new KeyboardState();
         }
 

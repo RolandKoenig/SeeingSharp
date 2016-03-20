@@ -62,6 +62,8 @@ namespace SeeingSharp.Multimedia.Input
         public WpfKeyAndMouseInputHandler()
         {
             m_stateMouseOrPointer = new MouseOrPointerState();
+            m_stateMouseOrPointer.Type = MouseOrPointerType.Mouse;
+
             m_stateKeyboard = new KeyboardState();
         }
 

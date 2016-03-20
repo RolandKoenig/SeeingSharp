@@ -525,8 +525,6 @@ namespace SeeingSharp.Multimedia.Views
             if (!GraphicsCore.IsInitialized) { return; }
             if (this.IsInDesignMode()) { return; }
 
-            ////Clear view resources
-            //m_renderLoop.UnloadViewResources();
             m_renderLoop.DeregisterRenderLoop();
         }
 
@@ -577,9 +575,19 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Gets the RenderLoop that is currently in use.
         /// </summary>
+        [Browsable(false)]
         public RenderLoop RenderLoop
         {
             get { return m_renderLoop; }
+        }
+
+        /// <summary>
+        /// Gets or sets the clear color of this 3D view.
+        /// </summary>
+        public System.Windows.Media.Color ClearColor
+        {
+            get { return m_renderLoop.ClearColor.ToWpfColor(); }
+            set { m_renderLoop.ClearColor = new Color4(value); }
         }
 
         /// <summary>

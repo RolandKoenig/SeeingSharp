@@ -28,6 +28,15 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Input
 {
+    public enum MouseOrPointerType
+    {
+        Mouse,
+
+        Touch,
+
+        Stylus
+    }
+
     public enum SeeingSharpInputMode
     {
         /// <summary>
