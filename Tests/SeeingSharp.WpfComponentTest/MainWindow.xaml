@@ -11,7 +11,7 @@
     <Grid>
         <ssharpMulti:SeeingSharpRendererElement>
             <ssharpMulti:FocusedPointCameraComponent
-                CameraDistanceMin="3" 
+                CameraDistanceMin="3"
                 CameraDistanceMax="10"
                 CameraDistanceInitial="5"/>
             <ssharpMulti:SimpleCenteredCubeComponent />

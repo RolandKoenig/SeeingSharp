@@ -80,13 +80,13 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Raised when it is possible for the UI thread to manipulate current filter list.
         /// </summary>
-        [Category("Graphics")]
+        [Category(Constants.DESIGNER_CATEGORY_RENDERER)]
         public event EventHandler<ManipulateFilterListArgs> ManipulateFilterList;
 
         /// <summary>
         /// Raises when mouse was down a short amount of time.
         /// </summary>
-        [Category("Graphics")]
+        [Category(Constants.DESIGNER_CATEGORY_RENDERER)]
         public event EventHandler<MouseEventArgs> MouseClickEx;
 
         /// <summary>
@@ -589,7 +589,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Discard rendering?
         /// </summary>
-        [Category("Rendering")]
+        [Category(Constants.DESIGNER_CATEGORY_RENDERER)]
         [DefaultValue(false)]
         public bool DiscardRendering
         {
@@ -600,7 +600,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Discard present of rendering results on the screen?
         /// </summary>
-        [Category("Rendering")]
+        [Category(Constants.DESIGNER_CATEGORY_RENDERER)]
         [DefaultValue(false)]
         public bool DiscardPresent
         {
@@ -628,7 +628,7 @@ namespace SeeingSharp.Multimedia.Views
         /// Gets the view configuration.
         /// </summary>
         [Browsable(true)]
-        [Category("Rendering")]
+        [Category(Constants.DESIGNER_CATEGORY_RENDERER)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [TypeConverter(typeof(ExpandableObjectConverter))]
         public GraphicsViewConfiguration ViewConfiguration
@@ -647,7 +647,7 @@ namespace SeeingSharp.Multimedia.Views
         }
 
         [Browsable(true)]
-        [Category("Rendering")]
+        [Category(Constants.DESIGNER_CATEGORY_RENDERER)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Editor(typeof(SeeingSharpRenderControlSceneComponentsEditor), typeof(UITypeEditor))]
         [MergableProperty(false)]

@@ -25,6 +25,7 @@ using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -227,18 +228,30 @@ namespace SeeingSharp.Multimedia.Components
 
         protected abstract Vector3 GetFocusedLocation();
 
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
         public float CameraDistanceInitial
         {
             get;
             set;
         }
 
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
         public float CameraDistanceMin
         {
             get;
             set;
         }
 
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
         public float CameraDistanceMax
         {
             get;
@@ -248,6 +261,10 @@ namespace SeeingSharp.Multimedia.Components
         /// <summary>
         /// Initial horizontal rotation of the camera (degrees).
         /// </summary>
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
         public float CameraHRotationInitial
         {
             get { return m_hvRotation.X; }
@@ -257,6 +274,10 @@ namespace SeeingSharp.Multimedia.Components
         /// <summary>
         /// Initial vertical rotation of the camera (degrees).
         /// </summary>
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
         public float CameraVRotationInitial
         {
             get { return m_hvRotation.Y; }

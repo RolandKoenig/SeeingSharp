@@ -25,6 +25,7 @@ using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -49,6 +50,10 @@ namespace SeeingSharp.Multimedia.Components
             else { return Vector3.Zero; }
         }
 
+#if DESKTOP
+        [Browsable(false)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
         public SceneSpacialObject FocusedObject
         {
             get;

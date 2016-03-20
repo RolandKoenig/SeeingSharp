@@ -50,19 +50,31 @@ namespace SeeingSharp.Multimedia.Components
             return m_focusedLocation;
         }
 
-        public float XPos
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
+        public float FocusedPointX
         {
             get { return m_focusedLocation.X; }
             set { m_focusedLocation.X = value; }
         }
 
-        public float YPos
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
+        public float FocusedPointY
         {
             get { return m_focusedLocation.Y; }
             set { m_focusedLocation.Y = value; }
         }
 
-        public float ZPos
+#if DESKTOP
+        [Browsable(true)]
+        [Category(Constants.DESIGNER_CATEGORY_CAMERA)]
+#endif
+        public float FocusedPointZ
         {
             get { return m_focusedLocation.Z; }
             set { m_focusedLocation.Z = value; }

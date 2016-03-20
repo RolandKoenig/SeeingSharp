@@ -72,5 +72,10 @@ namespace SeeingSharp.Multimedia
         public const double UPDATE_DEFAULT_CYCLE_MS = 50.0;
         public const long UPDATE_DEFAULT_CYCLES_TICKS = 500000;
         #endregion
+
+        #region Constants for design-time
+        public const string DESIGNER_CATEGORY_RENDERER = "Renderer";
+        public const string DESIGNER_CATEGORY_CAMERA = "Camera";
+        #endregion
     }
 }
