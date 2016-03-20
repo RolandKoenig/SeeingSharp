@@ -56,8 +56,6 @@ namespace SeeingSharp.Multimedia.Views
         public SeeingSharpRenderPanel()
         {
             m_painter = new SeeingSharpPanelPainter(this);
-
-      
         }
 
         /// <summary>

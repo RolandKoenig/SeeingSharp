@@ -69,7 +69,7 @@ namespace SeeingSharp.Multimedia.Core
             {
                 RequestType = SceneComponentRequestType.Attach,
                 Component = component,
-                CorrespondingView = sourceView
+                CorrespondingView = component.IsViewSpecific ? sourceView : null
             });
         }
 
@@ -90,7 +90,7 @@ namespace SeeingSharp.Multimedia.Core
             {
                 RequestType = SceneComponentRequestType.Detach,
                 Component = component,
-                CorrespondingView = sourceView
+                CorrespondingView = component.IsViewSpecific ? sourceView : null
             });
         }
 
@@ -147,7 +147,8 @@ namespace SeeingSharp.Multimedia.Core
                         if(!string.IsNullOrEmpty(actRequest.Component.ComponentGroup))
                         {
                             foreach(SceneComponentInfo actObsoleteComponent in GetExistingComponentsByGroup(
-                                actRequest.Component.ComponentGroup))
+                                actRequest.Component.ComponentGroup, 
+                                actRequest.Component.IsViewSpecific ? actRequest.CorrespondingView : null))
                             {
                                 m_componentRequests.Enqueue(new SceneComponentRequest()
                                 {
@@ -228,12 +229,13 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
-        private IEnumerable<SceneComponentInfo> GetExistingComponentsByGroup(string groupName)
+        private IEnumerable<SceneComponentInfo> GetExistingComponentsByGroup(string groupName, ViewInformation correspondingView)
         {
             int attachedComponentCount = m_attachedComponents.Count;
             for (int loop = 0; loop < m_attachedComponents.Count; loop++)
             {
-                if(m_attachedComponents[loop].Component.ComponentGroup == groupName)
+                if((m_attachedComponents[loop].Component.ComponentGroup == groupName) &&
+                   (m_attachedComponents[loop].CorrespondingView == correspondingView))
                 {
                     yield return m_attachedComponents[loop];
                 }

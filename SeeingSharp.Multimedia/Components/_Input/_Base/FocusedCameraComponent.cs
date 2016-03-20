@@ -40,6 +40,10 @@ namespace SeeingSharp.Multimedia.Components
         private const float SINGLE_ROTATION_V = EngineMath.RAD_180DEG / 100f;
         #endregion
 
+        #region Configuration
+        private Vector2 m_hvRotation;
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FocusedPointCameraComponent"/> class.
         /// </summary>
@@ -48,7 +52,7 @@ namespace SeeingSharp.Multimedia.Components
             this.CameraDistanceInitial = 4f;
             this.CameraDistanceMin = 3f;
             this.CameraDistanceMax = 10f;
-            this.CameraHVRotationInitial = new Vector2(
+            m_hvRotation = new Vector2(
                 EngineMath.RAD_45DEG,
                 EngineMath.RAD_45DEG);
         }
@@ -65,7 +69,7 @@ namespace SeeingSharp.Multimedia.Components
         {
             PerSceneContext result = new PerSceneContext();
             result.CameraDistance = this.CameraDistanceInitial;
-            result.CameraHVRotation = this.CameraHVRotationInitial;
+            result.CameraHVRotation = m_hvRotation;
             return result;
         }
 
@@ -241,10 +245,22 @@ namespace SeeingSharp.Multimedia.Components
             set;
         }
 
-        public Vector2 CameraHVRotationInitial
+        /// <summary>
+        /// Initial horizontal rotation of the camera (degrees).
+        /// </summary>
+        public float CameraHRotationInitial
         {
-            get;
-            set;
+            get { return m_hvRotation.X; }
+            set { m_hvRotation.X = value; }
+        }
+
+        /// <summary>
+        /// Initial vertical rotation of the camera (degrees).
+        /// </summary>
+        public float CameraVRotationInitial
+        {
+            get { return m_hvRotation.Y; }
+            set { m_hvRotation.Y = value; }
         }
 
         public override string ComponentGroup

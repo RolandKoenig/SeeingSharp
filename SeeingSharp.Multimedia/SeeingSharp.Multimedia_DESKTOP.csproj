@@ -92,6 +92,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
@@ -404,6 +405,7 @@
     <Compile Include="Core\_SceneComponents\SceneComponent.cs" />
     <Compile Include="Components\_Input\FreeMovingCameraComponent.cs" />
     <Compile Include="Components\_Generic\SimpleCenteredCubeComponent.cs" />
+    <Compile Include="Views\Design\SeeingSharpRenderControlSceneComponentsEditor.cs" />
     <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Video\MediaPlayerComponent.cs">
       <SubType>Component</SubType>

@@ -185,10 +185,6 @@ namespace WinFormsSampleContainer
 
             if (this.DesignMode) { return; }
 
-            // Apply components
-            m_ctrlRenderer.RenderLoop.SceneComponents.Add(
-                new FreeMovingCameraComponent());
-
             // Just a dummy call to trigger initialization
             Assembly test = System.Windows.Application.ResourceAssembly;
 

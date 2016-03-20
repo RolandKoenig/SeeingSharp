@@ -22,8 +22,11 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using SeeingSharp.Multimedia.Views.Design;
 using System.ComponentModel;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading;
@@ -641,6 +644,16 @@ namespace SeeingSharp.Multimedia.Views
         public RenderLoop RenderLoop
         {
             get { return m_renderLoop; }
+        }
+
+        [Browsable(true)]
+        [Category("Rendering")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        [Editor(typeof(SeeingSharpRenderControlSceneComponentsEditor), typeof(UITypeEditor))]
+        [MergableProperty(false)]
+        public ObservableCollection<SceneComponentBase> SceneComponents
+        {
+            get { return m_renderLoop.SceneComponents; }
         }
 
         /// <summary>

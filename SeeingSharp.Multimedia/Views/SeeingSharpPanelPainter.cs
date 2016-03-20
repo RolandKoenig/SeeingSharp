@@ -24,7 +24,7 @@ using System;
 using System.Reactive.Linq;
 using System.Threading;
 using System.Collections.Generic;
-using SharpDX;
+using System.Collections.ObjectModel;
 using Windows.Foundation;
 using Windows.Graphics.Display;
 using Windows.UI.Xaml;
@@ -40,7 +40,6 @@ using SeeingSharp.Util;
 //Some namespace mappings
 using DXGI = SharpDX.DXGI;
 using D3D11 = SharpDX.Direct3D11;
-using System.Collections.ObjectModel;
 
 namespace SeeingSharp.Multimedia.Views
 {
@@ -570,22 +569,6 @@ namespace SeeingSharp.Multimedia.Views
         }
 
         /// <summary>
-        /// Gets or sets the clear color for the 3D view.
-        /// </summary>
-        public Windows.UI.Color ClearColor
-        {
-            get
-            {
-                return m_renderLoop.ClearColor.ToWindowsColor();
-            }
-            set
-            {
-                m_renderLoop.ClearColor = new Color4(
-                    value.R, value.G, value.B, value.A);
-            }
-        }
-
-        /// <summary>
         /// Gets a collection containing all SceneComponents associated to this view.
         /// </summary>
         public ObservableCollection<SceneComponentBase> SceneComponents
@@ -600,6 +583,15 @@ namespace SeeingSharp.Multimedia.Views
         bool IInputEnabledView.Focused
         {
             get { return m_renderLoop.IsRegisteredOnMainLoop; }
+        }
+
+        /// <summary>
+        /// Gets or sets the clear color for the 3D view.
+        /// </summary>
+        public Windows.UI.Color ClearColor
+        {
+            get { return m_renderLoop.ClearColor.ToWindowsColor(); }
+            set { m_renderLoop.ClearColor = new Color4(value); }
         }
 
         public Panel TargetPanel

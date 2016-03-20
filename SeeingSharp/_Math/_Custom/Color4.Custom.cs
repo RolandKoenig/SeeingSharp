@@ -117,7 +117,17 @@ namespace SeeingSharp
         }
 #endif
 
-#if WINRT
+#if UNIVERSAL
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Color4"/> struct.
+        /// </summary>
+        /// <param name="winColor">The Windows.UI.Color structure from which to create a Color4.</param>
+        public Color4(Windows.UI.Color winColor)
+            : this(winColor.R, winColor.G, winColor.B, winColor.A)
+        {
+
+        }
+
         /// <summary>
         /// Converts this value to a argb value
         /// </summary>

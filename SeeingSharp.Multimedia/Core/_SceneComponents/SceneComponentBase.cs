@@ -22,6 +22,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,7 +33,19 @@ namespace SeeingSharp.Multimedia.Core
     /// Base class for all scene components.
     /// </summary>
     public abstract class SceneComponentBase
+#if DESKTOP
+        : IComponent, IDisposable
+#endif
     {
+
+#if DESKTOP
+        event EventHandler IComponent.Disposed
+        {
+            add { }
+            remove { }
+        }
+#endif
+
         internal abstract object AttachInternal(SceneManipulator manipulator, ViewInformation correspondingView);
 
         internal abstract void DetachInternal(SceneManipulator manipulator, ViewInformation correspondingView, object componentContext);
@@ -47,6 +60,9 @@ namespace SeeingSharp.Multimedia.Core
         /// This feature was developed initially for various camera controls which 
         /// should not be activ simultaneously.
         /// </summary>
+#if DESKTOP
+        [Browsable(false)]
+#endif
         public virtual string ComponentGroup
         {
             get { return string.Empty; }
@@ -55,9 +71,25 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Is this component specific for one view?
         /// </summary>
+#if DESKTOP
+        [Browsable(false)]
+#endif
         public virtual bool IsViewSpecific
         {
             get { return false; }
         }
+
+#if DESKTOP
+        ISite System.ComponentModel.IComponent.Site
+        {
+            get;
+            set;
+        }
+
+        void IDisposable.Dispose()
+        {
+
+        }
+#endif
     }
 }

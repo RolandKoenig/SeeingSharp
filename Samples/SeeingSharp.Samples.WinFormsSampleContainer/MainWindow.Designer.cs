@@ -56,6 +56,7 @@ namespace WinFormsSampleContainer
             this.m_barProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
+            this.m_compFreeCamera = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
             this.m_splitter = new System.Windows.Forms.SplitContainer();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
@@ -290,6 +291,7 @@ namespace WinFormsSampleContainer
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
+            this.m_ctrlRenderer.SceneComponents.Add(this.m_compFreeCamera);
             this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 334);
             this.m_ctrlRenderer.TabIndex = 6;
             this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
@@ -376,6 +378,7 @@ namespace WinFormsSampleContainer
         private System.Windows.Forms.ToolStripButton m_cmdShowSource;
         private System.Windows.Forms.ToolStripButton m_cmdHelp;
         private System.Windows.Forms.ToolStripButton m_cmdNewChildWindow;
+        private SeeingSharp.Multimedia.Components.FreeMovingCameraComponent m_compFreeCamera;
     }
 }
 

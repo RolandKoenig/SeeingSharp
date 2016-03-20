@@ -25,6 +25,7 @@ using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Input;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Numerics;
 using System.Text;
@@ -34,23 +35,37 @@ namespace SeeingSharp.Multimedia.Components
 {
     public class FocusedPointCameraComponent : FocusedCameraComponent
     {
+        private Vector3 m_focusedLocation;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="FocusedPointCameraComponent"/> class.
         /// </summary>
         public FocusedPointCameraComponent()
         {
-            this.FocusedLocation = Vector3.Zero;
+            m_focusedLocation = Vector3.Zero;
         }
 
         protected override Vector3 GetFocusedLocation()
         {
-            return this.FocusedLocation;
+            return m_focusedLocation;
         }
 
-        public Vector3 FocusedLocation
+        public float XPos
         {
-            get;
-            set;
+            get { return m_focusedLocation.X; }
+            set { m_focusedLocation.X = value; }
+        }
+
+        public float YPos
+        {
+            get { return m_focusedLocation.Y; }
+            set { m_focusedLocation.Y = value; }
+        }
+
+        public float ZPos
+        {
+            get { return m_focusedLocation.Z; }
+            set { m_focusedLocation.Z = value; }
         }
     }
 }

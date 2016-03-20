@@ -32,19 +32,21 @@
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_toolBar = new System.Windows.Forms.ToolStrip();
             this.m_cboDevice = new System.Windows.Forms.ToolStripDropDownButton();
+            this.m_compFreeMovingCam = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
             this.m_toolBar.SuspendLayout();
             this.SuspendLayout();
             // 
             // m_ctrlRenderer
             // 
-            this.m_ctrlRenderer.DiscardRendering = true;
             this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 27);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
+            this.m_ctrlRenderer.SceneComponents.Add(this.m_compFreeMovingCam);
             this.m_ctrlRenderer.Size = new System.Drawing.Size(506, 365);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "m_ctrlRenderer";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
+            this.m_ctrlRenderer.ViewConfiguration.AlphaEnabledSwapChain = false;
             this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.2F;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
             this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
@@ -97,5 +99,6 @@
         private SeeingSharp.Multimedia.Views.SeeingSharpRendererControl m_ctrlRenderer;
         private System.Windows.Forms.ToolStrip m_toolBar;
         private System.Windows.Forms.ToolStripDropDownButton m_cboDevice;
+        private SeeingSharp.Multimedia.Components.FreeMovingCameraComponent m_compFreeMovingCam;
     }
 }
