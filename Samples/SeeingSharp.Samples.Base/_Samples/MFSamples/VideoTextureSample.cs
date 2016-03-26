@@ -56,7 +56,7 @@ namespace SeeingSharp.Samples.Base.MFSamples
         /// <param name="targetRenderLoop">The target render loop.</param>
         public override async Task OnStartupAsync(RenderLoop targetRenderLoop)
         {
-            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+            targetRenderLoop.EnsureNotNull(nameof(targetRenderLoop));
 
             // Get and configure the camera
             Camera3DBase camera = targetRenderLoop.Camera as PerspectiveCamera3D;

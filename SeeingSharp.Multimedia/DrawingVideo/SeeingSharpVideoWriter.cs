@@ -72,9 +72,9 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// </summary>
         internal void StartRendering(Size2 videoSize)
         {
-            videoSize.EnsureNotEmpty("videoSize");
-            if (m_hasStarted) { throw new SeeingSharpGraphicsException("VideoWriter has already started before!"); }
-            if (m_hasFinished) { throw new SeeingSharpGraphicsException("VideoWriter has already finished before!"); }
+            videoSize.EnsureNotEmpty(nameof(videoSize));
+            if (m_hasStarted) { throw new SeeingSharpGraphicsException($"{nameof(SeeingSharpVideoWriter)} has already started before!"); }
+            if (m_hasFinished) { throw new SeeingSharpGraphicsException($"{nameof(SeeingSharpVideoWriter)} has already finished before!"); }
 
             m_videoSize = videoSize;
 
@@ -105,10 +105,10 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         {
             try
             {
-                device.EnsureNotNull("device");
-                uploadedTexture.EnsureNotNull("uploadedTexture");
-                if (!m_hasStarted) { throw new SeeingSharpGraphicsException("VideoWriter is not started!"); }
-                if (m_hasFinished) { throw new SeeingSharpGraphicsException("VideoWriter has already finished before!"); }
+                device.EnsureNotNull(nameof(device));
+                uploadedTexture.EnsureNotNull(nameof(uploadedTexture));
+                if (!m_hasStarted) { throw new SeeingSharpGraphicsException($"{nameof(SeeingSharpVideoWriter)} is not started!"); }
+                if (m_hasFinished) { throw new SeeingSharpGraphicsException($"{nameof(SeeingSharpVideoWriter)} has already finished before!"); }
 
                 // Check for correct image size
                 if (m_videoSize != uploadedTexture.PixelSize)
@@ -131,8 +131,8 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         {
             try
             {
-                if (!m_hasStarted) { throw new SeeingSharpGraphicsException("VideoWriter is not started!"); }
-                if (m_hasFinished) { throw new SeeingSharpGraphicsException("VideoWriter has already finished before!"); }
+                if (!m_hasStarted) { throw new SeeingSharpGraphicsException($"{nameof(SeeingSharpVideoWriter)} is not started!"); }
+                if (m_hasFinished) { throw new SeeingSharpGraphicsException($"{nameof(SeeingSharpVideoWriter)} has already finished before!"); }
 
                 FinishRenderingInternal();
             }

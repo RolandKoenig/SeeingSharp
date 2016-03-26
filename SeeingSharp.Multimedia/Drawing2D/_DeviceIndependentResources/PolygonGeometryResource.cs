@@ -68,8 +68,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="polygon">The polygon.</param>
         public unsafe void SetContent(Polygon2D polygon)
         {
-            polygon.EnsureNotNull("polygon");
-            polygon.Vertices.EnsureMoreThanZeroElements("polygon.Vertices");
+            polygon.EnsureNotNull(nameof(polygon));
+            polygon.Vertices.EnsureMoreThanZeroElements($"{nameof(polygon)}.{nameof(polygon.Vertices)}");
 
             using (D2D.GeometrySink geoSink = m_d2dGeometry.Open())
             {
@@ -102,7 +102,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public bool Intersects(PolygonGeometryResource otherGeometry)
         {
             this.EnsureNotNullOrDisposed("this");
-            otherGeometry.EnsureNotNullOrDisposed("otherGeometry");
+            otherGeometry.EnsureNotNullOrDisposed(nameof(otherGeometry));
 
             D2D.GeometryRelation relation = m_d2dGeometry.Compare(otherGeometry.m_d2dGeometry);
 

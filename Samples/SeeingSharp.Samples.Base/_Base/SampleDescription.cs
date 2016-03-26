@@ -44,10 +44,10 @@ namespace SeeingSharp.Samples.Base
         /// <param name="sampleClass">The class behind the sample.</param>
         public SampleDescription(SampleInfoAttribute attrib, Type sampleClass)
         {
-            attrib.EnsureNotNull("attrib");
-            attrib.Category.EnsureNotNullOrEmpty("attrib.Category");
-            attrib.Name.EnsureNotNullOrEmpty("attrib.Name");
-            sampleClass.EnsureNotNull("sampleType");
+            attrib.EnsureNotNull(nameof(attrib));
+            attrib.Category.EnsureNotNullOrEmpty(nameof(attrib.Category));
+            attrib.Name.EnsureNotNullOrEmpty(nameof(attrib.Name));
+            sampleClass.EnsureNotNull(nameof(sampleClass));
 
             m_attrib = attrib;
             m_sampleClass = sampleClass;

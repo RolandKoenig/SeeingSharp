@@ -66,8 +66,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="radiusY">The radius in y direction.</param>
         public unsafe void SetContent(Vector2 center, float radiusX, float radiusY)
         {
-            radiusX.EnsurePositive("radiusX");
-            radiusY.EnsurePositive("radiusY");
+            radiusX.EnsurePositive(nameof(radiusX));
+            radiusY.EnsurePositive(nameof(radiusY));
 
             m_center = center;
             m_radiusX = radiusX;
@@ -86,7 +86,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         internal override D2D.Geometry GetGeometry()
         {
-            this.EnsureNotNullOrDisposed("m_geometry");
+            this.EnsureNotNullOrDisposed(nameof(m_geometry));
 
             return m_geometry;
         }

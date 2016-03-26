@@ -68,7 +68,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <param name="captureDevice">The capture device.</param>
         public MediaFoundationVideoReader(CaptureDeviceInfo captureDevice)
         {
-            captureDevice.EnsureNotNullOrDisposed("captureDevice");
+            captureDevice.EnsureNotNullOrDisposed(nameof(captureDevice));
 
             try
             {
@@ -126,7 +126,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <param name="videoSource">The source video file.</param>
         public MediaFoundationVideoReader(ResourceLink videoSource)
         {
-            videoSource.EnsureNotNull("videoSource");
+            videoSource.EnsureNotNull(nameof(videoSource));
 
             try
             {
@@ -248,9 +248,9 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         /// <param name="updateEndReached">Do update the EndReached flag?</param>
         public void SetCurrentPosition(TimeSpan position, bool updateEndReached = true)
         {
-            position.EnsureLongerOrEqualZero("position");
-            position.EnsureShorterOrEqualThan(this.Duration, "position");
-            this.EnsureSeekable("self");
+            position.EnsureLongerOrEqualZero(nameof(position));
+            position.EnsureShorterOrEqualThan(this.Duration, nameof(position));
+            this.EnsureSeekable("this");
 
             m_sourceReader.SetCurrentPosition(position.Ticks);
 

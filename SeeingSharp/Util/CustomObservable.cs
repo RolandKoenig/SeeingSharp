@@ -65,7 +65,7 @@ namespace SeeingSharp.Util
 
         public void PushError(Exception error)
         {
-            m_isFinished.EnsureFalse("m_isFinished");
+            m_isFinished.EnsureFalse(nameof(m_isFinished));
 
             m_isFinished = true;
             for (int loop = 0; loop < m_observers.Count; loop++)
@@ -76,7 +76,7 @@ namespace SeeingSharp.Util
 
         public void PushCompleted()
         {
-            m_isFinished.EnsureFalse("m_isFinished");
+            m_isFinished.EnsureFalse(nameof(m_isFinished));
 
             m_isFinished = true;
             for (int loop = 0; loop < m_observers.Count; loop++)

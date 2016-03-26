@@ -58,9 +58,9 @@ namespace SeeingSharp.Multimedia.Input
             RenderLoop renderLoop,
             bool currentlyDispsoing)
         {
-            viewObject.EnsureNotNull("viewObject");
-            inputHandlers.EnsureNotNull("inputHandlers");
-            renderLoop.EnsureNotNull("renderLoop");
+            viewObject.EnsureNotNull(nameof(viewObject));
+            inputHandlers.EnsureNotNull(nameof(inputHandlers));
+            renderLoop.EnsureNotNull(nameof(renderLoop));
 
             // Clear previous input handlers
             if (inputHandlers.Count > 0)

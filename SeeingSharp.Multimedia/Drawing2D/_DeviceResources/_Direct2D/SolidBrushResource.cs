@@ -53,7 +53,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             Color4 singleColor,
             float opacity = 1f)
         {
-            opacity.EnsureInRange(0f, 1f, "opacity");
+            opacity.EnsureInRange(0f, 1f, nameof(opacity));
 
             m_loadedBrushes = new D2D.SolidColorBrush[GraphicsCore.Current.DeviceCount];
 

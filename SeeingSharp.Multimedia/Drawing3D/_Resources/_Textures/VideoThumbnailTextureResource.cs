@@ -63,14 +63,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="timestamp">The Timestamp from which to create the timestamp.</param>
         public VideoThumbnailTextureResource(ResourceLink videoSource, TimeSpan timestamp)
         {
-            videoSource.EnsureNotNull("videoSource");
-            timestamp.EnsureLongerOrEqualZero("timestamp");
+            videoSource.EnsureNotNull(nameof(videoSource));
+            timestamp.EnsureLongerOrEqualZero(nameof(timestamp));
 
             // Create the FrameByFrameVideoReader
             try
             {
                 m_videoReader = new FrameByFrameVideoReader(videoSource);
-                m_videoReader.EnsureSeekable("m_videoReader");
+                m_videoReader.EnsureSeekable(nameof(m_videoReader));
             }
             catch
             {

@@ -61,10 +61,10 @@ namespace SeeingSharp.Multimedia.Drawing2D
             Gamma gamma = Gamma.StandardRgb,
             float opacity = 1f)
         {;
-            gradientStops.EnsureNotNullOrEmpty("gradientStops");
-            opacity.EnsureInRange(0f, 1f, "opacity");
-            radiusX.EnsurePositive("radiusX");
-            radiusY.EnsurePositive("radiusY");
+            gradientStops.EnsureNotNullOrEmpty(nameof(gradientStops));
+            opacity.EnsureInRange(0f, 1f, nameof(opacity));
+            radiusX.EnsurePositive(nameof(radiusX));
+            radiusY.EnsurePositive(nameof(radiusY));
 
             m_gradientStops = gradientStops;
             m_center = center;

@@ -50,8 +50,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public CameraStraightMoveAnimation(Camera3DBase targetCamera, Camera3DViewPoint targetViewPoint, TimeSpan animationTime)
             : base(targetCamera, AnimationType.FixedTime, animationTime)
         {
-            targetCamera.EnsureNotNull("targetCamera");
-            targetViewPoint.EnsureNotNull("targetViewPoint");
+            targetCamera.EnsureNotNull(nameof(targetCamera));
+            targetViewPoint.EnsureNotNull(nameof(targetViewPoint));
  
 
             m_camera = targetCamera;

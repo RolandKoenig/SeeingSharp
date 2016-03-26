@@ -46,7 +46,7 @@ namespace SeeingSharp.Util
         /// <param name="uri">The uri from which to read.</param>
         public UriResourceLink(Uri uri)
         {
-            uri.EnsureNotNull("uri");
+            uri.EnsureNotNull(nameof(uri));
 
             m_resourceUri = uri;
         }

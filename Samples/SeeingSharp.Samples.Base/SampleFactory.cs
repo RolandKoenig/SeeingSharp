@@ -110,7 +110,7 @@ namespace SeeingSharp.Samples.Base
         /// <param name="sampleInfo">The sample information.</param>
         public SampleBase CreateSample(SampleDescription sampleInfo)
         {
-            sampleInfo.EnsureNotNull("sampleInfo");
+            sampleInfo.EnsureNotNull(nameof(sampleInfo));
 
             var actSample = m_sampleTypes.First((actTuple) => actTuple.Item1 == sampleInfo);
             return Activator.CreateInstance(actSample.Item2) as SampleBase;
@@ -123,8 +123,8 @@ namespace SeeingSharp.Samples.Base
         /// <param name="sampleDesc">The sample to be applied.</param>
         public SampleBase ApplySample(RenderLoop renderLoop, SampleDescription sampleDesc)
         {
-            renderLoop.EnsureNotNull("renderLoop");
-            sampleDesc.EnsureNotNull("sampleDesc");
+            renderLoop.EnsureNotNull(nameof(renderLoop));
+            sampleDesc.EnsureNotNull(nameof(sampleDesc));
 
             SampleBase sample = Activator.CreateInstance(sampleDesc.SampleClass) as SampleBase;
             sample.OnStartupAsync(renderLoop);

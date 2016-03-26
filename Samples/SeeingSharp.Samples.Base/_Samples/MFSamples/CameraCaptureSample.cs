@@ -58,7 +58,7 @@ namespace SeeingSharp.Samples.Base.MFSamples
         /// <param name="targetRenderLoop">The target render loop.</param>
         public override async Task OnStartupAsync(RenderLoop targetRenderLoop)
         {
-            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+            targetRenderLoop.EnsureNotNull(nameof(targetRenderLoop));
 
             // Start the device chooser
             m_deviceChooser = new CaptureDeviceChooser();
@@ -120,7 +120,7 @@ namespace SeeingSharp.Samples.Base.MFSamples
 
         private async Task OnStartupAsync_Fallback(RenderLoop targetRenderLoop)
         {
-            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+            targetRenderLoop.EnsureNotNull(nameof(targetRenderLoop));
 
             // Build dummy scene
             Scene scene = targetRenderLoop.Scene;

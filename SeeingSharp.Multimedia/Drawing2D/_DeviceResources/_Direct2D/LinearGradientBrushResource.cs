@@ -65,8 +65,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
             Gamma gamma = Gamma.StandardRgb,
             float opacity = 1f)
         {
-            startPoint.EnsureNotEqual(endPoint, "startPoint", "endPoint");
-            gradientStops.EnsureNotNullOrEmpty("gradientStops");
+            startPoint.EnsureNotEqual(endPoint, nameof(startPoint), nameof(endPoint));
+            gradientStops.EnsureNotNullOrEmpty(nameof(gradientStops));
 
             m_gradientStops = gradientStops;
             m_startPoint = startPoint;

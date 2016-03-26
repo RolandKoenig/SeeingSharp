@@ -129,7 +129,7 @@ namespace SeeingSharp.Multimedia.Input
             };
 
             // Check correct count of buttons
-            buttonStates.EnsureCountEquals(BUTTON_COUNT, "buttonStates");
+            buttonStates.EnsureCountEquals(BUTTON_COUNT, nameof(buttonStates));
 
             // Update mouse states
             for(int loop=0; loop<buttonStates.Length; loop++)

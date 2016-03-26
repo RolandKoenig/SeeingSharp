@@ -55,7 +55,7 @@ namespace SeeingSharp.Samples.Base.Input
         /// <param name="targetRenderLoop">The target render loop.</param>
         public override async Task OnStartupAsync(RenderLoop targetRenderLoop)
         {
-            targetRenderLoop.EnsureNotNull("targetRenderLoop");
+            targetRenderLoop.EnsureNotNull(nameof(targetRenderLoop));
 
             // Build dummy scene
             Scene scene = targetRenderLoop.Scene;

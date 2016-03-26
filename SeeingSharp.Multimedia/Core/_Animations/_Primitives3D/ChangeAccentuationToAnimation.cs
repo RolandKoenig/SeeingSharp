@@ -50,9 +50,9 @@ namespace SeeingSharp.Multimedia.Core
         public ChangeAccentuationToAnimation(IAnimatableObjectAccentuation targetObject, float targetAccentuation, TimeSpan duration)
             : base(targetObject, AnimationType.FixedTime, duration)
         {
-            targetObject.EnsureNotNull("targetObject");
-            targetAccentuation.EnsureInRange(0f, 1f, "targetAccentuation");
-            duration.EnsureLongerThanZero("duration");
+            targetObject.EnsureNotNull(nameof(targetObject));
+            targetAccentuation.EnsureInRange(0f, 1f, nameof(targetAccentuation));
+            duration.EnsureLongerThanZero(nameof(duration));
 
             m_targetObject = targetObject;
             m_duration = duration;

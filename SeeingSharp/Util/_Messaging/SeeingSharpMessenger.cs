@@ -96,7 +96,7 @@ namespace SeeingSharp.Util
         /// <param name="messengerName">The name of the messenger.</param>
         public static SeeingSharpMessenger GetByName(string messengerName)
         {
-            messengerName.EnsureNotNullOrEmpty("messengerName");
+            messengerName.EnsureNotNullOrEmpty(nameof(messengerName));
 
             var result = TryGetByName(messengerName);
             if (result == null) { throw new SeeingSharpException(string.Format("Unable to find Messenger for thread {0}!", messengerName)); }
@@ -109,7 +109,7 @@ namespace SeeingSharp.Util
         /// <param name="messengerName">The name of the messenger.</param>
         public static SeeingSharpMessenger TryGetByName(string messengerName)
         {
-            messengerName.EnsureNotNullOrEmpty("messengerName");
+            messengerName.EnsureNotNullOrEmpty(nameof(messengerName));
 
             SeeingSharpMessenger result = null;
             s_messengersByName.TryGetValue(messengerName, out result);
@@ -123,7 +123,7 @@ namespace SeeingSharp.Util
         /// <param name="targetThread">The thread on which this Messanger should work on.</param>
         public void ApplyForGlobalSynchronization(ObjectThread targetThread)
         {
-            targetThread.EnsureNotNull("targetThread");
+            targetThread.EnsureNotNull(nameof(targetThread));
 
             ApplyForGlobalSynchronization(
                 SeeingSharpMessageThreadingBehavior.EnsureMainSyncContextOnSyncCalls,
@@ -139,8 +139,8 @@ namespace SeeingSharp.Util
         /// <param name="syncContext">The synchronization context to be used.</param>
         public void ApplyForGlobalSynchronization(SeeingSharpMessageThreadingBehavior checkBehavior, string messengerName, SynchronizationContext syncContext)
         {
-            messengerName.EnsureNotNullOrEmpty("messengerName");
-            syncContext.EnsureNotNull("syncContext");
+            messengerName.EnsureNotNullOrEmpty(nameof(messengerName));
+            syncContext.EnsureNotNull(nameof(syncContext));
 
             m_messengerName = messengerName;
             m_checkBehavior = checkBehavior;
@@ -217,7 +217,7 @@ namespace SeeingSharp.Util
         /// <param name="target">The target win.forms control.</param>
         public void SubscribeAllOnControl(System.Windows.Forms.Control target)
         {
-            target.EnsureNotNull("target");
+            target.EnsureNotNull(nameof(target));
 
             IEnumerable<MessageSubscription> generatedSubscriptions = null;
 
@@ -257,7 +257,7 @@ namespace SeeingSharp.Util
         /// <param name="targetObject">The target object which is to subscribe..</param>
         public IEnumerable<MessageSubscription> SubscribeAll(object targetObject)
         {
-            targetObject.EnsureNotNull("targetObject");
+            targetObject.EnsureNotNull(nameof(targetObject));
 
             Type targetObjectType = targetObject.GetType();
 
@@ -308,14 +308,14 @@ namespace SeeingSharp.Util
         /// Subscribes to the given MessageType.
         /// </summary>
         /// <typeparam name="MessageType">Type of the message.</typeparam>
-        /// <param name="Messenger">Action to perform on incoming message.</param>
-        public MessageSubscription Subscribe<MessageType>(Action<MessageType> Messenger)
+        /// <param name="actionOnMessage">Action to perform on incoming message.</param>
+        public MessageSubscription Subscribe<MessageType>(Action<MessageType> actionOnMessage)
             where MessageType : SeeingSharpMessage
         {
-            Messenger.EnsureNotNull("Messenger");
+            actionOnMessage.EnsureNotNull(nameof(actionOnMessage));
 
             Type currentType = typeof(MessageType);
-            return this.Subscribe(Messenger, currentType);
+            return this.Subscribe(actionOnMessage, currentType);
         }
 
         /// <summary>
@@ -323,19 +323,19 @@ namespace SeeingSharp.Util
         /// </summary>
         /// <typeparam name="MessageType">The type of the message type.</typeparam>
         /// <param name="condition">The condition.</param>
-        /// <param name="Messenger">The messenger.</param>
+        /// <param name="actionOnMessage">The messenger.</param>
         /// <returns></returns>
-        public MessageSubscription SubscribeWhen<MessageType>(Func<MessageType, bool> condition, Action<MessageType> Messenger)
+        public MessageSubscription SubscribeWhen<MessageType>(Func<MessageType, bool> condition, Action<MessageType> actionOnMessage)
             where MessageType : SeeingSharpMessage
         {
-            condition.EnsureNotNull("condition");
-            Messenger.EnsureNotNull("Messenger");
+            condition.EnsureNotNull(nameof(condition));
+            actionOnMessage.EnsureNotNull(nameof(actionOnMessage));
 
             Action<MessageType> filterAction = (message) =>
             {
                 if (condition(message))
                 {
-                    Messenger(message);
+                    actionOnMessage(message);
                 }
             };
 
@@ -347,16 +347,16 @@ namespace SeeingSharp.Util
         /// Subscribes to the given message type.
         /// </summary>
         /// <param name="messageType">The type of the message.</param>
-        /// <param name="Messenger">Action to perform on incoming message.</param>
+        /// <param name="actionOnMessage">Action to perform on incoming message.</param>
         public MessageSubscription Subscribe(
-            Delegate Messenger, Type messageType)
+            Delegate actionOnMessage, Type messageType)
         {
-            Messenger.EnsureNotNull("Messenger");
-            messageType.EnsureNotNull("messageType");
+            actionOnMessage.EnsureNotNull(nameof(actionOnMessage));
+            messageType.EnsureNotNull(nameof(messageType));
 
             if (!messageType.GetTypeInfo().IsSubclassOf(typeof(SeeingSharpMessage))) { throw new ArgumentException("Given message type does not derive from SeeingSharpMessage!"); }
 
-            MessageSubscription newOne = new MessageSubscription(this, messageType, Messenger);
+            MessageSubscription newOne = new MessageSubscription(this, messageType, actionOnMessage);
             lock (m_messageSubscriptionsLock)
             {
                 if (m_messageSubscriptions.ContainsKey(messageType))
@@ -380,13 +380,13 @@ namespace SeeingSharp.Util
         /// Events OnHandleCreated and OnHandleDestroyed are used for subscribing / unsubscribing.
         /// </summary>
         /// <typeparam name="MessageType">Type of the message.</typeparam>
-        /// <param name="Messenger">Action to perform on incoming message.</param>
+        /// <param name="actionOnMessage">Action to perform on incoming message.</param>
         /// <param name="target">The target control.</param>
-        public void SubscribeOnControl<MessageType>(System.Windows.Forms.Control target, Action<MessageType> Messenger)
+        public void SubscribeOnControl<MessageType>(System.Windows.Forms.Control target, Action<MessageType> actionOnMessage)
             where MessageType : SeeingSharpMessage
         {
-            target.EnsureNotNull("target");
-            Messenger.EnsureNotNull("Messenger");
+            target.EnsureNotNull(nameof(target));
+            actionOnMessage.EnsureNotNull(nameof(actionOnMessage));
             MessageSubscription subscription = null;
 
             //Create handler delegates
@@ -394,7 +394,7 @@ namespace SeeingSharp.Util
             {
                 if (subscription == null)
                 {
-                    subscription = Subscribe(Messenger);
+                    subscription = Subscribe(actionOnMessage);
                 }
             };
             EventHandler onHandleDestroyed = (inner, eArgs) =>
@@ -411,7 +411,7 @@ namespace SeeingSharp.Util
             target.HandleDestroyed += onHandleDestroyed;
             if (target.IsHandleCreated)
             {
-                subscription = Subscribe(Messenger);
+                subscription = Subscribe(actionOnMessage);
             }
         }
 #endif
@@ -422,7 +422,7 @@ namespace SeeingSharp.Util
         /// <param name="messageSubscription">The subscription to clear.</param>
         public void Unsubscribe(MessageSubscription messageSubscription)
         {
-            messageSubscription.EnsureNotNull("messageSubscription");
+            messageSubscription.EnsureNotNull(nameof(messageSubscription));
 
             if (messageSubscription != null && !messageSubscription.IsDisposed)
             {
@@ -552,7 +552,7 @@ namespace SeeingSharp.Util
             MessageType message, bool isInitialCall)
             where MessageType : SeeingSharpMessage
         {
-            message.EnsureNotNull("message");
+            message.EnsureNotNull(nameof(message));
 
             try
             {

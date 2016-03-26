@@ -61,7 +61,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="videoSource">The video source.</param>
         public VideoTextureResource(ResourceLink videoSource)
         {
-            videoSource.EnsureNotNull("videoSource");
+            videoSource.EnsureNotNull(nameof(videoSource));
 
             m_videoReader = new AsyncRealtimeVideoReader(videoSource, immediateStart: true);
             m_videoReader.VideoReachedEnd += (sender, eArgs) =>
@@ -81,7 +81,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="videoReader">The video reader.</param>
         public VideoTextureResource(AsyncRealtimeVideoReader videoReader)
         {
-            videoReader.EnsureNotNull("videoReader");
+            videoReader.EnsureNotNull(nameof(videoReader));
 
             m_videoReader = videoReader;
 

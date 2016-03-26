@@ -41,7 +41,7 @@ namespace SeeingSharp.Util
         /// <param name="filePath">The path to the physical file.</param>
         public DesktopFileSystemResourceLink(string filePath)
         {
-            filePath.EnsureNotNullOrEmptyOrWhiteSpace("filePath");
+            filePath.EnsureNotNullOrEmptyOrWhiteSpace(nameof(filePath));
 
             m_filePath = filePath;
         }
@@ -68,7 +68,7 @@ namespace SeeingSharp.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
-            newFileName.EnsureNotNullOrEmptyOrWhiteSpace("newFileName");
+            newFileName.EnsureNotNullOrEmptyOrWhiteSpace(nameof(newFileName));
 
             string directoryName = Path.GetDirectoryName(m_filePath);
             if (!string.IsNullOrEmpty(directoryName))

@@ -95,8 +95,10 @@ namespace SeeingSharp.Multimedia.Views
         private int m_viewportWidth;
         #endregion
 
+        #region State members for handling rendering problems
         private int m_isDirtyCount = 0;
         private BitmapSource m_dummyBitmap;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SeeingSharpRendererElement"/> class.

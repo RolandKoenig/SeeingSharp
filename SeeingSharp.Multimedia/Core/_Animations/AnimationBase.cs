@@ -74,7 +74,7 @@ namespace SeeingSharp.Multimedia.Core
         public AnimationBase(object targetObject, AnimationType animationType, TimeSpan fixedTime)
             : this(targetObject)
         {
-            fixedTime.EnsureLongerOrEqualZero("fixedTime");
+            fixedTime.EnsureLongerOrEqualZero(nameof(fixedTime));
 
             m_animationType = animationType;
             m_fixedTime = fixedTime;
@@ -86,7 +86,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="fixedTime">This fixed time to be set.</param>
         protected void ChangeToFixedTime(TimeSpan fixedTime)
         {
-            fixedTime.EnsureLongerOrEqualZero("fixedTime");
+            fixedTime.EnsureLongerOrEqualZero(nameof(fixedTime));
 
             if (m_currentTime > TimeSpan.Zero) { throw new InvalidOperationException("Unable to change animation type when animation was started already!"); }
 

@@ -183,9 +183,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawGeometry(Geometry2DResourceBase geometry, BrushResource brush, float strokeWidth = 1f)
         {
-            geometry.EnsureNotNullOrDisposed("geometry");
-            brush.EnsureNotNull("brush");
-            strokeWidth.EnsurePositive("strokeWidth");
+            geometry.EnsureNotNullOrDisposed(nameof(geometry));
+            brush.EnsureNotNull(nameof(brush));
+            strokeWidth.EnsurePositive(nameof(strokeWidth));
 
             m_renderTarget.DrawGeometry(
                 geometry.GetGeometry(),
@@ -198,9 +198,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawRectangle(RectangleF rectangle, BrushResource brush, float strokeWidth = 1f)
         {
-            brush.EnsureNotNull("brush");
-            rectangle.EnsureNotEmpty("rectangle");
-            strokeWidth.EnsurePositive("strokeWidth");
+            brush.EnsureNotNull(nameof(brush));
+            rectangle.EnsureNotEmpty(nameof(rectangle));
+            strokeWidth.EnsurePositive(nameof(strokeWidth));
 
             m_renderTarget.DrawRectangle(
                 rectangle.ToDXRectangle(),
@@ -213,11 +213,11 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawRoundedRectangle(RectangleF rectangle, float radiusX, float radiusY, BrushResource brush, float strokeWidth = 1f)
         {
-            rectangle.EnsureNotEmpty("rectangle");
-            brush.EnsureNotNull("brush");
-            radiusX.EnsurePositive("radiusX");
-            radiusY.EnsurePositive("radiusY");
-            strokeWidth.EnsurePositive("strokeWidth");
+            rectangle.EnsureNotEmpty(nameof(rectangle));
+            brush.EnsureNotNull(nameof(brush));
+            radiusX.EnsurePositive(nameof(radiusX));
+            radiusY.EnsurePositive(nameof(radiusY));
+            strokeWidth.EnsurePositive(nameof(strokeWidth));
 
             D2D.RoundedRectangle roundedRect = new D2D.RoundedRectangle();
             roundedRect.Rect = rectangle.ToDXRectangle();
@@ -245,8 +245,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawLine(Vector2 start, Vector2 end, BrushResource brush, float strokeWidth = 1f)
         {
-            brush.EnsureNotNull("brush");
-            strokeWidth.EnsurePositiveAndNotZero("strokeWidth");
+            brush.EnsureNotNull(nameof(brush));
+            strokeWidth.EnsurePositiveAndNotZero(nameof(strokeWidth));
 
             m_renderTarget.DrawLine(
                 start.ToDXVector(), end.ToDXVector(),
@@ -261,8 +261,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="brush">The brush to be used.</param>
         public void FillRectangle(RectangleF rectangle, BrushResource brush)
         {
-            rectangle.EnsureNotEmpty("rectangle");
-            brush.EnsureNotNull("brush");
+            rectangle.EnsureNotEmpty(nameof(rectangle));
+            brush.EnsureNotNull(nameof(brush));
 
             m_renderTarget.FillRectangle(
                 rectangle.ToDXRectangle(),
@@ -274,8 +274,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void FillGeometry(Geometry2DResourceBase geometry, BrushResource brush)
         {
-            geometry.EnsureNotNullOrDisposed("geometry");
-            brush.EnsureNotNull("brush");
+            geometry.EnsureNotNullOrDisposed(nameof(geometry));
+            brush.EnsureNotNull(nameof(brush));
 
             m_renderTarget.FillGeometry(
                 geometry.GetGeometry(),
@@ -287,8 +287,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void FillGeometry(Geometry2DResourceBase geometry, BrushResource brush, BrushResource opacityBrush)
         {
-            geometry.EnsureNotNullOrDisposed("geometry");
-            brush.EnsureNotNull("brush");
+            geometry.EnsureNotNullOrDisposed(nameof(geometry));
+            brush.EnsureNotNull(nameof(brush));
 
             m_renderTarget.FillGeometry(
                 geometry.GetGeometry(),
@@ -305,10 +305,10 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="brush">The brush to be used.</param>
         public void FillRoundedRectangle(RectangleF rectangle, float radiusX, float radiusY, BrushResource brush)
         {
-            rectangle.EnsureNotEmpty("rectangle");
-            brush.EnsureNotNull("brush");
-            radiusX.EnsurePositive("radiusX");
-            radiusY.EnsurePositive("radiusY");
+            rectangle.EnsureNotEmpty(nameof(rectangle));
+            brush.EnsureNotNull(nameof(brush));
+            radiusX.EnsurePositive(nameof(radiusX));
+            radiusY.EnsurePositive(nameof(radiusY));
 
             D2D.RoundedRectangle roundedRect = new D2D.RoundedRectangle();
             roundedRect.Rect = rectangle.ToDXRectangle();
@@ -334,9 +334,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
             DrawTextOptions drawOptions = DrawTextOptions.None,
             MeasuringMode measuringMode = MeasuringMode.Natural)
         {
-            textToDraw.EnsureNotNull("textToDraw");
-            targetRectangle.EnsureNotEmpty("targetRectangle");
-            brush.EnsureNotNull("brush");
+            textToDraw.EnsureNotNull(nameof(textToDraw));
+            targetRectangle.EnsureNotEmpty(nameof(targetRectangle));
+            brush.EnsureNotNull(nameof(brush));
 
             D2D.DrawTextOptions drawOptionsD2D = (D2D.DrawTextOptions)drawOptions;
             D2D.MeasuringMode measuringModeD2D = (D2D.MeasuringMode)measuringMode;
@@ -364,9 +364,9 @@ namespace SeeingSharp.Multimedia.Drawing2D
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor, 
             int frameIndex = 0)
         {
-            bitmap.EnsureNotNull("bitmap");
-            destinationRectangle.EnsureNotEmpty("destinationRectangle");
-            opacity.EnsureInRange(0f, 1f, "opacity");
+            bitmap.EnsureNotNull(nameof(bitmap));
+            destinationRectangle.EnsureNotEmpty(nameof(destinationRectangle));
+            opacity.EnsureInRange(0f, 1f, nameof(opacity));
 
             int bitmapFrameCount = bitmap.TotalFrameCount;
             frameIndex.EnsureInRange(0, bitmapFrameCount - 1, nameof(frameIndex));
@@ -424,8 +424,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor,
             int frameIndex = 0)
         {
-            bitmap.EnsureNotNull("bitmap");
-            opacity.EnsureInRange(0f, 1f, "opacity");
+            bitmap.EnsureNotNull(nameof(bitmap));
+            opacity.EnsureInRange(0f, 1f, nameof(opacity));
 
             int bitmapFrameCount = bitmap.TotalFrameCount;
             frameIndex.EnsureInRange(0, bitmapFrameCount - 1, nameof(frameIndex));

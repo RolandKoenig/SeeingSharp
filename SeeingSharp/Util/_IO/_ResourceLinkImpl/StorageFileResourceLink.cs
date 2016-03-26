@@ -47,7 +47,7 @@ namespace SeeingSharp.Util
             StorageFile storageFile,
             StorageFolder parentFolder = null)
         {
-            storageFile.EnsureNotNull("storageFile");
+            storageFile.EnsureNotNull(nameof(storageFile));
 
             m_storageFile = storageFile;
             m_storageParentFolder = parentFolder;
@@ -76,7 +76,7 @@ namespace SeeingSharp.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
-            newFileName.EnsureNotNullOrEmptyOrWhiteSpace("newFileName");
+            newFileName.EnsureNotNullOrEmptyOrWhiteSpace(nameof(newFileName));
 
             if(m_storageParentFolder != null)
             {

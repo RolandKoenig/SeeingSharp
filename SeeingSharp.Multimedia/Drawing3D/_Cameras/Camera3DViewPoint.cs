@@ -54,7 +54,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="resourceLink">The resource link.</param>
         public static Camera3DViewPoint FromResourceLink(ResourceLink resourceLink)
         {
-            resourceLink.EnsureNotNull("resourceLink");
+            resourceLink.EnsureNotNull(nameof(resourceLink));
 
             XmlSerializer serializer = SerializerRepository.Current.GetSerializer(typeof(Camera3DViewPoint));
             using (Stream inStream = resourceLink.OpenInputStream())
@@ -69,7 +69,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="resourceLink">The resource link.</param>
         public static async Task<Camera3DViewPoint> FromResourceLinkAsync(ResourceLink resourceLink)
         {
-            resourceLink.EnsureNotNull("resourceLink");
+            resourceLink.EnsureNotNull(nameof(resourceLink));
 
             XmlSerializer serializer = SerializerRepository.Current.GetSerializer(typeof(Camera3DViewPoint));
             using (Stream inStream = await resourceLink.OpenInputStreamAsync())
@@ -84,7 +84,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="resourceLink">The resource link.</param>
         public void ToResourceLink(ResourceLink resourceLink)
         {
-            resourceLink.EnsureNotNull("resourceLink");
+            resourceLink.EnsureNotNull(nameof(resourceLink));
 
             XmlSerializer serializer = SerializerRepository.Current.GetSerializer(typeof(Camera3DViewPoint));
             using (Stream outStream = resourceLink.OpenOutputStream())

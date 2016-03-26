@@ -50,9 +50,9 @@ namespace SeeingSharp.Multimedia.Core
         public ChangeOpacityToAnimation(IAnimatableObjectOpacity targetObject, float targetOpacity, TimeSpan duration)
             : base(targetObject, AnimationType.FixedTime, duration)
         {
-            targetObject.EnsureNotNull("targetObject");
-            targetOpacity.EnsureInRange(0f, 1f, "targetOpacity");
-            duration.EnsureLongerThanZero("duration");
+            targetObject.EnsureNotNull(nameof(targetObject));
+            targetOpacity.EnsureInRange(0f, 1f, nameof(targetOpacity));
+            duration.EnsureLongerThanZero(nameof(duration));
 
             m_targetObject = targetObject;
             m_duration = duration;

@@ -89,10 +89,10 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="sceneLayer">The scene layer.</param>
         internal void SetSceneAndLayer(Scene scene, SceneLayer sceneLayer)
         {
-            scene.EnsureNotNull("scene");
-            sceneLayer.EnsureNotNull("sceneLayer");
-            m_scene.EnsureNull("m_scene");
-            m_sceneLayer.EnsureNull("m_sceneLayer");
+            scene.EnsureNotNull(nameof(scene));
+            sceneLayer.EnsureNotNull(nameof(sceneLayer));
+            m_scene.EnsureNull(nameof(m_scene));
+            m_sceneLayer.EnsureNull(nameof(m_sceneLayer));
 
             m_scene = scene;
             m_sceneLayer = sceneLayer;
@@ -112,8 +112,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal void ResetSceneAndLayer()
         {
-            m_scene.EnsureNotNull("m_scene");
-            m_sceneLayer.EnsureNotNull("m_sceneLayer");
+            m_scene.EnsureNotNull(nameof(m_scene));
+            m_sceneLayer.EnsureNotNull(nameof(m_sceneLayer));
 
             // Remember old scene
             Scene oldScene = m_scene;

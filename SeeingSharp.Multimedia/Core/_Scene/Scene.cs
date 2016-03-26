@@ -159,8 +159,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="cancelToken">The cancel token.</param>
         public Task WaitUntilVisibleAsync(SceneObject sceneObject, ViewInformation viewInfo, CancellationToken cancelToken = default(CancellationToken))
         {
-            sceneObject.EnsureNotNull("sceneObject");
-            sceneObject.EnsureNotNull("viewInfo");
+            sceneObject.EnsureNotNull(nameof(sceneObject));
+            sceneObject.EnsureNotNull(nameof(viewInfo));
 
             return WaitUntilVisibleAsync(
                 new SceneObject[] { sceneObject },
@@ -171,12 +171,12 @@ namespace SeeingSharp.Multimedia.Core
         /// Waits until the given object is visible.
         /// </summary>
         /// <param name="sceneObjects">The scene objects to check for.</param>
-        /// <param name="viewInfo">The view information.</param>
-        /// <param name="cancelToken">The cancel token.</param>
+        /// <param name="viewInfo">The view on which to check for visibility.</param>
+        /// <param name="cancelToken">The cancellation token.</param>
         public Task WaitUntilVisibleAsync(IEnumerable<SceneObject> sceneObjects, ViewInformation viewInfo, CancellationToken cancelToken = default(CancellationToken))
         {
-            sceneObjects.EnsureNotNull("sceneObjects");
-            viewInfo.EnsureNotNull("viewInfo");
+            sceneObjects.EnsureNotNull(nameof(sceneObjects));
+            viewInfo.EnsureNotNull(nameof(viewInfo));
 
             TaskCompletionSource<object> taskComplSource = new TaskCompletionSource<object>();
 
@@ -211,8 +211,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="viewInfo">The view information.</param>
         public bool AreAllObjectsVisible(IEnumerable<SceneObject> sceneObjects, ViewInformation viewInfo)
         {
-            sceneObjects.EnsureNotNull("sceneObjects");
-            viewInfo.EnsureNotNull("viewInfo");
+            sceneObjects.EnsureNotNull(nameof(sceneObjects));
+            viewInfo.EnsureNotNull(nameof(viewInfo));
 
             foreach (var actObject in sceneObjects)
             {
@@ -259,7 +259,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="manipulatorAction">The action which is able to manipulate the scene.</param>
         public Task ManipulateSceneAsync(Action<SceneManipulator> manipulatorAction)
         {
-            manipulatorAction.EnsureNotNull("manipulatorAction");
+            manipulatorAction.EnsureNotNull(nameof(manipulatorAction));
 
             SceneManipulator manipulator = new SceneManipulator(this);
             return this.PerformBeforeUpdateAsync(() =>
@@ -286,7 +286,7 @@ namespace SeeingSharp.Multimedia.Core
         internal NamedOrGenericKey AddResource<ResourceType>(Func<ResourceType> resourceFactory, NamedOrGenericKey resourceKey)
             where ResourceType : Resource
         {
-            resourceFactory.EnsureNotNull("resourceFactory");
+            resourceFactory.EnsureNotNull(nameof(resourceFactory));
 
             InitializeResourceDictionaries(true);
 
@@ -323,7 +323,7 @@ namespace SeeingSharp.Multimedia.Core
         internal void ManipulateResource<ResourceType>(Action<ResourceType> manipulateAction, NamedOrGenericKey resourceKey)
             where ResourceType : Resource
         {
-            manipulateAction.EnsureNotNull("manipulateAction");
+            manipulateAction.EnsureNotNull(nameof(manipulateAction));
 
             InitializeResourceDictionaries(true);
 
@@ -355,9 +355,9 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal List<SceneObject> Pick(Vector3 rayStart, Vector3 rayDirection, ViewInformation viewInformation, PickingOptions pickingOptions)
         {
-            rayDirection.EnsureNormalized("rayDirection");
-            viewInformation.EnsureNotNull("viewInformation");
-            pickingOptions.EnsureNotNull("pickingOptions");
+            rayDirection.EnsureNormalized(nameof(rayDirection));
+            viewInformation.EnsureNotNull(nameof(viewInformation));
+            pickingOptions.EnsureNotNull(nameof(pickingOptions));
 
             // Query for all objects below the cursor
             List<Tuple<SceneObject, float>> pickedObjects = new List<Tuple<SceneObject, float>>();
@@ -389,7 +389,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="sceneObjectLocal">The object to trigger filter logic for.</param>
         internal void TriggerNewFilter(SceneObject sceneObjectLocal)
         {
-            sceneObjectLocal.EnsureNotNull("sceneObjectLocal");
+            sceneObjectLocal.EnsureNotNull(nameof(sceneObjectLocal));
 
             sceneObjectLocal.ClearVisibilityStageData();
         }
@@ -400,7 +400,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="drawingLayer">The drawing layer.</param>
         internal void AddDrawingLayer(Custom2DDrawingLayer drawingLayer)
         {
-            drawingLayer.EnsureNotNull("drawingLayer");
+            drawingLayer.EnsureNotNull(nameof(drawingLayer));
 
             if (!m_drawing2DLayers.Contains(drawingLayer))
             {
@@ -414,7 +414,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="drawingLayer">The drawing layer.</param>
         internal void RemoveDrawingLayer(Custom2DDrawingLayer drawingLayer)
         {
-            drawingLayer.EnsureNotNull("drawingLayer");
+            drawingLayer.EnsureNotNull(nameof(drawingLayer));
 
             while (m_drawing2DLayers.Remove(drawingLayer)) { }
         }
@@ -427,8 +427,8 @@ namespace SeeingSharp.Multimedia.Core
         internal T Add<T>(T sceneObject, string layer)
             where T : SceneObject
         {
-            sceneObject.EnsureNotNull("sceneObject");
-            layer.EnsureNotNullOrEmpty("layer");
+            sceneObject.EnsureNotNull(nameof(sceneObject));
+            layer.EnsureNotNullOrEmpty(nameof(layer));
 
             InitializeResourceDictionaries(true);
 
@@ -451,7 +451,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="viewInformation">The view to register.</param>
         internal void RegisterView(ViewInformation viewInformation)
         {
-            viewInformation.EnsureNotNull("viewInformation");
+            viewInformation.EnsureNotNull(nameof(viewInformation));
 
             bool isFirstView = m_registeredViews.Count == 0;
 
@@ -493,7 +493,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="viewInformation">The view to check for.</param>
         internal bool IsViewRegistered(ViewInformation viewInformation)
         {
-            viewInformation.EnsureNotNull("viewInformation");
+            viewInformation.EnsureNotNull(nameof(viewInformation));
 
             return m_registeredViews.Contains(viewInformation);
         }
@@ -505,7 +505,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="viewInformation">The view to deregister.</param>
         internal void DeregisterView(ViewInformation viewInformation)
         {
-            viewInformation.EnsureNotNull("viewInformation");
+            viewInformation.EnsureNotNull(nameof(viewInformation));
 
             // Check for registration
             // If there is no one, then the caller made an error
@@ -538,7 +538,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="name">Name of the layer.</param>
         internal SceneLayer AddLayer(string name)
         {
-            name.EnsureNotNullOrEmpty("name");
+            name.EnsureNotNullOrEmpty(nameof(name));
 
             SceneLayer currentLayer = TryGetLayer(name);
             if (currentLayer != null) { throw new ArgumentException("There is already a SceneLayer with the given name!", "name"); }
@@ -569,7 +569,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="layerName">Name of the layer.</param>
         internal void RemoveLayer(string layerName)
         {
-            layerName.EnsureNotNullOrEmpty("layerName");
+            layerName.EnsureNotNullOrEmpty(nameof(layerName));
 
             SceneLayer layerToRemove = TryGetLayer(layerName);
             if (layerToRemove != null)
@@ -585,7 +585,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="newOrderID">the new order id.</param>
         internal void SetLayerOrderID(SceneLayer layer, int newOrderID)
         {
-            layer.EnsureNotNull("layer");
+            layer.EnsureNotNull(nameof(layer));
 
             if (!m_sceneLayers.Contains(layer)) { throw new ArgumentException("This scene does not contain the given layer!"); }
 
@@ -602,7 +602,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="layer">Layer to remove.</param>
         internal void RemoveLayer(SceneLayer layer)
         {
-            layer.EnsureNotNull("layer");
+            layer.EnsureNotNull(nameof(layer));
 
             if (layer == null) { throw new ArgumentNullException("layer"); }
             if (layer.Scene != this) { throw new ArgumentException("Given layer does not belong to this scene!", "layer"); }
@@ -621,7 +621,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="layerName">The name of the layer.</param>
         internal void ClearLayer(string layerName)
         {
-            layerName.EnsureNotNullOrEmpty("layerName");
+            layerName.EnsureNotNullOrEmpty(nameof(layerName));
 
             SceneLayer layerToClear = GetLayer(layerName);
             ClearLayer(layerToClear);
@@ -633,7 +633,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="layer">The layer to be cleared.</param>
         internal void ClearLayer(SceneLayer layer)
         {
-            layer.EnsureNotNull("layer");
+            layer.EnsureNotNull(nameof(layer));
 
             if (layer == null) { throw new ArgumentNullException("layer"); }
             if (layer.Scene != this) { throw new ArgumentException("Given layer does not belong to this scene!", "layer"); }
@@ -647,7 +647,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="layerName">Name of the layer.</param>
         internal SceneLayer TryGetLayer(string layerName)
         {
-            layerName.EnsureNotNullOrEmpty("layerName");
+            layerName.EnsureNotNullOrEmpty(nameof(layerName));
 
             if (string.IsNullOrEmpty(layerName)) { throw new ArgumentException("Given layer name is not valid!", "layerName"); }
 
@@ -665,12 +665,12 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="layerName">Name of the layer.</param>
         internal SceneLayer GetLayer(string layerName)
         {
-            layerName.EnsureNotNullOrEmpty("layerName");
+            layerName.EnsureNotNullOrEmpty(nameof(layerName));
 
             SceneLayer result = TryGetLayer(layerName);
             if (result == null)
             {
-                throw new ArgumentException("Layer " + layerName + " not found!");
+                throw new ArgumentException($"Layer {layerName} not found!");
             }
             return result;
         }
@@ -716,7 +716,7 @@ namespace SeeingSharp.Multimedia.Core
 
         internal void RemoveRange(IEnumerable<SceneObject> sceneObjects)
         {
-            sceneObjects.EnsureNotNull("sceneObjects");
+            sceneObjects.EnsureNotNull(nameof(sceneObjects));
 
             foreach(SceneObject actObject in sceneObjects)
             {
@@ -726,7 +726,7 @@ namespace SeeingSharp.Multimedia.Core
 
         internal void RemoveRange(IEnumerable<SceneObject> sceneObjects, string layerName)
         {
-            sceneObjects.EnsureNotNull("sceneObjects");
+            sceneObjects.EnsureNotNull(nameof(sceneObjects));
 
             foreach (SceneObject actObject in sceneObjects)
             {
@@ -740,7 +740,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="sceneObject">Object to remove.</param>
         internal void Remove(SceneObject sceneObject)
         {
-            sceneObject.EnsureNotNull("sceneObject");
+            sceneObject.EnsureNotNull(nameof(sceneObject));
 
             foreach (SceneLayer actLayer in m_sceneLayers)
             {
@@ -760,8 +760,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="layerName">Layer on wich the scene object was added.</param>
         internal void Remove(SceneObject sceneObject, string layerName)
         {
-            sceneObject.EnsureNotNull("sceneObject");
-            layerName.EnsureNotNullOrEmpty("layerName");
+            sceneObject.EnsureNotNull(nameof(sceneObject));
+            layerName.EnsureNotNullOrEmpty(nameof(layerName));
 
             SceneLayer layerObject = GetLayer(layerName);
             layerObject.RemoveObject(sceneObject);
@@ -779,7 +779,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="actionToInvoke">The action to be invoked.</param>
         public Task PerformBeforeUpdateAsync(Action actionToInvoke)
         {
-            actionToInvoke.EnsureNotNull("actionToInvoke");
+            actionToInvoke.EnsureNotNull(nameof(actionToInvoke));
 
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
 
@@ -807,7 +807,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="actionToInvoke">The action to be invoked.</param>
         public Task PerformBesideRenderingAsync(Action actionToInvoke)
         {
-            actionToInvoke.EnsureNotNull("actionToInvoke");
+            actionToInvoke.EnsureNotNull(nameof(actionToInvoke));
 
             TaskCompletionSource<bool> taskCompletionSource = new TaskCompletionSource<bool>();
 

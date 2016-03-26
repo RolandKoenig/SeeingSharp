@@ -50,7 +50,7 @@ namespace SeeingSharp.Util
         /// <param name="maxItemCount">The maximum count of items.</param>
         public RingBuffer(int maxItemCount)
         {
-            maxItemCount.EnsureInRange(2, Int32.MaxValue, "length");
+            maxItemCount.EnsureInRange(2, Int32.MaxValue, nameof(maxItemCount));
 
             m_buffer = new T[maxItemCount];
             m_bufferLength = maxItemCount;

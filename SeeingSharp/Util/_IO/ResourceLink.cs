@@ -114,7 +114,7 @@ namespace SeeingSharp.Util
         /// <param name="fileName">Name of the file.</param>
         protected string GetExtensionFromFileName(string fileName)
         {
-            fileName.EnsureNotNullOrEmptyOrWhiteSpace("fileName");
+            fileName.EnsureNotNullOrEmptyOrWhiteSpace(nameof(fileName));
 
             // Try to read format out of the file name
             if (!string.IsNullOrEmpty(fileName))

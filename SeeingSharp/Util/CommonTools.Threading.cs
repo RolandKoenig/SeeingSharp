@@ -40,8 +40,8 @@ namespace SeeingSharp.Util
         /// <param name="forceValidSyncContext">True to force a valid (UI) SynchronizationContext.</param>
         public static async void InvokeDelayed(Action action, TimeSpan delayTime, bool forceValidSyncContext = true)
         {
-            action.EnsureNotNull("action");
-            delayTime.EnsureLongerThanZero("delayTime");
+            action.EnsureNotNull(nameof(action));
+            delayTime.EnsureLongerThanZero(nameof(delayTime));
 
             // Gets current Synchronization context
             if (forceValidSyncContext)

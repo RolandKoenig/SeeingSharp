@@ -53,8 +53,8 @@ namespace SeeingSharpModelViewer.Data
         /// <param name="camera">The camera.</param>
         public SceneManager(Scene scene, Camera3DBase camera)
         {
-            scene.EnsureNotNull("scene");
-            camera.EnsureNotNull("camera");
+            scene.EnsureNotNull(nameof(scene));
+            camera.EnsureNotNull(nameof(camera));
 
             m_scene = scene;
             m_camera = camera;

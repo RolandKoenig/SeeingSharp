@@ -97,7 +97,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
         public bool ReadFrame(MemoryMappedTexture32bpp targetBuffer)
         {
             this.EnsureNotNullOrDisposed("this");
-            targetBuffer.EnsureNotNull("targetBuffer");
+            targetBuffer.EnsureNotNull(nameof(targetBuffer));
             if ((targetBuffer.Width != base.FrameSize.Width) ||
                (targetBuffer.Height != base.FrameSize.Height))
             {

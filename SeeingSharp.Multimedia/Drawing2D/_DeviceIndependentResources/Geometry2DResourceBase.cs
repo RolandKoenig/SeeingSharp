@@ -43,7 +43,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public bool IntersectsWith(Geometry2DResourceBase other)
         {
             this.EnsureNotNullOrDisposed("this");
-            other.EnsureNotNullOrDisposed("other");
+            other.EnsureNotNullOrDisposed(nameof(other));
 
             D2D.Geometry geometryThis = this.GetGeometry();
             D2D.Geometry geometryOther = other.GetGeometry();
@@ -59,7 +59,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
         public bool IntersectsWith(Geometry2DResourceBase other, Matrix3x2 otherTransform)
         {
             this.EnsureNotNullOrDisposed("this");
-            other.EnsureNotNullOrDisposed("other");
+            other.EnsureNotNullOrDisposed(nameof(other));
 
             D2D.Geometry geometryThis = this.GetGeometry();
             D2D.Geometry geometryOther = other.GetGeometry();

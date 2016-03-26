@@ -213,8 +213,8 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="height"></param>
         internal void SetCurrentViewSize(int width, int height)
         {
-            width.EnsurePositive("width");
-            height.EnsurePositive("height");
+            width.EnsurePositive(nameof(width));
+            height.EnsurePositive(nameof(height));
 
             if (width < Constants.MIN_VIEW_WIDTH) { width = Constants.MIN_VIEW_WIDTH; }
             if (height < Constants.MIN_VIEW_HEIGHT) { height = Constants.MIN_VIEW_HEIGHT; }
@@ -238,7 +238,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="device">The device to be set.</param>
         public void SetRenderingDevice(EngineDevice device)
         {
-            device.EnsureNotNull("device");
+            device.EnsureNotNull(nameof(device));
 
             // Only set state values here. All logic is triggered during render process
             m_targetDevice = device;
@@ -250,7 +250,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="scene">The scene to be set.</param>
         public void SetScene(Scene scene)
         {
-            scene.EnsureNotNull("scene");
+            scene.EnsureNotNull(nameof(scene));
 
             m_targetScene = scene;
         }
@@ -284,7 +284,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="drawAction">The action that performs 2D drawing</param>
         public Task<Custom2DDrawingLayer> Register2DDrawingLayerAsync(Action<Graphics2D> drawAction)
         {
-            drawAction.EnsureNotNull("drawAction");
+            drawAction.EnsureNotNull(nameof(drawAction));
 
             Custom2DDrawingLayer result = new Custom2DDrawingLayer(drawAction);
             return Register2DDrawingLayerAsync(result)
@@ -361,7 +361,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="videoWriter">The VideoWriter to be finished.</param>
         public Task FinishVideoWriterAsync(SeeingSharpVideoWriter videoWriter)
         {
-            videoWriter.EnsureNotNull("videoWriter");
+            videoWriter.EnsureNotNull(nameof(videoWriter));
 
             if (videoWriter.AssociatedRenderLoop != this) { throw new SeeingSharpGraphicsException("The given VideoWriter is not associated with this RenderLoop!"); }
 
@@ -399,7 +399,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="videoWriter">The VideoWriter to be applied.</param>
         public Task RegisterVideoWriterAsync(SeeingSharpVideoWriter videoWriter)
         {
-            videoWriter.EnsureNotNull("videoWriter");
+            videoWriter.EnsureNotNull(nameof(videoWriter));
 
             if (m_currentScene == null) { throw new SeeingSharpGraphicsException("No scene set to RenderLoop!"); }
             if (m_currentDevice == null) { throw new SeeingSharpGraphicsException("No device associated to RenderLoop!"); }
@@ -434,7 +434,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="drawingLayer">The layer to be registered.</param>
         public Task Register2DDrawingLayerAsync(Custom2DDrawingLayer drawingLayer)
         {
-            drawingLayer.EnsureNotNull("drawingLayer");
+            drawingLayer.EnsureNotNull(nameof(drawingLayer));
 
             TaskCompletionSource<object> result = new TaskCompletionSource<object>();
 
@@ -464,7 +464,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="drawingLayer">The drawing layer to be deregistered.</param>
         public Task Deregister2DDrawingLayerAsync(Custom2DDrawingLayer drawingLayer)
         {
-            drawingLayer.EnsureNotNull("drawingLayer");
+            drawingLayer.EnsureNotNull(nameof(drawingLayer));
 
             TaskCompletionSource<object> result = new TaskCompletionSource<object>();
 
@@ -539,7 +539,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="newViewConfiguration">The new configuration object to be applied.</param>
         public Task ExchangeViewConfigurationAsync(GraphicsViewConfiguration newViewConfiguration)
         {
-            newViewConfiguration.EnsureNotNull("newViewConfiguration");
+            newViewConfiguration.EnsureNotNull(nameof(newViewConfiguration));
 
             TaskCompletionSource<object> result = new TaskCompletionSource<object>();
 

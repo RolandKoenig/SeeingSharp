@@ -98,7 +98,7 @@ namespace WinFormsSampleContainer
         /// <param name="sampleInfo">The sample to be applied.</param>
         private async void ApplySample(SampleDescription sampleInfo)
         {
-            m_isChangingSample.EnsureFalse("m_isChangingSample");
+            m_isChangingSample.EnsureFalse(nameof(m_isChangingSample));
 
             m_isChangingSample = true;
             try
@@ -271,11 +271,11 @@ namespace WinFormsSampleContainer
             }
             
             ListView actListView = sender as ListView;
-            actListView.EnsureNotNull("actListView");
-            e.Item.EnsureNotNull("e.Item");
+            actListView.EnsureNotNull(nameof(actListView));
+            e.Item.EnsureNotNull($"{nameof(e)}.{nameof(e.Item)}");
 
             SampleDescription sampleInfo = e.Item.Tag as SampleDescription;
-            sampleInfo.EnsureNotNull("sampleInfo");
+            sampleInfo.EnsureNotNull(nameof(sampleInfo));
 
             // Clear selection on other ListViews
             foreach (ListView actOtherListView in m_generatedListViews)

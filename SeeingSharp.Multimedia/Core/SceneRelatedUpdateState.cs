@@ -158,7 +158,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                m_updateState.EnsureNotNull("m_updateState");
+                m_updateState.EnsureNotNull(nameof(m_updateState));
 
                 if (m_isPaused && (!m_ignorePauseState)) { return TimeSpan.Zero; }
                 return m_updateState.UpdateTime;
@@ -172,7 +172,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                m_updateState.EnsureNotNull("m_updateState");
+                m_updateState.EnsureNotNull(nameof(m_updateState));
 
                 if (m_isPaused && (!m_ignorePauseState)) { return 0; }
                 return m_updateState.UpdateTimeMilliseconds;

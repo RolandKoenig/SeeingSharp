@@ -62,9 +62,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="width">The height of the generated texture.</param>
         public Direct2DTextureResource(Custom2DDrawingLayer drawingLayer, int width, int height)
         {
-            drawingLayer.EnsureNotNull("drawingLayer");
-            width.EnsurePositive("width");
-            height.EnsurePositive("height");
+            drawingLayer.EnsureNotNull(nameof(drawingLayer));
+            width.EnsurePositive(nameof(width));
+            height.EnsurePositive(nameof(height));
 
             m_drawingLayer = drawingLayer;
             m_width = width;

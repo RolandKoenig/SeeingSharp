@@ -40,7 +40,7 @@ namespace SeeingSharp.Util
         /// <param name="resourceLink">The link to the resource.</param>
         public AssemblyResourceLinkSource(AssemblyResourceLink resourceLink)
         {
-            resourceLink.EnsureNotNull("resourceLink");
+            resourceLink.EnsureNotNull(nameof(resourceLink));
 
             m_resourceLink = resourceLink;
         }
@@ -67,7 +67,7 @@ namespace SeeingSharp.Util
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
         public override ResourceLink GetForAnotherFile(string newFileName)
         {
-            newFileName.EnsureNotNullOrEmptyOrWhiteSpace("newFileName");
+            newFileName.EnsureNotNullOrEmptyOrWhiteSpace(nameof(newFileName));
 
             return new AssemblyResourceLinkSource(
                 m_resourceLink.GetForAnotherFile(newFileName));

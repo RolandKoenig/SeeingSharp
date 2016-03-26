@@ -35,7 +35,7 @@ namespace SeeingSharp.Multimedia.Core
         public WaitForConditionPassedAnimation(Func<bool> checkFunction)
             : base(null)
         {
-            checkFunction.EnsureNotNull("checkFunction");
+            checkFunction.EnsureNotNull(nameof(checkFunction));
 
             m_checkFunction = checkFunction;
         }

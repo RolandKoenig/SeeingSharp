@@ -54,7 +54,7 @@ namespace RKRocket.Game
         /// </summary>
         public BlockEntity(int points)
         {
-            points.EnsureInRange(1, GraphicsResources.Bitmap_Blocks.Length, "points");
+            points.EnsureInRange(1, GraphicsResources.Bitmap_Blocks.Length, nameof(points));
 
             m_points = points;
             m_blockBitmap = GraphicsResources.Bitmap_Blocks[m_points - 1];

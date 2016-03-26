@@ -44,7 +44,7 @@ namespace SeeingSharp.Util
             Func<Stream> streamFactory,
             string fileName = "unknown.dat")
         {
-            streamFactory.EnsureNotNull("streamFactory");
+            streamFactory.EnsureNotNull(nameof(streamFactory));
 
             m_streamFactory = streamFactory;
             m_fileName = fileName;

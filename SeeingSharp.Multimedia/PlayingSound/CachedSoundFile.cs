@@ -72,7 +72,7 @@ namespace SeeingSharp.Multimedia.PlayingSound
         /// <param name="resource">The resource to load.</param>
         public static async Task<CachedSoundFile> FromResourceAsync(ResourceLink resource)
         {
-            resource.EnsureNotNull("resource");
+            resource.EnsureNotNull(nameof(resource));
 
             CachedSoundFile result = new CachedSoundFile();
 

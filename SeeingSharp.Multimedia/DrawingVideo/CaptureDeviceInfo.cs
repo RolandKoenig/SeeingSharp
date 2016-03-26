@@ -39,7 +39,7 @@ namespace SeeingSharp.Multimedia.DrawingVideo
     {
         internal CaptureDeviceInfo(MF.Activate deviceSourceActivate)
         {
-            deviceSourceActivate.EnsureNotNullOrDisposed("deviceSourceActivate");
+            deviceSourceActivate.EnsureNotNullOrDisposed(nameof(deviceSourceActivate));
 
             this.DeviceSourceActivate = deviceSourceActivate;
             this.FriendlyName = deviceSourceActivate.Get(

@@ -67,7 +67,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="mappedTexture">The mapped texture.</param>
         public BitmapTextureResource(MemoryMappedTexture32bpp mappedTexture)
         {
-            mappedTexture.EnsureNotNull("mappedTexture");
+            mappedTexture.EnsureNotNull(nameof(mappedTexture));
 
             m_mappedTexture = mappedTexture;
         }
