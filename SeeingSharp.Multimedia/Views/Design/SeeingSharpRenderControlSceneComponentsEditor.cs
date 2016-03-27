@@ -43,6 +43,7 @@ namespace SeeingSharp.Multimedia.Views.Design
             return new Type[]
             {
                 typeof(SimpleCenteredCubeComponent),
+                typeof(GradientBackgroundComponent),
                 typeof(FocusedObjectCameraComponent),
                 typeof(FocusedPointCameraComponent),
                 typeof(FreeMovingCameraComponent)

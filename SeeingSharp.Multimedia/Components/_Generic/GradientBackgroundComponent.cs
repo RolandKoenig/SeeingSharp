@@ -64,7 +64,7 @@ namespace SeeingSharp.Multimedia.Components
             m_textureHeight = DEFAULT_HEIGHT;
 
             m_colorStart = Color4.WhiteSmoke;
-            m_colorEnd = Color4.BlueColor;
+            m_colorEnd = Color4.Gray;
 
             base.TargetLayer = DEFAULT_LAYER;
             base.TargetLayerOrderID = DEFAULT_LAYER_ORDER_ID;
