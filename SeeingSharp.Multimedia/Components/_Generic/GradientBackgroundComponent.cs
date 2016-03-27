@@ -163,10 +163,7 @@ namespace SeeingSharp.Multimedia.Components
             get { return m_textureWidth; }
             set
             {
-                value.EnsurePositive(nameof(value));
-                value.EnsurePowerOfTwo(nameof(value));
-                value.EnsureInRange(0, 2048, nameof(value)); // 2048 is maximum on FeatureLevel 9_1
-
+                m_textureWidth.EnsureValidTextureSize(HardwareDriverLevel.Direct3D9_1, nameof(TextureWidth));
                 m_textureWidth = value;
             }
         }
@@ -181,10 +178,7 @@ namespace SeeingSharp.Multimedia.Components
             get { return m_textureHeight; }
             set
             {
-                value.EnsurePositive(nameof(value));
-                value.EnsurePowerOfTwo(nameof(value));
-                value.EnsureInRange(0, 2048, nameof(value)); // 2048 is maximum on FeatureLevel 9_1
-
+                m_textureHeight.EnsureValidTextureSize(HardwareDriverLevel.Direct3D9_1, nameof(TextureHeight));
                 m_textureHeight = value;
             }
         }

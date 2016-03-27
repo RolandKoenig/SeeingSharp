@@ -38,8 +38,8 @@ namespace SeeingSharp.Checking
     public static partial class EnsureMultimedia
     {
         [Conditional("DEBUG")]
-        internal static void EnsureValidTextureSize(
-            int sizeValue, HardwareDriverLevel driverLevel, string checkedVariableName,
+        public static void EnsureValidTextureSize(
+            this int sizeValue, HardwareDriverLevel driverLevel, string checkedVariableName,
             [CallerMemberName]
             string callerMethod = "")
         {

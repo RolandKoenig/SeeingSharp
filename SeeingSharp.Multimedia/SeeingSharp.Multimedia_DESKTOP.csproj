@@ -414,6 +414,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="_OtherNamespaces\Checking\Ensure.Multimedia.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Rendering.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
     <Compile Include="_Translatables.cs" />
     <SeeingSharp-VertexShader-Min4_0 Include="Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl" />
