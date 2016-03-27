@@ -136,12 +136,14 @@ namespace RKRocket.View
         private void OnMenu_DropDownOpened(object sender, EventArgs e)
         {
             m_dropDownOpenCount++;
+
             base.Messenger.Publish<MessageMenuOpened>();
         }
 
         private void OnMenu_DropDownClosed(object sender, EventArgs e)
         {
             m_dropDownOpenCount--;
+
             CommonTools.InvokeDelayed(() =>
                 {
                     if (this.IsDisposed) { return; }

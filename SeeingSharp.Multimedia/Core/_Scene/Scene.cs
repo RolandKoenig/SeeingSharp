@@ -21,7 +21,6 @@
 */
 #endregion
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -31,18 +30,19 @@ using System.Threading.Tasks;
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Drawing3D;
-using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
 
-//Some namespace mappings
+// Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
 
 namespace SeeingSharp.Multimedia.Core
 {
     public partial class Scene
     {
+        #region Constants
         public static readonly string DEFAULT_LAYER_NAME = "Default";
         public static readonly string DEFAULT_SCENE_NAME = "Scene";
+        #endregion
 
         #region Standard members
         private bool m_initialized;

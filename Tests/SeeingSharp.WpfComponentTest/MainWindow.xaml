@@ -10,6 +10,7 @@
         Title="Seeing# WPF Components Test" Height="350" Width="525">
     <Grid>
         <ssharpMulti:SeeingSharpRendererElement>
+            <ssharpMulti:GradientBackgroundComponent />
             <ssharpMulti:FocusedPointCameraComponent
                 CameraDistanceMin="3"
                 CameraDistanceMax="10"

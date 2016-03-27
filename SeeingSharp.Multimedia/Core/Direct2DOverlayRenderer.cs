@@ -105,7 +105,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Begins the draw.
         /// </summary>
-        public void BeginDraw(RenderState renderState)
+        public void BeginDraw()
         {
             m_device.DeviceContextD2D.Target = m_renderTargetBitmap;
             m_device.DeviceContextD2D.DotsPerInch = m_renderTargetBitmap.DotsPerInch;
@@ -117,7 +117,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Finishes Direct2D drawing.
         /// </summary>
-        public void EndDraw(RenderState renderState)
+        public void EndDraw()
         {
             // Finish Direct2D drawing
             m_renderTarget2D.EndDraw();

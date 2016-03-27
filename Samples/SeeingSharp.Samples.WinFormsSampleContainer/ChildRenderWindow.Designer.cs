@@ -32,8 +32,8 @@
             this.m_toolBar = new System.Windows.Forms.ToolStrip();
             this.m_cboDevice = new System.Windows.Forms.ToolStripDropDownButton();
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
-            this.m_compFreeMovingCam = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
             this.m_compFreeCamera = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
+            this.m_compFreeMovingCam = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
             this.m_toolBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -44,7 +44,7 @@
             this.m_cboDevice});
             this.m_toolBar.Location = new System.Drawing.Point(0, 0);
             this.m_toolBar.Name = "m_toolBar";
-            this.m_toolBar.Size = new System.Drawing.Size(506, 27);
+            this.m_toolBar.Size = new System.Drawing.Size(726, 27);
             this.m_toolBar.TabIndex = 1;
             // 
             // m_cboDevice
@@ -64,7 +64,7 @@
             this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 27);
             this.m_ctrlRenderer.Name = "m_ctrlRenderer";
             this.m_ctrlRenderer.SceneComponents.Add(this.m_compFreeCamera);
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(506, 365);
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(726, 209);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "m_ctrlRenderer";
             this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
@@ -83,7 +83,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(506, 392);
+            this.ClientSize = new System.Drawing.Size(726, 236);
             this.Controls.Add(this.m_ctrlRenderer);
             this.Controls.Add(this.m_toolBar);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));

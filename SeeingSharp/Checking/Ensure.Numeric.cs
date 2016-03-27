@@ -221,6 +221,23 @@ namespace SeeingSharp.Checking
         }
 
         [Conditional("DEBUG")]
+        public static void EnsurePowerOfTwo(
+            this int numValue, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            
+            if (Math.Abs((double)numValue / 2) > EngineMath.TOLERANCE_DOUBLE_POSITIVE)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Value {0} within method {1} must be a power of 2 (value: {2})!",
+                    checkedVariableName, callerMethod, numValue));
+            }
+        }
+
+        [Conditional("DEBUG")]
         public static void EnsurePositive(
             this short numValue, string checkedVariableName,
             [CallerMemberName]

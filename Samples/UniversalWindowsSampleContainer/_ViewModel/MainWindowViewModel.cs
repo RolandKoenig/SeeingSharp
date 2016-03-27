@@ -52,6 +52,15 @@ namespace UniversalWindowsSampleContainer
         /// </summary>
         public MainWindowViewModel()
         {
+            if ((!SeeingSharpApplication.IsInitialized) ||
+                (SampleFactory.Current == null))
+            {
+                m_allSamples = new List<SampleViewModel>();
+                m_visibleSamples = new ObservableCollection<SampleViewModel>();
+                m_categories = new List<CategoryInfo>();
+                return;
+            }
+
             // Initialize main collections
             m_allSamples = new List<SampleViewModel>(
                 SampleFactory.Current.GetSampleInfos()

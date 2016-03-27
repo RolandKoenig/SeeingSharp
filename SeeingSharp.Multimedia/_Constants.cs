@@ -76,6 +76,7 @@ namespace SeeingSharp.Multimedia
         #region Constants for design-time
         public const string DESIGNER_CATEGORY_RENDERER = "Renderer";
         public const string DESIGNER_CATEGORY_CAMERA = "Camera";
+        public const string DESIGNER_CATEGORY_GRADIENT = "Gradient";
         #endregion
     }
 }

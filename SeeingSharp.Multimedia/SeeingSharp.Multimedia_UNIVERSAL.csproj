@@ -55,11 +55,13 @@
     <Compile Include="..\Misc\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Components\_Base\FocusedCameraComponent.cs" />
+    <Compile Include="Components\_Base\ObjectCreatorComponent.cs" />
+    <Compile Include="Components\_Generic\GradientBackgroundComponent.cs" />
     <Compile Include="Components\_Generic\SimpleCenteredCubeComponent.cs" />
     <Compile Include="Components\_Input\FocusedObjectCameraComponent.cs" />
     <Compile Include="Components\_Input\FocusedPointCameraComponent.cs" />
     <Compile Include="Components\_Input\FreeMovingCameraComponent.cs" />
-    <Compile Include="Components\_Input\_Base\FocusedCameraComponent.cs" />
     <Compile Include="Core\Direct2DOverlayRenderer.cs" />
     <Compile Include="Core\EngineMainLoop.cs" />
     <Compile Include="Core\GenericInputEventArgs.cs" />
@@ -228,6 +230,7 @@
     <Compile Include="Drawing3D\_Resources\_Shaders\ShaderResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Shaders\VertexShaderResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\BitmapTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\Direct2DSingleRenderTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\Direct2DTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\DrawingBrushTextureResource.cs" />
     <Compile Include="Drawing3D\_Resources\_Textures\LinearGradientTextureResource.cs" />
@@ -338,7 +341,8 @@
     <Compile Include="_Extensions.cs" />
     <Compile Include="_Misc.cs" />
     <Compile Include="_Native.cs" />
-    <Compile Include="_OtherNamespaces\Checking\Ensure.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Rendering.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Multimedia.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
     <Compile Include="_Translatables.cs" />
   </ItemGroup>

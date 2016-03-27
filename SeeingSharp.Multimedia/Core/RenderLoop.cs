@@ -1081,7 +1081,7 @@ namespace SeeingSharp.Multimedia.Core
                 {
                     var d2dOverlayTime = GraphicsCore.Current.PerformanceCalculator.BeginMeasureActivityDuration(
                         string.Format(Constants.PERF_RENDERLOOP_RENDER_2D, m_currentDevice.DeviceIndex, m_viewInformation.ViewIndex + 1));
-                    m_d2dOverlay.BeginDraw(m_renderState);
+                    m_d2dOverlay.BeginDraw();
                     try
                     {
                         m_renderState.RenderTarget2D = m_d2dOverlay.RenderTarget2D;
@@ -1107,7 +1107,7 @@ namespace SeeingSharp.Multimedia.Core
                         m_renderState.RenderTarget2D = null;
                         m_renderState.Graphics2D = null;
 
-                        m_d2dOverlay.EndDraw(m_renderState);
+                        m_d2dOverlay.EndDraw();
                         d2dOverlayTime.Dispose();
                     }
                 }

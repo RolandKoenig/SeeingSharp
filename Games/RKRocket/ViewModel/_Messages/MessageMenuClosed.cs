@@ -34,5 +34,6 @@ namespace RKRocket.ViewModel
     [MessageAsyncRoutingTargets(Constants.GAME_SCENE_NAME)]
     public class MessageMenuClosed : SeeingSharpMessage
     {
+
     }
 }

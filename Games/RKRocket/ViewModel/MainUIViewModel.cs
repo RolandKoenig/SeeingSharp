@@ -76,9 +76,6 @@ namespace RKRocket.ViewModel
             }
         }
 
-        /// <summary>
-        /// Starts a new game.
-        /// </summary>
         private void OnCommandNewGame_Execute()
         {
             m_game.Scene.Messenger.BeginPublish<MessageNewGame>();
@@ -91,9 +88,6 @@ namespace RKRocket.ViewModel
             this.IsPaneVisible = !this.IsPaneVisible;
         }
 
-        /// <summary>
-        /// Called when we reached a new level.
-        /// </summary>
         private void OnMessage_Received(MessageLevelStarted message)
         {
             this.CurrentLevel = message.LevelNumber;

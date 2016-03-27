@@ -86,7 +86,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="renderState">Current render state.</param>
         public void Render(RenderState renderState)
         {
-            m_overlayRenderer.BeginDraw(renderState);
+            m_overlayRenderer.BeginDraw();
             try
             {
                 if (m_graphics2D != null)
@@ -96,7 +96,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             }
             finally
             {
-                m_overlayRenderer.EndDraw(renderState);
+                m_overlayRenderer.EndDraw();
             }
         }
 

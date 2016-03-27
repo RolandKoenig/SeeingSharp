@@ -82,6 +82,11 @@ namespace SeeingSharp.Multimedia.Core
     public enum HardwareDriverLevel
     {
         /// <summary>
+        /// Driver runs on Direct3D12 hardware.
+        /// </summary>
+        Direct3D12,
+
+        /// <summary>
         /// Driver runs on Direct3D11 hardware.
         /// </summary>
         Direct3D11,
