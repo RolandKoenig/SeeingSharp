@@ -32,12 +32,14 @@ using DXGI = SharpDX.DXGI;
 
 namespace SeeingSharp.Multimedia.Drawing3D
 {
+    /// <summary>
+    /// The default structure for sending vertex data to the GPU.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct StandardVertex
     {
-        //Create InputElements descriptior for Direct3D 11 api
+        #region Constants
         public static readonly int Size = Marshal.SizeOf<StandardVertex>();
-
         public static readonly D3D11.InputElement[] InputElements = new D3D11.InputElement[]
         {
             new D3D11.InputElement("POSITION", 0, DXGI.Format.R32G32B32_Float, 0, 0),
@@ -48,8 +50,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
             new D3D11.InputElement("TEXCOORD", 0, DXGI.Format.R32G32_Float, 52, 0),
             new D3D11.InputElement("TEXCOORD", 1, DXGI.Format.R32_Float, 60, 0)
         };
+        #endregion
 
-        //All vertex elements
+        #region  All vertex elements
         public Vector3 Position;
         public Vector3 Normal;
         public Vector3 Tangent;
@@ -57,6 +60,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public int Color;
         public Vector2 Texture;
         public float TextureFactor;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StandardVertex"/> struct.

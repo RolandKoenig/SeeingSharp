@@ -116,12 +116,12 @@ namespace SeeingSharp.Multimedia.Objects
 
                 surfacePallet.Material = m_palletMaterial;
 
-                //Build 3 board on bottom
+                // Build 3 board on bottom
                 surfacePallet.BuildCube24V(new Vector3(0f, 0f, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
                 surfacePallet.BuildCube24V(new Vector3(middleFrontBegin, 0f, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
                 surfacePallet.BuildCube24V(new Vector3(lastBeginSmall, 0f, 0f), new Vector3(m_smallFooterWidth, m_boardHeight, m_depth), m_palletColor);
 
-                //Build 9 footers
+                // Build 9 footers
                 surfacePallet.BuildCubeSides16V(new Vector3(0f, m_boardHeight, 0f), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
                 surfacePallet.BuildCubeSides16V(new Vector3(0f, m_boardHeight, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
                 surfacePallet.BuildCubeSides16V(new Vector3(0f, m_boardHeight, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
@@ -132,12 +132,12 @@ namespace SeeingSharp.Multimedia.Objects
                 surfacePallet.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, middleSideBegin), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
                 surfacePallet.BuildCubeSides16V(new Vector3(lastBeginSmall, m_boardHeight, lastBeginBig), new Vector3(m_smallFooterWidth, footerHeight, m_bigFooterWidth), m_palletColor);
 
-                //Build boards above footers
+                // Build boards above footers
                 surfacePallet.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, 0f), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
                 surfacePallet.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, middleSideBegin), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
                 surfacePallet.BuildCube24V(new Vector3(0f, m_boardHeight + footerHeight, lastBeginBig), new Vector3(m_width, m_boardHeight, m_bigFooterWidth), m_palletColor);
 
-                //Build top boards
+                // Build top boards
                 float localYPos = m_palletHeight - m_boardHeight;
                 surfacePallet.BuildCube24V(new Vector3(0f, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
                 surfacePallet.BuildCube24V(new Vector3(middleFrontBegin, localYPos, 0f), new Vector3(m_bigFooterWidth, m_boardHeight, m_depth), m_palletColor);
@@ -179,15 +179,7 @@ namespace SeeingSharp.Multimedia.Objects
         public float Width
         {
             get { return m_width; }
-            set
-            {
-                if (m_width != value)
-                {
-                    m_width = value;
-
-                    //base.RefreshStructure();
-                }
-            }
+            set { m_width = value; }
         }
 
         /// <summary>
@@ -196,15 +188,7 @@ namespace SeeingSharp.Multimedia.Objects
         public float Depth
         {
             get { return m_depth; }
-            set
-            {
-                if (m_depth != value)
-                {
-                    m_depth = value;
-
-                    //base.RefreshStructure();
-                }
-            }
+            set { m_depth = value; }
         }
 
         /// <summary>
@@ -213,15 +197,7 @@ namespace SeeingSharp.Multimedia.Objects
         public float PalletHeight
         {
             get { return m_palletHeight; }
-            set
-            {
-                if (m_palletHeight != value)
-                {
-                    m_palletHeight = value;
-
-                    //base.RefreshStructure();
-                }
-            }
+            set { m_palletHeight = value; }
         }
 
         /// <summary>
@@ -230,15 +206,7 @@ namespace SeeingSharp.Multimedia.Objects
         public float ContentHeight
         {
             get { return m_contentHeight; }
-            set
-            {
-                if (m_contentHeight != value)
-                {
-                    m_contentHeight = value;
-
-                    //base.RefreshStructure();
-                }
-            }
+            set { m_contentHeight = value; }
         }
 
         /// <summary>
@@ -247,15 +215,7 @@ namespace SeeingSharp.Multimedia.Objects
         public float SmallFooterWidth
         {
             get { return m_smallFooterWidth; }
-            set
-            {
-                if (m_smallFooterWidth != value)
-                {
-                    m_smallFooterWidth = value;
-
-                    //base.RefreshStructure();
-                }
-            }
+            set { m_smallFooterWidth = value; }
         }
 
         /// <summary>
@@ -264,15 +224,7 @@ namespace SeeingSharp.Multimedia.Objects
         public float BigFooterWidth
         {
             get { return m_bigFooterWidth; }
-            set
-            {
-                if (m_bigFooterWidth != value)
-                {
-                    m_bigFooterWidth = value;
-
-                    //base.RefreshStructure();
-                }
-            }
+            set { m_bigFooterWidth = value; }
         }
 
         /// <summary>
@@ -281,15 +233,7 @@ namespace SeeingSharp.Multimedia.Objects
         public float BoardHeight
         {
             get { return m_boardHeight; }
-            set
-            {
-                if (m_boardHeight != value)
-                {
-                    m_boardHeight = value;
-
-                    //base.RefreshStructure();
-                }
-            }
+            set { m_boardHeight = value; }
         }
 
         /// <summary>

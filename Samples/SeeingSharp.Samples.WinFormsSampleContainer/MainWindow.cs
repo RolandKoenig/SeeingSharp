@@ -117,6 +117,7 @@ namespace WinFormsSampleContainer
 
                     m_actSample.SetClosed();
                 }
+                if (this.IsDisposed || (!this.IsHandleCreated)) { return; }
 
                 // Reset members
                 m_actSample = null;
@@ -131,13 +132,17 @@ namespace WinFormsSampleContainer
                     m_actSample = sampleObject;
                     m_actSampleInfo = sampleInfo;
                 }
+                if (this.IsDisposed || (!this.IsHandleCreated)) { return; }
 
                 // Wait for next finished rendering
                 await m_ctrlRenderer.RenderLoop.WaitForNextFinishedRenderAsync();
+                if (this.IsDisposed || (!this.IsHandleCreated)) { return; }
+
                 await m_ctrlRenderer.RenderLoop.WaitForNextFinishedRenderAsync();
+                if (this.IsDisposed || (!this.IsHandleCreated)) { return; }
 
                 // Apply new camera on child windows
-                foreach(ChildRenderWindow actChildWindow in m_openedChildRenderers)
+                foreach (ChildRenderWindow actChildWindow in m_openedChildRenderers)
                 {
                     actChildWindow.ApplyViewpoint(m_ctrlRenderer.Camera.GetViewPoint());
                 }

@@ -35,7 +35,9 @@ namespace SeeingSharp.Multimedia.DrawingVideo
 {
     public class SeeingSharpMediaBuffer : IDisposable, ICheckDisposed
     {
+        #region Native resources
         private MF.MediaBuffer m_buffer;
+        #endregion
 
         internal SeeingSharpMediaBuffer(MF.MediaBuffer buffer)
         {

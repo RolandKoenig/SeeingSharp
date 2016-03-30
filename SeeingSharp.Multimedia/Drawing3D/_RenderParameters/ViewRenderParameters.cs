@@ -36,15 +36,18 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class ViewRenderParameters : Resource
     {
-        // Resource keys
+        #region Resource keys
         internal NamedOrGenericKey KEY_CONSTANT_BUFFER = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
-        // Configuration
+        #region Configuration
         private NamedOrGenericKey m_postprocessEffectKey;
+        #endregion
 
-        // Resources
+        #region Resources
         private TypeSafeConstantBufferResource<CBPerView> m_cbPerView;
         private PostprocessEffectResource m_postprocessEffect;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewRenderParameters" /> class.

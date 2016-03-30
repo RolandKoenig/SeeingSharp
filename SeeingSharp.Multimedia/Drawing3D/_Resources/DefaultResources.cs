@@ -37,25 +37,30 @@ namespace SeeingSharp.Multimedia.Drawing3D
     {
         public static readonly NamedOrGenericKey RESOURCE_KEY = new NamedOrGenericKey(typeof(DefaultResources));
 
-        // Blend states
+        #region Blend states
         private Lazy<D3D11.BlendState> m_defaultBlendState;
         private Lazy<D3D11.BlendState> m_alphaBlendingBlendState;
+        #endregion
 
-        // Depth stencil states
+        #region Depth stencil states
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateDefault;
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateDisableZWrites;
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateInvertedZTest;
         private Lazy<D3D11.DepthStencilState> m_depthStencilStateAllwaysPass;
+        #endregion
 
-        // Rastarizer states
+        #region Rastarizer states
         private Lazy<D3D11.RasterizerState> m_rasterStateLines;
         private Lazy<D3D11.RasterizerState> m_rasterStateDefault;
         private Lazy<D3D11.RasterizerState> m_rasterStateBiased;
+        private Lazy<D3D11.RasterizerState> m_rasterStateWireframe;
+        #endregion
 
-        // Sample states
+        #region Sample states
         private Lazy<D3D11.SamplerState> m_samplerStateLow;
         private Lazy<D3D11.SamplerState> m_samplerStateMedium;
         private Lazy<D3D11.SamplerState> m_samplerStateHigh;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DefaultResources" /> class.
@@ -163,6 +168,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
             {
                 D3D11.RasterizerStateDescription rasterDesc = D3D11.RasterizerStateDescription.Default();
                 rasterDesc.DepthBias = GraphicsHelper.GetDepthBiasValue(device, -0.00003f);
+                return new D3D11.RasterizerState(device.DeviceD3D11, rasterDesc);
+            });
+
+            // Create a raster state for wireframe rendering
+            m_rasterStateWireframe = new Lazy<SharpDX.Direct3D11.RasterizerState>(() =>
+            {
+                D3D11.RasterizerStateDescription rasterDesc = D3D11.RasterizerStateDescription.Default();
+                rasterDesc.FillMode = D3D11.FillMode.Wireframe;
                 return new D3D11.RasterizerState(device.DeviceD3D11, rasterDesc);
             });
 
@@ -285,6 +298,15 @@ namespace SeeingSharp.Multimedia.Drawing3D
             {
                 if (m_rasterStateBiased == null) { return null; }
                 return m_rasterStateBiased.Value;
+            }
+        }
+
+        internal D3D11.RasterizerState RasterStateWireframe
+        {
+            get
+            {
+                if(m_rasterStateWireframe == null) { return null; }
+                return m_rasterStateWireframe.Value;
             }
         }
 

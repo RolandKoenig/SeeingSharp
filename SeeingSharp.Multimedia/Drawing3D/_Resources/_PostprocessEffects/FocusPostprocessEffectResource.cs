@@ -37,23 +37,26 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class FocusPostprocessEffectResource : PostprocessEffectResource
     {
-        // Resource keys
+        #region Resource keys
         private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER_BLUR = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey KEY_MATERIAL = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey KEY_RENDER_TARGET = GraphicsCore.GetNextGenericResourceKey();
         private NamedOrGenericKey KEY_CB_PASS_01 = GraphicsCore.GetNextGenericResourceKey();
         private NamedOrGenericKey KEY_CB_PASS_02 = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
-        // Configuration
+        #region Configuration
         private bool m_forceSimpleMethod;
+        #endregion
 
-        // Resources
+        #region Resources
         private SingleForcedColorMaterialResource m_singleForcedColor;
         private RenderTargetTextureResource m_renderTarget;
         private DefaultResources m_defaultResources;
         private PixelShaderResource m_pixelShaderBlur;
         private TypeSafeConstantBufferResource<CBPerObject> m_cbFirstPass;
         private TypeSafeConstantBufferResource<CBPerObject> m_cbSecondPass;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FocusPostprocessEffectResource"/> class.

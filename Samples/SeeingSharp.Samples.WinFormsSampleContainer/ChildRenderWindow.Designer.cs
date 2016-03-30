@@ -67,17 +67,6 @@
             this.m_ctrlRenderer.Size = new System.Drawing.Size(563, 391);
             this.m_ctrlRenderer.TabIndex = 0;
             this.m_ctrlRenderer.Text = "m_ctrlRenderer";
-            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
-            this.m_ctrlRenderer.ViewConfiguration.AlphaEnabledSwapChain = false;
-            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.2F;
-            this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
-            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
-            this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
-            this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
-            this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
-            this.m_ctrlRenderer.ViewConfiguration.ShowTextures = true;
-            this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
-            this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
             // 
             // ChildRenderWindow
             // 

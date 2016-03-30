@@ -22,15 +22,26 @@
 #endregion
 using SeeingSharp.Util;
 using System;
+using System.ComponentModel;
 using System.Xml.Serialization;
 
 namespace SeeingSharp.Multimedia.Core
 {
     public class GraphicsViewConfiguration 
     {
-        private const string CATEOGRY_COMMON = "Common";
-        private const string CATEGORY_QUALITY = "Quality";
-        private const string CATEGORY_DETAILS = "Details";
+        #region Constants
+        private const bool DEFAULT_SHOW_TEXTURES = true;
+        private const bool DEFAULT_WIREFRAME = false;
+        private const bool DEFAULT_ANTIALIASING = true;
+        private const AntialiasingQualityLevel DEFAULT_ANTIALIASING_QUALITY = AntialiasingQualityLevel.Medium;
+        private const float DEFAULT_BORDER_FACTOR = 1f;
+        private const float DEFAULT_GRADIENT_FACTOR = 1f;
+        private const float DEFAULT_ACCENTUATION_FACTOR = 0f;
+        private const float DEFAULT_AMBIENT_FACTOR = 0.2f;
+        private const float DEFAULT_LIGHT_POWER = 0.8f;
+        private const float DEFAULT_STRONG_LIGHT_FACTOR = 1.5f;
+        private const bool DEFAULT_SWAP_CHAIN_WIDTH_ALPHA = false;
+        #endregion
 
         #region Generic
         private GraphicsDeviceConfiguration m_deviceConfig;
@@ -63,21 +74,21 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal GraphicsViewConfiguration()
         {
-            this.ShowTextures = true;
-            this.AntialiasingEnabled = true;
-            this.AntialiasingQuality = AntialiasingQualityLevel.Medium;
-
             // Define and execute reset action
             Action resetAction = () =>
             {
-                ShowTexturesInternal = true;
-                m_generatedBorderFactor = 1f;
-                m_generatedColorGradientFactor = 1f;
-                m_accentuationFactor = 0f;
-                m_ambientFactor = 0.2f;
-                m_lightPower = 0.8f;
-                m_strongLightFactor = 1.5f;
-                m_alphaEnabledSwapChain = false;
+                ShowTextures = DEFAULT_SHOW_TEXTURES;
+                ShowTexturesInternal = DEFAULT_SHOW_TEXTURES;
+                WireframeEnabled = DEFAULT_WIREFRAME;
+                AntialiasingEnabled = DEFAULT_ANTIALIASING;
+                AntialiasingQuality = DEFAULT_ANTIALIASING_QUALITY;
+                m_generatedBorderFactor = DEFAULT_BORDER_FACTOR;
+                m_generatedColorGradientFactor = DEFAULT_GRADIENT_FACTOR;
+                m_accentuationFactor = DEFAULT_ACCENTUATION_FACTOR;
+                m_ambientFactor = DEFAULT_AMBIENT_FACTOR;
+                m_lightPower = DEFAULT_LIGHT_POWER;
+                m_strongLightFactor = DEFAULT_STRONG_LIGHT_FACTOR;
+                m_alphaEnabledSwapChain = DEFAULT_SWAP_CHAIN_WIDTH_ALPHA;
             };
             resetAction();
 
@@ -85,6 +96,9 @@ namespace SeeingSharp.Multimedia.Core
             ResetCommand = new DelegateCommand(resetAction);
         }
 
+#if DESKTOP
+        [Browsable(false)]
+#endif
         public DelegateCommand ResetCommand
         {
             get;
@@ -100,6 +114,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Is wireframe rendering enabled?
         /// </summary>
+        [DefaultValue(DEFAULT_WIREFRAME)]
         public bool WireframeEnabled
         {
             get;
@@ -109,6 +124,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Try to enable antialiasing?
         /// </summary>
+        [DefaultValue(DEFAULT_ANTIALIASING)]
         public bool AntialiasingEnabled
         {
             get { return m_antialiasingEnabled; }
@@ -127,6 +143,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// The quality level for antialiasing (if antialiasing is enabled).
         /// </summary>
+        [DefaultValue(DEFAULT_ANTIALIASING_QUALITY)]
         public AntialiasingQualityLevel AntialiasingQuality
         {
             get { return m_antialiasingQuality; }
@@ -141,7 +158,8 @@ namespace SeeingSharp.Multimedia.Core
                 }
             }
         }
-
+    
+        [DefaultValue(DEFAULT_GRADIENT_FACTOR)]
         public float GeneratedColorGradientFactor
         {
             get { return m_generatedColorGradientFactor; }
@@ -155,6 +173,7 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        [DefaultValue(DEFAULT_BORDER_FACTOR)]
         public float GeneratedBorderFactor
         {
             get { return m_generatedBorderFactor; }
@@ -168,6 +187,7 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        [DefaultValue(DEFAULT_ACCENTUATION_FACTOR)]
         public float AccentuationFactor
         {
             get { return m_accentuationFactor; }
@@ -181,6 +201,7 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        [DefaultValue(DEFAULT_AMBIENT_FACTOR)]
         public float AmbientFactor
         {
             get { return m_ambientFactor; }
@@ -194,6 +215,7 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        [DefaultValue(DEFAULT_LIGHT_POWER)]
         public float LightPower
         {
             get { return m_lightPower; }
@@ -207,6 +229,7 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        [DefaultValue(DEFAULT_STRONG_LIGHT_FACTOR)]
         public float StrongLightFactor
         {
             get { return m_strongLightFactor; }
@@ -226,6 +249,7 @@ namespace SeeingSharp.Multimedia.Core
         internal bool ShowTexturesInternal;
 
         [XmlAttribute]
+        [DefaultValue(DEFAULT_SHOW_TEXTURES)]
         public bool ShowTextures
         {
             get { return ShowTexturesInternal; }
@@ -243,7 +267,11 @@ namespace SeeingSharp.Multimedia.Core
         /// Set this flag to true to enable transparent pixels when view is embedded into Xaml stack.
         /// Only relevant in UWP-Apps!
         /// </summary>
+#if DESKTOP
+        [Browsable(false)]
+#endif
         [XmlAttribute]
+        [DefaultValue(DEFAULT_SWAP_CHAIN_WIDTH_ALPHA)]
         public bool AlphaEnabledSwapChain
         {
             get { return m_alphaEnabledSwapChain; }
@@ -261,6 +289,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets current device configuration.
         /// </summary>
+#if DESKTOP
+        [Browsable(false)]
+#endif
         public GraphicsDeviceConfiguration DeviceConfiguration
         {
             get { return m_deviceConfig; }
@@ -270,6 +301,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets current core configuration.
         /// </summary>
+#if DESKTOP
+        [Browsable(false)]
+#endif 
         public GraphicsCoreConfiguration CoreConfiguration
         {
             get 

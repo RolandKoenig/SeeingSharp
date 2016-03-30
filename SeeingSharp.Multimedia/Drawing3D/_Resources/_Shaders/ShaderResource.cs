@@ -29,24 +29,11 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public abstract class ShaderResource : Resource
     {
-        // Generic members
+        #region Generic members
         private string m_shaderProfile;
         private byte[] m_shaderBytecode;
         private ResourceLink m_resourceLink;
-
-        ///// <summary>
-        ///// Initializes a new instance of the <see cref="ShaderResource"/> class.
-        ///// </summary>
-        ///// <param name="name">The name of the resource.</param>
-        ///// <param name="shaderProfile">Shader profile used for compilation.</param>
-        ///// <param name="filePath">Path to shader file.</param>
-        //protected ShaderResource(string name, string shaderProfile, string filePath)
-        //    : base(name)
-        //{
-        //    m_precompiled = false;
-        //    m_shaderProfile = shaderProfile;
-        //    m_filePath = filePath;
-        //}
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ShaderResource"/> class.

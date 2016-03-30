@@ -35,9 +35,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class ObjectRenderParameters : Resource
     {
+        #region Resource keys
         internal NamedOrGenericKey KEY_CONSTANT_BUFFER = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
+        #region Resources
         private TypeSafeConstantBufferResource<CBPerObject> m_cbPerObject;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ObjectRenderParameters" /> class.

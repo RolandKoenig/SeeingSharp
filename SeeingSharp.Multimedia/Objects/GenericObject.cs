@@ -35,14 +35,17 @@ namespace SeeingSharp.Multimedia.Objects
 {
     public class GenericObject : SceneSpacialObject
     {
-        // Configuration members
+        #region Configuration members
         private NamedOrGenericKey m_resGeometryKey;
+        #endregion
 
-        // private float m_opacity;
+        #region private float m_opacity;
         private bool m_passRelevantValuesChanged;
+        #endregion
 
-        // Resources
+        #region Resources
         private IndexBasedDynamicCollection<GeometryResource> m_localResources;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GenericObject"/> class.
@@ -286,7 +289,6 @@ namespace SeeingSharp.Multimedia.Objects
             GeometryResource geometryResource = m_localResources[renderState.DeviceIndex];
             if (geometryResource != null)
             {
-                //renderState.ObjectOpacity = this.Opacity;
                 using (base.UpdateAndApplyRenderParameters(renderState))
                 {
                     geometryResource.Render(renderState);
@@ -303,8 +305,6 @@ namespace SeeingSharp.Multimedia.Objects
             GeometryResource geometryResource = m_localResources[renderState.DeviceIndex];
             if (geometryResource != null)
             {
-                //Apply opacity value
-                //renderState.ObjectOpacity = Math.Max(0f, base.Opacity);
                 using (base.UpdateAndApplyRenderParameters(renderState))
                 {
                     geometryResource.Render(renderState);

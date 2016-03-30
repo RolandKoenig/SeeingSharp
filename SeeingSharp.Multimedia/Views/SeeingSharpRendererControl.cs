@@ -589,7 +589,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Discard rendering?
         /// </summary>
-        [Category(Constants.DESIGNER_CATEGORY_RENDERER)]
+        [Browsable(false)]
         [DefaultValue(false)]
         public bool DiscardRendering
         {

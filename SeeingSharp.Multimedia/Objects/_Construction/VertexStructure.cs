@@ -671,6 +671,32 @@ namespace SeeingSharp.Multimedia.Objects
             get { return m_surfaces.Count; }
         }
 
+        public int CountTriangles
+        {
+            get
+            {
+                int sum = 0; 
+                for(int loop=0; loop<m_surfaces.Count; loop++)
+                {
+                    sum += m_surfaces[loop].CountTriangles;
+                }
+                return sum;
+            }
+        }
+
+        public int CountIndices
+        {
+            get
+            {
+                int sum = 0;
+                for (int loop = 0; loop < m_surfaces.Count; loop++)
+                {
+                    sum += m_surfaces[loop].CountIndices;
+                }
+                return sum;
+            }
+        }
+
         /// <summary>
         /// Gets or sets the resource source assembly.
         /// </summary>

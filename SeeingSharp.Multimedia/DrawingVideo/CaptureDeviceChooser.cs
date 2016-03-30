@@ -37,7 +37,9 @@ namespace SeeingSharp.Multimedia.DrawingVideo
 {
     public class CaptureDeviceChooser : IDisposable, ICheckDisposed
     {
+        #region Misc
         private CaptureDeviceInfo[] m_captureDeviceInfos;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CaptureDeviceChooser"/> class.

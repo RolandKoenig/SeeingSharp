@@ -690,7 +690,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Retrieves total count of all indexes within this structure
         /// </summary>
-        internal int CountIndexes
+        internal int CountIndices
         {
             get { return m_indices.Count; }
         }

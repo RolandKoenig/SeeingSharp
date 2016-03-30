@@ -30,9 +30,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class OrthographicCamera3D : Camera3DBase
     {
+        #region Constants
         private const float ZOOM_FACTOR_MIN = 0.1f;
+        #endregion
 
+        #region Configuration
         private float m_zoomFactor = 10f;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="OrthographicCamera3D"/> class.

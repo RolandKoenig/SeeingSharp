@@ -30,8 +30,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
     public class TypeSafeConstantBufferResource<T> : ConstantBufferResource
         where T : struct
     {
+        #region Configuration
         private T m_initialData;
         private int m_structureSize;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="TypeSafeConstantBufferResource{T}" /> class.

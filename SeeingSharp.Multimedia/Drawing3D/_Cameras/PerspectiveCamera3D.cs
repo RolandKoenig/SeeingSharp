@@ -30,8 +30,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class PerspectiveCamera3D : Camera3DBase
     {
+        #region Configuration
         private float m_fov = (float)Math.PI / 4.0f;
         private float m_aspectRatio;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PerspectiveCamera3D"/> class.

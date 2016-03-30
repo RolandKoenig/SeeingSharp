@@ -34,32 +34,36 @@ namespace SeeingSharp.Multimedia.Drawing3D
 
     public abstract class Camera3DBase : IAnimatableObject
     {
+        #region Configuration
+        private RenderLoop m_associatedRenderLoop;
         private Vector3 m_position = new Vector3(0, 0, 0);
-        private Vector3 m_lastBigStepPos = new Vector3(0, 0, 0);
         private Vector3 m_relativeTarget = new Vector3(0, 0, 1);
         private Vector3 m_upVector = new Vector3(0, 1, 0);
+        private float m_hRotation = 0.0f;
+        private float m_vRotation = 0.0f;
+        private int m_screenWidth;
+        private int m_screenHeight;
+        #endregion
 
+        #region State
+        private Vector3 m_lastBigStepPos = new Vector3(0, 0, 0);
         private Vector3 m_up;
         private Vector3 m_right;
         private Vector3 m_look;
-
         private Matrix4x4 m_view;
         private Matrix4x4 m_project;
         private Matrix4x4 m_viewProj;
-
-        private int m_screenWidth;
-        private int m_screenHeight;
-
-        private float m_hRotation = 0.0f;
-        private float m_vRotation = 0.0f;
-
+        #endregion
+        
+        #region Additional parameters
         private float m_zNear = 0.1f;
         private float m_zFar = 500f;
-
         private bool m_invertScreenMove;
+        #endregion
 
+        #region Animation
         private AnimationHandler m_animHandler;
-        private RenderLoop m_associatedRenderLoop;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Camera3DBase"/> class.

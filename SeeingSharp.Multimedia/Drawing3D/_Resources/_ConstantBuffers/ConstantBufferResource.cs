@@ -30,8 +30,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class ConstantBufferResource : Resource
     {
+        #region Direct3D resources
         private D3D11.Buffer m_constantBuffer;
+        #endregion
+
+        #region Configuration
         private int m_bufferSize;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConstantBufferResource" /> class.

@@ -33,6 +33,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
     // Structures representing the content of ConstantBuffers on graphics hardware
     // See hlsl file "_constants.hlsl"
 
+    /// <summary>
+    /// This buffer contains all settings which are set once per frame.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct CBPerFrame
     {
@@ -40,6 +43,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public Vector3 Dummy;
     }
 
+    /// <summary>
+    /// This buffer contains all settings which are set once per view.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct CBPerView
     {
@@ -55,6 +61,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public float Dummy;
     }
 
+    /// <summary>
+    /// This buffer contains all settings which are set once per object.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct CBPerObject
     {
@@ -77,6 +86,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public float SpriteScaling;
     }
 
+    /// <summary>
+    /// This buffer contains all settings which are set once per material.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct CBPerMaterial
     {

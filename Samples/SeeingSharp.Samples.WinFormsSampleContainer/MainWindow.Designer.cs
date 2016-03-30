@@ -55,9 +55,9 @@ namespace WinFormsSampleContainer
             this.m_lblWorking = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_barProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.m_refreshTimer = new System.Windows.Forms.Timer(this.components);
+            this.m_splitter = new System.Windows.Forms.SplitContainer();
             this.m_ctrlRenderer = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_compFreeCamera = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
-            this.m_splitter = new System.Windows.Forms.SplitContainer();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).BeginInit();
@@ -285,28 +285,6 @@ namespace WinFormsSampleContainer
             this.m_refreshTimer.Interval = 500;
             this.m_refreshTimer.Tick += new System.EventHandler(this.OnRefreshTimer_Tick);
             // 
-            // m_ctrlRenderer
-            // 
-            this.m_ctrlRenderer.DiscardRendering = true;
-            this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
-            this.m_ctrlRenderer.Name = "m_ctrlRenderer";
-            this.m_ctrlRenderer.SceneComponents.Add(this.m_compFreeCamera);
-            this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 334);
-            this.m_ctrlRenderer.TabIndex = 6;
-            this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
-            this.m_ctrlRenderer.ViewConfiguration.AccentuationFactor = 0F;
-            this.m_ctrlRenderer.ViewConfiguration.AlphaEnabledSwapChain = false;
-            this.m_ctrlRenderer.ViewConfiguration.AmbientFactor = 0.2F;
-            this.m_ctrlRenderer.ViewConfiguration.AntialiasingEnabled = true;
-            this.m_ctrlRenderer.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
-            this.m_ctrlRenderer.ViewConfiguration.GeneratedBorderFactor = 1F;
-            this.m_ctrlRenderer.ViewConfiguration.GeneratedColorGradientFactor = 1F;
-            this.m_ctrlRenderer.ViewConfiguration.LightPower = 0.8F;
-            this.m_ctrlRenderer.ViewConfiguration.ShowTextures = true;
-            this.m_ctrlRenderer.ViewConfiguration.StrongLightFactor = 1.5F;
-            this.m_ctrlRenderer.ViewConfiguration.WireframeEnabled = false;
-            // 
             // m_splitter
             // 
             this.m_splitter.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -325,6 +303,17 @@ namespace WinFormsSampleContainer
             this.m_splitter.Size = new System.Drawing.Size(762, 466);
             this.m_splitter.SplitterDistance = 128;
             this.m_splitter.TabIndex = 7;
+            // 
+            // m_ctrlRenderer
+            // 
+            this.m_ctrlRenderer.DiscardRendering = true;
+            this.m_ctrlRenderer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.m_ctrlRenderer.Location = new System.Drawing.Point(0, 0);
+            this.m_ctrlRenderer.Name = "m_ctrlRenderer";
+            this.m_ctrlRenderer.SceneComponents.Add(this.m_compFreeCamera);
+            this.m_ctrlRenderer.Size = new System.Drawing.Size(762, 334);
+            this.m_ctrlRenderer.TabIndex = 6;
+            this.m_ctrlRenderer.Text = "frozenSkyRendererControl1";
             // 
             // MainWindow
             // 

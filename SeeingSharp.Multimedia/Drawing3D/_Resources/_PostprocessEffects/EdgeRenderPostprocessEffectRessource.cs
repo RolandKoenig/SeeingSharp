@@ -37,22 +37,25 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class EdgeDetectPostprocessEffectResource : PostprocessEffectResource
     {
-        // Resource keys
+        #region Resource keys
         private static readonly NamedOrGenericKey RES_KEY_PIXEL_SHADER_BLUR = GraphicsCore.GetNextGenericResourceKey();
         private NamedOrGenericKey KEY_RENDER_TARGET = GraphicsCore.GetNextGenericResourceKey();
         private NamedOrGenericKey KEY_CONSTANT_BUFFER = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
-        // Resources
+        #region Resources
         private RenderTargetTextureResource m_renderTarget;
         private DefaultResources m_defaultResources;
         private PixelShaderResource m_pixelShaderBlur;
         private CBPerObject m_constantBufferData;
         private TypeSafeConstantBufferResource<CBPerObject> m_constantBuffer;
+        #endregion
 
-        // Configuration
+        #region Configuration
         private float m_thickness;
         private bool m_drawOriginalObject;
         private Color4 m_borderColor;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FocusPostprocessEffectResource"/> class.

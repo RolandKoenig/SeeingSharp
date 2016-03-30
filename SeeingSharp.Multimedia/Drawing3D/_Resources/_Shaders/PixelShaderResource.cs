@@ -30,8 +30,9 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class PixelShaderResource : ShaderResource
     {
-        //Resources for Direct3D 11 rendering
+        #region Resources for Direct3D 11 rendering
         private D3D11.PixelShader m_pixelShader;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VertexShaderResource" /> class.

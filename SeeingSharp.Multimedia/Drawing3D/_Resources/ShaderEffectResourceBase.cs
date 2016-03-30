@@ -35,10 +35,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public abstract class ShaderEffectResourceBase : Resource
     {
+        #region Constants
         private static readonly NamedOrGenericKey RES_KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
+        #region Resources
         private VertexShaderResource m_vertexShader;
         private DefaultResources m_defaultResources;
+        #endregion
 
         /// <summary>
         /// Applies alpha based sprite rendering.

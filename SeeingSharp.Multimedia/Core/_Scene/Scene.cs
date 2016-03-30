@@ -152,11 +152,11 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Waits until the given object is visible.
+        /// Waits until the given object is visible on the given view.
         /// </summary>
-        /// <param name="sceneObject">The scene object.</param>
-        /// <param name="viewInfo">The view information.</param>
-        /// <param name="cancelToken">The cancel token.</param>
+        /// <param name="sceneObject">The scene object to be checked.</param>
+        /// <param name="viewInfo">The view on which to check.</param>
+        /// <param name="cancelToken">The cancellation token.</param>
         public Task WaitUntilVisibleAsync(SceneObject sceneObject, ViewInformation viewInfo, CancellationToken cancelToken = default(CancellationToken))
         {
             sceneObject.EnsureNotNull(nameof(sceneObject));
@@ -951,8 +951,6 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="renderState">The current render state.</param>
         internal void Render(RenderState renderState)
         {
-            //renderState.LastRenderBlockID = -1;
-
             // Get current resource dictionary
             ResourceDictionary resources = m_registeredResourceDicts[renderState.DeviceIndex];
             if (resources == null) { throw new SeeingSharpGraphicsException("Unable to render scene: Resource dictionary for current device not found!"); }
@@ -962,7 +960,17 @@ namespace SeeingSharp.Multimedia.Core
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
             deviceContext.OutputMerger.BlendState = defaultResource.DefaultBlendState;
             deviceContext.OutputMerger.DepthStencilState = defaultResource.DepthStencilStateDefault;
-            deviceContext.Rasterizer.State = defaultResource.RasterStateDefault;
+
+            // Set initial rasterizer state
+            if(renderState.ViewInformation.ViewConfiguration.WireframeEnabled)
+            {
+                deviceContext.Rasterizer.State = defaultResource.RasterStateWireframe;
+            }
+            else
+            {
+                deviceContext.Rasterizer.State = defaultResource.RasterStateDefault;
+            }
+            
 
             // Get or create RenderParamters object on scene level
             SceneRenderParameters renderParameters = m_renderParameters[renderState.DeviceIndex];

@@ -45,10 +45,11 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class EngineDevice
     {
+        #region Constants
         private const string CATEGORY_ADAPTER = "Adapter";
+        #endregion
 
-        // Main members
-        #region
+        #region Main members
         private DXGI.Adapter1 m_adapter;
         private TargetHardware m_targetHardware;
         private GraphicsDeviceConfiguration m_configuration;
@@ -58,14 +59,12 @@ namespace SeeingSharp.Multimedia.Core
         private Exception m_initializationException;
         #endregion
 
-        // Some configuration
-        #region
+        #region Some configuration
         private bool m_isDetailLevelForced;
         private DetailLevel m_forcedDetailLevel;
         #endregion
 
-        // Handlers for different DirectX Apis
-        #region
+        #region Handlers for different DirectX Apis
 #if UNIVERSAL
         private DeviceHandlerDXGI m_handlerDXGI;
         private DeviceHandlerD3D11 m_handlerD3D11;
@@ -79,15 +78,13 @@ namespace SeeingSharp.Multimedia.Core
 #endif
         #endregion
 
-        // Possible antialiasing modes
-        #region
+        #region Possible antialiasing modes
         private DXGI.SampleDescription m_antialiasingConfigLow;
         private DXGI.SampleDescription m_antialiasingConfigMedium;
         private DXGI.SampleDescription m_antialiasingConfigHigh;
         #endregion
 
-        // Members for antialiasing
-        #region
+        #region Members for antialiasing
         private bool m_isStandardAntialiasingSupported;
         private DXGI.SampleDescription m_sampleDescWithAntialiasing;
         #endregion

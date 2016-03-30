@@ -39,16 +39,22 @@ namespace SeeingSharp.Multimedia.Drawing3D
 {
     public class LineRenderResources : Resource
     {
-        public static readonly NamedOrGenericKey RESOURCE_KEY = GraphicsCore.GetNextGenericResourceKey();
+        #region Public constants
+        internal static readonly NamedOrGenericKey RESOURCE_KEY = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
+        #region Private constants
         private static readonly NamedOrGenericKey KEY_VERTEX_SHADER = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey KEY_PIXEL_SHADER = GraphicsCore.GetNextGenericResourceKey();
         private static readonly NamedOrGenericKey KEY_CONSTANT_BUFFER = GraphicsCore.GetNextGenericResourceKey();
+        #endregion
 
+        #region Resources
         private VertexShaderResource m_vertexShader;
         private PixelShaderResource m_pixelShader;
         private TypeSafeConstantBufferResource<ConstantBufferData> m_constantBuffer;
         private D3D11.InputLayout m_inputLayout;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LineRenderResources" /> class.

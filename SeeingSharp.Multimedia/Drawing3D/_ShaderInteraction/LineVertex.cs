@@ -34,19 +34,23 @@ using DXGI = SharpDX.DXGI;
 
 namespace SeeingSharp.Multimedia.Drawing3D
 {
+    /// <summary>
+    /// A structure for sending line vertex data to the GPU.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct LineVertex
     {
-        public Vector3 Position;
-
-        // Create InputElements descriptior for Direct3D 11 api
+        #region Constants
         public static readonly int Size = Marshal.SizeOf<LineVertex>();
-
-        // Structure describing all elements of one vertex
         public static readonly D3D11.InputElement[] InputElements = new D3D11.InputElement[]
         {
             new D3D11.InputElement("POSITION", 0, DXGI.Format.R32G32B32_Float, 0, 0)
         };
+        #endregion
+
+        #region Vertex data
+        public Vector3 Position;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LineVertex" /> struct.
