@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using System.Threading;
 using System.Reflection;
 using SeeingSharp.Util;
+using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Multimedia.PlayingSound;
@@ -198,6 +199,53 @@ namespace SeeingSharp.Multimedia.Core
                 m_configuration = null;
                 m_resourceKeyGenerator = null;
             }
+        }
+
+        /// <summary>
+        /// Gets a collection containing all available font familily names.
+        /// </summary>
+        public IEnumerable<string> GetFontFamilyNames(string localeName = "en-us")
+        {
+            localeName.EnsureNotNullOrEmpty(nameof(localeName));
+            localeName = localeName.ToLower();
+
+            // Query for all available FontFamilies installed on the system
+            List<string> result = null;
+            using (DWrite.FontCollection fontCollection = this.FactoryDWrite.GetSystemFontCollection(false))
+            {
+                int fontFamilyCount = fontCollection.FontFamilyCount;
+                result = new List<string>(fontFamilyCount);
+
+                for(int loop=0; loop< fontFamilyCount; loop++)
+                {
+                    using (DWrite.FontFamily actFamily = fontCollection.GetFontFamily(loop))
+                    using (DWrite.LocalizedStrings actLocalizedStrings = actFamily.FamilyNames)
+                    {
+                        int localeIndex = -1;
+                        if ((bool)actLocalizedStrings.FindLocaleName(localeName, out localeIndex))
+                        {
+                            string actName = actLocalizedStrings.GetString(0);
+                            if(!string.IsNullOrWhiteSpace(actName))
+                            {
+                                result.Add(actName);
+                            }
+                        }
+                        else if((bool)actLocalizedStrings.FindLocaleName("en-us", out localeIndex))
+                        {
+                            string actName = actLocalizedStrings.GetString(0);
+                            if (!string.IsNullOrWhiteSpace(actName))
+                            {
+                                result.Add(actName);
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Sort the list finally
+            result.Sort();
+
+            return result;
         }
 
         /// <summary>

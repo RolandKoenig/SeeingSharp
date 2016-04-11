@@ -105,6 +105,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             // Check for disposed state
             if (base.IsDisposed) { throw new ObjectDisposedException(this.GetType().Name); }
 
+
             DWrite.TextFormat result = m_loadedTextFormats[engineDevice.DeviceIndex];
             if (result == null)
             {

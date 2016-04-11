@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}"
 EndProject
@@ -90,6 +90,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalSampleContainer.WindowsPhone", "Samples\UniversalSampleContainer\UniversalSampleContainer.WindowsPhone\UniversalSampleContainer.WindowsPhone.csproj", "{431F8F6A-AA43-4DE1-8EC3-744A0396AF02}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.UniversalComponentTest", "Tests\SeeingSharp.UniversalComponentTest\SeeingSharp.UniversalComponentTest.csproj", "{87F67058-3F49-4DD1-B4C3-0FAD214033CA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.FontSymbolExtractor", "Tools\SeeingSharp.FontSymbolExtractor\SeeingSharp.FontSymbolExtractor.csproj", "{5C2813D1-CA38-454B-9706-5C74E74B9079}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -543,6 +545,22 @@ Global
 		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x86.ActiveCfg = Release|x86
 		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x86.Build.0 = Release|x86
 		{87F67058-3F49-4DD1-B4C3-0FAD214033CA}.Release|x86.Deploy.0 = Release|x86
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|ARM.Build.0 = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|x64.Build.0 = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Debug|x86.Build.0 = Debug|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|ARM.ActiveCfg = Release|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|ARM.Build.0 = Release|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|x64.ActiveCfg = Release|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|x64.Build.0 = Release|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|x86.ActiveCfg = Release|Any CPU
+		{5C2813D1-CA38-454B-9706-5C74E74B9079}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -575,5 +593,6 @@ Global
 		{73A7B7A2-4698-4CE6-B84C-1E8D64075C61} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{431F8F6A-AA43-4DE1-8EC3-744A0396AF02} = {CB7BB534-A7F5-4680-B4FD-EFF5021EE99D}
 		{87F67058-3F49-4DD1-B4C3-0FAD214033CA} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
+		{5C2813D1-CA38-454B-9706-5C74E74B9079} = {B0619BB7-B709-4C27-8D6F-1C54090C1320}
 	EndGlobalSection
 EndGlobal
