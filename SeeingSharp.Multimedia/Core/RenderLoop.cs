@@ -76,13 +76,7 @@ namespace SeeingSharp.Multimedia.Core
         #endregion
 
         #region Callback methods for current host object
-        private Func<EngineDevice, Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling>> m_actionCreateViewResources;
-        private Action<EngineDevice> m_actionDisposeViewResources;
-        private Func<EngineDevice, bool> m_actionCheckCanRender;
-        private Action<EngineDevice> m_actionPrepareRendering;
-        private Action<EngineDevice> m_actionAfterRendering;
-        private Action<EngineDevice> m_actionPresent;
-        private Func<IEnumerable<InputStateBase>> m_actionQueryInputStates;
+        private IRenderLoopHost m_renderLoopHost;
         #endregion
 
         #region Values needed for runtime
@@ -141,13 +135,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal RenderLoop(
             SynchronizationContext guiSyncContext,
-            Func<EngineDevice, Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling>> actionCreateViewResources,
-            Action<EngineDevice> actionDisposeViewResources,
-            Func<EngineDevice, bool> actionCheckCanRender,
-            Action<EngineDevice> actionPrepareRendering,
-            Action<EngineDevice> actionAfterRendering,
-            Action<EngineDevice> actionPresent,
-            Func<IEnumerable<InputStateBase>> actionQueryInputStates = null,
+            IRenderLoopHost renderLoopHost,
             bool isDesignMode = false)
         {
             m_afterPresentActions = new ThreadSaveQueue<Action>();
@@ -178,13 +166,7 @@ namespace SeeingSharp.Multimedia.Core
             m_videoWriters = new List<SeeingSharpVideoWriter>();
 
             // Assign all given actions
-            m_actionCreateViewResources = actionCreateViewResources;
-            m_actionDisposeViewResources = actionDisposeViewResources;
-            m_actionCheckCanRender = actionCheckCanRender;
-            m_actionPrepareRendering = actionPrepareRendering;
-            m_actionAfterRendering = actionAfterRendering;
-            m_actionPresent = actionPresent;
-            m_actionQueryInputStates = actionQueryInputStates;
+            m_renderLoopHost = renderLoopHost;
 
             // Create default objects
             m_clearColor = Color4.White;
@@ -630,7 +612,7 @@ namespace SeeingSharp.Multimedia.Core
             this.UnloadViewResources();
 
             // Recreate view resources
-            var generatedViewResources = m_actionCreateViewResources(m_currentDevice);
+            var generatedViewResources = m_renderLoopHost.OnRenderLoop_CreateViewResources(m_currentDevice);
             if (generatedViewResources == null) { return; }
             m_renderTarget = generatedViewResources.Item1;
             m_renderTargetView = generatedViewResources.Item2;
@@ -692,7 +674,7 @@ namespace SeeingSharp.Multimedia.Core
             if (m_currentDevice == null) { return; }
 
             // Dispose resources of parent object first
-            m_actionDisposeViewResources(m_currentDevice);
+            m_renderLoopHost.OnRenderLoop_DisposeViewResources(m_currentDevice);
 
             // Free direct2d render target (if created)
             GraphicsHelper.SafeDispose(ref m_d2dOverlay);
@@ -725,13 +707,11 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal async Task<List<InputStateBase>> QueryViewRelatedInputStateAsync()
         {
-            if(m_actionQueryInputStates == null) { return null; }
-
             // Query all states
             List<InputStateBase> result = new List<InputStateBase>(10);
             await m_guiSyncContext.PostAsync(() =>
             {
-                foreach(InputStateBase actInputState in m_actionQueryInputStates())
+                foreach(InputStateBase actInputState in m_renderLoopHost.OnRenderLoop_QueryInputStates())
                 {
                     if(actInputState == null) { continue; }
 
@@ -893,14 +873,14 @@ namespace SeeingSharp.Multimedia.Core
                 try
                 {
                     // Check here wether we can render or not
-                    if (!m_actionCheckCanRender(m_currentDevice))
+                    if (!m_renderLoopHost.OnRenderLoop_CheckCanRender(m_currentDevice))
                     {
                         m_nextRenderAllowed = false;
                         return;
                     }
 
                     // Perform some preparation for rendering
-                    m_actionPrepareRendering(m_currentDevice);
+                    m_renderLoopHost.OnRenderLoop_PrepareRendering(m_currentDevice);
                 }
                 catch (Exception ex)
                 {
@@ -986,13 +966,13 @@ namespace SeeingSharp.Multimedia.Core
                     // Presents all contents on the screen
                     GraphicsCore.Current.ExecuteAndMeasureActivityDuration(
                         string.Format(Constants.PERF_RENDERLOOP_PRESENT, m_currentDevice.DeviceIndex, m_viewInformation.ViewIndex + 1),
-                        () => m_actionPresent(m_currentDevice));
+                        () => m_renderLoopHost.OnRenderLoop_Present(m_currentDevice));
 
                     // Execute all deferred actions to be called after present
                     m_afterPresentActions.DequeueAll().ForEachInEnumeration((actAction) => actAction());
 
                     // Finish rendering now
-                    m_actionAfterRendering(m_currentDevice);
+                    m_renderLoopHost.OnRenderLoop_AfterRendering(m_currentDevice);
                 }
                 catch (Exception ex)
                 {

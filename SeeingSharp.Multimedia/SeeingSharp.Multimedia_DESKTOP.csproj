@@ -411,6 +411,7 @@
     <Compile Include="Components\_Input\FreeMovingCameraComponent.cs" />
     <Compile Include="Components\_Generic\SimpleCenteredCubeComponent.cs" />
     <Compile Include="Views\Design\SeeingSharpRenderControlSceneComponentsEditor.cs" />
+    <Compile Include="Core\IRenderLoopHost.cs" />
     <Compile Include="Views\_Misc.cs" />
     <Compile Include="Views\_Video\MediaPlayerComponent.cs">
       <SubType>Component</SubType>

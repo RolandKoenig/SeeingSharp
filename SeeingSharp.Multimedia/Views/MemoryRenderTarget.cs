@@ -31,12 +31,15 @@ using System.Threading.Tasks;
 
 // Namespace mappings
 using D3D11 = SharpDX.Direct3D11;
+using SeeingSharp.Multimedia.Input;
+using SharpDX;
+using System.Collections.Generic;
 
 namespace SeeingSharp.Multimedia.Views
 {
     //For handling of staging resource see
     // http://msdn.microsoft.com/en-us/library/windows/desktop/ff476259(v=vs.85).aspx
-    public class MemoryRenderTarget : IDisposable, ISeeingSharpPainter
+    public class MemoryRenderTarget : IDisposable, ISeeingSharpPainter, IRenderLoopHost
     {
         #region Configuration
         private int m_pixelWidth;
@@ -79,14 +82,7 @@ namespace SeeingSharp.Multimedia.Views
             if (syncContext == null) { syncContext = new SynchronizationContext(); }
 
             //Create the RenderLoop object
-            m_renderLoop = new RenderLoop(
-                syncContext,
-                OnRenderLoopCreateViewResources,
-                OnRenderLoopDisposeViewResources,
-                OnRenderLoopCheckCanRender,
-                OnRenderLoopPrepareRendering,
-                OnRenderLoopAfterRendering,
-                OnRenderLoopPresent);
+            m_renderLoop = new RenderLoop(syncContext, this);
             m_renderLoop.Camera.SetScreenSize(pixelWidth, pixelHeight);
             m_renderLoop.RegisterRenderLoop();
         }
@@ -113,7 +109,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Disposes all loaded view resources.
         /// </summary>
-        private void OnRenderLoopDisposeViewResources(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_DisposeViewResources(EngineDevice device)
         {
             m_renderTargetDepthView = GraphicsHelper.DisposeObject(m_renderTargetDepthView);
             m_renderTargetDepth = GraphicsHelper.DisposeObject(m_renderTargetDepth);
@@ -128,7 +124,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Create all view resources.
         /// </summary>
-        private Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling> OnRenderLoopCreateViewResources(EngineDevice device)
+        Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling> IRenderLoopHost.OnRenderLoop_CreateViewResources(EngineDevice device)
         {
             int width = m_pixelWidth;
             int height = m_pixelHeight;
@@ -155,7 +151,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop object checks wheter it is possible to render.
         /// </summary>
-        private bool OnRenderLoopCheckCanRender(EngineDevice device)
+        bool IRenderLoopHost.OnRenderLoop_CheckCanRender(EngineDevice device)
         {
             CancelEventArgs eventArgs = new CancelEventArgs(false);
             if (BeforeRender != null) { BeforeRender(this, eventArgs); }
@@ -163,15 +159,15 @@ namespace SeeingSharp.Multimedia.Views
             return !eventArgs.Cancel;
         }
 
-        private void OnRenderLoopPrepareRendering(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_PrepareRendering(EngineDevice device)
         {
-            //m_deviceContext.OutputMerger.SetTargets(m_renderTargetDepthView, m_renderTargetView);
+            
         }
 
         /// <summary>
         /// Called when RenderLoop wants to present its results.
         /// </summary>
-        private void OnRenderLoopPresent(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_Present(EngineDevice device)
         {
             // Finish rendering of all render tasks
             m_deviceContext.Flush();
@@ -187,9 +183,14 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop has finished rendering.
         /// </summary>
-        private void OnRenderLoopAfterRendering(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_AfterRendering(EngineDevice device)
         {
 
+        }
+
+        IEnumerable<InputStateBase> IRenderLoopHost.OnRenderLoop_QueryInputStates()
+        {
+            yield break;
         }
 
         /// <summary>

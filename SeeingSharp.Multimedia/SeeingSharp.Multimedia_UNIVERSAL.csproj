@@ -67,6 +67,7 @@
     <Compile Include="Core\GenericInputEventArgs.cs" />
     <Compile Include="Core\GraphicsCore.cs" />
     <Compile Include="Core\GraphicsHelper.cs" />
+    <Compile Include="Core\IRenderLoopHost.cs" />
     <Compile Include="Core\RenderLoop.cs" />
     <Compile Include="Core\RenderPassInfo.cs" />
     <Compile Include="Core\RenderPassSubscription.cs" />

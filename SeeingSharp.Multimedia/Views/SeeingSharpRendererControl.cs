@@ -46,7 +46,7 @@ using GDI = System.Drawing;
 
 namespace SeeingSharp.Multimedia.Views
 {
-    public partial class SeeingSharpRendererControl : Panel, ISeeingSharpPainter, IInputEnabledView
+    public partial class SeeingSharpRendererControl : Panel, ISeeingSharpPainter, IInputEnabledView, IRenderLoopHost
     {
         private const string TEXT_GRAPHICS_NOT_INITIALIZED = "Graphics not initialized!";
 
@@ -106,15 +106,7 @@ namespace SeeingSharp.Multimedia.Views
 
             //Create the render loop
             GraphicsCore.Touch();
-            m_renderLoop = new RenderLoop(
-                SynchronizationContext.Current,
-                OnRenderLoop_CreateViewResources,
-                OnRenderLoop_DisposeViewResources,
-                OnRenderLoop_CheckCanRender,
-                OnRenderLoop_PrepareRendering,
-                OnRenderLoop_AfterRendering,
-                OnRenderLoop_Present,
-                OnRenderLoop_QueryInputStates);
+            m_renderLoop = new RenderLoop(SynchronizationContext.Current, this, this.DesignMode);
             m_renderLoop.CameraChanged += OnRenderLoopCameraChanged;
             m_renderLoop.ManipulateFilterList += OnRenderLoopManipulateFilterList;
             m_renderLoop.ClearColor = new Color4(this.BackColor);
@@ -407,7 +399,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Create all view resources.
         /// </summary>
-        private Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling> OnRenderLoop_CreateViewResources(EngineDevice device)
+        Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.ViewportF, Size2, DpiScaling> IRenderLoopHost.OnRenderLoop_CreateViewResources(EngineDevice device)
         {
             int width = this.Width;
             int height = this.Height;
@@ -448,7 +440,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Disposes all loaded view resources.
         /// </summary>
-        private void OnRenderLoop_DisposeViewResources(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_DisposeViewResources(EngineDevice device)
         {
             m_factory = null;
             m_renderDevice = null;
@@ -464,7 +456,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop object checks wheter it is possible to render.
         /// </summary>
-        private bool OnRenderLoop_CheckCanRender(EngineDevice device)
+        bool IRenderLoopHost.OnRenderLoop_CheckCanRender(EngineDevice device)
         {
             //if (!m_initialized) { return false; }
             if (this.Width <= 0) { return false; }
@@ -478,7 +470,7 @@ namespace SeeingSharp.Multimedia.Views
         /// Called when the render loop prepares rendering.
         /// </summary>
         /// <param name="device">The current rendering device.</param>
-        private void OnRenderLoop_PrepareRendering(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_PrepareRendering(EngineDevice device)
         {
             if ((m_renderLoop != null) &&
                (m_renderLoop.Camera != null))
@@ -490,7 +482,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop wants to present its results.
         /// </summary>
-        private void OnRenderLoop_Present(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_Present(EngineDevice device)
         {
             //Present all rendered stuff on screen
             m_swapChain.Present(0, DXGI.PresentFlags.DoNotWait, new DXGI.PresentParameters());
@@ -499,7 +491,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <summary>
         /// Called when RenderLoop has finished rendering.
         /// </summary>
-        private void OnRenderLoop_AfterRendering(EngineDevice device)
+        void IRenderLoopHost.OnRenderLoop_AfterRendering(EngineDevice device)
         {
             //m_isOnRendering = false;
             if (!this.Visible)
@@ -512,7 +504,7 @@ namespace SeeingSharp.Multimedia.Views
         /// Queries all input states.
         /// (Called within UI thread)
         /// </summary>
-        private IEnumerable<InputStateBase> OnRenderLoop_QueryInputStates()
+        IEnumerable<InputStateBase> IRenderLoopHost.OnRenderLoop_QueryInputStates()
         {
             foreach (IInputHandler actInputHandler in m_inputHandlers)
             {
