@@ -38,6 +38,7 @@ namespace SeeingSharp.Multimedia
         #region Rendering constants
         public const double MINIMUM_FRAME_TIME_MS = 1000.0 / 60.0;
         public const double MINIMUM_DELAY_TIME_MS = 10.0;
+        public const int INPUT_FRAMES_PER_SECOND = 30;
         #endregion
 
         #region View constants

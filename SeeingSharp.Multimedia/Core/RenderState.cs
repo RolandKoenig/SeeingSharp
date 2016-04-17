@@ -35,10 +35,11 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class RenderState : IDisposable
     {
-        //Resources for Direct3D 11 rendering
+        #region Resources for Direct3D 11 rendering
         private EngineDevice m_device;
+        #endregion
 
-        //Generic fields
+        #region  Generic fields
         private bool m_disposed;
         private Stack<RenderStackEntry> m_renderSettingsStack;
         private Stack<Tuple<Scene, ResourceDictionary>> m_sceneStack;
@@ -47,11 +48,13 @@ namespace SeeingSharp.Multimedia.Core
         private ResourceDictionary m_currentResourceDictionary;
         private Matrix4Stack m_world;
         private PerformanceAnalyzer m_perfomanceCalculator;
+        #endregion
 
-        //Current state
+        #region Current state
         private MaterialResource m_forcedMaterial;
         private MaterialResource m_lastAppliedMaterial;
         private MaterialApplyInstancingMode m_lastMaterialInstancingMode;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RenderState"/> class.
