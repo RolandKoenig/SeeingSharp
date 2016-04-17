@@ -41,10 +41,6 @@ namespace SeeingSharp.Multimedia.Core
     /// </summary>
     public class EngineMainLoop
     {
-        #region Singleton instance
-        private static EngineMainLoop s_current;
-        #endregion
-
         #region main thread synchronization
         private Task m_suspendWaiter;
         private TaskCompletionSource<object> m_suspendWaiterSource;
@@ -82,7 +78,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Prevents a default instance of the <see cref="EngineMainLoop"/> class from being created.
         /// </summary>
-        private EngineMainLoop()
+        internal EngineMainLoop()
         {
             m_globalLoopAwaiters = new ConcurrentQueue<Action>();
             m_registeredRenderLoops = new List<RenderLoop>();
@@ -699,18 +695,6 @@ namespace SeeingSharp.Multimedia.Core
             lock(m_scenesForUnloadLock)
             {
                 while (m_scenesForUnload.Remove(scene)) { }
-            }
-        }
-
-        /// <summary>
-        /// Gets the current singleton instance.
-        /// </summary>
-        public static EngineMainLoop Current
-        {
-            get 
-            {
-                if (s_current == null) { s_current = new EngineMainLoop(); }
-                return s_current; 
             }
         }
 

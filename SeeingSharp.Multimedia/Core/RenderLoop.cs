@@ -1112,7 +1112,7 @@ namespace SeeingSharp.Multimedia.Core
             // Deregister this Renderloop object
             if (IsRegisteredOnMainLoop)
             {
-                EngineMainLoop.Current.DeregisterRenderLoop(this);
+                GraphicsCore.Current.MainLoop.DeregisterRenderLoop(this);
             }
         }
 
@@ -1124,7 +1124,7 @@ namespace SeeingSharp.Multimedia.Core
             // Deregister this Renderloop object
             if (!IsRegisteredOnMainLoop)
             {
-                EngineMainLoop.Current.RegisterRenderLoop(this);
+                GraphicsCore.Current.MainLoop.RegisterRenderLoop(this);
             }
         }
 
@@ -1134,7 +1134,7 @@ namespace SeeingSharp.Multimedia.Core
         public void Dispose()
         {
             // Deregister this Renderloop object
-            EngineMainLoop.Current.DeregisterRenderLoop(this);
+            GraphicsCore.Current.MainLoop.DeregisterRenderLoop(this);
 
             GraphicsHelper.SafeDispose(ref m_debugDrawingLayer);
         }

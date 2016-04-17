@@ -45,7 +45,7 @@ namespace SeeingSharp.Multimedia.Drawing2D
             {
                 m_isDisposed = true;
 
-                EngineMainLoop.Current.RegisterForUnload(this);
+                GraphicsCore.Current.MainLoop.RegisterForUnload(this);
             }
         }
 

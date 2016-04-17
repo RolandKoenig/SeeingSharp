@@ -483,7 +483,7 @@ namespace SeeingSharp.Multimedia.Core
             // Mark this scene for deletion if we don't have any other view registered
             if (isFirstView)
             {
-                EngineMainLoop.Current.DeregisterSceneForUnload(this);
+                GraphicsCore.Current.MainLoop.DeregisterSceneForUnload(this);
             }
         }
 
@@ -528,7 +528,7 @@ namespace SeeingSharp.Multimedia.Core
             // Mark this scene for deletion if we don't have any other view registered
             if (m_registeredViews.Count <= 0)
             {
-                EngineMainLoop.Current.RegisterSceneForUnload(this);
+                GraphicsCore.Current.MainLoop.RegisterSceneForUnload(this);
             }
         }
 

@@ -54,27 +54,25 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class GraphicsCore
     {
-        // Singleton instance
+        #region Singleton instance
         private static GraphicsCore s_current;
+        #endregion
 
-        // Hardware 
-        #region
+        #region Hardware 
         private EngineHardwareInfo m_hardwareInfo;
         private List<EngineDevice> m_devices;
         private EngineDevice m_defaultDevice;
         #endregion
 
-        // Some helpers
-        #region
+        #region Some helpers
         private GraphicsCoreConfiguration m_configuration;
         private UniqueGenericKeyGenerator m_resourceKeyGenerator;
         private PerformanceAnalyzer m_performanceCalculator;
-        private InputHandlerFactory m_inputHandlers;
+        private InputHandlerFactory m_inputHandlerFactory;
         private ImportExportHandler m_importExporters;
         #endregion
 
-        // Global device handlers
-        #region
+        #region Global device handlers
         private FactoryHandlerWIC m_factoryHandlerWIC;
         private FactoryHandlerD2D m_factoryHandlerD2D;
         private FactoryHandlerDWrite m_factoryHandlerDWrite;
@@ -86,15 +84,14 @@ namespace SeeingSharp.Multimedia.Core
         private SoundManager m_soundManager;
         #endregion
 
-        // Members for threading
-        #region
+        #region Members for threading
         private static Task m_defaultInitTask;
+        private EngineMainLoop m_mainLoop;
         private Task m_mainLoopTask;
         private CancellationTokenSource m_mainLoopCancelTokenSource;
         #endregion
 
-        // Configurations
-        #region
+        #region Configurations
         private bool m_debugEnabled;
         private TargetHardware m_targetHardware;
         private SeeingSharpPlatform m_platform;
@@ -121,7 +118,7 @@ namespace SeeingSharp.Multimedia.Core
                 m_configuration.DebugEnabled = debugEnabled;
 
                 // Create container object for all input handlers
-                m_inputHandlers = new InputHandlerFactory();
+                m_inputHandlerFactory = new InputHandlerFactory();
                 m_importExporters = new ImportExportHandler();
 
                 // Try to initialize global api factories (mostly for 2D rendering / operations)
@@ -186,10 +183,11 @@ namespace SeeingSharp.Multimedia.Core
                 m_resourceKeyGenerator = new UniqueGenericKeyGenerator();
 
                 // Start main loop
+                m_mainLoop = new EngineMainLoop();
                 if (m_devices.Count > 0)
                 {
                     m_mainLoopCancelTokenSource = new CancellationTokenSource();
-                    m_mainLoopTask = EngineMainLoop.Current.Start(m_mainLoopCancelTokenSource.Token);
+                    m_mainLoopTask = m_mainLoop.Start(m_mainLoopCancelTokenSource.Token);
                 }
             }
             catch (Exception)
@@ -253,7 +251,9 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void Resume()
         {
-            EngineMainLoop.Current.Resume();
+            if (m_mainLoop == null) { throw new SeeingSharpGraphicsException("GraphicsCore not initialized!"); }
+
+            m_mainLoop.Resume();
         }
 
         /// <summary>
@@ -261,7 +261,9 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public Task SuspendAsync()
         {
-            return EngineMainLoop.Current.SuspendAsync();
+            if(m_mainLoop == null) { throw new SeeingSharpGraphicsException("GraphicsCore not initialized!"); }
+
+            return m_mainLoop.SuspendAsync();
         }
 
         public static void Touch()
@@ -596,7 +598,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public InputHandlerFactory InputHandlers
         {
-            get { return m_inputHandlers; }
+            get { return m_inputHandlerFactory; }
         }
 
         /// <summary>
@@ -612,7 +614,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public EngineMainLoop MainLoop
         {
-            get { return EngineMainLoop.Current; }
+            get { return m_mainLoop; }
         }
 
         /// <summary>
