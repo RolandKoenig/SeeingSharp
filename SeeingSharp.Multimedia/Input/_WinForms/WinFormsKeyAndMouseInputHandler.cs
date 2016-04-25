@@ -108,14 +108,6 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Generic method thet gets iteratively after this handler was started.
-        /// </summary>
-        public void UpdateMovement()
-        {
-
-        }
-
-        /// <summary>
         /// Gets a list containing all supported view types.
         /// </summary>
         public Type[] GetSupportedViewTypes()

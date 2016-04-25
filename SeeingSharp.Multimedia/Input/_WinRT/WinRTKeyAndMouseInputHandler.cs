@@ -186,13 +186,6 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Generic method thet gets iteratively after this handler was started.
-        /// </summary>
-        public void UpdateMovement()
-        {
-        }
-
-        /// <summary>
         /// Querries all current input states.
         /// </summary>
         public IEnumerable<InputStateBase> GetInputStates()

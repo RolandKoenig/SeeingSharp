@@ -262,7 +262,6 @@ namespace SeeingSharp.Multimedia.Core
                             // Get input from generic input handlers
                             foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
                             {
-                                actGenericInputHandler.UpdateMovement();
                                 inputStates.AddRange(actGenericInputHandler.GetInputStates());
                             }
 

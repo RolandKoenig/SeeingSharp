@@ -68,8 +68,12 @@ namespace SeeingSharp.Multimedia.Core
         private GraphicsCoreConfiguration m_configuration;
         private UniqueGenericKeyGenerator m_resourceKeyGenerator;
         private PerformanceAnalyzer m_performanceCalculator;
-        private InputHandlerFactory m_inputHandlerFactory;
         private ImportExportHandler m_importExporters;
+        #endregion
+
+        #region Members for input
+        private InputHandlerFactory m_inputHandlerFactory;
+        private InputGathererThread m_inputGatherer;
         #endregion
 
         #region Global device handlers
@@ -182,6 +186,10 @@ namespace SeeingSharp.Multimedia.Core
                 // Create the key generator for resource keys
                 m_resourceKeyGenerator = new UniqueGenericKeyGenerator();
 
+                // Start input gathering
+                m_inputGatherer = new InputGathererThread();
+                m_inputGatherer.Start();
+
                 // Start main loop
                 m_mainLoop = new EngineMainLoop();
                 if (m_devices.Count > 0)
@@ -189,6 +197,8 @@ namespace SeeingSharp.Multimedia.Core
                     m_mainLoopCancelTokenSource = new CancellationTokenSource();
                     m_mainLoopTask = m_mainLoop.Start(m_mainLoopCancelTokenSource.Token);
                 }
+
+                
             }
             catch (Exception)
             {

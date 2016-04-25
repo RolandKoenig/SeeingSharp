@@ -407,12 +407,6 @@ namespace SeeingSharp.Multimedia.Views
                 (m_renderLoop.Camera != null) &&
                 (m_swapChain != null))
             {
-                // Update movement for all running input handlers
-                foreach (var actInputHandler in m_inputHandlers)
-                {
-                    actInputHandler.UpdateMovement();
-                }
-
                 // Update swap chain scaling (only relevant for SwapChainPanel targets)
                 //  see https://www.packtpub.com/books/content/integrating-direct3d-xaml-and-windows-81
                 if (m_compositionScaleChanged &&

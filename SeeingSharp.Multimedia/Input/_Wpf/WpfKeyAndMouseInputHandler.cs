@@ -104,14 +104,6 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Generic method thet gets iteratively after this handler was started.
-        /// </summary>
-        public void UpdateMovement()
-        {
-
-        }
-
-        /// <summary>
         /// Stops input handling.
         /// </summary>
         public void Stop()

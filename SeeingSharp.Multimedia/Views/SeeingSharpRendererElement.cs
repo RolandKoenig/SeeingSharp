@@ -344,15 +344,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <param name="engineDevice">The engine device.</param>
         void IRenderLoopHost.OnRenderLoop_PrepareRendering(EngineDevice engineDevice)
         {
-            if ((m_renderLoop != null) &&
-                (m_renderLoop.Camera != null))
-            {
-                // Update movement for all running input handlers
-                foreach (var actInputHandler in m_inputHandlers)
-                {
-                    actInputHandler.UpdateMovement();
-                }
-            }
+
         }
 
         /// <summary>

@@ -81,27 +81,6 @@ namespace SeeingSharp.Multimedia.Input
 
         }
 
-        /// <summary>
-        /// Generic method thet gets iteratively after this handler was started.
-        /// </summary>
-        public void UpdateMovement()
-        {
-            for(int loop=0; loop<m_controllers.Length; loop++)
-            {
-                bool isConnected = m_controllers[loop].IsConnected;
-                
-                if(!isConnected)
-                {
-                    m_states[loop].NotifyConnected(false);
-                    continue;
-                }
-
-                // Query all state values
-                m_states[loop].NotifyConnected(true);
-                m_states[loop].NotifyState(m_controllers[loop]);
-            }
-        }
-
         public void Stop()
         {
 
@@ -112,7 +91,24 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public IEnumerable<InputStateBase> GetInputStates()
         {
-            for(int loop=0; loop<m_states.Length; loop++)
+            // Update connected states first
+            for (int loop = 0; loop < m_controllers.Length; loop++)
+            {
+                bool isConnected = m_controllers[loop].IsConnected;
+
+                if (!isConnected)
+                {
+                    m_states[loop].NotifyConnected(false);
+                    continue;
+                }
+
+                // Query all state values
+                m_states[loop].NotifyConnected(true);
+                m_states[loop].NotifyState(m_controllers[loop]);
+            }
+
+            // Now return all input states
+            for (int loop=0; loop<m_states.Length; loop++)
             {
                 yield return m_states[loop];
             }

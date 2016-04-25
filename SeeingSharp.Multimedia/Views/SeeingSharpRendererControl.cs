@@ -252,18 +252,6 @@ namespace SeeingSharp.Multimedia.Views
         }
 
         /// <summary>
-        /// Updates the movement.
-        /// </summary>
-        private void UpdateMovement()
-        {
-            // Update movement for all running input handlers
-            foreach (var actInputHandler in m_inputHandlers)
-            {
-                actInputHandler.UpdateMovement();
-            }
-        }
-
-        /// <summary>
         /// Stops rendering.
         /// </summary>
         private void StartRendering()
@@ -472,11 +460,7 @@ namespace SeeingSharp.Multimedia.Views
         /// <param name="device">The current rendering device.</param>
         void IRenderLoopHost.OnRenderLoop_PrepareRendering(EngineDevice device)
         {
-            if ((m_renderLoop != null) &&
-               (m_renderLoop.Camera != null))
-            {
-                this.UpdateMovement();
-            }
+
         }
 
         /// <summary>
