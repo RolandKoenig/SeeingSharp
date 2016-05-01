@@ -46,6 +46,24 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
+        /// Creates all input handlers which are not associated to one view.
+        /// </summary>
+        internal static List<IInputHandler> CreateInputHandlersForGlobal()
+        {
+            return GraphicsCore.Current.InputHandlers.GetInputHandler(null);
+        }
+
+        /// <summary>
+        /// Creates all input handlers which are associated to one view.
+        /// </summary>
+        internal static List<IInputHandler> CreateInputHandlersForView(IInputEnabledView viewObject)
+        {
+            viewObject.EnsureNotNull(nameof(viewObject));
+
+            return GraphicsCore.Current.InputHandlers.GetInputHandler(viewObject.GetType());
+        }
+
+        /// <summary>
         /// Updates all currently active input handlers for the given view.
         /// </summary>
         /// <param name="viewObject">The object of the view control.</param>
@@ -84,7 +102,6 @@ namespace SeeingSharp.Multimedia.Input
 
             // Get all possible input handlers
             inputHandlers.AddRange(GraphicsCore.Current.InputHandlers.GetInputHandler(
-                viewObject,
                 viewObject.GetType()));
 
             // Start them all
@@ -104,16 +121,15 @@ namespace SeeingSharp.Multimedia.Input
         {
             Type givenViewType = typeof(ViewType);
 
-            return GetInputHandler(viewObject, givenViewType);
+            return GetInputHandler(givenViewType);
         }
 
         /// <summary>
         /// Gets all possible GraphicsInputHandlers for the given view and camera types.
         /// Pass null to all parameters to return all generic input handlers.
         /// </summary>
-        /// <param name="viewObject">The view for which to query the input object.</param>
         /// <param name="givenViewType">The type of the camera.</param>
-        public List<IInputHandler> GetInputHandler(IInputEnabledView viewObject, Type givenViewType)
+        public List<IInputHandler> GetInputHandler(Type givenViewType)
         {
             List<IInputHandler> result = new List<IInputHandler>();
             foreach (var actInputHandler in m_inputHandlers)

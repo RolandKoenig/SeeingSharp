@@ -627,6 +627,11 @@ namespace SeeingSharp.Multimedia.Core
             get { return m_mainLoop; }
         }
 
+        public InputGathererThread InputGatherer
+        {
+            get { return m_inputGatherer; }
+        }
+
         /// <summary>
         /// Gets the currently running SoundManager object.
         /// </summary>

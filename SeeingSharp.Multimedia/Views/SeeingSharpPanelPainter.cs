@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Windows.Foundation;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -586,6 +587,15 @@ namespace SeeingSharp.Multimedia.Views
             {
                 if (m_targetPanel == null) { return null; }
                 return m_targetPanel.Panel; 
+            }
+        }
+
+        public CoreDispatcher Disptacher
+        {
+            get
+            {
+                if(m_targetPanel == null) { return null; }
+                return m_targetPanel.Dispatcher;
             }
         }
     }

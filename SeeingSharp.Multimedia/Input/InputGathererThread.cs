@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Multimedia.Core;
 
 namespace SeeingSharp.Multimedia.Input
 {
@@ -42,7 +43,8 @@ namespace SeeingSharp.Multimedia.Input
         #endregion
 
         #region Thread local state
-        private List<IInputHandler> m_inputHandlers;
+        private List<IInputHandler> m_globalInputHandlers;
+        private Dictionary<IInputEnabledView, List<IInputHandler>> m_viewInputHandlers;
         #endregion
 
         /// <summary>
@@ -53,7 +55,9 @@ namespace SeeingSharp.Multimedia.Input
         {
             m_commandQueue = new ThreadSaveQueue<Action>();
             m_gatheredInputFrames = new ThreadSaveQueue<InputFrame>();
-            m_inputHandlers = new List<IInputHandler>();
+
+            m_globalInputHandlers = new List<IInputHandler>();
+            m_viewInputHandlers = new Dictionary<IInputEnabledView, List<IInputHandler>>();
         }
 
         /// <summary>
@@ -65,26 +69,68 @@ namespace SeeingSharp.Multimedia.Input
         }
 
         /// <summary>
-        /// Registers the given InputHandler for input gathering.
+        /// Registers the given view on this thread.
         /// </summary>
-        internal void RegisterInputHandler(IInputHandler inputHandler)
+        internal void RegisterView(IInputEnabledView view)
         {
-            inputHandler.EnsureNotNull(nameof(inputHandler));
-
-            m_commandQueue.Enqueue(() => m_inputHandlers.Add(inputHandler));
-        }
-
-        /// <summary>
-        /// Deregisters the given InputHandler.
-        /// </summary>
-        internal void DeregisterInputHandler(IInputHandler inputHandler)
-        {
-            inputHandler.EnsureNotNull(nameof(inputHandler));
+            view.EnsureNotNull(nameof(view));
 
             m_commandQueue.Enqueue(() =>
             {
-                while (m_inputHandlers.Contains(inputHandler)) { m_inputHandlers.Remove(inputHandler); }
+                List<IInputHandler> inputHandlers = InputHandlerFactory.CreateInputHandlersForView(view);
+                if(inputHandlers == null) { return; }
+                if(inputHandlers.Count == 0) { return; }
+
+                // Deregister old input handlers if necessary
+                if(m_viewInputHandlers.ContainsKey(view))
+                {
+                    List<IInputHandler> oldList = m_viewInputHandlers[view];
+                    foreach(IInputHandler actOldInputHanlder in oldList)
+                    {
+                        actOldInputHanlder.Stop();
+                    }
+                    m_viewInputHandlers.Remove(view);
+                }
+
+                // Register new ones
+                m_viewInputHandlers[view] = inputHandlers;
+                foreach(IInputHandler actInputHandler in inputHandlers)
+                {
+                    actInputHandler.Start(view);
+                }
             });
+        }
+
+        /// <summary>
+        /// Deregisters the given view from this thread.
+        /// </summary>
+        internal void DeregisterView(IInputEnabledView view)
+        {
+            view.EnsureNotNull(nameof(view));
+
+            m_commandQueue.Enqueue(() =>
+            {
+                if (m_viewInputHandlers.ContainsKey(view))
+                {
+                    List<IInputHandler> oldList = m_viewInputHandlers[view];
+                    foreach (IInputHandler actOldInputHanlder in oldList)
+                    {
+                        actOldInputHanlder.Stop();
+                    }
+                    m_viewInputHandlers.Remove(view);
+                }
+            });
+        }
+
+        protected override void OnStarting(EventArgs eArgs)
+        {
+            base.OnStarting(eArgs);
+
+            m_globalInputHandlers = InputHandlerFactory.CreateInputHandlersForGlobal();
+            foreach(IInputHandler actInputHandler in m_globalInputHandlers)
+            {
+                actInputHandler.Start(null);
+            }
         }
 
         protected override void OnTick(EventArgs eArgs)
@@ -104,7 +150,7 @@ namespace SeeingSharp.Multimedia.Input
             // Gather all input data
             int expectedStateCount = m_lastInputFrame != null ? m_lastInputFrame.CountStates : 6;
             InputFrame newInputFrame = new InputFrame(expectedStateCount);
-            foreach(IInputHandler actInputHandler in m_inputHandlers)
+            foreach(IInputHandler actInputHandler in m_globalInputHandlers)
             {
                 foreach(InputStateBase actInputState in actInputHandler.GetInputStates())
                 {
@@ -113,10 +159,30 @@ namespace SeeingSharp.Multimedia.Input
                     newInputFrame.AddState(actInputState);
                 }
             }
+            foreach(KeyValuePair<IInputEnabledView, List<IInputHandler>> actViewSpecificHandlers in m_viewInputHandlers)
+            {
+                foreach (IInputHandler actInputHandler in actViewSpecificHandlers.Value)
+                {
+                    foreach (InputStateBase actInputState in actInputHandler.GetInputStates())
+                    {
+                        actInputState.EnsureNotNull(nameof(actInputState));
+
+                        newInputFrame.AddState(actInputState);
+                    }
+                }
+            }
 
             // Store the generated InputFrame 
             m_lastInputFrame = newInputFrame;
             m_gatheredInputFrames.Enqueue(newInputFrame);
+
+            // Ensure that we hold input frames for a maximum time range of a second
+            //  (older input is obsolete)
+            while(m_gatheredInputFrames.Count > Constants.INPUT_FRAMES_PER_SECOND)
+            {
+                InputFrame dummyFrame = null;
+                m_gatheredInputFrames.Dequeue(out dummyFrame);   
+            }
         }
     }
 }

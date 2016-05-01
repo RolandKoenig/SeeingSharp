@@ -30,6 +30,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Graphics.Display;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using DXGI = SharpDX.DXGI;
@@ -38,18 +39,24 @@ namespace SeeingSharp.Multimedia.Views
 {
     internal class SwapChainPanelWrapper : IDisposable
     {
+        #region UI objects
         private SwapChainBackgroundPanel m_bgPanel;
         private DXGI.ISwapChainBackgroundPanelNative m_bgPanelNative;
         private SwapChainPanel m_panel;
         private DXGI.ISwapChainPanelNative m_panelNative;
+        #endregion
 
+        #region Configuration
         private float m_currentDpiX;
         private float m_currentDpiY;
+        #endregion
 
+        #region Forwarded events
         public event EventHandler<RoutedEventArgs> Unloaded;
         public event EventHandler<RoutedEventArgs> Loaded;
         public event EventHandler<SizeChangedEventArgs> SizeChanged;
         public event EventHandler CompositionScaleChanged;
+        #endregion
 
         public SwapChainPanelWrapper()
         {
@@ -187,6 +194,19 @@ namespace SeeingSharp.Multimedia.Views
             {
                 if (m_panel != null) { return m_panel.CompositionScaleY; }
                 return m_currentDpiY / 96.0;
+            }
+        }
+
+        public CoreDispatcher Dispatcher
+        {
+            get
+            {
+                if(m_bgPanel != null) { return m_bgPanel.Dispatcher; }
+                else if(m_panel != null) { return m_panel.Dispatcher; }
+                else
+                {
+                    throw new ObjectDisposedException("SwapChainPanelWrapper");
+                }
             }
         }
     }

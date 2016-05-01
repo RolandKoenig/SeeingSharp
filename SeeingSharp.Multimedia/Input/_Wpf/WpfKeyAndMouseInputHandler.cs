@@ -24,6 +24,7 @@
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Multimedia.Core;
 using System;
 using System.Numerics;
 using System.Collections.Generic;
@@ -82,13 +83,14 @@ namespace SeeingSharp.Multimedia.Input
         /// Starts input handling.
         /// </summary>
         /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        public void Start(object viewObject)
+        public void Start(IInputEnabledView viewObject)
         {
             m_rendererElement = viewObject as SeeingSharpRendererElement;
+            if(m_rendererElement == null) { throw new ArgumentException("Unable to handle given view object!"); }
 
-            if(m_rendererElement != null)
+            // Register all events needed for mouse camera dragging
+            m_rendererElement.Dispatcher.BeginInvoke(new Action(() =>
             {
-                // Register all events needed for mouse camera dragging
                 m_rendererElement.MouseWheel += OnRendererElement_MouseWheel;
                 m_rendererElement.MouseDown += OnRendererElement_MouseDown;
                 m_rendererElement.MouseUp += OnRendererElement_MouseUp;
@@ -100,7 +102,7 @@ namespace SeeingSharp.Multimedia.Input
                 m_rendererElement.PreviewMouseUp += OnRendererElement_PreviewMouseUp;
                 m_rendererElement.KeyUp += OnRendererElement_KeyUp;
                 m_rendererElement.KeyDown += OnRendererElement_KeyDown;
-            }
+            }));
         }
 
         /// <summary>
@@ -111,15 +113,19 @@ namespace SeeingSharp.Multimedia.Input
             // Deregister all events
             if(m_rendererElement != null)
             {
-                m_rendererElement.MouseWheel -= OnRendererElement_MouseWheel;
-                m_rendererElement.MouseDown -= OnRendererElement_MouseDown;
-                m_rendererElement.MouseUp -= OnRendererElement_MouseUp;
-                m_rendererElement.MouseMove -= OnRendererElement_MouseMove;
-                m_rendererElement.MouseLeave -= OnRendererElement_MouseLeave;
-                m_rendererElement.LostFocus -= OnRendererElement_LostFocus;
-                m_rendererElement.LostKeyboardFocus -= OnRendererElement_LostKeyboardFocus;
-                m_rendererElement.GotFocus -= OnRenderElement_GotFocus;
-                m_rendererElement.PreviewMouseUp -= OnRendererElement_PreviewMouseUp;
+                SeeingSharpRendererElement rendererElement = m_rendererElement;
+                m_rendererElement.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    rendererElement.MouseWheel -= OnRendererElement_MouseWheel;
+                    rendererElement.MouseDown -= OnRendererElement_MouseDown;
+                    rendererElement.MouseUp -= OnRendererElement_MouseUp;
+                    rendererElement.MouseMove -= OnRendererElement_MouseMove;
+                    rendererElement.MouseLeave -= OnRendererElement_MouseLeave;
+                    rendererElement.LostFocus -= OnRendererElement_LostFocus;
+                    rendererElement.LostKeyboardFocus -= OnRendererElement_LostKeyboardFocus;
+                    rendererElement.GotFocus -= OnRenderElement_GotFocus;
+                    rendererElement.PreviewMouseUp -= OnRendererElement_PreviewMouseUp;
+                }));
             }
 
             m_rendererElement = null;
@@ -139,11 +145,15 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnRendererElement_KeyDown(object sender, KeyEventArgs e)
         {
+            if(m_rendererElement == null) { return; }
+
             m_stateKeyboard.NotifyKeyDown((WinVirtualKey)KeyInterop.VirtualKeyFromKey(e.Key));
         }
 
         private void OnRendererElement_KeyUp(object sender, KeyEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_stateKeyboard.NotifyKeyUp((WinVirtualKey)KeyInterop.VirtualKeyFromKey(e.Key));
         }
 
@@ -154,26 +164,36 @@ namespace SeeingSharp.Multimedia.Input
         /// <param name="e"></param>
         private void OnRendererElement_MouseWheel(object sender, MouseWheelEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_stateMouseOrPointer.NotifyMouseWheel(e.Delta);
         }
 
         private void OnRenderElement_GotFocus(object sender, RoutedEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_stateKeyboard.NotifyFocusGot();
         }
 
         private void OnRendererElement_LostFocus(object sender, RoutedEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_stateKeyboard.NotifyFocusLost();
         }
 
         private void OnRendererElement_LostKeyboardFocus(object sender, KeyboardFocusChangedEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_stateKeyboard.NotifyFocusLost();
         }
 
         private void OnRendererElement_MouseDown(object sender, MouseButtonEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_rendererElement.Focus();
 
             switch (e.ChangedButton)
@@ -202,6 +222,8 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnRendererElement_MouseLeave(object sender, MouseEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_stateMouseOrPointer.NotifyInside(false);
 
             m_lastDragPointValid = false;
@@ -210,6 +232,8 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnRendererElement_MouseMove(object sender, MouseEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             m_stateMouseOrPointer.NotifyInside(true);
 
             System.Windows.Point currentPosition = e.GetPosition(m_rendererElement);
@@ -227,6 +251,8 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnRendererElement_MouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             switch (e.ChangedButton)
             {
                 case System.Windows.Input.MouseButton.Left:
@@ -253,6 +279,8 @@ namespace SeeingSharp.Multimedia.Input
 
         private void OnRendererElement_PreviewMouseUp(object sender, MouseButtonEventArgs e)
         {
+            if (m_rendererElement == null) { return; }
+
             switch (e.ChangedButton)
             {
                 case System.Windows.Input.MouseButton.Left:

@@ -107,7 +107,6 @@ namespace SeeingSharp.Multimedia.Views
             //Create the render loop
             GraphicsCore.Touch();
             m_renderLoop = new RenderLoop(SynchronizationContext.Current, this, this.DesignMode);
-            m_renderLoop.CameraChanged += OnRenderLoopCameraChanged;
             m_renderLoop.ManipulateFilterList += OnRenderLoopManipulateFilterList;
             m_renderLoop.ClearColor = new Color4(this.BackColor);
             m_renderLoop.DiscardRendering = true;
@@ -121,9 +120,6 @@ namespace SeeingSharp.Multimedia.Views
             {
                 m_renderLoop.SetScene(new Scene());
                 m_renderLoop.Camera = new PerspectiveCamera3D();
-
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
 
                 //Observe resize event and throttle them
                 this.HandleCreateDisposeOnControl(
@@ -499,20 +495,6 @@ namespace SeeingSharp.Multimedia.Views
                 {
                     yield return actInputstate;
                 }
-            }
-        }
-
-        /// <summary>
-        /// Called when the currently active camera has changed.
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void OnRenderLoopCameraChanged(object sender, EventArgs e)
-        {
-            if (!DesignMode)
-            {
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
             }
         }
 

@@ -1113,6 +1113,12 @@ namespace SeeingSharp.Multimedia.Core
             if (IsRegisteredOnMainLoop)
             {
                 GraphicsCore.Current.MainLoop.DeregisterRenderLoop(this);
+
+                IInputEnabledView inputInterface = m_renderLoopHost as IInputEnabledView;
+                if (inputInterface != null)
+                {
+                    GraphicsCore.Current.InputGatherer.DeregisterView(inputInterface);
+                }
             }
         }
 
@@ -1125,6 +1131,12 @@ namespace SeeingSharp.Multimedia.Core
             if (!IsRegisteredOnMainLoop)
             {
                 GraphicsCore.Current.MainLoop.RegisterRenderLoop(this);
+
+                IInputEnabledView inputInterface = m_renderLoopHost as IInputEnabledView;
+                if (inputInterface != null)
+                {
+                    GraphicsCore.Current.InputGatherer.RegisterView(inputInterface);
+                }
             }
         }
 

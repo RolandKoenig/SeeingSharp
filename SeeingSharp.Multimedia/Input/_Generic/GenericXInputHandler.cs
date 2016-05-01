@@ -76,7 +76,7 @@ namespace SeeingSharp.Multimedia.Input
         /// Starts input handling.
         /// </summary>
         /// <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        public void Start(object viewObject)
+        public void Start(IInputEnabledView viewObject)
         {
 
         }
