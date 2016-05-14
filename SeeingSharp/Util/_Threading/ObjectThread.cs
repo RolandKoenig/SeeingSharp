@@ -33,24 +33,27 @@ namespace SeeingSharp.Util
     {
         private const int STANDARD_HEARTBEAT = 500;
 
-        // Members for thread configuration
+        #region Members for thread configuration
         private string m_name;
         private int m_heartBeat;
         private bool m_createMessenger;
+        #endregion
 
-        //Members for thread runtime
+        #region Members for thread runtime
         private volatile ObjectThreadState m_currentState;
         private SeeingSharpMessenger m_Messenger;
         private ObjectThreadTimer m_timer;
 #if DESKTOP
         private Thread m_mainThread;
 #endif
+        #endregion
 
-        //Threading resources
+        #region Threading resources
         private ObjectThreadSynchronizationContext m_syncContext;
         private ConcurrentQueue<Action> m_taskQueue;
         private SemaphoreSlim m_mainLoopSynchronizeObject;
         private SemaphoreSlim m_threadStopSynchronizeObject;
+        #endregion
 
         /// <summary>
         /// Called when the thread ist starting.

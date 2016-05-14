@@ -134,20 +134,21 @@ namespace SeeingSharp.Multimedia.Input
             });
         }
 
-        protected override void OnStarting(EventArgs eArgs)
-        {
-            base.OnStarting(eArgs);
-
-            m_globalInputHandlers = InputHandlerFactory.CreateInputHandlersForGlobal();
-            foreach(IInputHandler actInputHandler in m_globalInputHandlers)
-            {
-                actInputHandler.Start(null);
-            }
-        }
-
         protected override void OnTick(EventArgs eArgs)
         {
             base.OnTick(eArgs);
+
+            if (!GraphicsCore.IsInitialized) { return; }
+
+            // Query for all input handlers on first tick
+            if(m_globalInputHandlers == null)
+            {
+                m_globalInputHandlers = InputHandlerFactory.CreateInputHandlersForGlobal();
+                foreach (IInputHandler actInputHandler in m_globalInputHandlers)
+                {
+                    actInputHandler.Start(null);
+                }
+            }
 
             // Execute all commands within the command queue
             if(m_commandQueue.Count > 0)
@@ -193,10 +194,10 @@ namespace SeeingSharp.Multimedia.Input
 
             // Ensure that we hold input frames for a maximum time range of a second
             //  (older input is obsolete)
-            while(m_gatheredInputFrames.Count > Constants.INPUT_FRAMES_PER_SECOND)
+            while (m_gatheredInputFrames.Count > Constants.INPUT_FRAMES_PER_SECOND)
             {
                 InputFrame dummyFrame = null;
-                m_gatheredInputFrames.Dequeue(out dummyFrame);   
+                m_gatheredInputFrames.Dequeue(out dummyFrame);
             }
         }
     }

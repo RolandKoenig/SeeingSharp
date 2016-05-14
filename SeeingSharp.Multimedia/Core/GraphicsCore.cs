@@ -197,8 +197,6 @@ namespace SeeingSharp.Multimedia.Core
                     m_mainLoopCancelTokenSource = new CancellationTokenSource();
                     m_mainLoopTask = m_mainLoop.Start(m_mainLoopCancelTokenSource.Token);
                 }
-
-                
             }
             catch (Exception)
             {
