@@ -191,18 +191,11 @@ namespace SeeingSharp.Multimedia.Core
                 Stopwatch renderStopWatch = new Stopwatch();
                 renderStopWatch.Start();
 
-                // Starts all generic input handlers
-                List<IInputHandler> genericInputHandlers = GraphicsCore.Current.InputHandlers.GetInputHandler(null);
-                foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
-                {
-                    actGenericInputHandler.Start(null);
-                }
-
                 List<RenderLoop> renderingRenderLoops = new List<RenderLoop>(16);
                 List<Scene> scenesToRender = new List<Scene>(16);
                 List<Camera3DBase> camerasToUpdate = new List<Camera3DBase>(16);
                 List<EngineDevice> devicesInUse = new List<EngineDevice>(16);
-                List<InputStateBase> inputStates = new List<InputStateBase>(16);
+                List<InputFrame> inputFrames = new List<InputFrame>(16);
                 UpdateState updateState = new UpdateState(TimeSpan.Zero);
                 while (!cancelToken.IsCancellationRequested)
                 {
@@ -241,8 +234,12 @@ namespace SeeingSharp.Multimedia.Core
                             // Restart the stopwatch
                             renderStopWatch.Restart();
 
+                            // Get all input frames
+                            inputFrames.Clear();
+                            GraphicsCore.Current.InputGatherer.GetAllFrames(inputFrames);
+
                             // First global pass: Update scene and prepare rendering
-                            await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, inputStates, updateState)
+                            await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, inputFrames, updateState)
                                 .ConfigureAwait(false);
                             foreach (Camera3DBase actCamera in camerasToUpdate)
                             {
@@ -254,21 +251,12 @@ namespace SeeingSharp.Multimedia.Core
                             QueryForDevicesInUse(renderingRenderLoops, devicesInUse);
 
                             // Second global pass: Render scene(s) and update beside
-                            inputStates.Clear();
-                            await RenderAndUpdateBesideAsync(
-                                renderingRenderLoops, scenesToRender, devicesInUse, updateState,
-                                inputStates);
-
-                            // Get input from generic input handlers
-                            foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
-                            {
-                                inputStates.AddRange(actGenericInputHandler.GetInputStates());
-                            }
+                            RenderAndUpdateBeside(renderingRenderLoops, scenesToRender, devicesInUse, updateState);
 
                             // Raise generic input event (if registered)
                             if (this.GenericInput != null)
                             {
-                                this.GenericInput.Raise(this, new GenericInputEventArgs(inputStates));
+                                this.GenericInput.Raise(this, new GenericInputEventArgs(inputFrames));
                             }
 
                             // Clear unreferenced Scenes finally
@@ -332,13 +320,6 @@ namespace SeeingSharp.Multimedia.Core
                         await suspendWaiter;
                     }
                 }
-
-                // Stop all generic input handlers
-                foreach(IInputHandler actGenericInputHandler in genericInputHandlers)
-                {
-                    actGenericInputHandler.Stop();
-                }
-                genericInputHandlers.Clear();
             });
 
             return m_runningTask;
@@ -350,9 +331,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="renderingRenderLoops">The registered render loops on the current pass.</param>
         /// <param name="scenesToRender">All scenes to be updated / rendered.</param>
         /// <param name="devicesInUse">The rendering devices that are in use.</param>
-        /// <param name="inputStates">All input states queried during last render.</param>
+        /// <param name="inputFrames">All InputFrames gathered during last render.</param>
         /// <param name="updateState">Current global update state.</param>
-        private async Task UpdateAndPrepareRendering(List<RenderLoop> renderingRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, List<InputStateBase> inputStates, UpdateState updateState)
+        private async Task UpdateAndPrepareRendering(List<RenderLoop> renderingRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, IEnumerable<InputFrame> inputFrames, UpdateState updateState)
         {
             using (var perfToken = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_UPDATE_AND_PREPARE))
             {
@@ -441,7 +422,7 @@ namespace SeeingSharp.Multimedia.Core
                             Scene actScene = scenesToRender[actTaskIndex];
                             SceneRelatedUpdateState actUpdateState = actScene.CachedUpdateState;
 
-                            actUpdateState.OnStartSceneUpdate(actScene, updateState, inputStates);
+                            actUpdateState.OnStartSceneUpdate(actScene, updateState, inputFrames);
 
                             actScene.Update(actUpdateState);
                         }
@@ -497,21 +478,12 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="scenesToRender">All scenes to be updated / rendered.</param>
         /// <param name="devicesInUse">The rendering devices that are in use.</param>
         /// <param name="updateState">Current global update state.</param>
-        /// <param name="inputStates">The list containing all queried input states.</param>
-        private async Task RenderAndUpdateBesideAsync(
-            List<RenderLoop> registeredRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, UpdateState updateState,
-            List<InputStateBase> inputStates)
+        private void RenderAndUpdateBeside(
+            List<RenderLoop> registeredRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, UpdateState updateState)
         {
             using (var perfToken = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_RENDER_AND_UPDATE_BESIDE))
             {
                 ThreadSaveQueue<RenderLoop> invalidRenderLoops = new ThreadSaveQueue<RenderLoop>();
-
-                // Querry for all input states
-                Task<List<InputStateBase>>[] inputStateQuerryTasks = new Task<List<InputStateBase>>[registeredRenderLoops.Count];
-                for(int loop=0; loop<registeredRenderLoops.Count; loop++)
-                {
-                    inputStateQuerryTasks[loop] = registeredRenderLoops[loop].QueryViewRelatedInputStateAsync();
-                }
 
                 // Trigger all tasks for 'Update' pass
                 Parallel.For(0, devicesInUse.Count + scenesToRender.Count, (actTaskIndex) =>
@@ -568,17 +540,6 @@ namespace SeeingSharp.Multimedia.Core
                 foreach(RenderLoop actRenderLoop in registeredRenderLoops)
                 {
                     actRenderLoop.Camera.StateChanged = false;
-                }
-
-                // Wait for querried input states
-                await Task.WhenAll(inputStateQuerryTasks);
-                foreach(Task<List<InputStateBase>> actQueryTask in inputStateQuerryTasks)
-                {
-                    List<InputStateBase> actResult = actQueryTask.Result;
-                    if(actResult == null) { continue; }
-
-                    // Register input states for following update pass
-                    inputStates.AddRange(actResult);
                 }
             }
         }

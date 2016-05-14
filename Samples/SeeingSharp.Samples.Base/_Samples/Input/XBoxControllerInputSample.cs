@@ -109,9 +109,11 @@ namespace SeeingSharp.Samples.Base.Input
 
             protected override void UpdateInternal(SceneRelatedUpdateState updateState)
             {
-                GamepadState gamepadState = updateState.DefaultGamepad;
-                if(gamepadState != GamepadState.Dummy)
+                foreach (InputFrame actInputFrame in updateState.InputFrames)
                 {
+                    GamepadState gamepadState = actInputFrame.DefaultGamepad;
+                    if (gamepadState == GamepadState.Dummy) { continue; }
+
                     Vector3 moveVector = Vector3.Zero;
 
                     // Handle left/right movement

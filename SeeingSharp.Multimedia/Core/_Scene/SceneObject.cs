@@ -28,6 +28,7 @@ using System.Numerics;
 using System.Threading;
 using SeeingSharp.Checking;
 using SeeingSharp.Util;
+using SeeingSharp.Multimedia.Input;
 
 namespace SeeingSharp.Multimedia.Core
 {
@@ -368,10 +369,19 @@ namespace SeeingSharp.Multimedia.Core
         public abstract void LoadResources(EngineDevice device, ResourceDictionary resourceDictionary);
 
         /// <summary>
+        /// Processes the given input frame.
+        /// </summary>
+        /// <param name="inputFrame">The input frame.</param>
+        internal void ProcessInput(InputFrame inputFrame)
+        {
+            this.ProcessInputInternal(inputFrame);
+        }
+
+        /// <summary>
         /// Updates this object.
         /// </summary>
         /// <param name="updateState">State of update process.</param>
-        public void Update(SceneRelatedUpdateState updateState)
+        internal void Update(SceneRelatedUpdateState updateState)
         {
             // Update all behaviors first
             foreach (SceneObjectBehavior actBehavior in m_behaviors)
@@ -401,7 +411,7 @@ namespace SeeingSharp.Multimedia.Core
         /// UpdateOverall methods are called sequentially object by object.
         /// </summary>
         /// <param name="updateState">Current update state of the scene.</param>
-        public void UpdateOverall(SceneRelatedUpdateState updateState)
+        internal void UpdateOverall(SceneRelatedUpdateState updateState)
         {
             // Update all dependencies finally
             if (m_children.Count > 0)
@@ -429,7 +439,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="updateState">Current state of the update pass.</param>
         /// <param name="layerViewSubset">The layer view subset wich called this update method.</param>
-        public void UpdateForView(SceneRelatedUpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
+        internal void UpdateForView(SceneRelatedUpdateState updateState, ViewRelatedSceneLayerSubset layerViewSubset)
         {
             UpdateForViewInternal(updateState, layerViewSubset);
         }
@@ -439,6 +449,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public virtual void UnloadResources()
         {
+
         }
 
         /// <summary>
@@ -446,6 +457,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected virtual void OnAddedToScene(Scene newScene)
         {
+
         }
 
         /// <summary>
@@ -453,7 +465,14 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         protected virtual void OnRemovedFromScene(Scene oldScene)
         {
+
         }
+
+        /// <summary>
+        /// Processes the given input frame.
+        /// </summary>
+        /// <param name="inputFrame">The input frame.</param>
+        protected virtual void ProcessInputInternal(InputFrame inputFrame) { }
 
         /// <summary>
         /// Updates the object.

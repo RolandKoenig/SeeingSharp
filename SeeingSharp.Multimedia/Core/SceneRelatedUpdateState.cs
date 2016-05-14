@@ -36,6 +36,10 @@ namespace SeeingSharp.Multimedia.Core
     /// </summary>
     public class SceneRelatedUpdateState : IAnimationUpdateState
     {
+        #region Constants
+        private static readonly InputFrame[] DUMMY_FRAME_COLLECTION = new InputFrame[0];
+        #endregion
+
         #region parameters
         private Scene m_owner;
         #endregion
@@ -46,7 +50,7 @@ namespace SeeingSharp.Multimedia.Core
         private UpdateState m_updateState;
         private Matrix4Stack m_world;
         private SceneLayer m_sceneLayer;
-        private List<InputStateBase> m_inputStates;
+        private IEnumerable<InputFrame> m_inputFrames;
         #endregion
 
         /// <summary>
@@ -56,23 +60,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             m_owner = owner;
             m_world = new Matrix4Stack(Matrix4x4.Identity);
-            m_inputStates = new List<InputStateBase>(16);
-        }
-
-        /// <summary>
-        /// Gets all input state for this view.
-        /// </summary>
-        /// <param name="viewInfo">The view for which to get all input states.</param>
-        public IEnumerable<InputStateBase> GetInputStates(ViewInformation viewInfo)
-        {
-            int inputStateCount = m_inputStates.Count;
-            for(int loop=0; loop<inputStateCount; loop++)
-            {
-                if(m_inputStates[loop].RelatedView == viewInfo)
-                {
-                    yield return m_inputStates[loop];
-                }
-            }
+            m_inputFrames = null;
         }
 
         /// <summary>
@@ -80,9 +68,12 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="targetScene">The scene for which to prepare this state object</param>
         /// <param name="updateState">The update state.</param>
-        /// <param name="unfilteredInputStates">A list containing all queried input states (still not filtered by scene!)</param>
-        internal void OnStartSceneUpdate(Scene targetScene, UpdateState updateState, List<InputStateBase> unfilteredInputStates)
+        /// <param name="inputFrames">A list containing all gathered InputFrames since last update pass.</param>
+        internal void OnStartSceneUpdate(Scene targetScene, UpdateState updateState, IEnumerable<InputFrame> inputFrames)
         {
+            targetScene.EnsureNotNull(nameof(targetScene));
+            updateState.EnsureNotNull(nameof(updateState));
+
             m_isPaused = targetScene.IsPaused;
             m_ignorePauseState = updateState.IgnorePauseState;
 
@@ -91,64 +82,8 @@ namespace SeeingSharp.Multimedia.Core
             m_updateState = updateState;
             m_sceneLayer = null;
 
-            // Reset input states
-            m_inputStates.Clear();
-            this.DefaultMouseOrPointer = MouseOrPointerState.Dummy;
-            this.DefaultGamepad = GamepadState.Dummy;
-            this.DefaultKeyboard = KeyboardState.Dummy;
-
-            // Update input states
-            if (unfilteredInputStates != null)
-            {
-                int inputStateCount = unfilteredInputStates.Count;
-                for (int loop = 0; loop < inputStateCount; loop++)
-                {
-                    InputStateBase actInputState = unfilteredInputStates[loop];
-
-                    // TODO: Move this call to another location because
-                    // we have a conflict with the UI thread which may register/deregister
-                    // a view
-                    ViewInformation relatedView = actInputState.RelatedView;
-                    if ((relatedView == null) ||
-                        (m_owner.IsViewRegistered(relatedView)))
-                    {
-                        m_inputStates.Add(actInputState);
-
-                        // Register first MouseOrPointer state as default
-                        if (this.DefaultMouseOrPointer == MouseOrPointerState.Dummy)
-                        {
-                            MouseOrPointerState mouseOrPointer = actInputState as MouseOrPointerState;
-                            if (mouseOrPointer != null)
-                            {
-                                this.DefaultMouseOrPointer = mouseOrPointer;
-                                continue;
-                            }
-                        }
-
-                        // Register first Gamepad state as default
-                        if(this.DefaultGamepad == GamepadState.Dummy)
-                        {
-                            GamepadState gamepadState = actInputState as GamepadState;
-                            if(gamepadState != null)
-                            {
-                                this.DefaultGamepad = gamepadState;
-                                continue;
-                            }
-                        }
-
-                        // Register first keyboard state as default
-                        if(this.DefaultKeyboard == KeyboardState.Dummy)
-                        {
-                            KeyboardState keyboardState = actInputState as KeyboardState;
-                            if(keyboardState != null)
-                            {
-                                this.DefaultKeyboard = keyboardState;
-                                continue;
-                            }
-                        }
-                    }
-                }
-            }
+            m_inputFrames = inputFrames;
+            if(m_inputFrames == null) { m_inputFrames = DUMMY_FRAME_COLLECTION; }
         }
 
         /// <summary>
@@ -211,29 +146,11 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Gets a collection containing all gathered input states.
+        /// Gets a collection containing all gathered InputFrames since last update pass.
         /// </summary>
-        public IEnumerable<InputStateBase> InputStates
+        public IEnumerable<InputFrame> InputFrames
         {
-            get { return m_inputStates; }
-        }
-
-        public MouseOrPointerState DefaultMouseOrPointer
-        {
-            get;
-            private set;
-        }
-
-        public GamepadState DefaultGamepad
-        {
-            get;
-            private set;
-        }
-
-        public KeyboardState DefaultKeyboard
-        {
-            get;
-            private set;
+            get { return m_inputFrames; }
         }
 
         internal bool ForceTransformUpdatesOnChilds;

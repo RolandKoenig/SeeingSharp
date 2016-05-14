@@ -69,31 +69,34 @@ namespace RKRocket.Behaviors
 
         private void OnGraphicsCore_GenericInput(object sender, GenericInputEventArgs e)
         {
-            if (!e.AnyRelevantState) { return; }
-
-            // Get the button which we are listening for
-            GamepadButton listeningButton = this.ControllerButton;
-
-            // Check button state
-            bool buttonPressed = e.DefaultGamepad.IsButtonHit(listeningButton);
-            if (!buttonPressed) { return; }
-
-            // Raise button click
-            Button currentButton = m_associatedButton;
-            if (currentButton != null)
+            foreach (InputFrame actFrame in e.InputFrames)
             {
-                currentButton.Dispatcher.RunAsync(
-                    CoreDispatcherPriority.High,
-                    new DispatchedHandler(() =>
-                    {
-                        if (!currentButton.IsEnabled) { return; }
-                        if (currentButton.Visibility != Visibility.Visible) { return; }
+                if(actFrame.DefaultGamepad == GamepadState.Dummy) { continue; }
 
-                        ButtonAutomationPeer peer = new ButtonAutomationPeer(currentButton);
-                        IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
-                        invokeProv.Invoke();
-                    }))
-                    .FireAndForget();
+                // Get the button which we are listening for
+                GamepadButton listeningButton = this.ControllerButton;
+
+                // Check button state
+                bool buttonPressed = actFrame.DefaultGamepad.IsButtonHit(listeningButton);
+                if (!buttonPressed) { return; }
+
+                // Raise button click
+                Button currentButton = m_associatedButton;
+                if (currentButton != null)
+                {
+                    currentButton.Dispatcher.RunAsync(
+                        CoreDispatcherPriority.High,
+                        new DispatchedHandler(() =>
+                        {
+                            if (!currentButton.IsEnabled) { return; }
+                            if (currentButton.Visibility != Visibility.Visible) { return; }
+
+                            ButtonAutomationPeer peer = new ButtonAutomationPeer(currentButton);
+                            IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+                            invokeProv.Invoke();
+                        }))
+                        .FireAndForget();
+                }
             }
         }
 

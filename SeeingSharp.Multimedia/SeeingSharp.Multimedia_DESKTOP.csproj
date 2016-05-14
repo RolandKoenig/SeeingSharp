@@ -316,7 +316,6 @@
     <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
     <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
     <Compile Include="Input\IInputHandler.cs" />
-    <Compile Include="Input\InputEvent.cs" />
     <Compile Include="Input\InputFrame.cs" />
     <Compile Include="Input\InputGathererThread.cs" />
     <Compile Include="Input\_States\GamepadState.cs" />

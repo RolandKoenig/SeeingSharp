@@ -154,6 +154,18 @@ namespace SeeingSharp.Util
         }
 
         /// <summary>
+        /// Deques all items within this queue and puts the items to the given target list.
+        /// </summary>
+        public void DequeueAll(List<T> targetList)
+        {
+            T actItem = default(T);
+            while (this.Dequeue(out actItem))
+            {
+                targetList.Add(actItem);
+            }
+        }
+
+        /// <summary>
         /// Removes all items from the queue.
         /// </summary>
         public void Clear()

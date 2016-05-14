@@ -31,61 +31,20 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class GenericInputEventArgs : EventArgs
     {
-        private List<InputStateBase> m_inputStates;
-        private bool m_anyRelevantState;
+        private List<InputFrame> m_inputFrames;
 
-        internal GenericInputEventArgs(List<InputStateBase> unfilteredInputStates)
+        internal GenericInputEventArgs(IEnumerable<InputFrame> inputFrames)
         {
             // Reset input states
-            m_inputStates = new List<InputStateBase>(unfilteredInputStates.Count);
-            this.DefaultGamepad = GamepadState.Dummy;
-
-            // Update input states
-            if (unfilteredInputStates != null)
-            {
-                int inputStateCount = unfilteredInputStates.Count;
-                for (int loop = 0; loop < inputStateCount; loop++)
-                {
-                    InputStateBase actInputState = unfilteredInputStates[loop];
-                    if (actInputState.RelatedView != null) { continue; }
-
-                    m_inputStates.Add(actInputState);
-
-                    // Register first Gamepad state as default
-                    if (this.DefaultGamepad == GamepadState.Dummy)
-                    {
-                        GamepadState gamepadState = actInputState as GamepadState;
-                        if (gamepadState != null)
-                        {
-                            m_anyRelevantState = true;
-                            this.DefaultGamepad = gamepadState;
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-
-        public bool AnyRelevantState
-        {
-            get { return m_anyRelevantState; }
+            m_inputFrames = new List<InputFrame>(inputFrames);
         }
 
         /// <summary>
-        /// Gets the current default gamepad state.
+        /// Gets a list containing all InputFrames.
         /// </summary>
-        public GamepadState DefaultGamepad
+        public List<InputFrame> InputFrames
         {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// Gets a list containing all generic input states.
-        /// </summary>
-        public List<InputStateBase> InputStates
-        {
-            get { return m_inputStates; }
+            get { return m_inputFrames; }
         }
     }
 }

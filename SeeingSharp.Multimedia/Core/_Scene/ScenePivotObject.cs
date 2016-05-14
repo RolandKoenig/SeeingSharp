@@ -25,6 +25,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Multimedia.Input;
 
 namespace SeeingSharp.Multimedia.Core
 {

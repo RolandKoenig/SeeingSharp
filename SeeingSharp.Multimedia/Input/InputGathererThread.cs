@@ -36,6 +36,10 @@ namespace SeeingSharp.Multimedia.Input
     /// </summary>
     public class InputGathererThread : ObjectThread
     {
+        #region Constants
+        private static readonly TimeSpan SINGLE_FRAME_DURATION = TimeSpan.FromSeconds(1000.0 / Constants.INPUT_FRAMES_PER_SECOND);
+        #endregion
+
         #region Synchronization
         private ThreadSaveQueue<Action> m_commandQueue;
         private ThreadSaveQueue<InputFrame> m_gatheredInputFrames;
@@ -66,6 +70,14 @@ namespace SeeingSharp.Multimedia.Input
         internal List<InputFrame> GetAllFrames()
         {
             return m_gatheredInputFrames.DequeueAll();
+        }
+
+        /// <summary>
+        /// Gets all gathered InputFrames.
+        /// </summary>
+        internal void GetAllFrames(List<InputFrame> targetList)
+        {
+            m_gatheredInputFrames.DequeueAll(targetList);
         }
 
         /// <summary>
@@ -149,14 +161,14 @@ namespace SeeingSharp.Multimedia.Input
 
             // Gather all input data
             int expectedStateCount = m_lastInputFrame != null ? m_lastInputFrame.CountStates : 6;
-            InputFrame newInputFrame = new InputFrame(expectedStateCount);
+            InputFrame newInputFrame = new InputFrame(expectedStateCount, SINGLE_FRAME_DURATION);
             foreach(IInputHandler actInputHandler in m_globalInputHandlers)
             {
                 foreach(InputStateBase actInputState in actInputHandler.GetInputStates())
                 {
                     actInputState.EnsureNotNull(nameof(actInputState));
 
-                    newInputFrame.AddState(actInputState);
+                    newInputFrame.AddState(actInputState.CopyAndResetForUpdatePass());
                 }
             }
             foreach(KeyValuePair<IInputEnabledView, List<IInputHandler>> actViewSpecificHandlers in m_viewInputHandlers)
@@ -167,7 +179,10 @@ namespace SeeingSharp.Multimedia.Input
                     {
                         actInputState.EnsureNotNull(nameof(actInputState));
 
-                        newInputFrame.AddState(actInputState);
+                        InputStateBase copied = actInputState.CopyAndResetForUpdatePass();
+                        copied.RelatedView = actViewSpecificHandlers.Key.RenderLoop.ViewInformation;
+
+                        newInputFrame.AddState(copied);
                     }
                 }
             }

@@ -60,14 +60,17 @@ namespace RKRocket.Game
         /// <param name="updateState">State of the update.</param>
         protected override void UpdateInternal(SceneRelatedUpdateState updateState)
         {
-            MouseOrPointerState mouseState = updateState.DefaultMouseOrPointer;
-
-            m_mouseAvailable =
-                (mouseState != MouseOrPointerState.Dummy) &&
-                (mouseState.IsInsideView);
-            if(m_mouseAvailable)
+            foreach (InputFrame actInputFrame in updateState.InputFrames)
             {
-                m_relativeMousePos = mouseState.PositionRelative;
+                MouseOrPointerState mouseState = actInputFrame.DefaultMouseOrPointer;
+
+                m_mouseAvailable =
+                    (mouseState != MouseOrPointerState.Dummy) &&
+                    (mouseState.IsInsideView);
+                if (m_mouseAvailable)
+                {
+                    m_relativeMousePos = mouseState.PositionRelative;
+                }
             }
         }
 

@@ -71,100 +71,103 @@ namespace RKRocket.Game
             float prevXPos = m_xPos;
 
             // Get input states
-            MouseOrPointerState mouseState = updateState.DefaultMouseOrPointer;
-            GamepadState gamepadState = updateState.DefaultGamepad;
-            KeyboardState keyboardState = updateState.DefaultKeyboard;
-
-            // Initialize variables for input control
-            bool isFireHit = false;
-            float moveDistance = 0f;
-            float maxMoveDistance = (float)updateState.UpdateTime.TotalSeconds * Constants.SIM_ROCKET_MAX_X_MOVEMENT;
-
-            // Capture mouse state
-            if (mouseState.IsButtonHit(MouseButton.Left)) { isFireHit = true; }
-            if (mouseState.MoveDistanceRelative != Vector2.Zero)
+            foreach (InputFrame actInputFrame in updateState.InputFrames)
             {
-                float newMouseX = 0f;
-                float currentViewWidthDip =
-                    (mouseState.ScreenSizeDip.Y / Constants.GFX_SCREEN_VPIXEL_HEIGHT) * Constants.GFX_SCREEN_VPIXEL_WIDTH;
-                if (mouseState.ScreenSizeDip.X > currentViewWidthDip)
+                MouseOrPointerState mouseState = actInputFrame.DefaultMouseOrPointer;
+                GamepadState gamepadState = actInputFrame.DefaultGamepad;
+                KeyboardState keyboardState = actInputFrame.DefaultKeyboard;
+
+                // Initialize variables for input control
+                bool isFireHit = false;
+                float moveDistance = 0f;
+                float maxMoveDistance = (float)(actInputFrame.FrameDuration.TotalSeconds * Constants.SIM_ROCKET_MAX_X_MOVEMENT);
+
+                // Capture mouse state
+                if (mouseState.IsButtonHit(MouseButton.Left)) { isFireHit = true; }
+                if (mouseState.MoveDistanceRelative != Vector2.Zero)
                 {
-                    float relativMouseX = 
-                        (mouseState.PositionDip.X - (mouseState.ScreenSizeDip.X - currentViewWidthDip) / 2f) / 
-                        currentViewWidthDip;
-                    if(relativMouseX > 1f) { relativMouseX = 1f; }
-                    if(relativMouseX < -1f) { relativMouseX = -1f; }
+                    float newMouseX = 0f;
+                    float currentViewWidthDip =
+                        (mouseState.ScreenSizeDip.Y / Constants.GFX_SCREEN_VPIXEL_HEIGHT) * Constants.GFX_SCREEN_VPIXEL_WIDTH;
+                    if (mouseState.ScreenSizeDip.X > currentViewWidthDip)
+                    {
+                        float relativMouseX =
+                            (mouseState.PositionDip.X - (mouseState.ScreenSizeDip.X - currentViewWidthDip) / 2f) /
+                            currentViewWidthDip;
+                        if (relativMouseX > 1f) { relativMouseX = 1f; }
+                        if (relativMouseX < -1f) { relativMouseX = -1f; }
 
-                    newMouseX = relativMouseX * Constants.GFX_SCREEN_VPIXEL_WIDTH;
+                        newMouseX = relativMouseX * Constants.GFX_SCREEN_VPIXEL_WIDTH;
+                    }
+                    else
+                    {
+                        newMouseX = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
+                    }
+                    moveDistance = newMouseX - m_xPos;
                 }
-                else
+
+                // Capture keyboard state
+                if (keyboardState.IsConnected)
                 {
-                    newMouseX = Constants.GFX_SCREEN_VPIXEL_WIDTH * mouseState.PositionRelative.X;
+                    isFireHit |=
+                        keyboardState.IsKeyHit(WinVirtualKey.Space) ||
+                        keyboardState.IsKeyHit(WinVirtualKey.Enter);
+
+                    if (keyboardState.IsKeyDown(WinVirtualKey.Left) ||
+                        keyboardState.IsKeyDown(WinVirtualKey.A) ||
+                        keyboardState.IsKeyDown(WinVirtualKey.NumPad4))
+                    {
+                        moveDistance = -maxMoveDistance;
+                    }
+                    else if (keyboardState.IsKeyDown(WinVirtualKey.Right) ||
+                        keyboardState.IsKeyDown(WinVirtualKey.D) ||
+                        keyboardState.IsKeyDown(WinVirtualKey.NumPad6))
+                    {
+                        moveDistance = maxMoveDistance;
+                    }
                 }
-                moveDistance = newMouseX - m_xPos;
-            }
 
-            // Capture keyboard state
-            if (keyboardState.IsConnected)
-            {
-                isFireHit |=
-                    keyboardState.IsKeyHit(WinVirtualKey.Space) ||
-                    keyboardState.IsKeyHit(WinVirtualKey.Enter);
-
-                if (keyboardState.IsKeyDown(WinVirtualKey.Left) ||
-                    keyboardState.IsKeyDown(WinVirtualKey.A) ||
-                    keyboardState.IsKeyDown(WinVirtualKey.NumPad4))
+                // Capture gamepad state
+                if (gamepadState.IsConnected)
                 {
-                    moveDistance = -maxMoveDistance;
+                    isFireHit |=
+                        gamepadState.IsButtonHit(GamepadButton.X) ||
+                        gamepadState.IsButtonHit(GamepadButton.A) ||
+                        gamepadState.IsButtonHit(GamepadButton.B) ||
+                        gamepadState.IsButtonHit(GamepadButton.Y);
+
+                    if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)) { moveDistance = -maxMoveDistance; }
+                    else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)) { moveDistance = maxMoveDistance; }
+                    else if (Math.Abs((int)gamepadState.LeftThumbX) > 10000)
+                    {
+                        moveDistance = (gamepadState.LeftThumbX / (float)short.MaxValue) * maxMoveDistance;
+                    }
+                    else if (Math.Abs((int)gamepadState.RightThumbX) > 10000)
+                    {
+                        moveDistance = (gamepadState.RightThumbX / (float)short.MaxValue) * maxMoveDistance;
+                    }
                 }
-                else if (keyboardState.IsKeyDown(WinVirtualKey.Right) ||
-                    keyboardState.IsKeyDown(WinVirtualKey.D) ||
-                    keyboardState.IsKeyDown(WinVirtualKey.NumPad6))
+
+                // Apply states
+                if (moveDistance != 0f)
                 {
-                    moveDistance = maxMoveDistance;
+                    m_xPos = m_xPos + moveDistance;
+                    if (m_xPos < 50f) { m_xPos = 50f; }
+                    if (m_xPos > Constants.GFX_SCREEN_VPIXEL_WIDTH - 50) { m_xPos = Constants.GFX_SCREEN_VPIXEL_WIDTH - 50f; }
                 }
-            }
-
-            // Capture gamepad state
-            if (gamepadState.IsConnected)
-            {
-                isFireHit |= 
-                    gamepadState.IsButtonHit(GamepadButton.X) ||
-                    gamepadState.IsButtonHit(GamepadButton.A) ||
-                    gamepadState.IsButtonHit(GamepadButton.B) ||
-                    gamepadState.IsButtonHit(GamepadButton.Y);
-
-                if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)){ moveDistance = -maxMoveDistance; }
-                else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)){ moveDistance = maxMoveDistance; }
-                else if(Math.Abs((int)gamepadState.LeftThumbX) > 10000)
+                if (isFireHit)
                 {
-                    moveDistance = (gamepadState.LeftThumbX / (float)short.MaxValue) * maxMoveDistance;
-                }
-                else if(Math.Abs((int)gamepadState.RightThumbX) > 10000)
-                {
-                    moveDistance = (gamepadState.RightThumbX / (float)short.MaxValue) * maxMoveDistance;
-                }
-            }
+                    ProjectileEntity newProjectile = new ProjectileEntity(new Vector2(
+                        m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER - Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f));
+                    base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Add(newProjectile))
+                        .FireAndForget();
 
-            // Apply states
-            if(moveDistance != 0f)
-            {
-                m_xPos = m_xPos + moveDistance;
-                if(m_xPos < 50f) { m_xPos = 50f; }
-                if(m_xPos > Constants.GFX_SCREEN_VPIXEL_WIDTH - 50) { m_xPos = Constants.GFX_SCREEN_VPIXEL_WIDTH - 50f; }
-            }
-            if (isFireHit)
-            {
-                ProjectileEntity newProjectile = new ProjectileEntity(new Vector2(
-                    m_xPos, Constants.GFX_ROCKET_VPIXEL_Y_CENTER - Constants.GFX_ROCKET_VPIXEL_HEIGHT / 2f));
-                base.Scene.ManipulateSceneAsync((manipulator) => manipulator.Add(newProjectile))
-                    .FireAndForget();
-
-                base.Messenger.Publish<MessageProjectileShooted>();
+                    base.Messenger.Publish<MessageProjectileShooted>();
+                }
             }
 
             // X Location has changed
-            if(prevXPos != m_xPos)
+            if (prevXPos != m_xPos)
             {
                 base.Messenger.Publish(new MessagePlayerXLocationChanged(m_xPos));
             }

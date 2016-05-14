@@ -74,22 +74,25 @@ namespace SeeingSharp.Multimedia.Components
             Camera3DBase actCamera = correspondingView.Camera;
             if(actCamera == null) { return; }
 
-            foreach(var actInputState in updateState.GetInputStates(correspondingView))
+            foreach (InputFrame actInputFrame in updateState.InputFrames)
             {
-                // Handle keyboard
-                KeyboardState actKeyboardState = actInputState as KeyboardState;
-                bool isControlKeyDown = false;
-                if(actKeyboardState != null)
+                foreach (var actInputState in actInputFrame.GetInputStates(correspondingView))
                 {
-                    UpdateForKeyboard(actCamera, actKeyboardState, out isControlKeyDown);
-                    continue;
-                }
+                    // Handle keyboard
+                    KeyboardState actKeyboardState = actInputState as KeyboardState;
+                    bool isControlKeyDown = false;
+                    if (actKeyboardState != null)
+                    {
+                        UpdateForKeyboard(actCamera, actKeyboardState, out isControlKeyDown);
+                        continue;
+                    }
 
-                // Handle mouse (or pointer)
-                MouseOrPointerState mouseState = actInputState as MouseOrPointerState;
-                if(mouseState != null)
-                {
-                    UpdateForMouse(actCamera, isControlKeyDown, mouseState);
+                    // Handle mouse (or pointer)
+                    MouseOrPointerState mouseState = actInputState as MouseOrPointerState;
+                    if (mouseState != null)
+                    {
+                        UpdateForMouse(actCamera, isControlKeyDown, mouseState);
+                    }
                 }
             }
         }

@@ -702,27 +702,27 @@ namespace SeeingSharp.Multimedia.Core
             this.VisibleObjectCountInternal = 0;
         }
 
-        /// <summary>
-        /// Queries for all view related input states (e. g. Mouse, Touch, Keyboard).
-        /// </summary>
-        internal async Task<List<InputStateBase>> QueryViewRelatedInputStateAsync()
-        {
-            // Query all states
-            List<InputStateBase> result = new List<InputStateBase>(10);
-            await m_guiSyncContext.PostAsync(() =>
-            {
-                foreach(InputStateBase actInputState in m_renderLoopHost.OnRenderLoop_QueryInputStates())
-                {
-                    if(actInputState == null) { continue; }
+        ///// <summary>
+        ///// Queries for all view related input states (e. g. Mouse, Touch, Keyboard).
+        ///// </summary>
+        //internal async Task<List<InputStateBase>> QueryViewRelatedInputStateAsync()
+        //{
+        //    // Query all states
+        //    List<InputStateBase> result = new List<InputStateBase>(10);
+        //    await m_guiSyncContext.PostAsync(() =>
+        //    {
+        //        foreach(InputStateBase actInputState in m_renderLoopHost.OnRenderLoop_QueryInputStates())
+        //        {
+        //            if(actInputState == null) { continue; }
 
-                    InputStateBase actQueriedObject = actInputState.CopyAndResetForUpdatePass();
-                    actQueriedObject.RelatedView = m_viewInformation;
-                    result.Add(actQueriedObject);
-                }
-            });
+        //            InputStateBase actQueriedObject = actInputState.CopyAndResetForUpdatePass();
+        //            actQueriedObject.RelatedView = m_viewInformation;
+        //            result.Add(actQueriedObject);
+        //        }
+        //    });
 
-            return result;
-        }
+        //    return result;
+        //}
 
         /// <summary>
         /// Prepares rendering (refreshes view resources, post last rendered image to the view, ...)
