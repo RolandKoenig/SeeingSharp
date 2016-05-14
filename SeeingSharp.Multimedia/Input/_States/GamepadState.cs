@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,7 +46,7 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Prevents a default instance of the <see cref="GamepadState"/> class from being created.
         /// </summary>
-        private GamepadState()
+        public GamepadState()
         {
             m_prevState = new XI.State();
             m_currentState = new XI.State();
@@ -76,14 +77,15 @@ namespace SeeingSharp.Multimedia.Input
         /// in preparation of the next update pass.
         /// Called by update-render loop.
         /// </summary>
-        protected override InputStateBase CopyAndResetForUpdatePassInternal()
+        protected override void CopyAndResetForUpdatePassInternal(InputStateBase targetState)
         {
-            GamepadState result = new GamepadState();
-            result.m_controllerIndex = this.m_controllerIndex;
-            result.m_isConnected = this.m_isConnected;
-            result.m_prevState = this.m_prevState;
-            result.m_currentState = this.m_currentState;
-            return result;
+            GamepadState targetStateCasted = targetState as GamepadState;
+            targetStateCasted.EnsureNotNull(nameof(targetStateCasted));
+
+            targetStateCasted.m_controllerIndex = this.m_controllerIndex;
+            targetStateCasted.m_isConnected = this.m_isConnected;
+            targetStateCasted.m_prevState = this.m_prevState;
+            targetStateCasted.m_currentState = this.m_currentState;
         }
 
         /// <summary>

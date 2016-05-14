@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace SeeingSharp.Multimedia.Input
 {
     public class KeyboardState : InputStateBase
     {
-        public static readonly KeyboardState Dummy = new KeyboardState(0, 0);
+        public static readonly KeyboardState Dummy = new KeyboardState();
 
         #region current key states
         private List<WinVirtualKey> m_keysHit;
@@ -41,10 +42,10 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Initializes a new instance of the <see cref="KeyboardState"/> class.
         /// </summary>
-        internal KeyboardState(int keyCapacityHit = 6, int keyCapacityDown = 12)
+        public KeyboardState()
         {
-            m_keysHit = new List<WinVirtualKey>(keyCapacityHit);
-            m_keysDown = new List<WinVirtualKey>(keyCapacityDown);
+            m_keysHit = new List<WinVirtualKey>(6);
+            m_keysDown = new List<WinVirtualKey>(12);
         }
 
         internal void NotifyKeyDown(WinVirtualKey key)
@@ -91,20 +92,18 @@ namespace SeeingSharp.Multimedia.Input
                 m_keysHit.Contains(key);
         }
 
-        protected override InputStateBase CopyAndResetForUpdatePassInternal()
+        protected override void CopyAndResetForUpdatePassInternal(InputStateBase targetState)
         {
-            KeyboardState result = new KeyboardState(
-                m_keysHit.Count, m_keysDown.Count);
+            KeyboardState targetStateCasted = targetState as KeyboardState;
+            targetStateCasted.EnsureNotNull(nameof(targetStateCasted));
 
-            result.m_keysHit.AddRange(this.m_keysHit);
-            result.m_keysDown.AddRange(this.m_keysDown);
-            result.m_focused = this.m_focused;
+            targetStateCasted.m_keysHit.AddRange(this.m_keysHit);
+            targetStateCasted.m_keysDown.AddRange(this.m_keysDown);
+            targetStateCasted.m_focused = this.m_focused;
 
             // Update local collections (move hit keys to down keys)
             this.m_keysDown.AddRange(this.m_keysHit);
             this.m_keysHit.Clear();
-
-            return result;
         }
 
         public IEnumerable<WinVirtualKey> KeysDown

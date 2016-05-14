@@ -53,6 +53,18 @@ namespace SeeingSharp.Util
         }
 
         /// <summary>
+        /// Enqueues all items within the given collection.
+        /// </summary>
+        /// <param name="items">The items to be enqueued.</param>
+        public void Enqueue(IEnumerable<T> items)
+        {
+            foreach(T actItem in items)
+            {
+                m_backingQueue.Enqueue(actItem);
+            }
+        }
+
+        /// <summary>
         /// Are there any elements in the queue?
         /// </summary>
         public bool HasAny()

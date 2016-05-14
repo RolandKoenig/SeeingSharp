@@ -34,6 +34,7 @@ namespace SeeingSharp.Multimedia.Input
     /// </summary>
     public class InputFrame
     {
+        private List<InputStateBase> m_recoveredStates;
         private List<InputStateBase> m_inputStates;
         private TimeSpan m_frameDuration;
 
@@ -54,8 +55,16 @@ namespace SeeingSharp.Multimedia.Input
         /// <param name="frameDuration">The TimeSpan which is covered by this InputFrame.</param>
         internal void Reset(int expectedStateCount, TimeSpan frameDuration)
         {
-            if(m_inputStates == null) { m_inputStates = new List<InputStateBase>(expectedStateCount); }
-            else { m_inputStates.Clear(); }
+            if(m_inputStates == null)
+            {
+                m_inputStates = new List<InputStateBase>(expectedStateCount);
+                m_recoveredStates = new List<InputStateBase>(expectedStateCount);
+            }
+            else
+            {
+                m_recoveredStates.AddRange(m_inputStates);
+                m_inputStates.Clear();
+            }
 
             m_frameDuration = frameDuration;
 
@@ -80,7 +89,32 @@ namespace SeeingSharp.Multimedia.Input
             }
         }
 
-        internal void AddState(InputStateBase inputState)
+        internal void AddCopyOfState(InputStateBase inputState, ViewInformation viewInfo)
+        {
+            // Get the state object to where to copy the given InputState
+            InputStateBase targetState = null;
+            for(int loop=0; loop<m_recoveredStates.Count; loop++)
+            {
+                if(m_recoveredStates[loop].CurrentType == inputState.CurrentType)
+                {
+                    targetState = m_recoveredStates[loop];
+                    m_recoveredStates.RemoveAt(loop);
+                    break;
+                }
+            }
+            if(targetState == null)
+            {
+                targetState = Activator.CreateInstance(inputState.CurrentType) as InputStateBase;
+            }
+
+            // Copy all state data
+            inputState.CopyAndResetForUpdatePass(targetState);
+            targetState.RelatedView = viewInfo;
+
+            this.AddState(targetState);
+        }
+
+        private void AddState(InputStateBase inputState)
         {
             m_inputStates.Add(inputState);
 

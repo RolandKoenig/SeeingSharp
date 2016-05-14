@@ -42,6 +42,7 @@ namespace SeeingSharp.Multimedia.Input
 
         #region Synchronization
         private ThreadSaveQueue<Action> m_commandQueue;
+        private ThreadSaveQueue<InputFrame> m_recoveredInputFrames;
         private ThreadSaveQueue<InputFrame> m_gatheredInputFrames;
         private InputFrame m_lastInputFrame;
         #endregion
@@ -59,6 +60,7 @@ namespace SeeingSharp.Multimedia.Input
         {
             m_commandQueue = new ThreadSaveQueue<Action>();
             m_gatheredInputFrames = new ThreadSaveQueue<InputFrame>();
+            m_recoveredInputFrames = new ThreadSaveQueue<InputFrame>();
 
             m_globalInputHandlers = new List<IInputHandler>();
             m_viewInputHandlers = new Dictionary<IInputEnabledView, List<IInputHandler>>();
@@ -67,16 +69,13 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Gets all gathered InputFrames.
         /// </summary>
-        internal List<InputFrame> GetAllFrames()
+        internal void QueryForCurrentFrames(List<InputFrame> targetList)
         {
-            return m_gatheredInputFrames.DequeueAll();
-        }
+            // Do first recover all old frames
+            m_recoveredInputFrames.Enqueue(targetList);
+            targetList.Clear();
 
-        /// <summary>
-        /// Gets all gathered InputFrames.
-        /// </summary>
-        internal void GetAllFrames(List<InputFrame> targetList)
-        {
+            // Enqueue new frames
             m_gatheredInputFrames.DequeueAll(targetList);
         }
 
@@ -162,14 +161,26 @@ namespace SeeingSharp.Multimedia.Input
 
             // Gather all input data
             int expectedStateCount = m_lastInputFrame != null ? m_lastInputFrame.CountStates : 6;
-            InputFrame newInputFrame = new InputFrame(expectedStateCount, SINGLE_FRAME_DURATION);
+
+            // Create new InputFrame object or reuse an old one
+            InputFrame newInputFrame = null;
+            if(m_recoveredInputFrames.Dequeue(out newInputFrame))
+            {
+                newInputFrame.Reset(expectedStateCount, SINGLE_FRAME_DURATION);
+            }
+            else
+            {
+                newInputFrame = new InputFrame(expectedStateCount, SINGLE_FRAME_DURATION);
+            }
+
+            // Gather all input states
             foreach(IInputHandler actInputHandler in m_globalInputHandlers)
             {
                 foreach(InputStateBase actInputState in actInputHandler.GetInputStates())
                 {
                     actInputState.EnsureNotNull(nameof(actInputState));
 
-                    newInputFrame.AddState(actInputState.CopyAndResetForUpdatePass());
+                    newInputFrame.AddCopyOfState(actInputState, null);
                 }
             }
             foreach(KeyValuePair<IInputEnabledView, List<IInputHandler>> actViewSpecificHandlers in m_viewInputHandlers)
@@ -179,11 +190,7 @@ namespace SeeingSharp.Multimedia.Input
                     foreach (InputStateBase actInputState in actInputHandler.GetInputStates())
                     {
                         actInputState.EnsureNotNull(nameof(actInputState));
-
-                        InputStateBase copied = actInputState.CopyAndResetForUpdatePass();
-                        copied.RelatedView = actViewSpecificHandlers.Key.RenderLoop.ViewInformation;
-
-                        newInputFrame.AddState(copied);
+                        newInputFrame.AddCopyOfState(actInputState, actViewSpecificHandlers.Key.RenderLoop.ViewInformation);
                     }
                 }
             }

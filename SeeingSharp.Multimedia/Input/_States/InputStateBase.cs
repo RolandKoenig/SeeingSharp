@@ -36,6 +36,7 @@ namespace SeeingSharp.Multimedia.Input
     {
         #region state related data
         private ViewInformation m_relatedView;
+        private Type m_currentType;
         #endregion
 
         /// <summary>
@@ -43,7 +44,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         protected InputStateBase()
         {
-
+            m_currentType = this.GetType();
         }
 
         /// <summary>
@@ -51,9 +52,9 @@ namespace SeeingSharp.Multimedia.Input
         /// in preparation of the next update pass.
         /// Called by update-render loop.
         /// </summary>
-        internal InputStateBase CopyAndResetForUpdatePass()
+        internal void CopyAndResetForUpdatePass(InputStateBase targetState)
         {
-            return CopyAndResetForUpdatePassInternal();
+            CopyAndResetForUpdatePassInternal(targetState);
         }
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace SeeingSharp.Multimedia.Input
         /// in preparation of the next update pass.
         /// Called by update-render loop.
         /// </summary>
-        protected abstract InputStateBase CopyAndResetForUpdatePassInternal();
+        protected abstract void CopyAndResetForUpdatePassInternal(InputStateBase targetState);
 
         /// <summary>
         /// The view object this input state was queried on.
@@ -84,6 +85,11 @@ namespace SeeingSharp.Multimedia.Input
                 if(m_relatedView == null) { return -1; }
                 else { return m_relatedView.ViewIndex; }
             }
+        }
+
+        internal Type CurrentType
+        {
+            get { return m_currentType; }
         }
     }
 }

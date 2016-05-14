@@ -235,8 +235,7 @@ namespace SeeingSharp.Multimedia.Core
                             renderStopWatch.Restart();
 
                             // Get all input frames
-                            inputFrames.Clear();
-                            GraphicsCore.Current.InputGatherer.GetAllFrames(inputFrames);
+                            GraphicsCore.Current.InputGatherer.QueryForCurrentFrames(inputFrames);
 
                             // First global pass: Update scene and prepare rendering
                             await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, inputFrames, updateState)

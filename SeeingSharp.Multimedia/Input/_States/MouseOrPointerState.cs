@@ -56,7 +56,7 @@ namespace SeeingSharp.Multimedia.Input
         /// <summary>
         /// Initializes a new instance of the <see cref="MouseOrPointerState"/> class.
         /// </summary>
-        internal MouseOrPointerState()
+        public MouseOrPointerState()
         {
             int buttonCount = BUTTON_COUNT;
             if (buttonCount <= 0)
@@ -178,21 +178,22 @@ namespace SeeingSharp.Multimedia.Input
         /// in preparation of the next update pass.
         /// Called by update-render loop.
         /// </summary>
-        protected override InputStateBase CopyAndResetForUpdatePassInternal()
+        protected override void CopyAndResetForUpdatePassInternal(InputStateBase targetState)
         {
-            // Copy the object
-            MouseOrPointerState result = new MouseOrPointerState();
-            result.m_moveDistancePixel = m_moveDistancePixel;
-            result.m_screenSizePixel = m_screenSizePixel;
-            result.m_positionPixel = m_positionPixel;
-            result.m_wheelDelta = m_wheelDelta;
-            result.m_isInside = m_isInside;
-            result.m_mouseOrPointerType = m_mouseOrPointerType;
+            MouseOrPointerState targetStateCasted = targetState as MouseOrPointerState;
+            targetStateCasted.EnsureNotNull(nameof(targetStateCasted));
+
+            targetStateCasted.m_moveDistancePixel = m_moveDistancePixel;
+            targetStateCasted.m_screenSizePixel = m_screenSizePixel;
+            targetStateCasted.m_positionPixel = m_positionPixel;
+            targetStateCasted.m_wheelDelta = m_wheelDelta;
+            targetStateCasted.m_isInside = m_isInside;
+            targetStateCasted.m_mouseOrPointerType = m_mouseOrPointerType;
             for (int loop = 0; loop < BUTTON_COUNT; loop++)
             {
-                result.m_buttonsDown[loop] = m_buttonsDown[loop];
-                result.m_buttonsHit[loop] = m_buttonsHit[loop];
-                result.m_buttonsUp[loop] = m_buttonsUp[loop];
+                targetStateCasted.m_buttonsDown[loop] = m_buttonsDown[loop];
+                targetStateCasted.m_buttonsHit[loop] = m_buttonsHit[loop];
+                targetStateCasted.m_buttonsUp[loop] = m_buttonsUp[loop];
             }
 
             // Reset current object
@@ -213,8 +214,6 @@ namespace SeeingSharp.Multimedia.Input
                     m_buttonsDown[loop] = false;
                 }
             }
-
-            return result;
         }
 
         /// <summary>
