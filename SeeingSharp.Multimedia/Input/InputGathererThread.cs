@@ -37,7 +37,7 @@ namespace SeeingSharp.Multimedia.Input
     public class InputGathererThread : ObjectThread
     {
         #region Constants
-        private static readonly TimeSpan SINGLE_FRAME_DURATION = TimeSpan.FromSeconds(1000.0 / Constants.INPUT_FRAMES_PER_SECOND);
+        private static readonly TimeSpan SINGLE_FRAME_DURATION = TimeSpan.FromMilliseconds(1000.0 / Constants.INPUT_FRAMES_PER_SECOND);
         #endregion
 
         #region Synchronization
@@ -62,7 +62,7 @@ namespace SeeingSharp.Multimedia.Input
             m_gatheredInputFrames = new ThreadSaveQueue<InputFrame>();
             m_recoveredInputFrames = new ThreadSaveQueue<InputFrame>();
 
-            m_globalInputHandlers = new List<IInputHandler>();
+            //m_globalInputHandlers = new List<IInputHandler>();
             m_viewInputHandlers = new Dictionary<IInputEnabledView, List<IInputHandler>>();
         }
 

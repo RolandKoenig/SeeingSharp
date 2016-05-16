@@ -75,10 +75,6 @@ namespace SeeingSharp.Multimedia.Views
         private IDisposable m_controlObserver;
         #endregion
 
-        #region Members for input handling
-        private List<IInputHandler> m_inputHandlers;
-        #endregion
-
         #region All needed direct3d resources
         private D3D11.Texture2D m_backBufferForWpf;
         private D3D11.Texture2D m_backBufferD3D11;
@@ -105,8 +101,6 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         public SeeingSharpRendererElement()
         {
-            m_inputHandlers = new List<IInputHandler>();
-
             this.Loaded += OnLoaded;
             this.Unloaded += OnUnloaded;
 
@@ -136,7 +130,6 @@ namespace SeeingSharp.Multimedia.Views
             // Break here if we are in design mode
             if (this.IsInDesignMode()) { return; }
 
-            m_renderLoop.CameraChanged += OnRenderLoopCameraChanged;
             m_renderLoop.ClearColor = Color4.Transparent;
             m_renderLoop.CallPresentInUIThread = true;
 
@@ -155,9 +148,6 @@ namespace SeeingSharp.Multimedia.Views
                 {
                     if (m_controlObserver == null)
                     {
-                        // Updates currently active input handlers
-                        InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
-
                         m_controlObserver = CommonTools.DisposeObject(m_controlObserver);
                         m_controlObserver = Observable.FromEventPattern<EventArgs>(this, "SizeChanged")
                             .Merge(Observable.FromEventPattern<EventArgs>(m_renderLoop.ViewConfiguration, "ConfigurationChanged"))
@@ -173,9 +163,6 @@ namespace SeeingSharp.Multimedia.Views
                     if (m_controlObserver != null)
                     {
                         SystemEvents.SessionSwitch -= OnSystemEvents_SessionSwitch;
-
-                        // Updates currently active input handlers
-                        InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
 
                         m_controlObserver = CommonTools.DisposeObject(m_controlObserver);
                     }
@@ -389,36 +376,6 @@ namespace SeeingSharp.Multimedia.Views
         void IRenderLoopHost.OnRenderLoop_AfterRendering(EngineDevice engineDevice)
         {
 
-        }
-
-        private void OnRenderLoopCameraChanged(object sender, EventArgs e)
-        {
-            if (!GraphicsCore.IsInitialized) { return; }
-            if (this.IsInDesignMode()) { return; }
-
-            // Updates currently active input handlers
-            if (this.IsLoaded)
-            {
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
-            }
-        }
-
-        /// <summary>
-        /// Queries all input states.
-        /// (Called within UI thread)
-        /// </summary>
-        IEnumerable<InputStateBase> IRenderLoopHost.OnRenderLoop_QueryInputStates()
-        {
-            foreach (IInputHandler actInputHandler in m_inputHandlers)
-            {
-                IEnumerable<InputStateBase> inputStates = actInputHandler.GetInputStates();
-                if (inputStates == null) { continue; }
-
-                foreach (InputStateBase actInputstate in inputStates)
-                {
-                    yield return actInputstate;
-                }
-            }
         }
 
         /// <summary>

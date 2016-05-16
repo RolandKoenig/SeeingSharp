@@ -188,11 +188,6 @@ namespace SeeingSharp.Multimedia.Views
 
         }
 
-        IEnumerable<InputStateBase> IRenderLoopHost.OnRenderLoop_QueryInputStates()
-        {
-            yield break;
-        }
-
         /// <summary>
         /// Gets or sets the scene.
         /// </summary>

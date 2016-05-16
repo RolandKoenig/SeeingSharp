@@ -280,6 +280,8 @@ namespace SeeingSharp.Multimedia.Input
             PointerPointProperties pointProperties = currentPoint.Properties;
             if (pointProperties.IsPrimary)
             {
+                System.Diagnostics.Debug.WriteLine($"_PointerReleased, Left={pointProperties.IsLeftButtonPressed}");
+
                 m_stateMouseOrPointer.NotifyButtonStates(
                     pointProperties.IsLeftButtonPressed,
                     pointProperties.IsMiddleButtonPressed,
@@ -307,6 +309,8 @@ namespace SeeingSharp.Multimedia.Input
             PointerPointProperties pointProperties = currentPoint.Properties;
             if (pointProperties.IsPrimary)
             {
+                System.Diagnostics.Debug.WriteLine($"_PointerPressed, Left={pointProperties.IsLeftButtonPressed}");
+
                 m_stateMouseOrPointer.NotifyButtonStates(
                     pointProperties.IsLeftButtonPressed,
                     pointProperties.IsMiddleButtonPressed,
@@ -338,6 +342,8 @@ namespace SeeingSharp.Multimedia.Input
             PointerPointProperties pointProperties = currentPoint.Properties;
             if (pointProperties.IsPrimary)
             {
+                System.Diagnostics.Debug.WriteLine($"_PointerMoved, Left={pointProperties.IsLeftButtonPressed}");
+
                 m_stateMouseOrPointer.NotifyButtonStates(
                     pointProperties.IsLeftButtonPressed,
                     pointProperties.IsMiddleButtonPressed,
@@ -381,12 +387,16 @@ namespace SeeingSharp.Multimedia.Input
         {
             if (m_painter == null) { return; }
 
+            System.Diagnostics.Debug.WriteLine($"_PointerExited");
+
             m_stateMouseOrPointer.NotifyInside(false);
         }
 
         private void OnTargetPanel_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             if (m_painter == null) { return; }
+
+            System.Diagnostics.Debug.WriteLine($"_PointerEntered");
 
             m_stateMouseOrPointer.NotifyInside(true);
         }

@@ -66,7 +66,6 @@ namespace SeeingSharp.Multimedia.Views
         #endregion Resources for Direct3D 11
 
         #region Members for input handling
-        private List<IInputHandler> m_inputHandlers;
         private bool m_isMouseInside;
         #endregion Members for input handling
 
@@ -94,8 +93,6 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         public SeeingSharpRendererControl()
         {
-            m_inputHandlers = new List<IInputHandler>();
-
             //Set style parameters for this control
             base.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             base.SetStyle(ControlStyles.ResizeRedraw, true);
@@ -260,9 +257,6 @@ namespace SeeingSharp.Multimedia.Views
                 m_renderLoop.SetCurrentViewSize(this.Width, this.Height);
                 m_renderLoop.DiscardRendering = false;
                 m_renderLoop.RegisterRenderLoop();
-
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
             }
         }
 
@@ -278,9 +272,6 @@ namespace SeeingSharp.Multimedia.Views
             {
                 m_renderLoop.DiscardRendering = true;
                 m_renderLoop.DeregisterRenderLoop();
-
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
             }
         }
 
@@ -372,9 +363,6 @@ namespace SeeingSharp.Multimedia.Views
         {
             if (!this.DesignMode)
             {
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
-
                 m_renderLoop.Dispose();
                 m_renderLoop = null;
             }
@@ -477,24 +465,6 @@ namespace SeeingSharp.Multimedia.Views
             if (!this.Visible)
             {
                 StopRendering();
-            }
-        }
-
-        /// <summary>
-        /// Queries all input states.
-        /// (Called within UI thread)
-        /// </summary>
-        IEnumerable<InputStateBase> IRenderLoopHost.OnRenderLoop_QueryInputStates()
-        {
-            foreach (IInputHandler actInputHandler in m_inputHandlers)
-            {
-                IEnumerable<InputStateBase> inputStates = actInputHandler.GetInputStates();
-                if (inputStates == null) { continue; }
-
-                foreach (InputStateBase actInputstate in inputStates)
-                {
-                    yield return actInputstate;
-                }
             }
         }
 

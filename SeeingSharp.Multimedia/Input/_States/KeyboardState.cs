@@ -97,8 +97,12 @@ namespace SeeingSharp.Multimedia.Input
             KeyboardState targetStateCasted = targetState as KeyboardState;
             targetStateCasted.EnsureNotNull(nameof(targetStateCasted));
 
+            targetStateCasted.m_keysHit.Clear();
             targetStateCasted.m_keysHit.AddRange(this.m_keysHit);
+
+            targetStateCasted.m_keysDown.Clear();
             targetStateCasted.m_keysDown.AddRange(this.m_keysDown);
+
             targetStateCasted.m_focused = this.m_focused;
 
             // Update local collections (move hit keys to down keys)

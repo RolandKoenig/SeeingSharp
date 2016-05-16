@@ -63,10 +63,6 @@ namespace SeeingSharp.Multimedia.Views
         private bool m_compositionScaleChanged;
         #endregion
 
-        #region Members for input handling
-        private List<IInputHandler> m_inputHandlers;
-        #endregion
-
         #region Resources from Direct3D 11
         private DXGI.SwapChain1 m_swapChain;
         private D3D11.Texture2D m_backBuffer;
@@ -81,8 +77,6 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         public SeeingSharpPanelPainter()
         {
-            m_inputHandlers = new List<IInputHandler>();
-
             // Create the RenderLoop object
             m_renderLoop = new Core.RenderLoop(SynchronizationContext.Current, this);
             m_renderLoop.ClearColor = Color4.CornflowerBlue;
@@ -142,9 +136,6 @@ namespace SeeingSharp.Multimedia.Views
                 m_renderLoop.UnloadViewResources();
                 m_renderLoop.DeregisterRenderLoop();
 
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
-
                 // Clear event registrations
                 m_targetPanel.SizeChanged -= OnTargetPanel_SizeChanged;
                 m_targetPanel.Loaded -= OnTargetPanel_Loaded;
@@ -201,9 +192,6 @@ namespace SeeingSharp.Multimedia.Views
             if (VisualTreeHelper.GetParent(m_targetPanel.Panel) != null)
             {
                 m_renderLoop.RegisterRenderLoop();
-
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
             }
         }
 
@@ -243,9 +231,6 @@ namespace SeeingSharp.Multimedia.Views
         {
             m_renderLoop.DeregisterRenderLoop();
 
-            // Updates currently active input handlers
-            InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, true);
-
             // Trigger detach if requested
             if(m_detachOnUnload)
             {
@@ -263,9 +248,6 @@ namespace SeeingSharp.Multimedia.Views
             if (!m_renderLoop.IsRegisteredOnMainLoop)
             {
                 m_renderLoop.RegisterRenderLoop();
-
-                // Updates currently active input handlers
-                InputHandlerFactory.UpdateInputHandlerList(this, m_inputHandlers, m_renderLoop, false);
             }
         }
 
@@ -449,24 +431,6 @@ namespace SeeingSharp.Multimedia.Views
             //  see http://msdn.microsoft.com/en-us/library/windows/desktop/bb174576(v=vs.85).aspx
             //  see example http://msdn.microsoft.com/en-us/library/windows/apps/hh825871.aspx
             m_swapChain.Present(1, DXGI.PresentFlags.None);
-        }
-
-        /// <summary>
-        /// Queries all input states.
-        /// (Called within UI thread)
-        /// </summary>
-        IEnumerable<InputStateBase> IRenderLoopHost.OnRenderLoop_QueryInputStates()
-        {
-            foreach(IInputHandler actInputHandler in m_inputHandlers)
-            {
-                IEnumerable<InputStateBase> inputStates = actInputHandler.GetInputStates();
-                if(inputStates == null) { continue; }
-
-                foreach(InputStateBase actInputstate in inputStates)
-                {
-                    yield return actInputstate;
-                }
-            }
         }
 
         /// <summary>

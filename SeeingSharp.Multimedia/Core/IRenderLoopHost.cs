@@ -46,7 +46,5 @@ namespace SeeingSharp.Multimedia.Core
         void OnRenderLoop_AfterRendering(EngineDevice device);
 
         void OnRenderLoop_Present(EngineDevice device);
-
-        IEnumerable<InputStateBase> OnRenderLoop_QueryInputStates();
     }
 }
