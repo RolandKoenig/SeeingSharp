@@ -191,8 +191,6 @@ namespace SeeingSharp.Multimedia.Input
             targetStateCasted.m_mouseOrPointerType = m_mouseOrPointerType;
             for (int loop = 0; loop < BUTTON_COUNT; loop++)
             {
-                if (m_buttonsHit[loop]) { System.Diagnostics.Debugger.Break(); }
-
                 targetStateCasted.m_buttonsDown[loop] = m_buttonsDown[loop];
                 targetStateCasted.m_buttonsHit[loop] = m_buttonsHit[loop];
                 targetStateCasted.m_buttonsUp[loop] = m_buttonsUp[loop];

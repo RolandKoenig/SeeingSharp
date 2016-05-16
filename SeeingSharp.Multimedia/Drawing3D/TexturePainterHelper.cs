@@ -152,23 +152,23 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
 
+            // Apply all current rendering parameters
+            m_renderParameters.Apply(renderState);
+
             // Render the object
-            using (m_renderParameters.Apply(renderState))
+            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZWrites;
+            if (this.AlphaBlendMode == TexturePainterAlphaBlendMode.AlphaBlend)
             {
-                deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDisableZWrites;
-                if (this.AlphaBlendMode == TexturePainterAlphaBlendMode.AlphaBlend)
-                {
-                    deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
-                }
-
-                m_geometryResource.Render(renderState);
-
-                if(this.AlphaBlendMode == TexturePainterAlphaBlendMode.AlphaBlend)
-                {
-                    deviceContext.OutputMerger.BlendState = m_defaultResources.DefaultBlendState;
-                }
-                deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
+                deviceContext.OutputMerger.BlendState = m_defaultResources.AlphaBlendingBlendState;
             }
+
+            m_geometryResource.Render(renderState);
+
+            if (this.AlphaBlendMode == TexturePainterAlphaBlendMode.AlphaBlend)
+            {
+                deviceContext.OutputMerger.BlendState = m_defaultResources.DefaultBlendState;
+            }
+            deviceContext.OutputMerger.DepthStencilState = m_defaultResources.DepthStencilStateDefault;
         }
 
         /// <summary>

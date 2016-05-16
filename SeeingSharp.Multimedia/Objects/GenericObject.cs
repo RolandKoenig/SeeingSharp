@@ -289,10 +289,8 @@ namespace SeeingSharp.Multimedia.Objects
             GeometryResource geometryResource = m_localResources[renderState.DeviceIndex];
             if (geometryResource != null)
             {
-                using (base.UpdateAndApplyRenderParameters(renderState))
-                {
-                    geometryResource.Render(renderState);
-                }
+                base.UpdateAndApplyRenderParameters(renderState);
+                geometryResource.Render(renderState);
             }
         }
 
@@ -305,10 +303,8 @@ namespace SeeingSharp.Multimedia.Objects
             GeometryResource geometryResource = m_localResources[renderState.DeviceIndex];
             if (geometryResource != null)
             {
-                using (base.UpdateAndApplyRenderParameters(renderState))
-                {
-                    geometryResource.Render(renderState);
-                }
+                base.UpdateAndApplyRenderParameters(renderState);
+                geometryResource.Render(renderState);
             }
         }
 

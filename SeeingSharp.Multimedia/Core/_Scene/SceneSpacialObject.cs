@@ -430,7 +430,7 @@ namespace SeeingSharp.Multimedia.Core
         /// Applies all current render parameters.
         /// </summary>
         /// <param name="renderState">The render state on which to apply.</param>
-        internal IDisposable UpdateAndApplyRenderParameters(RenderState renderState)
+        internal void UpdateAndApplyRenderParameters(RenderState renderState)
         {
             // Get or create RenderParamters object on object level
             ObjectRenderParameters renderParameters = m_renderParameters[renderState.DeviceIndex];
@@ -460,7 +460,7 @@ namespace SeeingSharp.Multimedia.Core
                 renderParameters.NeedsRefresh = false;
             }
 
-            return renderParameters.Apply(renderState);
+            renderParameters.Apply(renderState);
         }
 
         /// <summary>

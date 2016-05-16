@@ -100,28 +100,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// Applies all parameters.
         /// </summary>
         /// <param name="renderState">The render state on which to apply.</param>
-        internal IDisposable Apply(RenderState renderState)
+        internal void Apply(RenderState renderState)
         {
             D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
 
             // Apply constant buffer on shaders
             deviceContext.VertexShader.SetConstantBuffer(1, m_cbPerView.ConstantBuffer);
             deviceContext.PixelShader.SetConstantBuffer(1, m_cbPerView.ConstantBuffer);
-
-            return new DummyDisposable(() => this.Discard(renderState));
-        }
-
-        /// <summary>
-        /// Discards all parameters.
-        /// </summary>
-        /// <param name="renderState">The render state on which to discard.</param>
-        internal void Discard(RenderState renderState)
-        {
-            D3D11.DeviceContext deviceContext = renderState.Device.DeviceImmediateContextD3D11;
-
-            // Discard constant buffer on shaders
-            deviceContext.VertexShader.SetConstantBuffer(1, null);
-            deviceContext.PixelShader.SetConstantBuffer(1, null);
         }
 
         /// <summary>

@@ -990,8 +990,9 @@ namespace SeeingSharp.Multimedia.Core
             renderParameters.UpdateValues(renderState, perFrameData);
 
             using (renderState.PushScene(this, resources))
-            using (renderParameters.Apply(renderState))
             {
+                renderParameters.Apply(renderState);
+
                 //Prepare rendering on each layer
                 foreach (SceneLayer actLayer in m_sceneLayers)
                 {

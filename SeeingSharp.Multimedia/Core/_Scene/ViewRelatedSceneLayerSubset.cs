@@ -439,7 +439,7 @@ namespace SeeingSharp.Multimedia.Core
             if (m_disposed) { throw new ObjectDisposedException("ViewRelatedLayerSubset"); }
 
             // Skip rendering if there is nothing to do..
-            if((m_objectsPassLineRender.Subscriptions.Count == 0) &&
+            if ((m_objectsPassLineRender.Subscriptions.Count == 0) &&
                (m_objectsPassPlainRender.Subscriptions.Count == 0) &&
                (m_objectsPassSpriteBatchRender.Subscriptions.Count == 0) &&
                (m_objectsPassTransparentRender.Subscriptions.Count == 0))
@@ -484,53 +484,52 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Perform main renderpass logic
-            using (m_renderParameters.Apply(renderState))
+            m_renderParameters.Apply(renderState);
+
+            int passID = 0;
+            bool continueWithNextPass = true;
+            while (continueWithNextPass)
             {
-                int passID = 0;
-                bool continueWithNextPass = true;
-                while (continueWithNextPass)
+                // Notify state before rendering
+                if (postprocessEffect != null) { postprocessEffect.NotifyBeforeRender(renderState, passID); }
+
+                try
                 {
-                    // Notify state before rendering
-                    if (postprocessEffect != null) { postprocessEffect.NotifyBeforeRender(renderState, passID); }
+                    // All following objects are build using only triangle lists
+                    m_device.DeviceImmediateContextD3D11.InputAssembler.PrimitiveTopology = D3D.PrimitiveTopology.TriangleList;
 
-                    try
-                    {
-                        // All following objects are build using only triangle lists
-                        m_device.DeviceImmediateContextD3D11.InputAssembler.PrimitiveTopology = D3D.PrimitiveTopology.TriangleList;
+                    // Perform all plain renderings
+                    RenderPass(null, m_objectsPassPlainRender, renderState, ref invalidObjects);
 
-                        // Perform all plain renderings
-                        RenderPass(null, m_objectsPassPlainRender, renderState, ref invalidObjects);
+                    // Notify state after plain rendering
+                    if (postprocessEffect != null) { postprocessEffect.NotifyAfterRenderPlain(renderState, passID); }
 
-                        // Notify state after plain rendering
-                        if (postprocessEffect != null) { postprocessEffect.NotifyAfterRenderPlain(renderState, passID); }
+                    // Render all lines
+                    RenderPass(
+                        m_renderPassLineRender, m_objectsPassLineRender,
+                        renderState, ref invalidObjects);
+                    renderState.ApplyMaterial(null);
 
-                        // Render all lines
-                        RenderPass(
-                            m_renderPassLineRender, m_objectsPassLineRender,
-                            renderState, ref invalidObjects);
-                        renderState.ApplyMaterial(null);
-
-                        // Perform all transparent renderings
-                        RenderPass(
-                            m_renderPassTransparent, m_objectsPassTransparentRender,
-                            renderState, ref invalidObjects);
-                    }
-                    finally
-                    {
-                        // Notify state after rendering
-                        if (postprocessEffect != null) { continueWithNextPass = postprocessEffect.NotifyAfterRender(renderState, passID); }
-                        else { continueWithNextPass = false; }
-
-                        // Increment passID value
-                        passID++;
-                    }
+                    // Perform all transparent renderings
+                    RenderPass(
+                        m_renderPassTransparent, m_objectsPassTransparentRender,
+                        renderState, ref invalidObjects);
                 }
-
-                // Clear current depth buffer
-                if (m_sceneLayer.ClearDepthBufferAfterRendering)
+                finally
                 {
-                    renderState.ClearCurrentDepthBuffer();
+                    // Notify state after rendering
+                    if (postprocessEffect != null) { continueWithNextPass = postprocessEffect.NotifyAfterRender(renderState, passID); }
+                    else { continueWithNextPass = false; }
+
+                    // Increment passID value
+                    passID++;
                 }
+            }
+
+            // Clear current depth buffer
+            if (m_sceneLayer.ClearDepthBufferAfterRendering)
+            {
+                renderState.ClearCurrentDepthBuffer();
             }
 
             //Remove all invalid objects
