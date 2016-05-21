@@ -185,12 +185,16 @@ namespace SeeingSharp.Multimedia.Input
             }
             foreach(KeyValuePair<IInputEnabledView, List<IInputHandler>> actViewSpecificHandlers in m_viewInputHandlers)
             {
+                RenderLoop renderLoop = actViewSpecificHandlers.Key.RenderLoop;
+                if (renderLoop == null) { continue; }
+
                 foreach (IInputHandler actInputHandler in actViewSpecificHandlers.Value)
                 {
                     foreach (InputStateBase actInputState in actInputHandler.GetInputStates())
                     {
                         actInputState.EnsureNotNull(nameof(actInputState));
-                        newInputFrame.AddCopyOfState(actInputState, actViewSpecificHandlers.Key.RenderLoop.ViewInformation);
+
+                        newInputFrame.AddCopyOfState(actInputState, renderLoop.ViewInformation);
                     }
                 }
             }

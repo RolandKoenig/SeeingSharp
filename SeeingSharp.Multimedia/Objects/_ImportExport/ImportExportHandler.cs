@@ -189,7 +189,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <param name="fileExtension">The file extension of the resource to load.</param>
         private IModelImporter GetImporterByFileType(string fileExtension)
         {
-            fileExtension = fileExtension.ToLower();
+            fileExtension = fileExtension.ToLower().Replace(".", "");
 
             // Query for importer object
             IModelImporter importer = null;

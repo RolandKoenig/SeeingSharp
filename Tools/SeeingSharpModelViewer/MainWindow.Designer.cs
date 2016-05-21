@@ -31,10 +31,11 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainWindow));
             this.m_barTools = new System.Windows.Forms.ToolStrip();
             this.m_cmdOpen = new System.Windows.Forms.ToolStripButton();
+            this.m_cmdClose = new System.Windows.Forms.ToolStripButton();
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
             this.m_dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.m_panGraphics = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
-            this.m_cmdClose = new System.Windows.Forms.ToolStripButton();
+            this.m_viewFreeMovingCamera = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
             this.m_barTools.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -60,6 +61,16 @@
             this.m_cmdOpen.Text = "Open";
             this.m_cmdOpen.Click += new System.EventHandler(this.OnCmdOpen_Click);
             // 
+            // m_cmdClose
+            // 
+            this.m_cmdClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.m_cmdClose.Image = ((System.Drawing.Image)(resources.GetObject("m_cmdClose.Image")));
+            this.m_cmdClose.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.m_cmdClose.Name = "m_cmdClose";
+            this.m_cmdClose.Size = new System.Drawing.Size(24, 24);
+            this.m_cmdClose.Text = "Close";
+            this.m_cmdClose.Click += new System.EventHandler(this.OnCmdClose_Click);
+            // 
             // m_barStatus
             // 
             this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -75,29 +86,9 @@
             this.m_panGraphics.Dock = System.Windows.Forms.DockStyle.Fill;
             this.m_panGraphics.Location = new System.Drawing.Point(0, 27);
             this.m_panGraphics.Name = "m_panGraphics";
+            this.m_panGraphics.SceneComponents.Add(this.m_viewFreeMovingCamera);
             this.m_panGraphics.Size = new System.Drawing.Size(712, 383);
             this.m_panGraphics.TabIndex = 0;
-            this.m_panGraphics.ViewConfiguration.AccentuationFactor = 0F;
-            this.m_panGraphics.ViewConfiguration.AlphaEnabledSwapChain = false;
-            this.m_panGraphics.ViewConfiguration.AmbientFactor = 0.2F;
-            this.m_panGraphics.ViewConfiguration.AntialiasingEnabled = true;
-            this.m_panGraphics.ViewConfiguration.AntialiasingQuality = SeeingSharp.Multimedia.Core.AntialiasingQualityLevel.Medium;
-            this.m_panGraphics.ViewConfiguration.GeneratedBorderFactor = 1F;
-            this.m_panGraphics.ViewConfiguration.GeneratedColorGradientFactor = 1F;
-            this.m_panGraphics.ViewConfiguration.LightPower = 0.8F;
-            this.m_panGraphics.ViewConfiguration.ShowTextures = true;
-            this.m_panGraphics.ViewConfiguration.StrongLightFactor = 1.5F;
-            this.m_panGraphics.ViewConfiguration.WireframeEnabled = false;
-            // 
-            // m_cmdClose
-            // 
-            this.m_cmdClose.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.m_cmdClose.Image = ((System.Drawing.Image)(resources.GetObject("m_cmdClose.Image")));
-            this.m_cmdClose.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.m_cmdClose.Name = "m_cmdClose";
-            this.m_cmdClose.Size = new System.Drawing.Size(24, 24);
-            this.m_cmdClose.Text = "Close";
-            this.m_cmdClose.Click += new System.EventHandler(this.OnCmdClose_Click);
             // 
             // MainWindow
             // 
@@ -125,6 +116,7 @@
         private System.Windows.Forms.ToolStripButton m_cmdOpen;
         private System.Windows.Forms.OpenFileDialog m_dlgOpenFile;
         private System.Windows.Forms.ToolStripButton m_cmdClose;
+        private SeeingSharp.Multimedia.Components.FreeMovingCameraComponent m_viewFreeMovingCamera;
     }
 }
 

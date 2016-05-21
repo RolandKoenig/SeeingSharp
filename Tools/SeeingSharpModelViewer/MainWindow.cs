@@ -25,6 +25,7 @@ using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.View;
 using SeeingSharpModelViewer.Data;
+using SeeingSharpModelViewer.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -63,14 +64,17 @@ namespace SeeingSharpModelViewer
 
         private async void OnCmdOpen_Click(object sender, EventArgs e)
         {
-            if(m_dlgOpenFile.ShowDialog(this) == DialogResult.OK)
+            using (ImportDialog importDialog = new ImportDialog())
             {
-                await m_sceneManager.ImportFileAsync(m_dlgOpenFile.FileName);
+                if(importDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    await m_sceneManager.ImportFileAsync(importDialog.FileName);
 
-                await m_panGraphics.RenderLoop.WaitForNextFinishedRenderAsync();
+                    await m_panGraphics.RenderLoop.WaitForNextFinishedRenderAsync();
 
-                await m_panGraphics.RenderLoop.MoveCameraToDefaultLocationAsync(
-                    EngineMath.RAD_45DEG, EngineMath.RAD_45DEG);
+                    await m_panGraphics.RenderLoop.MoveCameraToDefaultLocationAsync(
+                        EngineMath.RAD_45DEG, EngineMath.RAD_45DEG);
+                }
             }
         }
 
