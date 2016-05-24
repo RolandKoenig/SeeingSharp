@@ -37,6 +37,7 @@ namespace SeeingSharp.Multimedia.Objects
         public MaterialProperties()
         {
             this.DiffuseColor = Color4.White;
+            this.Name = string.Empty;
         }
 
         /// <summary>
@@ -113,6 +114,17 @@ namespace SeeingSharp.Multimedia.Objects
             if (Object.ReferenceEquals(left, null)) { return true; }
 
             return !left.Equals(right);
+        }
+
+        /// <summary>
+        /// Gets or sets the name of this material.
+        /// This value can be used internally by importers and exporters.
+        /// Within seeing#, this property has no relevance.
+        /// </summary>
+        public string Name
+        {
+            get;
+            set;
         }
 
         /// <summary>

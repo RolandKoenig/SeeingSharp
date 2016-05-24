@@ -83,11 +83,30 @@ namespace SeeingSharp.Multimedia.Objects
         /// Creates the surface on this VertexStructure.
         /// </summary>
         /// <param name="triangleCapacity">The triangle capacity.</param>
-        public VertexStructureSurface CreateSurface(int triangleCapacity = 512)
+        /// <param name="name">The internal name of the material.</param>
+        public VertexStructureSurface CreateSurface(int triangleCapacity = 512, string name = "")
         {
             VertexStructureSurface newSurface = new VertexStructureSurface(this, triangleCapacity);
+            newSurface.MaterialProperties.Name = name;
+
             m_surfaces.Add(newSurface);
             return newSurface;
+        }
+
+        /// <summary>
+        /// Tries to get an existing surface using given name.
+        /// If none exists, then a new surface is created.
+        /// </summary>
+        /// <param name="name">The internal name of the material.</param>
+        /// <param name="triangleCapacity">The triangle capacity.</param>
+        public VertexStructureSurface CreateOrGetExistingSurfaceByName(string name, int triangleCapacity = 512)
+        {
+            foreach (VertexStructureSurface actSurface in m_surfaces)
+            {
+                if (actSurface.MaterialProperties.Name == name) { return actSurface; }
+            }
+
+            return CreateSurface(triangleCapacity, name);
         }
 
         /// <summary>
@@ -105,6 +124,24 @@ namespace SeeingSharp.Multimedia.Objects
 
             VertexStructureSurface result = CreateSurface(triangleCapacity);
             result.MaterialProperties = matProperties;
+            return result;
+        }
+
+        /// <summary>
+        /// Tries to get an existing surface using given MaterialProperties.
+        /// If none exists, then a new surface is created.
+        /// </summary>
+        /// <param name="name">The internal name of the material.</param>
+        /// <param name="triangleCapacity">The triangle capacity.</param>
+        public VertexStructureSurface CreateOrGetExistingSurface(string name, int triangleCapacity = 512)
+        {
+            foreach (VertexStructureSurface actSurface in m_surfaces)
+            {
+                if (actSurface.MaterialProperties.Name == name) { return actSurface; }
+            }
+
+            VertexStructureSurface result = CreateSurface(triangleCapacity);
+            result.MaterialProperties.Name = name;
             return result;
         }
 

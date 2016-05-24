@@ -326,6 +326,9 @@
     <Compile Include="Input\_States\_Enum.cs" />
     <Compile Include="Objects\_Construction\VertexStructureSurface.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjFileReader.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjImporter.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImportOptions.cs" />
@@ -365,15 +368,10 @@
     <Compile Include="Objects\_ImportExport\IModelImporter.cs" />
     <Compile Include="Objects\_ImportExport\ImportExportHandler.cs" />
     <Compile Include="Objects\_ImportExport\ImportOptions.cs" />
-    <Compile Include="Objects\_ImportExport\_Formats\_Assimp\AssimpExporter.cs" />
-    <Compile Include="Objects\_ImportExport\_Formats\_Assimp\SeeingSharpAssimpIOStream.cs" />
-    <Compile Include="Objects\_ImportExport\_Formats\_Assimp\SeeingSharpAssimpIOSystem.cs" />
-    <Compile Include="Objects\_ImportExport\_Formats\_Assimp\_Extensions.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedObjectInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedResourceInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedModelContainer.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImporter.cs" />
-    <Compile Include="Objects\_ImportExport\_Formats\_Assimp\AssimpImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Attributes.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImporter.cs" />
     <Compile Include="Objects\_Misc.cs" />
