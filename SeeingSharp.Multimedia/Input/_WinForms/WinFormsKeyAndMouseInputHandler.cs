@@ -157,7 +157,7 @@ namespace SeeingSharp.Multimedia.Input
             if (m_currentControl != null)
             {
                 Control currentControl = m_currentControl;
-                currentControl.BeginInvoke(new Action(() =>
+                Action removeEventRegistrationsAction = new Action(() =>
                 {
                     currentControl.MouseEnter -= OnMouseEnter;
                     currentControl.MouseClick -= OnMouseClick;
@@ -170,7 +170,10 @@ namespace SeeingSharp.Multimedia.Input
                     currentControl.KeyDown -= OnKeyDown;
                     currentControl.LostFocus -= OnLostFocus;
                     currentControl.GotFocus -= OnGotFocus;
-                }));
+                });
+
+                if (m_currentControl.IsHandleCreated) { m_currentControl.BeginInvoke(removeEventRegistrationsAction); }
+                else { removeEventRegistrationsAction(); }
             }
 
             // Set local references to zero

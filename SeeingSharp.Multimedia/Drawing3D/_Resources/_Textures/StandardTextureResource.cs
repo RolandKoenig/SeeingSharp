@@ -101,8 +101,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
                     using (SDXTK.Image rawImage = SDXTK.Image.Load(inStream))
                     {
                         m_texture = GraphicsHelper.CreateTexture(device, rawImage); 
-                        
-                        //GraphicsHelper.LoadTexture2D(device, inStream);
                     }
                 }
                 else if (m_inMemoryTexture != null)

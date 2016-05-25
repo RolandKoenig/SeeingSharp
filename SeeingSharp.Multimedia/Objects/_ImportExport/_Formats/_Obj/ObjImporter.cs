@@ -62,8 +62,10 @@ namespace SeeingSharp.Multimedia.Objects
 
             ImportedModelContainer result = new ImportedModelContainer(objImportOptions);
 
+            // Read object file
             ObjFileReader objFileReader = new ObjFileReader(sourceFile, result);
             objFileReader.Read();
+            objFileReader.GenerateObjects();
 
             return result;
         }
