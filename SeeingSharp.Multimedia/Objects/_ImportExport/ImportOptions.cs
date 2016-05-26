@@ -21,6 +21,7 @@
 */
 #endregion
 using SeeingSharp.Multimedia.Core;
+using System.Numerics;
 
 namespace SeeingSharp.Multimedia.Objects
 {
@@ -34,6 +35,34 @@ namespace SeeingSharp.Multimedia.Objects
             this.ResourceCoordinateSystem = CoordinateSystem.LeftHanded_UpY;
             this.ResizeFactor = 1f;
             this.TwoSidedSurfaces = false;
+        }
+
+        /// <summary>
+        /// Gets the transform matrix for coordinate system.
+        /// </summary>
+        /// <returns></returns>
+        public Matrix4x4 GetTransformMatrixForCoordinateSystem()
+        {
+            switch (this.ResourceCoordinateSystem)
+            {
+                case CoordinateSystem.LeftHanded_UpY:
+                    return Matrix4x4.Identity;
+
+                case CoordinateSystem.LeftHanded_UpZ:
+                    return
+                        Matrix4x4.CreateScale(1f, -1f, 1f) *
+                        Matrix4x4.CreateFromYawPitchRoll(-EngineMath.RAD_90DEG, 0f, 0f);
+
+                case CoordinateSystem.RightHanded_UpY:
+                    return Matrix4x4.CreateScale(new Vector3(1f, 1f, -1f));
+
+                case CoordinateSystem.RightHanded_UpZ:
+                    return
+                        Matrix4x4.CreateScale(-1f, 1f, -1f) *
+                        Matrix4x4.CreateFromYawPitchRoll(EngineMath.RAD_90DEG, 0f, 0f);
+            }
+
+            return Matrix4x4.Identity;
         }
 
         /// <summary>

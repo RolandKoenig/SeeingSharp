@@ -89,6 +89,13 @@ namespace SeeingSharp.Multimedia.Objects
             m_rawTextureCoordinates = new List<Vector2>(1024);
 
             m_targetVertexStructure = new VertexStructure();
+
+            // Apply transform matrix in case of a different coordinate system (switched coordinate axes)
+            Matrix4x4 coordSpaceTransformMatrix = importOptions.GetTransformMatrixForCoordinateSystem();
+            if(coordSpaceTransformMatrix != Matrix4x4.Identity)
+            {
+                m_targetVertexStructure.EnableBuildTimeTransform(coordSpaceTransformMatrix);
+            }
         }
 
         /// <summary>
@@ -119,7 +126,7 @@ namespace SeeingSharp.Multimedia.Objects
                     actMaterialKey,
                     () => new SimpleColoredMaterialResource(textureKey)
                     {
-                        ClipFactor = 0.1f,
+                        ClipFactor = textureKey != NamedOrGenericKey.Empty ? 0.1f : 0f,
                         MaterialDiffuseColor = actSurface.DiffuseColor
                     }));
             }
