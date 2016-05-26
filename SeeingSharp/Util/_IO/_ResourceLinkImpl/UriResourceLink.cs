@@ -89,9 +89,16 @@ namespace SeeingSharp.Util
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        public override ResourceLink GetForAnotherFile(string newFileName)
+        /// <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
+        public override ResourceLink GetForAnotherFile(string newFileName, params string[] subdirectories)
         {
-            if(m_resourceUri.IsAbsoluteUri)
+            string subdirectoryPath = string.Empty;
+            for (int loop = 0; loop < subdirectories.Length; loop++)
+            {
+                subdirectoryPath += subdirectories[loop] + "/";
+            }
+
+            if (m_resourceUri.IsAbsoluteUri)
             {
                 try
                 {
@@ -99,7 +106,7 @@ namespace SeeingSharp.Util
 
                     string path = uriBuilder.Path;
                     string fileName = Path.GetFileName(path);
-                    uriBuilder.Path = path.Replace(fileName, newFileName);
+                    uriBuilder.Path = path.Replace(fileName, subdirectoryPath + newFileName);
 
                     return new UriResourceLink(uriBuilder.Uri);
                 }
@@ -117,7 +124,7 @@ namespace SeeingSharp.Util
                     string originalString = m_resourceUri.OriginalString;
                     string fileName = Path.GetFileName(originalString);
                     return new UriResourceLink(
-                        new Uri(originalString.Replace(fileName, newFileName)));
+                        new Uri(originalString.Replace(fileName, subdirectoryPath + newFileName)));
                 }
                 catch(Exception ex)
                 {

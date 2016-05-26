@@ -65,12 +65,13 @@ namespace SeeingSharp.Util
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        public override ResourceLink GetForAnotherFile(string newFileName)
+        /// <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
+        public override ResourceLink GetForAnotherFile(string newFileName, params string[] subdirectories)
         {
             newFileName.EnsureNotNullOrEmptyOrWhiteSpace(nameof(newFileName));
 
             return new AssemblyResourceLinkSource(
-                m_resourceLink.GetForAnotherFile(newFileName));
+                m_resourceLink.GetForAnotherFile(newFileName, subdirectories));
         }
 
         /// <summary>

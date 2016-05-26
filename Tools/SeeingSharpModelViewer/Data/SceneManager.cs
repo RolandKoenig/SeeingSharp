@@ -63,9 +63,9 @@ namespace SeeingSharpModelViewer.Data
                 .FireAndForget();
         }
 
-        public async Task<IEnumerable<SceneObject>> ImportFileAsync(ResourceLink resourceLink)
+        public async Task<IEnumerable<SceneObject>> ImportFileAsync(ResourceLink resourceLink, ImportOptions importOptions)
         {
-            return await m_scene.ImportAsync(resourceLink);
+            return await m_scene.ImportAsync(resourceLink, importOptions);
         }
 
         public Task CloseAsync()

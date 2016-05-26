@@ -64,7 +64,6 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public SimpleColoredMaterialResource(NamedOrGenericKey textureKey = new NamedOrGenericKey())
         {
             m_textureKey = textureKey;
-            m_clipFactor = 0f;
             m_maxClipDistance = 1000f;
             m_adjustTextureCoordinates = false;
             m_addToAlpha = 0f;

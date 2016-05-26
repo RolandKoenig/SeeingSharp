@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Util;
 using System;
@@ -39,11 +40,13 @@ namespace SeeingSharp.Multimedia.Objects
         private static readonly char[] ARGUMENT_SPLITTER = new char[] { ' ' };
         private static readonly CultureInfo FILE_CULTURE = new CultureInfo("en-US");
         private static readonly NumberFormatInfo FILE_NUMBER_FORMAT = FILE_CULTURE.NumberFormat;
+        private const string SUBDIRECTORY_TEXTURES = "Texture";
         #endregion
 
         #region Parameters
         private ResourceLink m_resource;
         private ImportedModelContainer m_targetContainer;
+        private ObjImportOptions m_importOptions;
         #endregion
 
         #region Current object
@@ -70,10 +73,16 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         /// <param name="resource">The resource to be loaded.</param>
         /// <param name="targetContainer">The target ModelContainer into which to put the generated objects and resources.</param>
-        public ObjFileReader(ResourceLink resource, ImportedModelContainer targetContainer)
+        /// <param name="importOptions">Current import settings.</param>
+        public ObjFileReader(ResourceLink resource, ImportedModelContainer targetContainer, ObjImportOptions importOptions)
         {
+            resource.EnsureNotNull(nameof(resource));
+            targetContainer.EnsureNotNull(nameof(targetContainer));
+            importOptions.EnsureNotNull(nameof(importOptions));
+
             m_resource = resource;
             m_targetContainer = targetContainer;
+            m_importOptions = importOptions;
 
             m_rawVertices = new List<Vector3>(1024);
             m_rawNormals = new List<Vector3>(1014);
@@ -87,13 +96,40 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public void GenerateObjects()
         {
-            NamedOrGenericKey resGeometry = m_targetContainer.GetResourceKey("Geometry", "1");
+            // Define all material resources which where defined in the material file
+            foreach (VertexStructureSurface actSurface in m_targetVertexStructure.Surfaces)
+            {
+                // Handle texture
+                NamedOrGenericKey textureKey = NamedOrGenericKey.Empty;
+                if (!string.IsNullOrEmpty(actSurface.TextureName))
+                {
+                    string actTextureName = actSurface.TextureName;
+                    textureKey = m_targetContainer.GetResourceKey("Texture", actSurface.TextureName);
+                    m_targetContainer.ImportedResources.Add(
+                        new ImportedResourceInfo(
+                            textureKey,
+                            () => new StandardTextureResource(m_resource.GetForAnotherFile(actTextureName))));
+                }
+                actSurface.TextureKey = textureKey;
 
+                // Handle material itself
+                NamedOrGenericKey actMaterialKey = m_targetContainer.GetResourceKey("Material", actSurface.MaterialProperties.Name);
+                actSurface.Material = actMaterialKey;
+                m_targetContainer.ImportedResources.Add(new ImportedResourceInfo(
+                    actMaterialKey,
+                    () => new SimpleColoredMaterialResource(textureKey)
+                    {
+                        ClipFactor = 0.1f,
+                        MaterialDiffuseColor = actSurface.DiffuseColor
+                    }));
+            }
+
+            // Define geometry resource
+            NamedOrGenericKey resGeometry = m_targetContainer.GetResourceKey("Geometry", "1");
             GenericObjectType newObjType = new GenericObjectType(m_targetVertexStructure);
             m_targetContainer.ImportedResources.Add(new ImportedResourceInfo(
                 resGeometry,
                 () => new GeometryResource(newObjType)));
-
             m_targetContainer.Objects.Add(new GenericObject(resGeometry));
         }
 
@@ -188,6 +224,12 @@ namespace SeeingSharp.Multimedia.Objects
             catch(Exception ex)
             {
                 throw new SeeingSharpGraphicsException($"Unable to read obj file {m_resource}: Error at line {actLineNumber}: {ex.Message}", ex);
+            }
+
+            // Reorders all triangle indices when necessary
+            if(m_importOptions.ChangeTriangleOrder)
+            {
+                m_targetVertexStructure.ReorderTriangleIndices();
             }
         }
 
@@ -344,13 +386,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             string texFileName = subArguments[subArguments.Length - 1];
-            NamedOrGenericKey textureKey = m_targetContainer.GetResourceKey("Texture", texFileName);
-            m_targetContainer.ImportedResources.Add(
-                new ImportedResourceInfo(
-                    textureKey,
-                    () => new StandardTextureResource(m_resource.GetForAnotherFile(texFileName))));
-
-            m_currentMaterialDefinition.TextureKey = textureKey;
+            m_currentMaterialDefinition.TextureName = texFileName;
         }
 
         /// <summary>
@@ -387,7 +423,11 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Store vertex
-            m_rawVertices.Add(new Vector3(m_dummyFloatArguments_3[0], m_dummyFloatArguments_3[1], m_dummyFloatArguments_3[2]));
+            Vector3 actCoordinate = new Vector3(
+                m_dummyFloatArguments_3[0] * m_importOptions.ResizeFactor, 
+                m_dummyFloatArguments_3[1] * m_importOptions.ResizeFactor, 
+                m_dummyFloatArguments_3[2] * m_importOptions.ResizeFactor);
+            m_rawVertices.Add(actCoordinate);
         }
 
         /// <summary>
@@ -439,7 +479,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Store vertex
-            m_rawTextureCoordinates.Add(new Vector2(m_dummyFloatArguments_3[0], m_dummyFloatArguments_3[1]));
+            m_rawTextureCoordinates.Add(new Vector2(m_dummyFloatArguments_3[0], 1f - m_dummyFloatArguments_3[1]));
         }
 
         /// <summary>
@@ -469,7 +509,7 @@ namespace SeeingSharp.Multimedia.Objects
                 int actIndex = m_dummyIntArguments_3[0];
                 if (actIndex < 0)
                 {
-                    int newIndex = m_rawVertices.Count - actIndex;
+                    int newIndex = m_rawVertices.Count + actIndex;
                     if (newIndex < 0)
                     {
                         throw new SeeingSharpGraphicsException($"Invalid vertex index: {actIndex} (we currently have {m_rawVertices.Count} vertices)!");
@@ -485,32 +525,40 @@ namespace SeeingSharp.Multimedia.Objects
                 actIndex = m_dummyIntArguments_3[1];
                 if ((actIndex < 0) && (actIndex != Int32.MinValue))
                 {
-                    int newIndex = m_rawTextureCoordinates.Count - actIndex;
+                    int newIndex = m_rawTextureCoordinates.Count + actIndex;
                     if (newIndex < 0)
                     {
                         throw new SeeingSharpGraphicsException($"Invalid vertex index: {actIndex} (we currently have {m_rawTextureCoordinates.Count} texture coordinates)!");
                     }
                     faceIndices[loop].TextureCoordinateIndex = newIndex;
                 }
-                else
+                else if (actIndex != Int32.MinValue)
                 {
                     faceIndices[loop].TextureCoordinateIndex = m_dummyIntArguments_3[1] - 1;
+                }
+                else
+                {
+                    faceIndices[loop].TextureCoordinateIndex = Int32.MinValue;
                 }
 
                 // Preprocess normal coordinates
                 actIndex = m_dummyIntArguments_3[2];
                 if ((actIndex < 0) && (actIndex != Int32.MinValue))
                 {
-                    int newIndex = m_rawNormals.Count - actIndex;
+                    int newIndex = m_rawNormals.Count + actIndex;
                     if (newIndex < 0)
                     {
                         throw new SeeingSharpGraphicsException($"Invalid vertex index: {actIndex} (we currently have {m_rawNormals.Count} normals)!");
                     }
                     faceIndices[loop].NormalIndex = newIndex;
                 }
-                else
+                else if (actIndex != Int32.MinValue)
                 {
                     faceIndices[loop].NormalIndex = m_dummyIntArguments_3[2] - 1;
+                }
+                else
+                {
+                    faceIndices[loop].NormalIndex = Int32.MinValue;
                 }
             }
            
@@ -524,11 +572,19 @@ namespace SeeingSharp.Multimedia.Objects
                     highestVertexIndex - 2,
                     highestVertexIndex - 1,
                     highestVertexIndex);
+                if(m_importOptions.TwoSidedSurfaces)
+                {
+                    m_currentSurface.AddTriangle(
+                        highestVertexIndex,
+                        highestVertexIndex - 1,
+                        highestVertexIndex - 2);
+                }
             }
             else
             {
                 m_currentSurface.AddPolygonByCuttingEars(
-                    GenerateFaceVertices(faceIndices));
+                    GenerateFaceVertices(faceIndices),
+                    twoSided: m_importOptions.TwoSidedSurfaces);
             }
         }
 

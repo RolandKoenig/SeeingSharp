@@ -91,7 +91,8 @@ namespace SeeingSharp.Util
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
-        public abstract ResourceLink GetForAnotherFile(string newFileName);
+        /// <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
+        public abstract ResourceLink GetForAnotherFile(string newFileName, params string[] subdirectories);
 
         /// <summary>
         /// Opens an output stream to the current stream source.

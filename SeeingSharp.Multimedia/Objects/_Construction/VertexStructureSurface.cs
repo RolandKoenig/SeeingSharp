@@ -189,16 +189,18 @@ namespace SeeingSharp.Multimedia.Objects
         /// Adds the given polygon using the cutting ears algorythm for triangulation.
         /// </summary>
         /// <param name="indices">The indices of the polygon's edges.</param>
-        public void AddPolygonByCuttingEars(IEnumerable<int> indices)
+        /// <param name="twoSided">The indiexes for front- and backside?</param>
+        public void AddPolygonByCuttingEars(IEnumerable<int> indices, bool twoSided = false)
         {
-            AddPolygonByCuttingEarsInternal(new List<int>(indices));
+            AddPolygonByCuttingEarsInternal(new List<int>(indices), twoSided);
         }
 
         /// <summary>
         /// Adds the given polygon using the cutting ears algorythm for triangulation.
         /// </summary>
         /// <param name="vertices">The vertices to add.</param>
-        public void AddPolygonByCuttingEarsAndCalculateNormals(IEnumerable<Vertex> vertices)
+        /// <param name = "twoSided" > The indiexes for front- and backside?</param>
+        public void AddPolygonByCuttingEarsAndCalculateNormals(IEnumerable<Vertex> vertices, bool twoSided = false)
         {
             //Add vertices first
             List<int> indices = new List<int>();
@@ -208,17 +210,18 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             //Calculate cutting ears and normals
-            AddPolygonByCuttingEarsAndCalculateNormals(indices);
+            AddPolygonByCuttingEarsAndCalculateNormals(indices, twoSided);
         }
 
         /// <summary>
         /// Adds the given polygon using the cutting ears algorythm for triangulation.
         /// </summary>
         /// <param name="indices">The indices of the polygon's edges.</param>
-        public void AddPolygonByCuttingEarsAndCalculateNormals(IEnumerable<int> indices)
+        /// <param name="twoSided">The indiexes for front- and backside?</param>
+        public void AddPolygonByCuttingEarsAndCalculateNormals(IEnumerable<int> indices, bool twoSided)
         {
             //Add the triangles using cutting ears algorithm
-            IEnumerable<int> addedIndices = AddPolygonByCuttingEarsInternal(new List<int>(indices));
+            IEnumerable<int> addedIndices = AddPolygonByCuttingEarsInternal(new List<int>(indices), twoSided);
 
             //Calculate all normals
             IEnumerator<int> indexEnumerator = addedIndices.GetEnumerator();
@@ -456,13 +459,13 @@ namespace SeeingSharp.Multimedia.Objects
             return null;
         }
 
-        private IEnumerable<int> AddPolygonByCuttingEarsInternal(IList<int> vertexIndices)
+        private IEnumerable<int> AddPolygonByCuttingEarsInternal(IList<int> vertexIndices, bool twoSided)
         {
             //Get all coordinates
             Vector3[] coordinates = new Vector3[vertexIndices.Count];
             for (int loop = 0; loop < vertexIndices.Count; loop++)
             {
-                coordinates[loop] = m_owner.VerticesInternal[loop].Position;
+                coordinates[loop] = m_owner.VerticesInternal[vertexIndices[loop]].Position;
             }
 
             //Triangulate all data
@@ -481,8 +484,12 @@ namespace SeeingSharp.Multimedia.Objects
                 if (indexEnumerator.MoveNext()) { index2 = indexEnumerator.Current; } else { break; }
                 if (indexEnumerator.MoveNext()) { index3 = indexEnumerator.Current; } else { break; }
 
-                this.AddTriangle(index3, index2, index1);
-                this.AddTriangle(index1, index2, index3);
+                this.AddTriangle(vertexIndices[index3], vertexIndices[index2], vertexIndices[index1]);
+                if(twoSided)
+                {
+                    this.AddTriangle(vertexIndices[index1], vertexIndices[index2], vertexIndices[index3]);
+                }
+
             }
 
             //Return found indices

@@ -33,6 +33,7 @@ namespace SeeingSharp.Multimedia.Objects
         {
             this.ResourceCoordinateSystem = CoordinateSystem.LeftHanded_UpY;
             this.ResizeFactor = 1f;
+            this.TwoSidedSurfaces = false;
         }
 
         /// <summary>
@@ -46,6 +47,12 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         public CoordinateSystem ResourceCoordinateSystem
+        {
+            get;
+            set;
+        }
+
+        public bool TwoSidedSurfaces
         {
             get;
             set;

@@ -68,7 +68,7 @@ namespace SeeingSharpModelViewer
             {
                 if(importDialog.ShowDialog(this) == DialogResult.OK)
                 {
-                    await m_sceneManager.ImportFileAsync(importDialog.FileName);
+                    await m_sceneManager.ImportFileAsync(importDialog.FileName, importDialog.ImportOptions);
 
                     await m_panGraphics.RenderLoop.WaitForNextFinishedRenderAsync();
 

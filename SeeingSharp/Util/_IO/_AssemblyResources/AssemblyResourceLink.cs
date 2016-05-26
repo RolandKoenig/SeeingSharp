@@ -85,12 +85,19 @@ namespace SeeingSharp.Util
         /// Gets the resource link for another file within the same assembly and namespace.
         /// </summary>
         /// <param name="fileName">The filename for which to get the link.</param>
-        public AssemblyResourceLink GetForAnotherFile(string fileName)
+        /// <param name="subdirectories">The subdirectory path to the file (optional).</param>
+        public AssemblyResourceLink GetForAnotherFile(string fileName, params string[] subdirectories)
         {
+            string subdirectoryPath = string.Empty;
+            for(int loop=0; loop<subdirectories.Length; loop++)
+            {
+                subdirectoryPath += subdirectories[loop] + ".";
+            }
+
             return new AssemblyResourceLink(
                 m_targetAssembly,
                 m_resourceNamespace,
-                fileName);
+                subdirectoryPath + fileName);
         }
 
         /// <summary>

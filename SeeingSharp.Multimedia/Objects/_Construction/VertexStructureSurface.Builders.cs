@@ -903,7 +903,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Changes the index order of each triangle.
         /// </summary>
-        public void RecorderTriangleIndices()
+        public void ReorderTriangleIndices()
         {
             for (int loop = 2; loop < m_indices.Count; loop += 3)
             {

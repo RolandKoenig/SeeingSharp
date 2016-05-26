@@ -560,6 +560,17 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         /// <summary>
+        /// Changes the index order of each triangle.
+        /// </summary>
+        public void ReorderTriangleIndices()
+        {
+            for(int loop=0; loop<m_surfaces.Count; loop++)
+            {
+                m_surfaces[loop].ReorderTriangleIndices();
+            }
+        }
+
+        /// <summary>
         /// Toggles all vertices and indexes from left to right handed or right to left handed system.
         /// </summary>
         public void ToggleCoordinateSystem()
