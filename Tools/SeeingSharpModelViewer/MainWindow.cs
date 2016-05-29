@@ -24,6 +24,7 @@ using SeeingSharp;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Util;
 using SeeingSharp.View;
 using SeeingSharpModelViewer.Data;
 using SeeingSharpModelViewer.View;
@@ -43,28 +44,76 @@ namespace SeeingSharpModelViewer
     {
         private SceneManager m_sceneManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
         public MainWindow()
         {
             InitializeComponent();
         }
 
-        protected override async void OnLoad(EventArgs e)
+        /// <summary>
+        /// Updates the state of the dialog.
+        /// </summary>
+        private void UpdateDialogState()
+        {
+            // Information about currently opened file
+            DesktopFileSystemResourceLink fileResourceLink = m_sceneManager.CurrentFile as DesktopFileSystemResourceLink;
+            string fileName = string.Empty;
+            if (fileResourceLink != null)
+            {
+                fileName = fileResourceLink.FileName;
+                m_lblCurrentFile.Text = fileName;
+            }
+            else
+            {
+                m_lblCurrentFile.Text = "-";
+            }
+
+            // Title
+            string titleString = $"{SeeingSharpApplication.Current.ProductName} - {SeeingSharpApplication.Current.ProductVersion}";
+            if(!string.IsNullOrEmpty(fileName))
+            {
+                titleString += $" ({fileName})";
+            }
+            this.Text = titleString;
+
+            // Handle import options 
+            m_propertiesImporter.SelectedObject = m_sceneManager.CurrentImportOptions;
+            m_cmdReloadObject.Enabled = m_sceneManager.CurrentImportOptions != null;
+        }
+
+        protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
-            if (SeeingSharpApplication.IsInitialized)
+            if (!SeeingSharpApplication.IsInitialized) { return; }
+
+            // Create main ViewModel
+            m_sceneManager = new SceneManager(m_panGraphics.RenderLoop);
+            m_sceneManager.PropertyChanged += OnSceneManager_PropertyChanged;
+
+            // Update Input/Export formats for file dialog
+            m_dlgOpenFile.Filter =
+                GraphicsCore.Current.ImportersAndExporters.GetOpenFileDialogFilter();
+
+            // Handle device combobox
+            m_cboDevice.Text = GraphicsCore.Current.DefaultDevice.AdapterDescription;
+            foreach (EngineDevice actDevice in GraphicsCore.Current.LoadedDevices)
             {
-                m_sceneManager = new SceneManager(m_panGraphics.RenderLoop);
-                m_sceneManager.PropertyChanged += OnSceneManager_PropertyChanged;
-
-                this.Text = $"{SeeingSharpApplication.Current.ProductName} - {SeeingSharpApplication.Current.ProductVersion}";
-
-                m_dlgOpenFile.Filter =
-                    GraphicsCore.Current.ImportersAndExporters.GetOpenFileDialogFilter();
-
-                await m_panGraphics.RenderLoop.MoveCameraToDefaultLocationAsync(
-                    EngineMath.RAD_45DEG, EngineMath.RAD_45DEG);
+                EngineDevice actDeviceInner = actDevice;
+                m_cboDevice.DropDownItems.Add(
+                    actDevice.AdapterDescription,
+                    null,
+                    (sender, eArgs) =>
+                    {
+                        m_panGraphics.RenderLoop.SetRenderingDevice(actDeviceInner);
+                        m_cboDevice.Text = actDeviceInner.AdapterDescription;
+                    });
             }
+
+            // Peform common updates finally
+            this.UpdateDialogState();
         }
 
         private void OnSceneManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -72,7 +121,8 @@ namespace SeeingSharpModelViewer
             switch(e.PropertyName)
             {
                 case nameof(SceneManager.CurrentImportOptions):
-                    m_propertiesImporter.SelectedObject = m_sceneManager.CurrentImportOptions;
+                case nameof(SceneManager.CurrentFile):
+                    this.UpdateDialogState();
                     break;
             }
         }
@@ -83,16 +133,22 @@ namespace SeeingSharpModelViewer
             {
                 await m_sceneManager.ImportNewFileAsync(m_dlgOpenFile.FileName);
             }
+
+            this.UpdateDialogState();
         }
 
         private async void OnCmdClose_Click(object sender, EventArgs e)
         {
             await m_sceneManager.CloseAsync();
+
+            this.UpdateDialogState();
         }
 
         private async void OnCmdReloadObject_Click(object sender, EventArgs e)
         {
             await m_sceneManager.ReloadCurrentFileAsync();
+
+            this.UpdateDialogState();
         }
     }
 }

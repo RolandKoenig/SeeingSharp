@@ -117,6 +117,7 @@
     <Resource Include="Assets\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Icons\Adapter16x16.png" />
     <Content Include="Assets\Icons\Close16x16.png" />
     <Content Include="Assets\Icons\Save16x16.png" />
     <Content Include="Assets\Icons\Open16x16.png" />

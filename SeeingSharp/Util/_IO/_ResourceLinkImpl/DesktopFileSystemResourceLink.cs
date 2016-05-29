@@ -130,6 +130,11 @@ namespace SeeingSharp.Util
             get { return m_filePath; }
         }
 
+        public string FileName
+        {
+            get { return Path.GetFileName(m_filePath); }
+        }
+
         /// <summary>
         /// Are async operations supported on this ResourceLink?
         /// </summary>
