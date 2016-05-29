@@ -31,19 +31,23 @@ using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
+using SeeingSharp;
 
 namespace SeeingSharpModelViewer.Data
 {
-    public class SceneManager
+    /// <summary>
+    /// The SceneManger acts as the ViewModel and therefore contains all logic
+    /// relevant for the ModelViewer application.
+    /// </summary>
+    public class SceneManager : ViewModelBase
     {
         #region main references
-        private Scene m_scene;
-        private Camera3DBase m_camera;
+        private RenderLoop m_renderLoop;
         #endregion main references
 
         #region Loaded data
-        //private ResourceLink m_currentFile;
-        //private ImportedModelContainer m_currentFileContent;
+        private ResourceLink m_currentFile;
+        private ImportOptions m_currentImportOptions;
         #endregion Loaded data
 
         /// <summary>
@@ -51,26 +55,65 @@ namespace SeeingSharpModelViewer.Data
         /// </summary>
         /// <param name="scene">The scene.</param>
         /// <param name="camera">The camera.</param>
-        public SceneManager(Scene scene, Camera3DBase camera)
+        public SceneManager(RenderLoop renderLoop)
         {
-            scene.EnsureNotNull(nameof(scene));
-            camera.EnsureNotNull(nameof(camera));
-
-            m_scene = scene;
-            m_camera = camera;
+            m_renderLoop = renderLoop;
 
             InitializeAsync()
                 .FireAndForget();
         }
 
-        public async Task<IEnumerable<SceneObject>> ImportFileAsync(ResourceLink resourceLink, ImportOptions importOptions)
+        private async Task SetInitialCameraPositionAsync()
         {
-            return await m_scene.ImportAsync(resourceLink, importOptions);
+            await m_renderLoop.MoveCameraToDefaultLocationAsync(
+                EngineMath.RAD_45DEG, EngineMath.RAD_45DEG);
         }
 
-        public Task CloseAsync()
+        /// <summary>
+        /// Imports a new file by the given <see cref="ResourceLink"/>.
+        /// </summary>
+        /// <param name="resourceLink">The <see cref="ResourceLink"/> from which to load the resource.</param>
+        public async Task ImportNewFileAsync(ResourceLink resourceLink)
         {
-            return m_scene.ManipulateSceneAsync(manipulator => manipulator.ClearLayer(Scene.DEFAULT_LAYER_NAME));
+            m_currentFile = resourceLink;
+            m_currentImportOptions = GraphicsCore.Current.ImportersAndExporters.CreateImportOptions(m_currentFile);
+            base.RaisePropertyChanged(nameof(CurrentFile));
+            base.RaisePropertyChanged(nameof(CurrentImportOptions));
+
+            await m_renderLoop.Scene.ImportAsync(m_currentFile, m_currentImportOptions);
+
+            await m_renderLoop.WaitForNextFinishedRenderAsync();
+
+            await SetInitialCameraPositionAsync();
+        }
+
+        public async Task ReloadCurrentFileAsync()
+        {
+            m_currentFile.EnsureNotNull(nameof(m_currentFile));
+            m_currentImportOptions.EnsureNotNull(nameof(m_currentImportOptions));
+
+            await CloseAsync(
+                clearCurrentFileInfo: false);
+
+            await m_renderLoop.Scene.ImportAsync(m_currentFile, m_currentImportOptions);
+
+            await m_renderLoop.WaitForNextFinishedRenderAsync();
+
+            await SetInitialCameraPositionAsync();
+
+        }
+
+        public async Task CloseAsync(bool clearCurrentFileInfo = true)
+        {
+            await m_renderLoop.Scene.ManipulateSceneAsync(manipulator => manipulator.ClearLayer(Scene.DEFAULT_LAYER_NAME));
+
+            if(clearCurrentFileInfo)
+            {
+                m_currentFile = null;
+                m_currentImportOptions = null;
+                RaisePropertyChanged(nameof(CurrentFile));
+                RaisePropertyChanged(nameof(ImportOptions));
+            }
         }
 
         /// <summary>
@@ -78,19 +121,47 @@ namespace SeeingSharpModelViewer.Data
         /// </summary>
         private async Task InitializeAsync()
         {
-            await m_scene.ManipulateSceneAsync((manipulator) =>
+            await m_renderLoop.Scene.ManipulateSceneAsync((manipulator) =>
             {
+                SceneLayer bgImageLayer = manipulator.AddLayer("BACKGROUND_FLAT");
                 SceneLayer bgLayer = manipulator.AddLayer("BACKGROUND");
-                manipulator.SetLayerOrderID(bgLayer, 0);
-                manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 1);
+                manipulator.SetLayerOrderID(bgImageLayer, 0);
+                manipulator.SetLayerOrderID(bgLayer, 1);
+                manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 2);
 
-                ResourceLink sourceWallTexture = new AssemblyResourceUriBuilder(
+                // Define background texture
+                ResourceLink linkBackgroundTexture = new AssemblyResourceUriBuilder(
                     "SeeingSharpModelViewer", true,
                     "Assets/Textures/Background.dds");
+                NamedOrGenericKey resBackgroundTexture = manipulator.AddTexture(linkBackgroundTexture);
+                manipulator.Add(new TexturePainter(resBackgroundTexture), bgImageLayer.Name);
 
-                var resBackgroundTexture = manipulator.AddTexture(sourceWallTexture);
-                manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
+                // Define ground
+                Grid3DType objTypeGrid = new Grid3DType();
+                objTypeGrid.TilesX = 64;
+                objTypeGrid.TilesZ = 64;
+                objTypeGrid.TileWidth = 0.25f;
+                objTypeGrid.GroupTileCount = 4;
+                objTypeGrid.GenerateGround = false;
+
+                NamedOrGenericKey resGridGeometry = manipulator.AddGeometry(objTypeGrid);
+                manipulator.Add(new GenericObject(resGridGeometry), "BACKGROUND");
             });
+
+            await m_renderLoop.WaitForNextFinishedRenderAsync();
+            await m_renderLoop.WaitForNextFinishedRenderAsync();
+
+            await SetInitialCameraPositionAsync();
+        }
+
+        public ResourceLink CurrentFile
+        {
+            get { return m_currentFile; }
+        }
+
+        public ImportOptions CurrentImportOptions
+        {
+            get { return m_currentImportOptions; }
         }
     }
 }

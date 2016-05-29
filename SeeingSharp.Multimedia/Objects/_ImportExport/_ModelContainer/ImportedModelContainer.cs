@@ -139,7 +139,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public bool ChangeTriangleOrder
         {
-            get { return m_importOptions.ChangeTriangleOrder; }
+            get { return m_importOptions.IsChangeTriangleOrderNeeded(); }
         }
 
         /// <summary>

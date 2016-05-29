@@ -28,16 +28,10 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Objects
 {
-    public class ObjImportOptions : ImportOptions
+    public enum ACImportMode
     {
-        /// <summary>
-        /// For some files we have a separate subfolder for textures.
-        /// This would be the name of this subfolder. If none, then set this property to empty (default).
-        /// </summary>
-        public string TextureSubfolderName
-        {
-            get;
-            set;
-        }
+        Default,
+
+        FlatternHierarchy
     }
 }

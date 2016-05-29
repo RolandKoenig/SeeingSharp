@@ -326,6 +326,7 @@
     <Compile Include="Input\_States\_Enum.cs" />
     <Compile Include="Objects\_Construction\VertexStructureSurface.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_AC\_Misc.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjFileReader.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjImportOptions.cs" />

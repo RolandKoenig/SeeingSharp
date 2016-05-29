@@ -66,8 +66,31 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         /// <summary>
+        /// Should triangle order be changes by the import logic?
+        /// </summary>
+        public bool IsChangeTriangleOrderNeeded()
+        {
+            switch (this.ResourceCoordinateSystem)
+            {
+                case CoordinateSystem.LeftHanded_UpY:
+                case CoordinateSystem.RightHanded_UpZ:
+                    return false;
+
+                case CoordinateSystem.LeftHanded_UpZ:
+                case CoordinateSystem.RightHanded_UpY:
+                    return true;
+
+                default:
+                    throw new SeeingSharpGraphicsException(string.Format(
+                        "Unknown coordinate system {0}!",
+                        this.ResourceCoordinateSystem));
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the resize factor.
         /// This is needed to transform coordinate from one measure unit to another.
+        /// Default is 1.
         /// </summary>
         public float ResizeFactor
         {
@@ -75,42 +98,25 @@ namespace SeeingSharp.Multimedia.Objects
             set;
         }
 
+        /// <summary>
+        /// The resource may have a different coordinate system.
+        /// This property ensures that the coordinate system is mapped correctly to the one that 
+        /// Seeing# uses. Default is LeftHanded_UpY.
+        /// </summary>
         public CoordinateSystem ResourceCoordinateSystem
         {
             get;
             set;
         }
 
+        /// <summary>
+        /// Needed some times. This generates a front and a back side for each loaded surface.
+        /// Default is false.
+        /// </summary>
         public bool TwoSidedSurfaces
         {
             get;
             set;
         }
-
-        /// <summary>
-        /// Should triangle order be changes by the import logic?
-        /// </summary>
-        public bool ChangeTriangleOrder
-        {
-            get
-            {
-                switch (this.ResourceCoordinateSystem)
-                {
-                    case CoordinateSystem.LeftHanded_UpY:
-                    case CoordinateSystem.RightHanded_UpZ:
-                        return false;
-
-                    case CoordinateSystem.LeftHanded_UpZ:
-                    case CoordinateSystem.RightHanded_UpY:
-                        return true;
-
-                    default:
-                        throw new SeeingSharpGraphicsException(string.Format(
-                            "Unknown coordinate system {0}!",
-                            this.ResourceCoordinateSystem));
-                }
-            }
-        }
-
     }
 }

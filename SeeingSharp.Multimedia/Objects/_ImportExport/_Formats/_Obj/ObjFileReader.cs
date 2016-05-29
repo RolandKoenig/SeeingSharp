@@ -103,6 +103,10 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public void GenerateObjects()
         {
+            // For some files we have a separate subfolder for textures
+            string[] textureSubfolderPath =
+                string.IsNullOrEmpty(m_importOptions.TextureSubfolderName) ? new string[0] : new string[1] { m_importOptions.TextureSubfolderName };
+
             // Define all material resources which where defined in the material file
             foreach (VertexStructureSurface actSurface in m_targetVertexStructure.Surfaces)
             {
@@ -115,7 +119,7 @@ namespace SeeingSharp.Multimedia.Objects
                     m_targetContainer.ImportedResources.Add(
                         new ImportedResourceInfo(
                             textureKey,
-                            () => new StandardTextureResource(m_resource.GetForAnotherFile(actTextureName))));
+                            () => new StandardTextureResource(m_resource.GetForAnotherFile(actTextureName, textureSubfolderPath))));
                 }
                 actSurface.TextureKey = textureKey;
 
@@ -234,9 +238,9 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             // Reorders all triangle indices when necessary
-            if(m_importOptions.ChangeTriangleOrder)
+            if(m_importOptions.IsChangeTriangleOrderNeeded())
             {
-                m_targetVertexStructure.ReorderTriangleIndices();
+                m_targetVertexStructure.ToggleTriangleIndexOrder();
             }
         }
 

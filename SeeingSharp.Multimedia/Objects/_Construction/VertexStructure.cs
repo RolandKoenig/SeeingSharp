@@ -562,11 +562,11 @@ namespace SeeingSharp.Multimedia.Objects
         /// <summary>
         /// Changes the index order of each triangle.
         /// </summary>
-        public void ReorderTriangleIndices()
+        public void ToggleTriangleIndexOrder()
         {
             for(int loop=0; loop<m_surfaces.Count; loop++)
             {
-                m_surfaces[loop].ReorderTriangleIndices();
+                m_surfaces[loop].ToggleTriangleIndexOrder();
             }
         }
 

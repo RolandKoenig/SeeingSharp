@@ -23,6 +23,7 @@
 using SeeingSharp;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.View;
 using SeeingSharpModelViewer.Data;
 using SeeingSharpModelViewer.View;
@@ -47,40 +48,51 @@ namespace SeeingSharpModelViewer
             InitializeComponent();
         }
 
-        protected override void OnLoad(EventArgs e)
+        protected override async void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
 
             if (SeeingSharpApplication.IsInitialized)
             {
-                m_sceneManager = new SceneManager(m_panGraphics.Scene, m_panGraphics.Camera);
+                m_sceneManager = new SceneManager(m_panGraphics.RenderLoop);
+                m_sceneManager.PropertyChanged += OnSceneManager_PropertyChanged;
 
                 this.Text = $"{SeeingSharpApplication.Current.ProductName} - {SeeingSharpApplication.Current.ProductVersion}";
 
                 m_dlgOpenFile.Filter =
                     GraphicsCore.Current.ImportersAndExporters.GetOpenFileDialogFilter();
+
+                await m_panGraphics.RenderLoop.MoveCameraToDefaultLocationAsync(
+                    EngineMath.RAD_45DEG, EngineMath.RAD_45DEG);
+            }
+        }
+
+        private void OnSceneManager_PropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            switch(e.PropertyName)
+            {
+                case nameof(SceneManager.CurrentImportOptions):
+                    m_propertiesImporter.SelectedObject = m_sceneManager.CurrentImportOptions;
+                    break;
             }
         }
 
         private async void OnCmdOpen_Click(object sender, EventArgs e)
         {
-            using (ImportDialog importDialog = new ImportDialog())
+            if (m_dlgOpenFile.ShowDialog(this) == DialogResult.OK)
             {
-                if(importDialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    await m_sceneManager.ImportFileAsync(importDialog.FileName, importDialog.ImportOptions);
-
-                    await m_panGraphics.RenderLoop.WaitForNextFinishedRenderAsync();
-
-                    await m_panGraphics.RenderLoop.MoveCameraToDefaultLocationAsync(
-                        EngineMath.RAD_45DEG, EngineMath.RAD_45DEG);
-                }
+                await m_sceneManager.ImportNewFileAsync(m_dlgOpenFile.FileName);
             }
         }
 
         private async void OnCmdClose_Click(object sender, EventArgs e)
         {
             await m_sceneManager.CloseAsync();
+        }
+
+        private async void OnCmdReloadObject_Click(object sender, EventArgs e)
+        {
+            await m_sceneManager.ReloadCurrentFileAsync();
         }
     }
 }

@@ -279,7 +279,7 @@ namespace SeeingSharp.Multimedia.Objects
                     break;
 
                 case 3:
-                    if (importOptions.ChangeTriangleOrder)
+                    if (importOptions.IsChangeTriangleOrderNeeded())
                     {
                         targetSurfae.AddTriangle(
                             new Vertex(m_cachedPoints[2], Color4.Transparent, Vector2.Zero, normal),
@@ -297,7 +297,7 @@ namespace SeeingSharp.Multimedia.Objects
 
                 default:
                     int[] indices = new int[pointCount];
-                    if (importOptions.ChangeTriangleOrder)
+                    if (importOptions.IsChangeTriangleOrderNeeded())
                     {
                         for (int loop = pointCount - 1; loop > -1; loop--)
                         {
@@ -375,7 +375,7 @@ namespace SeeingSharp.Multimedia.Objects
             }
 
             VertexStructureSurface targetSurface = vertexStructure.FirstSurface;
-            if (importOptions.ChangeTriangleOrder)
+            if (importOptions.IsChangeTriangleOrderNeeded())
             {
                 targetSurface.AddTriangle(
                     new Vertex(v3, currentColor, Vector2.Zero, normal),
