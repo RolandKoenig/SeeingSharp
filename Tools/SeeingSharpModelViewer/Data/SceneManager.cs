@@ -140,6 +140,7 @@ namespace SeeingSharpModelViewer.Data
                 Grid3DType objTypeGrid = new Grid3DType();
                 objTypeGrid.TilesX = 64;
                 objTypeGrid.TilesZ = 64;
+                objTypeGrid.HighlightXZLines = true;
                 objTypeGrid.TileWidth = 0.25f;
                 objTypeGrid.GroupTileCount = 4;
                 objTypeGrid.GenerateGround = false;

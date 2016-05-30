@@ -25,6 +25,7 @@ using System.Numerics;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp;
 using SeeingSharp.Util;
+using System;
 
 namespace SeeingSharp.Multimedia.Objects
 {
@@ -42,9 +43,14 @@ namespace SeeingSharp.Multimedia.Objects
             this.TilesX = 10;
             this.TilesZ = 10;
             this.GroupTileCount = 5;
+            this.BuildBackFaces = true;
 
-            this.GroundColor = Color.LightSteelBlue;
-            this.LineColor = Color.DarkBlue;
+            this.HighlightXZLines = false;
+            this.ZLineHighlightColor = Color4.BlueColor;
+            this.XLineHighlightColor = Color4.GreenColor;
+
+            this.GroundColor = Color4.LightSteelBlue;
+            this.LineColor = Color4.LightGray; //Color.DarkBlue;
         }
 
         /// <summary>
@@ -65,6 +71,9 @@ namespace SeeingSharp.Multimedia.Objects
             float fieldDepth = tileWidthZ * TilesZ;
             float fieldWidthHalf = fieldWidth / 2f;
             float fieldDepthHalf = fieldDepth / 2f;
+
+            int tileMiddleX = (TilesX % 2 == 0) && (this.HighlightXZLines) ? this.TilesX / 2 : 1;
+            int tileMiddleZ = (TilesZ % 2 == 0) && (this.HighlightXZLines) ? this.TilesZ / 2 : 1;
 
             // Define lower ground structure
             if (this.GenerateGround)
@@ -89,6 +98,12 @@ namespace SeeingSharp.Multimedia.Objects
                 Vector3 localStart = firstCoordinate + new Vector3(actTileX * tileWidthX, 0f, 0f);
                 Vector3 localEnd = localStart + new Vector3(0f, 0f, tileWidthZ * TilesZ);
 
+                Color4 actLineColor = this.LineColor;
+                if (this.HighlightXZLines && (actTileX == tileMiddleX))
+                {
+                    actLineColor = this.XLineHighlightColor;
+                }
+
                 VertexStructureSurface targetStruture = actTileX % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
                 float devider = actTileX % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
                 targetStruture.BuildRect4V(
@@ -96,12 +111,27 @@ namespace SeeingSharp.Multimedia.Objects
                     localStart + new Vector3(tileWidthX / devider, 0f, 0f),
                     localEnd + new Vector3(tileWidthX / devider, 0f, 0f),
                     localEnd - new Vector3(tileWidthX / devider, 0f, 0f),
-                    this.LineColor);
+                    actLineColor);
+                if(this.BuildBackFaces)
+                {
+                    targetStruture.BuildRect4V(
+                        localEnd - new Vector3(tileWidthX / devider, 0f, 0f),
+                        localEnd + new Vector3(tileWidthX / devider, 0f, 0f),
+                        localStart + new Vector3(tileWidthX / devider, 0f, 0f),
+                        localStart - new Vector3(tileWidthX / devider, 0f, 0f),
+                        actLineColor);
+                }
             }
             for (int actTileZ = 0; actTileZ < TilesZ + 1; actTileZ++)
             {
                 Vector3 localStart = firstCoordinate + new Vector3(0f, 0f, actTileZ * tileWidthZ);
                 Vector3 localEnd = localStart + new Vector3(tileWidthX * TilesX, 0f, 0f);
+
+                Color4 actLineColor = this.LineColor;
+                if (this.HighlightXZLines && (actTileZ == tileMiddleZ))
+                {
+                    actLineColor = this.ZLineHighlightColor;
+                }
 
                 VertexStructureSurface targetStruture = actTileZ % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
                 float devider = actTileZ % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
@@ -110,7 +140,16 @@ namespace SeeingSharp.Multimedia.Objects
                     localStart - new Vector3(0f, 0f, tileWidthZ / devider),
                     localEnd - new Vector3(0f, 0f, tileWidthZ / devider),
                     localEnd + new Vector3(0f, 0f, tileWidthZ / devider),
-                    this.LineColor);
+                    actLineColor);
+                if(this.BuildBackFaces)
+                {
+                    targetStruture.BuildRect4V(
+                        localEnd + new Vector3(0f, 0f, tileWidthZ / devider),
+                        localEnd - new Vector3(0f, 0f, tileWidthZ / devider),
+                        localStart - new Vector3(0f, 0f, tileWidthZ / devider),
+                        localStart + new Vector3(0f, 0f, tileWidthZ / devider),
+                        actLineColor);
+                }
             }
             genStructureDefaultLine.Material = this.LineMaterial;
             genStructureGroupLine.Material = this.LineMaterial;
@@ -152,6 +191,30 @@ namespace SeeingSharp.Multimedia.Objects
         }
 
         public Color4 GroundColor
+        {
+            get;
+            set;
+        }
+
+        public bool HighlightXZLines
+        {
+            get;
+            set;
+        }
+
+        public Color4 XLineHighlightColor
+        {
+            get;
+            set;
+        }
+
+        public Color4 ZLineHighlightColor
+        {
+            get;
+            set;
+        }
+
+        public bool BuildBackFaces
         {
             get;
             set;
