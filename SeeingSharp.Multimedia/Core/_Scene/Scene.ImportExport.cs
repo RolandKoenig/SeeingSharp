@@ -22,6 +22,7 @@
 #endregion
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
+using SeeingSharp.Checking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +33,42 @@ namespace SeeingSharp.Multimedia.Core
 {
     public partial class Scene
     {
+        public async Task<ExportModelContainer> PrepareForExportAsync(
+            IEnumerable<SceneObject> objectsToExport,
+            ExportOptions exportOptions)
+        {
+            objectsToExport.EnsureNotNull(nameof(objectsToExport));
+            objectsToExport.EnsureMoreThanZeroElements(nameof(objectsToExport));
+            objectsToExport.EnsureObjectOfScene(this, nameof(objectsToExport));
+
+            // Create result object container
+            ExportModelContainer result = new ExportModelContainer();
+            
+            // Fill export container beside rendering
+            //  (there it is ensured that no one changes the scene)
+            await this.PerformBesideRenderingAsync(() =>
+            {
+                // First step: Register all objects which we want to export
+                foreach (SceneObject actObject in objectsToExport)
+                {
+                    if (!actObject.IsExportable) { continue; }
+
+                    result.RegisterOriginalObject(actObject);
+                }
+
+                // Second step: Store all needed data into the container
+                foreach(SceneObject actObject in objectsToExport)
+                {
+                    if (!actObject.IsExportable) { continue; }
+
+                    actObject.PrepareForExport(result, exportOptions);
+                }
+            });
+
+            // Return the container
+            return result;
+        }
+
         /// <summary>
         /// Imports all objects from the given source.
         /// </summary>

@@ -20,10 +20,34 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace SeeingSharp.Multimedia.Objects
 {
-    public abstract class ExportOptions
+    public class ExportGeometryInfo
     {
+        private NamedOrGenericKey m_key;
+        private ObjectType m_objectType;
 
+        public ExportGeometryInfo(NamedOrGenericKey key, ObjectType objType)
+        {
+            m_key = key;
+            m_objectType = objType;
+        }
+
+        public NamedOrGenericKey Key
+        {
+            get { return m_key; }
+        }
+
+        public ObjectType ObjectType
+        {
+            get { return m_objectType; }
+        }
     }
 }

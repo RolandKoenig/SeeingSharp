@@ -271,6 +271,9 @@
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportGeometryInfo.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportMaterialInfo.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportModelContainer.cs" />
     <Compile Include="Objects\_ObjectTypes\CubeType.cs" />
     <Compile Include="PlayingSound\CachedSoundFile.cs" />
     <Compile Include="PlayingSound\SoundManager.cs" />
@@ -347,6 +350,7 @@
     <Compile Include="_Native.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.Rendering.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.Multimedia.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Scene.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
     <Compile Include="_Translatables.cs" />
   </ItemGroup>

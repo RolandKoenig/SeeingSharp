@@ -82,14 +82,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
 
             for (int loop = 0; loop < m_loadedStructures.Length; loop++)
             {
-                foreach (VertexStructure actLoadedStructure in m_loadedStructures[loop].VertexStructures)
+                VertexStructure actLoadedStructure = m_loadedStructures[loop].VertexStructure;
+
+                float currentDistance = float.NaN;
+                if (actLoadedStructure.Intersects(pickingRay, pickingOptions, out currentDistance))
                 {
-                    float currentDistance = float.NaN;
-                    if (actLoadedStructure.Intersects(pickingRay, pickingOptions, out currentDistance))
-                    {
-                        result = true;
-                        if (currentDistance < distance) { distance = currentDistance; }
-                    }
+                    result = true;
+                    if (currentDistance < distance) { distance = currentDistance; }
                 }
             }
 
@@ -363,7 +362,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                         newStructureInfo.VertexBufferID = vertexBufferID;
                         newStructureInfo.IndexBufferID = indexBufferID;
                         newStructureInfo.SizePerVertex = StandardVertex.Size;
-                        newStructureInfo.VertexStructures = new VertexStructure[] { actStructure };
+                        newStructureInfo.VertexStructure = actStructure;
                         newStructureInfo.IndexCount = indexArray.Length;
                         newStructureInfo.StartIndex = actIndexCount - indexArray.Length;
                         newStructureInfo.Material = actMaterialResource;
@@ -415,7 +414,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             public int VertexBufferID;
             public int IndexBufferID;
-            public VertexStructure[] VertexStructures;
+            public VertexStructure VertexStructure;
             public D3D11.Buffer VertexBuffer;
             public D3D11.Buffer IndexBuffer;
             public int SizePerVertex;

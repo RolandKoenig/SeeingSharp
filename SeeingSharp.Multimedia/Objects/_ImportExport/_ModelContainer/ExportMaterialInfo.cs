@@ -25,34 +25,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Multimedia.Core;
 
 namespace SeeingSharp.Multimedia.Objects
 {
-    public class ImportedObjectInfo
+    public class ExportMaterialInfo
     {
-        /// <summary>
-        /// Prevents a default instance of the <see cref="ImportedObjectInfo"/> class from being created.
-        /// </summary>
-        public ImportedObjectInfo(SceneObject sceneObject, BoundingBox boundingBox)
-        {
-            this.SceneObject = sceneObject;
-            this.BoundingBox = boundingBox;
-        }
-
-        public SceneObject SceneObject
-        {
-            get;
-            private set;
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public BoundingBox BoundingBox
-        {
-            get;
-            private set;
-        }
     }
 }

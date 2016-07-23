@@ -29,6 +29,7 @@ using System.Threading;
 using SeeingSharp.Checking;
 using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Input;
+using SeeingSharp.Multimedia.Objects;
 
 namespace SeeingSharp.Multimedia.Core
 {
@@ -81,6 +82,16 @@ namespace SeeingSharp.Multimedia.Core
 
             this.TransormationChanged = true;
             this.IsPickingTestVisible = true;
+        }
+
+        /// <summary>
+        /// This methode stores all data related to this object into the given <see cref="ExportModelContainer"/>.
+        /// </summary>
+        /// <param name="modelContainer">The target container.</param>
+        /// <param name="exportOptions">Options for export.</param>
+        internal void PrepareForExport(ExportModelContainer modelContainer, ExportOptions exportOptions)
+        {
+            this.PrepareForExportInternal(modelContainer, exportOptions);
         }
 
         /// <summary>
@@ -516,6 +527,18 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// This methode stores all data related to this object into the given <see cref="ExportModelContainer"/>.
+        /// </summary>
+        /// <param name="modelContainer">The target container.</param>
+        /// <param name="exportOptions">Options for export.</param>
+        protected virtual void PrepareForExportInternal(
+            ExportModelContainer modelContainer, 
+            ExportOptions exportOptions)
+        {
+
+        }
+
+        /// <summary>
         /// Are resources loaded for the given device?
         /// </summary>
         public abstract bool IsLoaded(EngineDevice device);
@@ -665,6 +688,14 @@ namespace SeeingSharp.Multimedia.Core
         public int CountChildren
         {
             get { return m_children.Count; }
+        }
+
+        /// <summary>
+        /// Is it possible to export this object?
+        /// </summary>
+        public virtual bool IsExportable
+        {
+            get;
         }
     }
 }
