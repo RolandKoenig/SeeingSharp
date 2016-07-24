@@ -21,6 +21,7 @@
 */
 #endregion
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Objects;
 
 //Some namespace mappings
 using D3D11 = SharpDX.Direct3D11;
@@ -35,6 +36,14 @@ namespace SeeingSharp.Multimedia.Drawing3D
         public MaterialResource()
         {
 
+        }
+
+        /// <summary>
+        /// Stores all required data into a new <see cref="ExportMaterialInfo"/>. 
+        /// </summary>
+        public virtual ExportMaterialInfo PrepareForExport()
+        {
+            return null;
         }
 
         /// <summary>
@@ -58,5 +67,10 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// <param name="inputElements">An array of InputElements describing vertex input structure.</param>
         /// <param name="instancingMode">Instancing mode for which to generate the input layout for.</param>
         internal abstract D3D11.InputLayout GenerateInputLayout(EngineDevice device, D3D11.InputElement[] inputElements, MaterialApplyInstancingMode instancingMode);
+
+        public virtual bool IsExportable
+        {
+            get { return false; }
+        }
     }
 }

@@ -70,6 +70,31 @@ namespace SeeingSharp.Multimedia.Drawing3D
         }
 
         /// <summary>
+        /// Stores all required data into a new <see cref="ExportGeometryInfo"/>. 
+        /// </summary>
+        public ExportGeometryInfo PrepareForExport()
+        {
+            return new ExportGeometryInfo(
+                this.Key,
+                this.ObjectType);
+        }
+
+        /// <summary>
+        /// Gets a collection containing all referenced materials.
+        /// </summary>
+        public IEnumerable<MaterialResource> GetReferencedMaterials()
+        {
+            var loadedStructures = m_loadedStructures;
+            for(int loop=0; loop<loadedStructures.Length; loop++)
+            {
+                var actLoadedStructure = loadedStructures[loop];
+                if(actLoadedStructure == null) { continue; }
+
+                if(actLoadedStructure.Material != null) { yield return actLoadedStructure.Material; }
+            }
+        }
+
+        /// <summary>
         /// Performs an intersection test using given picking ray and picking options.
         /// </summary>
         /// <param name="pickingRay">The given picking ray.</param>
@@ -82,14 +107,13 @@ namespace SeeingSharp.Multimedia.Drawing3D
 
             for (int loop = 0; loop < m_loadedStructures.Length; loop++)
             {
-                foreach (VertexStructure actLoadedStructure in m_loadedStructures[loop].VertexStructures)
+                VertexStructure actLoadedStructure = m_loadedStructures[loop].VertexStructure;
+
+                float currentDistance = float.NaN;
+                if (actLoadedStructure.Intersects(pickingRay, pickingOptions, out currentDistance))
                 {
-                    float currentDistance = float.NaN;
-                    if (actLoadedStructure.Intersects(pickingRay, pickingOptions, out currentDistance))
-                    {
-                        result = true;
-                        if (currentDistance < distance) { distance = currentDistance; }
-                    }
+                    result = true;
+                    if (currentDistance < distance) { distance = currentDistance; }
                 }
             }
 
@@ -363,7 +387,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                         newStructureInfo.VertexBufferID = vertexBufferID;
                         newStructureInfo.IndexBufferID = indexBufferID;
                         newStructureInfo.SizePerVertex = StandardVertex.Size;
-                        newStructureInfo.VertexStructures = new VertexStructure[] { actStructure };
+                        newStructureInfo.VertexStructure = actStructure;
                         newStructureInfo.IndexCount = indexArray.Length;
                         newStructureInfo.StartIndex = actIndexCount - indexArray.Length;
                         newStructureInfo.Material = actMaterialResource;
@@ -415,7 +439,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             public int VertexBufferID;
             public int IndexBufferID;
-            public VertexStructure[] VertexStructures;
+            public VertexStructure VertexStructure;
             public D3D11.Buffer VertexBuffer;
             public D3D11.Buffer IndexBuffer;
             public int SizePerVertex;

@@ -20,39 +20,42 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Multimedia.Core;
 
 namespace SeeingSharp.Multimedia.Objects
 {
-    public class ImportedObjectInfo
+    /// <summary>
+    /// All needed information for exported geometry.
+    /// </summary>
+    public class ExportGeometryInfo
     {
-        /// <summary>
-        /// Prevents a default instance of the <see cref="ImportedObjectInfo"/> class from being created.
-        /// </summary>
-        public ImportedObjectInfo(SceneObject sceneObject, BoundingBox boundingBox)
-        {
-            this.SceneObject = sceneObject;
-            this.BoundingBox = boundingBox;
-        }
-
-        public SceneObject SceneObject
-        {
-            get;
-            private set;
-        }
+        private NamedOrGenericKey m_key;
+        private ObjectType m_objectType;
 
         /// <summary>
-        /// 
+        /// Initializes a new instance of the <see cref="ExportGeometryInfo"/> class.
         /// </summary>
-        public BoundingBox BoundingBox
+        /// <param name="key">The key.</param>
+        /// <param name="objType">Type of the object.</param>
+        public ExportGeometryInfo(NamedOrGenericKey key, ObjectType objType)
         {
-            get;
-            private set;
+            m_key = key;
+            m_objectType = objType;
+        }
+
+        public NamedOrGenericKey Key
+        {
+            get { return m_key; }
+        }
+
+        public ObjectType ObjectType
+        {
+            get { return m_objectType; }
         }
     }
 }

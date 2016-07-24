@@ -333,6 +333,9 @@
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportModelContainer.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportGeometryInfo.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportMaterialInfo.cs" />
     <Compile Include="Objects\_ObjectTypes\CubeType.cs" />
     <Compile Include="Objects\_ObjectTypes\StackedObjectType.cs" />
     <Compile Include="PlayingSound\CachedSoundFile.cs" />
@@ -369,7 +372,6 @@
     <Compile Include="Objects\_ImportExport\IModelImporter.cs" />
     <Compile Include="Objects\_ImportExport\ImportExportHandler.cs" />
     <Compile Include="Objects\_ImportExport\ImportOptions.cs" />
-    <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedObjectInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedResourceInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedModelContainer.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImporter.cs" />
@@ -416,6 +418,7 @@
     </Compile>
     <Compile Include="_OtherNamespaces\Checking\Ensure.Multimedia.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.Rendering.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Scene.cs" />
     <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
     <Compile Include="_Translatables.cs" />
     <SeeingSharp-VertexShader-Min4_0 Include="Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl" />

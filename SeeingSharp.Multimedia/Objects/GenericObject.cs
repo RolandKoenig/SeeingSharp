@@ -21,6 +21,7 @@
 */
 #endregion
 using SeeingSharp;
+using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
@@ -118,6 +119,44 @@ namespace SeeingSharp.Multimedia.Objects
             else
             {
                 return BoundingSphere.Empty;
+            }
+        }
+
+        /// <summary>
+        /// This methode stores all data related to this object into the given <see cref="ExportModelContainer" />.
+        /// </summary>
+        /// <param name="modelContainer">The target container.</param>
+        /// <param name="exportOptions">Options for export.</param>
+        protected override void PrepareForExportInternal(
+            ExportModelContainer modelContainer, ExportOptions exportOptions)
+        {
+            modelContainer.EnsureNotNull(nameof(modelContainer));
+            exportOptions.EnsureNotNull(nameof(exportOptions));
+
+            // Get the device and ensure that we've an instance
+            var exportDevice = exportOptions.ExportDevice;
+            exportOptions.EnsureNotNull(nameof(exportDevice));
+
+            GeometryResource geometryResource = m_localResources[exportDevice.DeviceIndex];
+            if (geometryResource != null)
+            {
+                // Ensure that we have geometry infos for the exporter
+                if(!modelContainer.ContainsExportGeometry(geometryResource.Key))
+                {
+                    modelContainer.AddExportGeometry(geometryResource.PrepareForExport());
+
+                    foreach(MaterialResource actMaterial in geometryResource.GetReferencedMaterials())
+                    {
+                        if(!modelContainer.ContainsExportMaterial(actMaterial.Key))
+                        {
+
+                        }
+                    }
+                }
+                
+
+                //base.UpdateAndApplyRenderParameters(renderState);
+                //geometryResource.Render(renderState);
             }
         }
 
@@ -314,6 +353,11 @@ namespace SeeingSharp.Multimedia.Objects
         public NamedOrGenericKey GeometryResourceKey
         {
             get { return m_resGeometryKey; }
+        }
+
+        public override bool IsExportable
+        {
+            get { return true; }
         }
     }
 }

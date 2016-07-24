@@ -20,29 +20,34 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Checking;
+using SeeingSharp.Util;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Objects
 {
-    public abstract class ExportOptions
+    /// <summary>
+    /// All needed information for exported material.
+    /// </summary>
+    public class ExportMaterialInfo
     {
-        private EngineDevice m_device;
+        private NamedOrGenericKey m_key;
 
-        protected ExportOptions()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExportMaterialInfo"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        public ExportMaterialInfo(NamedOrGenericKey key)
         {
-            m_device = GraphicsCore.Current.DefaultDevice;
-
+            m_key = key;
         }
 
-        public EngineDevice ExportDevice
+        public NamedOrGenericKey Key
         {
-            get { return m_device; }
-            set
-            {
-                value.EnsureNotNull(nameof(value));
-                m_device = value;
-            }
+            get { return m_key; }
         }
     }
 }
