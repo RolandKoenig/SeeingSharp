@@ -20,6 +20,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,7 +29,25 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Objects
 {
+    /// <summary>
+    /// All needed information for exported material.
+    /// </summary>
     public class ExportMaterialInfo
     {
+        private NamedOrGenericKey m_key;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExportMaterialInfo"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        public ExportMaterialInfo(NamedOrGenericKey key)
+        {
+            m_key = key;
+        }
+
+        public NamedOrGenericKey Key
+        {
+            get { return m_key; }
+        }
     }
 }

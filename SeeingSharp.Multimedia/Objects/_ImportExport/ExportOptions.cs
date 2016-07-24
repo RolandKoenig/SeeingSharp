@@ -20,10 +20,29 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Checking;
+
 namespace SeeingSharp.Multimedia.Objects
 {
     public abstract class ExportOptions
     {
+        private EngineDevice m_device;
 
+        protected ExportOptions()
+        {
+            m_device = GraphicsCore.Current.DefaultDevice;
+
+        }
+
+        public EngineDevice ExportDevice
+        {
+            get { return m_device; }
+            set
+            {
+                value.EnsureNotNull(nameof(value));
+                m_device = value;
+            }
+        }
     }
 }

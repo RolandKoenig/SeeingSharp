@@ -27,6 +27,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Util;
 
 namespace SeeingSharp.Multimedia.Objects
 {
@@ -35,19 +36,32 @@ namespace SeeingSharp.Multimedia.Objects
     /// </summary>
     public class ExportModelContainer
     {
-        //private ExportOptions m_exportOptions;
-        //private List<SceneObject> m_objects;
-        //private List<Tuple<SceneObject, SceneObject>> m_parentChildRelationships;
-        //private List<ExportMaterialInfo> m_exportMaterials;
-        //private List<ExportGeometryInfo> m_exportGeometries;
-        private Dictionary<SceneObject, object> m_originalObjects;
+        private Dictionary<NamedOrGenericKey, ExportMaterialInfo> m_dicExportMaterial;
+        private Dictionary<NamedOrGenericKey, ExportGeometryInfo> m_dicExportGeometry;
+        private Dictionary<SceneObject, object> m_dicOriginalObjects;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExportModelContainer"/> class.
         /// </summary>
         internal ExportModelContainer()
         {
-            m_originalObjects = new Dictionary<SceneObject, object>();
+            m_dicExportMaterial = new Dictionary<NamedOrGenericKey, ExportMaterialInfo>();
+            m_dicExportGeometry = new Dictionary<NamedOrGenericKey, ExportGeometryInfo>();
+            m_dicOriginalObjects = new Dictionary<SceneObject, object>();
+        }
+
+        public void AddExportGeometry(ExportGeometryInfo exportGeometry)
+        {
+            exportGeometry.EnsureNotNull(nameof(exportGeometry));
+
+            m_dicExportGeometry[exportGeometry.Key] = exportGeometry;
+        }
+
+        public void AddExportMaterial(ExportMaterialInfo exportMaterial)
+        {
+            exportMaterial.EnsureNotNull(nameof(exportMaterial));
+
+            m_dicExportMaterial[exportMaterial.Key] = exportMaterial;
         }
 
         /// <summary>
@@ -59,7 +73,17 @@ namespace SeeingSharp.Multimedia.Objects
         {
             sceneObject.EnsureNotNull(nameof(sceneObject));
 
-            m_originalObjects[sceneObject] = null;
+            m_dicOriginalObjects[sceneObject] = null;
+        }
+
+        public bool ContainsExportGeometry(NamedOrGenericKey key)
+        {
+            return m_dicExportGeometry.ContainsKey(key);
+        }
+
+        public bool ContainsExportMaterial(NamedOrGenericKey key)
+        {
+            return m_dicExportMaterial.ContainsKey(key);
         }
 
         /// <summary>
@@ -71,7 +95,7 @@ namespace SeeingSharp.Multimedia.Objects
         {
             sceneObject.EnsureNotNull(nameof(sceneObject));
 
-            return m_originalObjects.ContainsKey(sceneObject);
+            return m_dicOriginalObjects.ContainsKey(sceneObject);
         }
     }
 }

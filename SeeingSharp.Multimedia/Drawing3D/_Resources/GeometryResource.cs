@@ -70,6 +70,31 @@ namespace SeeingSharp.Multimedia.Drawing3D
         }
 
         /// <summary>
+        /// Stores all required data into a new <see cref="ExportGeometryInfo"/>. 
+        /// </summary>
+        public ExportGeometryInfo PrepareForExport()
+        {
+            return new ExportGeometryInfo(
+                this.Key,
+                this.ObjectType);
+        }
+
+        /// <summary>
+        /// Gets a collection containing all referenced materials.
+        /// </summary>
+        public IEnumerable<MaterialResource> GetReferencedMaterials()
+        {
+            var loadedStructures = m_loadedStructures;
+            for(int loop=0; loop<loadedStructures.Length; loop++)
+            {
+                var actLoadedStructure = loadedStructures[loop];
+                if(actLoadedStructure == null) { continue; }
+
+                if(actLoadedStructure.Material != null) { yield return actLoadedStructure.Material; }
+            }
+        }
+
+        /// <summary>
         /// Performs an intersection test using given picking ray and picking options.
         /// </summary>
         /// <param name="pickingRay">The given picking ray.</param>

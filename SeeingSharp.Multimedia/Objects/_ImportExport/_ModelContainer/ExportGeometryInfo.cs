@@ -29,11 +29,19 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Multimedia.Objects
 {
+    /// <summary>
+    /// All needed information for exported geometry.
+    /// </summary>
     public class ExportGeometryInfo
     {
         private NamedOrGenericKey m_key;
         private ObjectType m_objectType;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ExportGeometryInfo"/> class.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="objType">Type of the object.</param>
         public ExportGeometryInfo(NamedOrGenericKey key, ObjectType objType)
         {
             m_key = key;

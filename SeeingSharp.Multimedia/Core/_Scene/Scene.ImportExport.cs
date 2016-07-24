@@ -46,7 +46,7 @@ namespace SeeingSharp.Multimedia.Core
             
             // Fill export container beside rendering
             //  (there it is ensured that no one changes the scene)
-            await this.PerformBesideRenderingAsync(() =>
+            await this.PerformBeforeUpdateAsync(() =>
             {
                 // First step: Register all objects which we want to export
                 foreach (SceneObject actObject in objectsToExport)
