@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}"
 EndProject
@@ -73,8 +73,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.PerformanceTest
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UniversalWindowsSampleContainer", "Samples\UniversalWindowsSampleContainer\UniversalWindowsSampleContainer.csproj", "{F68B90F0-B6B8-46F0-9B05-912724AB81F5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKRocket_Desktop", "Games\RKRocket_Desktop\RKRocket_Desktop.csproj", "{4B8EA1D4-0049-45CA-92F0-0030C54A339F}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{ED05ADC3-12B3-4DC5-AB52-041C7C019F53}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Nuget", "Nuget\SeeingSharp.Nuget\SeeingSharp.Nuget.csproj", "{0451BAEF-DF2E-4B98-8644-94EE9415E389}"
@@ -92,9 +90,9 @@ EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{431f8f6a-aa43-4de1-8ec3-744a0396af02}*SharedItemsImports = 4
-		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{a189873d-4436-48e6-8f18-52ea7050daad}*SharedItemsImports = 13
 		Games\RK2048\RK2048.Shared\RK2048.Shared.projitems*{9323afec-02e0-42e0-b502-aa7fc7482c3a}*SharedItemsImports = 4
 		Games\RK2048\RK2048.Shared\RK2048.Shared.projitems*{9c5a4bab-5ea6-4d4b-885a-fe526d3f03f8}*SharedItemsImports = 13
+		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{a189873d-4436-48e6-8f18-52ea7050daad}*SharedItemsImports = 13
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{eddfe984-ea36-456a-9614-722734755ce8}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -417,22 +415,6 @@ Global
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5}.Release|x86.ActiveCfg = Release|x86
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5}.Release|x86.Build.0 = Release|x86
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5}.Release|x86.Deploy.0 = Release|x86
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|ARM.Build.0 = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|x64.Build.0 = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Debug|x86.Build.0 = Debug|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|ARM.ActiveCfg = Release|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|ARM.Build.0 = Release|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|x64.ActiveCfg = Release|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|x64.Build.0 = Release|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|x86.ActiveCfg = Release|Any CPU
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F}.Release|x86.Build.0 = Release|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|ARM.ActiveCfg = Debug|Any CPU
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -549,7 +531,6 @@ Global
 		{9DC59F57-CF54-4565-8CD4-DBDADDA61F41} = {71CD5CB8-3CC8-401A-880D-5CE8E51B9B52}
 		{CA0DBFE2-939E-45AE-9AF2-B048A85BBF50} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{F68B90F0-B6B8-46F0-9B05-912724AB81F5} = {A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}
-		{4B8EA1D4-0049-45CA-92F0-0030C54A339F} = {71CD5CB8-3CC8-401A-880D-5CE8E51B9B52}
 		{0451BAEF-DF2E-4B98-8644-94EE9415E389} = {ED05ADC3-12B3-4DC5-AB52-041C7C019F53}
 		{5C53014A-CC17-415E-93EE-0C2763BFAD58} = {ED05ADC3-12B3-4DC5-AB52-041C7C019F53}
 		{0898C5F2-2F17-4B0A-9C7D-0A0FBD9294F6} = {B0619BB7-B709-4C27-8D6F-1C54090C1320}
