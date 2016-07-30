@@ -43,6 +43,7 @@ namespace SeeingSharpModelViewer
     public partial class MainWindow : SeeingSharpForm
     {
         private SceneManager m_sceneManager;
+        private Task m_loadingTask;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
@@ -78,9 +79,28 @@ namespace SeeingSharpModelViewer
             }
             this.Text = titleString;
 
-            // Handle import options 
+            // Handle import options
             m_propertiesImporter.SelectedObject = m_sceneManager.CurrentImportOptions;
-            m_cmdReloadObject.Enabled = m_sceneManager.CurrentImportOptions != null;
+
+            // Set enables / disables states
+            m_propertiesImporter.Enabled = m_loadingTask == null;
+            m_cmdReloadObject.Enabled = (m_sceneManager.CurrentImportOptions != null) && (m_loadingTask == null);
+            m_cmdOpen.Enabled = m_loadingTask == null;
+            m_cmdClose.Enabled = m_loadingTask == null;
+            m_lblProgress.Visible = m_loadingTask != null;
+            m_barProgress.Visible = m_loadingTask != null;
+        }
+
+        private void HandleLoadingTask(Task loadingTask)
+        {
+            m_loadingTask = loadingTask;
+            m_loadingTask.ContinueWith(
+                (lastTask) =>
+                {
+                    m_loadingTask = null;
+                    this.UpdateDialogState();
+                },
+                TaskScheduler.FromCurrentSynchronizationContext());
         }
 
         protected override void OnLoad(EventArgs e)
@@ -127,26 +147,28 @@ namespace SeeingSharpModelViewer
             }
         }
 
-        private async void OnCmdOpen_Click(object sender, EventArgs e)
+        private void OnCmdOpen_Click(object sender, EventArgs e)
         {
+            if(m_loadingTask != null) { return; }
+
             if (m_dlgOpenFile.ShowDialog(this) == DialogResult.OK)
             {
-                await m_sceneManager.ImportNewFileAsync(m_dlgOpenFile.FileName);
+                this.HandleLoadingTask(m_sceneManager.ImportNewFileAsync(m_dlgOpenFile.FileName));
             }
 
             this.UpdateDialogState();
         }
 
-        private async void OnCmdClose_Click(object sender, EventArgs e)
+        private void OnCmdClose_Click(object sender, EventArgs e)
         {
-            await m_sceneManager.CloseAsync();
+            this.HandleLoadingTask(m_sceneManager.CloseAsync());
 
             this.UpdateDialogState();
         }
 
-        private async void OnCmdReloadObject_Click(object sender, EventArgs e)
+        private void OnCmdReloadObject_Click(object sender, EventArgs e)
         {
-            await m_sceneManager.ReloadCurrentFileAsync();
+            this.HandleLoadingTask(m_sceneManager.ReloadCurrentFileAsync());
 
             this.UpdateDialogState();
         }

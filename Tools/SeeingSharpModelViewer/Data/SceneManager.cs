@@ -100,7 +100,6 @@ namespace SeeingSharpModelViewer.Data
             await m_renderLoop.WaitForNextFinishedRenderAsync();
 
             await SetInitialCameraPositionAsync();
-
         }
 
         public async Task CloseAsync(bool clearCurrentFileInfo = true)

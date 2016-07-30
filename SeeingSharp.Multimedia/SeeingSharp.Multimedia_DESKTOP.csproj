@@ -217,6 +217,8 @@
     <Compile Include="Core\_SceneFilter\SceneObjectFilter.cs" />
     <Compile Include="Core\_SceneFilter\SceneViewboxObjectFilter.cs" />
     <Compile Include="Core\_SceneComponents\SceneComponentBase.cs" />
+    <Compile Include="Core\_SceneInfo\SceneObjectInfo.cs" />
+    <Compile Include="Core\_SceneInfo\_Misc.cs" />
     <Compile Include="Core\_Scene\PickingInformation.cs" />
     <Compile Include="Core\_Scene\Scene.cs" />
     <Compile Include="Core\_Scene\Scene.ImportExport.cs" />
