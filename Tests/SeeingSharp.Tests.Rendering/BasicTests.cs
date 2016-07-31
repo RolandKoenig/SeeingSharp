@@ -34,6 +34,7 @@ using SeeingSharp.Multimedia.Views;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Util;
 using Xunit;
+using SeeingSharp.Multimedia.Objects;
 
 namespace SeeingSharp.Tests.Rendering
 {
@@ -198,6 +199,47 @@ namespace SeeingSharp.Tests.Rendering
 
             Assert.Null(publishException);
             Assert.True(SeeingSharpMessenger.CountGlobalMessengers == 0);
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task Check_SceneInfo_SimpleQuery()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+            {
+                memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                // Get and configure the camera
+                PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
+                camera.Position = new Vector3(0f, 5f, -7f);
+                camera.Target = new Vector3(0f, 0f, 0f);
+                camera.UpdateCamera();
+
+                // Define scene
+                SceneObject rootObject = null;
+                await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    NamedOrGenericKey geoResource = manipulator.AddResource<GeometryResource>(
+                        () => new GeometryResource(new PalletType()));
+
+                    GenericObject newObject = manipulator.AddGeneric(geoResource);
+                    newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
+                    newObject.Scaling = new Vector3(2f, 2f, 2f);
+
+                    rootObject = newObject;
+                });
+
+                SceneObjectInfo objInfo = await memRenderTarget.Scene.GetSceneObjectInfoAsync(rootObject);
+
+                Assert.NotNull(objInfo);
+                Assert.True(objInfo.OriginalObject == rootObject);
+                Assert.True(objInfo.Type == SceneObjectInfoType.GenericObject);
+            }
+
+            // Finishing checks
+            Assert.True(GraphicsCore.Current.MainLoop.RegisteredRenderLoopCount == 0, "RenderLoops where not disposed correctly!");
         }
 
         //*********************************************************************

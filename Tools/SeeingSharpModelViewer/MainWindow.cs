@@ -172,5 +172,21 @@ namespace SeeingSharpModelViewer
 
             this.UpdateDialogState();
         }
+
+        private void OnChkWireFrame_Click(object sender, EventArgs e)
+        {
+            m_panGraphics.RenderLoop.ViewConfiguration.WireframeEnabled =
+                m_toolSeparator_03.Checked;
+
+            this.UpdateDialogState();
+        }
+
+        private async void OnCmdCopyScreenshot_Click(object sender, EventArgs e)
+        {
+            using (Bitmap bitmap = await m_panGraphics.RenderLoop.GetScreenshotGdiAsync())
+            {
+                Clipboard.SetImage(bitmap);
+            }
+        }
     }
 }

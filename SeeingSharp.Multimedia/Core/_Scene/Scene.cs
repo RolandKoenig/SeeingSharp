@@ -168,6 +168,53 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets a full list of <see cref="SceneObjectInfo"/>  objects describing the contents of this scene.
+        /// </summary>
+        /// <param name="layer">Only return objects of this layer (empty means all layers).</param>
+        public async Task<List<SceneObjectInfo>> GetSceneObjectInfoAsync(string layer = "")
+        {
+            List<SceneObjectInfo> result = new List<SceneObjectInfo>(16);
+            await this.PerformBesideRenderingAsync(() =>
+            {
+                foreach(var actLayer in m_sceneLayers)
+                {
+                    // Layer filter
+                    if((!string.IsNullOrEmpty(layer)) &&
+                       (actLayer.Name != layer))
+                    {
+                        continue;
+                    }
+
+                    foreach(var actSceneObject in actLayer.ObjectsInternal)
+                    {
+                        if (actSceneObject.HasChilds) { continue; }
+                        result.Add(new Core.SceneObjectInfo(actSceneObject, buildFullChildTree: true));
+                    }
+                }
+            });
+
+            return result;
+        }
+
+        /// <summary>
+        /// Gets a <see cref="SceneObjectInfo"/>  object describing the given <see cref="SceneObject"/> .
+        /// </summary>
+        /// <param name="sceneObject">The <see cref="SceneObject"/> to describe.</param>
+        public async Task<SceneObjectInfo> GetSceneObjectInfoAsync(SceneObject sceneObject)
+        {
+            sceneObject.EnsureNotNull(nameof(sceneObject));
+            sceneObject.EnsureObjectOfScene(this, nameof(sceneObject));
+
+            SceneObjectInfo result = null;
+            await this.PerformBesideRenderingAsync(() =>
+            {
+                result = new SceneObjectInfo(sceneObject, buildFullChildTree: true);
+            });
+
+            return result;
+        }
+
+        /// <summary>
         /// Waits until the given object is visible.
         /// </summary>
         /// <param name="sceneObjects">The scene objects to check for.</param>

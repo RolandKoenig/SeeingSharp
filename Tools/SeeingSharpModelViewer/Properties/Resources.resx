@@ -133,4 +133,10 @@
   <data name="Icon_Save16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\assets\icons\save16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Icon_Screenshot16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\icons\screenshot16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Icon_Wireframe16x16" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\assets\icons\wireframe16x16.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>

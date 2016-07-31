@@ -34,9 +34,13 @@
             this.m_cmdClose = new System.Windows.Forms.ToolStripButton();
             this.m_toolSeparator_01 = new System.Windows.Forms.ToolStripSeparator();
             this.m_cboDevice = new System.Windows.Forms.ToolStripDropDownButton();
+            this.m_toolSeparator_02 = new System.Windows.Forms.ToolStripSeparator();
+            this.m_toolSeparator_03 = new System.Windows.Forms.ToolStripButton();
             this.m_barStatus = new System.Windows.Forms.StatusStrip();
             this.m_lblCurrentFileDesc = new System.Windows.Forms.ToolStripStatusLabel();
             this.m_lblCurrentFile = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_lblProgress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_barProgress = new System.Windows.Forms.ToolStripProgressBar();
             this.m_dlgOpenFile = new System.Windows.Forms.OpenFileDialog();
             this.m_panGraphics = new SeeingSharp.Multimedia.Views.SeeingSharpRendererControl();
             this.m_camera = new SeeingSharp.Multimedia.Components.FreeMovingCameraComponent();
@@ -45,8 +49,8 @@
             this.m_grpImporter = new System.Windows.Forms.GroupBox();
             this.m_propertiesImporter = new System.Windows.Forms.PropertyGrid();
             this.m_cmdReloadObject = new System.Windows.Forms.Button();
-            this.m_barProgress = new System.Windows.Forms.ToolStripProgressBar();
-            this.m_lblProgress = new System.Windows.Forms.ToolStripStatusLabel();
+            this.m_cmdCopyScreenshot = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).BeginInit();
@@ -65,8 +69,12 @@
             this.m_barTools.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.m_cmdOpen,
             this.m_cmdClose,
+            this.toolStripSeparator1,
+            this.m_cmdCopyScreenshot,
             this.m_toolSeparator_01,
-            this.m_cboDevice});
+            this.m_cboDevice,
+            this.m_toolSeparator_02,
+            this.m_toolSeparator_03});
             this.m_barTools.Location = new System.Drawing.Point(0, 0);
             this.m_barTools.Name = "m_barTools";
             this.m_barTools.Size = new System.Drawing.Size(789, 27);
@@ -106,6 +114,23 @@
             this.m_cboDevice.Size = new System.Drawing.Size(108, 24);
             this.m_cboDevice.Text = "<Device>";
             // 
+            // m_toolSeparator_02
+            // 
+            this.m_toolSeparator_02.Name = "m_toolSeparator_02";
+            this.m_toolSeparator_02.Size = new System.Drawing.Size(6, 27);
+            // 
+            // m_toolSeparator_03
+            // 
+            this.m_toolSeparator_03.CheckOnClick = true;
+            this.m_toolSeparator_03.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.m_toolSeparator_03.Image = global::SeeingSharpModelViewer.Properties.Resources.Icon_Wireframe16x16;
+            this.m_toolSeparator_03.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.m_toolSeparator_03.Name = "m_toolSeparator_03";
+            this.m_toolSeparator_03.Size = new System.Drawing.Size(24, 24);
+            this.m_toolSeparator_03.Text = "toolStripButton1";
+            this.m_toolSeparator_03.ToolTipText = "Enables / disables wireframe rendering";
+            this.m_toolSeparator_03.Click += new System.EventHandler(this.OnChkWireFrame_Click);
+            // 
             // m_barStatus
             // 
             this.m_barStatus.ImageScalingSize = new System.Drawing.Size(20, 20);
@@ -131,6 +156,20 @@
             this.m_lblCurrentFile.Name = "m_lblCurrentFile";
             this.m_lblCurrentFile.Size = new System.Drawing.Size(92, 24);
             this.m_lblCurrentFile.Text = "<FileName>";
+            // 
+            // m_lblProgress
+            // 
+            this.m_lblProgress.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
+            this.m_lblProgress.Name = "m_lblProgress";
+            this.m_lblProgress.Size = new System.Drawing.Size(76, 24);
+            this.m_lblProgress.Text = "Loading...";
+            // 
+            // m_barProgress
+            // 
+            this.m_barProgress.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
+            this.m_barProgress.Name = "m_barProgress";
+            this.m_barProgress.Size = new System.Drawing.Size(100, 23);
+            this.m_barProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
             // 
             // m_panGraphics
             // 
@@ -208,19 +247,20 @@
             this.m_cmdReloadObject.UseVisualStyleBackColor = true;
             this.m_cmdReloadObject.Click += new System.EventHandler(this.OnCmdReloadObject_Click);
             // 
-            // m_barProgress
+            // m_cmdCopyScreenshot
             // 
-            this.m_barProgress.Margin = new System.Windows.Forms.Padding(0, 3, 1, 3);
-            this.m_barProgress.Name = "m_barProgress";
-            this.m_barProgress.Size = new System.Drawing.Size(100, 23);
-            this.m_barProgress.Style = System.Windows.Forms.ProgressBarStyle.Marquee;
+            this.m_cmdCopyScreenshot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.m_cmdCopyScreenshot.Image = global::SeeingSharpModelViewer.Properties.Resources.Icon_Screenshot16x16;
+            this.m_cmdCopyScreenshot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.m_cmdCopyScreenshot.Name = "m_cmdCopyScreenshot";
+            this.m_cmdCopyScreenshot.Size = new System.Drawing.Size(24, 24);
+            this.m_cmdCopyScreenshot.Text = "toolStripButton1";
+            this.m_cmdCopyScreenshot.Click += new System.EventHandler(this.OnCmdCopyScreenshot_Click);
             // 
-            // m_lblProgress
+            // toolStripSeparator1
             // 
-            this.m_lblProgress.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
-            this.m_lblProgress.Name = "m_lblProgress";
-            this.m_lblProgress.Size = new System.Drawing.Size(76, 24);
-            this.m_lblProgress.Text = "Loading...";
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
             // 
             // MainWindow
             // 
@@ -270,6 +310,10 @@
         private System.Windows.Forms.ToolStripDropDownButton m_cboDevice;
         private System.Windows.Forms.ToolStripStatusLabel m_lblProgress;
         private System.Windows.Forms.ToolStripProgressBar m_barProgress;
+        private System.Windows.Forms.ToolStripButton m_toolSeparator_03;
+        private System.Windows.Forms.ToolStripSeparator m_toolSeparator_02;
+        private System.Windows.Forms.ToolStripButton m_cmdCopyScreenshot;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 
