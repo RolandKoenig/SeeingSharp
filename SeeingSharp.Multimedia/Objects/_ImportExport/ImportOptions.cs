@@ -118,5 +118,11 @@ namespace SeeingSharp.Multimedia.Objects
             get;
             set;
         }
+
+        public bool ToggleTriangleIndexOrder
+        {
+            get;
+            set;
+        }
     }
 }

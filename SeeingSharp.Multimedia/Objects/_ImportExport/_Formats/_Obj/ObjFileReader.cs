@@ -107,6 +107,12 @@ namespace SeeingSharp.Multimedia.Objects
             string[] textureSubfolderPath =
                 string.IsNullOrEmpty(m_importOptions.TextureSubfolderName) ? new string[0] : new string[1] { m_importOptions.TextureSubfolderName };
 
+            // Toggle triangle order, when configured
+            if(m_importOptions.ToggleTriangleIndexOrder)
+            {
+                m_targetVertexStructure.ToggleTriangleIndexOrder();
+            }
+
             // Define all material resources which where defined in the material file
             foreach (VertexStructureSurface actSurface in m_targetVertexStructure.Surfaces)
             {
