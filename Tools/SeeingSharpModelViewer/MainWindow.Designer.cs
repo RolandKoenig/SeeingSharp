@@ -32,6 +32,8 @@
             this.m_barTools = new System.Windows.Forms.ToolStrip();
             this.m_cmdOpen = new System.Windows.Forms.ToolStripButton();
             this.m_cmdClose = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.m_cmdCopyScreenshot = new System.Windows.Forms.ToolStripButton();
             this.m_toolSeparator_01 = new System.Windows.Forms.ToolStripSeparator();
             this.m_cboDevice = new System.Windows.Forms.ToolStripDropDownButton();
             this.m_toolSeparator_02 = new System.Windows.Forms.ToolStripSeparator();
@@ -49,13 +51,12 @@
             this.m_grpImporter = new System.Windows.Forms.GroupBox();
             this.m_propertiesImporter = new System.Windows.Forms.PropertyGrid();
             this.m_cmdReloadObject = new System.Windows.Forms.Button();
-            this.m_cmdCopyScreenshot = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.m_chkShowGround = new System.Windows.Forms.ToolStripButton();
+            this.m_toolSeparator_04 = new System.Windows.Forms.ToolStripSeparator();
             this.m_barTools.SuspendLayout();
             this.m_barStatus.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).BeginInit();
             this.m_splitter.Panel1.SuspendLayout();
-            this.m_splitter.Panel2.SuspendLayout();
             this.m_splitter.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.m_splitterLeft)).BeginInit();
             this.m_splitterLeft.Panel1.SuspendLayout();
@@ -74,6 +75,8 @@
             this.m_toolSeparator_01,
             this.m_cboDevice,
             this.m_toolSeparator_02,
+            this.m_chkShowGround,
+            this.m_toolSeparator_04,
             this.m_toolSeparator_03});
             this.m_barTools.Location = new System.Drawing.Point(0, 0);
             this.m_barTools.Name = "m_barTools";
@@ -100,6 +103,21 @@
             this.m_cmdClose.Size = new System.Drawing.Size(24, 24);
             this.m_cmdClose.Text = "Close";
             this.m_cmdClose.Click += new System.EventHandler(this.OnCmdClose_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            // 
+            // m_cmdCopyScreenshot
+            // 
+            this.m_cmdCopyScreenshot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.m_cmdCopyScreenshot.Image = global::SeeingSharpModelViewer.Properties.Resources.Icon_Screenshot16x16;
+            this.m_cmdCopyScreenshot.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.m_cmdCopyScreenshot.Name = "m_cmdCopyScreenshot";
+            this.m_cmdCopyScreenshot.Size = new System.Drawing.Size(24, 24);
+            this.m_cmdCopyScreenshot.Text = "Copy screenshot";
+            this.m_cmdCopyScreenshot.Click += new System.EventHandler(this.OnCmdCopyScreenshot_Click);
             // 
             // m_toolSeparator_01
             // 
@@ -191,9 +209,6 @@
             // m_splitter.Panel1
             // 
             this.m_splitter.Panel1.Controls.Add(this.m_splitterLeft);
-            // 
-            // m_splitter.Panel2
-            // 
             this.m_splitter.Panel2.Controls.Add(this.m_panGraphics);
             this.m_splitter.Size = new System.Drawing.Size(789, 461);
             this.m_splitter.SplitterDistance = 240;
@@ -247,20 +262,23 @@
             this.m_cmdReloadObject.UseVisualStyleBackColor = true;
             this.m_cmdReloadObject.Click += new System.EventHandler(this.OnCmdReloadObject_Click);
             // 
-            // m_cmdCopyScreenshot
+            // m_chkShowGround
             // 
-            this.m_cmdCopyScreenshot.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.m_cmdCopyScreenshot.Image = global::SeeingSharpModelViewer.Properties.Resources.Icon_Screenshot16x16;
-            this.m_cmdCopyScreenshot.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.m_cmdCopyScreenshot.Name = "m_cmdCopyScreenshot";
-            this.m_cmdCopyScreenshot.Size = new System.Drawing.Size(24, 24);
-            this.m_cmdCopyScreenshot.Text = "toolStripButton1";
-            this.m_cmdCopyScreenshot.Click += new System.EventHandler(this.OnCmdCopyScreenshot_Click);
+            this.m_chkShowGround.Checked = true;
+            this.m_chkShowGround.CheckOnClick = true;
+            this.m_chkShowGround.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.m_chkShowGround.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.m_chkShowGround.Image = global::SeeingSharpModelViewer.Properties.Resources.Icon_Floor16x16;
+            this.m_chkShowGround.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.m_chkShowGround.Name = "m_chkShowGround";
+            this.m_chkShowGround.Size = new System.Drawing.Size(24, 24);
+            this.m_chkShowGround.Text = "Show floor";
+            this.m_chkShowGround.CheckedChanged += new System.EventHandler(this.OnChkShowGround_CheckedChanged);
             // 
-            // toolStripSeparator1
+            // m_toolSeparator_04
             // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 27);
+            this.m_toolSeparator_04.Name = "m_toolSeparator_04";
+            this.m_toolSeparator_04.Size = new System.Drawing.Size(6, 27);
             // 
             // MainWindow
             // 
@@ -278,7 +296,6 @@
             this.m_barStatus.ResumeLayout(false);
             this.m_barStatus.PerformLayout();
             this.m_splitter.Panel1.ResumeLayout(false);
-            this.m_splitter.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.m_splitter)).EndInit();
             this.m_splitter.ResumeLayout(false);
             this.m_splitterLeft.Panel1.ResumeLayout(false);
@@ -314,6 +331,8 @@
         private System.Windows.Forms.ToolStripSeparator m_toolSeparator_02;
         private System.Windows.Forms.ToolStripButton m_cmdCopyScreenshot;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.ToolStripButton m_chkShowGround;
+        private System.Windows.Forms.ToolStripSeparator m_toolSeparator_04;
     }
 }
 

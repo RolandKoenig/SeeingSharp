@@ -115,6 +115,17 @@ namespace SeeingSharpModelViewer.Data
             }
         }
 
+        public async Task SetBackgroundVisibility(bool isVisible)
+        {
+            await m_renderLoop.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                var bgLayer = manipulator.TryGetLayer("BACKGROUND");
+                if(bgLayer == null) { return; }
+
+                bgLayer.IsRenderingEnabled = isVisible;
+            });
+        }
+
         /// <summary>
         /// Initializes the scene for this model viewer.
         /// </summary>

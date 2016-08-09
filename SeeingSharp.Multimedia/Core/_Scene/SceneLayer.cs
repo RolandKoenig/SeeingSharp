@@ -74,7 +74,7 @@ namespace SeeingSharp.Multimedia.Core
             m_sceneObjectsForSingleUpdateCall = new Queue<SceneObject>(1024);
 
             this.AllowPick = true;
-
+            this.IsRenderingEnabled = true;
             this.ClearDepthBufferAfterRendering = false;
         }
 
@@ -393,6 +393,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal void Render(RenderState renderState)
         {
+            if (!this.IsRenderingEnabled) { return; }
+
             //Delegate render call to corresponding view subset
             ViewRelatedSceneLayerSubset viewSubset = m_viewSubsets[renderState.ViewIndex];
             if (viewSubset != null)
@@ -470,6 +472,18 @@ namespace SeeingSharp.Multimedia.Core
         /// Gets or sets the resource key of the postprocess effect.
         /// </summary>
         public NamedOrGenericKey PostprocessEffectKey
+        {
+            get;
+            set;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this instance is rendering enabled.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is rendering enabled; otherwise, <c>false</c>.
+        /// </value>
+        public bool IsRenderingEnabled
         {
             get;
             set;

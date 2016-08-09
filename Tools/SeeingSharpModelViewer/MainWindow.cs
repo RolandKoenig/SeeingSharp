@@ -27,7 +27,6 @@ using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
 using SeeingSharp.View;
 using SeeingSharpModelViewer.Data;
-using SeeingSharpModelViewer.View;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -187,6 +186,11 @@ namespace SeeingSharpModelViewer
             {
                 Clipboard.SetImage(bitmap);
             }
+        }
+
+        private async void OnChkShowGround_CheckedChanged(object sender, EventArgs e)
+        {
+            await m_sceneManager.SetBackgroundVisibility(m_chkShowGround.Checked);
         }
     }
 }

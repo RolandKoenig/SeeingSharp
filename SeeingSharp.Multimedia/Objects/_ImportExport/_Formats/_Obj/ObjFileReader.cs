@@ -87,7 +87,6 @@ namespace SeeingSharp.Multimedia.Objects
             m_rawVertices = new List<Vector3>(1024);
             m_rawNormals = new List<Vector3>(1014);
             m_rawTextureCoordinates = new List<Vector2>(1024);
-
             m_targetVertexStructure = new VertexStructure();
 
             // Apply transform matrix in case of a different coordinate system (switched coordinate axes)
