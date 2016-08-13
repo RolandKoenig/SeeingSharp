@@ -393,7 +393,21 @@ namespace SeeingSharp.Multimedia.Views
 
             // Now connect this view with the main renderloop
             m_renderLoop.RegisterRenderLoop();
+
+            // Initialize Wpf performance meausre 
+            //  (first call performs initialization, all following are ignored)
+            GraphicsCore.Current.InitializeWpfRenderPerformanceMeasure();
+
+            //m_refreshTimer = new DispatcherTimer(DispatcherPriority.Render);
+            //m_refreshTimer.Tick += M_refreshTimer_Tick;
+            //m_refreshTimer.Interval = TimeSpan.FromMilliseconds(7.0);
+            //m_refreshTimer.Start();
         }
+
+        //private void M_refreshTimer_Tick(object sender, EventArgs e)
+        //{
+        //    this.InvalidateVisual();
+        //}
 
         /// <summary>
         /// Called when the current session was switched.

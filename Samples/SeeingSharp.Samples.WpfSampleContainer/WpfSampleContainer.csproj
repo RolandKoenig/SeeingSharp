@@ -125,9 +125,13 @@
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="PerformanceMeasureWindow.xaml.cs">
+      <DependentUpon>PerformanceMeasureWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="_Behavior\ApplySampleBehavior.cs" />
     <Compile Include="_Messages\MessageSampleChanged.cs" />
     <Compile Include="_ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="_ViewModel\PerformanceViewModel.cs" />
     <Compile Include="_ViewModel\SampleViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <SubType>Designer</SubType>
@@ -137,6 +141,10 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="PerformanceMeasureWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\StandardResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

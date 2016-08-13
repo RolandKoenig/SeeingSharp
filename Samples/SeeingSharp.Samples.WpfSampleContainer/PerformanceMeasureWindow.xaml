@@ -1,0 +1,22 @@
+﻿<Window x:Class="WpfSampleContainer.PerformanceMeasureWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfSampleContainer"
+        mc:Ignorable="d"
+        Title="Performance Measure" Height="400" Width="500">
+    <Window.DataContext>
+        <local:PerformanceViewModel />
+    </Window.DataContext>
+    
+    <Grid>
+        <DataGrid x:Name="GridPerformance" ItemsSource="{Binding Path=PerformanceData}"
+                  AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Path=CalculatorName}" Header="Name" />
+                <DataGridTextColumn Binding="{Binding Path=SumAverageMS}" Header="Time (ms)" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>

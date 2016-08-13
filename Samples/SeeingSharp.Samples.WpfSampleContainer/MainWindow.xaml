@@ -13,22 +13,30 @@
     <DockPanel LastChildFill="True">
         
         <!-- Define listbox which shows all categories -->
-        <ListBox DockPanel.Dock="Top" 
+        <StackPanel DockPanel.Dock="Top"
+                    Background="#00CCFF" 
+                    Orientation="Horizontal"
+                    Width="NaN" HorizontalAlignment="Stretch">
+            <Button Content="Performance" 
+                    Click="OnCmdPerformance_Click"/>
+            <ListBox 
                  Background="#00CCFF" Foreground="White" FontWeight="Bold" BorderThickness="0"
                  ItemsSource="{Binding Path=Categories}"
                  SelectedItem="{Binding Path=SelectedCategory, Mode=TwoWay}">
-            <ListBox.Resources>
-                <Style TargetType="ListBoxItem">
-                    <Setter Property="Margin" Value="5,2,5,2" />
-                </Style>
-            </ListBox.Resources>
-            
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <WrapPanel />
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-        </ListBox>
+                <ListBox.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Margin" Value="5,2,5,2" />
+                    </Style>
+                </ListBox.Resources>
+
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+            </ListBox>
+        </StackPanel>
+
 
         <Grid Name="MainContentGrid">
             <!-- Define 3D view-->
@@ -40,6 +48,8 @@
 
                 <ssharpMulti:FreeMovingCameraComponent />
             </ssharpMulti:SeeingSharpRendererElement>
+
+            <ssharpMulti:SeeingSharpWpfRenderTriggerElement TriggerIntervalMS="2" />
 
             <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Stretch"
                     Orientation="Horizontal"

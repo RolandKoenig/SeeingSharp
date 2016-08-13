@@ -88,6 +88,13 @@ namespace SeeingSharp.Multimedia.Core
         private SoundManager m_soundManager;
         #endregion
 
+        #region Helper for Wpf performance measure
+#if DESKTOP
+        private IDisposable m_wpfRenderWaiter;
+        private bool m_wpfRenderWaitreCreated;
+#endif
+        #endregion
+
         #region Members for threading
         private static Task m_defaultInitTask;
         private EngineMainLoop m_mainLoop;
@@ -253,6 +260,24 @@ namespace SeeingSharp.Multimedia.Core
 
             return result;
         }
+
+#if DESKTOP
+        /// <summary>
+        /// Initializes performance measure for Wpf render system.
+        /// </summary>
+        internal void InitializeWpfRenderPerformanceMeasure()
+        {
+            if (m_wpfRenderWaitreCreated) { return; }
+
+            m_wpfRenderWaitreCreated = true;
+            System.Windows.Media.CompositionTarget.Rendering += (sender, eArgs) =>
+            {
+                CommonTools.DisposeObject(m_wpfRenderWaiter);
+                m_wpfRenderWaiter = GraphicsCore.Current.PerformanceCalculator.BeginMeasureActivityDuration(
+                    Constants.PERF_WPF_RENDER);
+            };
+        }
+#endif
 
         /// <summary>
         /// Resumes rendering when in supendet state.

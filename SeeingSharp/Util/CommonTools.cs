@@ -166,6 +166,8 @@ namespace SeeingSharp.Util
         /// <param name="delayMilliseconds">Total time for delay.</param>
         public static void MaximumDelay(double delayMilliseconds)
         {
+            if(delayMilliseconds <= 0) { return; }
+
             using(var waitHandle = new System.Threading.ManualResetEvent(false))
             {
                 waitHandle.WaitOne((int)delayMilliseconds);

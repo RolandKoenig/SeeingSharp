@@ -27,5 +27,12 @@ namespace WpfSampleContainer
         {
             InitializeComponent();
         }
+
+        private void OnCmdPerformance_Click(object sender, RoutedEventArgs e)
+        {
+            PerformanceMeasureWindow perfWindow = new PerformanceMeasureWindow();
+            perfWindow.Owner = this;
+            perfWindow.Show();
+        }
     }
 }

@@ -37,7 +37,7 @@ namespace SeeingSharp.Multimedia
 
         #region Rendering constants
         public const double MINIMUM_FRAME_TIME_MS = 1000.0 / 60.0;
-        public const double MINIMUM_DELAY_TIME_MS = 10.0;
+        public const double MINIMUM_DELAY_TIME_MS = 0.0;
         public const int INPUT_FRAMES_PER_SECOND = 60;
         #endregion
 
@@ -47,6 +47,7 @@ namespace SeeingSharp.Multimedia
         #endregion
 
         #region Constants for time duration measuring
+        public const string PERF_WPF_RENDER = "Wpf.CompositionTarget.Render";
         public const string PERF_GLOBAL_PER_FRAME = "Graphics.Global.OneFrame";
         public const string PERF_GLOBAL_WAIT_TIME = "Graphics.Global.WaitTime";
         public const string PERF_GLOBAL_UPDATE_AND_PREPARE = "Graphics.Global.UpdateAndPrepare";
