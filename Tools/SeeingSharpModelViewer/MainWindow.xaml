@@ -3,9 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:local="clr-namespace:SeeingSharpModelViewer"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Icon="/Assets/Logo.ico"
+        Title="Seeing# ModelViewer" Height="350" Width="525">
     <DockPanel LastChildFill="True">
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="File">
@@ -15,6 +17,26 @@
                 <Separator />
                 <MenuItem Header="Exit" />
             </MenuItem>
+            <MenuItem Header="View">
+                
+            </MenuItem>
         </Menu>
+
+        <dock:DockingManager>
+            <dock:DockingManager.Theme>
+                <dock:MetroTheme />
+            </dock:DockingManager.Theme>
+
+            <dock:LayoutRoot>
+                <dock:LayoutPanel Orientation="Horizontal">
+                    <dock:LayoutAnchorablePane>
+                        <dock:LayoutAnchorable Title="Properties">
+                            <Rectangle Fill="Red" />
+                        </dock:LayoutAnchorable>
+                    </dock:LayoutAnchorablePane>
+                </dock:LayoutPanel>
+            </dock:LayoutRoot>
+        </dock:DockingManager>
+        
     </DockPanel>
 </Window>

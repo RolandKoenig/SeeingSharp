@@ -37,6 +37,8 @@
 
         
         <Grid Background="DarkGray">
+
+            <view:SeeingSharpWpfRenderTriggerElement TriggerIntervalMS="2" />
             
             <!-- Define 3D rendering part-->
             <view:SeeingSharpRendererElement Name="m_rendererElement" 

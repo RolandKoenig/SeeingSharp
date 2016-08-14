@@ -78,9 +78,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <None Include="..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
-      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
-    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -90,6 +87,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="_SeeingSharp.Tools.licenseheader" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

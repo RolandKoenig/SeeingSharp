@@ -40,7 +40,7 @@ namespace SeeingSharp.Infrastructure
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            //Try to get an existing singleton
+            // Try to get an existing singleton
             if (SeeingSharpApplication.IsInitialized)
             {
                 if ((!string.IsNullOrEmpty(this.Name)) &&
@@ -55,9 +55,19 @@ namespace SeeingSharp.Infrastructure
                 }
             }
 
-            //Try to create an object of the requested type
+            // Try to create an object of the requested type
             if (this.Type != null)
             {
+                // Try to create testdata
+                MethodInfo testDataMethod = this.Type.GetMethod("CreateTestDataForDesigner");
+                if((testDataMethod != null) &&
+                   (testDataMethod.GetParameters().Length == 0) &&
+                   (testDataMethod.ReturnType == this.Type))
+                {
+                    return testDataMethod.Invoke(null, null);
+                }
+
+                // Try to create a default instance of the object
                 ConstructorInfo standardConstructor = this.Type.GetConstructor(new Type[0]);
                 if (standardConstructor != null)
                 {

@@ -17,22 +17,9 @@ using System.Threading.Tasks;
 
 namespace SeeingSharpModelViewer
 {
-    public enum ModelViewerIcon
-    {
-        Adapter,
-        Close,
-        Floor,
-        Help,
-        Open,
-        Save,
-        Screenshot,
-        Wireframe
-    }
 
-    public enum IconResultType
+    internal static class Localizables
     {
-        BitmapImage,
-
-        Image
+        public static string BOOTSTRAPPER_NAME = "Seeing# ModelViewer";
     }
 }

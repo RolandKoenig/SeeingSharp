@@ -17,22 +17,7 @@ using System.Threading.Tasks;
 
 namespace SeeingSharpModelViewer
 {
-    public enum ModelViewerIcon
+    internal static class Constants
     {
-        Adapter,
-        Close,
-        Floor,
-        Help,
-        Open,
-        Save,
-        Screenshot,
-        Wireframe
-    }
-
-    public enum IconResultType
-    {
-        BitmapImage,
-
-        Image
     }
 }

@@ -48,6 +48,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{4EBD257C-4
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		Misc\_SeeingSharp.Multimedia.licenseheader = Misc\_SeeingSharp.Multimedia.licenseheader
+		Misc\_SeeingSharp.Tools.licenseheader = Misc\_SeeingSharp.Tools.licenseheader
 		LICENSE = LICENSE
 		LicenseOverview.xlsx = LicenseOverview.xlsx
 		Misc\SolutionInfo.cs = Misc\SolutionInfo.cs

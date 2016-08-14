@@ -9,30 +9,36 @@
 	More info at https://msdn.microsoft.com/en-us/library/ff647676.aspx
 */
 #endregion
+using SeeingSharp.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+// Define assembly attributes for type that is defined in this file
+[assembly: AssemblyQueryableType(
+    targetType: typeof(SeeingSharpModelViewer.ModelViewerBootstrapper),
+    contractType: typeof(SeeingSharp.Infrastructure.IBootstrapperItem))]
+
 namespace SeeingSharpModelViewer
 {
-    public enum ModelViewerIcon
+    public class ModelViewerBootstrapper : IBootstrapperItem
     {
-        Adapter,
-        Close,
-        Floor,
-        Help,
-        Open,
-        Save,
-        Screenshot,
-        Wireframe
-    }
 
-    public enum IconResultType
-    {
-        BitmapImage,
+        public Task Execute()
+        {
+            return Task.Delay(100);
+        }
 
-        Image
+        public string Description
+        {
+            get { return Localizables.BOOTSTRAPPER_NAME; }
+        }
+
+        public int OrderID
+        {
+            get { return 0; }
+        }
     }
 }
