@@ -10,6 +10,7 @@
 */
 #endregion
 using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,10 +26,31 @@ namespace SeeingSharpModelViewer
 {
     public class ModelViewerBootstrapper : IBootstrapperItem
     {
-
-        public Task Execute()
+        /// <summary>
+        /// Executes the background action behind this item.
+        /// </summary>
+        /// <param name="app">The current application instance.</param>
+        public async Task Execute(SeeingSharpApplication app)
         {
-            return Task.Delay(100);
+            Loaded3DModelViewModel modelVM = null;
+            using (MemoryRenderTarget dummyRenderTarget = new MemoryRenderTarget(128, 128))
+            {
+                modelVM = new Loaded3DModelViewModel();
+
+                // Assign main scene and camera to the dummy render target
+                dummyRenderTarget.Scene = modelVM.Scene;
+                dummyRenderTarget.Camera = modelVM.Camera;
+
+                // Initialize the scen
+                await modelVM.InitializeAsync();
+
+                // Perform some dummy renderings
+                await dummyRenderTarget.AwaitRenderAsync();
+                await dummyRenderTarget.AwaitRenderAsync();
+            }
+
+            // All went well, so register the main viewmode globally
+            app.RegisterSingleton(modelVM);
         }
 
         public string Description

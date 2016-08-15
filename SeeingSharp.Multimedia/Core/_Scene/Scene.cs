@@ -573,7 +573,8 @@ namespace SeeingSharp.Multimedia.Core
             viewInformation.ViewIndex = -1;
 
             // Mark this scene for deletion if we don't have any other view registered
-            if (m_registeredViews.Count <= 0)
+            if ((m_registeredViews.Count <= 0) &&
+                (!this.DiscardAutomaticUnload))
             {
                 GraphicsCore.Current.MainLoop.RegisterSceneForUnload(this);
             }
@@ -1275,6 +1276,17 @@ namespace SeeingSharp.Multimedia.Core
         {
             get;
             private set;
+        }
+
+        /// <summary>
+        /// Discard automatic scene unloading.
+        /// (normally the scene gets cleared automatically after the last view
+        /// gets deregistered).
+        /// </summary>
+        public bool DiscardAutomaticUnload
+        {
+            get;
+            set;
         }
     }
 }

@@ -1149,6 +1149,10 @@ namespace SeeingSharp.Multimedia.Core
             GraphicsCore.Current.MainLoop.DeregisterRenderLoop(this);
 
             GraphicsHelper.SafeDispose(ref m_debugDrawingLayer);
+
+            // Assign new dummy camera
+            //  (this call detaches the previous camera from this renderloop)
+            this.Camera = new PerspectiveCamera3D();
         }
 
         /// <summary>

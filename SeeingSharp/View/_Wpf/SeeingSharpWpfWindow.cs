@@ -1,6 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
     Seeing# and all games/applications distributed together with it. 
+	Exception are projects where it is noted otherwhise.
     More info at 
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
@@ -20,32 +21,23 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
-namespace SeeingSharp.Infrastructure
+namespace SeeingSharp.View
 {
-    public interface IBootstrapperItem
+    public class SeeingSharpWpfWindow : Window
     {
         /// <summary>
-        /// Executes the background action behind this item.
+        /// Initializes a new instance of the <see cref="SeeingSharpWpfWindow"/> class.
         /// </summary>
-        /// <param name="app">The current application instance.</param>
-        Task Execute(SeeingSharpApplication app);
-
-        /// <summary>
-        /// Gets a simple order id. The list of bootstrapper items will be sorted by this ID.
-        /// </summary>
-        int OrderID
+        public SeeingSharpWpfWindow()
         {
-            get;
-        }
 
-        /// <summary>
-        /// Gets a short description of this item for the UI (e. g. for splash screens).
-        /// </summary>
-        string Description
-        {
-            get;
         }
     }
 }

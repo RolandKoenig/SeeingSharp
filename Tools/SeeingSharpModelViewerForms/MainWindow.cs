@@ -28,7 +28,7 @@ using System.Windows.Forms;
 
 namespace SeeingSharpModelViewer
 {
-    public partial class MainWindow : SeeingSharpForm
+    public partial class MainWindow : SeeingSharpFormsForm
     {
         private SceneManager m_sceneManager;
         private Task m_loadingTask;

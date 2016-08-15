@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SeeingSharp.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace SeeingSharpModelViewer
     /// <summary>
     /// Interaction logic for ImportOptionsView.xaml
     /// </summary>
-    public partial class ImportOptionsView : UserControl
+    public partial class ImportOptionsView : SeeingSharpWpfUserControl
     {
         public ImportOptionsView()
         {

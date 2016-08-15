@@ -1,10 +1,11 @@
-﻿<Window x:Class="SeeingSharpModelViewer.MainWindow"
+﻿<ssharpBase:SeeingSharpWpfWindow x:Class="SeeingSharpModelViewer.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:dock="http://schemas.xceed.com/wpf/xaml/avalondock"
         xmlns:local="clr-namespace:SeeingSharpModelViewer"
+        xmlns:ssharpBase="http://www.rolandk.de/wp/seeingsharp/base"
         mc:Ignorable="d"
         Icon="/Assets/Logo.ico"
         Title="Seeing# ModelViewer" Height="350" Width="525">
@@ -26,17 +27,26 @@
             <dock:DockingManager.Theme>
                 <dock:MetroTheme />
             </dock:DockingManager.Theme>
+            
+
 
             <dock:LayoutRoot>
                 <dock:LayoutPanel Orientation="Horizontal">
-                    <dock:LayoutAnchorablePane>
-                        <dock:LayoutAnchorable Title="Properties">
+                    <dock:LayoutAnchorablePane DockWidth="150">
+                        <dock:LayoutAnchorable Title="{x:Static local:Localizables.TOOL_IMPORT_OPTIONS}">
                             <Rectangle Fill="Red" />
                         </dock:LayoutAnchorable>
                     </dock:LayoutAnchorablePane>
+
+                    <dock:LayoutDocumentPane>
+                        <dock:LayoutDocument Title="3D-View">
+                            <local:Scene3DView />
+                        </dock:LayoutDocument>
+                    </dock:LayoutDocumentPane>
                 </dock:LayoutPanel>
+     
             </dock:LayoutRoot>
         </dock:DockingManager>
         
     </DockPanel>
-</Window>
+</ssharpBase:SeeingSharpWpfWindow>

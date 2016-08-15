@@ -1,12 +1,18 @@
-﻿<UserControl x:Class="SeeingSharpModelViewer.Scene3DView"
+﻿<ssharpBase:SeeingSharpWpfUserControl x:Class="SeeingSharpModelViewer.Scene3DView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SeeingSharpModelViewer"
+             xmlns:ssharpBase="http://www.rolandk.de/wp/seeingsharp/base"
+             xmlns:ssharpMulti="http://www.rolandk.de/wp/seeingsharp/multimedia"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="300"
+             DataContext="{ssharpBase:Singleton Type=local:Loaded3DModelViewModel}">
     <Grid>
-            
+        <ssharpMulti:SeeingSharpRendererElement 
+            Scene="{Binding Path=Scene}" Camera="{Binding Path=Camera}">
+            <ssharpMulti:FocusedPointCameraComponent />
+        </ssharpMulti:SeeingSharpRendererElement>
     </Grid>
-</UserControl>
+</ssharpBase:SeeingSharpWpfUserControl>

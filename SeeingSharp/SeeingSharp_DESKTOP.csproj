@@ -194,12 +194,14 @@
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />
-    <Compile Include="View\_WinForms\SeeingSharpForm.cs">
+    <Compile Include="View\_WinForms\SeeingSharpFormsForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\_WinForms\SeeingSharpUserControl.cs">
+    <Compile Include="View\_WinForms\SeeingSharpFormsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="View\_Wpf\SeeingSharpWpfWindow.cs" />
+    <Compile Include="View\_Wpf\SeeingSharpWpfUserControl.cs" />
     <Compile Include="_Math\_Custom\BoundingBox.Custom.cs" />
     <Compile Include="_Math\_Custom\BoundingBox2D.cs" />
     <Compile Include="_Math\_Custom\BoundingSphere.Custom.cs" />
@@ -273,7 +275,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="View\_WinRT\" />
-    <Folder Include="View\_Wpf\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">

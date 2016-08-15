@@ -16,19 +16,25 @@ namespace SeeingSharpModelViewer
     /// </summary>
     public partial class App : Application
     {
-        protected override void OnStartup(StartupEventArgs e)
+        protected async override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
 
             // Default initializations
-            SeeingSharpApplication.InitializeAsync(
+            await SeeingSharpApplication.InitializeAsync(
                 Assembly.GetExecutingAssembly(),
                 new Assembly[]{
                     typeof(GraphicsCore).Assembly
                 },
-                new string[0]).Wait();
+                new string[0]);
+
+            // Initialize UI and Graphics
             SeeingSharpApplication.Current.InitializeUIEnvironment();
             GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+
+            // Load the main window
+            MainWindow mainWindow = new SeeingSharpModelViewer.MainWindow();
+            mainWindow.Show();
         }
     }
 }

@@ -23,6 +23,12 @@
 using System.Reflection;
 using System.Resources;
 
+// Custom namespace mapping for wpf
+#if DESKTOP
+[assembly: System.Windows.Markup.XmlnsDefinition("http://www.rolandk.de/wp/seeingsharp/base", "SeeingSharp.View")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://www.rolandk.de/wp/seeingsharp/base", "SeeingSharp.Infrastructure")]
+#endif
+
 [assembly: AssemblyTitle("Seeing#")]
 [assembly: AssemblyDescription("Main assembly containing all base classes of Seeing#")]
 [assembly: NeutralResourcesLanguage("de")]

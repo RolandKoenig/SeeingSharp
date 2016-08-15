@@ -18,8 +18,10 @@ using System.Threading.Tasks;
 namespace SeeingSharpModelViewer
 {
 
-    internal static class Localizables
+    public static class Localizables
     {
         public static string BOOTSTRAPPER_NAME = "Seeing# ModelViewer";
+        public static string TOOL_IMPORT_OPTIONS = "Import Options";
+        public static string TOOL_3D_VIEW = "3D-View";
     }
 }

@@ -40,14 +40,14 @@ namespace SeeingSharp.Bootstrapper
         /// Executes the background action behind this item.
         /// </summary>
         /// <returns></returns>
-        public async Task Execute()
+        public async Task Execute(SeeingSharpApplication app)
         {
             // Load all translation data
-            await SeeingSharpApplication.Current.Translator.QueryTranslationsAsync(
-                SeeingSharpApplication.Current.AppAssemblies).ConfigureAwait(false);
+            await app.Translator.QueryTranslationsAsync(
+                app.AppAssemblies).ConfigureAwait(false);
 
             // Translate all translatable classes
-            SeeingSharpApplication.Current.Translator.TranslateAllTranslatableClasses();
+            app.Translator.TranslateAllTranslatableClasses();
         }
 
         /// <summary>
