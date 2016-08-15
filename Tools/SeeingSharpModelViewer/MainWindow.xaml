@@ -43,7 +43,7 @@
                 <dock:LayoutPanel Orientation="Horizontal">
                     <dock:LayoutAnchorablePane DockWidth="150">
                         <dock:LayoutAnchorable Title="{x:Static local:Localizables.TOOL_IMPORT_OPTIONS}">
-                            <Rectangle Fill="Red" />
+                            <local:ImportOptionsView />
                         </dock:LayoutAnchorable>
                     </dock:LayoutAnchorablePane>
 

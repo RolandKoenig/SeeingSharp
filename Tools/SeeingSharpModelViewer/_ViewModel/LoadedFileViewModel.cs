@@ -76,7 +76,7 @@ namespace SeeingSharpModelViewer
                 m_currentFile = null;
                 m_currentImportOptions = null;
                 RaisePropertyChanged(nameof(CurrentFile));
-                RaisePropertyChanged(nameof(ImportOptions));
+                RaisePropertyChanged(nameof(CurrentImportOptions));
             }
         }
 
