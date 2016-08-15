@@ -21,31 +21,34 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#if DESKTOP
 using System.Windows;
+#endif
+#if UNIVERSAL
+using Windows.UI.Xaml;
+#endif
 
 namespace SeeingSharp.View
 {
-    public class SeeingSharpWpfWindow : Window
+    public static class Interaction
     {
-        private ViewServiceNode m_viewServiceNode;
+        public static readonly DependencyProperty ViewServicesProperty =
+            DependencyProperty.RegisterAttached("ViewServices", typeof(ViewServiceCollection), typeof(Interaction), new PropertyMetadata(new ViewServiceCollection()));
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SeeingSharpWpfWindow"/> class.
-        /// </summary>
-        public SeeingSharpWpfWindow()
+        public static ViewServiceCollection GetViewServices(DependencyObject obj)
         {
-            m_viewServiceNode = new ViewServiceNode(this);
-        }
-
-        public ViewServiceNode ViewServiceNode
-        {
-            get { return m_viewServiceNode; }
+            ViewServiceCollection triggerCollection = (ViewServiceCollection)obj.GetValue(Interaction.ViewServicesProperty);
+            if (triggerCollection == null)
+            {
+                triggerCollection = new ViewServiceCollection();
+                obj.SetValue(Interaction.ViewServicesProperty, triggerCollection);
+            }
+            return triggerCollection;
         }
     }
 }

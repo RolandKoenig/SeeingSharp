@@ -167,6 +167,7 @@
     <Compile Include="Util\_Mvvm\PropertyChangedBase.cs" />
     <Compile Include="Util\_Mvvm\ViewModelBase.cs" />
     <Compile Include="Util\_Mvvm\_Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Util\_Mvvm\_Misc.cs" />
     <Compile Include="Util\_Performance\PerformanceCalculatorBase.cs" />
     <Compile Include="Util\_Performance\PerformanceAnalyzeResultBase.cs" />
     <Compile Include="Util\_Performance\PerformanceAnalyzer.cs" />
@@ -179,6 +180,9 @@
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />
+    <Compile Include="View\Interaction.cs" />
+    <Compile Include="View\_ViewService\ViewServiceCollection.cs" />
+    <Compile Include="View\_ViewService\ViewServiceNode.cs" />
     <Compile Include="View\_WinRT\SeeingSharpPage.cs" />
     <Compile Include="View\_WinRT\SeeingSharpUserControl.cs" />
     <Compile Include="_Math\_Custom\BoundingBox.Custom.cs" />

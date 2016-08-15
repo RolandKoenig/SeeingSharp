@@ -47,6 +47,8 @@ namespace SeeingSharpModelViewer
             m_scene.DiscardAutomaticUnload = true;
 
             m_camera = new PerspectiveCamera3D();
+
+            this.CommandOpen = new DelegateCommand(OnCommandOpen_Execute);
         }
 
         /// <summary>
@@ -161,6 +163,11 @@ namespace SeeingSharpModelViewer
             await SetInitialCameraPositionAsync();
         }
 
+        private void OnCommandOpen_Execute()
+        {
+            CommonDialogsViewService vService = base.TryGetViewService<CommonDialogsViewService>();
+        }
+
         public ResourceLink CurrentFile
         {
             get { return m_currentFile; }
@@ -179,6 +186,12 @@ namespace SeeingSharpModelViewer
         public Camera3DBase Camera
         {
             get { return m_camera; }
+        }
+
+        public DelegateCommand CommandOpen
+        {
+            get;
+            private set;
         }
     }
 }

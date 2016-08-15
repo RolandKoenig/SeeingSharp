@@ -21,31 +21,22 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#if DESKTOP
 using System.Windows;
+#endif
+#if UNIVERSAL
+using Windows.UI.Xaml;
+#endif
 
 namespace SeeingSharp.View
 {
-    public class SeeingSharpWpfWindow : Window
+    public class ViewServiceCollection : List<object>
     {
-        private ViewServiceNode m_viewServiceNode;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="SeeingSharpWpfWindow"/> class.
-        /// </summary>
-        public SeeingSharpWpfWindow()
-        {
-            m_viewServiceNode = new ViewServiceNode(this);
-        }
-
-        public ViewServiceNode ViewServiceNode
-        {
-            get { return m_viewServiceNode; }
-        }
     }
 }

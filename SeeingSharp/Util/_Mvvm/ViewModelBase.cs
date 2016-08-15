@@ -44,6 +44,8 @@ namespace SeeingSharp.Util
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
+        public event EventHandler<ViewServiceRequestEventArgs> ViewServiceRequest;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ViewModelBase"/> class.
         /// </summary>
@@ -54,6 +56,20 @@ namespace SeeingSharp.Util
 #else
             m_raisePropertyChangedOnError = false;
 #endif
+        }
+
+        /// <summary>
+        /// Tries to get the view service that implements the given type.
+        /// </summary>
+        public T TryGetViewService<T>()
+            where T : class
+        {
+            Type requestedType = typeof(T);
+
+            ViewServiceRequestEventArgs eArgs = new ViewServiceRequestEventArgs(requestedType);
+            ViewServiceRequest.Raise(this, eArgs);
+
+            return eArgs.Implementation as T;
         }
 
         /// <summary>

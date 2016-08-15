@@ -97,6 +97,7 @@
     <Compile Include="_MarkupExtensions\_Icons\ModelViewerIconExtension.cs" />
     <Compile Include="_MarkupExtensions\_Icons\_Misc.cs" />
     <Compile Include="_ViewModel\Loaded3DModelViewModel.cs" />
+    <Compile Include="_ViewService\CommonDialogsViewService.cs" />
     <Compile Include="_View\ImportOptionsView.xaml.cs">
       <DependentUpon>ImportOptionsView.xaml</DependentUpon>
     </Compile>
