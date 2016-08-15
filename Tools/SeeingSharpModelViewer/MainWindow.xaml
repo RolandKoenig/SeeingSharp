@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Icon="/Assets/Logo.ico"
         Title="Seeing# ModelViewer" Height="350" Width="525"
-        DataContext="{ssharpBase:Singleton Type=local:Loaded3DModelViewModel}">
+        DataContext="{ssharpBase:Singleton Type=local:MainWindowViewModel}">
 
     <ssharpBase:Interaction.ViewServices>
         <local:CommonDialogsViewService />
@@ -21,7 +21,8 @@
             <MenuItem Header="File">
                 <MenuItem Header="Open" Icon="{local:ModelViewerIcon Icon=Open, ResultType=Image}"
                           Command="{Binding Path=CommandOpen}"/>
-                <MenuItem Header="Close" Icon="{local:ModelViewerIcon Icon=Close, ResultType=Image}" />
+                <MenuItem Header="Close" Icon="{local:ModelViewerIcon Icon=Close, ResultType=Image}" 
+                          Command="{Binding Path=CommandClose}"/>
                 <MenuItem Header="Save as..." Icon="{local:ModelViewerIcon Icon=Save, ResultType=Image}" />
                 <Separator />
                 <MenuItem Header="Exit" />

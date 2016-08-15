@@ -9,6 +9,8 @@
 	More info at https://msdn.microsoft.com/en-us/library/ff647676.aspx
 */
 #endregion
+using SeeingSharp.Util;
+using SeeingSharp.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +19,8 @@ using System.Threading.Tasks;
 
 namespace SeeingSharpModelViewer
 {
-    public class CommonDialogsViewService
+    public interface ICommonDialogsViewService : IViewService
     {
-
+        ResourceLink PickFileByDialog(string fileFilter);
     }
 }

@@ -23,6 +23,8 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,8 +37,33 @@ using Windows.UI.Xaml;
 
 namespace SeeingSharp.View
 {
-    public class ViewServiceCollection : List<object>
+    public class ViewServiceCollection : ObservableCollection<IViewService>
     {
+        private FrameworkElement m_host;
 
+        public ViewServiceCollection(FrameworkElement host)
+        {
+            m_host = host;
+        }
+
+        protected override void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
+        {
+            base.OnCollectionChanged(e);
+
+            switch(e.Action)
+            {
+                case NotifyCollectionChangedAction.Add:
+                case NotifyCollectionChangedAction.Replace:
+                    if (e.NewItems != null)
+                    {
+                        foreach(IViewService actNewService in e.NewItems)
+                        {
+                            actNewService.SetViewServiceHost(m_host);
+                        }
+                    }
+                    break;
+            }
+
+        }
     }
 }

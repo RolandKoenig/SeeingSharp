@@ -96,8 +96,11 @@
     <Compile Include="_Bootstrapper\ModelViewerBootstrapper.cs" />
     <Compile Include="_MarkupExtensions\_Icons\ModelViewerIconExtension.cs" />
     <Compile Include="_MarkupExtensions\_Icons\_Misc.cs" />
-    <Compile Include="_ViewModel\Loaded3DModelViewModel.cs" />
-    <Compile Include="_ViewService\CommonDialogsViewService.cs" />
+    <Compile Include="_ViewModel\LoadedFileViewModel.cs" />
+    <Compile Include="_ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="_ViewModel\MiscGraphicsObjectsViewModel.cs" />
+    <Compile Include="_ViewService\_Impl\ICommonDialogsViewService.cs" />
+    <Compile Include="_ViewService\_Interface\CommonDialogsViewService.cs" />
     <Compile Include="_View\ImportOptionsView.xaml.cs">
       <DependentUpon>ImportOptionsView.xaml</DependentUpon>
     </Compile>

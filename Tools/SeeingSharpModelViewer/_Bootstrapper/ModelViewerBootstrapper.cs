@@ -32,10 +32,10 @@ namespace SeeingSharpModelViewer
         /// <param name="app">The current application instance.</param>
         public async Task Execute(SeeingSharpApplication app)
         {
-            Loaded3DModelViewModel modelVM = null;
+            MainWindowViewModel modelVM = null;
             using (MemoryRenderTarget dummyRenderTarget = new MemoryRenderTarget(128, 128))
             {
-                modelVM = new Loaded3DModelViewModel();
+                modelVM = new MainWindowViewModel();
 
                 // Assign main scene and camera to the dummy render target
                 dummyRenderTarget.Scene = modelVM.Scene;

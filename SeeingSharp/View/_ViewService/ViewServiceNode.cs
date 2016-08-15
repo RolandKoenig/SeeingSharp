@@ -71,7 +71,7 @@ namespace SeeingSharp.View
                 if (actViewService == null) { continue; }
 
                 Type actViewServiceType = actViewService.GetType();
-                if (actViewServiceType.GetTypeInfo().IsAssignableFrom(e.RequestedType.GetTypeInfo()))
+                if (e.RequestedType.GetTypeInfo().IsAssignableFrom(actViewServiceType.GetTypeInfo()))
                 {
                     e.Implementation = actViewService;
                     return true;

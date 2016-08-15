@@ -195,6 +195,7 @@
     <Compile Include="Util\_Threading\ObjectThread.cs" />
     <Compile Include="Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="Util\_Threading\_Misc.cs" />
+    <Compile Include="View\_ViewService\IViewService.cs" />
     <Compile Include="View\_ViewService\ViewServiceCollection.cs" />
     <Compile Include="View\Interaction.cs" />
     <Compile Include="View\_WinForms\SeeingSharpFormsForm.cs">

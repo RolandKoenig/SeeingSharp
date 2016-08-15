@@ -26,33 +26,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using SeeingSharp.Checking;
-#if DESKTOP
 using System.Windows;
-#endif
-#if UNIVERSAL
-using Windows.UI.Xaml;
-#endif
 
 namespace SeeingSharp.View
 {
-    public static class Interaction
+    public interface IViewService
     {
-        public static readonly DependencyProperty ViewServicesProperty =
-            DependencyProperty.RegisterAttached("ShadowViewServices", typeof(ViewServiceCollection), typeof(Interaction), null);
-
-        public static ViewServiceCollection GetViewServices(DependencyObject obj)
-        {
-            FrameworkElement hostElement = obj as FrameworkElement;
-            hostElement.EnsureNotNull(nameof(hostElement));
-
-            ViewServiceCollection triggerCollection = (ViewServiceCollection)obj.GetValue(Interaction.ViewServicesProperty);
-            if (triggerCollection == null)
-            {
-                triggerCollection = new ViewServiceCollection(hostElement);
-                obj.SetValue(Interaction.ViewServicesProperty, triggerCollection);
-            }
-            return triggerCollection;
-        }
+        /// <summary>
+        /// Tells the ViewService which FrameworkElement it is hosted by.
+        /// </summary>
+        /// <param name="frameworkElement">The framework element.</param>
+        void SetViewServiceHost(FrameworkElement frameworkElement);
     }
 }
