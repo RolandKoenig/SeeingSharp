@@ -1,6 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
     Seeing# and all games/applications distributed together with it. 
+	Exception are projects where it is noted otherwhise.
     More info at 
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
@@ -28,5 +29,21 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Util
 {
+    /// <summary>
+    /// Indicates that a property is not to be cloned by CommonTools.CloneObject method.
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field)]
+    public class IgnoreGenericCloneAttribute : Attribute
+    {
 
+    }
+
+    /// <summary>
+    /// Inidicates that this field will get a reference to the original parent object after being cloned from it using CommonTools.Clone
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Field)]
+    public class AssignOriginalParentObjectAfterCloneAttribute : Attribute
+    {
+
+    }
 }

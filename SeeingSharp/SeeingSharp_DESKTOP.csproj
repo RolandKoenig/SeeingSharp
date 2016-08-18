@@ -118,7 +118,6 @@
     <Compile Include="Util\BitmapComparison.cs" />
     <Compile Include="Util\CommonTools.Threading.cs" />
     <Compile Include="Util\CommonTools.UI.cs" />
-    <Compile Include="Util\CommonTools.Cloning.cs" />
     <Compile Include="Util\CommonTools.cs" />
     <Compile Include="Util\CustomLazy.cs" />
     <Compile Include="Util\CustomObservable.cs" />
@@ -139,6 +138,8 @@
     <Compile Include="Util\TableData\_Csv\CsvTableRowReader.cs" />
     <Compile Include="Util\TableData\_Csv\CsvUtil.cs" />
     <Compile Include="Util\TplBasedLoop.cs" />
+    <Compile Include="Util\_Cloning\GenericClone.cs" />
+    <Compile Include="Util\_Cloning\_Misc.cs" />
     <Compile Include="Util\_Collections\RingBuffer.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceFileAttribute.cs" />
     <Compile Include="Util\_IO\_AssemblyResources\AssemblyResourceInfo.cs" />
