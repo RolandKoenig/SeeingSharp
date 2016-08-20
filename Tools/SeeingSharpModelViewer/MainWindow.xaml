@@ -33,12 +33,6 @@
         </Menu>
 
         <dock:DockingManager>
-            <dock:DockingManager.Theme>
-                <dock:MetroTheme />
-            </dock:DockingManager.Theme>
-            
-
-
             <dock:LayoutRoot>
                 <dock:LayoutPanel Orientation="Horizontal">
                     <dock:LayoutAnchorablePane DockWidth="150">

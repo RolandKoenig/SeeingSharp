@@ -53,6 +53,7 @@ namespace SeeingSharpModelViewer
 
             this.CommandOpen = new DelegateCommand(OnCommandOpen_Execute);
             this.CommandClose = new DelegateCommand(OnCommandClose_Execute, OnCommandClose_CanExecute);
+            this.CommandReload = new DelegateCommand(OnCommandReload_Execute, OnCommandReload_CanExecute);
         }
 
         /// <summary>
@@ -90,6 +91,16 @@ namespace SeeingSharpModelViewer
             return m_loadedFileVM.CurrentFile != null;   
         }
 
+        private async void OnCommandReload_Execute()
+        {
+            await m_loadedFileVM.ReloadCurrentFileAsync();
+        }
+
+        private bool OnCommandReload_CanExecute()
+        {
+            return m_loadedFileVM.CurrentFile != null;
+        }
+
         public Scene Scene
         {
             get { return m_scene; }
@@ -117,6 +128,12 @@ namespace SeeingSharpModelViewer
         }
 
         public DelegateCommand CommandClose
+        {
+            get;
+            private set;
+        }
+
+        public DelegateCommand CommandReload
         {
             get;
             private set;

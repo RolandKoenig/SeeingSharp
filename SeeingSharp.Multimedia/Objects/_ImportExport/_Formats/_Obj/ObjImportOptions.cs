@@ -22,6 +22,7 @@
 #endregion
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// For some files we have a separate subfolder for textures.
         /// This would be the name of this subfolder. If none, then set this property to empty (default).
         /// </summary>
+#if DESKTOP
+        [Category(Translatables.IMPORT_OPTIONS_CAT_OBJ_CONST)]
+#endif
         public string TextureSubfolderName
         {
             get;

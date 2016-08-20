@@ -21,6 +21,7 @@
 */
 #endregion
 using SeeingSharp.Multimedia.Core;
+using System.ComponentModel;
 using System.Numerics;
 
 namespace SeeingSharp.Multimedia.Objects
@@ -92,6 +93,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// This is needed to transform coordinate from one measure unit to another.
         /// Default is 1.
         /// </summary>
+#if DESKTOP
+        [Category(Translatables.IMPORT_OPTIONS_CAT_BASE_CONST)]
+#endif
         public float ResizeFactor
         {
             get;
@@ -103,6 +107,9 @@ namespace SeeingSharp.Multimedia.Objects
         /// This property ensures that the coordinate system is mapped correctly to the one that 
         /// Seeing# uses. Default is LeftHanded_UpY.
         /// </summary>
+#if DESKTOP
+        [Category(Translatables.IMPORT_OPTIONS_CAT_BASE_CONST)]
+#endif
         public CoordinateSystem ResourceCoordinateSystem
         {
             get;
@@ -113,12 +120,18 @@ namespace SeeingSharp.Multimedia.Objects
         /// Needed some times. This generates a front and a back side for each loaded surface.
         /// Default is false.
         /// </summary>
+#if DESKTOP
+        [Category(Translatables.IMPORT_OPTIONS_CAT_BASE_CONST)]
+#endif
         public bool TwoSidedSurfaces
         {
             get;
             set;
         }
 
+#if DESKTOP
+        [Category(Translatables.IMPORT_OPTIONS_CAT_BASE_CONST)]
+#endif
         public bool ToggleTriangleIndexOrder
         {
             get;

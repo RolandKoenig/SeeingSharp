@@ -34,8 +34,17 @@ namespace SeeingSharp.Multimedia
     [TranslateableClass("SeeingSharp.Multimedia")]
     internal static class Translatables
     {
+        #region Video rendering
         public static string ERROR_VIDEO_COMPLETING = "Error while completing video file: {0}";
         public static string ERROR_VIDEO_RENDERING = "Error while rendering video file: {0}";
         public static string ERROR_VIDEO_START = "Error while starting video-rendering to file: {0}";
+        #endregion
+
+        #region Import options
+        public const string IMPORT_OPTIONS_CAT_BASE_CONST = "Common";
+        public static string IMPORT_OPTIONS_CAT_BASE = IMPORT_OPTIONS_CAT_BASE_CONST;
+        public const string IMPORT_OPTIONS_CAT_OBJ_CONST = "Wavefront Obj";
+        public static string IMPORT_OPTIONS_CAT_OBJ = IMPORT_OPTIONS_CAT_OBJ_CONST;
+        #endregion
     }
 }

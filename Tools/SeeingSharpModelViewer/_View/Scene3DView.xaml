@@ -12,7 +12,7 @@
     <Grid>
         <ssharpMulti:SeeingSharpRendererElement 
             Scene="{Binding Path=Scene}" Camera="{Binding Path=Camera}">
-            <ssharpMulti:FocusedPointCameraComponent />
+            <ssharpMulti:FreeMovingCameraComponent />
         </ssharpMulti:SeeingSharpRendererElement>
     </Grid>
 </ssharpBase:SeeingSharpWpfUserControl>

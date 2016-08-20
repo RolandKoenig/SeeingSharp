@@ -10,7 +10,20 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{ssharpBase:Singleton Type=local:MainWindowViewModel}">
     <DockPanel LastChildFill="True">
+        <StackPanel Orientation="Horizontal"
+                    DockPanel.Dock="Top">
+            <Button Margin="1"
+                    Command="{Binding Path=CommandReload}">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="{local:ModelViewerIcon Icon=Refresh}"
+                           Height="16"
+                           Margin="0,0,3,0"/>
+                    <TextBlock VerticalAlignment="Center">Refresh Model</TextBlock>
+                </StackPanel>
+            </Button>
+        </StackPanel>
+
         <prop:PropertyGrid SelectedObject="{Binding Path=LoadedFile.CurrentImportOptions}" 
-                           TabVisibility="Collapsed"/>
+                           TabVisibility="Collapsed" />
     </DockPanel>
 </ssharpBase:SeeingSharpWpfUserControl>

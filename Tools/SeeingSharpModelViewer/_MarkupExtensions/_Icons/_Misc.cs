@@ -26,7 +26,8 @@ namespace SeeingSharpModelViewer
         Open,
         Save,
         Screenshot,
-        Wireframe
+        Wireframe,
+        Refresh
     }
 
     public enum IconResultType
