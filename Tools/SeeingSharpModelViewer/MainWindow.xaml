@@ -17,7 +17,8 @@
     </ssharpBase:Interaction.ViewServices>
 
     <DockPanel LastChildFill="True">
-        <Menu DockPanel.Dock="Top">
+        <!-- Main menu -->
+        <Menu DockPanel.Dock="Top" Style="{StaticResource MainMenu}">
             <MenuItem Header="File">
                 <MenuItem Header="Open" Icon="{local:ModelViewerIcon Icon=Open, ResultType=Image}"
                           Command="{Binding Path=CommandOpen}"/>
@@ -31,18 +32,64 @@
                 
             </MenuItem>
         </Menu>
+        
+        <!-- Main Toolbar-->
+        <ToolBarTray DockPanel.Dock="Top"
+                     IsLocked="True">
+            <ToolBar>
+                <Button Command="{Binding Path=CommandOpen}" 
+                    Content="{local:ModelViewerIcon Icon=Open,ResultType=Image}" />
+                <Button Command="{Binding Path=CommandClose}" 
+                    Content="{local:ModelViewerIcon Icon=Close,ResultType=Image}" />
+                <Separator />
+            </ToolBar>
+        </ToolBarTray>
 
-        <dock:DockingManager>
+        <!-- Footer -->
+        <ToolBarTray DockPanel.Dock="Bottom"
+                     IsLocked="True">
+            <ToolBar>
+                <TextBlock Text="Document: " />
+                <TextBlock Text="..Document/Test.obj" />
+            </ToolBar>
+        </ToolBarTray>
+
+        <!-- Main docking manager -->
+        <dock:DockingManager Margin="3">
+            <dock:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding IconSource}" Margin="0,0,4,0" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </dock:DockingManager.DocumentHeaderTemplate>
+            <dock:DockingManager.AnchorableTitleTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding IconSource}" Margin="0,0,4,0" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </dock:DockingManager.AnchorableTitleTemplate>
+            <dock:DockingManager.DocumentTitleTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding IconSource}" Margin="0,0,4,0" />
+                        <TextBlock Text="{Binding Title}" />
+                    </StackPanel>
+                </DataTemplate>
+            </dock:DockingManager.DocumentTitleTemplate>
             <dock:LayoutRoot>
                 <dock:LayoutPanel Orientation="Horizontal">
                     <dock:LayoutAnchorablePane DockWidth="150">
-                        <dock:LayoutAnchorable Title="{x:Static local:Localizables.TOOL_IMPORT_OPTIONS}">
+                        <dock:LayoutAnchorable Title="{x:Static local:Localizables.TOOL_IMPORT_OPTIONS}" IconSource="{local:ModelViewerIcon Icon=Open}">
                             <local:ImportOptionsView />
                         </dock:LayoutAnchorable>
                     </dock:LayoutAnchorablePane>
 
                     <dock:LayoutDocumentPane>
-                        <dock:LayoutDocument Title="3D-View">
+                        <dock:LayoutDocument Title="3D-View" IconSource="{local:ModelViewerIcon Icon=Open}">
                             <local:Scene3DView />
                         </dock:LayoutDocument>
                     </dock:LayoutDocumentPane>

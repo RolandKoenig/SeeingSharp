@@ -46,27 +46,33 @@ namespace SeeingSharpModelViewer
 
             // Load the ImageSource (me may have cached it before
             BitmapImage result = null;
-            if(!s_images.TryGetValue(uriPath, out result))
+            Action actionCreateBitmapSource = () =>
             {
-                result = new BitmapImage(new Uri(uriPath, UriKind.Absolute));
-                result.Freeze();
-                s_images.Add(uriPath, result);
-            }
+                if (!s_images.TryGetValue(uriPath, out result))
+                {
+                    result = new BitmapImage(new Uri(uriPath, UriKind.Absolute));
+                    result.Freeze();
+                    s_images.Add(uriPath, result);
+                }
+            };
 
             // Create the result object
             switch(this.ResultType)
             {
                 case IconResultType.Image:
+                    actionCreateBitmapSource();
                     Image imgControl = new Image();
                     imgControl.Source = result;
+                    imgControl.Width = 16.0;
+                    imgControl.Height = 16.0;
                     return imgControl;
 
                 case IconResultType.BitmapImage:
+                    actionCreateBitmapSource();
                     return result;
+            }
 
-                default:
-                    return null;
-            } 
+            return null;
         }
 
         public ModelViewerIcon Icon

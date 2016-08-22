@@ -91,11 +91,13 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="_Behaviors\Auto3DViewPointBehavior.cs" />
     <Compile Include="_Constants.cs" />
     <Compile Include="_Localizables.cs" />
     <Compile Include="_Bootstrapper\ModelViewerBootstrapper.cs" />
     <Compile Include="_MarkupExtensions\_Icons\ModelViewerIconExtension.cs" />
     <Compile Include="_MarkupExtensions\_Icons\_Misc.cs" />
+    <Compile Include="_Messages\NewModelLoadedMessage.cs" />
     <Compile Include="_ViewModel\LoadedFileViewModel.cs" />
     <Compile Include="_ViewModel\MainWindowViewModel.cs" />
     <Compile Include="_ViewModel\MiscGraphicsObjectsViewModel.cs" />
@@ -107,6 +109,10 @@
     <Compile Include="_View\Scene3DView.xaml.cs">
       <DependentUpon>Scene3DView.xaml</DependentUpon>
     </Compile>
+    <Page Include="Assets\Theme\ModelViewerTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -170,7 +176,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="_Behaviors\" />
+    <Folder Include="_MarkupExtensions\_Misc\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\Adapter_16x16.png" />

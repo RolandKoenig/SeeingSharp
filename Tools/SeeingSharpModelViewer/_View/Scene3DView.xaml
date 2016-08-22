@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:SeeingSharpModelViewer"
              xmlns:ssharpBase="http://www.rolandk.de/wp/seeingsharp/base"
              xmlns:ssharpMulti="http://www.rolandk.de/wp/seeingsharp/multimedia"
@@ -13,6 +14,9 @@
         <ssharpMulti:SeeingSharpRendererElement 
             Scene="{Binding Path=Scene}" Camera="{Binding Path=Camera}">
             <ssharpMulti:FreeMovingCameraComponent />
+            <i:Interaction.Behaviors>
+                <local:Auto3DViewPointBehavior />
+            </i:Interaction.Behaviors>
         </ssharpMulti:SeeingSharpRendererElement>
     </Grid>
 </ssharpBase:SeeingSharpWpfUserControl>

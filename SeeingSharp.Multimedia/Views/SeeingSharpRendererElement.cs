@@ -58,11 +58,11 @@ namespace SeeingSharp.Multimedia.Views
     {
         #region Dependency properties
         public static readonly DependencyProperty SceneProperty =
-            DependencyProperty.Register("Scene", typeof(Scene), typeof(SeeingSharpRendererElement), new PropertyMetadata(new Scene()));
+            DependencyProperty.Register(nameof(Scene), typeof(Scene), typeof(SeeingSharpRendererElement), new PropertyMetadata(new Scene()));
         public static readonly DependencyProperty CameraProperty =
-            DependencyProperty.Register("Camera", typeof(Camera3DBase), typeof(SeeingSharpRendererElement), new PropertyMetadata(new PerspectiveCamera3D()));
+            DependencyProperty.Register(nameof(Camera), typeof(Camera3DBase), typeof(SeeingSharpRendererElement), new PropertyMetadata(new PerspectiveCamera3D()));
         public static readonly DependencyProperty DrawingLayer2DProperty =
-            DependencyProperty.Register("DrawingLayer2D", typeof(Custom2DDrawingLayer), typeof(SeeingSharpRendererElement), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(DrawingLayer2D), typeof(Custom2DDrawingLayer), typeof(SeeingSharpRendererElement), new PropertyMetadata(null));
         #endregion
 
         private static Duration MAX_IMAGE_LOCK_DURATION = new Duration(TimeSpan.FromMilliseconds(100.0));
@@ -94,6 +94,12 @@ namespace SeeingSharp.Multimedia.Views
         #region State members for handling rendering problems
         private int m_isDirtyCount = 0;
         private BitmapSource m_dummyBitmap;
+        #endregion
+
+        #region Change events
+        public event EventHandler SceneChanged;
+        public event EventHandler CameraChanged;
+        public event EventHandler DrawingLayer2DChanged;
         #endregion
 
         /// <summary>
@@ -444,12 +450,21 @@ namespace SeeingSharp.Multimedia.Views
             if (!GraphicsCore.IsInitialized) { return; }
             if (this.IsInDesignMode()) { return; }
 
-            if (e.Property == SeeingSharpRendererElement.SceneProperty){ m_renderLoop.SetScene(this.Scene); }
-            else if (e.Property == SeeingSharpRendererElement.CameraProperty) { m_renderLoop.Camera = this.Camera; }
+            if (e.Property == SeeingSharpRendererElement.SceneProperty)
+            {
+                m_renderLoop.SetScene(this.Scene);
+                SceneChanged.Raise(this, EventArgs.Empty);
+            }
+            else if (e.Property == SeeingSharpRendererElement.CameraProperty)
+            {
+                m_renderLoop.Camera = this.Camera;
+                CameraChanged.Raise(this, EventArgs.Empty);
+            }
             else if (e.Property == SeeingSharpRendererElement.DrawingLayer2DProperty)
             {
                 if (e.OldValue != null) { await m_renderLoop.Deregister2DDrawingLayerAsync(e.OldValue as Custom2DDrawingLayer); }
                 if (e.NewValue != null) { await m_renderLoop.Register2DDrawingLayerAsync(e.NewValue as Custom2DDrawingLayer); }
+                DrawingLayer2DChanged.Raise(this, EventArgs.Empty);
             }
         }
 
