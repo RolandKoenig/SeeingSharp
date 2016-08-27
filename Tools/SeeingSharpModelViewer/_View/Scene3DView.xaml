@@ -10,13 +10,28 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{ssharpBase:Singleton Type=local:MainWindowViewModel}">
-    <Grid>
+    <DockPanel LastChildFill="True">
+        <ToolBarTray IsLocked="True"
+                     DockPanel.Dock="Top">
+            <ToolBar>
+                <ToggleButton IsChecked="{Binding ElementName=CtrlRenderer, Path=RenderLoop.ViewConfiguration.ShowTextures}" 
+                              Content="{local:ModelViewerIcon Icon=Screenshot,ResultType=Image}"
+                              ToolTip="Enable/Disable Textures"/>
+                
+                <ToggleButton IsChecked="{Binding ElementName=CtrlRenderer, Path=RenderLoop.ViewConfiguration.WireframeEnabled}" 
+                              Content="{local:ModelViewerIcon Icon=Wireframe,ResultType=Image}"
+                              ToolTip="Enable/Disable Wireframe mode"/>
+                
+            </ToolBar>
+        </ToolBarTray>
+
         <ssharpMulti:SeeingSharpRendererElement 
+            x:Name="CtrlRenderer"
             Scene="{Binding Path=Scene}" Camera="{Binding Path=Camera}">
             <ssharpMulti:FreeMovingCameraComponent />
             <i:Interaction.Behaviors>
                 <local:Auto3DViewPointBehavior />
             </i:Interaction.Behaviors>
         </ssharpMulti:SeeingSharpRendererElement>
-    </Grid>
+    </DockPanel>
 </ssharpBase:SeeingSharpWpfUserControl>

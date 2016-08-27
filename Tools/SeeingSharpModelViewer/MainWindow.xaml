@@ -29,7 +29,10 @@
                 <MenuItem Header="Exit" />
             </MenuItem>
             <MenuItem Header="View">
-                
+                <MenuItem IsCheckable="True"
+                          IsChecked="{Binding ElementName=DockPaneImportOptions, Path=IsVisible, Mode=TwoWay}"
+                          Header="{Binding ElementName=DockPaneImportOptions, Path=Title}"
+                          Icon="{local:ModelViewerIcon Icon=ModelEdit, ResultType=Image}"/>
             </MenuItem>
         </Menu>
         
@@ -50,7 +53,7 @@
                      IsLocked="True">
             <ToolBar>
                 <TextBlock Text="Document: " />
-                <TextBlock Text="..Document/Test.obj" />
+                <TextBlock Text="{Binding Path=LoadedFile.CurrentFileForStatusBar}" />
             </ToolBar>
         </ToolBarTray>
 
@@ -82,14 +85,18 @@
             </dock:DockingManager.DocumentTitleTemplate>
             <dock:LayoutRoot>
                 <dock:LayoutPanel Orientation="Horizontal">
-                    <dock:LayoutAnchorablePane DockWidth="150">
-                        <dock:LayoutAnchorable Title="{x:Static local:Localizables.TOOL_IMPORT_OPTIONS}" IconSource="{local:ModelViewerIcon Icon=Open}">
+                    <dock:LayoutAnchorablePane DockWidth="250">
+                        <dock:LayoutAnchorable x:Name="DockPaneImportOptions"
+                                               Title="{x:Static local:Localizables.TOOL_IMPORT_OPTIONS}" IconSource="{local:ModelViewerIcon Icon=ModelEdit}"
+                                               CanClose="False">
                             <local:ImportOptionsView />
                         </dock:LayoutAnchorable>
                     </dock:LayoutAnchorablePane>
 
                     <dock:LayoutDocumentPane>
-                        <dock:LayoutDocument Title="3D-View" IconSource="{local:ModelViewerIcon Icon=Open}">
+                        <dock:LayoutDocument x:Name="DockPane3DView"
+                                             Title="3D-View" IconSource="{local:ModelViewerIcon Icon=World}"
+                                             CanClose="False">
                             <local:Scene3DView />
                         </dock:LayoutDocument>
                     </dock:LayoutDocumentPane>

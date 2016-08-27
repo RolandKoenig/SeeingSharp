@@ -10,11 +10,13 @@
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{ssharpBase:Singleton Type=local:MainWindowViewModel}">
     <DockPanel LastChildFill="True">
-        <Menu DockPanel.Dock="Top" Style="{StaticResource SubMenu}">
-            <MenuItem Icon="{local:ModelViewerIcon Icon=Refresh,ResultType=Image}"
-                      Command="{Binding Path=CommandReload}"
-                      Header="Refresh"/>
-        </Menu>
+        <ToolBarTray IsLocked="True"
+                     DockPanel.Dock="Top">
+            <ToolBar>
+                <Button Command="{Binding Path=CommandReload}" 
+                    Content="{local:ModelViewerIcon Icon=Refresh,ResultType=Image}" />
+            </ToolBar>
+        </ToolBarTray>
 
         <prop:PropertyGrid SelectedObject="{Binding Path=LoadedFile.CurrentImportOptions}" 
                            TabVisibility="Collapsed" />

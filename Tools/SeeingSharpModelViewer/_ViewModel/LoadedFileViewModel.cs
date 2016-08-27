@@ -51,6 +51,7 @@ namespace SeeingSharpModelViewer
             m_currentFile = resourceLink;
             m_currentImportOptions = GraphicsCore.Current.ImportersAndExporters.CreateImportOptions(m_currentFile);
             base.RaisePropertyChanged(nameof(CurrentFile));
+            base.RaisePropertyChanged(nameof(CurrentFileForStatusBar));
             base.RaisePropertyChanged(nameof(CurrentImportOptions));
 
             await m_scene.ImportAsync(m_currentFile, m_currentImportOptions);
@@ -78,6 +79,7 @@ namespace SeeingSharpModelViewer
                 m_currentFile = null;
                 m_currentImportOptions = null;
                 RaisePropertyChanged(nameof(CurrentFile));
+                RaisePropertyChanged(nameof(CurrentFileForStatusBar));
                 RaisePropertyChanged(nameof(CurrentImportOptions));
             }
         }
@@ -85,6 +87,21 @@ namespace SeeingSharpModelViewer
         public ResourceLink CurrentFile
         {
             get { return m_currentFile; }
+        }
+
+        public string CurrentFileForStatusBar
+        {
+            get
+            {
+                DesktopFileSystemResourceLink fileResource = this.CurrentFile as DesktopFileSystemResourceLink;
+                if(fileResource == null) { return "-"; }
+                else
+                {
+                    string filePath = fileResource.FilePath;
+                    if(filePath.Length > 50) { return $"...{filePath.Substring(filePath.Length - 45)}"; }
+                    else { return filePath; }
+                }
+            }
         }
 
         public ImportOptions CurrentImportOptions
