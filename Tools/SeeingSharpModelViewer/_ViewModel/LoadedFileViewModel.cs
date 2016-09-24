@@ -68,6 +68,8 @@ namespace SeeingSharpModelViewer
                 clearCurrentFileInfo: false);
 
             await m_scene.ImportAsync(m_currentFile, m_currentImportOptions);
+
+            base.Messenger.Publish<NewModelLoadedMessage>();
         }
 
         public async Task CloseAsync(bool clearCurrentFileInfo = true)

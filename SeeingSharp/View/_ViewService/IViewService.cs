@@ -27,6 +27,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+#if UNIVERSAL
+using Windows.UI.Xaml;
+#endif
 
 namespace SeeingSharp.View
 {

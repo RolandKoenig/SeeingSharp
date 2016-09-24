@@ -21,6 +21,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+#if DESKTOP
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -34,7 +35,7 @@ namespace SeeingSharp.Util
 {
     public static class GenericClone
     {
-#if DESKTOP
+
         private static List<Type> s_notBinarySerializable = new List<Type>();
         private static object s_notBinarySerializableLock = new object();
 
@@ -245,6 +246,6 @@ namespace SeeingSharp.Util
 
             return result;
         }
-#endif
     }
 }
+#endif

@@ -70,6 +70,11 @@ namespace SeeingSharp.Util
             else { return "StoageFile: " + m_storageFile.Name; }
         }
 
+        public override bool Exists()
+        {
+            return m_storageFile != null;
+        }
+
         /// <summary>
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>

@@ -4,7 +4,7 @@
         <name>SeeingSharp</name>
     </assembly>
     <members>
-        <member name="M:SeeingSharp.Bootstrapper.TranslationBootstrapper.Execute">
+        <member name="M:SeeingSharp.Bootstrapper.TranslationBootstrapper.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
             <summary>
             Executes the background action behind this item.
             </summary>
@@ -224,7 +224,7 @@
             Loads all bootstrapper items
             </summary>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.RunAsync">
+        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.RunAsync(SeeingSharp.Infrastructure.SeeingSharpApplication)">
             <summary>
             Runs all items within this bootstrapper.
             </summary>
@@ -361,10 +361,11 @@
             Gets a container holding all registered singletons.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.IBootstrapperItem.Execute">
+        <member name="M:SeeingSharp.Infrastructure.IBootstrapperItem.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
             <summary>
             Executes the background action behind this item.
             </summary>
+            <param name="app">The current application instance.</param>
         </member>
         <member name="P:SeeingSharp.Infrastructure.IBootstrapperItem.OrderID">
             <summary>
@@ -626,26 +627,20 @@
             <param name="storageFile">The target file.</param>
             <param name="objectToSerialize">The object to serialize.</param>
         </member>
-        <member name="M:SeeingSharp.Util.CommonTools.DeserializeJsonFromResourceAsync``1(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Deserializes a json object from the given resource.
-            </summary>
-            <typeparam name="T">The type of the object.</typeparam>
-            <param name="resourceLink">The link to the resource.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.SerializeToJsonString``1(``0,System.Boolean)">
-            <summary>
-            Serializes the given object to a json formatted string.
-            </summary>
-            <param name="obj">The object to be serialized.</param>
-            <param name="indent">Append empty spaces to produce easy readable json?</param>
-        </member>
         <member name="M:SeeingSharp.Util.CommonTools.BinaryInsert``1(System.Collections.Generic.List{``0},``0)">
             <summary>
             Inserts the given object using a binary search algorithm.
             </summary>
             <param name="targetList">The list to be modified.</param>
             <param name="newItem">The new item to be inserted.</param>
+        </member>
+        <member name="M:SeeingSharp.Util.CommonTools.BinaryInsert``1(System.Collections.Generic.List{``0},``0,System.Collections.Generic.IComparer{``0})">
+            <summary>
+            Inserts the given object using a binary search algorithm.
+            </summary>
+            <param name="targetList">The list to be modified.</param>
+            <param name="newItem">The new item to be inserted.</param>
+            <param name="comparer">The comparer which is used for the binary search method.</param>
         </member>
         <member name="M:SeeingSharp.Util.CommonTools.BinaryRemove``1(System.Collections.Generic.List{``0},``0)">
             <summary>
@@ -763,6 +758,16 @@
             Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
+        <member name="T:SeeingSharp.Util.IgnoreGenericCloneAttribute">
+            <summary>
+            Indicates that a property is not to be cloned by CommonTools.CloneObject method.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Util.AssignOriginalParentObjectAfterCloneAttribute">
+            <summary>
+            Inidicates that this field will get a reference to the original parent object after being cloned from it using CommonTools.Clone
+            </summary>
+        </member>
         <member name="T:SeeingSharp.Util.RingBuffer`1">
             <summary>
             This is a simple RingBuffer implementation for Seeing#, 
@@ -812,17 +817,6 @@
             Gets the total count of items.
             </summary>
         </member>
-        <member name="F:SeeingSharp.Util.SerializerRepository.DEFAULT_JSON">
-            <summary>
-            Gets the default JsonSerializer which can be used to serialize complex object graphs.
-            The serializer should be threadsafe, see http://json.codeplex.com/discussions/110461
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SerializerRepository.#cctor">
-            <summary>
-            Initializes the <see cref="T:SeeingSharp.Util.SerializerRepository"/> class.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Util.SerializerRepository.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.SerializerRepository"/> class.
@@ -844,18 +838,6 @@
             <summary>
             Gets the current instance of the serializer collection.
             </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.SerializerRepository.SeeingSharpJsonContractResolver">
-            <summary>
-            Base class for creating a custom contract resolver that looks at each property to see if
-            it is allowed to be serialized.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Util.SerializerRepository.SeeingSharpJsonContractResolver.GetSerializableMembers(System.Type)">
-            <summary>
-            Gets the serializable members for the type.
-            </summary>
-            <param name="objectType">The type to get serializable members for.</param>
         </member>
         <member name="T:SeeingSharp.Util.TableData.ITableFile">
             <summary>
@@ -1073,6 +1055,45 @@
             <param name="sourceFile">The source file to be loaded.</param>
             <param name="importerConfig">The configuration of the importer.</param>
         </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector3(System.Xml.XmlReader)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+        </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector3(System.Xml.XmlReader,System.IFormatProvider)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
+        </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector2(System.Xml.XmlReader)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+        </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadContentAsVector2(System.Xml.XmlReader,System.IFormatProvider)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
+        </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadElementContentAsVector3(System.Xml.XmlReader)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+        </member>
+        <member name="M:SeeingSharp.Util._CommonExtensions.ReadElementContentAsVector3(System.Xml.XmlReader,System.IFormatProvider)">
+            <summary>
+            Reads a vector from the given xml reader.
+            </summary>
+            <param name="xmlReader">The xml reader.</param>
+            <param name="formatProvider">The <see cref="T:System.IFormatProvider"/> for parsing <see cref="T:System.Single"/> values.</param>
+        </member>
         <member name="M:SeeingSharp.Util.ResourceLink.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.ResourceLink"/> class.
@@ -1088,11 +1109,12 @@
             Reads the complete resource to a new string.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.ResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.ResourceLink.OpenOutputStream">
             <summary>
@@ -1218,11 +1240,12 @@
             A <see cref="T:System.String" /> that represents this instance.
             </returns>
         </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.AssemblyResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets the resource link for another file within the same assembly and namespace.
             </summary>
             <param name="fileName">The filename for which to get the link.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional).</param>
         </member>
         <member name="M:SeeingSharp.Util.AssemblyResourceLink.OpenRead">
             <summary>
@@ -1395,11 +1418,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenOutputStream">
             <summary>
@@ -1448,11 +1472,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.StorageFileResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.StorageFileResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.StorageFileResourceLink.OpenInputStream">
             <summary>
@@ -1502,11 +1527,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenOutputStream">
             <summary>
@@ -1565,11 +1591,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.UriResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.UriResourceLink.OpenOutputStream">
             <summary>
@@ -1717,7 +1744,7 @@
             Subscribes to the given MessageType.
             </summary>
             <typeparam name="MessageType">Type of the message.</typeparam>
-            <param name="Messenger">Action to perform on incoming message.</param>
+            <param name="actionOnMessage">Action to perform on incoming message.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeWhen``1(System.Func{``0,System.Boolean},System.Action{``0})">
             <summary>
@@ -1725,7 +1752,7 @@
             </summary>
             <typeparam name="MessageType">The type of the message type.</typeparam>
             <param name="condition">The condition.</param>
-            <param name="Messenger">The messenger.</param>
+            <param name="actionOnMessage">The messenger.</param>
             <returns></returns>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Subscribe(System.Delegate,System.Type)">
@@ -1733,7 +1760,7 @@
             Subscribes to the given message type.
             </summary>
             <param name="messageType">The type of the message.</param>
-            <param name="Messenger">Action to perform on incoming message.</param>
+            <param name="actionOnMessage">Action to perform on incoming message.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Unsubscribe(SeeingSharp.Util.MessageSubscription)">
             <summary>
@@ -1970,6 +1997,12 @@
             </summary>
             <param name="nameKey">A key in form of a name.</param>
         </member>
+        <member name="M:SeeingSharp.Util.NamedOrGenericKey.#ctor(System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Util.NamedOrGenericKey" /> struct.
+            </summary>
+            <param name="targetType">The type which to bind to the key (FullTypeName is used).</param>
+        </member>
         <member name="M:SeeingSharp.Util.NamedOrGenericKey.ToString">
             <summary>
             Returns a <see cref="T:System.String" /> that represents this instance.
@@ -2133,6 +2166,12 @@
             </summary>
             <param name="item">The item.</param>
         </member>
+        <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.Enqueue(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Enqueues all items within the given collection.
+            </summary>
+            <param name="items">The items to be enqueued.</param>
+        </member>
         <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.HasAny">
             <summary>
             Are there any elements in the queue?
@@ -2175,6 +2214,11 @@
         <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.DequeueAll">
             <summary>
             Deques all items within this queue and returns them using a List object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.DequeueAll(System.Collections.Generic.List{`0})">
+            <summary>
+            Deques all items within this queue and puts the items to the given target list.
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.Clear">
@@ -2412,16 +2456,6 @@
             Reregisters a stream for public use
             </summary>
         </member>
-        <member name="T:SeeingSharp.Util.IgnoreGenericCloneAttribute">
-            <summary>
-            Indicates that a property is not to be cloned by CommonTools.CloneObject method.
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.AssignOriginalObjectAfterCloneAttribute">
-            <summary>
-            Inidicates that this field will get a reference to the original object after being cloned from it using CommonTools.Clone
-            </summary>
-        </member>
         <member name="T:SeeingSharp.Util.MessagePublishException">
             <summary>
             An exception info holding all information about exceptions occurred during publishing a message.
@@ -2603,6 +2637,11 @@
         <member name="M:SeeingSharp.Util.ViewModelBase.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.ViewModelBase"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ViewModelBase.TryGetViewService``1">
+            <summary>
+            Tries to get the view service that implements the given type.
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.ViewModelBase.HasPropertyError``1(System.Linq.Expressions.Expression{System.Func{``0}})">
@@ -3199,6 +3238,22 @@
         <member name="P:SeeingSharp.Util.ObjectThreadExceptionEventArgs.State">
             <summary>
             Gets current state of the thread.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.IViewService.SetViewServiceHost(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Tells the ViewService which FrameworkElement it is hosted by.
+            </summary>
+            <param name="frameworkElement">The framework element.</param>
+        </member>
+        <member name="M:SeeingSharp.View.ViewServiceNode.#ctor(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.View.ViewServiceNode"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.ViewServiceNode.OnViewModel_ViewServiceRequest(System.Object,SeeingSharp.Util.ViewServiceRequestEventArgs)">
+            <summary>
+            Called when the viewmodel request a view service.
             </summary>
         </member>
         <member name="T:SeeingSharp.BoundingBox">
@@ -6017,6 +6072,17 @@
             <param name="green">The green.</param>
             <param name="blue">The blue.</param>
         </member>
+        <member name="M:SeeingSharp.Color4.#ctor(Windows.UI.Color)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Color4"/> struct.
+            </summary>
+            <param name="winColor">The Windows.UI.Color structure from which to create a Color4.</param>
+        </member>
+        <member name="M:SeeingSharp.Color4.ToArgb">
+            <summary>
+            Converts this value to a argb value
+            </summary>
+        </member>
         <member name="F:SeeingSharp.Color4.Black">
             <summary>
             The Black color (0, 0, 0, 1).
@@ -7819,6 +7885,224 @@
             Performs a equality check with a slight tolerance.
             </summary>
             <param name="otherRay">The other ray to check.</param>
+        </member>
+        <member name="T:SeeingSharp.RectangleF">
+            <summary>
+            Define a RectangleF. This structure is slightly different from System.Drawing.RectangleF as It is 
+            internally storing Left,Top,Right,Bottom instead of Left,Top,Width,Height.
+            Although automatic casting from a to System.Drawing.Rectangle is provided by this class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Inflate(System.Single,System.Single)">
+            <summary>Pushes the edges of the Rectangle out by the horizontal and vertical values specified.</summary>
+            <param name="horizontalAmount">Value to push the sides out by.</param>
+            <param name="verticalAmount">Value to push the top and bottom out by.</param>
+        </member>
+        <member name="F:SeeingSharp.RectangleF.Empty">
+            <summary>
+            An empty rectangle
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.RectangleF"/> struct.
+            </summary>
+            <param name="x">The left.</param>
+            <param name="y">The top.</param>
+            <param name="width">The width.</param>
+            <param name="height">The height.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Int32,System.Int32)">
+            <summary>
+            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
+            </summary>
+            <param name="x">X point coordinate.</param>
+            <param name="y">Y point coordinate.</param>
+            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Single,System.Single)">
+            <summary>
+            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
+            </summary>
+            <param name="x">X point coordinate.</param>
+            <param name="y">Y point coordinate.</param>
+            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2)">
+            <summary>
+            Checks, if specified <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
+            </summary> 
+            <param name="vector2D">Coordinate <see cref="T:System.Numerics.Vector2"/>.</param>
+            <returns><c>true</c> if <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Point)">
+            <summary>
+            Checks, if specified <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
+            </summary>
+            <param name="point">Coordinate <see cref="T:SeeingSharp.Point"/>.</param> 
+            <returns><c>true</c> if <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Left">
+            <summary>
+            Gets or sets the left.
+            </summary>
+            <value>The left.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Top">
+            <summary>
+            Gets or sets the top.
+            </summary>
+            <value>The top.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Right">
+            <summary>
+            Gets or sets the right.
+            </summary>
+            <value>The right.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Bottom">
+            <summary>
+            Gets or sets the bottom.
+            </summary>
+            <value>The bottom.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.X">
+            <summary>
+            Gets the left position.
+            </summary>
+            <value>The left position.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Y">
+            <summary>
+            Gets the top position.
+            </summary>
+            <value>The top position.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Width">
+            <summary>
+            Gets the width.
+            </summary>
+            <value>The width.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Height">
+            <summary>
+            Gets the height.
+            </summary>
+            <value>The height.</value>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Location">
+            <summary>Gets or sets the upper-left value of the Rectangle.</summary>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.Center">
+            <summary>Gets the Point that specifies the center of the rectangle.</summary>
+        </member>
+        <member name="P:SeeingSharp.RectangleF.IsEmpty">
+            <summary>Gets a value that indicates whether the Rectangle is empty.</summary>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Offset(SeeingSharp.Point)">
+            <summary>Changes the position of the Rectangle.</summary>
+            <param name="amount">The values to adjust the position of the Rectangle by.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Offset(System.Int32,System.Int32)">
+            <summary>Changes the position of the Rectangle.</summary>
+            <param name="offsetX">Change in the x-position.</param>
+            <param name="offsetY">Change in the y-position.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Inflate(System.Int32,System.Int32)">
+            <summary>Pushes the edges of the Rectangle out by the horizontal and vertical values specified.</summary>
+            <param name="horizontalAmount">Value to push the sides out by.</param>
+            <param name="verticalAmount">Value to push the top and bottom out by.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2@,System.Boolean@)">
+            <summary>Determines whether this Rectangle contains a specified Point.</summary>
+            <param name="value">The Point to evaluate.</param>
+            <param name="result">[OutAttribute] true if the specified Point is contained within this Rectangle; false otherwise.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Rectangle)">
+            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
+            <param name="value">The Rectangle to evaluate.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.RectangleF@,System.Boolean@)">
+            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
+            <param name="value">The Rectangle to evaluate.</param>
+            <param name="result">[OutAttribute] On exit, is true if this Rectangle entirely contains the specified Rectangle, or false if not.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF)">
+            <summary>Determines whether a specified Rectangle intersects with this Rectangle.</summary>
+            <param name="value">The Rectangle to evaluate.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF@,System.Boolean@)">
+            <summary>
+            Determines whether a specified Rectangle intersects with this Rectangle.
+            </summary>
+            <param name="value">The Rectangle to evaluate</param>
+            <param name="result">[OutAttribute] true if the specified Rectangle intersects with this one; false otherwise.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.
+            </summary>
+            <param name="value1">The first Rectangle to compare.</param>
+            <param name="value2">The second Rectangle to compare.</param>
+            <returns>Rectangle.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
+            <summary>Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.</summary>
+            <param name="value1">The first Rectangle to compare.</param>
+            <param name="value2">The second Rectangle to compare.</param>
+            <param name="result">[OutAttribute] The area where the two first parameters overlap.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Creates a new Rectangle that exactly contains two other rectangles.
+            </summary>
+            <param name="value1">The first Rectangle to contain.</param>
+            <param name="value2">The second Rectangle to contain.</param>
+            <returns>Rectangle.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
+            <summary>
+            Creates a new Rectangle that exactly contains two other rectangles.
+            </summary>
+            <param name="value1">The first Rectangle to contain.</param>
+            <param name="value2">The second Rectangle to contain.</param>
+            <param name="result">[OutAttribute] The Rectangle that must be the union of the first two rectangles.</param>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
+            <returns>
+            	<c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.Equals(SeeingSharp.RectangleF)">
+            <inheritdoc/>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+            </returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.op_Equality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Implements the operator ==.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>The result of the operator.</returns>
+        </member>
+        <member name="M:SeeingSharp.RectangleF.op_Inequality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
+            <summary>
+            Implements the operator !=.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>The result of the operator.</returns>
         </member>
         <member name="T:SeeingSharp.Size2">
             <summary>
@@ -13339,219 +13623,6 @@
             <returns>The result of the operator.</returns>
         </member>
         <member name="M:SeeingSharp.Rectangle.op_Inequality(SeeingSharp.Rectangle,SeeingSharp.Rectangle)">
-            <summary>
-            Implements the operator !=.
-            </summary>
-            <param name="left">The left.</param>
-            <param name="right">The right.</param>
-            <returns>The result of the operator.</returns>
-        </member>
-        <member name="T:SeeingSharp.RectangleF">
-            <summary>
-            Define a RectangleF. This structure is slightly different from System.Drawing.RectangleF as It is 
-            internally storing Left,Top,Right,Bottom instead of Left,Top,Width,Height.
-            Although automatic casting from a to System.Drawing.Rectangle is provided by this class.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.RectangleF.Empty">
-            <summary>
-            An empty rectangle
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.#ctor(System.Single,System.Single,System.Single,System.Single)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.RectangleF"/> struct.
-            </summary>
-            <param name="x">The left.</param>
-            <param name="y">The top.</param>
-            <param name="width">The width.</param>
-            <param name="height">The height.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Int32,System.Int32)">
-            <summary>
-            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
-            </summary>
-            <param name="x">X point coordinate.</param>
-            <param name="y">Y point coordinate.</param>
-            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Single,System.Single)">
-            <summary>
-            Checks, if specified point is inside <see cref="T:SeeingSharp.RectangleF"/>.
-            </summary>
-            <param name="x">X point coordinate.</param>
-            <param name="y">Y point coordinate.</param>
-            <returns><c>true</c> if point is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2)">
-            <summary>
-            Checks, if specified <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
-            </summary> 
-            <param name="vector2D">Coordinate <see cref="T:System.Numerics.Vector2"/>.</param>
-            <returns><c>true</c> if <see cref="T:System.Numerics.Vector2"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Point)">
-            <summary>
-            Checks, if specified <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>. 
-            </summary>
-            <param name="point">Coordinate <see cref="T:SeeingSharp.Point"/>.</param> 
-            <returns><c>true</c> if <see cref="T:SeeingSharp.Point"/> is inside <see cref="T:SeeingSharp.RectangleF"/>, otherwise <c>false</c>.</returns>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Left">
-            <summary>
-            Gets or sets the left.
-            </summary>
-            <value>The left.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Top">
-            <summary>
-            Gets or sets the top.
-            </summary>
-            <value>The top.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Right">
-            <summary>
-            Gets or sets the right.
-            </summary>
-            <value>The right.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Bottom">
-            <summary>
-            Gets or sets the bottom.
-            </summary>
-            <value>The bottom.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.X">
-            <summary>
-            Gets the left position.
-            </summary>
-            <value>The left position.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Y">
-            <summary>
-            Gets the top position.
-            </summary>
-            <value>The top position.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Width">
-            <summary>
-            Gets the width.
-            </summary>
-            <value>The width.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Height">
-            <summary>
-            Gets the height.
-            </summary>
-            <value>The height.</value>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Location">
-            <summary>Gets or sets the upper-left value of the Rectangle.</summary>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.Center">
-            <summary>Gets the Point that specifies the center of the rectangle.</summary>
-        </member>
-        <member name="P:SeeingSharp.RectangleF.IsEmpty">
-            <summary>Gets a value that indicates whether the Rectangle is empty.</summary>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Offset(SeeingSharp.Point)">
-            <summary>Changes the position of the Rectangle.</summary>
-            <param name="amount">The values to adjust the position of the Rectangle by.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Offset(System.Int32,System.Int32)">
-            <summary>Changes the position of the Rectangle.</summary>
-            <param name="offsetX">Change in the x-position.</param>
-            <param name="offsetY">Change in the y-position.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Inflate(System.Int32,System.Int32)">
-            <summary>Pushes the edges of the Rectangle out by the horizontal and vertical values specified.</summary>
-            <param name="horizontalAmount">Value to push the sides out by.</param>
-            <param name="verticalAmount">Value to push the top and bottom out by.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(System.Numerics.Vector2@,System.Boolean@)">
-            <summary>Determines whether this Rectangle contains a specified Point.</summary>
-            <param name="value">The Point to evaluate.</param>
-            <param name="result">[OutAttribute] true if the specified Point is contained within this Rectangle; false otherwise.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.Rectangle)">
-            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
-            <param name="value">The Rectangle to evaluate.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Contains(SeeingSharp.RectangleF@,System.Boolean@)">
-            <summary>Determines whether this Rectangle entirely contains a specified Rectangle.</summary>
-            <param name="value">The Rectangle to evaluate.</param>
-            <param name="result">[OutAttribute] On exit, is true if this Rectangle entirely contains the specified Rectangle, or false if not.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF)">
-            <summary>Determines whether a specified Rectangle intersects with this Rectangle.</summary>
-            <param name="value">The Rectangle to evaluate.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersects(SeeingSharp.RectangleF@,System.Boolean@)">
-            <summary>
-            Determines whether a specified Rectangle intersects with this Rectangle.
-            </summary>
-            <param name="value">The Rectangle to evaluate</param>
-            <param name="result">[OutAttribute] true if the specified Rectangle intersects with this one; false otherwise.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
-            <summary>
-            Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.
-            </summary>
-            <param name="value1">The first Rectangle to compare.</param>
-            <param name="value2">The second Rectangle to compare.</param>
-            <returns>Rectangle.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Intersect(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
-            <summary>Creates a Rectangle defining the area where one rectangle overlaps with another rectangle.</summary>
-            <param name="value1">The first Rectangle to compare.</param>
-            <param name="value2">The second Rectangle to compare.</param>
-            <param name="result">[OutAttribute] The area where the two first parameters overlap.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
-            <summary>
-            Creates a new Rectangle that exactly contains two other rectangles.
-            </summary>
-            <param name="value1">The first Rectangle to contain.</param>
-            <param name="value2">The second Rectangle to contain.</param>
-            <returns>Rectangle.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Union(SeeingSharp.RectangleF@,SeeingSharp.RectangleF@,SeeingSharp.RectangleF@)">
-            <summary>
-            Creates a new Rectangle that exactly contains two other rectangles.
-            </summary>
-            <param name="value1">The first Rectangle to contain.</param>
-            <param name="value2">The second Rectangle to contain.</param>
-            <param name="result">[OutAttribute] The Rectangle that must be the union of the first two rectangles.</param>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Equals(System.Object)">
-            <summary>
-            Determines whether the specified <see cref="T:System.Object"/> is equal to this instance.
-            </summary>
-            <param name="obj">The <see cref="T:System.Object"/> to compare with this instance.</param>
-            <returns>
-            	<c>true</c> if the specified <see cref="T:System.Object"/> is equal to this instance; otherwise, <c>false</c>.
-            </returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.Equals(SeeingSharp.RectangleF)">
-            <inheritdoc/>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.GetHashCode">
-            <summary>
-            Returns a hash code for this instance.
-            </summary>
-            <returns>
-            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
-            </returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.op_Equality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
-            <summary>
-            Implements the operator ==.
-            </summary>
-            <param name="left">The left.</param>
-            <param name="right">The right.</param>
-            <returns>The result of the operator.</returns>
-        </member>
-        <member name="M:SeeingSharp.RectangleF.op_Inequality(SeeingSharp.RectangleF,SeeingSharp.RectangleF)">
             <summary>
             Implements the operator !=.
             </summary>

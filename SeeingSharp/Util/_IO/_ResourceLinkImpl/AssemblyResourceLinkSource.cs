@@ -98,6 +98,11 @@ namespace SeeingSharp.Util
             return m_resourceLink.OpenRead();
         }
 
+        public override bool Exists()
+        {
+            return m_resourceLink.IsValid();
+        }
+
         /// <summary>
         /// Gets the file extension of the resource we target to.
         /// </summary>

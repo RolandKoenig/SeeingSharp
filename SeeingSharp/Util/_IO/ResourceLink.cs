@@ -88,6 +88,11 @@ namespace SeeingSharp.Util
         }
 
         /// <summary>
+        /// Does the resource behind this link already exist?
+        /// </summary>
+        public abstract bool Exists();
+
+        /// <summary>
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>
         /// <param name="newFileName">The new file name for which to get the ResourceLink object.</param>

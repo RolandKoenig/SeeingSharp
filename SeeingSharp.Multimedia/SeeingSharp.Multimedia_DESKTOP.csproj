@@ -372,7 +372,7 @@
     <Compile Include="Objects\_ImportExport\ExportOptions.cs" />
     <Compile Include="Objects\_ImportExport\IModelExporter.cs" />
     <Compile Include="Objects\_ImportExport\IModelImporter.cs" />
-    <Compile Include="Objects\_ImportExport\ImportExportHandler.cs" />
+    <Compile Include="Objects\_ImportExport\ImporterExporterRepository.cs" />
     <Compile Include="Objects\_ImportExport\ImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedResourceInfo.cs" />
     <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedModelContainer.cs" />

@@ -68,7 +68,7 @@ namespace SeeingSharp.Multimedia.Core
         private GraphicsCoreConfiguration m_configuration;
         private UniqueGenericKeyGenerator m_resourceKeyGenerator;
         private PerformanceAnalyzer m_performanceCalculator;
-        private ImportExportHandler m_importExporters;
+        private ImporterExporterRepository m_importExporters;
         #endregion
 
         #region Members for input
@@ -130,7 +130,7 @@ namespace SeeingSharp.Multimedia.Core
 
                 // Create container object for all input handlers
                 m_inputHandlerFactory = new InputHandlerFactory();
-                m_importExporters = new ImportExportHandler();
+                m_importExporters = new ImporterExporterRepository();
 
                 // Try to initialize global api factories (mostly for 2D rendering / operations)
                 try
@@ -637,7 +637,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets an object which manages all importers and exporters.
         /// </summary>
-        public ImportExportHandler ImportersAndExporters
+        public ImporterExporterRepository ImportersAndExporters
         {
             get { return m_importExporters; }
         }

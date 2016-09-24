@@ -25,7 +25,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin.WinRT\Debug\AnyCpu\</OutputPath>
+    <OutputPath>bin.Universal\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;UNIVERSAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -41,14 +41,14 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin.WinRT\Release\AnyCpu\</OutputPath>
+    <OutputPath>bin.Universal\Release\</OutputPath>
     <DefineConstants>TRACE;UNIVERSAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <NoWarn>1591</NoWarn>
-    <DocumentationFile>bin.WinRT\Release\AnyCpu\SeeingSharp.XML</DocumentationFile>
+    <DocumentationFile>bin.Universal\Release\AnyCpu\SeeingSharp.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .NET Framework is automatically included -->

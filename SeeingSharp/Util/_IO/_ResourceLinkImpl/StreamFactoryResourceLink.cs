@@ -66,6 +66,11 @@ namespace SeeingSharp.Util
             return "Factory-Resource: " + m_fileName;
         }
 
+        public override bool Exists()
+        {
+            return true;
+        }
+
         /// <summary>
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>

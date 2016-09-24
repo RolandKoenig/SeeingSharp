@@ -4,6 +4,34 @@
         <name>SeeingSharp.Multimedia</name>
     </assembly>
     <members>
+        <member name="M:SeeingSharp.Multimedia.Components.ObjectCreatorComponent`1.CreateLayerIfNotAvailable(SeeingSharp.Multimedia.Core.SceneManipulator)">
+            <summary>
+            Creates the configured layer if it does not exist on the given scene.
+            </summary>
+            <param name="manipulator">The manipulator for manipulating the scene.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.GradientBackgroundComponent.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Components.GradientBackgroundComponent"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.GradientBackgroundComponent.Attach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Attaches this component to a scene.
+            Be careful, this method gets called from a background thread of seeing#!
+            It may also be called from multiple scenes in parallel or simply withoud previous Detach call.
+            </summary>
+            <param name="manipulator">The manipulator of the scene we attach to.</param>
+            <param name="correspondingView">The view which attached this component.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Components.GradientBackgroundComponent.Detach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation,SeeingSharp.Multimedia.Components.GradientBackgroundComponent.PerSceneContext)">
+            <summary>
+            Detaches the specified manipulator.
+            </summary>
+            <param name="manipulator">The manipulator.</param>
+            <param name="correspondingView">The corresponding view.</param>
+            <param name="context">The context.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Components.FocusedObjectCameraComponent.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Components.FocusedObjectCameraComponent"/> class.
@@ -47,6 +75,16 @@
         <member name="M:SeeingSharp.Multimedia.Components.FocusedCameraComponent.UpdateForMouse(SeeingSharp.Multimedia.Components.FocusedCameraComponent.PerSceneContext,SeeingSharp.Multimedia.Drawing3D.Camera3DBase,SeeingSharp.Multimedia.Input.MouseOrPointerState)">
             <summary>
             Update camera for mouse input.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Components.FocusedCameraComponent.CameraHRotationInitial">
+            <summary>
+            Initial horizontal rotation of the camera (degrees).
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Components.FocusedCameraComponent.CameraVRotationInitial">
+            <summary>
+            Initial vertical rotation of the camera (degrees).
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Components.FreeMovingCameraComponent.Attach(SeeingSharp.Multimedia.Core.SceneManipulator,SeeingSharp.Multimedia.Core.ViewInformation)">
@@ -105,12 +143,12 @@
             Creates all resources 
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.BeginDraw(SeeingSharp.Multimedia.Core.RenderState)">
+        <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.BeginDraw">
             <summary>
             Begins the draw.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.EndDraw(SeeingSharp.Multimedia.Core.RenderState)">
+        <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.EndDraw">
             <summary>
             Finishes Direct2D drawing.
             </summary>
@@ -190,17 +228,17 @@
             <param name="cancelToken"></param>
             <returns></returns>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.UpdateAndPrepareRendering(System.Collections.Generic.List{SeeingSharp.Multimedia.Core.RenderLoop},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.Scene},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.EngineDevice},System.Collections.Generic.List{SeeingSharp.Multimedia.Input.InputStateBase},SeeingSharp.Multimedia.Core.UpdateState)">
+        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.UpdateAndPrepareRendering(System.Collections.Generic.List{SeeingSharp.Multimedia.Core.RenderLoop},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.Scene},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.EngineDevice},System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Input.InputFrame},SeeingSharp.Multimedia.Core.UpdateState)">
             <summary>
             Updates the scene's and prepares all views for rendering.
             </summary>
             <param name="renderingRenderLoops">The registered render loops on the current pass.</param>
             <param name="scenesToRender">All scenes to be updated / rendered.</param>
             <param name="devicesInUse">The rendering devices that are in use.</param>
-            <param name="inputStates">All input states queried during last render.</param>
+            <param name="inputFrames">All InputFrames gathered during last render.</param>
             <param name="updateState">Current global update state.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.RenderAndUpdateBesideAsync(System.Collections.Generic.List{SeeingSharp.Multimedia.Core.RenderLoop},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.Scene},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.EngineDevice},SeeingSharp.Multimedia.Core.UpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Input.InputStateBase})">
+        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.RenderAndUpdateBeside(System.Collections.Generic.List{SeeingSharp.Multimedia.Core.RenderLoop},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.Scene},System.Collections.Generic.List{SeeingSharp.Multimedia.Core.EngineDevice},SeeingSharp.Multimedia.Core.UpdateState)">
             <summary>
             Renders all given scenes using the different devices and performs "UpdateBesideRendering" step.
             </summary>
@@ -208,7 +246,6 @@
             <param name="scenesToRender">All scenes to be updated / rendered.</param>
             <param name="devicesInUse">The rendering devices that are in use.</param>
             <param name="updateState">Current global update state.</param>
-            <param name="inputStates">The list containing all queried input states.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.UpdateRenderLoopRegistrationsAsync(System.Collections.Generic.List{SeeingSharp.Multimedia.Core.RenderLoop})">
             <summary>
@@ -237,11 +274,6 @@
             </summary>
             <param name="scene">The scene to be registered.</param>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.EngineMainLoop.Current">
-            <summary>
-            Gets the current singleton instance.
-            </summary>
-        </member>
         <member name="P:SeeingSharp.Multimedia.Core.EngineMainLoop.IsRunning">
             <summary>
             Is the MainLoop running?
@@ -252,19 +284,24 @@
             Gets the total count of registered RenderLoop objects.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.GenericInputEventArgs.DefaultGamepad">
+        <member name="P:SeeingSharp.Multimedia.Core.GenericInputEventArgs.InputFrames">
             <summary>
-            Gets the current default gamepad state.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.GenericInputEventArgs.InputStates">
-            <summary>
-            Gets a list containing all generic input states.
+            Gets a list containing all InputFrames.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.GraphicsCore"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.GetFontFamilyNames(System.String)">
+            <summary>
+            Gets a collection containing all available font familily names.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.InitializeWpfRenderPerformanceMeasure">
+            <summary>
+            Initializes performance measure for Wpf render system.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Resume">
@@ -793,7 +830,7 @@
             Raised when it is possible for the UI thread to manipulate current filter list.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.#ctor(System.Threading.SynchronizationContext,System.Func{SeeingSharp.Multimedia.Core.EngineDevice,System.Tuple{SharpDX.Direct3D11.Texture2D,SharpDX.Direct3D11.RenderTargetView,SharpDX.Direct3D11.Texture2D,SharpDX.Direct3D11.DepthStencilView,SharpDX.ViewportF,SeeingSharp.Size2,SeeingSharp.Multimedia.Core.DpiScaling}},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Func{SeeingSharp.Multimedia.Core.EngineDevice,System.Boolean},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Action{SeeingSharp.Multimedia.Core.EngineDevice},System.Func{System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Input.InputStateBase}},System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.#ctor(System.Threading.SynchronizationContext,SeeingSharp.Multimedia.Core.IRenderLoopHost,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.RenderLoop" /> class.
             </summary>
@@ -921,11 +958,6 @@
         <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.ResetFlagsBeforeRendering">
             <summary>
             Internal method that resets some flags directly before rendering.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.QueryViewRelatedInputStateAsync">
-            <summary>
-            Queries for all view related input states (e. g. Mouse, Touch, Keyboard).
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.PrepareRenderAsync">
@@ -1377,19 +1409,13 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.GetInputStates(SeeingSharp.Multimedia.Core.ViewInformation)">
-            <summary>
-            Gets all input state for this view.
-            </summary>
-            <param name="viewInfo">The view for which to get all input states.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.OnStartSceneUpdate(SeeingSharp.Multimedia.Core.Scene,SeeingSharp.Multimedia.Core.UpdateState,System.Collections.Generic.List{SeeingSharp.Multimedia.Input.InputStateBase})">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.OnStartSceneUpdate(SeeingSharp.Multimedia.Core.Scene,SeeingSharp.Multimedia.Core.UpdateState,System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Input.InputFrame})">
             <summary>
             Called just before the update pass of a scene object starts.
             </summary>
             <param name="targetScene">The scene for which to prepare this state object</param>
             <param name="updateState">The update state.</param>
-            <param name="unfilteredInputStates">A list containing all queried input states (still not filtered by scene!)</param>
+            <param name="inputFrames">A list containing all gathered InputFrames since last update pass.</param>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.UpdateTime">
             <summary>
@@ -1401,9 +1427,9 @@
             Gets the current update time in milliseconds.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.InputStates">
+        <member name="P:SeeingSharp.Multimedia.Core.SceneRelatedUpdateState.InputFrames">
             <summary>
-            Gets a collection containing all gathered input states.
+            Gets a collection containing all gathered InputFrames since last update pass.
             </summary>
         </member>
         <member name="T:SeeingSharp.Multimedia.Core.UpdateState">
@@ -3747,6 +3773,11 @@
             Enumeration containing supported target hardware
             </summary>
         </member>
+        <member name="F:SeeingSharp.Multimedia.Core.HardwareDriverLevel.Direct3D12">
+            <summary>
+            Driver runs on Direct3D12 hardware.
+            </summary>
+        </member>
         <member name="F:SeeingSharp.Multimedia.Core.HardwareDriverLevel.Direct3D11">
             <summary>
             Driver runs on Direct3D11 hardware.
@@ -4510,6 +4541,13 @@
             Is this component specific for one view?
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObjectInfo.#ctor(SeeingSharp.Multimedia.Core.SceneObject,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.SceneObjectInfo"/> class.
+            </summary>
+            <param name="obj">The object for which to build this info object.</param>
+            <param name="buildFullChildTree">True to build a full child tree automatically.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.PickingInformation.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.PickingInformation" /> class.
@@ -4550,19 +4588,31 @@
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.Scene.WaitUntilVisibleAsync(SeeingSharp.Multimedia.Core.SceneObject,SeeingSharp.Multimedia.Core.ViewInformation,System.Threading.CancellationToken)">
             <summary>
-            Waits until the given object is visible.
+            Waits until the given object is visible on the given view.
             </summary>
-            <param name="sceneObject">The scene object.</param>
-            <param name="viewInfo">The view information.</param>
-            <param name="cancelToken">The cancel token.</param>
+            <param name="sceneObject">The scene object to be checked.</param>
+            <param name="viewInfo">The view on which to check.</param>
+            <param name="cancelToken">The cancellation token.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Scene.GetSceneObjectInfoAsync(System.String)">
+            <summary>
+            Gets a full list of <see cref="T:SeeingSharp.Multimedia.Core.SceneObjectInfo"/>  objects describing the contents of this scene.
+            </summary>
+            <param name="layer">Only return objects of this layer (empty means all layers).</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Scene.GetSceneObjectInfoAsync(SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Gets a <see cref="T:SeeingSharp.Multimedia.Core.SceneObjectInfo"/>  object describing the given <see cref="T:SeeingSharp.Multimedia.Core.SceneObject"/> .
+            </summary>
+            <param name="sceneObject">The <see cref="T:SeeingSharp.Multimedia.Core.SceneObject"/> to describe.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.Scene.WaitUntilVisibleAsync(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Core.SceneObject},SeeingSharp.Multimedia.Core.ViewInformation,System.Threading.CancellationToken)">
             <summary>
             Waits until the given object is visible.
             </summary>
             <param name="sceneObjects">The scene objects to check for.</param>
-            <param name="viewInfo">The view information.</param>
-            <param name="cancelToken">The cancel token.</param>
+            <param name="viewInfo">The view on which to check for visibility.</param>
+            <param name="cancelToken">The cancellation token.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.Scene.AreAllObjectsVisible(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Core.SceneObject},SeeingSharp.Multimedia.Core.ViewInformation)">
             <summary>
@@ -4855,6 +4905,13 @@
             Gets or sets the name of this scene.
             </summary>
         </member>
+        <member name="P:SeeingSharp.Multimedia.Core.Scene.DiscardAutomaticUnload">
+            <summary>
+            Discard automatic scene unloading.
+            (normally the scene gets cleared automatically after the last view
+            gets deregistered).
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.Scene.ImportAsync(SeeingSharp.Util.ResourceLink)">
             <summary>
             Imports all objects from the given source.
@@ -4988,6 +5045,14 @@
             <summary>
             Gets or sets the resource key of the postprocess effect.
             </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.SceneLayer.IsRenderingEnabled">
+            <summary>
+            Gets or sets a value indicating whether this instance is rendering enabled.
+            </summary>
+            <value>
+            <c>true</c> if this instance is rendering enabled; otherwise, <c>false</c>.
+            </value>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.SceneLayer.ClearDepthBufferAfterRendering">
             <summary>
@@ -5123,6 +5188,25 @@
             </summary>
             <param name="sceneObject">Object to add.</param>
             <param name="layer">Layer on wich the object should be added.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneManipulator.AddChild(SeeingSharp.Multimedia.Core.SceneObject,SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Adds the given object as a child.
+            </summary>
+            <param name="parent">The object to which to add the child.</param>
+            <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneManipulator.RemoveChild(SeeingSharp.Multimedia.Core.SceneObject,SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Removes the given object from the list of children.
+            </summary>
+            <param name="parent">The object from which to remove the child.</param>
+            <param name="childToRemove">The object which is to be removed from the list of children.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneManipulator.GetAllChildren(SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Queries for all children (also lower level).
+            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneManipulator.Add3DText(System.String,SeeingSharp.Multimedia.Objects.TextGeometryOptions)">
             <summary>
@@ -5271,6 +5355,13 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.SceneObject"/> class.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.PrepareForExport(SeeingSharp.Multimedia.Objects.ExportModelContainer,SeeingSharp.Multimedia.Objects.ExportOptions)">
+            <summary>
+            This methode stores all data related to this object into the given <see cref="T:SeeingSharp.Multimedia.Objects.ExportModelContainer"/>.
+            </summary>
+            <param name="modelContainer">The target container.</param>
+            <param name="exportOptions">Options for export.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.SetSceneAndLayer(SeeingSharp.Multimedia.Core.Scene,SeeingSharp.Multimedia.Core.SceneLayer)">
             <summary>
             Registers the given scene and layer on this object.
@@ -5314,18 +5405,18 @@
             </summary>
             <param name="objectToCheck">The object to check for.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.GetAllChildren">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.GetAllChildrenInternal">
             <summary>
             Queries for all children (also lower level).
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.AddChild(SeeingSharp.Multimedia.Core.SceneObject)">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.AddChildInternal(SeeingSharp.Multimedia.Core.SceneObject)">
             <summary>
             Adds the given object as a child.
             </summary>
             <param name="childToAdd">The object which is be be located under this one within object hierarchy.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.RemoveChild(SeeingSharp.Multimedia.Core.SceneObject)">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.RemoveChildInternal(SeeingSharp.Multimedia.Core.SceneObject)">
             <summary>
             Removes the given object from the list of children.
             </summary>
@@ -5396,6 +5487,12 @@
             <param name="device">Current graphics device.</param>
             <param name="resourceDictionary">Current resource dicionary.</param>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.ProcessInput(SeeingSharp.Multimedia.Input.InputFrame)">
+            <summary>
+            Processes the given input frame.
+            </summary>
+            <param name="inputFrame">The input frame.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.Update(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState)">
             <summary>
             Updates this object.
@@ -5437,6 +5534,12 @@
             Called when this object was removed from a scene.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.ProcessInputInternal(SeeingSharp.Multimedia.Input.InputFrame)">
+            <summary>
+            Processes the given input frame.
+            </summary>
+            <param name="inputFrame">The input frame.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.UpdateInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState)">
             <summary>
             Updates the object.
@@ -5463,6 +5566,13 @@
             </summary>
             <param name="updateState">The current update state.</param>
             <param name="children">The full list of children that should be updated.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.SceneObject.PrepareForExportInternal(SeeingSharp.Multimedia.Objects.ExportModelContainer,SeeingSharp.Multimedia.Objects.ExportOptions)">
+            <summary>
+            This methode stores all data related to this object into the given <see cref="T:SeeingSharp.Multimedia.Objects.ExportModelContainer"/>.
+            </summary>
+            <param name="modelContainer">The target container.</param>
+            <param name="exportOptions">Options for export.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.IsLoaded(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
@@ -5547,6 +5657,11 @@
         <member name="P:SeeingSharp.Multimedia.Core.SceneObject.CountChildren">
             <summary>
             Gets the total count of direct children of this object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.SceneObject.IsExportable">
+            <summary>
+            Is it possible to export this object?
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneObject.CountRenderPassSubscriptions(SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset)">
@@ -7699,12 +7814,6 @@
             </summary>
             <param name="renderState">The render state on which to apply.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ObjectRenderParameters.Discard(SeeingSharp.Multimedia.Core.RenderState)">
-            <summary>
-            Discards all parameters.
-            </summary>
-            <param name="renderState">The render state on which to discard.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.ObjectRenderParameters.LoadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
             <summary>
             Loads the resource.
@@ -7743,12 +7852,6 @@
             </summary>
             <param name="renderState">The render state on which to apply.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.SceneRenderParameters.Discard(SeeingSharp.Multimedia.Core.RenderState)">
-            <summary>
-            Discards all parameters.
-            </summary>
-            <param name="renderState">The render state on which to discard.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.SceneRenderParameters.LoadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
             <summary>
             Loads the resource.
@@ -7786,12 +7889,6 @@
             Applies all parameters.
             </summary>
             <param name="renderState">The render state on which to apply.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ViewRenderParameters.Discard(SeeingSharp.Multimedia.Core.RenderState)">
-            <summary>
-            Discards all parameters.
-            </summary>
-            <param name="renderState">The render state on which to discard.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.ViewRenderParameters.LoadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
             <summary>
@@ -7853,6 +7950,16 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.GeometryResource"/> class.
             </summary>
             <param name="vertexStructure">The vertex structures.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.PrepareForExport">
+            <summary>
+            Stores all required data into a new <see cref="T:SeeingSharp.Multimedia.Objects.ExportGeometryInfo"/>. 
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.GetReferencedMaterials">
+            <summary>
+            Gets a collection containing all referenced materials.
+            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.GeometryResource.Intersects(SeeingSharp.Ray,SeeingSharp.Multimedia.Core.PickingOptions,System.Single@)">
             <summary>
@@ -7971,6 +8078,11 @@
         <member name="M:SeeingSharp.Multimedia.Drawing3D.MaterialResource.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.MaterialResource"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.MaterialResource.PrepareForExport">
+            <summary>
+            Stores all required data into a new <see cref="T:SeeingSharp.Multimedia.Objects.ExportMaterialInfo"/>. 
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.MaterialResource.Apply(SeeingSharp.Multimedia.Core.RenderState,SeeingSharp.Multimedia.Core.MaterialApplyInstancingMode,SeeingSharp.Multimedia.Drawing3D.MaterialResource)">
@@ -8659,6 +8771,65 @@
             6 for cubemap textures.
             </summary>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource">
+            <summary>
+            A Direct2D texture which performs it's rendering only
+            on load time. So Draw2D is called only once per device!
+            Use this class for static textures, backgrounds, etc.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.#ctor(SeeingSharp.Multimedia.Drawing2D.Custom2DDrawingLayer,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource"/> class.
+            </summary>
+            <param name="drawingLayer">The drawing layer.</param>
+            <param name="height">The width of the generated texture.</param>
+            <param name="width">The height of the generated texture.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.#ctor(SeeingSharp.Multimedia.Drawing2D.BrushResource,System.Int32,System.Int32)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource"/> class.
+            </summary>
+            <param name="fillBrush">The brush which gets used when painting the texture on load time.</param>
+            <param name="height">The width of the generated texture.</param>
+            <param name="width">The height of the generated texture.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.LoadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
+            <summary>
+            Loads all resource.
+            </summary>
+            <param name="device">The device on which to load all resources.</param>
+            <param name="resources">The current ResourceDictionary.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.UnloadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
+            <summary>
+            Unloads all resources.
+            </summary>
+            <param name="device">The device on which the resources where loaded.</param>
+            <param name="resources">The current ResourceDictionary.</param>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.IsLoaded">
+            <summary>
+            Is the resource loaded?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.Texture">
+            <summary>
+            Gets the texture object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.TextureView">
+            <summary>
+            Gets a ShaderResourceView targeting the texture.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Drawing3D.Direct2DSingleRenderTextureResource.ArraySize">
+            <summary>
+            Gets the size of the texture array.
+            1 for normal textures.
+            6 for cubemap textures.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.Direct2DTextureResource.#ctor(SeeingSharp.Multimedia.Drawing2D.Custom2DDrawingLayer,System.Int32,System.Int32)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.Direct2DTextureResource"/> class.
@@ -9035,11 +9206,21 @@
             6 for cubemap textures.
             </summary>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Drawing3D.LineVertex">
+            <summary>
+            A structure for sending line vertex data to the GPU.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.LineVertex.#ctor(System.Numerics.Vector3)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.LineVertex" /> struct.
             </summary>
             <param name="position">The position.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Drawing3D.StandardVertex">
+            <summary>
+            The default structure for sending vertex data to the GPU.
+            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.StandardVertex.#ctor(System.Numerics.Vector3,System.Int32)">
             <summary>
@@ -9101,6 +9282,21 @@
             <param name="lineColor">Color of the line.</param>
             <param name="lineList">List containing the lines.</param>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Drawing3D.CBPerFrame">
+            <summary>
+            This buffer contains all settings which are set once per frame.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Drawing3D.CBPerView">
+            <summary>
+            This buffer contains all settings which are set once per view.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Drawing3D.CBPerObject">
+            <summary>
+            This buffer contains all settings which are set once per object.
+            </summary>
+        </member>
         <member name="F:SeeingSharp.Multimedia.Drawing3D.CBPerObject.ObjectScaling">
             <summary>
             Needed to rescale texture coordinate depending on the object's scaling factors.
@@ -9110,6 +9306,11 @@
             <summary>
             Only relevant for sprite rendering. Scales coordinates in VertexShader by
             this factor.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Drawing3D.CBPerMaterial">
+            <summary>
+            This buffer contains all settings which are set once per material.
             </summary>
         </member>
         <member name="F:SeeingSharp.Multimedia.Drawing3D.CBPerMaterial.MaterialDiffuseColor">
@@ -9545,16 +9746,11 @@
             Null means that this handler is not bound to a view.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.Start(System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
             <summary>
             Starts input handling.
             </summary>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.UpdateMovement">
-            <summary>
-            Generic method thet gets iteratively after this handler was started.
-            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.Stop">
             <summary>
@@ -9564,6 +9760,81 @@
         <member name="M:SeeingSharp.Multimedia.Input.IInputHandler.GetInputStates">
             <summary>
             Querries all current input states.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Input.InputFrame">
+            <summary>
+            An InputFrame describes states of all input devices on one specific time frame.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputFrame.#ctor(System.Int32,System.TimeSpan)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.InputFrame"/> class.
+            </summary>
+            <param name="expectedStateCount">The expected state count.</param>
+            <param name="frameDuration">The TimeSpan which is covered by this InputFrame.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputFrame.Reset(System.Int32,System.TimeSpan)">
+            <summary>
+            Resets this InputFrame to use this object more than once.
+            </summary>
+            <param name="expectedStateCount">The expected state count.</param>
+            <param name="frameDuration">The TimeSpan which is covered by this InputFrame.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputFrame.GetInputStates(SeeingSharp.Multimedia.Core.ViewInformation)">
+            <summary>
+            Gets all input state for the given view.
+            </summary>
+            <param name="viewInfo">The view for which to get all input states.</param>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Input.InputFrame.CountStates">
+            <summary>
+            Gets the total count of input states.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Input.InputFrame.InputStates">
+            <summary>
+            Gets a collection containing all gathered input states.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Input.InputFrame.DefaultMouseOrPointer">
+            <summary>
+            Gets the first MouseOrPointerState.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Input.InputFrame.DefaultGamepad">
+            <summary>
+            Gets the default GamepadState.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Input.InputFrame.DefaultKeyboard">
+            <summary>
+            Gets the default KeyboardState.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Input.InputGathererThread">
+            <summary>
+            This class is responsible for input gathering.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputGathererThread.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.InputGathererThread"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputGathererThread.QueryForCurrentFrames(System.Collections.Generic.List{SeeingSharp.Multimedia.Input.InputFrame})">
+            <summary>
+            Gets all gathered InputFrames.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputGathererThread.RegisterView(SeeingSharp.Multimedia.Input.IInputEnabledView)">
+            <summary>
+            Registers the given view on this thread.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputGathererThread.DeregisterView(SeeingSharp.Multimedia.Input.IInputEnabledView)">
+            <summary>
+            Deregisters the given view from this thread.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.GamepadState.#ctor">
@@ -9576,7 +9847,7 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.GamepadState"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GamepadState.CopyAndResetForUpdatePassInternal">
+        <member name="M:SeeingSharp.Multimedia.Input.GamepadState.CopyAndResetForUpdatePassInternal(SeeingSharp.Multimedia.Input.InputStateBase)">
             <summary>
             Copies this object and then resets it
             in preparation of the next update pass.
@@ -9635,14 +9906,14 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.InputStateBase"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.InputStateBase.CopyAndResetForUpdatePass">
+        <member name="M:SeeingSharp.Multimedia.Input.InputStateBase.CopyAndResetForUpdatePass(SeeingSharp.Multimedia.Input.InputStateBase)">
             <summary>
             Copies this object and then resets it 
             in preparation of the next update pass.
             Called by update-render loop.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.InputStateBase.CopyAndResetForUpdatePassInternal">
+        <member name="M:SeeingSharp.Multimedia.Input.InputStateBase.CopyAndResetForUpdatePassInternal(SeeingSharp.Multimedia.Input.InputStateBase)">
             <summary>
             Copies this object and then resets it 
             in preparation of the next update pass.
@@ -9661,7 +9932,7 @@
             -1, if this InputState does not depend on a view.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.KeyboardState.#ctor(System.Int32,System.Int32)">
+        <member name="M:SeeingSharp.Multimedia.Input.KeyboardState.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.KeyboardState"/> class.
             </summary>
@@ -9712,7 +9983,7 @@
             Called by input handler.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.MouseOrPointerState.CopyAndResetForUpdatePassInternal">
+        <member name="M:SeeingSharp.Multimedia.Input.MouseOrPointerState.CopyAndResetForUpdatePassInternal(SeeingSharp.Multimedia.Input.InputStateBase)">
             <summary>
             Copies this object and then resets it 
             in preparation of the next update pass.
@@ -9748,16 +10019,11 @@
             Null means that this handler is not bound to a view.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.Start(System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
             <summary>
             Starts input handling.
             </summary>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.UpdateMovement">
-            <summary>
-            Generic method thet gets iteratively after this handler was started.
-            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.GetInputStates">
             <summary>
@@ -9785,6 +10051,16 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.InputHandlerFactory"/> class.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.CreateInputHandlersForGlobal">
+            <summary>
+            Creates all input handlers which are not associated to one view.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.CreateInputHandlersForView(SeeingSharp.Multimedia.Input.IInputEnabledView)">
+            <summary>
+            Creates all input handlers which are associated to one view.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.UpdateInputHandlerList(SeeingSharp.Multimedia.Input.IInputEnabledView,System.Collections.Generic.List{SeeingSharp.Multimedia.Input.IInputHandler},SeeingSharp.Multimedia.Core.RenderLoop,System.Boolean)">
             <summary>
             Updates all currently active input handlers for the given view.
@@ -9801,12 +10077,11 @@
             <typeparam name="ViewType">Gets the type of the view.</typeparam>
             <param name="viewObject">The view for which to the input handlers.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.GetInputHandler(SeeingSharp.Multimedia.Input.IInputEnabledView,System.Type)">
+        <member name="M:SeeingSharp.Multimedia.Input.InputHandlerFactory.GetInputHandler(System.Type)">
             <summary>
             Gets all possible GraphicsInputHandlers for the given view and camera types.
             Pass null to all parameters to return all generic input handlers.
             </summary>
-            <param name="viewObject">The view for which to query the input object.</param>
             <param name="givenViewType">The type of the camera.</param>
         </member>
         <member name="P:SeeingSharp.Multimedia.Input.InputHandlerFactory.Count">
@@ -9851,17 +10126,12 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.UpdateMovement">
-            <summary>
-            Generic method thet gets iteratively after this handler was started.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.GetSupportedViewTypes">
             <summary>
             Gets a list containing all supported view types.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.Start(System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
             <summary>
             Starts input handling.
             </summary>
@@ -9927,16 +10197,11 @@
             Gets a list containing all supported view types.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.Start(System.Object)">
+        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
             <summary>
             Starts input handling.
             </summary>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.UpdateMovement">
-            <summary>
-            Generic method thet gets iteratively after this handler was started.
-            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.Stop">
             <summary>
@@ -10011,23 +10276,26 @@
             </summary>
             <param name="vertices">The vertices to add.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEars(System.Collections.Generic.IEnumerable{System.Int32})">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEars(System.Collections.Generic.IEnumerable{System.Int32},System.Boolean)">
             <summary>
             Adds the given polygon using the cutting ears algorythm for triangulation.
             </summary>
             <param name="indices">The indices of the polygon's edges.</param>
+            <param name="twoSided">The indiexes for front- and backside?</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.Vertex})">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{SeeingSharp.Multimedia.Objects.Vertex},System.Boolean)">
             <summary>
             Adds the given polygon using the cutting ears algorythm for triangulation.
             </summary>
             <param name="vertices">The vertices to add.</param>
+            <param name = "twoSided" > The indiexes for front- and backside?</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{System.Int32})">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.AddPolygonByCuttingEarsAndCalculateNormals(System.Collections.Generic.IEnumerable{System.Int32},System.Boolean)">
             <summary>
             Adds the given polygon using the cutting ears algorythm for triangulation.
             </summary>
             <param name="indices">The indices of the polygon's edges.</param>
+            <param name="twoSided">The indiexes for front- and backside?</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.BuildLineListForFaceBinormals">
             <summary>
@@ -10145,7 +10413,7 @@
             Gets a collection containing all indices.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CountIndexes">
+        <member name="P:SeeingSharp.Multimedia.Objects.VertexStructureSurface.CountIndices">
             <summary>
             Retrieves total count of all indexes within this structure
             </summary>
@@ -10498,7 +10766,7 @@
             Build a single rectangle into the vertex structure (Supports texturing and normal vectors)
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.RecorderTriangleIndices">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructureSurface.ToggleTriangleIndexOrder">
             <summary>
             Changes the index order of each triangle.
             </summary>
@@ -10531,6 +10799,140 @@
             Builds a plain polygon using the given coordinates.
             </summary>
             <param name="coordinates">The coordinates to build the polygon from.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.#ctor(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportedModelContainer,SeeingSharp.Multimedia.Objects.ObjImportOptions)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ObjFileReader"/> class.
+            </summary>
+            <param name="resource">The resource to be loaded.</param>
+            <param name="targetContainer">The target ModelContainer into which to put the generated objects and resources.</param>
+            <param name="importOptions">Current import settings.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.GenerateObjects">
+            <summary>
+            Creates all objects and puts them into the given ModelContainer.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.Read">
+            <summary>
+            Reads all contents of the Obj file.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.ReadMaterialLibrary(SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Reads all contents of the given material library.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Obj_Mtllib(System.String)">
+            <summary>
+            Starts reading all configured material libraries.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Mtl_NewMtl(System.String)">
+            <summary>
+            Reads the definition of a new material.
+            </summary>
+            <param name="arguments">Passed argumetns.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Mtl_Ka(System.String)">
+            <summary>
+            Reads ambient component of a material.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Mtl_Kd(System.String)">
+            <summary>
+            Reads diffuse component of a material.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Mtl_Ks(System.String)">
+            <summary>
+            Reads specular component of a material.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Mtl_Map_Kd(System.String)">
+            <summary>
+            Reads the diffuse texture information.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Obj_UseMtl(System.String)">
+            <summary>
+            Applies the material with the given name for following surfaces.
+            </summary>
+            <param name="arguments">Passed argumetns.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Obj_V(System.String)">
+            <summary>
+            Reads a line containing vertex information.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Obj_VN(System.String)">
+            <summary>
+            Reads a line containing vertex normal information.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Obj_VT(System.String)">
+            <summary>
+            Reads a line containing texture coordinate information.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.HandleKeyword_Obj_F(System.String)">
+            <summary>
+            Reads a line containing face information.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.GenerateFaceVertices(SeeingSharp.Multimedia.Objects.ObjFileReader.FaceIndices[])">
+            <summary>
+            Generates all vertices for given FaceIndices.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.TrySplitLine(System.String,System.String@,System.String@)">
+            <summary>
+            Tries to split the given line into keyword and arguments.
+            Returns true if this is a valid line.
+            </summary>
+            <param name="line">The line to be splitted.</param>
+            <param name="keyword">The keyword.</param>
+            <param name="arguments">All arguments for the keyword.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.TryParseStringsToFloats(System.String[],System.Single[],System.Int32)">
+            <summary>
+            Tries to parse all given strings into the given float array..
+            </summary>
+            <param name="sourceStrings">The source strings.</param>
+            <param name="targetFloats">The target floats.</param>
+            <param name="countValuesToParse">Total count of values to parse.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.TryParseStringsToInts(System.String[],System.Int32[])">
+            <summary>
+            Tries to parse all given strings into the given int array..
+            </summary>
+            <param name="sourceStrings">The source strings.</param>
+            <param name="targetInts">The target ints.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.ParseFaceData(System.String,System.Int32[])">
+            <summary>
+            Tries to parse all given strings into the given int array..
+            </summary>
+            <param name="sourceString">The string to be parsed.</param>
+            <param name="targetInts">The target array where to put all values.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjImporter.CreateDefaultImportOptions">
+            <summary>
+            Creates a default import options object for this importer.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ObjImporter.ImportModel(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
+            <summary>
+            Imports a model from the given file.
+            </summary>
+            <param name="sourceFile">The source file to be loaded.</param>
+            <param name="importOptions">Some configuration for the importer.</param>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.ObjImportOptions.TextureSubfolderName">
+            <summary>
+            For some files we have a separate subfolder for textures.
+            This would be the name of this subfolder. If none, then set this property to empty (default).
+            </summary>
         </member>
         <member name="T:SeeingSharp.Multimedia.Objects.StLImporter">
             <summary>
@@ -10619,6 +11021,53 @@
             Reads the model from the specified binary stream.
             </summary>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.ExportModelContainer">
+            <summary>
+            Container for export model data.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ExportModelContainer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ExportModelContainer"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ExportModelContainer.RegisterOriginalObject(SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Registers the given original object.
+            Original objects are hold to be able to check whether parents are also exported.
+            </summary>
+            <param name="sceneObject">The scene object.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ExportModelContainer.ContainsOrignalObject(SeeingSharp.Multimedia.Core.SceneObject)">
+            <summary>
+            Checks whether the given original is also exported by this container.
+            Original objects are hold to be able to check whether parents are also exported.
+            </summary>
+            <param name="sceneObject">The scene object.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.ExportGeometryInfo">
+            <summary>
+            All needed information for exported geometry.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ExportGeometryInfo.#ctor(SeeingSharp.Util.NamedOrGenericKey,SeeingSharp.Multimedia.Objects.ObjectType)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ExportGeometryInfo"/> class.
+            </summary>
+            <param name="key">The key.</param>
+            <param name="objType">Type of the object.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Objects.ExportMaterialInfo">
+            <summary>
+            All needed information for exported material.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ExportMaterialInfo.#ctor(SeeingSharp.Util.NamedOrGenericKey)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ExportMaterialInfo"/> class.
+            </summary>
+            <param name="key">The key.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.StackedObjectType.BuildStructure(SeeingSharp.Multimedia.Objects.StructureBuildOptions)">
             <summary>
             Builds all vertex structures for the given detail level.
@@ -10651,6 +11100,13 @@
             Returns BoundingSphere.Empty, if it is not available.
             </summary>
             <param name="viewInfo">The ViewInformation for which to get the BoundingSphere.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.GenericObject.PrepareForExportInternal(SeeingSharp.Multimedia.Objects.ExportModelContainer,SeeingSharp.Multimedia.Objects.ExportOptions)">
+            <summary>
+            This methode stores all data related to this object into the given <see cref="T:SeeingSharp.Multimedia.Objects.ExportModelContainer" />.
+            </summary>
+            <param name="modelContainer">The target container.</param>
+            <param name="exportOptions">Options for export.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.GenericObject.Pick(System.Numerics.Vector3,System.Numerics.Vector3,SeeingSharp.Multimedia.Core.ViewInformation,SeeingSharp.Multimedia.Core.PickingOptions)">
             <summary>
@@ -11072,6 +11528,13 @@
             Indicates whether the current object is equal to another object of the same type.
             </summary>
         </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.MaterialProperties.Name">
+            <summary>
+            Gets or sets the name of this material.
+            This value can be used internally by importers and exporters.
+            Within seeing#, this property has no relevance.
+            </summary>
+        </member>
         <member name="P:SeeingSharp.Multimedia.Objects.MaterialProperties.Key">
             <summary>
             Gets or sets the name of the material.
@@ -11254,10 +11717,19 @@
             Creates a new Vertex structure object
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CreateSurface(System.Int32)">
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CreateSurface(System.Int32,System.String)">
             <summary>
             Creates the surface on this VertexStructure.
             </summary>
+            <param name="triangleCapacity">The triangle capacity.</param>
+            <param name="name">The internal name of the material.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CreateOrGetExistingSurfaceByName(System.String,System.Int32)">
+            <summary>
+            Tries to get an existing surface using given name.
+            If none exists, then a new surface is created.
+            </summary>
+            <param name="name">The internal name of the material.</param>
             <param name="triangleCapacity">The triangle capacity.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CreateOrGetExistingSurface(SeeingSharp.Multimedia.Objects.MaterialProperties,System.Int32)">
@@ -11266,6 +11738,14 @@
             If none exists, then a new surface is created.
             </summary>
             <param name="matProperties">The material properties.</param>
+            <param name="triangleCapacity">The triangle capacity.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.CreateOrGetExistingSurface(System.String,System.Int32)">
+            <summary>
+            Tries to get an existing surface using given MaterialProperties.
+            If none exists, then a new surface is created.
+            </summary>
+            <param name="name">The internal name of the material.</param>
             <param name="triangleCapacity">The triangle capacity.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.RealignToCenter">
@@ -11398,6 +11878,11 @@
             Changes the color on each vertex.
             </summary>
             <param name="Color4">The new color.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.ToggleTriangleIndexOrder">
+            <summary>
+            Changes the index order of each triangle.
+            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.VertexStructure.ToggleCoordinateSystem">
             <summary>
@@ -11744,7 +12229,7 @@
             Some options for text geometry creation.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.IModelExporter.ExportModelAsync(SeeingSharp.Multimedia.Objects.ImportedModelContainer,SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ExportOptions)">
+        <member name="M:SeeingSharp.Multimedia.Objects.IModelExporter.ExportModelAsync(SeeingSharp.Multimedia.Objects.ExportModelContainer,SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ExportOptions)">
             <summary>
             Exports the model(s) defined in the given model container to the given model file.
             </summary>
@@ -11821,25 +12306,35 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ImportOptions"/> class.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.ImportOptions.ResizeFactor">
+        <member name="M:SeeingSharp.Multimedia.Objects.ImportOptions.GetTransformMatrixForCoordinateSystem">
             <summary>
-            Gets or sets the resize factor.
-            This is needed to transform coordinate from one measure unit to another.
+            Gets the transform matrix for coordinate system.
             </summary>
+            <returns></returns>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.ImportOptions.ChangeTriangleOrder">
+        <member name="M:SeeingSharp.Multimedia.Objects.ImportOptions.IsChangeTriangleOrderNeeded">
             <summary>
             Should triangle order be changes by the import logic?
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportedObjectInfo.#ctor(SeeingSharp.Multimedia.Core.SceneObject,SeeingSharp.BoundingBox)">
+        <member name="P:SeeingSharp.Multimedia.Objects.ImportOptions.ResizeFactor">
             <summary>
-            Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ImportedObjectInfo"/> class from being created.
+            Gets or sets the resize factor.
+            This is needed to transform coordinate from one measure unit to another.
+            Default is 1.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.ImportedObjectInfo.BoundingBox">
+        <member name="P:SeeingSharp.Multimedia.Objects.ImportOptions.ResourceCoordinateSystem">
             <summary>
-            
+            The resource may have a different coordinate system.
+            This property ensures that the coordinate system is mapped correctly to the one that 
+            Seeing# uses. Default is LeftHanded_UpY.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.ImportOptions.TwoSidedSurfaces">
+            <summary>
+            Needed some times. This generates a front and a back side for each loaded surface.
+            Default is false.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ImportedResourceInfo.#ctor(SeeingSharp.Util.NamedOrGenericKey,System.Func{SeeingSharp.Multimedia.Core.Resource})">
@@ -13455,6 +13950,22 @@
             Flags used by <see cref="M:SeeingSharp.Multimedia.Util.SdxTK.DDSHelper.LoadFromDDSMemory(System.IntPtr,System.Int32,System.Boolean,System.Nullable{System.Runtime.InteropServices.GCHandle})"/>.
             </summary>
         </member>
+        <member name="T:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement">
+            <summary>
+            A wpf element which triggers the rendering in wpf in a low
+            frequency (see property <see cref="P:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement.TriggerIntervalMS"/>) 
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement"/> class.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement.TriggerIntervalMS">
+            <summary>
+            the interval in which to trigger the Wpf rendering logic (milliseconds).
+            </summary>
+        </member>
         <member name="E:SeeingSharp.Multimedia.Views.MediaPlayerComponent.StateChanged">
             <summary>
             Raised when the current state has changed.
@@ -13607,11 +14118,6 @@
             </summary>
             <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs"/> that contains the event data.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.UpdateMovement">
-            <summary>
-            Updates the movement.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.StartRendering">
             <summary>
             Stops rendering.
@@ -13662,49 +14168,36 @@
             <param name="sender">The sender.</param>
             <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Create all view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Disposes all loaded view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop object checks wheter it is possible to render.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoop_PrepareRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_PrepareRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when the render loop prepares rendering.
             </summary>
             <param name="device">The current rendering device.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop wants to present its results.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop has finished rendering.
             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoop_QueryInputStates">
-            <summary>
-            Queries all input states.
-            (Called within UI thread)
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoopCameraChanged(System.Object,System.EventArgs)">
-            <summary>
-            Called when the currently active camera has changed.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnThrottledViewRecreation">
             <summary>
@@ -13775,41 +14268,35 @@
             Gets the current DpiScaling mode.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Disposes all loaded view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Create all view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop object checks wheter it is possible to render.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderLoop_PrepareRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_PrepareRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when the render loop prepares rendering.
             </summary>
             <param name="engineDevice">The engine device.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop wants to present its results.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop has finished rendering.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderLoop_QueryInputStates">
-            <summary>
-            Queries all input states.
-            (Called within UI thread)
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnLoaded(System.Object,System.Windows.RoutedEventArgs)">
@@ -13871,6 +14358,11 @@
         <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.RenderLoop">
             <summary>
             Gets the RenderLoop that is currently in use.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.ClearColor">
+            <summary>
+            Gets or sets the clear color of this 3D view.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.Focused">
@@ -13940,27 +14432,27 @@
             Führt anwendungsspezifische Aufgaben aus, die mit dem Freigeben, Zurückgeben oder Zurücksetzen von nicht verwalteten Ressourcen zusammenhängen.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.OnRenderLoopDisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Disposes all loaded view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.OnRenderLoopCreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Create all view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.OnRenderLoopCheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop object checks wheter it is possible to render.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.OnRenderLoopPresent(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop wants to present its results.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.OnRenderLoopAfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.MemoryRenderTarget.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop has finished rendering.
             </summary>

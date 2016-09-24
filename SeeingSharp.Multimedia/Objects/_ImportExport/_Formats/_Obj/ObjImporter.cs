@@ -43,7 +43,7 @@ namespace SeeingSharp.Multimedia.Objects
         /// </summary>
         public ImportOptions CreateDefaultImportOptions()
         {
-            return new ObjImportOptions();
+            return new ObjImportOptions() { ResizeFactor = 0.01f };
         }
 
         /// <summary>

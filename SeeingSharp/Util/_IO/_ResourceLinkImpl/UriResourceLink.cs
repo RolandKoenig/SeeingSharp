@@ -143,6 +143,22 @@ namespace SeeingSharp.Util
             throw new SeeingSharpException("Output stream to uri resources not supported currently!");
         }
 
+        public override bool Exists()
+        {
+#if DESKTOP
+            var streamInfo = Application.GetResourceStream(m_resourceUri);
+            if(streamInfo == null) { return false; }
+            else
+            {
+                CommonTools.DisposeObject(streamInfo.Stream);
+                return true;
+            }
+#else
+            var storageFile = StorageFile.GetFileFromApplicationUriAsync(m_resourceUri).AsTask().Result;
+            return storageFile != null;
+#endif
+        }
+
         /// <summary>
         /// Opens the input stream to the described resource.
         /// </summary>

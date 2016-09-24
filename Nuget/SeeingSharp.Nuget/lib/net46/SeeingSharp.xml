@@ -4,7 +4,7 @@
         <name>SeeingSharp</name>
     </assembly>
     <members>
-        <member name="M:SeeingSharp.Bootstrapper.TranslationBootstrapper.Execute">
+        <member name="M:SeeingSharp.Bootstrapper.TranslationBootstrapper.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
             <summary>
             Executes the background action behind this item.
             </summary>
@@ -85,7 +85,7 @@
             Loads all bootstrapper items
             </summary>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.RunAsync">
+        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.RunAsync(SeeingSharp.Infrastructure.SeeingSharpApplication)">
             <summary>
             Runs all items within this bootstrapper.
             </summary>
@@ -228,10 +228,11 @@
             Gets a container holding all registered singletons.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.IBootstrapperItem.Execute">
+        <member name="M:SeeingSharp.Infrastructure.IBootstrapperItem.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
             <summary>
             Executes the background action behind this item.
             </summary>
+            <param name="app">The current application instance.</param>
         </member>
         <member name="P:SeeingSharp.Infrastructure.IBootstrapperItem.OrderID">
             <summary>
@@ -604,18 +605,6 @@
             <param name="action">The action to be executed.</param>
             <param name="delayTime">The delay time to be passed before executing the given action.</param>
             <param name="forceValidSyncContext">True to force a valid (UI) SynchronizationContext.</param>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.CloneObject``1(``0)">
-            <summary>
-            Clones an object by doing a full deep copy of every field and property.
-            </summary>
-            <param name="source">Object to clone</param>
-            <returns>Cloned copy</returns>
-        </member>
-        <member name="M:SeeingSharp.Util.CommonTools.CloneObjectInternal(System.Object,System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
-            <summary>
-            Internal method to clone an object
-            </summary>
         </member>
         <member name="M:SeeingSharp.Util.CommonTools.GetBackingArray``1(System.Collections.Generic.List{``0})">
             <summary>
@@ -1088,6 +1077,28 @@
             <param name="cancelToken"></param>
             <returns></returns>
         </member>
+        <member name="M:SeeingSharp.Util.GenericClone.CloneObject``1(``0)">
+            <summary>
+            Clones an object by doing a full deep copy of every field and property.
+            </summary>
+            <param name="source">Object to clone</param>
+            <returns>Cloned copy</returns>
+        </member>
+        <member name="M:SeeingSharp.Util.GenericClone.CloneObjectInternal(System.Object,System.Object,System.Collections.Generic.Dictionary{System.Object,System.Object})">
+            <summary>
+            Internal method to clone an object
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Util.IgnoreGenericCloneAttribute">
+            <summary>
+            Indicates that a property is not to be cloned by CommonTools.CloneObject method.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Util.AssignOriginalParentObjectAfterCloneAttribute">
+            <summary>
+            Inidicates that this field will get a reference to the original parent object after being cloned from it using CommonTools.Clone
+            </summary>
+        </member>
         <member name="T:SeeingSharp.Util.RingBuffer`1">
             <summary>
             This is a simple RingBuffer implementation for Seeing#, 
@@ -1210,11 +1221,12 @@
             A <see cref="T:System.String" /> that represents this instance.
             </returns>
         </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.AssemblyResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets the resource link for another file within the same assembly and namespace.
             </summary>
             <param name="fileName">The filename for which to get the link.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional).</param>
         </member>
         <member name="M:SeeingSharp.Util.AssemblyResourceLink.OpenRead">
             <summary>
@@ -1621,6 +1633,12 @@
             </summary>
             <param name="item">The item.</param>
         </member>
+        <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.Enqueue(System.Collections.Generic.IEnumerable{`0})">
+            <summary>
+            Enqueues all items within the given collection.
+            </summary>
+            <param name="items">The items to be enqueued.</param>
+        </member>
         <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.HasAny">
             <summary>
             Are there any elements in the queue?
@@ -1663,6 +1681,11 @@
         <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.DequeueAll">
             <summary>
             Deques all items within this queue and returns them using a List object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.DequeueAll(System.Collections.Generic.List{`0})">
+            <summary>
+            Deques all items within this queue and puts the items to the given target list.
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.ThreadSaveQueue`1.Clear">
@@ -1949,11 +1972,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.UriResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.UriResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.UriResourceLink.OpenOutputStream">
             <summary>
@@ -2001,11 +2025,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.AssemblyResourceLinkSource.OpenOutputStream">
             <summary>
@@ -2054,11 +2079,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.StreamFactoryResourceLink.OpenOutputStream">
             <summary>
@@ -2106,11 +2132,12 @@
             Returns a <see cref="T:System.String" /> that represents this instance.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.DesktopFileSystemResourceLink.OpenOutputStream">
             <summary>
@@ -2305,16 +2332,6 @@
             Reregisters a stream for public use
             </summary>
         </member>
-        <member name="T:SeeingSharp.Util.IgnoreGenericCloneAttribute">
-            <summary>
-            Indicates that a property is not to be cloned by CommonTools.CloneObject method.
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Util.AssignOriginalObjectAfterCloneAttribute">
-            <summary>
-            Inidicates that this field will get a reference to the original object after being cloned from it using CommonTools.Clone
-            </summary>
-        </member>
         <member name="T:SeeingSharp.Util.SeeingSharpMessage">
             <summary>
             Base class of all messages sent and received through ApplicationMessenger class.
@@ -2457,7 +2474,7 @@
             Subscribes to the given MessageType.
             </summary>
             <typeparam name="MessageType">Type of the message.</typeparam>
-            <param name="Messenger">Action to perform on incoming message.</param>
+            <param name="actionOnMessage">Action to perform on incoming message.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeWhen``1(System.Func{``0,System.Boolean},System.Action{``0})">
             <summary>
@@ -2465,7 +2482,7 @@
             </summary>
             <typeparam name="MessageType">The type of the message type.</typeparam>
             <param name="condition">The condition.</param>
-            <param name="Messenger">The messenger.</param>
+            <param name="actionOnMessage">The messenger.</param>
             <returns></returns>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Subscribe(System.Delegate,System.Type)">
@@ -2473,7 +2490,7 @@
             Subscribes to the given message type.
             </summary>
             <param name="messageType">The type of the message.</param>
-            <param name="Messenger">Action to perform on incoming message.</param>
+            <param name="actionOnMessage">Action to perform on incoming message.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.SubscribeOnControl``1(System.Windows.Forms.Control,System.Action{``0})">
             <summary>
@@ -2481,7 +2498,7 @@
             Events OnHandleCreated and OnHandleDestroyed are used for subscribing / unsubscribing.
             </summary>
             <typeparam name="MessageType">Type of the message.</typeparam>
-            <param name="Messenger">Action to perform on incoming message.</param>
+            <param name="actionOnMessage">Action to perform on incoming message.</param>
             <param name="target">The target control.</param>
         </member>
         <member name="M:SeeingSharp.Util.SeeingSharpMessenger.Unsubscribe(SeeingSharp.Util.MessageSubscription)">
@@ -2766,6 +2783,11 @@
         <member name="M:SeeingSharp.Util.ViewModelBase.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.ViewModelBase"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ViewModelBase.TryGetViewService``1">
+            <summary>
+            Tries to get the view service that implements the given type.
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.ViewModelBase.HasPropertyError``1(System.Linq.Expressions.Expression{System.Func{``0}})">
@@ -3194,11 +3216,12 @@
             Reads the complete resource to a new string.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Util.ResourceLink.GetForAnotherFile(System.String)">
+        <member name="M:SeeingSharp.Util.ResourceLink.GetForAnotherFile(System.String,System.String[])">
             <summary>
             Gets an object pointing to a file at the same location (e. g. the same directory).
             </summary>
             <param name="newFileName">The new file name for which to get the ResourceLink object.</param>
+            <param name="subdirectories">The subdirectory path to the file (optional). This parameter may not be supported by all ResourceLink implementations!</param>
         </member>
         <member name="M:SeeingSharp.Util.ResourceLink.OpenOutputStream">
             <summary>
@@ -3468,6 +3491,32 @@
         <member name="P:SeeingSharp.Util.ObjectThreadExceptionEventArgs.State">
             <summary>
             Gets current state of the thread.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.IViewService.SetViewServiceHost(System.Windows.FrameworkElement)">
+            <summary>
+            Tells the ViewService which FrameworkElement it is hosted by.
+            </summary>
+            <param name="frameworkElement">The framework element.</param>
+        </member>
+        <member name="M:SeeingSharp.View.SeeingSharpWpfWindow.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.View.SeeingSharpWpfWindow"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.SeeingSharpWpfUserControl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.View.SeeingSharpWpfUserControl"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.ViewServiceNode.#ctor(System.Windows.FrameworkElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.View.ViewServiceNode"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.ViewServiceNode.OnViewModel_ViewServiceRequest(System.Object,SeeingSharp.Util.ViewServiceRequestEventArgs)">
+            <summary>
+            Called when the viewmodel request a view service.
             </summary>
         </member>
         <member name="T:SeeingSharp.BoundingBox">

@@ -27,7 +27,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin.WinRT\Debug\AnyCpu\</OutputPath>
+    <OutputPath>bin.Universal\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG;UNIVERSAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,13 +42,13 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin.WinRT\Release\AnyCpu\</OutputPath>
+    <OutputPath>bin.Universal\Release\</OutputPath>
     <DefineConstants>TRACE;UNIVERSAL</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-    <DocumentationFile>bin.WinRT\Release\AnyCpu\SeeingSharp.Multimedia.XML</DocumentationFile>
+    <DocumentationFile>bin.Universal\Release\AnyCpu\SeeingSharp.Multimedia.XML</DocumentationFile>
     <NoWarn>1591;675</NoWarn>
   </PropertyGroup>
   <ItemGroup>
@@ -266,6 +266,7 @@
     <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.cs" />
     <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.Text.cs" />
     <Compile Include="Objects\_Construction\VertexStructureSurface.cs" />
+    <Compile Include="Objects\_ImportExport\ImporterExporterRepository.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjFileReader.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjImporter.cs" />
@@ -308,7 +309,6 @@
     <Compile Include="Objects\_ImportExport\ExportOptions.cs" />
     <Compile Include="Objects\_ImportExport\IModelExporter.cs" />
     <Compile Include="Objects\_ImportExport\IModelImporter.cs" />
-    <Compile Include="Objects\_ImportExport\ImportExportHandler.cs" />
     <Compile Include="Objects\_ImportExport\ImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Attributes.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImporter.cs" />

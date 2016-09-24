@@ -346,7 +346,11 @@ namespace SeeingSharp.Multimedia.Objects
             for(int loop=0; loop<mtlFiles.Length; loop++)
             {
                 ResourceLink mtlLibResource = m_resource.GetForAnotherFile(mtlFiles[loop]);
-                this.ReadMaterialLibrary(mtlLibResource);
+
+                if (mtlLibResource.Exists())
+                {
+                    this.ReadMaterialLibrary(mtlLibResource);
+                }
             }
         }
 

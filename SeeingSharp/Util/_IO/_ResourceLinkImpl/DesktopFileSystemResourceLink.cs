@@ -62,6 +62,11 @@ namespace SeeingSharp.Util
             return "File-Resource: " + m_filePath;
         }
 
+        public override bool Exists()
+        {
+            return File.Exists(m_filePath);
+        }
+
         /// <summary>
         /// Gets an object pointing to a file at the same location (e. g. the same directory).
         /// </summary>
