@@ -22,6 +22,16 @@
                               Content="{local:ModelViewerIcon Icon=Wireframe,ResultType=Image}"
                               ToolTip="Enable/Disable Wireframe mode"/>
                 
+                <Separator />
+
+                <ToggleButton IsChecked="{Binding Path=MiscObjects.BackgroundVisible}"
+                              Content="{local:ModelViewerIcon Icon=Floor, ResultType=Image}"
+                              ToolTip="Enable/Disable Background" />
+                <Label Content="# Tiles:" />
+                <TextBox Text="{Binding Path=MiscObjects.TilesPerSide}"
+                         Width="50" 
+                         BorderBrush="Gray" BorderThickness="1"/>
+
             </ToolBar>
         </ToolBarTray>
 

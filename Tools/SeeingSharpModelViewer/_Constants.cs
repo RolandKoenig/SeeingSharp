@@ -19,5 +19,7 @@ namespace SeeingSharpModelViewer
 {
     internal static class Constants
     {
+        public const int COUNT_TILES_MIN = 16;
+        public const int COUNT_TILES_MAX = 128;
     }
 }

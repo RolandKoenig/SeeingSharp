@@ -99,13 +99,14 @@ namespace SeeingSharp.Multimedia.Objects
                 Vector3 localEnd = localStart + new Vector3(0f, 0f, tileWidthZ * TilesZ);
 
                 Color4 actLineColor = this.LineColor;
+                float devider = actTileX % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
                 if (this.HighlightXZLines && (actTileX == tileMiddleX))
                 {
                     actLineColor = this.ZLineHighlightColor;
+                    devider = this.LineSmallDevider;
                 }
 
                 VertexStructureSurface targetStruture = actTileX % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
-                float devider = actTileX % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
                 targetStruture.BuildRect4V(
                     localStart - new Vector3(tileWidthX / devider, 0f, 0f),
                     localStart + new Vector3(tileWidthX / devider, 0f, 0f),
@@ -128,13 +129,14 @@ namespace SeeingSharp.Multimedia.Objects
                 Vector3 localEnd = localStart + new Vector3(tileWidthX * TilesX, 0f, 0f);
 
                 Color4 actLineColor = this.LineColor;
+                float devider = actTileZ % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
                 if (this.HighlightXZLines && (actTileZ == tileMiddleZ))
                 {
                     actLineColor = this.XLineHighlightColor;
+                    devider = this.LineSmallDevider;
                 }
 
                 VertexStructureSurface targetStruture = actTileZ % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
-                float devider = actTileZ % this.GroupTileCount == 0 ? this.LineSmallDevider : this.LineBigDevider;
                 targetStruture.BuildRect4V(
                     localStart + new Vector3(0f, 0f, tileWidthZ / devider),
                     localStart - new Vector3(0f, 0f, tileWidthZ / devider),

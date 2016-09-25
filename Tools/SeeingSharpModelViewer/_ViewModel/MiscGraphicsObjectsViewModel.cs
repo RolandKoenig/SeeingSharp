@@ -26,12 +26,20 @@ namespace SeeingSharpModelViewer
 {
     public class MiscGraphicsObjectsViewModel : ViewModelBase
     {
+        #region Scene
         private Scene m_scene;
         private SceneLayer m_bgLayer;
+        #endregion
+
+        #region Configuration
+        private int m_tilesPerSide;
+        #endregion
 
         public MiscGraphicsObjectsViewModel(Scene scene)
         {
             scene.EnsureNotNull(nameof(scene));
+
+            m_tilesPerSide = 16;
 
             m_scene = scene;
         }
@@ -43,7 +51,18 @@ namespace SeeingSharpModelViewer
         {
             await m_scene.ManipulateSceneAsync((manipulator) =>
             {
-                SceneLayer bgImageLayer = manipulator.AddLayer("BACKGROUND_FLAT");
+                SceneLayer bgImageLayer = null;
+                bool isBgImageCreated = false;
+                if (manipulator.ContainsLayer("BACKGROUND_FLAT"))
+                {
+                    bgImageLayer = manipulator.GetLayer("BACKGROUND_FLAT");
+                    isBgImageCreated = true;
+                }
+                else
+                {
+                    bgImageLayer = manipulator.AddLayer("BACKGROUND_FLAT");
+                }
+
                 SceneLayer bgLayer = manipulator.AddLayer("BACKGROUND");
                 manipulator.SetLayerOrderID(bgImageLayer, 0);
                 manipulator.SetLayerOrderID(bgLayer, 1);
@@ -53,16 +72,19 @@ namespace SeeingSharpModelViewer
                 m_bgLayer = bgLayer;
 
                 // Define background texture
-                ResourceLink linkBackgroundTexture = new AssemblyResourceUriBuilder(
-                    "SeeingSharpModelViewer", true,
-                    "Assets/Textures/Background.dds");
-                NamedOrGenericKey resBackgroundTexture = manipulator.AddTexture(linkBackgroundTexture);
-                manipulator.Add(new TexturePainter(resBackgroundTexture), bgImageLayer.Name);
+                if (!isBgImageCreated)
+                {
+                    ResourceLink linkBackgroundTexture = new AssemblyResourceUriBuilder(
+                        "SeeingSharpModelViewer", true,
+                        "Assets/Textures/Background.dds");
+                    NamedOrGenericKey resBackgroundTexture = manipulator.AddTexture(linkBackgroundTexture);
+                    manipulator.Add(new TexturePainter(resBackgroundTexture), bgImageLayer.Name);
+                }
 
                 // Define ground
                 Grid3DType objTypeGrid = new Grid3DType();
-                objTypeGrid.TilesX = 64;
-                objTypeGrid.TilesZ = 64;
+                objTypeGrid.TilesX = m_tilesPerSide * 4;
+                objTypeGrid.TilesZ = m_tilesPerSide * 4;
                 objTypeGrid.HighlightXZLines = true;
                 objTypeGrid.TileWidth = 0.25f;
                 objTypeGrid.GroupTileCount = 4;
@@ -81,7 +103,7 @@ namespace SeeingSharpModelViewer
                     "X", textXOptions,
                     realignToCenter: true, 
                     layer: "BACKGROUND");
-                textX.Position = new Vector3(9f, 0, 0);
+                textX.Position = new Vector3((m_tilesPerSide / 2f) + 1f, 0, 0);
 
                 TextGeometryOptions textZOptions = TextGeometryOptions.Default;
                 textZOptions.SurfaceVertexColor = Color4.BlueColor;
@@ -92,8 +114,45 @@ namespace SeeingSharpModelViewer
                     "Z", textZOptions, 
                     realignToCenter: true,
                     layer: "BACKGROUND");
-                textZ.Position = new Vector3(0f, 0f, 9f);
+                textZ.Position = new Vector3(0f, 0f, (m_tilesPerSide / 2f) + 1f);
             });
+        }
+
+        /// <summary>
+        /// Reloads the background asynchronous.
+        /// </summary>
+        /// <returns></returns>
+        internal async Task ReloadBackgroundAsync()
+        {
+            if (m_bgLayer != null)
+            {
+                await m_scene.ManipulateSceneAsync((manipulator) =>
+                {
+                    manipulator.RemoveLayer(m_bgLayer);
+                });
+            }
+
+            await InitializeAsync();
+        }
+
+
+        public int TilesPerSide
+        {
+            get { return m_tilesPerSide; }
+            set
+            {
+                if(m_tilesPerSide != value)
+                {
+                    m_tilesPerSide = value;
+                    if(m_tilesPerSide < Constants.COUNT_TILES_MIN) { m_tilesPerSide = Constants.COUNT_TILES_MIN; }
+                    if(m_tilesPerSide > Constants.COUNT_TILES_MAX) { m_tilesPerSide = Constants.COUNT_TILES_MAX; }
+
+                    ReloadBackgroundAsync()
+                        .FireAndForget();
+
+                    RaisePropertyChanged(nameof(TilesPerSide));
+                }
+            }
         }
 
         public bool BackgroundVisible
