@@ -40,8 +40,8 @@ namespace SeeingSharp.Multimedia.Core
     public partial class Scene
     {
         #region Constants
-        public static readonly string DEFAULT_LAYER_NAME = "Default";
-        public static readonly string DEFAULT_SCENE_NAME = "Scene";
+        public const string DEFAULT_LAYER_NAME = "Default";
+        public const string DEFAULT_SCENE_NAME = "Scene";
         #endregion
 
         #region Standard members

@@ -19,6 +19,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Numerics;
+using SeeingSharp;
 
 namespace SeeingSharpModelViewer
 {
@@ -65,9 +67,32 @@ namespace SeeingSharpModelViewer
                 objTypeGrid.TileWidth = 0.25f;
                 objTypeGrid.GroupTileCount = 4;
                 objTypeGrid.GenerateGround = false;
+                objTypeGrid.XLineHighlightColor = Color4.GreenColor;
+                objTypeGrid.ZLineHighlightColor = Color4.BlueColor;
 
                 NamedOrGenericKey resGridGeometry = manipulator.AddGeometry(objTypeGrid);
                 manipulator.Add(new GenericObject(resGridGeometry), "BACKGROUND");
+
+                TextGeometryOptions textXOptions = TextGeometryOptions.Default;
+                textXOptions.SurfaceVertexColor = Color4.GreenColor;
+                textXOptions.MakeVolumetricText = false;
+                textXOptions.FontSize = 30;
+                GenericObject textX = manipulator.Add3DText(
+                    "X", textXOptions,
+                    realignToCenter: true, 
+                    layer: "BACKGROUND");
+                textX.Position = new Vector3(9f, 0, 0);
+
+                TextGeometryOptions textZOptions = TextGeometryOptions.Default;
+                textZOptions.SurfaceVertexColor = Color4.BlueColor;
+                textZOptions.MakeVolumetricText = false;
+                textZOptions.FontSize = 30;
+          
+                GenericObject textZ = manipulator.Add3DText(
+                    "Z", textZOptions, 
+                    realignToCenter: true,
+                    layer: "BACKGROUND");
+                textZ.Position = new Vector3(0f, 0f, 9f);
             });
         }
 

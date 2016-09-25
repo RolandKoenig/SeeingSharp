@@ -294,14 +294,19 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         /// <param name="textToDisplay">The text to be displayed.</param>
         /// <param name="textOptions">All options regarding the text geometry generator.</param>
-        public GenericObject Add3DText(string textToDisplay, TextGeometryOptions textOptions)
+        /// <param name="realignToCenter">Moves all vertices so that the center is 0.</param>
+        /// <param name="layer">The layer on which to add the object.</param>
+        public GenericObject Add3DText(string textToDisplay, TextGeometryOptions textOptions, bool realignToCenter = false, string layer = Scene.DEFAULT_LAYER_NAME)
         {
             VertexStructure newStructure = new VertexStructure();
             newStructure.FirstSurface.BuildTextGeometry(
                 textToDisplay,
                 textOptions);
+
+            if (realignToCenter) { newStructure.RealignToCenter(); }
+
             var resTextGeometry = this.AddResource(() => new GeometryResource(newStructure));
-            return this.AddGeneric(resTextGeometry);
+            return this.AddGeneric(resTextGeometry, layer);
         }
 
         /// <summary>

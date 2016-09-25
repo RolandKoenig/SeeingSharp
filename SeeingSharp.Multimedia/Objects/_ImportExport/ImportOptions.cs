@@ -52,15 +52,14 @@ namespace SeeingSharp.Multimedia.Objects
                 case CoordinateSystem.LeftHanded_UpZ:
                     return
                         Matrix4x4.CreateScale(1f, -1f, 1f) *
-                        Matrix4x4.CreateFromYawPitchRoll(-EngineMath.RAD_90DEG, 0f, 0f);
+                        Matrix4x4.CreateRotationX(-EngineMath.RAD_90DEG); ;
 
                 case CoordinateSystem.RightHanded_UpY:
                     return Matrix4x4.CreateScale(new Vector3(1f, 1f, -1f));
 
                 case CoordinateSystem.RightHanded_UpZ:
                     return
-                        Matrix4x4.CreateScale(-1f, 1f, -1f) *
-                        Matrix4x4.CreateFromYawPitchRoll(EngineMath.RAD_90DEG, 0f, 0f);
+                        Matrix4x4.CreateRotationX(-EngineMath.RAD_90DEG);
             }
 
             return Matrix4x4.Identity;

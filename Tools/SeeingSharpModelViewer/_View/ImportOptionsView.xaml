@@ -13,8 +13,12 @@
         <ToolBarTray IsLocked="True"
                      DockPanel.Dock="Top">
             <ToolBar>
-                <Button Command="{Binding Path=CommandReload}" 
-                    Content="{local:ModelViewerIcon Icon=Refresh,ResultType=Image}" />
+                <Button Command="{Binding Path=CommandReload}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{local:ModelViewerIcon Icon=Refresh,ResultType=BitmapImage}" />
+                        <Label>Reload Model</Label>
+                    </StackPanel>
+                </Button>
             </ToolBar>
         </ToolBarTray>
 

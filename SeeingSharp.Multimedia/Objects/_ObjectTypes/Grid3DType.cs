@@ -101,7 +101,7 @@ namespace SeeingSharp.Multimedia.Objects
                 Color4 actLineColor = this.LineColor;
                 if (this.HighlightXZLines && (actTileX == tileMiddleX))
                 {
-                    actLineColor = this.XLineHighlightColor;
+                    actLineColor = this.ZLineHighlightColor;
                 }
 
                 VertexStructureSurface targetStruture = actTileX % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
@@ -130,7 +130,7 @@ namespace SeeingSharp.Multimedia.Objects
                 Color4 actLineColor = this.LineColor;
                 if (this.HighlightXZLines && (actTileZ == tileMiddleZ))
                 {
-                    actLineColor = this.ZLineHighlightColor;
+                    actLineColor = this.XLineHighlightColor;
                 }
 
                 VertexStructureSurface targetStruture = actTileZ % this.GroupTileCount == 0 ? genStructureGroupLine : genStructureDefaultLine;
