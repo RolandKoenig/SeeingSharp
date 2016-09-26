@@ -65,7 +65,10 @@ namespace SeeingSharp.Multimedia.Core
             m_adapterIndex = adapterIndex;
 
             m_adapterDescription = adapter.Description;
-            m_isSoftware = m_adapterDescription.Description.StartsWith("Microsoft Basic Render Driver");
+            m_isSoftware =
+                (m_adapterDescription.Description == "Microsoft Basic Render Driver") ||
+                ((!string.IsNullOrEmpty(m_adapterDescription.Description)) && m_adapterDescription.Description.Contains("Software")) ||
+                ((!string.IsNullOrEmpty(m_adapterDescription.Description)) && m_adapterDescription.Description.Contains("Microsoft Basic Render Driver"));
 
             m_d3d11FeatureLevel = D3D11.Device.GetSupportedFeatureLevel(adapter);
 
