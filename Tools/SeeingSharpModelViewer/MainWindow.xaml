@@ -52,8 +52,15 @@
         <ToolBarTray DockPanel.Dock="Bottom"
                      IsLocked="True">
             <ToolBar>
-                <TextBlock Text="Document: " />
-                <TextBlock Text="{Binding Path=LoadedFile.CurrentFileForStatusBar}" />
+                <Image Source="{local:ModelViewerIcon Icon=Page}" />
+                <TextBlock Text="{Binding Path=LoadedFile.CurrentFileForStatusBar}"
+                           Foreground="Gray"/>
+                <Separator />
+                <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding Path=LoadedFile.LoadingBarVisibility}">
+                    <ProgressBar Width="150" Height="12" IsIndeterminate="True" />
+                    <TextBlock Margin="3,0,0,0" Text="Loading..." />
+                </StackPanel>
             </ToolBar>
         </ToolBarTray>
 

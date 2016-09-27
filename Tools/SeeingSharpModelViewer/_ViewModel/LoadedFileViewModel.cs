@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace SeeingSharpModelViewer
 {
@@ -31,6 +32,10 @@ namespace SeeingSharpModelViewer
         private ResourceLink m_currentFile;
         private ImportOptions m_currentImportOptions;
         #endregion Loaded data
+
+        #region State
+        private bool m_isLoading;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="LoadedFileViewModel"/> class.
@@ -48,26 +53,46 @@ namespace SeeingSharpModelViewer
         /// <param name="resourceLink">The <see cref="ResourceLink"/> from which to load the resource.</param>
         public async Task ImportNewFileAsync(ResourceLink resourceLink)
         {
-            m_currentFile = resourceLink;
-            m_currentImportOptions = GraphicsCore.Current.ImportersAndExporters.CreateImportOptions(m_currentFile);
-            base.RaisePropertyChanged(nameof(CurrentFile));
-            base.RaisePropertyChanged(nameof(CurrentFileForStatusBar));
-            base.RaisePropertyChanged(nameof(CurrentImportOptions));
+            if (this.IsLoading) { return; }
 
-            await m_scene.ImportAsync(m_currentFile, m_currentImportOptions);
+            this.IsLoading = true;
+            try
+            {
+                m_currentFile = resourceLink;
+                m_currentImportOptions = GraphicsCore.Current.ImportersAndExporters.CreateImportOptions(m_currentFile);
+                base.RaisePropertyChanged(nameof(CurrentFile));
+                base.RaisePropertyChanged(nameof(CurrentFileForStatusBar));
+                base.RaisePropertyChanged(nameof(CurrentImportOptions));
+
+                await m_scene.ImportAsync(m_currentFile, m_currentImportOptions);
+            }
+            finally
+            {
+                this.IsLoading = false;
+            }
 
             base.Messenger.Publish<NewModelLoadedMessage>();
         }
 
         public async Task ReloadCurrentFileAsync()
         {
-            m_currentFile.EnsureNotNull(nameof(m_currentFile));
-            m_currentImportOptions.EnsureNotNull(nameof(m_currentImportOptions));
+            if (this.IsLoading) { return; }
 
-            await CloseAsync(
-                clearCurrentFileInfo: false);
+            this.IsLoading = true;
+            try
+            {
+                m_currentFile.EnsureNotNull(nameof(m_currentFile));
+                m_currentImportOptions.EnsureNotNull(nameof(m_currentImportOptions));
 
-            await m_scene.ImportAsync(m_currentFile, m_currentImportOptions);
+                await CloseAsync(
+                    clearCurrentFileInfo: false);
+
+                await m_scene.ImportAsync(m_currentFile, m_currentImportOptions);
+            }
+            finally
+            {
+                this.IsLoading = false;
+            }
 
             base.Messenger.Publish<NewModelLoadedMessage>();
         }
@@ -96,12 +121,10 @@ namespace SeeingSharpModelViewer
             get
             {
                 DesktopFileSystemResourceLink fileResource = this.CurrentFile as DesktopFileSystemResourceLink;
-                if(fileResource == null) { return "-"; }
+                if (fileResource == null) { return "-"; }
                 else
                 {
-                    string filePath = fileResource.FilePath;
-                    if(filePath.Length > 50) { return $"...{filePath.Substring(filePath.Length - 45)}"; }
-                    else { return filePath; }
+                    return fileResource.FileName;
                 }
             }
         }
@@ -110,5 +133,21 @@ namespace SeeingSharpModelViewer
         {
             get { return m_currentImportOptions; }
         }
+
+        public bool IsLoading
+        {
+            get { return m_isLoading; }
+            set
+            {
+                if(m_isLoading != value)
+                {
+                    m_isLoading = value;
+                    RaisePropertyChanged(nameof(IsLoading));
+                    RaisePropertyChanged(nameof(LoadingBarVisibility));
+                }
+            }
+        }
+
+        public Visibility LoadingBarVisibility => m_isLoading ? Visibility.Visible : Visibility.Collapsed;
     }
 }

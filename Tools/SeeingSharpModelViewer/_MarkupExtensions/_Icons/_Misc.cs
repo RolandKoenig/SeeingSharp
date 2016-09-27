@@ -29,7 +29,8 @@ namespace SeeingSharpModelViewer
         Wireframe,
         Refresh,
         ModelEdit,
-        World
+        World,
+        Page
     }
 
     public enum IconResultType
