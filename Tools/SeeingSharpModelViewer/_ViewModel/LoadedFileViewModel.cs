@@ -143,11 +143,8 @@ namespace SeeingSharpModelViewer
                 {
                     m_isLoading = value;
                     RaisePropertyChanged(nameof(IsLoading));
-                    RaisePropertyChanged(nameof(LoadingBarVisibility));
                 }
             }
         }
-
-        public Visibility LoadingBarVisibility => m_isLoading ? Visibility.Visible : Visibility.Collapsed;
     }
 }

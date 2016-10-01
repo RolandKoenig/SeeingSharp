@@ -12,6 +12,14 @@
         Title="Seeing# ModelViewer" Height="350" Width="525"
         DataContext="{ssharpBase:Singleton Type=local:MainWindowViewModel}">
 
+    <ssharpBase:SeeingSharpWpfWindow.Resources>
+        <local:BooleanToVisibilityConverter x:Key="ConvBoolToVisibility"
+                                            ResultOnFalse="Collapsed" />
+        <local:NullableToVisibilityConverter x:Key="ConvNullableToVisibility"
+                                             ResultOnNull="Collapsed" />
+        <local:BooleanNegateConverter x:Key="ConvBoolNegate" />
+    </ssharpBase:SeeingSharpWpfWindow.Resources>
+    
     <ssharpBase:Interaction.ViewServices>
         <local:CommonDialogsViewService />
     </ssharpBase:Interaction.ViewServices>
@@ -21,10 +29,13 @@
         <Menu DockPanel.Dock="Top" Style="{StaticResource MainMenu}">
             <MenuItem Header="File">
                 <MenuItem Header="Open" Icon="{local:ModelViewerIcon Icon=Open, ResultType=Image}"
+                          IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"
                           Command="{Binding Path=CommandOpen}"/>
                 <MenuItem Header="Close" Icon="{local:ModelViewerIcon Icon=Close, ResultType=Image}" 
+                          IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"
                           Command="{Binding Path=CommandClose}"/>
-                <MenuItem Header="Save as..." Icon="{local:ModelViewerIcon Icon=Save, ResultType=Image}" />
+                <MenuItem Header="Save as..." Icon="{local:ModelViewerIcon Icon=Save, ResultType=Image}"
+                          IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}" />
                 <Separator />
                 <MenuItem Header="Exit" />
             </MenuItem>
@@ -41,9 +52,11 @@
                      IsLocked="True">
             <ToolBar>
                 <Button Command="{Binding Path=CommandOpen}" 
-                    Content="{local:ModelViewerIcon Icon=Open,ResultType=Image}" />
+                        Content="{local:ModelViewerIcon Icon=Open,ResultType=Image}" 
+                        IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"/>
                 <Button Command="{Binding Path=CommandClose}" 
-                    Content="{local:ModelViewerIcon Icon=Close,ResultType=Image}" />
+                        Content="{local:ModelViewerIcon Icon=Close,ResultType=Image}" 
+                        IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"/>
                 <Separator />
             </ToolBar>
         </ToolBarTray>
@@ -52,14 +65,17 @@
         <ToolBarTray DockPanel.Dock="Bottom"
                      IsLocked="True">
             <ToolBar>
-                <Image Source="{local:ModelViewerIcon Icon=Page}" />
-                <TextBlock Text="{Binding Path=LoadedFile.CurrentFileForStatusBar}"
-                           Foreground="Gray"/>
-                <Separator />
                 <StackPanel Orientation="Horizontal"
-                            Visibility="{Binding Path=LoadedFile.LoadingBarVisibility}">
+                            Visibility="{Binding Path=LoadedFile.CurrentFile, Converter={StaticResource ConvNullableToVisibility}}">
+                    <TextBlock Text="{Binding Path=LoadedFile.CurrentFileForStatusBar}"
+                           Foreground="Gray"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal"
+                            Visibility="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolToVisibility}}"
+                            Margin="3,0,0,0">
                     <ProgressBar Width="150" Height="12" IsIndeterminate="True" />
-                    <TextBlock Margin="3,0,0,0" Text="Loading..." />
+                    <TextBlock Text="Loading..." 
+                               Margin="3,0,0,0"/>
                 </StackPanel>
             </ToolBar>
         </ToolBarTray>

@@ -99,6 +99,9 @@
     </ApplicationDefinition>
     <Compile Include="_Behaviors\Auto3DViewPointBehavior.cs" />
     <Compile Include="_Constants.cs" />
+    <Compile Include="_Converter\BooleanNegateConverter.cs" />
+    <Compile Include="_Converter\BooleanToVisibilityConverter.cs" />
+    <Compile Include="_Converter\NullableToVisibilityConverter.cs" />
     <Compile Include="_Localizables.cs" />
     <Compile Include="_Bootstrapper\ModelViewerBootstrapper.cs" />
     <Compile Include="_MarkupExtensions\_Icons\ModelViewerIconExtension.cs" />

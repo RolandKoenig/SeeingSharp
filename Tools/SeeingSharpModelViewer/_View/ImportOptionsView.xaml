@@ -9,11 +9,17 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{ssharpBase:Singleton Type=local:MainWindowViewModel}">
+
+    <ssharpBase:SeeingSharpWpfUserControl.Resources>
+        <local:BooleanNegateConverter x:Key="ConvBoolNegate" />
+    </ssharpBase:SeeingSharpWpfUserControl.Resources>
+    
     <DockPanel LastChildFill="True">
         <ToolBarTray IsLocked="True"
                      DockPanel.Dock="Top">
             <ToolBar>
-                <Button Command="{Binding Path=CommandReload}">
+                <Button Command="{Binding Path=CommandReload}"
+                        IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}">
                     <StackPanel Orientation="Horizontal">
                         <Image Source="{local:ModelViewerIcon Icon=Refresh,ResultType=BitmapImage}" />
                         <Label>Reload Model</Label>
@@ -23,6 +29,7 @@
         </ToolBarTray>
 
         <prop:PropertyGrid SelectedObject="{Binding Path=LoadedFile.CurrentImportOptions}" 
-                           TabVisibility="Collapsed" />
+                           TabVisibility="Collapsed" 
+                           IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"/>
     </DockPanel>
 </ssharpBase:SeeingSharpWpfUserControl>
