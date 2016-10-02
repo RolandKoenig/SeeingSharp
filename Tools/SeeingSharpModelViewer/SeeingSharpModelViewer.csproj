@@ -98,6 +98,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="_Behaviors\Auto3DViewPointBehavior.cs" />
+    <Compile Include="_Behaviors\ObjectSelectionBehavior.cs" />
     <Compile Include="_Constants.cs" />
     <Compile Include="_Converter\BooleanNegateConverter.cs" />
     <Compile Include="_Converter\BooleanToVisibilityConverter.cs" />

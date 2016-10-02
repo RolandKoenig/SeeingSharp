@@ -139,6 +139,10 @@
     <Compile Include="Core\_HardwareInfo\EngineAdapterInfo.cs" />
     <Compile Include="Core\_HardwareInfo\EngineHardwareInfo.cs" />
     <Compile Include="Core\_HardwareInfo\EngineOutputInfo.cs" />
+    <Compile Include="Core\_HostedObjects\DummyOpacityProvider.cs" />
+    <Compile Include="Core\_HostedObjects\HostedObjectTransformDataMapper.cs" />
+    <Compile Include="Core\_HostedObjects\IEngineHostedSceneObject.cs" />
+    <Compile Include="Core\_HostedObjects\IEngineOpacityProvider.cs" />
     <Compile Include="Core\_Messages\SceneObjectRemovedMessage.cs" />
     <Compile Include="Core\_Messages\SceneObjectAddedMessage.cs" />
     <Compile Include="Core\_Misc.cs" />

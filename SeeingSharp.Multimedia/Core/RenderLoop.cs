@@ -468,7 +468,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the object on the given pixel location (location local to this control).
         /// </summary>
-        public async Task<List<SceneObject>> PickObjectAsync(Point localLocation, PickingOptions pickingOptions)
+        /// <param name="pickingOptions">Options for picking logic.</param>
+        /// <param name="pixelLocation">X, Y location of the cursor in pixels.</param>
+        public async Task<List<SceneObject>> PickObjectAsync(Point pixelLocation, PickingOptions pickingOptions)
         {
             List<SceneObject> result = null;
 
@@ -478,8 +480,8 @@ namespace SeeingSharp.Multimedia.Core
                 Matrix4x4 projectionMatrix = m_camera.Projection;
 
                 Vector3 pickingVector;
-                pickingVector.X = (((2.0f * localLocation.X) / m_currentViewSize.Width) - 1) / projectionMatrix.M11;
-                pickingVector.Y = -(((2.0f * localLocation.Y) / m_currentViewSize.Height) - 1) / projectionMatrix.M22;
+                pickingVector.X = (((2.0f * pixelLocation.X) / m_currentViewSize.Width) - 1) / projectionMatrix.M11;
+                pickingVector.Y = -(((2.0f * pixelLocation.Y) / m_currentViewSize.Height) - 1) / projectionMatrix.M22;
                 pickingVector.Z = 1f;
 
                 Matrix4x4 worldMatrix = Matrix4x4.Identity;

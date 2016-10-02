@@ -290,7 +290,7 @@ namespace SeeingSharp.Util
         /// </summary>
         /// <param name="uiElement">The ui element on which to transform the coordinate.</param>
         /// <param name="wpfPoint">The wpf point to be transformed.</param>
-        public static Point GetPixelLocation(this UIElement uiElement, System.Windows.Point wpfPoint)
+        public static System.Windows.Point GetPixelLocation(this UIElement uiElement, System.Windows.Point wpfPoint)
         {
             PresentationSource source = PresentationSource.FromVisual(uiElement);
             double dpiScaleFactorX = 1.0;
@@ -301,9 +301,9 @@ namespace SeeingSharp.Util
                 dpiScaleFactorY = source.CompositionTarget.TransformToDevice.M22;
             }
 
-            return new Point(
-                (int)Math.Round(wpfPoint.X * dpiScaleFactorX),
-                (int)Math.Round(wpfPoint.Y * dpiScaleFactorY));
+            return new System.Windows.Point(
+                wpfPoint.X * dpiScaleFactorX,
+                wpfPoint.Y * dpiScaleFactorY);
         }
 
         /// <summary>

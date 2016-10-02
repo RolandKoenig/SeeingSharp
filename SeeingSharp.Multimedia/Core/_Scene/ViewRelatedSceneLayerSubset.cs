@@ -478,7 +478,7 @@ namespace SeeingSharp.Multimedia.Core
                 resources);
 
             // Clear current depth buffer
-            if (m_sceneLayer.ClearDepthBufferBefreRendering)
+            if (m_sceneLayer.ClearDepthBufferBeforeRendering)
             {
                 renderState.ClearCurrentDepthBuffer();
             }

@@ -53,20 +53,30 @@ namespace SeeingSharpModelViewer
             {
                 SceneLayer bgImageLayer = null;
                 bool isBgImageCreated = false;
-                if (manipulator.ContainsLayer("BACKGROUND_FLAT"))
+                if (manipulator.ContainsLayer(Constants.LAYER_BACKGROUND_FLAT))
                 {
-                    bgImageLayer = manipulator.GetLayer("BACKGROUND_FLAT");
+                    bgImageLayer = manipulator.GetLayer(Constants.LAYER_BACKGROUND_FLAT);
                     isBgImageCreated = true;
                 }
                 else
                 {
-                    bgImageLayer = manipulator.AddLayer("BACKGROUND_FLAT");
+                    bgImageLayer = manipulator.AddLayer(Constants.LAYER_BACKGROUND_FLAT);
                 }
 
-                SceneLayer bgLayer = manipulator.AddLayer("BACKGROUND");
+                SceneLayer bgLayer = manipulator.AddLayer(Constants.LAYER_BACKGROUND);
                 manipulator.SetLayerOrderID(bgImageLayer, 0);
                 manipulator.SetLayerOrderID(bgLayer, 1);
                 manipulator.SetLayerOrderID(Scene.DEFAULT_LAYER_NAME, 2);
+
+                var keyPostprocess = manipulator.AddResource<FocusPostprocessEffectResource>(
+                    () => new FocusPostprocessEffectResource(false));
+                if (!manipulator.ContainsLayer(Constants.LAYER_HOVER))
+                {
+                    SceneLayer layerHover = manipulator.AddLayer(Constants.LAYER_HOVER);
+                    layerHover.PostprocessEffectKey = keyPostprocess;
+                    layerHover.ClearDepthBufferBeforeRendering = true;
+                    manipulator.SetLayerOrderID(layerHover, 3);
+                }
 
                 // Store a reference to the background layer
                 m_bgLayer = bgLayer;
@@ -93,7 +103,7 @@ namespace SeeingSharpModelViewer
                 objTypeGrid.ZLineHighlightColor = Color4.BlueColor;
 
                 NamedOrGenericKey resGridGeometry = manipulator.AddGeometry(objTypeGrid);
-                manipulator.Add(new GenericObject(resGridGeometry), "BACKGROUND");
+                manipulator.Add(new GenericObject(resGridGeometry), Constants.LAYER_BACKGROUND);
 
                 TextGeometryOptions textXOptions = TextGeometryOptions.Default;
                 textXOptions.SurfaceVertexColor = Color4.GreenColor;
@@ -102,7 +112,7 @@ namespace SeeingSharpModelViewer
                 GenericObject textX = manipulator.Add3DText(
                     "X", textXOptions,
                     realignToCenter: true, 
-                    layer: "BACKGROUND");
+                    layer: Constants.LAYER_BACKGROUND);
                 textX.Position = new Vector3((m_tilesPerSide / 2f) + 1f, 0, 0);
 
                 TextGeometryOptions textZOptions = TextGeometryOptions.Default;
@@ -113,7 +123,7 @@ namespace SeeingSharpModelViewer
                 GenericObject textZ = manipulator.Add3DText(
                     "Z", textZOptions, 
                     realignToCenter: true,
-                    layer: "BACKGROUND");
+                    layer: Constants.LAYER_BACKGROUND);
                 textZ.Position = new Vector3(0f, 0f, (m_tilesPerSide / 2f) + 1f);
             });
         }

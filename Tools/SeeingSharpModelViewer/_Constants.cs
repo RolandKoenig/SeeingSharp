@@ -19,7 +19,16 @@ namespace SeeingSharpModelViewer
 {
     internal static class Constants
     {
+        #region Floor tiles
         public const int COUNT_TILES_MIN = 16;
         public const int COUNT_TILES_MAX = 128;
+        #endregion
+
+        #region Graphics Layer names
+        public const string LAYER_BACKGROUND = "Background";
+        public const string LAYER_BACKGROUND_FLAT = "BackgroundFlat";
+        public const string LAYER_HOVER = "HoveredObjects";
+        public const string LAYER_SELECTION = "SelectedObjects";
+        #endregion
     }
 }

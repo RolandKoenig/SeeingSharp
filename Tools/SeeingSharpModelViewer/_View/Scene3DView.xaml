@@ -41,6 +41,7 @@
             <ssharpMulti:FreeMovingCameraComponent />
             <i:Interaction.Behaviors>
                 <local:Auto3DViewPointBehavior />
+                <local:ObjectSelectionBehavior />
             </i:Interaction.Behaviors>
         </ssharpMulti:SeeingSharpRendererElement>
     </DockPanel>

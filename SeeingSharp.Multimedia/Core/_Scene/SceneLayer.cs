@@ -501,7 +501,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Clear the depth buffer before rendering?
         /// </summary>
-        public bool ClearDepthBufferBefreRendering
+        public bool ClearDepthBufferBeforeRendering
         {
             get;
             set;

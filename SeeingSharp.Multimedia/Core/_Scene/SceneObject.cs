@@ -671,6 +671,14 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets the parent object.
+        /// </summary>
+        public SceneObject Parent
+        {
+            get { return m_parent; }
+        }
+
+        /// <summary>
         /// Does this object have any child?
         /// </summary>
         public bool HasChilds
