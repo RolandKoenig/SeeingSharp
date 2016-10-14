@@ -36,6 +36,11 @@ namespace SeeingSharp.Infrastructure
             this.Value = value;
         }
 
+        public override string ToString()
+        {
+            return $"{this.Name}: {this.Value}";
+        }
+
         public string Name { get; set; }
         public string Value { get; set; }
     }

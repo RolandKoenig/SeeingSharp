@@ -39,7 +39,7 @@
         <Setter Property="Background" Value="#E6E7EA" />
         <Setter Property="Foreground" Value="Black" />
     </Style>
-    
+
     <Style TargetType="{x:Type prop:PropertyGrid}">
         <Style.Resources>
             <Style TargetType="{x:Type GroupBox}">
@@ -48,7 +48,7 @@
                         <ControlTemplate TargetType="{x:Type GroupBox}">
                             <StackPanel Orientation="Vertical">
                                 <Label Content="{TemplateBinding Header}"
-                                       FontSize="12" FontWeight="Bold" Foreground="#00CCFF"/>
+                                       FontSize="12" FontWeight="Bold" Foreground="#00CCFF" />
                                 <Rectangle Height="1" Fill="#00CCFF" Margin="0,0,0,8" />
                                 <ContentPresenter />
                             </StackPanel>
@@ -89,8 +89,8 @@
             <Border x:Name="MainPanelBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
                 <Border.Style>
                     <Style TargetType="{x:Type Border}">
-                        <Setter Property="Margin" Value="0,0,11,0"/>
-                        <Setter Property="CornerRadius" Value="3"/>
+                        <Setter Property="Margin" Value="0,0,11,0" />
+                        <Setter Property="CornerRadius" Value="3" />
                     </Style>
                 </Border.Style>
                 <DockPanel KeyboardNavigation.TabIndex="1" KeyboardNavigation.TabNavigation="Local">
@@ -106,8 +106,8 @@
                                                         <DrawingBrush TileMode="Tile" Viewbox="0,0,4,4" Viewport="0,0,4,4" ViewportUnits="Absolute" ViewboxUnits="Absolute">
                                                             <DrawingBrush.Drawing>
                                                                 <DrawingGroup>
-                                                                    <GeometryDrawing Brush="White" Geometry="M1,1L1,3 3,3 3,1z"/>
-                                                                    <GeometryDrawing Brush="#FF6D6D6D" Geometry="M0,0L0,2 2,2 2,0z"/>
+                                                                    <GeometryDrawing Brush="White" Geometry="M1,1L1,3 3,3 3,1z" />
+                                                                    <GeometryDrawing Brush="#FF6D6D6D" Geometry="M0,0L0,2 2,2 2,0z" />
                                                                 </DrawingGroup>
                                                             </DrawingBrush.Drawing>
                                                         </DrawingBrush>
@@ -116,7 +116,7 @@
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="IsMouseOver" Value="True">
-                                                    <Setter Property="Cursor" Value="SizeAll"/>
+                                                    <Setter Property="Cursor" Value="SizeAll" />
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
                                         </ControlTemplate>
@@ -125,35 +125,34 @@
                             </Style>
                         </Thumb.Style>
                     </Thumb>
-                    <ContentPresenter x:Name="ToolBarHeader" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Center" Margin="4,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center"/>
-                    <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="True" Margin="0,1,2,2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+                    <ContentPresenter x:Name="ToolBarHeader" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="Center" Margin="4,0" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="Center" />
+                    <ToolBarPanel x:Name="PART_ToolBarPanel" IsItemsHost="True" Margin="0,1,2,2" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
                 </DockPanel>
             </Border>
         </Grid>
         <ControlTemplate.Triggers>
             <Trigger Property="Header" Value="{x:Null}">
-                <Setter Property="Visibility" TargetName="ToolBarHeader" Value="Collapsed"/>
+                <Setter Property="Visibility" TargetName="ToolBarHeader" Value="Collapsed" />
             </Trigger>
             <Trigger Property="ToolBarTray.IsLocked" Value="True">
-                <Setter Property="Visibility" TargetName="ToolBarThumb" Value="Collapsed"/>
+                <Setter Property="Visibility" TargetName="ToolBarThumb" Value="Collapsed" />
             </Trigger>
             <Trigger Property="Orientation" Value="Vertical">
-                <Setter Property="Margin" TargetName="Grid" Value="1,3,1,1"/>
-                <Setter Property="Height" TargetName="ToolBarThumb" Value="10"/>
-                <Setter Property="Width" TargetName="ToolBarThumb" Value="Auto"/>
-                <Setter Property="Margin" TargetName="ToolBarThumb" Value="-1,-3,0,0"/>
-                <Setter Property="Padding" TargetName="ToolBarThumb" Value="5,6,6,1"/>
-                <Setter Property="Margin" TargetName="ToolBarHeader" Value="0,0,0,4"/>
-                <Setter Property="Margin" TargetName="PART_ToolBarPanel" Value="1,0,2,2"/>
-                <Setter Property="DockPanel.Dock" TargetName="ToolBarThumb" Value="Top"/>
-                <Setter Property="DockPanel.Dock" TargetName="ToolBarHeader" Value="Top"/>
-                <Setter Property="Margin" TargetName="MainPanelBorder" Value="0,0,0,11"/>
-                <Setter Property="Background" Value="#FFEEF5FD"/>
+                <Setter Property="Margin" TargetName="Grid" Value="1,3,1,1" />
+                <Setter Property="Height" TargetName="ToolBarThumb" Value="10" />
+                <Setter Property="Width" TargetName="ToolBarThumb" Value="Auto" />
+                <Setter Property="Margin" TargetName="ToolBarThumb" Value="-1,-3,0,0" />
+                <Setter Property="Padding" TargetName="ToolBarThumb" Value="5,6,6,1" />
+                <Setter Property="Margin" TargetName="ToolBarHeader" Value="0,0,0,4" />
+                <Setter Property="Margin" TargetName="PART_ToolBarPanel" Value="1,0,2,2" />
+                <Setter Property="DockPanel.Dock" TargetName="ToolBarThumb" Value="Top" />
+                <Setter Property="DockPanel.Dock" TargetName="ToolBarHeader" Value="Top" />
+                <Setter Property="Margin" TargetName="MainPanelBorder" Value="0,0,0,11" />
+                <Setter Property="Background" Value="#FFEEF5FD" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+                <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
-
 </ResourceDictionary>

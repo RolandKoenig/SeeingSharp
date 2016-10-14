@@ -1,26 +1,23 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# Tools. More info at 
+    Seeing# Tools. More info at
      - https://github.com/RolandKoenig/SeeingSharp/tree/master/Tools (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2016 Roland König (RolandK)
-    
+
 	This program is distributed under the terms of the Microsoft Public License (Ms-PL)-
 	More info at https://msdn.microsoft.com/en-us/library/ff647676.aspx
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
+
+using SeeingSharp;
+using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Util;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
-using SeeingSharp.Checking;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SeeingSharp.Util;
 using System.Numerics;
-using SeeingSharp;
+using System.Threading.Tasks;
 
 namespace SeeingSharpModelViewer
 {
@@ -29,11 +26,11 @@ namespace SeeingSharpModelViewer
         #region Scene
         private Scene m_scene;
         private SceneLayer m_bgLayer;
-        #endregion
+        #endregion Scene
 
         #region Configuration
         private int m_tilesPerSide;
-        #endregion
+        #endregion Configuration
 
         public MiscGraphicsObjectsViewModel(Scene scene)
         {
@@ -111,7 +108,7 @@ namespace SeeingSharpModelViewer
                 textXOptions.FontSize = 30;
                 GenericObject textX = manipulator.Add3DText(
                     "X", textXOptions,
-                    realignToCenter: true, 
+                    realignToCenter: true,
                     layer: Constants.LAYER_BACKGROUND);
                 textX.Position = new Vector3((m_tilesPerSide / 2f) + 1f, 0, 0);
 
@@ -119,9 +116,9 @@ namespace SeeingSharpModelViewer
                 textZOptions.SurfaceVertexColor = Color4.BlueColor;
                 textZOptions.MakeVolumetricText = false;
                 textZOptions.FontSize = 30;
-          
+
                 GenericObject textZ = manipulator.Add3DText(
-                    "Z", textZOptions, 
+                    "Z", textZOptions,
                     realignToCenter: true,
                     layer: Constants.LAYER_BACKGROUND);
                 textZ.Position = new Vector3(0f, 0f, (m_tilesPerSide / 2f) + 1f);
@@ -145,17 +142,16 @@ namespace SeeingSharpModelViewer
             await InitializeAsync();
         }
 
-
         public int TilesPerSide
         {
             get { return m_tilesPerSide; }
             set
             {
-                if(m_tilesPerSide != value)
+                if (m_tilesPerSide != value)
                 {
                     m_tilesPerSide = value;
-                    if(m_tilesPerSide < Constants.COUNT_TILES_MIN) { m_tilesPerSide = Constants.COUNT_TILES_MIN; }
-                    if(m_tilesPerSide > Constants.COUNT_TILES_MAX) { m_tilesPerSide = Constants.COUNT_TILES_MAX; }
+                    if (m_tilesPerSide < Constants.COUNT_TILES_MIN) { m_tilesPerSide = Constants.COUNT_TILES_MIN; }
+                    if (m_tilesPerSide > Constants.COUNT_TILES_MAX) { m_tilesPerSide = Constants.COUNT_TILES_MAX; }
 
                     ReloadBackgroundAsync()
                         .FireAndForget();
@@ -174,9 +170,9 @@ namespace SeeingSharpModelViewer
             }
             set
             {
-                if(m_bgLayer == null) { return; }
+                if (m_bgLayer == null) { return; }
 
-                if(m_bgLayer.IsRenderingEnabled != value)
+                if (m_bgLayer.IsRenderingEnabled != value)
                 {
                     m_bgLayer.IsRenderingEnabled = value;
                     RaisePropertyChanged(nameof(BackgroundVisible));

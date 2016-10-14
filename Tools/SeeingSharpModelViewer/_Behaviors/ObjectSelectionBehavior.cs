@@ -1,14 +1,15 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# Tools. More info at 
+    Seeing# Tools. More info at
      - https://github.com/RolandKoenig/SeeingSharp/tree/master/Tools (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2016 Roland König (RolandK)
-    
+
 	This program is distributed under the terms of the Microsoft Public License (Ms-PL)-
 	More info at https://msdn.microsoft.com/en-us/library/ff647676.aspx
 */
-#endregion
+#endregion License information (SeeingSharp and all based games/applications)
+
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Multimedia.Views;
@@ -16,8 +17,6 @@ using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interactivity;
 using System.Windows.Threading;
@@ -29,19 +28,19 @@ namespace SeeingSharpModelViewer
         #region Refresh timer
         private DispatcherTimer m_refreshTimer;
         private bool m_onRefresh;
-        #endregion
+        #endregion Refresh timer
 
         #region Mouse state
         private bool m_isMouseInside;
         private Point m_mouseLocation;
-        #endregion
+        #endregion Mouse state
 
         #region Scene state
         private Scene m_scene;
         private RenderLoop m_renderLoop;
         private GenericObject m_hoveredObject;
         private GenericObject m_selectedObject;
-        #endregion
+        #endregion Scene state
 
         public ObjectSelectionBehavior()
         {
@@ -51,7 +50,7 @@ namespace SeeingSharpModelViewer
         {
             base.OnAttached();
 
-            if(m_refreshTimer == null)
+            if (m_refreshTimer == null)
             {
                 m_scene = this.AssociatedObject.Scene;
                 m_renderLoop = this.AssociatedObject.RenderLoop;
@@ -71,7 +70,7 @@ namespace SeeingSharpModelViewer
         {
             base.OnDetaching();
 
-            if(m_refreshTimer != null)
+            if (m_refreshTimer != null)
             {
                 this.AssociatedObject.MouseMove -= OnAssociatedObject_MouseMove;
                 this.AssociatedObject.MouseLeave -= OnAssociatedObject_MouseLeave;
@@ -93,7 +92,7 @@ namespace SeeingSharpModelViewer
             try
             {
                 // Check for empty position
-                if(m_mouseLocation == new Point()) { return; }
+                if (m_mouseLocation == new Point()) { return; }
 
                 System.Diagnostics.Debug.WriteLine($"{m_mouseLocation.X:F2}, {m_mouseLocation.Y:F2}");
 
@@ -111,16 +110,16 @@ namespace SeeingSharpModelViewer
 
                 // Sync
                 GenericObject newHovered = null;
-                if((topUnderCursor != null) && (m_selectedObject != topUnderCursor)) { newHovered = topUnderCursor; }
+                if ((topUnderCursor != null) && (m_selectedObject != topUnderCursor)) { newHovered = topUnderCursor; }
 
                 // Apply changes to the scene
                 if (m_hoveredObject != newHovered)
                 {
                     await m_scene.ManipulateSceneAsync(manipulator =>
                     {
-                        if(m_hoveredObject != null) { manipulator.ClearLayer(Constants.LAYER_HOVER); }
+                        if (m_hoveredObject != null) { manipulator.ClearLayer(Constants.LAYER_HOVER); }
                         m_hoveredObject = newHovered;
-                        if(m_hoveredObject != null)
+                        if (m_hoveredObject != null)
                         {
                             GenericObject newHovering = new GenericObject(m_hoveredObject.GeometryResourceKey);
                             newHovering.TransformationType = SpacialTransformationType.TakeFromOtherObject;

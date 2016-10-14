@@ -1,40 +1,35 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
-    Seeing# Tools. More info at 
+    Seeing# Tools. More info at
      - https://github.com/RolandKoenig/SeeingSharp/tree/master/Tools (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2016 Roland König (RolandK)
-    
+
 	This program is distributed under the terms of the Microsoft Public License (Ms-PL)-
 	More info at https://msdn.microsoft.com/en-us/library/ff647676.aspx
 */
-#endregion
-using SeeingSharp.Multimedia.Core;
-using SeeingSharp.Multimedia.Objects;
-using SeeingSharp.Util;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SeeingSharp;
+#endregion License information (SeeingSharp and all based games/applications)
+
 using SeeingSharp.Checking;
-using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Util;
+using System.Threading.Tasks;
 
 namespace SeeingSharpModelViewer
 {
     public class MainWindowViewModel : ViewModelBase
     {
         #region main references
-        private Scene m_scene;
         private Camera3DBase m_camera;
+        private Scene m_scene;
         #endregion main references
 
         #region Child viewmodels
         private LoadedFileViewModel m_loadedFileVM;
         private MiscGraphicsObjectsViewModel m_miscObjectsVM;
-        #endregion
+        #endregion Child viewmodels
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -69,16 +64,9 @@ namespace SeeingSharpModelViewer
             return m_miscObjectsVM.InitializeAsync();
         }
 
-        private async void OnCommandOpen_Execute()
+        private bool OnCommandClose_CanExecute()
         {
-            ICommonDialogsViewService dialogService = base.TryGetViewService<ICommonDialogsViewService>();
-            dialogService.EnsureNotNull(nameof(dialogService));
-
-            ResourceLink fileToOpen = dialogService.PickFileByDialog(
-                GraphicsCore.Current.ImportersAndExporters.GetOpenFileDialogFilter());
-            if(fileToOpen == null) { return; }
-
-            await m_loadedFileVM.ImportNewFileAsync(fileToOpen);
+            return m_loadedFileVM.CurrentFile != null;
         }
 
         private async void OnCommandClose_Execute()
@@ -86,14 +74,16 @@ namespace SeeingSharpModelViewer
             await m_loadedFileVM.CloseAsync();
         }
 
-        private bool OnCommandClose_CanExecute()
+        private async void OnCommandOpen_Execute()
         {
-            return m_loadedFileVM.CurrentFile != null;   
-        }
+            ICommonDialogsViewService dialogService = base.TryGetViewService<ICommonDialogsViewService>();
+            dialogService.EnsureNotNull(nameof(dialogService));
 
-        private async void OnCommandReload_Execute()
-        {
-            await m_loadedFileVM.ReloadCurrentFileAsync();
+            ResourceLink fileToOpen = dialogService.PickFileByDialog(
+                GraphicsCore.Current.ImportersAndExporters.GetOpenFileDialogFilter());
+            if (fileToOpen == null) { return; }
+
+            await m_loadedFileVM.ImportNewFileAsync(fileToOpen);
         }
 
         private bool OnCommandReload_CanExecute()
@@ -101,14 +91,32 @@ namespace SeeingSharpModelViewer
             return m_loadedFileVM.CurrentFile != null;
         }
 
-        public Scene Scene
+        private async void OnCommandReload_Execute()
         {
-            get { return m_scene; }
+            await m_loadedFileVM.ReloadCurrentFileAsync();
         }
 
         public Camera3DBase Camera
         {
             get { return m_camera; }
+        }
+
+        public DelegateCommand CommandClose
+        {
+            get;
+            private set;
+        }
+
+        public DelegateCommand CommandOpen
+        {
+            get;
+            private set;
+        }
+
+        public DelegateCommand CommandReload
+        {
+            get;
+            private set;
         }
 
         public LoadedFileViewModel LoadedFile
@@ -121,22 +129,9 @@ namespace SeeingSharpModelViewer
             get { return m_miscObjectsVM; }
         }
 
-        public DelegateCommand CommandOpen
+        public Scene Scene
         {
-            get;
-            private set;
-        }
-
-        public DelegateCommand CommandClose
-        {
-            get;
-            private set;
-        }
-
-        public DelegateCommand CommandReload
-        {
-            get;
-            private set;
+            get { return m_scene; }
         }
     }
 }

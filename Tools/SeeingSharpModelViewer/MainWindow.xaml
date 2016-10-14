@@ -19,7 +19,7 @@
                                              ResultOnNull="Collapsed" />
         <local:BooleanNegateConverter x:Key="ConvBoolNegate" />
     </ssharpBase:SeeingSharpWpfWindow.Resources>
-    
+
     <ssharpBase:Interaction.ViewServices>
         <local:CommonDialogsViewService />
     </ssharpBase:Interaction.ViewServices>
@@ -30,10 +30,10 @@
             <MenuItem Header="File">
                 <MenuItem Header="Open" Icon="{local:ModelViewerIcon Icon=Open, ResultType=Image}"
                           IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"
-                          Command="{Binding Path=CommandOpen}"/>
-                <MenuItem Header="Close" Icon="{local:ModelViewerIcon Icon=Close, ResultType=Image}" 
+                          Command="{Binding Path=CommandOpen}" />
+                <MenuItem Header="Close" Icon="{local:ModelViewerIcon Icon=Close, ResultType=Image}"
                           IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"
-                          Command="{Binding Path=CommandClose}"/>
+                          Command="{Binding Path=CommandClose}" />
                 <MenuItem Header="Save as..." Icon="{local:ModelViewerIcon Icon=Save, ResultType=Image}"
                           IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}" />
                 <Separator />
@@ -43,20 +43,20 @@
                 <MenuItem IsCheckable="True"
                           IsChecked="{Binding ElementName=DockPaneImportOptions, Path=IsVisible, Mode=TwoWay}"
                           Header="{Binding ElementName=DockPaneImportOptions, Path=Title}"
-                          Icon="{local:ModelViewerIcon Icon=ModelEdit, ResultType=Image}"/>
+                          Icon="{local:ModelViewerIcon Icon=ModelEdit, ResultType=Image}" />
             </MenuItem>
         </Menu>
-        
+
         <!-- Main Toolbar-->
         <ToolBarTray DockPanel.Dock="Top"
                      IsLocked="True">
             <ToolBar>
-                <Button Command="{Binding Path=CommandOpen}" 
-                        Content="{local:ModelViewerIcon Icon=Open,ResultType=Image}" 
-                        IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"/>
-                <Button Command="{Binding Path=CommandClose}" 
-                        Content="{local:ModelViewerIcon Icon=Close,ResultType=Image}" 
-                        IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}"/>
+                <Button Command="{Binding Path=CommandOpen}"
+                        Content="{local:ModelViewerIcon Icon=Open,ResultType=Image}"
+                        IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}" />
+                <Button Command="{Binding Path=CommandClose}"
+                        Content="{local:ModelViewerIcon Icon=Close,ResultType=Image}"
+                        IsEnabled="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolNegate}}" />
                 <Separator />
             </ToolBar>
         </ToolBarTray>
@@ -68,14 +68,14 @@
                 <StackPanel Orientation="Horizontal"
                             Visibility="{Binding Path=LoadedFile.CurrentFile, Converter={StaticResource ConvNullableToVisibility}}">
                     <TextBlock Text="{Binding Path=LoadedFile.CurrentFileForStatusBar}"
-                           Foreground="Gray"/>
+                           Foreground="Gray" />
                 </StackPanel>
                 <StackPanel Orientation="Horizontal"
                             Visibility="{Binding Path=LoadedFile.IsLoading, Converter={StaticResource ConvBoolToVisibility}}"
                             Margin="3,0,0,0">
                     <ProgressBar Width="150" Height="12" IsIndeterminate="True" />
-                    <TextBlock Text="Loading..." 
-                               Margin="3,0,0,0"/>
+                    <TextBlock Text="Loading..."
+                               Margin="3,0,0,0" />
                 </StackPanel>
             </ToolBar>
         </ToolBarTray>
@@ -124,9 +124,7 @@
                         </dock:LayoutDocument>
                     </dock:LayoutDocumentPane>
                 </dock:LayoutPanel>
-     
             </dock:LayoutRoot>
         </dock:DockingManager>
-        
     </DockPanel>
 </ssharpBase:SeeingSharpWpfWindow>

@@ -1,27 +1,27 @@
 ﻿<ssharpBase:SeeingSharpWpfUserControl x:Class="SeeingSharpModelViewer.Scene3DView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:local="clr-namespace:SeeingSharpModelViewer"
              xmlns:ssharpBase="http://www.rolandk.de/wp/seeingsharp/base"
              xmlns:ssharpMulti="http://www.rolandk.de/wp/seeingsharp/multimedia"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300"
              DataContext="{ssharpBase:Singleton Type=local:MainWindowViewModel}">
     <DockPanel LastChildFill="True">
         <ToolBarTray IsLocked="True"
                      DockPanel.Dock="Top">
             <ToolBar>
-                <ToggleButton IsChecked="{Binding ElementName=CtrlRenderer, Path=RenderLoop.ViewConfiguration.ShowTextures}" 
+                <ToggleButton IsChecked="{Binding ElementName=CtrlRenderer, Path=RenderLoop.ViewConfiguration.ShowTextures}"
                               Content="{local:ModelViewerIcon Icon=Screenshot,ResultType=Image}"
-                              ToolTip="Enable/Disable Textures"/>
-                
-                <ToggleButton IsChecked="{Binding ElementName=CtrlRenderer, Path=RenderLoop.ViewConfiguration.WireframeEnabled}" 
+                              ToolTip="Enable/Disable Textures" />
+
+                <ToggleButton IsChecked="{Binding ElementName=CtrlRenderer, Path=RenderLoop.ViewConfiguration.WireframeEnabled}"
                               Content="{local:ModelViewerIcon Icon=Wireframe,ResultType=Image}"
-                              ToolTip="Enable/Disable Wireframe mode"/>
-                
+                              ToolTip="Enable/Disable Wireframe mode" />
+
                 <Separator />
 
                 <ToggleButton IsChecked="{Binding Path=MiscObjects.BackgroundVisible}"
@@ -29,13 +29,12 @@
                               ToolTip="Enable/Disable Background" />
                 <Label Content="# Tiles:" />
                 <TextBox Text="{Binding Path=MiscObjects.TilesPerSide}"
-                         Width="50" 
-                         BorderBrush="Gray" BorderThickness="1"/>
-
+                         Width="50"
+                         BorderBrush="Gray" BorderThickness="1" />
             </ToolBar>
         </ToolBarTray>
 
-        <ssharpMulti:SeeingSharpRendererElement 
+        <ssharpMulti:SeeingSharpRendererElement
             x:Name="CtrlRenderer"
             Scene="{Binding Path=Scene}" Camera="{Binding Path=Camera}">
             <ssharpMulti:FreeMovingCameraComponent />

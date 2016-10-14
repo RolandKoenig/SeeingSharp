@@ -25,8 +25,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Threading;
 using System.Windows;
-using SeeingSharp.Util;
 using System.Threading.Tasks;
+using SeeingSharp.Util;
+using SeeingSharp.Checking;
 
 #if DESKTOP
 // Some namespace mappings
@@ -71,7 +72,22 @@ namespace SeeingSharp.Infrastructure
         }
 
         /// <summary>
-        /// Initializes the RKApplication object.
+        /// Initializes the SeeingSharpApplication object for UnitTests.
+        /// </summary>
+        public static void InitializeForUnitTests()
+        {
+            // Do not throw any exception if Initialize was called before
+            if (s_current != null) { return; }
+
+            InitializeAsync(
+                typeof(SeeingSharpApplication).GetTypeInfo().Assembly,
+                new Assembly[0],
+                new string[0]).Wait();
+
+        }
+
+        /// <summary>
+        /// Initializes the SeeingSharpApplication object.
         /// </summary>
         /// <param name="mainAssembly">The main assembly of the application.</param>
         /// <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
@@ -82,10 +98,15 @@ namespace SeeingSharp.Infrastructure
 
             if (otherAssemblies == null) { otherAssemblies = new List<Assembly>(); }
 
+            // Ensure that the SeeingSharp assembly is contained in otherAssemblies list
+            Assembly thisAssembly = typeof(SeeingSharpApplication).GetTypeInfo().Assembly;
+            List<Assembly> otherAssembliesList = new List<Assembly>(otherAssemblies);
+            if (!otherAssembliesList.Contains(thisAssembly)) { otherAssembliesList.Add(thisAssembly); }
+
             // Do all initializations
             SeeingSharpApplication newApplication = new SeeingSharpApplication();
             newApplication.m_mainAssembly = mainAssembly;
-            newApplication.m_otherAssemblies = otherAssemblies;
+            newApplication.m_otherAssemblies = otherAssembliesList;
             newApplication.m_startupArguments = startupArguments;
             newApplication.m_translator = new SeeingSharpTranslator();
             newApplication.m_assemblyQuery = new TypeQueryHandler();
@@ -112,6 +133,44 @@ namespace SeeingSharp.Infrastructure
         }
 #endif
 
+#if DESKTOP        
+        /// <summary>
+        /// Initializes the automatic error reporting for Wpf applications.
+        /// </summary>
+        /// <param name="app">The main application object.</param>
+        /// <param name="mainWindow">The window that acts as the host of the error dialog.</param>
+        public void InitializeAutoErrorReporting_Wpf(System.Windows.Application app, System.Windows.Window mainWindow)
+        {
+            app.EnsureNotNull(nameof(app));
+
+            app.DispatcherUnhandledException += (sender, eArgs) =>
+            {
+                ExceptionInfo exInfo = new ExceptionInfo(eArgs.Exception);
+                eArgs.Handled = true;
+            };
+        }
+
+        /// <summary>
+        /// Initializes the automatic error reporting win forms.
+        /// </summary>
+        /// <param name="mainForm">The form that acts as the host of the error dialog.</param>
+        public void InitializeAutoErrorReporting_WinForms(System.Windows.Forms.Form mainForm)
+        {
+            System.Windows.Forms.Application.ThreadException += (sender, eArgs) =>
+            {
+                if(eArgs.Exception != null)
+                {
+                    ExceptionInfo exInfo = new ExceptionInfo(eArgs.Exception);
+
+                }
+                else
+                {
+
+                }
+            };
+        }
+#endif
+
         /// <summary>
         /// Initializes the UI environment.
         /// </summary>
@@ -124,11 +183,6 @@ namespace SeeingSharp.Infrastructure
             {
                 throw new InvalidOperationException("Unable to initialize RKApplication object: No valid UI SynchronizationContext found!");
             }
-
-            // Set the name on the UI thread
-#if DESKTOP
-            Thread.CurrentThread.Name = SeeingSharpConstants.THREAD_NAME_GUI;
-#endif
 
             // Create the UI messenger
             m_uiMessenger = new SeeingSharpMessenger();

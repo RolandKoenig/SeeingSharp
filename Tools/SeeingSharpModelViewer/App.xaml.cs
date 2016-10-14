@@ -1,12 +1,6 @@
 ﻿using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
-using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace SeeingSharpModelViewer
@@ -34,6 +28,7 @@ namespace SeeingSharpModelViewer
 
             // Load the main window
             MainWindow mainWindow = new SeeingSharpModelViewer.MainWindow();
+            SeeingSharpApplication.Current.InitializeAutoErrorReporting_Wpf(this, mainWindow);
             mainWindow.Show();
         }
     }
