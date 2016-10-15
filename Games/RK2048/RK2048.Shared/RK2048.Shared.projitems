@@ -19,6 +19,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)Data\GameDataContainer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Data\GameScore.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)DummyPage.xaml.cs">
       <DependentUpon>DummyPage.xaml</DependentUpon>
     </Compile>

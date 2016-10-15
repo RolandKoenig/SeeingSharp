@@ -34,11 +34,11 @@ using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp;
 using RK2048.Graphics;
 using SeeingSharp.Multimedia.Objects;
-using SeeingSharp.Gaming;
+using RK2048.Data;
 
 #if UNIVERSAL
 using Windows.ApplicationModel;
-#endif 
+#endif
 
 namespace RK2048.Logic
 {

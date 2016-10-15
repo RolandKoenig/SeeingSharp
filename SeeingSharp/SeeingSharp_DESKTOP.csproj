@@ -88,9 +88,6 @@
     <Compile Include="SeeingSharpException.cs" />
     <Compile Include="SeeingSharpKey.cs" />
     <Compile Include="SeeingSharpPointerButton.cs" />
-    <Compile Include="Gaming\_Data\GameDataContainer.cs" />
-    <Compile Include="Gaming\_Data\GameScore.cs" />
-    <Compile Include="Infrastructure\_AppLoader\ISeeingSharpAppLoader.cs" />
     <Compile Include="Infrastructure\_Attributes\AssemblyQueryableTypeAttribute.cs" />
     <Compile Include="Infrastructure\_Attributes\TranslateableClassAttribute.cs" />
     <Compile Include="Infrastructure\_Attributes\UINavigatablePageAttribute.cs" />

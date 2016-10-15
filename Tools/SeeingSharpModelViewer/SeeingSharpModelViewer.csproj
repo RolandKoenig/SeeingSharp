@@ -111,8 +111,8 @@
     <Compile Include="_ViewModel\LoadedFileViewModel.cs" />
     <Compile Include="_ViewModel\MainWindowViewModel.cs" />
     <Compile Include="_ViewModel\MiscGraphicsObjectsViewModel.cs" />
-    <Compile Include="_ViewService\_Impl\ICommonDialogsViewService.cs" />
-    <Compile Include="_ViewService\_Interface\CommonDialogsViewService.cs" />
+    <Compile Include="_ViewService\_Interface\ICommonDialogsViewService.cs" />
+    <Compile Include="_ViewService\_Impl\CommonDialogsViewService.cs" />
     <Compile Include="_View\ImportOptionsView.xaml.cs">
       <DependentUpon>ImportOptionsView.xaml</DependentUpon>
     </Compile>
