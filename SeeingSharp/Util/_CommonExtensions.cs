@@ -400,7 +400,7 @@ namespace SeeingSharp.Util
         {
             if (syncContext == null)
             {
-#if DESKTOP
+#if DESKTOP || ANDROID
                 ThreadPool.QueueUserWorkItem(obj => postAction());
 #else
                 ThreadPool.RunAsync((arg) => { postAction(); })

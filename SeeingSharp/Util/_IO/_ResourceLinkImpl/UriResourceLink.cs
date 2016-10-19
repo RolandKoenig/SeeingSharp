@@ -145,7 +145,7 @@ namespace SeeingSharp.Util
 
         public override bool Exists()
         {
-#if DESKTOP
+#if DESKTOP 
             var streamInfo = Application.GetResourceStream(m_resourceUri);
             if(streamInfo == null) { return false; }
             else
@@ -153,6 +153,8 @@ namespace SeeingSharp.Util
                 CommonTools.DisposeObject(streamInfo.Stream);
                 return true;
             }
+#elif ANDROID
+            throw new SeeingSharpException("Not supported on Android platform!");
 #else
             var storageFile = StorageFile.GetFileFromApplicationUriAsync(m_resourceUri).AsTask().Result;
             return storageFile != null;
@@ -166,6 +168,8 @@ namespace SeeingSharp.Util
         {
 #if DESKTOP
             return await Task.Factory.StartNew<Stream>(() => OpenInputStream());
+#elif ANDROID
+            throw new SeeingSharpException("Not supported on Android platform!");
 #else
             var storageFile = await StorageFile.GetFileFromApplicationUriAsync(m_resourceUri);
             return await storageFile.OpenStreamForReadAsync().ConfigureAwait(false);
@@ -179,6 +183,8 @@ namespace SeeingSharp.Util
         {
 #if DESKTOP
             return Application.GetResourceStream(m_resourceUri).Stream;
+#elif ANDROID
+            throw new SeeingSharpException("Not supported on Android platform!");
 #else
             // Bad construct to map asynchronous API to synchronous OpenInputStream function
             // .. but it works for now and don't create a Deadlock on the UI

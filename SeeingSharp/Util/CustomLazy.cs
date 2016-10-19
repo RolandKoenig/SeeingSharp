@@ -109,7 +109,7 @@ namespace SeeingSharp.Util
             {
                 m_asyncLoadWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
 
-#if DESKTOP 
+#if DESKTOP || ANDROID
                 ThreadPool.QueueUserWorkItem((arg) =>
                 {
                     try { m_value = m_factoryFunc(); }

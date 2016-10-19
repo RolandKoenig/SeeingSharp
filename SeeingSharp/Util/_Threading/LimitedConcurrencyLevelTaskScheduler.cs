@@ -72,7 +72,7 @@ namespace SeeingSharp.Util
         // Inform the ThreadPool that there's work to be executed for this scheduler.  
         private void NotifyThreadPoolOfPendingWork()
         {
-#if DESKTOP
+#if DESKTOP || ANDROID
             ThreadPool.UnsafeQueueUserWorkItem(_ =>
 #else
             Task.Factory.StartNew(() =>
@@ -109,7 +109,7 @@ namespace SeeingSharp.Util
                     // We're done processing items on the current thread 
                     finally { _currentThreadIsProcessingItems = false; }
                 }
-#if DESKTOP
+#if DESKTOP || ANDROID
                 , null);
 #else
                 ).FireAndForget();

@@ -88,6 +88,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharpModelViewer", "T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharpModelViewer.Tests", "Tools\SeeingSharpModelViewer.Tests\SeeingSharpModelViewer.Tests.csproj", "{5D028D29-849E-4296-A595-C260E8397435}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp_ANDROID", "SeeingSharp\SeeingSharp_ANDROID.csproj", "{23E6E6EB-C841-4EFE-94EE-318E94C0E691}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\UniversalSampleContainer\UniversalSampleContainer.Shared\UniversalSampleContainer.Shared.projitems*{431f8f6a-aa43-4de1-8ec3-744a0396af02}*SharedItemsImports = 4
@@ -518,6 +520,22 @@ Global
 		{5D028D29-849E-4296-A595-C260E8397435}.Release|x64.Build.0 = Release|Any CPU
 		{5D028D29-849E-4296-A595-C260E8397435}.Release|x86.ActiveCfg = Release|Any CPU
 		{5D028D29-849E-4296-A595-C260E8397435}.Release|x86.Build.0 = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|ARM.Build.0 = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|x64.Build.0 = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Debug|x86.Build.0 = Debug|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|ARM.ActiveCfg = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|ARM.Build.0 = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|x64.ActiveCfg = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|x64.Build.0 = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|x86.ActiveCfg = Release|Any CPU
+		{23E6E6EB-C841-4EFE-94EE-318E94C0E691}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
