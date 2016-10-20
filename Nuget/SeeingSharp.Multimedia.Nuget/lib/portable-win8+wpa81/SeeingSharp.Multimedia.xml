@@ -859,6 +859,8 @@
             <summary>
             Gets the object on the given pixel location (location local to this control).
             </summary>
+            <param name="pickingOptions">Options for picking logic.</param>
+            <param name="pixelLocation">X, Y location of the cursor in pixels.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.ExchangeViewConfigurationAsync(SeeingSharp.Multimedia.Core.GraphicsViewConfiguration)">
             <summary>
@@ -2616,7 +2618,7 @@
             Called when the FixedTime animation has finished.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.ScaleSpriteToAnimation.#ctor(SeeingSharp.Multimedia.Objects.TexturePainter,System.Single,System.TimeSpan)">
+        <member name="M:SeeingSharp.Multimedia.Core.ScaleSpriteToAnimation.#ctor(SeeingSharp.Multimedia.Objects.FullscreenTextureObject,System.Single,System.TimeSpan)">
             <summary>
             Initialize a new Instance of the <see cref="T:SeeingSharp.Multimedia.Core.ScaleSpriteToAnimation" /> class.
             </summary>
@@ -3660,6 +3662,82 @@
         <member name="P:SeeingSharp.Multimedia.Core.EngineOutputInfo.DeviceName">
             <summary>
             Gets the name of the output device.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.DummyOpacityProvider.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.DummyOpacityProvider"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.DummyOpacityProvider.#ctor(System.Single)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.DummyOpacityProvider"/> class.
+            </summary>
+            <param name="opacity">The opacity.</param>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.DummyOpacityProvider.Opacity">
+            <summary>
+            Gets or sets the opacity of this object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.HostedObjectTransformDataMapper.#ctor(SeeingSharp.Multimedia.Core.IEngineHostedSceneObject,System.Func{System.Numerics.Vector3,System.Numerics.Vector3},System.Func{System.Numerics.Vector3,System.Numerics.Vector3},System.Func{System.Numerics.Vector3,System.Numerics.Vector3})">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.HostedObjectTransformDataMapper"/> class.
+            </summary>
+            <param name="originalObject">The original object.</param>
+            <param name="funcPositionMapper">The function position mapper.</param>
+            <param name="funcRotationMapper">The function rotation mapper.</param>
+            <param name="funcScalingMapper">The function scaling mapper.</param>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject">
+            <summary>
+            Helper interface for accessing transformation values from plc emulation
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject.Position">
+            <summary>
+            Gets the current position of the object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject.RotationEuler">
+            <summary>
+            Gets the current rotation of the object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject.ParentRotation">
+            <summary>
+            Gets the current rotation of the parent.
+            (only relevant when HostMode is set to ChildRotationMode).
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject.Scaling">
+            <summary>
+            Gets the current scaling of the object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject.AnimationHandler">
+            <summary>
+            Gets the assoziated AnimationHandler object (if any).
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject.DisplayColor">
+            <summary>
+            Gets the display color of the object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineHostedSceneObject.IsVisibleGlobal">
+            <summary>
+            Gets the current visibility state of the object.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Multimedia.Core.IEngineOpacityProvider">
+            <summary>
+            Helper interface for accessing opacity values from plc emulation.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.IEngineOpacityProvider.Opacity">
+            <summary>
+            Gets the opacity of this object.
             </summary>
         </member>
         <member name="T:SeeingSharp.Multimedia.Core.DpiScaling">
@@ -5028,7 +5106,7 @@
             Clear the depth buffer after rendering?
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.SceneLayer.ClearDepthBufferBefreRendering">
+        <member name="P:SeeingSharp.Multimedia.Core.SceneLayer.ClearDepthBufferBeforeRendering">
             <summary>
             Clear the depth buffer before rendering?
             </summary>
@@ -5177,12 +5255,14 @@
             Queries for all children (also lower level).
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.SceneManipulator.Add3DText(System.String,SeeingSharp.Multimedia.Objects.TextGeometryOptions)">
+        <member name="M:SeeingSharp.Multimedia.Core.SceneManipulator.Add3DText(System.String,SeeingSharp.Multimedia.Objects.TextGeometryOptions,System.Boolean,System.String)">
             <summary>
             Adds a text object displaying the given text.
             </summary>
             <param name="textToDisplay">The text to be displayed.</param>
             <param name="textOptions">All options regarding the text geometry generator.</param>
+            <param name="realignToCenter">Moves all vertices so that the center is 0.</param>
+            <param name="layer">The layer on which to add the object.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.SceneManipulator.AddGeneric(SeeingSharp.Util.NamedOrGenericKey)">
             <summary>
@@ -5616,6 +5696,11 @@
         <member name="P:SeeingSharp.Multimedia.Core.SceneObject.HasParent">
             <summary>
             Does this object have a parent?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.SceneObject.Parent">
+            <summary>
+            Gets the parent object.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.SceneObject.HasChilds">
@@ -9834,6 +9919,105 @@
             Called when mouse leaves the target panel.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.#ctor(SeeingSharp.Util.NamedOrGenericKey)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.FullscreenTextureObject"/> class.
+            </summary>
+            <param name="texture">The texture.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.LoadResources(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
+            <summary>
+            Loads all resources of the object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.IsLoaded(SeeingSharp.Multimedia.Core.EngineDevice)">
+            <summary>
+            Are resources loaded for the given device?
+            </summary>
+            <param name="device"></param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.UpdateInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState)">
+            <summary>
+            Updates the object.
+            </summary>
+            <param name="updateState">Current update state.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.UpdateForViewInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset)">
+            <summary>
+            Updates this object for the given view.
+            </summary>
+            <param name="updateState">Current state of the update pass.</param>
+            <param name="layerViewSubset">The layer view subset wich called this update method.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.OnRenderPlain(SeeingSharp.Multimedia.Core.RenderState)">
+            <summary>
+            Renders the object.
+            </summary>
+            <param name="renderState">Current render state.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.OnRenderTransparent(SeeingSharp.Multimedia.Core.RenderState)">
+            <summary>
+            Renders the object.
+            </summary>
+            <param name="renderState">Current render state.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.UnloadResources">
+            <summary>
+            Unloads all resources of the object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.Scaling">
+            <summary>
+            Gets or sets the scaling factor.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Objects.FullscreenTextureObject.AlphaBlendMode">
+            <summary>
+            Gets or sets the alpha blend mode.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.WirePainterHostObject.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.WireObject" /> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.WirePainterHostObject.LoadResources(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
+            <summary>
+            Loads all resources of the object.
+            </summary>
+            <param name="device">Current graphics device.</param>
+            <param name="resourceDictionary">Current resource dicionary.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.WirePainterHostObject.IsLoaded(SeeingSharp.Multimedia.Core.EngineDevice)">
+            <summary>
+            Are resources loaded for the given device?
+            </summary>
+            <param name="device">The device for which to check.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.WirePainterHostObject.UnloadResources">
+            <summary>
+            Unloads all resources of the object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.WirePainterHostObject.UpdateInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState)">
+            <summary>
+            Updates the object.
+            </summary>
+            <param name="updateState">Current update state.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.WirePainterHostObject.UpdateForViewInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset)">
+            <summary>
+            Updates this object for the given view.
+            </summary>
+            <param name="updateState">Current state of the update pass.</param>
+            <param name="layerViewSubset">The layer view subset wich called this update method.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.WirePainterHostObject.RenderLines(SeeingSharp.Multimedia.Core.RenderState)">
+            <summary>
+            Main render method for the wire object.
+            </summary>
+            <param name="renderState">Current render state.</param>
+        </member>
         <member name="T:SeeingSharp.Multimedia.Objects.VertexStructureSurface">
             <summary>
             A set of triangles of a VertexStructure which share the 
@@ -10414,6 +10598,58 @@
             Returns the index at ghe given index
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ImporterExporterRepository"/> class from being created.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.GetSupportedImportFormats">
+            <summary>
+            Gets a collection containing all supported import formats.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.GetOpenFileDialogFilter">
+            <summary>
+            Gets the filter string for an open file dialog.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.CreateImportOptions(SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Creates an ImportOptions object by the given source.
+            </summary>
+            <param name="source">The source of the resource.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.CreateImportOptionsByFileType(System.String)">
+            <summary>
+            Creates an ImportOptions object by the given source.
+            </summary>
+            <param name="fileExtension">The extension of the file to be imported.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.ImportAsync(SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Imports model(s) from the given source.
+            </summary>
+            <param name="source">The source where to load all objects from..</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.ImportAsync(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
+            <summary>
+            Imports model(s) from the given source.
+            </summary>
+            <param name="source">The source where to load all objects from..</param>
+            <param name="importOptions">The import options.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.GetImporterBySource(SeeingSharp.Util.ResourceLink)">
+            <summary>
+            Gets a ModelImporter by the given source.
+            </summary>
+            <param name="source">The source of the resource.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Objects.ImporterExporterRepository.GetImporterByFileType(System.String)">
+            <summary>
+            Gets a ModelImporter by the given file extension.
+            </summary>
+            <param name="fileExtension">The file extension of the resource to load.</param>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ObjFileReader.#ctor(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportedModelContainer,SeeingSharp.Multimedia.Objects.ObjImportOptions)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ObjFileReader"/> class.
@@ -10882,63 +11118,6 @@
         <member name="T:SeeingSharp.Multimedia.Objects.SkyboxObject.SkyboxLocalResources">
             <summary>
             Helper class that holds all resources of a skybox.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.#ctor(SeeingSharp.Util.NamedOrGenericKey)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Objects.TexturePainter"/> class.
-            </summary>
-            <param name="texture">The texture.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.LoadResources(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
-            <summary>
-            Loads all resources of the object.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.IsLoaded(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Are resources loaded for the given device?
-            </summary>
-            <param name="device"></param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.UpdateInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState)">
-            <summary>
-            Updates the object.
-            </summary>
-            <param name="updateState">Current update state.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.UpdateForViewInternal(SeeingSharp.Multimedia.Core.SceneRelatedUpdateState,SeeingSharp.Multimedia.Core.ViewRelatedSceneLayerSubset)">
-            <summary>
-            Updates this object for the given view.
-            </summary>
-            <param name="updateState">Current state of the update pass.</param>
-            <param name="layerViewSubset">The layer view subset wich called this update method.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.OnRenderPlain(SeeingSharp.Multimedia.Core.RenderState)">
-            <summary>
-            Renders the object.
-            </summary>
-            <param name="renderState">Current render state.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.OnRenderTransparent(SeeingSharp.Multimedia.Core.RenderState)">
-            <summary>
-            Renders the object.
-            </summary>
-            <param name="renderState">Current render state.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.TexturePainter.UnloadResources">
-            <summary>
-            Unloads all resources of the object.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.TexturePainter.Scaling">
-            <summary>
-            Gets or sets the scaling factor.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Objects.TexturePainter.AlphaBlendMode">
-            <summary>
-            Gets or sets the alpha blend mode.
             </summary>
         </member>
         <member name="T:SeeingSharp.Multimedia.Objects.WireObject">
@@ -11856,58 +12035,6 @@
             <summary>
             Creates a default import options object for this importer.
             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.#ctor">
-            <summary>
-            Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.Objects.ImportExportHandler"/> class from being created.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.GetSupportedImportFormats">
-            <summary>
-            Gets a collection containing all supported import formats.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.GetOpenFileDialogFilter">
-            <summary>
-            Gets the filter string for an open file dialog.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.CreateImportOptions(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Creates an ImportOptions object by the given source.
-            </summary>
-            <param name="source">The source of the resource.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.CreateImportOptionsByFileType(System.String)">
-            <summary>
-            Creates an ImportOptions object by the given source.
-            </summary>
-            <param name="fileExtension">The extension of the file to be imported.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.ImportAsync(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Imports model(s) from the given source.
-            </summary>
-            <param name="source">The source where to load all objects from..</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.ImportAsync(SeeingSharp.Util.ResourceLink,SeeingSharp.Multimedia.Objects.ImportOptions)">
-            <summary>
-            Imports model(s) from the given source.
-            </summary>
-            <param name="source">The source where to load all objects from..</param>
-            <param name="importOptions">The import options.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.GetImporterBySource(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Gets a ModelImporter by the given source.
-            </summary>
-            <param name="source">The source of the resource.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Objects.ImportExportHandler.GetImporterByFileType(System.String)">
-            <summary>
-            Gets a ModelImporter by the given file extension.
-            </summary>
-            <param name="fileExtension">The file extension of the resource to load.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Objects.ImportOptions.#ctor">
             <summary>

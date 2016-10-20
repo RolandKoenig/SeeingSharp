@@ -49,16 +49,6 @@
             </summary>
             <param name="ex">The exception to be analyzed.</param>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.ISeeingSharpAppLoader.LoadAsync">
-            <summary>
-            Loads this part of the application.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ISeeingSharpAppLoader.UnloadAsync">
-            <summary>
-            Unloads this part of the application.
-            </summary>
-        </member>
         <member name="P:SeeingSharp.Infrastructure.AssemblyQueryableTypeAttribute.TargetType">
             <summary>
             Gets The type which is to be found through assembly query.
@@ -105,9 +95,14 @@
             Prevents a default instance of the <see cref="T:SeeingSharp.Infrastructure.SeeingSharpApplication" /> class from being created.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeForUnitTests">
+            <summary>
+            Initializes the SeeingSharpApplication object for UnitTests.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeAsync(System.Reflection.Assembly,System.Collections.Generic.IEnumerable{System.Reflection.Assembly},System.String[])">
             <summary>
-            Initializes the RKApplication object.
+            Initializes the SeeingSharpApplication object.
             </summary>
             <param name="mainAssembly">The main assembly of the application.</param>
             <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
@@ -118,6 +113,19 @@
             Creates all default services.
             </summary>
             <param name="mainWindow">The mainwindow instance.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeAutoErrorReporting_Wpf(System.Windows.Application,System.Windows.Window)">
+            <summary>
+            Initializes the automatic error reporting for Wpf applications.
+            </summary>
+            <param name="app">The main application object.</param>
+            <param name="mainWindow">The window that acts as the host of the error dialog.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeAutoErrorReporting_WinForms(System.Windows.Forms.Form)">
+            <summary>
+            Initializes the automatic error reporting win forms.
+            </summary>
+            <param name="mainForm">The form that acts as the host of the error dialog.</param>
         </member>
         <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeUIEnvironment">
             <summary>
@@ -527,33 +535,6 @@
         <member name="M:SeeingSharp.SeeingSharpException.#ctor(System.String,System.Exception)">
             <summary>
             Creates a new CommonLibraryException object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Gaming.GameDataContainer.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Gaming.GameDataContainer" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Gaming.GameDataContainer.TryPostNewScore(System.String,System.Int32)">
-            <summary>
-            Posts a new score value.
-            </summary>
-            <param name="playerName">The name of the player.</param>
-            <param name="totalScore">The value to be posted.</param>
-        </member>
-        <member name="M:SeeingSharp.Gaming.GameDataContainer.SaveToRoamingFolder">
-            <summary>
-            Saves this data container to the roaming folder.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Gaming.GameDataContainer.LoadFromRoamingFolderAsync(System.String)">
-            <summary>
-            Loads the GameDataContainer from the roaming folder.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Gaming.GameDataContainer.GameScores">
-            <summary>
-            Gets a list containing all game scores.
             </summary>
         </member>
         <member name="T:SeeingSharp.Properties.Resources">
@@ -3214,6 +3195,11 @@
         <member name="M:SeeingSharp.Util.ResourceLink.ReadCompleteToStringAsync">
             <summary>
             Reads the complete resource to a new string.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Util.ResourceLink.Exists">
+            <summary>
+            Does the resource behind this link already exist?
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.ResourceLink.GetForAnotherFile(System.String,System.String[])">
