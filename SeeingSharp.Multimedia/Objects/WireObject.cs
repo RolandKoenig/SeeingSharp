@@ -42,13 +42,15 @@ namespace SeeingSharp.Multimedia.Objects
     /// </summary>
     public class WireObject : SceneObject
     {
-        // Configuration
+        #region Configuration
         private bool m_forceReloadLineData;
         private Line[] m_lineData;
         private Color4 m_lineColor;
+        #endregion
 
-        // Direct3D resources
+        #region Direct3D resources
         private IndexBasedDynamicCollection<LocalResourceData> m_localResources;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WireObject" /> class.

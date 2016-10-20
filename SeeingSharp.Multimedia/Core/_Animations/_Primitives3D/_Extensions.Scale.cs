@@ -68,7 +68,7 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         public static IAnimationSequenceBuilder<TargetObject> ScaleTo<TargetObject>(this IAnimationSequenceBuilder<TargetObject> sequenceBuilder, float targetScaling, TimeSpan animationTime)
-            where TargetObject : TexturePainter
+            where TargetObject : FullscreenTextureObject
         {
             sequenceBuilder.Add(
                 new ScaleSpriteToAnimation(sequenceBuilder.TargetObject, targetScaling, animationTime));

@@ -132,7 +132,7 @@ namespace SeeingSharpModelViewer.Data
                     "SeeingSharpModelViewer", true,
                     "Assets/Textures/Background.dds");
                 NamedOrGenericKey resBackgroundTexture = manipulator.AddTexture(linkBackgroundTexture);
-                manipulator.Add(new TexturePainter(resBackgroundTexture), bgImageLayer.Name);
+                manipulator.Add(new FullscreenTextureObject(resBackgroundTexture), bgImageLayer.Name);
 
                 // Define ground
                 Grid3DType objTypeGrid = new Grid3DType();

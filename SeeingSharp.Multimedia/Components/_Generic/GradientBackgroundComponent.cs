@@ -122,7 +122,7 @@ namespace SeeingSharp.Multimedia.Components
             // Create and add the background
             context.BackgroundTextureKey = manipulator.AddResource(
                 () => new Direct2DSingleRenderTextureResource(context.BrushResource, m_textureWidth, m_textureHeight));
-            context.BackgroundPainter = new TexturePainter(context.BackgroundTextureKey);
+            context.BackgroundPainter = new FullscreenTextureObject(context.BackgroundTextureKey);
             context.BackgroundPainter.Scaling = 1.1f;
             manipulator.Add(context.BackgroundPainter, DEFAULT_LAYER);
 
@@ -233,7 +233,7 @@ namespace SeeingSharp.Multimedia.Components
         //*********************************************************************
         public class PerSceneContext
         {
-            public TexturePainter BackgroundPainter;
+            public FullscreenTextureObject BackgroundPainter;
             public NamedOrGenericKey BackgroundTextureKey;
             public LinearGradientBrushResource BrushResource;
         }

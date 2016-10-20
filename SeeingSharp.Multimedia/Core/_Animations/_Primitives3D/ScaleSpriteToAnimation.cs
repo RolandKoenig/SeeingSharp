@@ -33,7 +33,7 @@ namespace SeeingSharp.Multimedia.Core
     public class ScaleSpriteToAnimation : AnimationBase
     {
         #region Parameters
-        private TexturePainter m_targetObject;
+        private FullscreenTextureObject m_targetObject;
         private TimeSpan m_duration;
         private float m_targetScaling;
         #endregion Parameters
@@ -50,7 +50,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="targetScaling">The target scaling factor.</param>
         /// <param name="duration">The duration.</param>
         /// <exception cref="System.Exception">Opacity value can be between 0 and 1, not greater than 1 and not lower than 0!</exception>
-        public ScaleSpriteToAnimation(TexturePainter targetObject, float targetScaling, TimeSpan duration)
+        public ScaleSpriteToAnimation(FullscreenTextureObject targetObject, float targetScaling, TimeSpan duration)
             : base(targetObject, AnimationType.FixedTime, duration)
         {
             m_targetObject = targetObject;

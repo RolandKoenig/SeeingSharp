@@ -54,7 +54,7 @@ namespace SeeingSharp.Samples.Base
                 "Assets/Textures/Floor.dds");
 
             var resBackgroundTexture = manipulator.AddTexture(sourceWallTexture);
-            manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
+            manipulator.Add(new FullscreenTextureObject(resBackgroundTexture), bgLayer.Name);
 
             // Define textures and materials
             var resTileTexture = manipulator.AddResource(() => new StandardTextureResource(sourceTileTexture));

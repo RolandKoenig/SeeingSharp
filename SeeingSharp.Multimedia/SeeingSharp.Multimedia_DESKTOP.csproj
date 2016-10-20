@@ -330,6 +330,7 @@
     <Compile Include="Input\_States\MouseOrPointerState.cs" />
     <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
     <Compile Include="Input\_States\_Enum.cs" />
+    <Compile Include="Objects\WirePainterHostObject.cs" />
     <Compile Include="Objects\_Construction\VertexStructureSurface.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImportOptions.cs" />
     <Compile Include="Objects\_ImportExport\_Formats\_AC\_Misc.cs" />
@@ -344,6 +345,7 @@
     <Compile Include="Objects\_ImportExport\_ModelContainer\ExportMaterialInfo.cs" />
     <Compile Include="Objects\_ObjectTypes\CubeType.cs" />
     <Compile Include="Objects\_ObjectTypes\StackedObjectType.cs" />
+    <Compile Include="Objects\_Painters\WirePainter.cs" />
     <Compile Include="PlayingSound\CachedSoundFile.cs" />
     <Compile Include="PlayingSound\SoundManager.cs" />
     <Compile Include="SeeingSharpGraphicsException.cs" />
@@ -356,7 +358,7 @@
     <Compile Include="Objects\GenericObject.cs" />
     <Compile Include="Objects\Overlay2DLineObject.cs" />
     <Compile Include="Objects\SkyboxObject.cs" />
-    <Compile Include="Objects\TexturePainter.cs" />
+    <Compile Include="Objects\FullscreenTextureObject.cs" />
     <Compile Include="Objects\WireObject.cs" />
     <Compile Include="Objects\_Construction\AnimationData.cs" />
     <Compile Include="Objects\_Construction\BuiltVerticesRange.cs" />

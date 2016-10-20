@@ -90,7 +90,7 @@ namespace RK2048.Graphics
 
             var resBackgroundTexture = manipulator.AddTexture(
                 new AssemblyResourceUriBuilder("RK2048", true, "Assets/Textures/Background.png"));
-            manipulator.Add(new TexturePainter(resBackgroundTexture), bgLayer.Name);
+            manipulator.Add(new FullscreenTextureObject(resBackgroundTexture), bgLayer.Name);
         }
 
         /// <summary>
