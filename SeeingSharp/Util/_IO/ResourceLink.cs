@@ -167,6 +167,7 @@ namespace SeeingSharp.Util
         }
 #endif
 
+#if !ANDROID
         /// <summary>
         /// Performs an implicit conversion from <see cref="AssemblyResourceUriBuilder"/> to <see cref="ResourceLink"/>.
         /// </summary>
@@ -182,6 +183,7 @@ namespace SeeingSharp.Util
         {
             return new UriResourceLink(resourceUri);
         }
+#endif
 
         /// <summary>
         /// Gets the file extension of the resource we target to.
