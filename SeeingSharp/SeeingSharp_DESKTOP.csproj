@@ -202,6 +202,9 @@
     <Compile Include="View\_WinForms\SeeingSharpFormsUserControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="View\_Wpf\SeeingSharpWpfErrorDialog.xaml.cs">
+      <DependentUpon>SeeingSharpWpfErrorDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\_Wpf\SeeingSharpWpfWindow.cs" />
     <Compile Include="View\_Wpf\SeeingSharpWpfUserControl.cs" />
     <Compile Include="View\_ViewService\ViewServiceNode.cs" />
@@ -285,6 +288,15 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="View\_Wpf\SeeingSharpWpfErrorDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Icons\ErrorDialog_32x32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

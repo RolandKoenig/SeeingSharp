@@ -32,7 +32,7 @@ using System.Text;
 namespace SeeingSharp
 {
     [TranslateableClass("SeeingSharp")]
-    internal static class Translatables
+    public static class Translatables
     {
         public static string BOOTSTRAP_TRANSLATION = "Loading Translation..";
 
@@ -41,5 +41,12 @@ namespace SeeingSharp
         public static string ERROR_ROOT = "Root";
 
         public static string VALIDATION_ERRORS = "Following configuration errors found:";
+
+        #region Strings for the error dialog
+        public static string ERROR_DLG_SHOW_DETAILS = "Show details";
+        public static string ERROR_UNHANDLED_EX = "Unexpected error";
+        public static string ERROR_DLG_CLOSE = "Close";
+        public static string ERROR_DLG_TITLE = "Error";
+        #endregion
     }
 }

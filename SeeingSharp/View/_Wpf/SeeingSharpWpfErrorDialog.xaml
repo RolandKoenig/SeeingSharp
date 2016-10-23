@@ -1,0 +1,82 @@
+﻿<Window x:Class="SeeingSharp.View.SeeingSharpWpfErrorDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:local="clr-namespace:SeeingSharp.View"
+        xmlns:inf="clr-namespace:SeeingSharp.Infrastructure"
+        xmlns:util="clr-namespace:SeeingSharp.Util"
+        xmlns:ssharp="clr-namespace:SeeingSharp"
+        mc:Ignorable="d" 
+        Title="{x:Static ssharp:Translatables.ERROR_DLG_TITLE}"
+        Width="428" Height="220">
+
+    <Window.DataContext>
+        <inf:ExceptionInfo MainMessage="Test-MainMessage"
+                           Description="This is a short description of the exception" />
+    </Window.DataContext>
+
+    <Window.Resources>
+        <util:BooleanToVisibilityConverter x:Key="BoolToVisibleConverter" />
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="45"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="5"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+            <RowDefinition Height="3" />
+        </Grid.RowDefinitions>
+
+        <Image Grid.Column="0" Grid.Row="1"
+               VerticalAlignment="Top"
+               Margin="5"
+               Source="pack://application:,,,/SeeingSharp;component/Resources/Icons/ErrorDialog_32x32.png" />
+
+        <DockPanel Grid.Column="1" Grid.Row="1"
+                   LastChildFill="True">
+            <StackPanel DockPanel.Dock="Top"
+                        Orientation="Vertical">
+                <Label FontSize="22" Content="{Binding Path=MainMessage}" />
+                <TextBlock FontSize="16" Text="{Binding Path=Description}" 
+                           TextWrapping="Wrap"/>
+
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Name="ChkShowDetails" VerticalAlignment="Center"
+                              IsChecked="False"
+                              Checked="ChkShowDetails_Checked"/>
+                    <Label Content="{x:Static ssharp:Translatables.ERROR_DLG_SHOW_DETAILS}"
+                           VerticalAlignment="Center"/>
+                </StackPanel>
+            </StackPanel>
+
+            <TreeView ItemsSource="{Binding Path=ChildNodes}"
+                      Visibility="{Binding ElementName=ChkShowDetails, Path=IsChecked, Converter={StaticResource BoolToVisibleConverter}}">
+                <TreeView.ItemTemplate>
+                    <HierarchicalDataTemplate DataType="{x:Type inf:ExceptionInfoNode}"
+                                                  ItemsSource="{Binding Path=ChildNodes}">
+                        <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Horizontal">
+                                <Label Content="{Binding Path=PropertyName}" />
+                                <Label Content=":" Margin="0,0,3,0" />
+                                <Label Content="{Binding Path=PropertyValue}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+                </TreeView.ItemTemplate>
+            </TreeView>
+        </DockPanel>
+
+        <Grid Grid.Column="1" Grid.Row="2">
+            <Button Width="100" Margin="0,2,0,2"
+                    HorizontalAlignment="Right"
+                    Content="Close" 
+                    Click="OnCmdClose_Click"/>
+        </Grid>
+    </Grid>
+</Window>

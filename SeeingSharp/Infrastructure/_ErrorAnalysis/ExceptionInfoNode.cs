@@ -22,52 +22,62 @@
 #endregion
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using SeeingSharp.Checking;
 
 namespace SeeingSharp.Infrastructure
 {
-    public class ExceptionInfoNode
+    public class ExceptionInfoNode : IComparable<ExceptionInfoNode>
     {
-        private List<ExceptionInfoNode> m_innerExceptionNodes;
-        private List<ExceptionProperty> m_properties;
+        private Exception m_exception;
+        private List<ExceptionInfoNode> m_childNodes;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionInfoNode"/> class.
         /// </summary>
-        /// <param name="exceptionType">The type of the exception.</param>
-        public ExceptionInfoNode(Type exceptionType)
+        public ExceptionInfoNode(Exception ex)
         {
-            m_innerExceptionNodes = new List<ExceptionInfoNode>();
-            m_properties = new List<ExceptionProperty>();
+            ex.EnsureNotNull(nameof(ex));
 
-            this.TypeName = exceptionType.Name;           
+            m_exception = ex;
+
+            m_childNodes = new List<ExceptionInfoNode>();
+            this.PropertyName = ex.GetType().GetTypeInfo().Name;
+            this.PropertyValue = ex.Message;
         }
 
-        /// <summary>
-        /// Gets or sets the name of this node.
-        /// </summary>
-        public string TypeName
+        public ExceptionInfoNode(ExceptionProperty property)
         {
-            get;
-            set;
+            property.EnsureNotNull(nameof(property));
+
+            m_childNodes = new List<ExceptionInfoNode>();
+            this.PropertyName = property.Name;
+            this.PropertyValue = property.Value;
+        }
+
+        public int CompareTo(ExceptionInfoNode other)
+        {
+            if(this.IsExceptionNode != other.IsExceptionNode)
+            {
+                if (this.IsExceptionNode) { return -1; }
+                else { return 1; }
+            }
+
+            return this.PropertyName.CompareTo(other.PropertyName);
         }
 
         /// <summary>
         /// Gets a collection containing all subnodes.
         /// </summary>
-        public List<ExceptionInfoNode> InnerExceptionNodes
+        public List<ExceptionInfoNode> ChildNodes
         {
-            get { return m_innerExceptionNodes; }
+            get { return m_childNodes; }
         }
 
-        /// <summary>
-        /// Gets a list containing all exception properties.
-        /// </summary>
-        public List<ExceptionProperty> Properties
-        {
-            get { return m_properties; }
-        }
+        public bool IsExceptionNode => m_exception != null;
+
+        public string PropertyName { get; private set; }
+
+        public string PropertyValue { get; private set; }
     }
 }

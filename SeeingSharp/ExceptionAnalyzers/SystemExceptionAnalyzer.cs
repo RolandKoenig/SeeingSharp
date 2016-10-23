@@ -44,7 +44,7 @@ namespace SeeingSharp.ExceptionAnalyzers
         public IEnumerable<ExceptionProperty> ReadExceptionInfo(Exception ex)
         {
             // Write common properties
-            yield return new ExceptionProperty("Type", ex.GetType().FullName);
+            yield return new ExceptionProperty("ExceptionType", ex.GetType().FullName);
             yield return new ExceptionProperty("HResult", ex.HResult.ToString());
             yield return new ExceptionProperty("HelpLink", ex.HelpLink);
             yield return new ExceptionProperty("Message", ex.Message);

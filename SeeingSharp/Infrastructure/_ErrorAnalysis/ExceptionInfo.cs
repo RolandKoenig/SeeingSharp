@@ -21,6 +21,7 @@
 */
 #endregion
 using System;
+using System.Reflection;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -28,15 +29,16 @@ using System.Threading.Tasks;
 
 namespace SeeingSharp.Infrastructure
 {
-    public class ExceptionInfo : ExceptionInfoNode
+    public class ExceptionInfo
     {
+        private List<ExceptionInfoNode> m_childNodes;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ExceptionInfo"/> class.
         /// </summary>
         public ExceptionInfo()
-            : base(typeof(ExceptionInfo))
         {
-
+            m_childNodes = new List<ExceptionInfoNode>();
         }
 
         /// <summary>
@@ -44,16 +46,19 @@ namespace SeeingSharp.Infrastructure
         /// </summary>
         /// <param name="ex">The ex.</param>
         public ExceptionInfo(Exception ex)
-            : base(ex.GetType())
+            : this()
         {
-            this.MainMessage = ex.Message;
+            this.MainMessage = Translatables.ERROR_UNHANDLED_EX;
+            this.Description = ex.Message;
 
             // Read all available analyzers
             List<IExceptionAnalyzer> exceptionAnalyzer = 
                 SeeingSharpApplication.Current.TypeQuery.GetAndInstanciateByContract<IExceptionAnalyzer>();
 
             // Analyze the given exception 
-            AnalyzeException(ex, this, exceptionAnalyzer);
+            ExceptionInfoNode newNode = new ExceptionInfoNode(ex);
+            m_childNodes.Add(newNode);
+            AnalyzeException(ex, newNode, exceptionAnalyzer);
         }
 
         /// <summary>
@@ -65,17 +70,16 @@ namespace SeeingSharp.Infrastructure
         private void AnalyzeException(Exception ex, ExceptionInfoNode targetNode, IEnumerable<IExceptionAnalyzer> exceptionAnalyzers)
         {
             // Query over all exception data
-            Dictionary<Exception, ExceptionInfoNode> innerExceptions = new Dictionary<Exception,ExceptionInfoNode>();
-            Dictionary<string, ExceptionProperty> properties = new Dictionary<string,ExceptionProperty>();
             foreach(IExceptionAnalyzer actAnalyzer in exceptionAnalyzers)
             {
                 // Read all properties of the current exception
                 foreach(ExceptionProperty actProperty in actAnalyzer.ReadExceptionInfo(ex))
                 {
                     if (actProperty == null) { continue; }
-
                     if (string.IsNullOrEmpty(actProperty.Name)) { continue; }
-                    properties[actProperty.Name] = actProperty;
+
+                    ExceptionInfoNode propertyNode = new ExceptionInfoNode(actProperty);
+                    targetNode.ChildNodes.Add(propertyNode);
                 }
 
                 // Read all inner exception information
@@ -83,21 +87,34 @@ namespace SeeingSharp.Infrastructure
                 {
                     if (actInnerException == null) { continue; }
 
-                    ExceptionInfoNode actInfoNode = new ExceptionInfoNode(actInnerException.GetType());
+                    ExceptionInfoNode actInfoNode = new ExceptionInfoNode(actInnerException);
                     AnalyzeException(actInnerException, actInfoNode, exceptionAnalyzers);
-                    innerExceptions[actInnerException] = actInfoNode;
+                    targetNode.ChildNodes.Add(actInfoNode);
                 }
             }
 
-            // Fill data of current node with all found data
-            targetNode.Properties.AddRange(properties.Values);
-            targetNode.InnerExceptionNodes.AddRange(innerExceptions.Values);
+            // Sort all generated nodes
+            targetNode.ChildNodes.Sort();
+        }
+
+        /// <summary>
+        /// Gets a collection containing all subnodes.
+        /// </summary>
+        public List<ExceptionInfoNode> ChildNodes
+        {
+            get { return m_childNodes; }
         }
 
         /// <summary>
         /// Gets or sets the main message.
         /// </summary>
         public string MainMessage
+        {
+            get;
+            set;
+        }
+
+        public string Description
         {
             get;
             set;

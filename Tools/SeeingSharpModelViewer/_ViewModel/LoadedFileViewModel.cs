@@ -14,6 +14,7 @@ using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Util;
+using System;
 using System.Threading.Tasks;
 
 namespace SeeingSharpModelViewer

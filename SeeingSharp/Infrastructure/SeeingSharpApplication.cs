@@ -28,6 +28,7 @@ using System.Windows;
 using System.Threading.Tasks;
 using SeeingSharp.Util;
 using SeeingSharp.Checking;
+using SeeingSharp.View;
 
 #if DESKTOP
 // Some namespace mappings
@@ -147,6 +148,8 @@ namespace SeeingSharp.Infrastructure
             {
                 ExceptionInfo exInfo = new ExceptionInfo(eArgs.Exception);
                 eArgs.Handled = true;
+
+                SeeingSharpWpfErrorDialog.ShowDialog(mainWindow, exInfo);
             };
         }
 

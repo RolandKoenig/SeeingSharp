@@ -94,8 +94,6 @@ namespace SeeingSharpModelViewer
                 // Check for empty position
                 if (m_mouseLocation == new Point()) { return; }
 
-                System.Diagnostics.Debug.WriteLine($"{m_mouseLocation.X:F2}, {m_mouseLocation.Y:F2}");
-
                 // Pick objects
                 List<SceneObject> pickedObjects = await m_renderLoop.PickObjectAsync(
                     new SeeingSharp.Point((int)m_mouseLocation.X, (int)m_mouseLocation.Y),
