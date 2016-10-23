@@ -66,6 +66,11 @@ namespace SeeingSharp.Infrastructure
             return this.PropertyName.CompareTo(other.PropertyName);
         }
 
+        public override string ToString()
+        {
+            return $"{this.PropertyName}: {this.PropertyValue}";
+        }
+
         /// <summary>
         /// Gets a collection containing all subnodes.
         /// </summary>

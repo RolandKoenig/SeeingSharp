@@ -32,9 +32,11 @@ namespace SeeingSharp.Tests
             // Query for exception info
             ExceptionInfo exInfo = new ExceptionInfo(catchedEx);
 
-            Assert.True(exInfo.Properties.Any(
-                (actProperty) => actProperty.Name == nameof(catchedEx.Message)));
-            Assert.True(exInfo.Properties.Count > 5);
+            // Check information
+            Assert.True(exInfo.ChildNodes.Count == 1);
+            Assert.True(exInfo.ChildNodes[0].ChildNodes.Count > 5);
+            Assert.True(exInfo.ChildNodes[0].ChildNodes.Any(
+                (actNode) => actNode.PropertyName == nameof(catchedEx.Message)));
         }
     }
 }

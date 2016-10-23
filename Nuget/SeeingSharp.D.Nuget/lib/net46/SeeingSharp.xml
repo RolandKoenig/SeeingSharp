@@ -271,30 +271,24 @@
             <param name="targetNode">The target node where to put all data to.</param>
             <param name="exceptionAnalyzers">All loaded analyzer objects.</param>
         </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.ChildNodes">
+            <summary>
+            Gets a collection containing all subnodes.
+            </summary>
+        </member>
         <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.MainMessage">
             <summary>
             Gets or sets the main message.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfoNode.#ctor(System.Type)">
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfoNode.#ctor(System.Exception)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfoNode"/> class.
             </summary>
-            <param name="exceptionType">The type of the exception.</param>
         </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.TypeName">
-            <summary>
-            Gets or sets the name of this node.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.InnerExceptionNodes">
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.ChildNodes">
             <summary>
             Gets a collection containing all subnodes.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.Properties">
-            <summary>
-            Gets a list containing all exception properties.
             </summary>
         </member>
         <member name="T:SeeingSharp.Infrastructure.IExceptionAnalyzer">
@@ -3484,6 +3478,24 @@
             Tells the ViewService which FrameworkElement it is hosted by.
             </summary>
             <param name="frameworkElement">The framework element.</param>
+        </member>
+        <member name="T:SeeingSharp.View.SeeingSharpWpfErrorDialog">
+            <summary>
+            Interaction logic for SeeingSharpWpfErrorDialog.xaml
+            </summary>
+            <summary>
+            SeeingSharpWpfErrorDialog
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.SeeingSharpWpfErrorDialog.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.View.SeeingSharpWpfErrorDialog"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.SeeingSharpWpfErrorDialog.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
         </member>
         <member name="M:SeeingSharp.View.SeeingSharpWpfWindow.#ctor">
             <summary>
@@ -14662,6 +14674,36 @@
             <param name="result">When the method completes, contains the reflected vector.</param>
             <remarks>Reflect only gives the direction of a reflection off a surface, it does not determine
             whether the original vector was close enough to the surface to hit it.</remarks>
+        </member>
+        <member name="T:XamlGeneratedNamespace.GeneratedInternalTypeHelper">
+            <summary>
+            GeneratedInternalTypeHelper
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateInstance(System.Type,System.Globalization.CultureInfo)">
+            <summary>
+            CreateInstance
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.GetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            GetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.SetPropertyValue(System.Reflection.PropertyInfo,System.Object,System.Object,System.Globalization.CultureInfo)">
+            <summary>
+            SetPropertyValue
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.CreateDelegate(System.Type,System.Object,System.String)">
+            <summary>
+            CreateDelegate
+            </summary>
+        </member>
+        <member name="M:XamlGeneratedNamespace.GeneratedInternalTypeHelper.AddEventHandler(System.Reflection.EventInfo,System.Object,System.Delegate)">
+            <summary>
+            AddEventHandler
+            </summary>
         </member>
     </members>
 </doc>

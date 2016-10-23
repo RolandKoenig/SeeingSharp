@@ -28,7 +28,9 @@ using System.Windows;
 using System.Threading.Tasks;
 using SeeingSharp.Util;
 using SeeingSharp.Checking;
+#if !ANDROID
 using SeeingSharp.View;
+#endif
 
 #if DESKTOP
 // Some namespace mappings
@@ -84,7 +86,6 @@ namespace SeeingSharp.Infrastructure
                 typeof(SeeingSharpApplication).GetTypeInfo().Assembly,
                 new Assembly[0],
                 new string[0]).Wait();
-
         }
 
         /// <summary>
@@ -102,7 +103,11 @@ namespace SeeingSharp.Infrastructure
             // Ensure that the SeeingSharp assembly is contained in otherAssemblies list
             Assembly thisAssembly = typeof(SeeingSharpApplication).GetTypeInfo().Assembly;
             List<Assembly> otherAssembliesList = new List<Assembly>(otherAssemblies);
-            if (!otherAssembliesList.Contains(thisAssembly)) { otherAssembliesList.Add(thisAssembly); }
+            if ((!otherAssembliesList.Contains(thisAssembly)) &&
+                (mainAssembly != thisAssembly))
+            {
+                otherAssembliesList.Add(thisAssembly);
+            }
 
             // Do all initializations
             SeeingSharpApplication newApplication = new SeeingSharpApplication();
