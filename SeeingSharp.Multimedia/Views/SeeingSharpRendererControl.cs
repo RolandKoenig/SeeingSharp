@@ -430,10 +430,18 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         bool IRenderLoopHost.OnRenderLoop_CheckCanRender(EngineDevice device)
         {
-            //if (!m_initialized) { return false; }
+            // Check properties on self
+            if (this.IsDisposed) { return false; }
+            if (!this.Visible) { return false; }
             if (this.Width <= 0) { return false; }
             if (this.Height <= 0) { return false; }
-            //if (m_isOnRendering) { return false; }
+
+            // Check parent form
+            Form parentForm = this.GetParentForm();
+            if(parentForm != null)
+            {
+                if(parentForm.WindowState == FormWindowState.Minimized) { return false; }
+            }
 
             return true;
         }

@@ -27,11 +27,12 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
+using System.Windows;
+using SeeingSharp.Checking;
 
 // Some namespace mappings
 #if DESKTOP
-using System.Windows.Media.Imaging;
-using System.Windows;
 using WinForms = System.Windows.Forms;
 using GDI = System.Drawing;
 #endif
@@ -75,6 +76,20 @@ namespace SeeingSharp.Util
         }
 #endif
 
+#if DESKTOP
+        public static System.Windows.Forms.Form GetParentForm(this System.Windows.Forms.Control control)
+        {
+            control.EnsureNotNull(nameof(control));
+            
+            while(!(control is System.Windows.Forms.Form))
+            {
+                control = control.Parent;
+                if(control == null) { return null; }
+            }
+
+            return control as System.Windows.Forms.Form;
+        }
+#endif
         public static void CreateDummyObjectUntilCapacityReached<T>(this List<T> list, int targetCapacity)
         {
             if (list.Capacity < targetCapacity) { list.Capacity = targetCapacity; }

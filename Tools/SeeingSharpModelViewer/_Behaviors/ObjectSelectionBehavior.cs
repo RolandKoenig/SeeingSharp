@@ -61,7 +61,7 @@ namespace SeeingSharpModelViewer
 
                 m_refreshTimer = new DispatcherTimer(DispatcherPriority.Input);
                 m_refreshTimer.Tick += OnRefeshTimer_Tick;
-                m_refreshTimer.Interval = TimeSpan.FromMilliseconds(100.0);
+                m_refreshTimer.Interval = TimeSpan.FromMilliseconds(50.0);
                 m_refreshTimer.Start();
             }
         }

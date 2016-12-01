@@ -1,4 +1,7 @@
-﻿using SeeingSharp.View;
+﻿using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
+using SeeingSharp.View;
+using System.Collections.Generic;
 
 namespace SeeingSharpModelViewer
 {

@@ -65,6 +65,11 @@ namespace SeeingSharp.Multimedia.Core
             else if(clrType == typeof(ScenePivotObject)) { m_sceneObjectType = SceneObjectInfoType.Pivot; }
         }
 
+        public override string ToString()
+        {
+            return $"Type:{this.Type}, #Childs:{this.Childs.Count}";
+        }
+
         public SceneObject OriginalObject
         {
             get { return m_sceneObject; }
