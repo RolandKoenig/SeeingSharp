@@ -349,7 +349,7 @@ namespace SeeingSharp.Multimedia.Core
                     }
                 }
 
-                //Now update all view specific references
+                // Now update all view specific references
                 foreach (var actViewSubset in m_viewSubsets)
                 {
                     actViewSubset.UpdateForView(updateState);
