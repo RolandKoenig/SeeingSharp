@@ -62,9 +62,6 @@ namespace SeeingSharp.Tests.Rendering
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
-                // Dump image to desktop
-                ////screenshot.DumpToDesktop("ClearedScreen");
-
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
                     screenshot, Properties.Resources.ReferenceImage_ClearedScreen);
@@ -141,6 +138,8 @@ namespace SeeingSharp.Tests.Rendering
                 camera.Target = new Vector3(0f, 0f, 0f);
                 camera.UpdateCamera();
 
+                await memRenderTarget.AwaitRenderAsync();
+
                 // Define scene
                 await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
                 {
@@ -150,13 +149,13 @@ namespace SeeingSharp.Tests.Rendering
                     GenericObject newObject = manipulator.AddGeneric(geoResource);
                     newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
                     newObject.Scaling = new Vector3(2f, 2f, 2f);
+                    newObject.TrySetInitialVisibility(memRenderTarget.RenderLoop.ViewInformation, true);
                 });
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
-                //screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
-                screenshot.DumpToDesktop("Blub.png");
+                //screenshot.DumpToDesktop("Blub.png");
 
                 // Calculate and check difference
                 bool isNearEqual = BitmapComparison.IsNearEqual(
@@ -184,6 +183,8 @@ namespace SeeingSharp.Tests.Rendering
                 camera.Target = new Vector3(0f, 1f, 0f);
                 camera.UpdateCamera();
 
+                await memRenderTarget.AwaitRenderAsync();
+
                 // Define scene
                 await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
                 {
@@ -197,11 +198,11 @@ namespace SeeingSharp.Tests.Rendering
                     GenericObject newObject = manipulator.AddGeneric(geoResource);
                     newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
                     newObject.Scaling = new Vector3(2f, 2f, 2f);
+                    newObject.TrySetInitialVisibility(memRenderTarget.RenderLoop.ViewInformation, true);
                 });
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
-                screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
 
                 //screenshot.DumpToDesktop("Blub.png");
 
@@ -277,6 +278,8 @@ namespace SeeingSharp.Tests.Rendering
                 camera.UpdateCamera();
                 memRenderTarget.RenderLoop.Camera = camera;
 
+                await memRenderTarget.AwaitRenderAsync();
+
                 // Define scene
                 await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
                 {
@@ -286,10 +289,8 @@ namespace SeeingSharp.Tests.Rendering
                     GenericObject newObject = manipulator.AddGeneric(geoResource);
                     newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
                     newObject.Scaling = new Vector3(2f, 2f, 2f);
+                    newObject.TrySetInitialVisibility(memRenderTarget.RenderLoop.ViewInformation, true);
                 });
-
-                await memRenderTarget.AwaitRenderAsync();
-                await memRenderTarget.AwaitRenderAsync();
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();

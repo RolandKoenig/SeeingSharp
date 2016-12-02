@@ -312,6 +312,32 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Tries to set the visibility of this object on the given view.
+        /// This method can be used to force rendering on the next frame after adding 
+        /// an object to the scene.
+        /// </summary>
+        /// <param name="viewInfo">The view on which to set the visibility.</param>
+        /// <param name="isVisible">The visibility state to set.</param>
+        public bool TrySetInitialVisibility(ViewInformation viewInfo, bool isVisible)
+        {
+            if(viewInfo.ViewIndex < 0) { return false; }
+
+            VisibilityCheckData checkData = this.GetVisibilityCheckData(viewInfo);
+            if (checkData.IsVisible) { return true; }
+
+            if ((checkData.IsVisible != isVisible) &&
+                (checkData.FilterStageData.Count == 0))
+            {
+                checkData.IsVisible = isVisible;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Picks an object in 3D-World.
         /// </summary>
         /// <param name="rayStart">Start of picking ray.</param>
