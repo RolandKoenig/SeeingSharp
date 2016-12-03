@@ -127,6 +127,8 @@ namespace SeeingSharp.Multimedia.Drawing3D
         /// </summary>
         public float AddToAlpha;
 
-        public Vector3 Dummy;
+        public float FadeIntensity;
+
+        public Vector2 Dummy;
     }
 }

@@ -57,6 +57,10 @@ namespace SeeingSharp.Multimedia.Core
         private SceneComponentFlyweight m_sceneComponents;
         #endregion
 
+        #region Members for 3D rendering
+        private CBPerFrame m_perFrameData;
+        #endregion
+
         #region Members for 2D rendering
         private Graphics2DTransformMode m_transformMode2D;
         private Size2F m_virtualScreenSize2D;
@@ -94,6 +98,8 @@ namespace SeeingSharp.Multimedia.Core
         {
             if (string.IsNullOrEmpty(name)) { name = DEFAULT_SCENE_NAME; }
             this.Name = name;
+
+            m_perFrameData = new CBPerFrame();
 
             m_transformMode2D = Graphics2DTransformMode.Custom;
             m_customTransform2D = Matrix3x2.Identity;
@@ -891,6 +897,12 @@ namespace SeeingSharp.Multimedia.Core
 
             try
             {
+                m_perFrameData.Time = m_perFrameData.Time + updateState.UpdateTimeMilliseconds;
+                if(m_perFrameData.Time > Constants.MAX_PER_FRAME_TIME_VALUE)
+                {
+                    m_perFrameData.Time = m_perFrameData.Time % Constants.MAX_PER_FRAME_TIME_VALUE;
+                }
+
                 // Update all scene components first 
                 //  These may trigger some further manipulation actions
                 m_sceneComponents.UpdateSceneComponents(updateState);
@@ -1018,7 +1030,6 @@ namespace SeeingSharp.Multimedia.Core
             {
                 deviceContext.Rasterizer.State = defaultResource.RasterStateDefault;
             }
-            
 
             // Get or create RenderParamters object on scene level
             SceneRenderParameters renderParameters = m_renderParameters[renderState.DeviceIndex];
@@ -1034,8 +1045,7 @@ namespace SeeingSharp.Multimedia.Core
             renderState.ViewIndex = m_registeredViews.IndexOf(renderState.ViewInformation);
 
             // Update render parameters
-            CBPerFrame perFrameData = new CBPerFrame();
-            renderParameters.UpdateValues(renderState, perFrameData);
+            renderParameters.UpdateValues(renderState, m_perFrameData);
 
             using (renderState.PushScene(this, resources))
             {

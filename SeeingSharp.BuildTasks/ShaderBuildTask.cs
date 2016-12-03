@@ -120,7 +120,11 @@ namespace SeeingSharp.BuildTasks
                         {
                             if (string.IsNullOrWhiteSpace(eArgs.Data)) { return; }
                             errorStringBuilder.Append(eArgs.Data);
-                            fxcNotifiedErrors = true;
+
+                            if (!eArgs.Data.Contains(" warning "))
+                            {
+                                fxcNotifiedErrors = true;
+                            }
                         };
 
                         // Start the process and wait for exit

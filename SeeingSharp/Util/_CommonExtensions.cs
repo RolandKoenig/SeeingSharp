@@ -27,12 +27,12 @@ using System.IO;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows.Media.Imaging;
 using System.Windows;
 using SeeingSharp.Checking;
 
 // Some namespace mappings
 #if DESKTOP
+using System.Windows.Media.Imaging;
 using WinForms = System.Windows.Forms;
 using GDI = System.Drawing;
 #endif

@@ -82,7 +82,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 () => GraphicsHelper.GetPixelShaderResource(device, "Postprocessing", "PostprocessBlur"));
             m_singleForcedColor = resources.GetResourceAndEnsureLoaded<SingleForcedColorMaterialResource>(
                 KEY_MATERIAL,
-                () => new SingleForcedColorMaterialResource());
+                () => new SingleForcedColorMaterialResource() { FadeIntensity = 1f });
             m_renderTarget = resources.GetResourceAndEnsureLoaded<RenderTargetTextureResource>(
                 KEY_RENDER_TARGET,
                 () => new RenderTargetTextureResource(RenderTargetCreationMode.Color));
