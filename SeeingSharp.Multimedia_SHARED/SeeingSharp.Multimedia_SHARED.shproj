@@ -8,6 +8,11 @@
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.Common.Default.props" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.Common.props" />
   <PropertyGroup />
+  <ItemGroup>
+    <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
+  </ItemGroup>
   <Import Project="SeeingSharp.Multimedia_SHARED.projitems" Label="Shared" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CodeSharing\Microsoft.CodeSharing.CSharp.targets" />
 </Project>

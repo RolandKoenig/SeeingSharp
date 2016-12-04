@@ -1,7 +1,4 @@
-﻿// Taken from PRISM project (2012): http://compositewpf.codeplex.com
-// Sourcecode under Apache 2.0 License
-
-#if DESKTOP
+﻿#if DESKTOP
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;

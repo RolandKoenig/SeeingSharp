@@ -1,7 +1,4 @@
-﻿// Code taken from Helix project (2012): https://helixtoolkit.codeplex.com/
-// This Sourcecode is originally under MIT license
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

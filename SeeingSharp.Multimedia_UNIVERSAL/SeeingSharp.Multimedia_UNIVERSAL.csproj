@@ -40,6 +40,9 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

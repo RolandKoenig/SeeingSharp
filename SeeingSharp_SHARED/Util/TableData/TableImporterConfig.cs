@@ -1,6 +1,7 @@
 ﻿#region License information (SeeingSharp and all based games/applications)
 /*
     Seeing# and all games/applications distributed together with it. 
+	Exception are projects where it is noted otherwhise.
     More info at 
      - https://github.com/RolandKoenig/SeeingSharp (sourcecode)
      - http://www.rolandk.de/wp (the autors homepage, german)

@@ -92,6 +92,11 @@
   <ItemGroup>
     <Content Include="Shaders\structures.hlsl" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <Import Project="$(SolutionDir)Build\SeeingSharp.Common.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

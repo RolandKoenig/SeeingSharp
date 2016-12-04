@@ -71,6 +71,11 @@
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
+  </ItemGroup>
   <Import Project="..\SeeingSharp_SHARED\SeeingSharp_SHARED.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

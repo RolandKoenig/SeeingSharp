@@ -128,6 +128,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
