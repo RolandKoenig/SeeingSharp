@@ -47,8 +47,7 @@ namespace WinFormsSampleContainer
             SeeingSharpApplication.InitializeAsync(
                 Assembly.GetExecutingAssembly(),
                 new Assembly[]{
-                    typeof(GraphicsCore).Assembly,
-                    typeof(SampleBase).Assembly
+                    typeof(GraphicsCore).Assembly
                 },
                 new string[0]).Wait();
             GraphicsCore.Initialize(TargetHardware.Direct3D11, false);

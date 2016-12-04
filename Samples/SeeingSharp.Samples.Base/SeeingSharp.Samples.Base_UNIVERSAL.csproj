@@ -110,16 +110,6 @@
     <Content Include="Assets\Videos\DummyVideoLandscape.mp4" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_UNIVERSAL.csproj">
-      <Project>{b2985a80-5ca6-41e0-b96a-6b4625365f08}</Project>
-      <Name>SeeingSharp.Multimedia_UNIVERSAL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SeeingSharp\SeeingSharp_UNIVERSAL.csproj">
-      <Project>{b077159e-8a45-42d2-896e-131eb2f8b9d0}</Project>
-      <Name>SeeingSharp_UNIVERSAL</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Content Include="Assets\Models\Banana.ac" />
   </ItemGroup>
   <ItemGroup>

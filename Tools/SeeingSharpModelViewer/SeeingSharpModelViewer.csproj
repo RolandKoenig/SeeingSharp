@@ -176,16 +176,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_DESKTOP.csproj">
-      <Project>{bd9d021a-85db-4d43-ac49-560987e3339f}</Project>
-      <Name>SeeingSharp.Multimedia_DESKTOP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SeeingSharp\SeeingSharp_DESKTOP.csproj">
-      <Project>{c2a4856d-600e-4fff-bcbf-ca3f7ed6fe57}</Project>
-      <Name>SeeingSharp_DESKTOP</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="_MarkupExtensions\_Misc\" />
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +208,20 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Assets\Icons\Page_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\SeeingSharp.Multimedia.Resources\SeeingSharp.Multimedia.Resources.csproj">
+      <Project>{f24f4dd8-52d6-49ce-b5b3-b8c840ccaa7f}</Project>
+      <Name>SeeingSharp.Multimedia.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SeeingSharp.Multimedia_DESKTOP\SeeingSharp.Multimedia_DESKTOP.csproj">
+      <Project>{761c1f6e-0eca-42b8-a9af-86d0570b9ce8}</Project>
+      <Name>SeeingSharp.Multimedia_DESKTOP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SeeingSharp_DESKTOP\SeeingSharp_DESKTOP.csproj">
+      <Project>{be2b99b1-163a-4d13-897a-c6a1f917169c}</Project>
+      <Name>SeeingSharp_DESKTOP</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

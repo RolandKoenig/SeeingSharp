@@ -113,9 +113,9 @@
     <None Include="Properties\AndroidManifest.xml" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SeeingSharp\SeeingSharp_ANDROID.csproj">
+    <ProjectReference Include="..\..\..\..\SeeingSharp\SeeingSharpOld_ANDROID.csproj">
       <Project>{23e6e6eb-c841-4efe-94ee-318e94c0e691}</Project>
-      <Name>SeeingSharp_ANDROID</Name>
+      <Name>SeeingSharpOld_ANDROID</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup />

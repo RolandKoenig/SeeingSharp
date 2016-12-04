@@ -130,12 +130,16 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_UNIVERSAL.csproj">
-      <Project>{b2985a80-5ca6-41e0-b96a-6b4625365f08}</Project>
+    <ProjectReference Include="..\..\SeeingSharp.Multimedia.Resources\SeeingSharp.Multimedia.Resources.csproj">
+      <Project>{f24f4dd8-52d6-49ce-b5b3-b8c840ccaa7f}</Project>
+      <Name>SeeingSharp.Multimedia.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SeeingSharp.Multimedia_UNIVERSAL\SeeingSharp.Multimedia_UNIVERSAL.csproj">
+      <Project>{890efe3a-a642-44a8-a6ea-213ccade3fef}</Project>
       <Name>SeeingSharp.Multimedia_UNIVERSAL</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\SeeingSharp\SeeingSharp_UNIVERSAL.csproj">
-      <Project>{b077159e-8a45-42d2-896e-131eb2f8b9d0}</Project>
+    <ProjectReference Include="..\..\SeeingSharp_UNIVERSAL\SeeingSharp_UNIVERSAL.csproj">
+      <Project>{6db78969-0fff-4778-912a-194846229fda}</Project>
       <Name>SeeingSharp_UNIVERSAL</Name>
     </ProjectReference>
   </ItemGroup>

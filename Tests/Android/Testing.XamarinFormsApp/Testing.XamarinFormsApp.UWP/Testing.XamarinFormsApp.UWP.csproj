@@ -128,9 +128,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\SeeingSharp\SeeingSharp_UNIVERSAL.csproj">
+    <ProjectReference Include="..\..\..\..\SeeingSharp\SeeingSharpOld_UNIVERSAL.csproj">
       <Project>{b077159e-8a45-42d2-896e-131eb2f8b9d0}</Project>
-      <Name>SeeingSharp_UNIVERSAL</Name>
+      <Name>SeeingSharpOld_UNIVERSAL</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

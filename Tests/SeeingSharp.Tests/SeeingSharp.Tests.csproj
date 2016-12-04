@@ -89,16 +89,6 @@
     <Compile Include="UtilityTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_DESKTOP.csproj">
-      <Project>{bd9d021a-85db-4d43-ac49-560987e3339f}</Project>
-      <Name>SeeingSharp.Multimedia_DESKTOP</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\SeeingSharp\SeeingSharp_DESKTOP.csproj">
-      <Project>{c2a4856d-600e-4fff-bcbf-ca3f7ed6fe57}</Project>
-      <Name>SeeingSharp_DESKTOP</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\..\Misc\_SeeingSharp.Multimedia.licenseheader">
       <Link>_SeeingSharp.Multimedia.licenseheader</Link>
     </None>
@@ -126,7 +116,12 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\SeeingSharp_DESKTOP\SeeingSharp_DESKTOP.csproj">
+      <Project>{be2b99b1-163a-4d13-897a-c6a1f917169c}</Project>
+      <Name>SeeingSharp_DESKTOP</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

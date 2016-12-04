@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>2f1fd63d-4ec2-4fc9-b91f-c655029a7ed3</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>SeeingSharp.Samples</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)SampleFactory.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Base\SampleBase.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Base\SampleDescription.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Base\SampleInfoAttribute.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Base\SampleSceneBuilder.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Base\_Misc.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Constants.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Performance\PerformanceAnalysisViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Performance\PerformanceSnapshot.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Performance\PerformanceSnapshotItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\AsyncAnimationSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\PalletsAnimatedSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\PalletsSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\ParentChildSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\RotatingPalletSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\SingleModelSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\SkyboxSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\Text3DSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\TexturedPalletSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\BasicSamples\TransparentPalletsSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\CategoryMetadata.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\Direct2D\Direct2DAnimatedTextureSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\Direct2D\Direct2DScreenOverlaySample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\Direct2D\Direct2DSimpleEffect.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\Direct2D\Direct2DTextureSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\Input\XBoxControllerInputSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\MFSamples\CameraCaptureSample.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)_Samples\MFSamples\VideoTextureSample.cs" />
+  </ItemGroup>
+</Project>

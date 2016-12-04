@@ -64,7 +64,7 @@ namespace SeeingSharp.Tests.Rendering
                 await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
                 {
                     var keyPostprocess = manipulator.AddResource<FocusPostprocessEffectResource>(
-                        () => new FocusPostprocessEffectResource(false));
+                        () => new FocusPostprocessEffectResource(false, 0f));
 
                     SceneLayer defaultLayer = manipulator.GetLayer(Scene.DEFAULT_LAYER_NAME);
                     defaultLayer.PostprocessEffectKey = keyPostprocess;

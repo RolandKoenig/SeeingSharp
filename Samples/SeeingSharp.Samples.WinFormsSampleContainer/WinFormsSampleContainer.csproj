@@ -48,7 +48,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;DESKTOP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UseVSHostingProcess>true</UseVSHostingProcess>
@@ -60,7 +60,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;DESKTOP</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -95,9 +95,6 @@
     </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="SeeingSharp">
-      <HintPath>..\..\SeeingSharp\bin.Desktop\Debug\SeeingSharp.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -192,13 +189,21 @@
     <Resource Include="Resources\Logo.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\SeeingSharp.Multimedia\SeeingSharp.Multimedia_DESKTOP.csproj">
-      <Project>{BD9D021A-85DB-4D43-AC49-560987E3339F}</Project>
+    <ProjectReference Include="..\..\SeeingSharp.Multimedia.Resources\SeeingSharp.Multimedia.Resources.csproj">
+      <Project>{f24f4dd8-52d6-49ce-b5b3-b8c840ccaa7f}</Project>
+      <Name>SeeingSharp.Multimedia.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\SeeingSharp.Multimedia_DESKTOP\SeeingSharp.Multimedia_DESKTOP.csproj">
+      <Project>{761c1f6e-0eca-42b8-a9af-86d0570b9ce8}</Project>
       <Name>SeeingSharp.Multimedia_DESKTOP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SeeingSharp.Samples.Base\SeeingSharp.Samples.Base_DESKTOP.csproj">
-      <Project>{1c967edd-286f-42f9-86a2-d2c3a3136891}</Project>
-      <Name>SeeingSharp.Samples.Base_DESKTOP</Name>
+    <ProjectReference Include="..\..\SeeingSharp_DESKTOP\SeeingSharp_DESKTOP.csproj">
+      <Project>{be2b99b1-163a-4d13-897a-c6a1f917169c}</Project>
+      <Name>SeeingSharp_DESKTOP</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SeeingSharp.Samples.Resources\SeeingSharp.Samples.Resources.csproj">
+      <Project>{d9564440-77bd-495b-a256-b54ec41ebb11}</Project>
+      <Name>SeeingSharp.Samples.Resources</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -218,6 +223,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <Import Project="..\SeeingSharp.Samples\SeeingSharp.Samples.projitems" Label="Shared" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)Build\SeeingSharp.Common.targets" />
 </Project>

@@ -26,8 +26,7 @@ namespace WpfSampleContainer
             SeeingSharpApplication.InitializeAsync(
                 Assembly.GetExecutingAssembly(),
                 new Assembly[]{
-                    typeof(GraphicsCore).Assembly,
-                    typeof(SampleBase).Assembly
+                    typeof(GraphicsCore).Assembly
                 },
                 new string[0]).Wait();
             SeeingSharpApplication.Current.InitializeUIEnvironment();

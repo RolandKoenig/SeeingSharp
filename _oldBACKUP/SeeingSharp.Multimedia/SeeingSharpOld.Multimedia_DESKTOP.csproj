@@ -1,0 +1,508 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BD9D021A-85DB-4D43-AC49-560987E3339F}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>SeeingSharp.Multimedia</RootNamespace>
+    <AssemblyName>SeeingSharp.Multimedia</AssemblyName>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <BaseIntermediateOutputPath>obj.Desktop</BaseIntermediateOutputPath>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin.Desktop\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;DESKTOP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <DocumentationFile>bin.Desktop\Debug\SeeingSharp.Multimedia.XML</DocumentationFile>
+    <NoWarn>1591;675</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin.Desktop\Release\</OutputPath>
+    <DefineConstants>TRACE;DESKTOP</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>bin.Desktop\Release\SeeingSharp.Multimedia.XML</DocumentationFile>
+    <NoWarn>1591;675</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="SharpDX, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.3.1.0\lib\net45\SharpDX.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.D3DCompiler, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.D3DCompiler.3.1.0\lib\net45\SharpDX.D3DCompiler.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Direct2D1, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct2D1.3.1.0\lib\net45\SharpDX.Direct2D1.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D10, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D10.3.1.0\lib\net45\SharpDX.Direct3D10.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D11, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D11.3.1.0\lib\net45\SharpDX.Direct3D11.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Direct3D9, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Direct3D9.3.1.0\lib\net45\SharpDX.Direct3D9.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.DXGI, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.DXGI.3.1.0\lib\net45\SharpDX.DXGI.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.Mathematics, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.Mathematics.3.1.0\lib\net45\SharpDX.Mathematics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.MediaFoundation, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.MediaFoundation.3.1.0\lib\net45\SharpDX.MediaFoundation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.XAudio2, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.XAudio2.3.1.0\lib\net45\SharpDX.XAudio2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="SharpDX.XInput, Version=3.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
+      <HintPath>..\packages\SharpDX.XInput.3.1.0\lib\net45\SharpDX.XInput.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="System.Reactive.Core, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Interfaces.2.2.5\lib\net45\System.Reactive.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.2.5.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Rx-Linq.2.2.5\lib\net45\System.Reactive.Linq.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xaml" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Misc\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Components\_Base\ObjectCreatorComponent.cs" />
+    <Compile Include="Components\_Generic\GradientBackgroundComponent.cs" />
+    <Compile Include="Components\_Input\FocusedObjectCameraComponent.cs" />
+    <Compile Include="Components\_Input\FocusedPointCameraComponent.cs" />
+    <Compile Include="Components\_Base\FocusedCameraComponent.cs" />
+    <Compile Include="Core\Direct2DOverlayRenderer.cs" />
+    <Compile Include="Core\EngineMainLoop.cs" />
+    <Compile Include="Core\GenericInputEventArgs.cs" />
+    <Compile Include="Core\GraphicsCore.cs" />
+    <Compile Include="Core\GraphicsHelper.cs" />
+    <Compile Include="Core\RenderLoop.cs" />
+    <Compile Include="Core\RenderPassInfo.cs" />
+    <Compile Include="Core\RenderPassSubscription.cs" />
+    <Compile Include="Core\RenderState.cs" />
+    <Compile Include="Core\RenderTargets.cs" />
+    <Compile Include="Core\SceneRelatedUpdateState.cs" />
+    <Compile Include="Core\UpdateState.cs" />
+    <Compile Include="Core\ViewInformation.cs" />
+    <Compile Include="Core\_Animations\AnimationBase.cs" />
+    <Compile Include="Core\_Animations\AnimationHandler.cs" />
+    <Compile Include="Core\_Animations\AnimationMetadata.cs" />
+    <Compile Include="Core\_Animations\AnimationSequence.cs" />
+    <Compile Include="Core\_Animations\AnimationSequenceBuilder.cs" />
+    <Compile Include="Core\_Animations\AnimationState.cs" />
+    <Compile Include="Core\_Animations\IAnimatableObject.cs" />
+    <Compile Include="Core\_Animations\IAnimation.cs" />
+    <Compile Include="Core\_Animations\IAnimationSequenceBuilder.cs" />
+    <Compile Include="Core\_Animations\IAnimationUpdateState.cs" />
+    <Compile Include="Core\_Animations\_Analytics\EventDrivenPassInfo.cs" />
+    <Compile Include="Core\_Animations\_Analytics\EventDrivenStepInfo.cs" />
+    <Compile Include="Core\_Animations\_Extensions.cs" />
+    <Compile Include="Core\_Animations\_Misc.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectAccentuation.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectEulerRotation.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectOpacity.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectPosition2D.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectPosition.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectQuaternion.cs" />
+    <Compile Include="Core\_Animations\_ObjectInterfaces\IAnimatableObjectScaling.cs" />
+    <Compile Include="Core\_Animations\_Primitives2D\Move2DToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives2D\Move2DByAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives2D\_Extensions.Move.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\ChangeAccentuationToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\ScaleSpriteToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\ChangeOpacityToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\Move3DByAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\Move3DToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\RotateEulerAnglesAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\RotateQuaternionToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\Scale3DToAnimation.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Misc.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Move.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Rotate.cs" />
+    <Compile Include="Core\_Animations\_Primitives3D\_Extensions.Scale.cs" />
+    <Compile Include="Core\_Animations\_Standard\CallActionAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\ChangeIntByAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\ChangeFloatByAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\DelayAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\LazyAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\WaitFinishedAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\WaitForConditionPassedAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\WaitTaskFinishedAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\WaitTimePassedAnimation.cs" />
+    <Compile Include="Core\_Animations\_Standard\_Extensions.cs" />
+    <Compile Include="Core\_Behaviors\SceneObjectBehavior.cs" />
+    <Compile Include="Core\_Devices\EngineDevice.cs" />
+    <Compile Include="Core\_Configuration\GraphicsCoreConfiguration.cs" />
+    <Compile Include="Core\_Configuration\GraphicsDeviceConfiguration.cs" />
+    <Compile Include="Core\_Configuration\GraphicsViewConfiguration.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerD2D.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerDWrite.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerMF.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerWIC.cs" />
+    <Compile Include="Core\_Devices\_Global\FactoryHandlerXAudio2.cs" />
+    <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD2D.cs" />
+    <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D11.cs" />
+    <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerD3D9.cs" />
+    <Compile Include="Core\_Devices\_PerAdapter\DeviceHandlerDXGI.cs" />
+    <Compile Include="Core\_HardwareInfo\EngineAdapterInfo.cs" />
+    <Compile Include="Core\_HardwareInfo\EngineHardwareInfo.cs" />
+    <Compile Include="Core\_HardwareInfo\EngineOutputInfo.cs" />
+    <Compile Include="Core\_HostedObjects\DummyOpacityProvider.cs" />
+    <Compile Include="Core\_HostedObjects\HostedObjectTransformDataMapper.cs" />
+    <Compile Include="Core\_HostedObjects\IEngineHostedSceneObject.cs" />
+    <Compile Include="Core\_HostedObjects\IEngineOpacityProvider.cs" />
+    <Compile Include="Core\_Messages\SceneObjectAddedMessage.cs" />
+    <Compile Include="Core\_Messages\SceneObjectRemovedMessage.cs" />
+    <Compile Include="Core\_Misc.cs" />
+    <Compile Include="Core\_RenderPasses\RenderPass2DOverlay.cs" />
+    <Compile Include="Core\_RenderPasses\RenderPassBase.cs" />
+    <Compile Include="Core\_RenderPasses\RenderPassDefaultTransparent.cs" />
+    <Compile Include="Core\_RenderPasses\RenderPassLineRender.cs" />
+    <Compile Include="Core\_Resources\IRenderableResource.cs" />
+    <Compile Include="Core\_Resources\Resource.cs" />
+    <Compile Include="Core\_Resources\ResourceDictionary.cs" />
+    <Compile Include="Core\_SceneComponents\SceneComponentFlyweight.cs" />
+    <Compile Include="Core\_SceneComponents\_Misc.cs" />
+    <Compile Include="Core\_SceneFilter\SceneObjectFilter.cs" />
+    <Compile Include="Core\_SceneFilter\SceneViewboxObjectFilter.cs" />
+    <Compile Include="Core\_SceneComponents\SceneComponentBase.cs" />
+    <Compile Include="Core\_SceneInfo\SceneObjectInfo.cs" />
+    <Compile Include="Core\_SceneInfo\_Misc.cs" />
+    <Compile Include="Core\_Scene\PickingInformation.cs" />
+    <Compile Include="Core\_Scene\Scene.cs" />
+    <Compile Include="Core\_Scene\Scene.ImportExport.cs" />
+    <Compile Include="Core\_Scene\SceneLayer.cs" />
+    <Compile Include="Core\_Scene\SceneLogicalObject.cs" />
+    <Compile Include="Core\_Scene\SceneManipulator.cs" />
+    <Compile Include="Core\_Scene\SceneObject.cs" />
+    <Compile Include="Core\_Scene\SceneObject.SubscriptionHandling.cs" />
+    <Compile Include="Core\_Scene\ScenePivotObject.cs" />
+    <Compile Include="Core\_Scene\SceneSpacialObject.cs" />
+    <Compile Include="Core\_Scene\SceneSynchronizationContext.cs" />
+    <Compile Include="Core\_Scene\ViewRelatedSceneLayerSubset.cs" />
+    <Compile Include="Core\_Scene\VisibilityCheckData.cs" />
+    <Compile Include="Core\_Scene\VisibilityCheckFilterStageData.cs" />
+    <Compile Include="Core\_Scene\_Misc.cs" />
+    <Compile Include="Core\_Util\MemoryMappedTexture32bpp.cs" />
+    <Compile Include="Core\_Util\MemoryMappedTextureFloat.cs" />
+    <Compile Include="Core\_Util\PlatformDetector.cs" />
+    <Compile Include="Core\_Util\TextureUploader.cs" />
+    <Compile Include="Core\_Util\WicBitmapSourceInternal.cs" />
+    <Compile Include="Drawing2D\Custom2DDrawingLayer.cs" />
+    <Compile Include="Drawing2D\Graphics2D.cs" />
+    <Compile Include="Drawing2D\Graphics2DTransformSettings.cs" />
+    <Compile Include="Drawing2D\_DeviceIndependentResources\EllipseGeometryResource.cs" />
+    <Compile Include="Drawing2D\_DeviceIndependentResources\PolygonGeometryResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\Drawing2DResourceBase.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\IImage.cs" />
+    <Compile Include="Drawing2D\_DeviceIndependentResources\Geometry2DResourceBase.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2DEffects\DirectionalBlurEffectResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2DEffects\GaussianBlurEffectResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\BitmapResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\EffectResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\RadialGradientBrushResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\LinearGradientBrushResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\StandardBitmapResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\WritableBitmapResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\BrushResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_Direct2D\SolidBrushResource.cs" />
+    <Compile Include="Drawing2D\_DeviceResources\_DirectWrite\TextFormatResource.cs" />
+    <Compile Include="Drawing2D\_DrawingLayers\DebugDrawingLayer.cs" />
+    <Compile Include="Drawing2D\_Misc.cs" />
+    <Compile Include="Drawing2D\_Resources\WicBitmap.cs" />
+    <Compile Include="Drawing2D\_Resources\WicBitmapSource.cs" />
+    <Compile Include="Drawing3D\TexturePainterHelper.cs" />
+    <Compile Include="Drawing3D\_Cameras\Camera3DBase.cs" />
+    <Compile Include="Drawing3D\_Cameras\Camera3DViewPoint.cs" />
+    <Compile Include="Drawing3D\_Cameras\OrthographicCamera3D.cs" />
+    <Compile Include="Drawing3D\_Cameras\PerspectiveCamera3D.cs" />
+    <Compile Include="Drawing3D\_Cameras\_Animations\CameraStraightMoveAnimation.cs" />
+    <Compile Include="Drawing3D\_Cameras\_Animations\_Extensions.cs" />
+    <Compile Include="Drawing3D\_Misc.cs" />
+    <Compile Include="Drawing3D\_RenderParameters\ObjectRenderParameters.cs" />
+    <Compile Include="Drawing3D\_RenderParameters\SceneRenderParameters.cs" />
+    <Compile Include="Drawing3D\_RenderParameters\ViewRenderParameters.cs" />
+    <Compile Include="Drawing3D\_Resources\DefaultResources.cs" />
+    <Compile Include="Drawing3D\_Resources\GeometryResource.cs" />
+    <Compile Include="Drawing3D\_Resources\LineRenderResources.cs" />
+    <Compile Include="Drawing3D\_Resources\MaterialResource.cs" />
+    <Compile Include="Drawing3D\_Resources\ShaderEffectResourceBase.cs" />
+    <Compile Include="Drawing3D\_Resources\TextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_ConstantBuffers\ConstantBufferResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_ConstantBuffers\TypeSafeConstantBuffer.cs" />
+    <Compile Include="Drawing3D\_Resources\_ManipulatorExtensions.cs" />
+    <Compile Include="Drawing3D\_Resources\_Materials\SimpleColoredMaterialResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Materials\SingleForcedColorMaterialResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Materials\SpriteMaterialResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Misc.cs" />
+    <Compile Include="Drawing3D\_Resources\_PostprocessEffects\EdgeRenderPostprocessEffectRessource.cs" />
+    <Compile Include="Drawing3D\_Resources\_PostprocessEffects\FocusPostprocessEffectResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_PostprocessEffects\PostprocessEffectResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_ResourceDictionaryExtensions.cs" />
+    <Compile Include="Drawing3D\_Resources\_Shaders\PixelShaderResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Shaders\ShaderResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Shaders\VertexShaderResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\BitmapTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\Direct2DSingleRenderTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\Direct2DTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\DrawingBrushTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\LinearGradientTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\RenderTargetTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\StandardTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\VideoThumbnailTextureResource.cs" />
+    <Compile Include="Drawing3D\_Resources\_Textures\VideoTextureResource.cs" />
+    <Compile Include="Drawing3D\_ShaderInteraction\LineVertex.cs" />
+    <Compile Include="Drawing3D\_ShaderInteraction\StandardVertex.cs" />
+    <Compile Include="Drawing3D\_ShaderInteraction\_ConstantBufferStructures.cs" />
+    <Compile Include="DrawingVideo\CaptureDeviceChooser.cs" />
+    <Compile Include="DrawingVideo\CaptureDeviceInfo.cs" />
+    <Compile Include="DrawingVideo\SeeingSharpMediaBuffer.cs" />
+    <Compile Include="DrawingVideo\SeeingSharpVideoWriter.cs" />
+    <Compile Include="Core\_Util\MFHelper.cs" />
+    <Compile Include="DrawingVideo\_Misc.cs" />
+    <Compile Include="DrawingVideo\_Readers\AsyncRealtimeVideoReader.cs" />
+    <Compile Include="DrawingVideo\_Readers\FrameByFrameVideoReader.cs" />
+    <Compile Include="DrawingVideo\_Readers\MediaFoundationVideoReader.cs" />
+    <Compile Include="DrawingVideo\_Util\MFSessionEventListener.cs" />
+    <Compile Include="DrawingVideo\_Writers\MediaFoundationVideoWriter.cs" />
+    <Compile Include="DrawingVideo\_Writers\Mp4VideoWriter.cs" />
+    <Compile Include="Input\IInputHandler.cs" />
+    <Compile Include="Input\InputFrame.cs" />
+    <Compile Include="Input\InputGathererThread.cs" />
+    <Compile Include="Input\_States\GamepadState.cs" />
+    <Compile Include="Input\_States\InputStateBase.cs" />
+    <Compile Include="Input\_States\KeyboardState.cs" />
+    <Compile Include="Input\_States\MouseOrPointerState.cs" />
+    <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
+    <Compile Include="Input\_States\_Enum.cs" />
+    <Compile Include="Objects\WirePainterHostObject.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_AC\_Misc.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjFileReader.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjImporter.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Obj\ObjImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImporter.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Stl\StlImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportModelContainer.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportGeometryInfo.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ExportMaterialInfo.cs" />
+    <Compile Include="Objects\_ObjectTypes\CubeType.cs" />
+    <Compile Include="Objects\_ObjectTypes\StackedObjectType.cs" />
+    <Compile Include="Objects\_Painters\WirePainter.cs" />
+    <Compile Include="PlayingSound\CachedSoundFile.cs" />
+    <Compile Include="PlayingSound\SoundManager.cs" />
+    <Compile Include="SeeingSharpGraphicsException.cs" />
+    <Compile Include="Input\IInputEnabledView.cs" />
+    <Compile Include="Input\InputHandlerFactory.cs" />
+    <Compile Include="Input\_Misc.cs" />
+    <Compile Include="Input\_WinForms\WinFormsKeyAndMouseInputHandler.cs" />
+    <Compile Include="Input\_WinRT\WinRTKeyAndMouseInputHandler.cs" />
+    <Compile Include="Input\_Wpf\WpfKeyAndMouseInputHandler.cs" />
+    <Compile Include="Objects\GenericObject.cs" />
+    <Compile Include="Objects\Overlay2DLineObject.cs" />
+    <Compile Include="Objects\SkyboxObject.cs" />
+    <Compile Include="Objects\FullscreenTextureObject.cs" />
+    <Compile Include="Objects\WireObject.cs" />
+    <Compile Include="Objects\_Construction\AnimationData.cs" />
+    <Compile Include="Objects\_Construction\BuiltVerticesRange.cs" />
+    <Compile Include="Objects\_Construction\GeometryData.cs" />
+    <Compile Include="Objects\_Construction\MaterialProperties.cs" />
+    <Compile Include="Objects\_Construction\TextureData.cs" />
+    <Compile Include="Objects\_Construction\Triangle.cs" />
+    <Compile Include="Objects\_Construction\Vertex.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.cs" />
+    <Compile Include="Objects\_Construction\VertexStructureSurface.Builders.Text.cs" />
+    <Compile Include="Objects\_Construction\VertexStructure.cs" />
+    <Compile Include="Objects\_Construction\_ComplexBuilding\SimplePolygon2DGeometrySink.cs" />
+    <Compile Include="Objects\_Construction\_ComplexBuilding\VertexStructureTextRenderer.cs" />
+    <Compile Include="Objects\_Construction\_ConstructionExtensions.cs" />
+    <Compile Include="Objects\_Construction\_ConstructionExtensions.EdgeDetection.cs" />
+    <Compile Include="Objects\_Construction\_Misc.cs" />
+    <Compile Include="Objects\_ImportExport\ExportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\IModelExporter.cs" />
+    <Compile Include="Objects\_ImportExport\IModelImporter.cs" />
+    <Compile Include="Objects\_ImportExport\ImporterExporterRepository.cs" />
+    <Compile Include="Objects\_ImportExport\ImportOptions.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedResourceInfo.cs" />
+    <Compile Include="Objects\_ImportExport\_ModelContainer\ImportedModelContainer.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_AC\ACImporter.cs" />
+    <Compile Include="Objects\_ImportExport\_Attributes.cs" />
+    <Compile Include="Objects\_ImportExport\_Formats\_Xgl\XglImporter.cs" />
+    <Compile Include="Objects\_Misc.cs" />
+    <Compile Include="Objects\_ObjectTypes\_Loaders\ACFileLoader.cs" />
+    <Compile Include="Objects\_ObjectTypes\GenericObjectType.cs" />
+    <Compile Include="Objects\_ObjectTypes\Grid3DType.cs" />
+    <Compile Include="Objects\_ObjectTypes\_Floor\FloorTile.cs" />
+    <Compile Include="Objects\_ObjectTypes\_Floor\FloorTileInfo.cs" />
+    <Compile Include="Objects\_ObjectTypes\_Floor\FloorType.cs" />
+    <Compile Include="Objects\_ObjectTypes\ObjectType.cs" />
+    <Compile Include="Objects\_ObjectTypes\PalletStackType.cs" />
+    <Compile Include="Objects\_ObjectTypes\PalletType.cs" />
+    <Compile Include="Objects\_ObjectTypes\_Misc.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ResourceKeys.cs" />
+    <Compile Include="Util\SdxTK\DDS.cs" />
+    <Compile Include="Util\SdxTK\DDSHelper.cs" />
+    <Compile Include="Util\SdxTK\Image.cs" />
+    <Compile Include="Util\SdxTK\ImageDescription.cs" />
+    <Compile Include="Util\SdxTK\MipMapCount.cs" />
+    <Compile Include="Util\SdxTK\MipMapDescription.cs" />
+    <Compile Include="Util\SdxTK\MipMapHelper.cs" />
+    <Compile Include="Util\SdxTK\PixelBuffer.cs" />
+    <Compile Include="Util\SdxTK\PixelBufferArray.cs" />
+    <Compile Include="Util\SdxTK\PixelFormat.cs" />
+    <Compile Include="Util\SdxTK\WICHelper.cs" />
+    <Compile Include="Util\SdxTK\_Misc.cs" />
+    <Compile Include="Core\_SceneComponents\SceneComponent.cs" />
+    <Compile Include="Components\_Input\FreeMovingCameraComponent.cs" />
+    <Compile Include="Components\_Generic\SimpleCenteredCubeComponent.cs" />
+    <Compile Include="Views\Design\SeeingSharpRenderControlSceneComponentsEditor.cs" />
+    <Compile Include="Core\IRenderLoopHost.cs" />
+    <Compile Include="Views\SeeingSharpWpfRenderTriggerElement.cs" />
+    <Compile Include="Views\_Misc.cs" />
+    <Compile Include="Views\_Video\MediaPlayerComponent.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Multimedia.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Rendering.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.Scene.cs" />
+    <Compile Include="_OtherNamespaces\Checking\Ensure.SharpDX.cs" />
+    <Compile Include="_Translatables.cs" />
+    <SeeingSharp-VertexShader-Min4_0 Include="Resources\Shaders\Postprocessing\PostprocessVertexShader.hlsl" />
+    <SeeingSharp-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessEdgeDetect.hlsl" />
+    <SeeingSharp-PixelShader Include="Resources\Shaders\Postprocessing\PostprocessBlur.hlsl" />
+    <Content Include="Resources\Icons\Cancel_16x16.png" />
+    <Content Include="Resources\Images\GfxNotInitialized.png" />
+    <Content Include="Resources\Shaders\Postprocessing\_structures.hlsl" />
+    <Compile Include="Views\SeeingSharpRendererControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Views\SeeingSharpRendererElement.cs" />
+    <Compile Include="Views\ISeeingSharpPainter.cs" />
+    <Compile Include="Views\_Util\HigherD3DImageSource.cs" />
+    <Compile Include="Views\MemoryRenderTarget.cs" />
+    <Compile Include="_Constants.cs" />
+    <Compile Include="_Extensions.cs" />
+    <Compile Include="_Misc.cs" />
+    <Compile Include="_Native.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Objects\_ImportExport\_Formats\_Cmo\" />
+    <Folder Include="Resources\Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <SeeingSharp-PixelShader Include="Resources\Shaders\Common\CommonPixelShader.hlsl" />
+    <SeeingSharp-VertexShader Include="Resources\Shaders\Common\CommonVertexShader.hlsl" />
+    <Content Include="Resources\Images\Empty.png" />
+    <Content Include="Resources\Shaders\constants.hlsl" />
+    <Content Include="Resources\Shaders\functions.hlsl" />
+    <SeeingSharp-PixelShader Include="Resources\Shaders\LineRendering\LinePixelShader.hlsl" />
+    <SeeingSharp-VertexShader Include="Resources\Shaders\LineRendering\LineVertexShader.hlsl" />
+    <SeeingSharp-PixelShader Include="Resources\Shaders\Common\SingleForcedColorPixelShader.hlsl" />
+    <SeeingSharp-VertexShader Include="Resources\Shaders\Common\SingleForcedColorVertexShader.hlsl" />
+    <SeeingSharp-PixelShader Include="Resources\Shaders\Sprite\SpritePixelShader.hlsl" />
+    <SeeingSharp-VertexShader Include="Resources\Shaders\Sprite\SpriteVertexShader.hlsl" />
+    <SeeingSharp-PixelShader Include="Resources\Shaders\Skybox\CommonPixelShader.hlsl" />
+    <SeeingSharp-VertexShader Include="Resources\Shaders\Skybox\CommonVertexShader.hlsl" />
+    <Content Include="Resources\Shaders\structures.hlsl" />
+    <Content Include="Resources\Shaders\_mainInclude.hlsl" />
+    <Resource Include="Resources\Textures\Blank_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Misc\_SeeingSharp.Multimedia.licenseheader">
+      <Link>_SeeingSharp.Multimedia.licenseheader</Link>
+    </None>
+    <None Include="app.config" />
+    <None Include="packages.SeeingSharp.Multimedia_DESKTOP.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Properties\DataSources\SeeingSharp.Multimedia.UI.LoadExternalModelVM.datasource" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SeeingSharp_DESKTOP\SeeingSharp_DESKTOP.csproj">
+      <Project>{be2b99b1-163a-4d13-897a-c6a1f917169c}</Project>
+      <Name>SeeingSharp_DESKTOP</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)Build\SeeingSharp.Common.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

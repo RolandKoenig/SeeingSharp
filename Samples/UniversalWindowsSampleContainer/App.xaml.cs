@@ -57,8 +57,7 @@ namespace UniversalWindowsSampleContainer
                     new Assembly[]
                     {
                         typeof(SeeingSharpApplication).GetTypeInfo().Assembly,
-                        typeof(GraphicsCore).GetTypeInfo().Assembly,
-                        typeof(SampleFactory).GetTypeInfo().Assembly
+                        typeof(GraphicsCore).GetTypeInfo().Assembly
                     },
                     new string[] { e.Arguments });
                 try
