@@ -39,8 +39,8 @@ namespace SeeingSharp.Multimedia.Input
 
         #region State variables
         private int m_controllerIndex;
-        private XI.State m_prevState;
-        private XI.State m_currentState;
+        private GamepadReportedState m_prevState;
+        private GamepadReportedState m_currentState;
         private bool m_isConnected;
         #endregion
 
@@ -49,8 +49,8 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public GamepadState()
         {
-            m_prevState = new XI.State();
-            m_currentState = new XI.State();
+            m_prevState = new GamepadReportedState();
+            m_currentState = new GamepadReportedState();
         }
 
         /// <summary>
@@ -67,10 +67,10 @@ namespace SeeingSharp.Multimedia.Input
             m_isConnected = isConnected;
         }
 
-        internal void NotifyState(XI.Controller controller)
+        internal void NotifyState(GamepadReportedState controllerState)
         {
             m_prevState = m_currentState;
-            controller.GetState(out m_currentState);
+            m_currentState = controllerState;
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace SeeingSharp.Multimedia.Input
         {
             if (!m_isConnected) { return false; }
 
-            return ((short)m_currentState.Gamepad.Buttons & (short)button) == (short)button;
+            return ((short)m_currentState.Buttons & (short)button) == (short)button;
         }
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace SeeingSharp.Multimedia.Input
         {
             if (!m_isConnected) { return false; }
 
-            bool prevDown = ((short)m_prevState.Gamepad.Buttons & (short)button) == (short)button;
-            bool currentDown = ((short)m_currentState.Gamepad.Buttons & (short)button) == (short)button;
+            bool prevDown = ((short)m_prevState.Buttons & (short)button) == (short)button;
+            bool currentDown = ((short)m_currentState.Buttons & (short)button) == (short)button;
 
             
             return (!prevDown) && currentDown;
@@ -131,50 +131,56 @@ namespace SeeingSharp.Multimedia.Input
             get
             {
                 if (!m_isConnected) { return GamepadButton.None; }
-                return (GamepadButton)m_currentState.Gamepad.Buttons;
+                return m_currentState.Buttons;
             }
         }
 
         /// <summary>
-        /// Value from short.MinValue to short.MaxValue.
+        /// The position of the left thumbstick on the X-axis. The value is between -1.0 and and 1.0.
         /// </summary>
-        public short LeftThumbX
+        public float LeftThumbX
         {
-            get { return m_currentState.Gamepad.LeftThumbX; }
+            get { return m_currentState.LeftThumbstickX; }
         }
 
         /// <summary>
-        /// Value from short.MinValue to short.MaxValue.
+        /// The position of the left thumbstick on the Y-axis. The value is between -1.0 and and 1.0.
         /// </summary>
-        public short LeftThumbY
+        public float LeftThumbY
         {
-            get { return m_currentState.Gamepad.LeftThumbY; }
-        }
-
-        public byte LeftTrigger
-        {
-            get { return m_currentState.Gamepad.LeftTrigger; }
+            get { return m_currentState.LeftThumbstickY; }
         }
 
         /// <summary>
-        /// Value from short.MinValue to short.MaxValue.
+        /// The position of the left trigger. The value is between 0.0 (not depressed) and 1.0 (fully depressed).
         /// </summary>
-        public short RightThumbX
+        public float LeftTrigger
         {
-            get { return m_currentState.Gamepad.RightThumbX; }
+            get { return m_currentState.LeftTrigger; }
         }
 
         /// <summary>
-        /// Value from short.MinValue to short.MaxValue.
+        /// The position of the right thumbstick on the X-axis. The value is between -1.0 and and 1.0.
         /// </summary>
-        public short RightThumbY
+        public float RightThumbX
         {
-            get { return m_currentState.Gamepad.RightThumbY; }
+            get { return m_currentState.RightThumbstickX; }
         }
 
-        public byte RightTrigger
+        /// <summary>
+        /// The position of the right thumbstick on the Y-axis. The value is between -1.0 and and 1.0.
+        /// </summary>
+        public float RightThumbY
         {
-            get { return m_currentState.Gamepad.RightTrigger; }
+            get { return m_currentState.RightThumbstickY; }
+        }
+
+        /// <summary>
+        /// The position of the right trigger. The value is between 0.0 (not depressed) and 1.0 (fully depressed).
+        /// </summary>
+        public float RightTrigger
+        {
+            get { return m_currentState.RightTrigger; }
         }
     }
 }

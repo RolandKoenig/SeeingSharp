@@ -9,6 +9,7 @@
     <Import_RootNamespace>SeeingSharp.Multimedia_SHARED</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
+    <Folder Include="$(MSBuildThisFileDirectory)Input\_Generic\" />
     <Folder Include="$(MSBuildThisFileDirectory)Objects\_ImportExport\_Formats\_Cmo\" />
     <Folder Include="$(MSBuildThisFileDirectory)Resources\Models\" />
   </ItemGroup>
@@ -222,13 +223,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputFrame.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputGathererThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\InputHandlerFactory.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\_Generic\GenericXInputHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_States\GamepadState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_States\InputStateBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_States\KeyboardState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_States\MouseOrPointerState.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Input\_States\_Enum.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Input\_States\_Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_WinForms\WinFormsKeyAndMouseInputHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_WinRT\WinRTKeyAndMouseInputHandler.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Input\_Wpf\WpfKeyAndMouseInputHandler.cs" />

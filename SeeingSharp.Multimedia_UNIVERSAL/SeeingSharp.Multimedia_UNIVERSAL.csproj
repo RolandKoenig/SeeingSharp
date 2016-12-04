@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compatibility.cs" />
+    <Compile Include="Input\_Generic\GenericGamepadHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\SeeingSharpPanelPainter.cs" />
     <Compile Include="Views\SeeingSharpRenderPanel.cs" />

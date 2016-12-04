@@ -102,10 +102,43 @@ namespace SeeingSharp.Multimedia.Input
                     m_states[loop].NotifyConnected(false);
                     continue;
                 }
-
-                // Query all state values
                 m_states[loop].NotifyConnected(true);
-                m_states[loop].NotifyState(m_controllers[loop]);
+
+                // Query all state structures
+                XI.State xiState = m_controllers[loop].GetState();
+                XI.Gamepad xiGamepad = xiState.Gamepad;
+
+                // Convert float values 
+                GamepadReportedState repState = new GamepadReportedState()
+                {
+                    LeftThumbstickX = EngineMath.Clamp((float)xiGamepad.LeftThumbX / (float)short.MaxValue, -1f, 1f),
+                    LeftThumbstickY = EngineMath.Clamp((float)xiGamepad.LeftThumbY / (float)short.MaxValue, -1f, 1f),
+                    LeftTrigger = EngineMath.Clamp((float)xiGamepad.LeftTrigger / 255f, 0f, 1f),
+                    RightThumbstickX = EngineMath.Clamp((float)xiGamepad.RightThumbX / (float)short.MaxValue, -1f, 1f),
+                    RightThumbstickY = EngineMath.Clamp((float)xiGamepad.RightThumbY / (float)short.MaxValue, -1f, 1f),
+                    RightTrigger = EngineMath.Clamp((float)xiGamepad.RightTrigger / 255f, 0, 1f)
+                };
+
+                // Convert button states
+                GamepadButton pressedButtons = GamepadButton.None;
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.A)) { pressedButtons |= GamepadButton.A; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.B)) { pressedButtons |= GamepadButton.B; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.Back)) { pressedButtons |= GamepadButton.View; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.DPadDown)) { pressedButtons |= GamepadButton.DPadDown; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.DPadLeft)) { pressedButtons |= GamepadButton.DPadLeft; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.DPadRight)) { pressedButtons |= GamepadButton.DPadRight; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.DPadUp)) { pressedButtons |= GamepadButton.DPadUp; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.LeftShoulder)) { pressedButtons |= GamepadButton.LeftShoulder; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.LeftThumb)) { pressedButtons |= GamepadButton.LeftThumbstick; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.RightShoulder)) { pressedButtons |= GamepadButton.RightShoulder; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.RightThumb)) { pressedButtons |= GamepadButton.RightThumbstick; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.Start)) { pressedButtons |= GamepadButton.Menu; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.X)) { pressedButtons |= GamepadButton.X; }
+                if (xiGamepad.Buttons.HasFlag(XI.GamepadButtonFlags.Y)) { pressedButtons |= GamepadButton.Y; }
+                repState.Buttons = pressedButtons;
+
+                // Report controller state to the system
+                m_states[loop].NotifyState(repState);
             }
 
             // Now return all input states

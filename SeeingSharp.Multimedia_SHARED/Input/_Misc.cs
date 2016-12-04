@@ -61,23 +61,38 @@ namespace SeeingSharp.Multimedia.Input
     /// Controller buttons do not manifest crosstalk.
     /// </summary>
     [Flags]
-    public enum GamepadButton
+    public enum GamepadButton : int
     {
-        Y = short.MinValue,
         None = 0,
-        DPadUp = 1,
-        DPadDown = 2,
-        DPadLeft = 4,
-        DPadRight = 8,
-        Start = 16,
-        Back = 32,
-        LeftThumb = 64,
-        RightThumb = 128,
-        LeftShoulder = 256,
-        RightShoulder = 512,
-        A = 4096,
-        B = 8192,
-        X = 16384
+        Menu = 1,
+        View = 2,
+        A = 4,
+        B = 8,
+        X = 16,
+        Y = 32,
+        DPadUp = 64,
+        DPadDown = 128,
+        DPadLeft = 256,
+        DPadRight = 512,
+        LeftShoulder = 1024,
+        RightShoulder = 2048,
+        LeftThumbstick = 4096,
+        RightThumbstick = 8192,
+        Paddle1 = 16384,
+        Paddle2 = 32768,
+        Paddle3 = 65536,
+        Paddle4 = 131072
+    }
+
+    public struct GamepadReportedState
+    {
+        public GamepadButton Buttons;
+        public float LeftThumbstickX;
+        public float LeftThumbstickY;
+        public float LeftTrigger;
+        public float RightThumbstickX;
+        public float RightThumbstickY;
+        public float RightTrigger;
     }
 
     /// <summary>

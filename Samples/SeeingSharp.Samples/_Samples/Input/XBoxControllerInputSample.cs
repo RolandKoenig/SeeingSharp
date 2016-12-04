@@ -121,26 +121,26 @@ namespace SeeingSharp.Samples.Base.Input
                     Vector3 moveX = new Vector3(0.1f, 0f, 0f);
                     if (gamepadState.IsButtonDown(GamepadButton.DPadLeft)) { moveVector += -moveX; }
                     else if (gamepadState.IsButtonDown(GamepadButton.DPadRight)) { moveVector += moveX; }
-                    else if (Math.Abs((int)gamepadState.LeftThumbX) > 10000)
+                    else if (Math.Abs(gamepadState.LeftThumbX) > 0.5f)
                     {
-                        moveVector += (gamepadState.LeftThumbX / (float)short.MaxValue) * moveX;
+                        moveVector += gamepadState.LeftThumbX * moveX;
                     }
-                    else if (Math.Abs((int)gamepadState.RightThumbX) > 10000)
+                    else if (Math.Abs(gamepadState.RightThumbX) > 0.5f)
                     {
-                        moveVector += (gamepadState.RightThumbX / (float)short.MaxValue) * moveX;
+                        moveVector += gamepadState.RightThumbX * moveX;
                     }
 
                     // Handle up/down movement
                     Vector3 moveZ = new Vector3(0f, 0f, 0.1f);
                     if (gamepadState.IsButtonDown(GamepadButton.DPadDown)) { moveVector += -moveZ; }
                     else if (gamepadState.IsButtonDown(GamepadButton.DPadUp)) { moveVector += moveZ; }
-                    else if (Math.Abs((int)gamepadState.LeftThumbY) > 10000)
+                    else if (Math.Abs(gamepadState.LeftThumbY) > 0.5f)
                     {
-                        moveVector += (gamepadState.LeftThumbY / (float)short.MaxValue) * moveZ;
+                        moveVector += gamepadState.LeftThumbY * moveZ;
                     }
-                    else if (Math.Abs((int)gamepadState.RightThumbY) > 10000)
+                    else if (Math.Abs(gamepadState.RightThumbY) > 0.5f)
                     {
-                        moveVector += (gamepadState.RightThumbY / (float)short.MaxValue) * moveZ;
+                        moveVector += gamepadState.RightThumbY * moveZ;
                     }
 
                     this.Position = this.Position + moveVector;
