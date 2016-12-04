@@ -9,6 +9,8 @@
     "SharpDX.XAudio2": "3.1.1",
     "SharpDX.XInput": "3.1.1",
     "System.Numerics.Vectors": "4.3.0",
+    "System.Reactive.Core": "3.1.1",
+    "System.Reactive.Interfaces": "3.1.1",
     "System.Reactive.Linq": "3.1.1"
   },
   "frameworks": {

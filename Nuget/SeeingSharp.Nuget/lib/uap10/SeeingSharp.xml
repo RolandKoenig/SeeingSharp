@@ -4,6 +4,22 @@
         <name>SeeingSharp</name>
     </assembly>
     <members>
+        <member name="M:SeeingSharp.View.IViewService.SetViewServiceHost(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Tells the ViewService which FrameworkElement it is hosted by.
+            </summary>
+            <param name="frameworkElement">The framework element.</param>
+        </member>
+        <member name="M:SeeingSharp.View.ViewServiceNode.#ctor(Windows.UI.Xaml.FrameworkElement)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.View.ViewServiceNode"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.View.ViewServiceNode.OnViewModel_ViewServiceRequest(System.Object,SeeingSharp.Util.ViewServiceRequestEventArgs)">
+            <summary>
+            Called when the viewmodel request a view service.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Bootstrapper.TranslationBootstrapper.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
             <summary>
             Executes the background action behind this item.
@@ -3205,22 +3221,6 @@
         <member name="P:SeeingSharp.Util.ObjectThreadExceptionEventArgs.State">
             <summary>
             Gets current state of the thread.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.View.IViewService.SetViewServiceHost(Windows.UI.Xaml.FrameworkElement)">
-            <summary>
-            Tells the ViewService which FrameworkElement it is hosted by.
-            </summary>
-            <param name="frameworkElement">The framework element.</param>
-        </member>
-        <member name="M:SeeingSharp.View.ViewServiceNode.#ctor(Windows.UI.Xaml.FrameworkElement)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.View.ViewServiceNode"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.View.ViewServiceNode.OnViewModel_ViewServiceRequest(System.Object,SeeingSharp.Util.ViewServiceRequestEventArgs)">
-            <summary>
-            Called when the viewmodel request a view service.
             </summary>
         </member>
         <member name="M:SeeingSharp.MathExtensions.GetAllPoints(System.Collections.Generic.IEnumerable{SeeingSharp.Line})">
