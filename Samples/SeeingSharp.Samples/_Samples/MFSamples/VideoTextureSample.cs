@@ -45,7 +45,7 @@ namespace SeeingSharp.Samples.Base.MFSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_MF, "VideoTexture",
         Constants.SAMPLE_MF_VIDEOTEXTURE_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/MFSamples/VideoTextureSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/MFSamples/VideoTextureSample.cs",
         SampleTargetPlatform.All)]
     public class VideoTextureSample : SampleBase
     {

@@ -44,7 +44,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
     [SampleInfo(
         Constants.SAMPLEGROUP_DIRECT2D, "Screen Overlay",
         Constants.SAMPLE_DIRECT2D_SCREEN_OVERLAY_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/Direct2D/Direct2DScreenOverlaySample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/Direct2D/Direct2DScreenOverlaySample.cs",
         SampleTargetPlatform.All)]
     public class Direct2DScreenOverlaySample : SampleBase
     {

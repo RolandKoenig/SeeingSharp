@@ -44,7 +44,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "TexturedPallet",
         Constants.SAMPLE_BASICS_TEXTUREDPALLET_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/TexturedPalletSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/TexturedPalletSample.cs",
         SampleTargetPlatform.All)]
     public class TexturedPalletSample : SampleBase
     {

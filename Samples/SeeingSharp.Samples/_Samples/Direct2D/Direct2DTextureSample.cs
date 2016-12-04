@@ -44,7 +44,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
     [SampleInfo(
         Constants.SAMPLEGROUP_DIRECT2D, "Draw to Texture",
         Constants.SAMPLE_DIRECT2D_D2DTEXTURE_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/Direct2D/Direct2DTextureSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/Direct2D/Direct2DTextureSample.cs",
         SampleTargetPlatform.All)]
     public class Direct2DTextureSample : SampleBase
     {

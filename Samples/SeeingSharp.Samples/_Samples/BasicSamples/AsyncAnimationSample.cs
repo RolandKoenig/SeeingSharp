@@ -44,7 +44,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "AsyncAnimation", 
         Constants.SAMPLE_BASICS_ASYNCANIM_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/AsyncAnimationSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/AsyncAnimationSample.cs",
         SampleTargetPlatform.All)]
     public class AsyncAnimationPalletSample : SampleBase
     {

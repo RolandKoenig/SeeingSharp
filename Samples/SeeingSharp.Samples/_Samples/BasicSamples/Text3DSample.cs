@@ -42,7 +42,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "Text3D",
         Constants.SAMPLE_BASICS_TEXT_3D_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/Text3DSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/Text3DSample.cs",
         SampleTargetPlatform.All)]
     public class Text3DSample : SampleBase
     {

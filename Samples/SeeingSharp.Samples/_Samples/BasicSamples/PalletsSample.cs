@@ -44,7 +44,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "Pallets",
         Constants.SAMPLE_BASICS_PALLETS_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/PalletsSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/PalletsSample.cs",
         SampleTargetPlatform.AllExcludingSmartphone)]
     public class PalletsSample : SampleBase
     {

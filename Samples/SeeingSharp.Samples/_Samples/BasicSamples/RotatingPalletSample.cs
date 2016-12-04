@@ -42,7 +42,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "RotatingPallet",
         Constants.SAMPLE_BASICS_ROTATINGPALLET_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples.Base/_Samples/BasicSamples/RotatingPalletSample.cs",
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/RotatingPalletSample.cs",
         SampleTargetPlatform.All)]
     public class RotatingPalletSample : SampleBase
     {
