@@ -4,24 +4,18 @@
         <name>SeeingSharp.Multimedia</name>
     </assembly>
     <members>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.#ctor">
+        <member name="M:SeeingSharp.Multimedia.Input.GenericGamepadHandler.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.GenericXInputHandler"/> class.
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.GenericGamepadHandler"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.GetSupportedViewTypes">
+        <member name="M:SeeingSharp.Multimedia.Input.GenericGamepadHandler.GetSupportedViewTypes">
             <summary>
             Gets a list containing all supported view types.
             Null means that this handler is not bound to a view.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
-            <summary>
-            Starts input handling.
-            </summary>
-            <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.GenericXInputHandler.GetInputStates">
+        <member name="M:SeeingSharp.Multimedia.Input.GenericGamepadHandler.GetInputStates">
             <summary>
             Querries all current input states.
             </summary>
@@ -390,593 +384,273 @@
             Gets the current wheel delta.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.#cctor">
+        <member name="M:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler.#cctor">
             <summary>
-            Initializes the <see cref="T:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler"/> class.
+            Initializes the <see cref="T:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.#ctor">
+        <member name="M:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler.#ctor">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler"/> class.
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler"/> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.GetSupportedViewTypes">
+        <member name="M:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler.GetSupportedViewTypes">
             <summary>
             Gets a list containing all supported view types.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
+        <member name="M:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
             <summary>
             Starts input handling.
             </summary>
             <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.Stop">
+        <member name="M:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler.Stop">
             <summary>
             Stops input handling.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.GetInputStates">
+        <member name="M:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler.GetInputStates">
             <summary>
             Querries all current input states.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnMouseEnter(System.Object,System.EventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Input.WinRTKeyAndMouseInputHandler.OnTargetPanel_PointerExited(System.Object,Windows.UI.Xaml.Input.PointerRoutedEventArgs)">
             <summary>
-            Called when the mouse enters the screen.
+            Called when mouse leaves the target panel.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnMouseClick(System.Object,System.Windows.Forms.MouseEventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.#ctor">
             <summary>
-            Called when user clicks on this panel.
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter" /> class.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnMouseLeave(System.Object,System.EventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.#ctor(Windows.UI.Xaml.Controls.SwapChainBackgroundPanel)">
             <summary>
-            Called when the mouse leaves the screen.
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter"/> class.
+            </summary>
+            <param name="targetPanel">The target panel.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.#ctor(Windows.UI.Xaml.Controls.SwapChainPanel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter"/> class.
+            </summary>
+            <param name="targetPanel">The target panel.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.Attach(Windows.UI.Xaml.Controls.SwapChainPanel)">
+            <summary>
+            Attaches the renderer to the given SwapChainBackgroundPanel.
+            </summary>
+            <param name="targetPanel">The target panel to attach to.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.Attach(Windows.UI.Xaml.Controls.SwapChainBackgroundPanel)">
+            <summary>
+            Attaches the renderer to the given SwapChainBackgroundPanel.
+            </summary>
+            <param name="targetPanel">The target panel to attach to.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.Detach">
+            <summary>
+            Detaches the renderer from the current target panel.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnMouseMove(System.Object,System.Windows.Forms.MouseEventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.Dispose">
             <summary>
-            Called when the mouse moves on the screen.
+            Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnMouseWheel(System.Object,System.Windows.Forms.MouseEventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.AttachInternal(SeeingSharp.Multimedia.Views.SwapChainPanelWrapper)">
             <summary>
-            Called when mouse wheel is used.
+            Attaches the renderer to the given SwapChainBackgroundPanel.
+            </summary>
+            <param name="targetPanel">The target panel to attach to.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.GetTargetRenderPixelSize">
+            <summary>
+            Gets the current target pixel size for the render panel.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnKeyUp(System.Object,System.Windows.Forms.KeyEventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.UpdateRenderLoopViewSize">
             <summary>
-            Called when a key is up
+            Update current configured view size on the render loop.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnKeyDown(System.Object,System.Windows.Forms.KeyEventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.OnTargetPanel_Unloaded(System.Object,Windows.UI.Xaml.RoutedEventArgs)">
             <summary>
-            Called when a key is down.
+            Called when the target panel gets unloaded.
             </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WinFormsKeyAndMouseInputHandler.OnLostFocus(System.Object,System.EventArgs)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.OnTargetPanel_Loaded(System.Object,Windows.UI.Xaml.RoutedEventArgs)">
             <summary>
-            Called when the focus on the target control is lost.
+            Called when the target panel gets loaded.
             </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:Windows.UI.Xaml.RoutedEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.#ctor">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.OnTargetPanelThrottled_SizeChanged(System.Object,Windows.UI.Xaml.SizeChangedEventArgs)">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler"/> class.
+            Called when the size of the target panel has changed.
             </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:Windows.UI.Xaml.SizeChangedEventArgs" /> instance containing the event data.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.GetSupportedViewTypes">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.OnTargetPanel_SizeChanged(System.Object,Windows.UI.Xaml.SizeChangedEventArgs)">
             <summary>
-            Gets a list containing all supported view types.
+            Called when the size of the target panel has changed.
             </summary>
+            <param name="sender">The sender.</param>
+            <param name="e">The <see cref="T:Windows.UI.Xaml.SizeChangedEventArgs"/> instance containing the event data.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.Start(SeeingSharp.Multimedia.Input.IInputEnabledView)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.OnTargetPanel_CompositionScaleChanged(System.Object,System.EventArgs)">
             <summary>
-            Starts input handling.
-            </summary>
-            <param name="viewObject">The view object (e. g. Direct3D11Canvas).</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.Stop">
-            <summary>
-            Stops input handling.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.GetInputStates">
-            <summary>
-            Querries all current input states.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Input.WpfKeyAndMouseInputHandler.OnRendererElement_MouseWheel(System.Object,System.Windows.Input.MouseWheelEventArgs)">
-            <summary>
-            Called when user uses the mouse wheel for zooming.
+            Some configuration like 
             </summary>
             <param name="sender"></param>
             <param name="e"></param>
         </member>
-        <member name="T:SeeingSharp.Multimedia.Properties.Resources">
-            <summary>
-              A strongly-typed resource class, for looking up localized strings, etc.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Properties.Resources.ResourceManager">
-            <summary>
-              Returns the cached ResourceManager instance used by this class.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Properties.Resources.Culture">
-            <summary>
-              Overrides the current thread's CurrentUICulture property for all
-              resource lookups using this strongly typed resource class.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Properties.Resources.Blank_16x16">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Properties.Resources.GfxNotInitialized">
-            <summary>
-              Looks up a localized resource of type System.Drawing.Bitmap.
-            </summary>
-        </member>
-        <member name="E:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.ManipulateFilterList">
-            <summary>
-            Raised when it is possible for the UI thread to manipulate current filter list.
-            </summary>
-        </member>
-        <member name="E:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.MouseClickEx">
-            <summary>
-            Raises when mouse was down a short amount of time.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.GetObjectBelowCursorAsync">
-            <summary>
-            Gets the scene object below the cursor.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.GetObjectsBelowCursorAsync">
-            <summary>
-            Gets all objects that are below the cursor.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SaveScreenshotAsync(System.String)">
-            <summary>
-            Saves a screenshot to harddisc.
-            </summary>
-            <param name="targetFile">Target file path.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SaveScreenshotAsync(System.String,System.Drawing.Imaging.ImageFormat)">
-            <summary>
-            Saves a screenshot to harddisc.
-            </summary>
-            <param name="targetFile">Target file path.</param>
-            <param name="imageFormat">Target file format.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnPaint(System.Windows.Forms.PaintEventArgs)">
-            <summary>
-            Called when system wants to paint this panel.
-            </summary>
-            <param name="e">A <see cref="T:System.Windows.Forms.PaintEventArgs"/> that contains the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.StartRendering">
-            <summary>
-            Stops rendering.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.StopRendering">
-            <summary>
-            Stops rendering.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.UpdateDrawingResourcesForFailoverRendering">
-            <summary>
-            Updates the background brush used for failover rendering in System.Drawing.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnBackColorChanged(System.EventArgs)">
-            <summary>
-            Called when BackColor property has changed.
-            </summary>
-            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnSizeChanged(System.EventArgs)">
-            <summary>
-            Called when the size of the viewport has changed.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnHandleCreated(System.EventArgs)">
-            <summary>
-            Called when the window handle is created.
-            </summary>
-            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnHandleDestroyed(System.EventArgs)">
-            <summary>
-            Called when the window handle is destroyed.
-            </summary>
-            <param name="e">An <see cref="T:System.EventArgs"/> that contains the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnVisibleChanged(System.EventArgs)">
-            <summary>
-            Handle changed control visibility.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnDisposed(System.Object,System.EventArgs)">
-            <summary>
-            Called when this view gets disposed.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Create all view resources.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Disposes all loaded view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Called when RenderLoop object checks wheter it is possible to render.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_PrepareRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Called when the render loop prepares rendering.
-            </summary>
-            <param name="device">The current rendering device.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Called when RenderLoop wants to present its results.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Called when RenderLoop has finished rendering.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnThrottledViewRecreation">
-            <summary>
-            Called when the control has changed its size.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnMouseEnter(System.EventArgs)">
-            <summary>
-            Called when the mouse is inside the area of this control.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnMouseLeave(System.EventArgs)">
-            <summary>
-            Called when the mouse is outside the area of this control.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.OnRenderLoopManipulateFilterList(System.Object,SeeingSharp.Multimedia.Core.ManipulateFilterListArgs)">
-            <summary>
-            Called when RenderLoop allows it to manipulate current filter list.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The decimal.</param>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.DiscardRendering">
-            <summary>
-            Discard rendering?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.DiscardPresent">
-            <summary>
-            Discard present of rendering results on the screen?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.ViewConfiguration">
-            <summary>
-            Gets the view configuration.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.RenderLoop">
-            <summary>
-            Gets the render loop object.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererControl.BackColor">
-            <summary>
-            Ruft die Hintergrundfarbe für das Steuerelement ab oder legt diese fest.
-            </summary>
-            <returns>Eine <see cref="T:System.Drawing.Color" />, die die Hintergrundfarbe des Steuerelements darstellt. Der Standardwert ist der Wert der <see cref="P:System.Windows.Forms.Control.DefaultBackColor" />-Eigenschaft.</returns>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnRenderSizeChanged(System.Windows.SizeChangedInfo)">
-            <summary>
-            Called when the render size has changed.
-            </summary>
-            <param name="sizeInfo">New size information.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.IsInDesignMode">
-            <summary>
-            Is this object in design mode?
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.GetDpiScaling">
-            <summary>
-            Gets the current DpiScaling mode.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_DisposeViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Disposes all loaded view resources.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CreateViewResources(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Create all view resources.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_CheckCanRender(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop object checks wheter it is possible to render.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_PrepareRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Called when the render loop prepares rendering.
-            </summary>
-            <param name="engineDevice">The engine device.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_Present(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop wants to present its results.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.SeeingSharp#Multimedia#Core#IRenderLoopHost#OnRenderLoop_AfterRendering(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Called when RenderLoop has finished rendering.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnLoaded(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Called when the image is loaded.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnSystemEvents_SessionSwitch(System.Object,Microsoft.Win32.SessionSwitchEventArgs)">
-            <summary>
-            Called when the current session was switched.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:Microsoft.Win32.SessionSwitchEventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnPropertyChanged(System.Windows.DependencyPropertyChangedEventArgs)">
-            <summary>
-            Called when one of the dependency properties has changed.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnThrottledSizeChanged">
-            <summary>
-            Called when size changed event occurred.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.OnUnloaded(System.Object,System.Windows.RoutedEventArgs)">
-            <summary>
-            Called when the image is unloaded.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.DiscardRendering">
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.DiscardRendering">
             <summary>
             Discard rendering?
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.SceneComponents">
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.Scene">
+            <summary>
+            Gets the current 3D scene.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.Camera">
+            <summary>
+            Gets or sets the current 3D camera.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.RenderLoop">
+            <summary>
+            Gets current renderloop object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.DetachOnUnload">
+            <summary>
+            Should we detach automatically if the TargetPanel gets unloaded?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.IsAttachedToGui">
+            <summary>
+            Is this painter attached to any panel?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.PixelSize">
+            <summary>
+            Gets the current pixel size of the target panel.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.SceneComponents">
             <summary>
             Gets a collection containing all SceneComponents associated to this view.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.Scene">
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.SeeingSharp#Multimedia#Input#IInputEnabledView#Focused">
+            <summary>
+            Does the target control have focus?
+            (Return true here if rendering runs, because in winrt we are everytime at fullscreen)
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.ClearColor">
+            <summary>
+            Gets or sets the clear color for the 3D view.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.OnPropertyChanged(Windows.UI.Xaml.DependencyObject,Windows.UI.Xaml.DependencyPropertyChangedEventArgs)">
+            <summary>
+            Called when one of the dependency properties has changed.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.DiscardRendering">
+            <summary>
+            Discard rendering?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.SceneComponents">
+            <summary>
+            Gets a collection containing all SceneComponents associated to this view.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.Scene">
             <summary>
             Gets or sets the currently applied scene.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.DrawingLayer2D">
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.DrawingLayer2D">
             <summary>
             Gets or sets the custom layer for 2D rendering.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.Camera">
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.Camera">
             <summary>
             Gets or sets the camera.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.RenderLoop">
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.RenderLoop">
             <summary>
             Gets the RenderLoop that is currently in use.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.ClearColor">
-            <summary>
-            Gets or sets the clear color of this 3D view.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRendererElement.Focused">
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.Focused">
             <summary>
             Does the target control have focus?
             </summary>
         </member>
-        <member name="T:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement">
+        <member name="M:SeeingSharp.Multimedia.Views.SwapChainPanelWrapper.#ctor(Windows.UI.Xaml.Controls.SwapChainBackgroundPanel)">
             <summary>
-            A wpf element which triggers the rendering in wpf in a low
-            frequency (see property <see cref="P:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement.TriggerIntervalMS"/>) 
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SwapChainPanelWrapper"/> class.
+            </summary>
+            <param name="bgPanel">The panel for which to create the wrapper.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SwapChainPanelWrapper.#ctor(Windows.UI.Xaml.Controls.SwapChainPanel)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SwapChainPanelWrapper"/> class.
+            </summary>
+            <param name="panel">The panel for which to create the wrapper.</param>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Views.SwapChainPanelWrapper.Dispose">
+            <summary>
+            Führt anwendungsspezifische Aufgaben durch, die mit der Freigabe, der Zurückgabe oder dem Zurücksetzen von nicht verwalteten Ressourcen zusammenhängen.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement.#ctor">
+        <member name="P:SeeingSharp.Multimedia.Views.SwapChainPanelWrapper.SwapChain">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement"/> class.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpWpfRenderTriggerElement.TriggerIntervalMS">
-            <summary>
-            the interval in which to trigger the Wpf rendering logic (milliseconds).
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.HigherD3DImageSource.#ctor(SeeingSharp.Multimedia.Core.EngineDevice)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.HigherD3DImageSource"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.HigherD3DImageSource.Dispose">
-            <summary>
-            Disposes this object.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.HigherD3DImageSource.InvalidateD3DImage">
-            <summary>
-            Invalidates the direct3D image.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.HigherD3DImageSource.SetRenderTarget(SharpDX.Direct3D11.Texture2D)">
-            <summary>
-            Sets the render target of this D3DImage object.
-            </summary>
-            <param name="renderTarget">The render target to set.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.HigherD3DImageSource.GetSharedHandle(SharpDX.Direct3D11.Texture2D)">
-            <summary>
-            Gets the handle that can be used for resource sharing.
-            </summary>
-            <param name="Texture">The texture to be shared.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.HigherD3DImageSource.TranslateFormat(SharpDX.Direct3D11.Texture2D)">
-            <summary>
-            Gets the format for sharing.
-            </summary>
-            <param name="Texture">The texture to get the format for.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.HigherD3DImageSource.IsShareable(SharpDX.Direct3D11.Texture2D)">
-            <summary>
-            Is the given texture sharable?
-            </summary>
-            <param name="textureToCheck">The checker to check.</param>
-        </member>
-        <member name="E:SeeingSharp.Multimedia.Views.MediaPlayerComponent.StateChanged">
-            <summary>
-            Raised when the current state has changed.
-            </summary>
-        </member>
-        <member name="E:SeeingSharp.Multimedia.Views.MediaPlayerComponent.IsPausedChanged">
-            <summary>
-            Raised when the paused flag has changed.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.MediaPlayerComponent"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.PauseVideoAsync">
-            <summary>
-            Pauses the video currently playing.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.ResumeVideoAsync">
-            <summary>
-            Resumes the video from current position.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.OpenAndShowVideoFileAsync(SeeingSharp.Util.ResourceLink)">
-            <summary>
-            Opens the given video file and plays it directly.
-            </summary>
-            <param name="videoLink">The link to the video file.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.StartSessionInternalAsync(System.Boolean)">
-            <summary>
-            Starts playing the video.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.CloseVideoAsync">
-            <summary>
-            Closes the current video.
-            This method returns immediately if there is no video playing.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.OnSessionEventHandlerEndOfPresentationReached(System.Object,System.EventArgs)">
-            <summary>
-            Current session reports finished video.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.OnTargetControlResize(System.Object,System.EventArgs)">
-            <summary>
-            Called when the target control changes its size.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:System.EventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.OnTargetControlPaint(System.Object,System.Windows.Forms.PaintEventArgs)">
-            <summary>
-            Called when the target control requested painting.
-            </summary>
-            <param name="sender">The sender.</param>
-            <param name="e">The <see cref="T:System.Windows.Forms.PaintEventArgs"/> instance containing the event data.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Views.MediaPlayerComponent.DisposeResources">
-            <summary>
-            Disposes all current resources.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.State">
-            <summary>
-            Gets the state of the media player.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.CurrentVideoFile">
-            <summary>
-            Gets a reference to the current displayed video.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.CurrentCaptureDevice">
-            <summary>
-            Gets a reference to the current CaptureDevice.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.CurrentVideoDuration">
-            <summary>
-            Gets the total duration of the currently displayed video.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.RestartWhenFinished">
-            <summary>
-            Restart the video when playing has finished?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.TargetControl">
-            <summary>
-            Gets or sets the target control which is used for displaying the video.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.IsPaused">
-            <summary>
-            Is the video paused currently?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Views.MediaPlayerComponent.AudioVolume">
-            <summary>
-            Gets or sets the current MasterVolume for audio rendering.
+            Sets the SwapChain object of the panel wrapped by this object.
             </summary>
         </member>
         <member name="E:SeeingSharp.Multimedia.Views.MemoryRenderTarget.BeforeRender">
@@ -1332,11 +1006,6 @@
             Gets a collection containing all available font familily names.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.InitializeWpfRenderPerformanceMeasure">
-            <summary>
-            Initializes performance measure for Wpf render system.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Resume">
             <summary>
             Resumes rendering when in supendet state.
@@ -1528,37 +1197,14 @@
             The global XAudio2 device
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.CreateDefaultSwapChain(System.Windows.Forms.Control,SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.GraphicsViewConfiguration)">
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.CreateSwapChainForComposition(SeeingSharp.Multimedia.Core.EngineDevice,System.Int32,System.Int32,SeeingSharp.Multimedia.Core.GraphicsViewConfiguration)">
             <summary>
-            Creates a default SwapChain for the given target control.
+            Creates the SwapChain object that is used on WinRT platforms.
             </summary>
-            <param name="targetControl">Target control of the swap chain.</param>
-            <param name="device">Graphics device.</param>
-            <param name="gfxConfig">The current graphics configuration.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.LoadTextureFromBitmap(SeeingSharp.Multimedia.Core.EngineDevice,System.Drawing.Bitmap)">
-            <summary>
-            Converts a System.Drawing.Bitmap to a DirectX 11 texture object.
-            </summary>
-            <param name="device">Device on wich the resource should be created.</param>
-            <param name="bitmap">The source bitmap.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.LoadTextureFromBitmap(SeeingSharp.Multimedia.Core.EngineDevice,System.Drawing.Bitmap,System.Int32)">
-            <summary>
-            Converts a System.Drawing.Bitmap to a DirectX 11 texture object.
-            </summary>
-            <param name="device">Device on wich the resource should be created.</param>
-            <param name="bitmap">The source bitmap.</param>
-            <param name="mipLevels">Total count of levels for mipmapping.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.LoadBitmapFromStagingTexture(SeeingSharp.Multimedia.Core.EngineDevice,SharpDX.Direct3D11.Texture2D,System.Int32,System.Int32)">
-            <summary>
-            Loads a bitmap from the given texture. Be careful: The texture musst have CPU read access and this only matches for staging textures.
-            </summary>
-            <param name="device">The device on which the texture is created.</param>
-            <param name="stagingTexture">The texture to be loaded into the bitmap.</param>
-            <param name="width">The width of the texture.</param>
-            <param name="height">The height of the texture.</param>
+            <param name="device">The device on which to create the SwapChain.</param>
+            <param name="width">Width of the screen in pixels.</param>
+            <param name="height">Height of the screen in pixels.</param>
+            <param name="gfxConfig">Current graphics configuration.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.CreateSharedTexture(SeeingSharp.Multimedia.Core.EngineDevice,System.Int32,System.Int32)">
             <summary>
@@ -1581,14 +1227,6 @@
             </summary>
             <param name="device">The device on wich to create the texture.</param>
             <param name="inStream">The source stream.</param>
-            <returns></returns>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.LoadTexture2D(SeeingSharp.Multimedia.Core.EngineDevice,System.String)">
-            <summary>
-            Loads a new texture from the given file path.
-            </summary>
-            <param name="device">The device on wich to create the texture.</param>
-            <param name="fileName">The source file</param>
             <returns></returns>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.LoadBitmapSource(SeeingSharp.Util.ResourceLink)">
@@ -1620,12 +1258,6 @@
             <param name="device">The Direct3D11 device</param>
             <param name="bitmapSourceWrapper">The WIC bitmap source</param>
             <returns>A Texture2D</returns>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.LoadBitmapFromMappedTexture(SeeingSharp.Multimedia.Core.MemoryMappedTexture32bpp)">
-            <summary>
-            Loads a bitmap from the given mapped texture.
-            </summary>
-            <param name="mappedTexture">The mapped texture from which to read all pixel data.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.CreateDefaultViewport(System.Int32,System.Int32)">
             <summary>
@@ -1750,21 +1382,6 @@
             </summary>
             <param name="device">Graphics device.</param>
             <param name="indices">Source index array.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.ResizeGdiBitmap(System.Drawing.Bitmap,System.Int32,System.Int32)">
-            <summary>
-            Resizes the given bitmap to given size.
-            </summary>
-            <param name="bitmapToResize">The bitmap to resize.</param>
-            <param name="newWidth">Width of the generated bitmap.</param>
-            <param name="newHeight">Height of the genrated bitmap.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.SetBitmapContents(SharpDX.Direct2D1.Bitmap,System.Drawing.Bitmap)">
-            <summary>
-            Copies all contents of the given gdi bitmap into the given Direct2D bitmap.
-            </summary>
-            <param name="targetBitmap">Target Direct2D bitmap.</param>
-            <param name="drawingBitmap">The source gdi bitmap.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.SafeDispose``1(``0@)">
             <summary>
@@ -1957,17 +1574,6 @@
             Changes the ViewConfiguration object.
             </summary>
             <param name="newViewConfiguration">The new configuration object to be applied.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.GetScreenshotGdiAsync">
-            <summary>
-            Takes a screenshot and returns it as a gdi bitmap.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.GetScreenshotGdiInternal">
-            <summary>
-            Gets a screenshot in form of a gdi bitmap.
-            (be careful. This call is executed synchronous.
-            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.RenderLoop.ResetRenderCounter">
             <summary>
@@ -4684,39 +4290,6 @@
             Are Direct2D textures possible?
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerD3D9.#ctor(SharpDX.DXGI.Adapter1,System.Boolean,System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.DeviceHandlerD3D9"/> class.
-            </summary>
-            <param name="dxgiAdapter">The target adapter.</param>
-            <param name="isSoftwareAdapter">Are we in software mode?</param>
-            <param name="debugEnabled">Is debug mode enabled?</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerD3D9.UnloadResources">
-            <summary>
-            Unloads all loaded resources.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerD3D9.GetDesktopWindow">
-            <summary>
-            Gets current desktop window.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D9.IsInitialized">
-            <summary>
-            Is the device successfully initialized?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D9.Device">
-            <summary>
-            Gets the initialized device.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerD3D9.Context">
-            <summary>
-            Gets current DirectX context.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerDXGI.#ctor(SharpDX.DXGI.Adapter1,SharpDX.Direct3D11.Device)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.DeviceHandlerDXGI"/> class.
@@ -4732,6 +4305,11 @@
             Gets current factory object.
             </summary>
             <value>The factory.</value>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerDXGI.Device">
+            <summary>
+            Gets the DXGI device.
+            </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.DeviceHandlerDXGI.Adapter">
             <summary>
@@ -7644,11 +7222,6 @@
             <param name="device">The device on which the texture was created.</param>
             <param name="texture">The texture which is to be uploaded to system memory.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.TextureUploader.UploadToGdiBitmap">
-            <summary>
-            Takes a screenshot and returns it as a gdi bitmap.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Core.TextureUploader.UploadToIntBuffer(SeeingSharp.Multimedia.Core.MemoryMappedTexture32bpp)">
             <summary>
             Takes a color texture and uploads it to the given buffer.
@@ -7667,13 +7240,6 @@
             This method is only valid for resources of type R32_Floatfloat.
             </summary>
             <param name="floatBuffer">The target float buffer to which to copy all ObjectIDs.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.TextureUploader.UploadNormalDepthBitmapsWpf(System.Windows.Media.Imaging.WriteableBitmap@,System.Windows.Media.Imaging.WriteableBitmap@)">
-            <summary>
-            Takes a NormalDepth texture and creates a normal- and a depth-bitmap
-            </summary>
-            <param name="normal">The normal-bitmap</param>
-            <param name="depth">The depth-bitmap</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.TextureUploader.CopyTextureToStagingResource(System.Boolean)">
             <summary>
@@ -9744,26 +9310,6 @@
             Adds a new text geometry with the given text.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddTexture(SeeingSharp.Multimedia.Core.ResourceDictionary,System.String)">
-            <summary>
-            Adds a new texture resource pointing to the given texture file name.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddTexture(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Util.NamedOrGenericKey,System.String)">
-            <summary>
-            Adds a new texture resource pointing to the given texture file name.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddTexture(SeeingSharp.Multimedia.Core.ResourceDictionary,System.Uri)">
-            <summary>
-            Adds a new texture resource pointing to the given texture file name.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.ResourceDictionaryExtensions.AddTexture(SeeingSharp.Multimedia.Core.ResourceDictionary,SeeingSharp.Util.NamedOrGenericKey,System.Uri)">
-            <summary>
-            Adds a new texture resource pointing to the given texture file name.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.PixelShaderResource.#ctor(System.String,SeeingSharp.Util.ResourceLink)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.VertexShaderResource" /> class.
@@ -9850,12 +9396,6 @@
             Gets the loaded VertexShader object.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.BitmapTextureResource.#ctor(System.Drawing.Bitmap)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.BitmapTextureResource"/> class.
-            </summary>
-            <param name="bitmap">The bitmap source object.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.BitmapTextureResource.#ctor(SeeingSharp.Multimedia.Core.MemoryMappedTexture32bpp)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.BitmapTextureResource"/> class.
@@ -9870,11 +9410,6 @@
         <member name="M:SeeingSharp.Multimedia.Drawing3D.BitmapTextureResource.UnloadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
             <summary>
             Unloads the resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.BitmapTextureResource.SetBitmap(System.Drawing.Bitmap)">
-            <summary>
-            Sets the bitmap to be displayed.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Drawing3D.BitmapTextureResource.IsLoaded">
@@ -10012,81 +9547,6 @@
             Gets the size of the texture array.
             1 for normal textures.
             6 for cubemap textures.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.#ctor(System.Drawing.Brush)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource"/> class.
-            </summary>
-            <param name="drawingBrush">The drawing brush.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.#ctor(System.Drawing.Brush,System.Int32,System.Int32)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource"/> class.
-            </summary>
-            <param name="drawingBrush">The drawing brush.</param>
-            <param name="height">Width of the texture.</param>
-            <param name="width">Height of the texture.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.LoadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
-            <summary>
-            Loads the resource.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.UnloadResourceInternal(SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.ResourceDictionary)">
-            <summary>
-            Unloads the resource.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.IsLoaded">
-            <summary>
-            Is the resource loaded?
-            </summary>
-            <value></value>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.Texture">
-            <summary>
-            Gets the texture object.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.TextureView">
-            <summary>
-            Gets a ShaderResourceView targeting the texture.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Drawing3D.DrawingBrushTextureResource.ArraySize">
-            <summary>
-            Gets the size of the texture array.
-            1 for normal textures.
-            6 for cubemap textures.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.LinearGradientTextureResource.#ctor(SeeingSharp.Color4,SeeingSharp.Color4,SeeingSharp.Multimedia.Drawing3D.GradientDirection,System.Int32,System.Int32)">
-            <summary>
-            Creates a linear gradient texture.
-            </summary>
-            <param name="start">Starting color.</param>
-            <param name="destination">Destination color.</param>
-            <param name="gradientDirection">Direction of the gradient.</param>
-            <param name="height">Height of the texture in pixels.</param>
-            <param name="widht">Width of the texture in pixels.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.LinearGradientTextureResource.#ctor(SeeingSharp.Color4,SeeingSharp.Color4,SeeingSharp.Multimedia.Drawing3D.GradientDirection)">
-            <summary>
-            Creates a linear gradient texture.
-            </summary>
-            <param name="start">Starting color.</param>
-            <param name="destination">Destination color.</param>
-            <param name="gradientDirection">Direction of the gradient.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.LinearGradientTextureResource.GetStartPoint(SeeingSharp.Multimedia.Drawing3D.GradientDirection,System.Int32,System.Int32)">
-            <summary>
-            Gets the start-point of the gradient.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Drawing3D.LinearGradientTextureResource.GetTargetPoint(SeeingSharp.Multimedia.Drawing3D.GradientDirection,System.Int32,System.Int32)">
-            <summary>
-            Gets the target-point of the gradient.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing3D.RenderTargetTextureResource.#ctor(SeeingSharp.Multimedia.Drawing3D.RenderTargetCreationMode)">
@@ -10474,16 +9934,6 @@
             Needed for video rendering (Frames from the MF SourceReader have alpha always to zero)
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.CaptureDeviceChooser.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.DrawingVideo.CaptureDeviceChooser"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.CaptureDeviceInfo.CreateMediaSource">
-            <summary>
-            Creates a media source pointing to this CaptureDevice.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.DrawingVideo.SeeingSharpMediaBuffer.CopyPointer">
             <summary>
             Creates a new object targeting the the same underlying COM object.
@@ -10583,13 +10033,6 @@
             Occurs when the end of the video is reached.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.AsyncRealtimeVideoReader.#ctor(SeeingSharp.Multimedia.DrawingVideo.CaptureDeviceInfo,System.Boolean)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.DrawingVideo.AsyncRealtimeVideoReader"/> class.
-            </summary>
-            <param name="captureDevice">The capture device.</param>
-            <param name="immediateStart">True to start video reading immediately.</param>
-        </member>
         <member name="M:SeeingSharp.Multimedia.DrawingVideo.AsyncRealtimeVideoReader.#ctor(SeeingSharp.Util.ResourceLink,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.DrawingVideo.AsyncRealtimeVideoReader"/> class.
@@ -10624,11 +10067,6 @@
             Did we start this reader previously?
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.FrameByFrameVideoReader.#ctor(SeeingSharp.Multimedia.DrawingVideo.CaptureDeviceInfo)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.DrawingVideo.FrameByFrameVideoReader"/> class.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.DrawingVideo.FrameByFrameVideoReader.#ctor(SeeingSharp.Util.ResourceLink)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.DrawingVideo.FrameByFrameVideoReader"/> class.
@@ -10651,12 +10089,6 @@
             This object reads video streams from a file source using the MediaFoundation.
             See https://msdn.microsoft.com/de-de/library/windows/desktop/dd389281(v=vs.85).aspx
             </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.MediaFoundationVideoReader.#ctor(SeeingSharp.Multimedia.DrawingVideo.CaptureDeviceInfo)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.DrawingVideo.MediaFoundationVideoReader"/> class.
-            </summary>
-            <param name="captureDevice">The capture device.</param>
         </member>
         <member name="M:SeeingSharp.Multimedia.DrawingVideo.MediaFoundationVideoReader.#ctor(SeeingSharp.Util.ResourceLink)">
             <summary>
@@ -10706,82 +10138,6 @@
             <summary>
             Gets the current time position within the video.
             </summary>
-        </member>
-        <member name="E:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.EndOfPresentation">
-            <summary>
-            Raises when the end of a video is reached.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.#ctor(SharpDX.MediaFoundation.MediaSession)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener"/> class.
-            </summary>
-            <param name="session">The session to listen to.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.AttachTo(SharpDX.MediaFoundation.MediaSession)">
-            <summary>
-            Attaches this listener on the given session.
-            </summary>
-            <param name="session">The session object to attach to.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.WaitForEventAsync(SharpDX.MediaFoundation.MediaEventTypes,System.Threading.CancellationToken)">
-            <summary>
-            This method waits for an asynchronous event message from the MF framework.
-            </summary>
-            <param name="eventType">The type of the event to wait for.</param>
-            <param name="cancelToken">The cancellation token.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.WaitForEventAsync(SharpDX.MediaFoundation.MediaEventTypes,System.Func{SharpDX.MediaFoundation.MediaEvent,System.Boolean},System.Threading.CancellationToken)">
-            <summary>
-            This method waits for an asynchronous event message from the MF framework.
-            </summary>
-            <param name="eventType">The type of the event to wait for.</param>
-            <param name="specificEventCheckingFunc">A specific event checking func implemented by the caller. Returns false if the event is not handled.</param>
-            <param name="cancelToken">The cancellation token.</param>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.Dispose">
-            <summary>
-            Führt anwendungsspezifische Aufgaben aus, die mit dem Freigeben, Zurückgeben oder Zurücksetzen von nicht verwalteten Ressourcen zusammenhängen.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.WorkQueueId">
-            <summary>
-            Gets the identifier of the work queue on which the callback is dispatched. See remarks.
-            </summary>
-            <value>
-            The work queue identifier.
-            </value>
-            <msdn-id>bb970381</msdn-id>
-              <unmanaged>HRESULT IMFAsyncCallback::GetParameters([Out] MFASYNC_CALLBACK_FLAGS* pdwFlags,[Out] unsigned int* pdwQueue)</unmanaged>
-              <unmanaged-short>IMFAsyncCallback::GetParameters</unmanaged-short>
-            <exception cref="T:System.NotImplementedException"></exception>
-            <remarks>
-              <p>This value can specify one of the standard Media Foundation work queues, or a work queue created by the application. For list of standard Media Foundation work queues, see <strong>Work Queue Identifiers</strong>. To create a new work queue, call <strong><see cref="M:SharpDX.MediaFoundation.MediaFactory.AllocateWorkQueue(System.Int32@)" /></strong>. The default value is <strong><see cref="F:SharpDX.MediaFoundation.WorkQueueType.Standard" /></strong>.</p> <p>If the work queue is not compatible with the value returned in <em>pdwFlags</em>, the Media Foundation platform returns <strong><see cref="F:SharpDX.MediaFoundation.ResultCode.InvalidWorkqueue" /></strong> when it tries to dispatch the callback. (See <strong><see cref="M:SharpDX.MediaFoundation.MediaFactory.PutWorkItem(System.Int32,System.IntPtr,SharpDX.ComObject)" /></strong>.)</p>
-            </remarks>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.Shadow">
-            <summary>
-            Gets or sets the unmanaged shadow callback.
-            </summary>
-            <value>
-            The unmanaged shadow callback.
-            </value>
-            <remarks>
-            This property is set whenever this instance has an unmanaged shadow callback
-            registered. This callback must be disposed when disposing this instance.
-            </remarks>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.DrawingVideo.MFSessionEventListener.Flags">
-            <summary>
-            Gets a flag indicating the behavior of the callback object's <strong><see cref="M:SharpDX.MediaFoundation.IAsyncCallback.Invoke(SharpDX.MediaFoundation.AsyncResult)" /></strong> method. Default behavior should be <see cref="F:SharpDX.MediaFoundation.AsyncCallbackFlags.None" />.
-            </summary>
-            <value>
-            The a flag indicating the behavior of the callback object's <strong><see cref="M:SharpDX.MediaFoundation.IAsyncCallback.Invoke(SharpDX.MediaFoundation.AsyncResult)" /></strong> method.
-            </value>
-            <msdn-id>bb970381</msdn-id>
-              <unmanaged>HRESULT IMFAsyncCallback::GetParameters([Out] MFASYNC_CALLBACK_FLAGS* pdwFlags,[Out] unsigned int* pdwQueue)</unmanaged>
-              <unmanaged-short>IMFAsyncCallback::GetParameters</unmanaged-short>
-            <exception cref="T:System.NotImplementedException"></exception>
         </member>
         <member name="T:SeeingSharp.Multimedia.DrawingVideo.MediaFoundationVideoWriter">
             <summary>

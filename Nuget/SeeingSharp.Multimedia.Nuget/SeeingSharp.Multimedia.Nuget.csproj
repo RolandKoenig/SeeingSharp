@@ -63,9 +63,11 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="lib\net46\SeeingSharp.Multimedia.dll" />
+    <Content Include="lib\net46\SeeingSharp.Multimedia.Resources.dll" />
     <Content Include="lib\net46\SeeingSharp.Multimedia.xml" />
-    <Content Include="lib\portable-win8+wpa81\SeeingSharp.Multimedia.dll" />
-    <Content Include="lib\portable-win8+wpa81\SeeingSharp.Multimedia.xml" />
+    <Content Include="lib\uap10\SeeingSharp.Multimedia.dll" />
+    <Content Include="lib\uap10\SeeingSharp.Multimedia.Resources.dll" />
+    <Content Include="lib\uap10\SeeingSharp.Multimedia.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -88,10 +90,12 @@
     <Message Text="SUCCESS: Published package." Condition=" '$(Configuration)|$(Platform)|$(ExitCode)' == 'Release|AnyCPU|0' " Importance="High" />
   </Target>
   <PropertyGroup>
-    <PreBuildEvent>copy "$(SolutionDir)SeeingSharp.Multimedia\bin.Desktop\$(ConfigurationName)\SeeingSharp.Multimedia.dll" "$(ProjectDir)lib\net46\SeeingSharp.Multimedia.dll" /Y
-copy "$(SolutionDir)SeeingSharp.Multimedia\bin.Desktop\$(ConfigurationName)\SeeingSharp.Multimedia.XML" "$(ProjectDir)lib\net46\SeeingSharp.Multimedia.xml" /Y
+    <PreBuildEvent>copy "$(SolutionDir)SeeingSharp.Multimedia_DESKTOP\bin\$(ConfigurationName)\SeeingSharp.Multimedia.dll" "$(ProjectDir)lib\net46\SeeingSharp.Multimedia.dll" /Y
+copy "$(SolutionDir)SeeingSharp.Multimedia_DESKTOP\bin\$(ConfigurationName)\SeeingSharp.Multimedia.XML" "$(ProjectDir)lib\net46\SeeingSharp.Multimedia.xml" /Y
+copy "$(SolutionDir)SeeingSharp.Multimedia.Resources\bin\$(ConfigurationName)\SeeingSharp.Multimedia.Resources.dll" "$(ProjectDir)lib\net46\SeeingSharp.Multimedia.Resources.dll" /Y
 
-copy "$(SolutionDir)SeeingSharp.Multimedia\bin.Universal\$(ConfigurationName)\SeeingSharp.Multimedia.dll" "$(ProjectDir)lib\portable-win8+wpa81\SeeingSharp.Multimedia.dll" /Y
-copy "$(SolutionDir)SeeingSharp.Multimedia\bin.Universal\$(ConfigurationName)\SeeingSharp.Multimedia.XML" "$(ProjectDir)lib\portable-win8+wpa81\SeeingSharp.Multimedia.xml" /Y</PreBuildEvent>
+copy "$(SolutionDir)SeeingSharp.Multimedia_UNIVERSAL\bin\$(ConfigurationName)\SeeingSharp.Multimedia.dll" "$(ProjectDir)lib\uap10\SeeingSharp.Multimedia.dll" /Y
+copy "$(SolutionDir)SeeingSharp.Multimedia_UNIVERSAL\bin\$(ConfigurationName)\SeeingSharp.Multimedia.XML" "$(ProjectDir)lib\uap10\SeeingSharp.Multimedia.xml" /Y
+copy "$(SolutionDir)SeeingSharp.Multimedia.Resources\bin\$(ConfigurationName)\SeeingSharp.Multimedia.Resources.dll" "$(ProjectDir)lib\uap10\SeeingSharp.Multimedia.Resources.dll" /Y</PreBuildEvent>
   </PropertyGroup>
 </Project>

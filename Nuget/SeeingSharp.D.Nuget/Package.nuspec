@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>SeeingSharp.D</id>
-    <version>1.0.11</version>
+    <version>1.1.0</version>
     <title>Seeing# Base (Debug)</title>
     <authors>RolandK</authors>
     <owners>RolandK</owners>
@@ -12,10 +12,9 @@
       and so on..
 
       Supported targets:
-        - Classic Desktop (.Net 4.6)
-        - Windows 8.1 Apps and upwards
-        - Windows Phone 8.1 Apps and upwards
-        
+      - Classic Desktop (.Net 4.6)
+      - Windows 10 Universal Apps
+
       This version of the library is for development builds.
       It performs more time consuming check logic which are not
       compiled within the release build.
@@ -34,15 +33,16 @@
     <dependencies>
       <group targetFramework="net46">
       </group>
-      <group targetFramework="portable-win8+wpa81">
-        <dependency id="System.Numerics.Vectors" version="4.0.0" />
+      <group targetFramework="uap10">
+        <dependency id="System.Numerics.Vectors" version="4.3.0" />
+        <dependency id="Microsoft.NETCore.UniversalWindowsPlatform" version="5.2.2" />
       </group>
     </dependencies>
     <references>
       <group targetFramework="net46">
         <reference file="SeeingSharp.dll" />
       </group>
-      <group targetFramework="portable-win8+wpa81">
+      <group targetFramework="uap10">
         <reference file="SeeingSharp.dll" />
       </group>
     </references>

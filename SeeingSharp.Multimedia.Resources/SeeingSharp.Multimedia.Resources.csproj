@@ -38,6 +38,9 @@
     <Content Include="Shaders\_mainInclude.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Misc\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeeingSharpResources.cs" />
   </ItemGroup>

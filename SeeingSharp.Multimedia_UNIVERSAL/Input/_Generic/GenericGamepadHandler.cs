@@ -49,7 +49,7 @@ namespace SeeingSharp.Multimedia.Input
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="GenericXInputHandler"/> class.
+        /// Initializes a new instance of the <see cref="GenericGamepadHandler"/> class.
         /// </summary>
         public GenericGamepadHandler()
         {
