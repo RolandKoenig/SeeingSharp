@@ -526,7 +526,7 @@ namespace SeeingSharp.Tests.Rendering
 
                 // Take screenshot
                 GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
-                screenshot.DumpToDesktop("Blub.png");
+                //screenshot.DumpToDesktop("Blub.png");
 
                 // Calculate and check difference
                 float diff = BitmapComparison.CalculatePercentageDifference(
