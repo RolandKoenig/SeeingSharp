@@ -22,14 +22,8 @@
 */
 #endregion
 using System;
-
-#if UNIVERSAL
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Data;
-#else
 using System.Windows.Data;
 using System.Windows;
-#endif
 
 namespace SeeingSharp.Util
 {

@@ -18,6 +18,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Windows.ApplicationModel.Core;
+using Windows.UI.Core;
 
 namespace UniversalWindowsSampleContainer
 {
@@ -32,6 +34,8 @@ namespace UniversalWindowsSampleContainer
         /// </summary>
         public App()
         {
+            
+
             Microsoft.ApplicationInsights.WindowsAppInitializer.InitializeAsync(
                 Microsoft.ApplicationInsights.WindowsCollectors.Metadata |
                 Microsoft.ApplicationInsights.WindowsCollectors.Session);

@@ -42,3 +42,6 @@ using System.Runtime.InteropServices;
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: ComVisible(false)]
+
+[assembly: System.Windows.Markup.XmlnsDefinition("http://www.rolandk.de/wp/seeingsharp/base", "SeeingSharp.View")]
+[assembly: System.Windows.Markup.XmlnsDefinition("http://www.rolandk.de/wp/seeingsharp/base", "SeeingSharp.Infrastructure")]

@@ -56,6 +56,9 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\_Mvvm\_Converters\BooleanToVisibilityConverter.cs" />
+    <Compile Include="Util\_Mvvm\_Converters\Vector2ToMultilineStringConverter.cs" />
+    <Compile Include="Util\_Mvvm\_Converters\Vector3ToMultilineStringConverter.cs" />
     <Compile Include="View\_WinRT\SeeingSharpPage.cs" />
     <Compile Include="View\_WinRT\SeeingSharpUserControl.cs" />
     <EmbeddedResource Include="Properties\SeeingSharp_UNIVERSAL.rd.xml" />

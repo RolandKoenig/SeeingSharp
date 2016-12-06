@@ -110,10 +110,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\DelegateCommand.APACHE2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\PropertyChangedBase.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\ViewModelBase.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\_Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\_Converters\StringFormatConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\_Converters\Vector2ToMultilineStringConverter.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\_Converters\Vector3ToMultilineStringConverter.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Mvvm\_Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Performance\PerformanceAnalyzer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Performance\PerformanceAnalyzer.UISync.cs" />
@@ -127,10 +123,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Threading\ObjectThread.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Threading\ObjectThreadTimer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Threading\_Misc.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)View\Interaction.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)View\_ViewService\IViewService.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)View\_ViewService\ViewServiceCollection.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)View\_ViewService\ViewServiceNode.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Math\MathExtensions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Math\_Custom\BoundingBox.Custom.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Math\_Custom\BoundingBox2D.cs" />
