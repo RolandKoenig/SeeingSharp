@@ -28,8 +28,8 @@
   </ItemGroup>
 
   <!-- Custom Task references -->
-  <UsingTask AssemblyFile="$(SolutionDir)Build\Tasks\SeeingSharp.BuildTasks.dll" TaskName="ShaderBuildTask" />
-  <UsingTask AssemblyFile="$(SolutionDir)Build\Tasks\SeeingSharp.BuildTasks.dll" TaskName="ClickonceSignTask" />
+  <UsingTask AssemblyFile="$(ProjectDir)..\Build\Tasks\SeeingSharp.BuildTasks.dll" TaskName="ShaderBuildTask" />
+  <UsingTask AssemblyFile="$(ProjectDir)..\Build\Tasks\SeeingSharp.BuildTasks.dll" TaskName="ClickonceSignTask" />
   
   <Target Name="AfterPublish" AfterTargets="Publish">
     <ClickonceSignTask PublishDirectory="$(TargetDir)app.publish" CertInformationDirectory="$(SolutionDir)Misc\Cert" />
