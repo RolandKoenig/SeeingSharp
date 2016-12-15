@@ -1415,7 +1415,7 @@ namespace SeeingSharp.Multimedia.Core
             private set;
         }
 
-        public bool IsAttachedToVisibleView
+        public bool IsOperational
         {
             get { return IsRegisteredOnMainLoop; }
         }

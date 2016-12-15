@@ -136,6 +136,31 @@ namespace SeeingSharp.Util
         }
 
         /// <summary>
+        /// Waits until this ObjectThread has stopped.
+        /// </summary>
+        public Task WaitUntilSoppedAsync()
+        {
+            switch(m_currentState)
+            {
+                case ObjectThreadState.None:
+                case ObjectThreadState.Stopping:
+                    return Task.Delay(100);
+
+                case ObjectThreadState.Running:
+                case ObjectThreadState.Starting:
+                    TaskCompletionSource<object> taskSource = new TaskCompletionSource<object>();
+                    this.Stopping += (sender, eArgs) =>
+                    {
+                        taskSource.TrySetResult(null);
+                    };
+                    return taskSource.Task;
+
+                default:
+                    throw new SeeingSharpException($"Unhandled {nameof(ObjectThreadState)} {m_currentState}!");
+            }
+        }
+
+        /// <summary>
         /// Starts this thread. The returned task is completed when starting is finished.
         /// </summary>
         public Task StartAsync()

@@ -216,7 +216,7 @@ namespace SeeingSharp.Multimedia.Views
             base.OnPaint(e);
 
             if ((!m_renderLoop.ViewResourcesLoaded) ||
-               (!m_renderLoop.IsRegisteredOnMainLoop))
+                (!m_renderLoop.IsRegisteredOnMainLoop))
             {
                 // Paint using System.Drawing
                 e.Graphics.FillRectangle(m_backBrush, e.ClipRectangle);
@@ -251,6 +251,7 @@ namespace SeeingSharp.Multimedia.Views
         {
             if (this.DesignMode) { return; }
             if (!SeeingSharpApplication.IsInitialized) { return; }
+            if (!GraphicsCore.IsInitialized) { return; }
 
             if (!m_renderLoop.IsRegisteredOnMainLoop)
             {
@@ -267,6 +268,7 @@ namespace SeeingSharp.Multimedia.Views
         {
             if (this.DesignMode) { return; }
             if (!SeeingSharpApplication.IsInitialized) { return; }
+            if (!GraphicsCore.IsInitialized) { return; }
 
             if (m_renderLoop.IsRegisteredOnMainLoop)
             {
@@ -432,6 +434,7 @@ namespace SeeingSharp.Multimedia.Views
         {
             // Check properties on self
             if (this.IsDisposed) { return false; }
+            if (this.Parent == null) { return false; }
             if (!this.Visible) { return false; }
             if (this.Width <= 0) { return false; }
             if (this.Height <= 0) { return false; }
@@ -614,6 +617,16 @@ namespace SeeingSharp.Multimedia.Views
                 if (m_renderLoop != null) { return m_renderLoop.Device; }
                 else { return null; }
             }
+        }
+
+        /// <summary>
+        /// True if the control is connected with the main rendering loop.
+        /// False if something went wrong.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsOperational
+        {
+            get { return m_renderLoop.IsOperational; }
         }
     }
 }

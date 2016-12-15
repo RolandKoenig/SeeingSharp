@@ -134,6 +134,8 @@ namespace SeeingSharp.Multimedia.Input
             // Perform event registrations on UI thread
             m_currentControl.BeginInvoke(new Action(() =>
             {
+                if(m_currentControl == null) { return; }
+
                 m_currentControl.MouseEnter += OnMouseEnter;
                 m_currentControl.MouseClick += OnMouseClick;
                 m_currentControl.MouseUp += OnMouseUp;
@@ -160,6 +162,8 @@ namespace SeeingSharp.Multimedia.Input
                 Control currentControl = m_currentControl;
                 Action removeEventRegistrationsAction = new Action(() =>
                 {
+                    if(currentControl == null) { return; }
+
                     currentControl.MouseEnter -= OnMouseEnter;
                     currentControl.MouseClick -= OnMouseClick;
                     currentControl.MouseLeave -= OnMouseLeave;

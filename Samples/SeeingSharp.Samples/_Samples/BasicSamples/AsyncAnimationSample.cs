@@ -102,7 +102,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
                 await Task.Delay(1000);
                 if (base.IsClosed) { return; }
 
-                if (!renderLoop.IsAttachedToVisibleView) { continue; }
+                if (!renderLoop.IsOperational) { continue; }
 
                 // Create a new object within the scene
                 GenericObject newGenericObject = null;

@@ -112,7 +112,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsCore"/> class.
         /// </summary>
-        private GraphicsCore(TargetHardware targetHardware, bool debugEnabled)
+        protected GraphicsCore(TargetHardware targetHardware, bool debugEnabled)
         {
             try
             {
@@ -307,6 +307,15 @@ namespace SeeingSharp.Multimedia.Core
                 GraphicsCore.InitializeDefaultAsync()
                     .Wait();
             }
+        }
+
+        /// <summary>
+        /// Overrides the current instance with a testing instance.
+        /// This method is only meant to be used within automated tests!
+        /// </summary>
+        public static void SetTestInstance(GraphicsCore testInstance)
+        {
+            s_current = testInstance;
         }
 
         /// <summary>
