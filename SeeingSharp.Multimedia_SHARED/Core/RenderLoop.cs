@@ -127,6 +127,12 @@ namespace SeeingSharp.Multimedia.Core
         public event EventHandler CameraChanged;
 
         /// <summary>
+        /// Raised directly after rendering a frame.
+        /// Be careful, this event comes from a background rendering thread!
+        /// </summary>
+        public event EventHandler Rendered;
+
+        /// <summary>
         /// Raised when it is possible for the UI thread to manipulate current filter list.
         /// </summary>
         public event EventHandler<ManipulateFilterListArgs> ManipulateFilterList;
@@ -1005,27 +1011,6 @@ namespace SeeingSharp.Multimedia.Core
                     // Renders current scene on this view
                     m_currentScene.HandleRenderResources(m_renderState);
                 }
-
-                //// Set default rastarization state
-                //D3D11.RasterizerState rasterState = null;
-                //bool isWireframeEnabled = m_viewConfiguration.WireframeEnabled;
-                //if (isWireframeEnabled)
-                //{
-                //    rasterState = new D3D11.RasterizerState(m_currentDevice.DeviceD3D11, new D3D11.RasterizerStateDescription()
-                //    {
-                //        CullMode = D3D11.CullMode.Back,
-                //        FillMode = D3D11.FillMode.Wireframe,
-                //        IsFrontCounterClockwise = false,
-                //        DepthBias = 0,
-                //        SlopeScaledDepthBias = 0f,
-                //        DepthBiasClamp = 0f,
-                //        IsDepthClipEnabled = true,
-                //        IsAntialiasedLineEnabled = false,
-                //        IsMultisampleEnabled = false,
-                //        IsScissorEnabled = false
-                //    });
-                //    m_currentDevice.DeviceImmediateContextD3D11.Rasterizer.State = rasterState;
-                //}
                 
                 // Update render state
                 m_renderState.Reset(
@@ -1048,13 +1033,6 @@ namespace SeeingSharp.Multimedia.Core
 
                 // Clear current state after rendering
                 m_renderState.ClearState();
-
-                //// Handle wireframe state
-                //if (isWireframeEnabled)
-                //{
-                //    m_currentDevice.DeviceImmediateContextD3D11.Rasterizer.State = null;
-                //    rasterState.Dispose();
-                //}
 
                 if (m_totalRenderCount < Int32.MaxValue) { m_totalRenderCount++; }
 
@@ -1100,6 +1078,15 @@ namespace SeeingSharp.Multimedia.Core
 
                 // Update flag indicating that last render was successful
                 m_lastRenderSuccessfully = true;
+
+                try
+                {
+                    this.Rendered.Raise(this, EventArgs.Empty);
+                }
+                catch
+                {
+                    // TODO: Notify this exception somehow to the host application
+                }
             }
             finally
             {
