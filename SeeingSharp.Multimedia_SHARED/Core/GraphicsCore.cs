@@ -224,6 +224,10 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        /// <summary>
+        /// This method is implemented for automated tests only!
+        /// Is sets <see cref="GraphicsCore.Current"/> to null to enable a separate instance inside a using block. 
+        /// </summary>
         public static IDisposable AutomatedTest_NewTestEnviornment()
         {
             GraphicsCore lastCurrent = s_current;
@@ -240,6 +244,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public static void AutomatedTest_ForceDeviceInitError(bool forceException)
         {
+            if (s_current?.MainLoop?.RegisteredRenderLoopCount > 0) { throw new SeeingSharpException("Current environment still active!"); }
+
             s_current = null;
             s_throwDeviceInitError = forceException;
         }
