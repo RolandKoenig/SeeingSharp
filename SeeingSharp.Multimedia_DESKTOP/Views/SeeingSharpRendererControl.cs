@@ -441,7 +441,12 @@ namespace SeeingSharp.Multimedia.Views
 
             // Check parent form
             Form parentForm = this.GetParentForm();
-            if(parentForm != null)
+            if(parentForm == null)
+            {
+                // Control's parent chain is broken -> it is not visible.
+                return false;
+            }
+            else
             {
                 if(parentForm.WindowState == FormWindowState.Minimized) { return false; }
             }
