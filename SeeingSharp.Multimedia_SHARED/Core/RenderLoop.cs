@@ -177,15 +177,15 @@ namespace SeeingSharp.Multimedia.Core
             m_targetDevice = null;
             m_targetSize = new Size2(0, 0);
 
+            // Create default scene and camera
+            this.Camera = new PerspectiveCamera3D();
+            this.SetScene(new Scene());
+
             if (!GraphicsCore.IsInitialized) { return; }
             if (isDesignMode) { return; }
 
             // Apply default rendering device for this RenderLoop
             this.SetRenderingDevice(GraphicsCore.Current.DefaultDevice);
-
-            // Create default scene and camera
-            this.Camera = new PerspectiveCamera3D();
-            this.SetScene(new Scene());
         }
 
         /// <summary>
@@ -1112,6 +1112,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void DeregisterRenderLoop()
         {
+            if (!GraphicsCore.IsInitialized) { return; }
+
             // Deregister this Renderloop object
             if (IsRegisteredOnMainLoop)
             {
@@ -1130,6 +1132,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void RegisterRenderLoop()
         {
+            if (!GraphicsCore.IsInitialized) { return; }
+
             // Deregister this Renderloop object
             if (!IsRegisteredOnMainLoop)
             {
@@ -1148,6 +1152,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void Dispose()
         {
+            if (!GraphicsCore.IsInitialized) { return; }
+
             // Deregister this Renderloop object
             GraphicsCore.Current.MainLoop.DeregisterRenderLoop(this);
 
@@ -1415,9 +1421,18 @@ namespace SeeingSharp.Multimedia.Core
             private set;
         }
 
+        /// <summary>
+        /// True if the <see cref="RenderLoop"/> is connected with the main rendering loop.
+        /// False if something went wrong during initialization.
+        /// </summary>
         public bool IsOperational
         {
-            get { return IsRegisteredOnMainLoop; }
+            get
+            {
+                if (!GraphicsCore.IsInitialized) { return false; }
+                if (GraphicsCore.Current.DeviceCount <= 0) { return false; }
+                return IsRegisteredOnMainLoop;
+            }
         }
 
         /// <summary>

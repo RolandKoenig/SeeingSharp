@@ -78,6 +78,7 @@ namespace SeeingSharp.Multimedia.Views
         public SeeingSharpPanelPainter()
         {
             // Create the RenderLoop object
+            GraphicsCore.Touch();
             m_renderLoop = new Core.RenderLoop(SynchronizationContext.Current, this);
             m_renderLoop.ClearColor = Color4.CornflowerBlue;
             m_renderLoop.CallPresentInUIThread = false;
@@ -551,6 +552,18 @@ namespace SeeingSharp.Multimedia.Views
             {
                 if (m_targetPanel == null) { return null; }
                 return m_targetPanel.Panel; 
+            }
+        }
+
+        /// <summary>
+        /// True if the control is connected with the main rendering loop.
+        /// False if something went wrong.
+        /// </summary>
+        public bool IsOperational
+        {
+            get
+            {
+                return m_renderLoop.IsOperational;
             }
         }
 

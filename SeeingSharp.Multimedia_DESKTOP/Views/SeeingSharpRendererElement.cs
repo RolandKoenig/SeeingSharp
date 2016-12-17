@@ -569,5 +569,18 @@ namespace SeeingSharp.Multimedia.Views
         {
             get { return this.IsFocused; }
         }
+
+        /// <summary>
+        /// True if the control is connected with the main rendering loop.
+        /// False if something went wrong.
+        /// </summary>
+        [Browsable(false)]
+        public bool IsOperational
+        {
+            get
+            {
+                return m_renderLoop.IsOperational;
+            }
+        }
     }
 }

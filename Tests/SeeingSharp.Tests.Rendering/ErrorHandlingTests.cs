@@ -43,6 +43,32 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
+        public async Task MemoryRenderLoop_GraphicsInitError()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            bool isRenderTargetOperational = true;
+            bool isGraphicsCoreInitialized = true;
+            int registeredRenderLoopCount = 1;
+            using (GraphicsCore.AutomatedTest_NewTestEnviornment())
+            {
+                GraphicsCore.AutomatedTest_ForceDeviceInitError(true);
+
+                using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+                {
+                    isRenderTargetOperational = memRenderTarget.IsOperational;
+                    isGraphicsCoreInitialized = GraphicsCore.IsInitialized;
+                    registeredRenderLoopCount = GraphicsCore.Current.RegisteredRenderLoopCount;
+                }
+            }
+
+            Assert.False(isRenderTargetOperational);
+            Assert.False(isGraphicsCoreInitialized);
+            Assert.True(registeredRenderLoopCount == 0);
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
         public async Task WinForms_Parent_Child_Switch()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
@@ -104,6 +130,7 @@ namespace SeeingSharp.Tests.Rendering
             };
             fakeUIThread.Start();
 
+            // Wait until the Fake-UI thread stopped
             await fakeUIThread.WaitUntilSoppedAsync();
 
             // Some checks after rendering

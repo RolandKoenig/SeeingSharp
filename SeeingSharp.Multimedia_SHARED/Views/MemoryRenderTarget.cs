@@ -83,6 +83,7 @@ namespace SeeingSharp.Multimedia.Views
             if (syncContext == null) { syncContext = new SynchronizationContext(); }
 
             //Create the RenderLoop object
+            GraphicsCore.Touch();
             m_renderLoop = new RenderLoop(syncContext, this);
             m_renderLoop.Camera.SetScreenSize(pixelWidth, pixelHeight);
             m_renderLoop.RegisterRenderLoop();
@@ -93,6 +94,8 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         public Task AwaitRenderAsync()
         {
+            if (!this.IsOperational) { return Task.Delay(100); }
+
             TaskCompletionSource<object> result = new TaskCompletionSource<object>();
             m_renderAwaitors.Enqueue(result);
 
@@ -221,6 +224,11 @@ namespace SeeingSharp.Multimedia.Views
         public RenderLoop RenderLoop
         {
             get { return m_renderLoop; }
+        }
+
+        public bool IsOperational
+        {
+            get { return m_renderLoop.IsOperational; }
         }
     }
 }

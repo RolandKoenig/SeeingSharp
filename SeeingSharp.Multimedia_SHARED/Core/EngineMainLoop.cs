@@ -42,6 +42,10 @@ namespace SeeingSharp.Multimedia.Core
     /// </summary>
     public class EngineMainLoop
     {
+        #region Common
+        private GraphicsCore m_host;
+        #endregion
+
         #region main thread synchronization
         private Task m_suspendWaiter;
         private TaskCompletionSource<object> m_suspendWaiterSource;
@@ -79,8 +83,10 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Prevents a default instance of the <see cref="EngineMainLoop"/> class from being created.
         /// </summary>
-        internal EngineMainLoop()
+        internal EngineMainLoop(GraphicsCore graphicsCore)
         {
+            m_host = graphicsCore;
+
             m_globalLoopAwaiters = new ConcurrentQueue<Action>();
             m_registeredRenderLoops = new List<RenderLoop>();
             m_unregisteredRenderLoops = new List<RenderLoop>();
@@ -203,15 +209,14 @@ namespace SeeingSharp.Multimedia.Core
                     bool exceptionOccurred = false;
                     try
                     {
-                        using (var perfToken = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_PER_FRAME))
+                        using (var perfToken = m_host.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_PER_FRAME))
                         {
                             // Wait some time before doing anything..
                             double lastRenderMilliseconds = renderStopWatch.GetTrueElapsedMilliseconds();
                             double delayTime = Constants.MINIMUM_FRAME_TIME_MS - lastRenderMilliseconds;
                             if (delayTime < Constants.MINIMUM_DELAY_TIME_MS) { delayTime = Constants.MINIMUM_DELAY_TIME_MS; }
 
-                            //GraphicsCore.Current.NotifyActivityDuration(Constants.PERF_GLOBAL_WAIT_TIME + "_PARAM", TimeSpan.FromMilliseconds(MINIMUM_FRAME_TIME_MS - lastRenderMilliseconds).Ticks);
-                            using (var perfTokenInner = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_WAIT_TIME))
+                            using (var perfTokenInner = m_host.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_WAIT_TIME))
                             {
                                 CommonTools.MaximumDelay(delayTime);
                             }
@@ -236,7 +241,7 @@ namespace SeeingSharp.Multimedia.Core
                             renderStopWatch.Restart();
 
                             // Get all input frames
-                            GraphicsCore.Current.InputGatherer.QueryForCurrentFrames(inputFrames);
+                            m_host.InputGatherer.QueryForCurrentFrames(inputFrames);
 
                             // First global pass: Update scene and prepare rendering
                             await UpdateAndPrepareRendering(renderingRenderLoops, scenesToRender, devicesInUse, inputFrames, updateState)
@@ -274,7 +279,7 @@ namespace SeeingSharp.Multimedia.Core
                             Drawing2DResourceBase act2DResourceToUnload = null;
                             while (m_drawing2DResourcesToUnload.TryDequeue(out act2DResourceToUnload))
                             {
-                                foreach (EngineDevice actDevice in GraphicsCore.Current.Devices)
+                                foreach (EngineDevice actDevice in m_host.Devices)
                                 {
                                     act2DResourceToUnload.UnloadResources(actDevice);
                                 }
@@ -310,7 +315,7 @@ namespace SeeingSharp.Multimedia.Core
 
 #if UNIVERSAL
                         // Call Trim on all devices
-                        foreach(EngineDevice actDevice in GraphicsCore.Current.Devices)
+                        foreach(EngineDevice actDevice in m_host.Devices)
                         {
                             if(actDevice.DeviceDxgi != null) { actDevice.DeviceDxgi.Trim(); }
                         }
@@ -335,7 +340,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="updateState">Current global update state.</param>
         private async Task UpdateAndPrepareRendering(List<RenderLoop> renderingRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, IEnumerable<InputFrame> inputFrames, UpdateState updateState)
         {
-            using (var perfToken = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_UPDATE_AND_PREPARE))
+            using (var perfToken = m_host.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_UPDATE_AND_PREPARE))
             {
                 List<Action> additionalContinuationActions = new List<Action>();
                 object additionalContinuationActionsLock = new object();
@@ -416,7 +421,7 @@ namespace SeeingSharp.Multimedia.Core
                 {
                     try
                     {
-                        using (var perfToken2 = GraphicsCore.Current.BeginMeasureActivityDuration(
+                        using (var perfToken2 = m_host.BeginMeasureActivityDuration(
                             string.Format(Constants.PERF_GLOBAL_UPDATE_SCENE, actTaskIndex)))
                         {
                             Scene actScene = scenesToRender[actTaskIndex];
@@ -481,7 +486,7 @@ namespace SeeingSharp.Multimedia.Core
         private void RenderAndUpdateBeside(
             List<RenderLoop> registeredRenderLoops, List<Scene> scenesToRender, List<EngineDevice> devicesInUse, UpdateState updateState)
         {
-            using (var perfToken = GraphicsCore.Current.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_RENDER_AND_UPDATE_BESIDE))
+            using (var perfToken = m_host.BeginMeasureActivityDuration(Constants.PERF_GLOBAL_RENDER_AND_UPDATE_BESIDE))
             {
                 ThreadSaveQueue<RenderLoop> invalidRenderLoops = new ThreadSaveQueue<RenderLoop>();
 
@@ -492,7 +497,7 @@ namespace SeeingSharp.Multimedia.Core
                     {
                         // Render all targets for the current device
                         EngineDevice actDevice = devicesInUse[actTaskIndex];
-                        using (var perfTokenInner = GraphicsCore.Current.BeginMeasureActivityDuration(string.Format(Constants.PERF_GLOBAL_RENDER_DEVICE, actDevice.AdapterDescription)))
+                        using (var perfTokenInner = m_host.BeginMeasureActivityDuration(string.Format(Constants.PERF_GLOBAL_RENDER_DEVICE, actDevice.AdapterDescription)))
                         {
                             for (int loop = 0; loop < registeredRenderLoops.Count; loop++)
                             {
@@ -516,7 +521,7 @@ namespace SeeingSharp.Multimedia.Core
                     {
                         // Perform updates beside rendering for the current scene
                         int sceneIndex = actTaskIndex - devicesInUse.Count;
-                        using (var perfTokenInner = GraphicsCore.Current.BeginMeasureActivityDuration(string.Format(Constants.PERF_GLOBAL_UPDATE_BESIDE, sceneIndex)))
+                        using (var perfTokenInner = m_host.BeginMeasureActivityDuration(string.Format(Constants.PERF_GLOBAL_UPDATE_BESIDE, sceneIndex)))
                         {
                             Scene actScene = scenesToRender[sceneIndex];
                             SceneRelatedUpdateState actUpdateState = actScene.CachedUpdateState;

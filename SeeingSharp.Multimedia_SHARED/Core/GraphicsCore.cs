@@ -55,6 +55,10 @@ namespace SeeingSharp.Multimedia.Core
 {
     public class GraphicsCore
     {
+        #region Members for Unittesting
+        private static bool s_throwDeviceInitError;
+        #endregion
+
         #region Singleton instance
         private static GraphicsCore s_current;
         #endregion
@@ -133,9 +137,17 @@ namespace SeeingSharp.Multimedia.Core
                 m_inputHandlerFactory = new InputHandlerFactory();
                 m_importExporters = new ImporterExporterRepository();
 
+                // Create the key generator for resource keys
+                m_resourceKeyGenerator = new UniqueGenericKeyGenerator();
+
                 // Try to initialize global api factories (mostly for 2D rendering / operations)
                 try
                 {
+                    if(s_throwDeviceInitError)
+                    {
+                        throw new SeeingSharpException("Simulated device initialization exception");
+                    }
+
                     m_factoryHandlerWIC = new FactoryHandlerWIC();
                     m_factoryHandlerD2D = new FactoryHandlerD2D(this);
                     m_factoryHandlerDWrite = new FactoryHandlerDWrite(this);
@@ -191,15 +203,12 @@ namespace SeeingSharp.Multimedia.Core
                 }
                 m_defaultDevice = m_devices.FirstOrDefault();
 
-                // Create the key generator for resource keys
-                m_resourceKeyGenerator = new UniqueGenericKeyGenerator();
-
                 // Start input gathering
                 m_inputGatherer = new InputGathererThread();
                 m_inputGatherer.Start();
 
                 // Start main loop
-                m_mainLoop = new EngineMainLoop();
+                m_mainLoop = new EngineMainLoop(this);
                 if (m_devices.Count > 0)
                 {
                     m_mainLoopCancelTokenSource = new CancellationTokenSource();
@@ -213,6 +222,26 @@ namespace SeeingSharp.Multimedia.Core
                 m_configuration = null;
                 m_resourceKeyGenerator = null;
             }
+        }
+
+        public static IDisposable AutomatedTest_NewTestEnviornment()
+        {
+            GraphicsCore lastCurrent = s_current;
+            if(lastCurrent?.MainLoop?.RegisteredRenderLoopCount > 0) { throw new SeeingSharpException("Current environment still active!"); }
+
+            s_current = null;
+
+            return new DummyDisposable(() => s_current = lastCurrent);
+        }
+
+        /// <summary>
+        /// This method is implemented for automated tests only!
+        /// It simulates a device initialization exception all next times GraphicsCore.Initialize is called.
+        /// </summary>
+        public static void AutomatedTest_ForceDeviceInitError(bool forceException)
+        {
+            s_current = null;
+            s_throwDeviceInitError = forceException;
         }
 
         /// <summary>
@@ -302,6 +331,8 @@ namespace SeeingSharp.Multimedia.Core
 
         public static void Touch()
         {
+            if(s_current != null) { return; }
+
             if(!GraphicsCore.IsInitialized)
             {
                 GraphicsCore.InitializeDefaultAsync()
@@ -511,8 +542,9 @@ namespace SeeingSharp.Multimedia.Core
 
                 if (s_current == null)
                 {
-                    GraphicsCore.InitializeDefaultAsync()
-                        .Wait();
+                    throw new SeeingSharpException($"Unable to access {nameof(GraphicsCore)}.{nameof(GraphicsCore.Current)} before Initialize was called or a rendering control created!");
+                    //GraphicsCore.InitializeDefaultAsync()
+                    //    .Wait();
                 }
 
                 return s_current;
@@ -614,6 +646,18 @@ namespace SeeingSharp.Multimedia.Core
         public int DeviceCount
         {
             get { return m_devices.Count; }
+        }
+
+        /// <summary>
+        /// Gets the total count of registered RenderLoop objects.
+        /// </summary>
+        public int RegisteredRenderLoopCount
+        {
+            get
+            {
+                if(m_mainLoop == null) { return 0; }
+                return m_mainLoop.RegisteredRenderLoopCount;
+            }
         }
 
         /// <summary>

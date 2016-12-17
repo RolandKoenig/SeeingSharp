@@ -1143,7 +1143,6 @@ namespace SeeingSharp.Multimedia.Core
             GraphicsCore.Touch();
             if (!GraphicsCore.IsInitialized)
             {
-                if (throwExceptionIfUnable) { throw new SeeingSharpGraphicsException("Unable to load the scene: GraphicsCore not initialized currently!"); }
                 return;
             }
 

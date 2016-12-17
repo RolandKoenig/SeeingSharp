@@ -626,7 +626,10 @@ namespace SeeingSharp.Multimedia.Views
         [Browsable(false)]
         public bool IsOperational
         {
-            get { return m_renderLoop.IsOperational; }
+            get
+            {
+                return m_renderLoop.IsOperational;
+            }
         }
     }
 }
