@@ -42,5 +42,10 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         /// <param name="device">The device for which to get the image.</param>
         IDisposable GetImageObject(EngineDevice device);
+
+        /// <summary>
+        /// Tries to get the <see cref="BitmapResource"/> which is the source of this image. 
+        /// </summary>
+        BitmapResource TryGetSourceBitmap();
     }
 }

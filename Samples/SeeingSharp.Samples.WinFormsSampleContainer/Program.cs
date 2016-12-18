@@ -50,7 +50,7 @@ namespace WinFormsSampleContainer
                     typeof(GraphicsCore).Assembly
                 },
                 new string[0]).Wait();
-            GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+            GraphicsCore.Initialize(TargetHardware.Direct3D11, false, true);
 
             // Run the application
             MainWindow mainWindow = new MainWindow();

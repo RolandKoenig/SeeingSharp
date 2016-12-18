@@ -492,15 +492,26 @@ namespace SeeingSharp.Multimedia.Drawing2D
             IImageInternal internalImage = image as IImageInternal;
             internalImage.EnsureNotNull(nameof(internalImage));
 
-            D2D.Image d2dImage = internalImage.GetImageObject(m_device) as D2D.Image;
-            d2dImage.EnsureNotNull(nameof(d2dImage));
+            if (m_deviceContext != null)
+            {
+                D2D.Image d2dImage = internalImage.GetImageObject(m_device) as D2D.Image;
+                d2dImage.EnsureNotNull(nameof(d2dImage));
 
-            m_deviceContext.DrawImage(
-                d2dImage,
-                destinationOrigin.ToDXVector(),
-                null,
-                D2D.InterpolationMode.Linear,
-                D2D.CompositeMode.SourceOver);
+                m_deviceContext.DrawImage(
+                    d2dImage,
+                    destinationOrigin.ToDXVector(),
+                    null,
+                    D2D.InterpolationMode.Linear,
+                    D2D.CompositeMode.SourceOver);
+            }
+            else
+            {
+                BitmapResource bitmap = internalImage.TryGetSourceBitmap();
+                if(bitmap != null)
+                {
+                    this.DrawBitmap(bitmap, destinationOrigin);
+                }
+            }
         }
 
         /// <summary>

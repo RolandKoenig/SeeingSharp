@@ -63,11 +63,28 @@ namespace SeeingSharp.Multimedia.Drawing2D
         }
 
         /// <summary>
+        /// Tries to get the <see cref="BitmapResource"/> which is the source of this image. 
+        /// </summary>
+        BitmapResource IImageInternal.TryGetSourceBitmap()
+        {
+            if(m_effectInputs.Length > 0)
+            {
+                return m_effectInputs[0].TryGetSourceBitmap();
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Gets the input object for an effect.
         /// </summary>
         /// <param name="device">The device for which to get the input.</param>
         IDisposable IImageInternal.GetImageObject(EngineDevice device)
         {
+            if (device.IsUsingFallbackMethodFor2D)
+            {
+                return null;
+            }
+
             D2D.Effect effect = m_loadedEffects[device.DeviceIndex];
             if(effect == null)
             {
