@@ -21,6 +21,7 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using System;
 
 //Some namespace mappings
 using D2D = SharpDX.Direct2D1;
@@ -30,7 +31,8 @@ namespace SeeingSharp.Multimedia.Core
     public class FactoryHandlerD2D
     {
         #region Resources form Direct2D api
-        private D2D.Factory2 m_factory;
+        private D2D.Factory m_factory;
+        private D2D.Factory2 m_factory2;
         #endregion
 
         /// <summary>
@@ -39,10 +41,29 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="core">The core.</param>
         internal FactoryHandlerD2D(GraphicsCore core)
         {
-            //Create the factory object
-            m_factory = new D2D.Factory2(
-                D2D.FactoryType.SingleThreaded,
-                core.IsDebugEnabled ? D2D.DebugLevel.Information : D2D.DebugLevel.None);
+            bool doFallbackMethod = core.Force2DFallbackMethod;
+
+            // Do default method (Windows 8 and newer)
+            if (!doFallbackMethod)
+            {
+                try
+                {
+                    m_factory2 = new D2D.Factory2(
+                        D2D.FactoryType.SingleThreaded,
+                        core.IsDebugEnabled ? D2D.DebugLevel.Information : D2D.DebugLevel.None);
+                    m_factory = m_factory2;
+                }
+                catch (Exception) { doFallbackMethod = true; }
+            }
+
+            // Fallback method (on older windows platforms (< Windows 8))
+            if (doFallbackMethod)
+            {
+                m_factory2 = null;
+                m_factory = new D2D.Factory(
+                    D2D.FactoryType.SingleThreaded,
+                    core.IsDebugEnabled ? D2D.DebugLevel.Information : D2D.DebugLevel.None);
+            }
         }
 
         /// <summary>
@@ -50,15 +71,21 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal void UnloadResources()
         {
-            m_factory = GraphicsHelper.DisposeObject(m_factory);
+            GraphicsHelper.SafeDispose(ref m_factory);
+            m_factory2 = null;
         }
 
         /// <summary>
         /// Gets the factory object.
         /// </summary>
-        internal D2D.Factory2 Factory
+        internal D2D.Factory Factory
         {
             get { return m_factory; }
+        }
+
+        internal D2D.Factory2 Factory2
+        {
+            get { return m_factory2; }
         }
 
         /// <summary>
@@ -66,7 +93,12 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public bool IsInitialized
         {
-            get { return m_factory != null; }
+            get { return m_factory2 != null; }
+        }
+
+        public bool IsUsingFallbackMethod
+        {
+            get { return (m_factory2 == null) && (m_factory != null); }
         }
     }
 }

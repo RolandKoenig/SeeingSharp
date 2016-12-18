@@ -42,6 +42,11 @@ namespace SeeingSharp.Multimedia.Core
         private D2D.DeviceContext m_deviceContextD2D;
         #endregion
 
+        #region Members for fallback method on older windows platforms
+        private D3D11.Texture2D m_dummyRenderTargetTexture;
+        private Direct2DOverlayRenderer m_dummyDirect2DOverlay;
+        #endregion
+
         /// <summary>
         /// Initializes a new instance of the <see cref="DeviceHandlerD3D11" /> class.
         /// </summary>
@@ -49,13 +54,36 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="engineDevice">The engine device.</param>
         internal DeviceHandlerD2D(GraphicsCore core, EngineDevice engineDevice)
         {
-            using (DXGI.Device dxgiDevice = engineDevice.DeviceD3D11.QueryInterface<DXGI.Device>())
+            bool doFallbackMethod = core.Force2DFallbackMethod || (core.FactoryD2D_2 == null);
+
+            // Do default method (Windows 8 and newer)
+            if (!doFallbackMethod)
             {
-                m_deviceD2D = new D2D.Device1(engineDevice.Core.FactoryD2D, dxgiDevice);
-                m_deviceContextD2D = new SharpDX.Direct2D1.DeviceContext(
-                    m_deviceD2D,
-                    D2D.DeviceContextOptions.None);
-                m_renderTarget = m_deviceContextD2D;
+                try
+                {
+                    using (DXGI.Device dxgiDevice = engineDevice.DeviceD3D11.QueryInterface<DXGI.Device>())
+                    {
+                        m_deviceD2D = new D2D.Device1(engineDevice.Core.FactoryD2D_2, dxgiDevice);
+                        m_deviceContextD2D = new SharpDX.Direct2D1.DeviceContext(
+                            m_deviceD2D,
+                            D2D.DeviceContextOptions.None);
+                        m_renderTarget = m_deviceContextD2D;
+                    }
+                }
+                catch (Exception) { doFallbackMethod = true; }
+            }
+
+            // Fallback method (on older windows platforms (< Windows 8))
+            if (doFallbackMethod)
+            {
+                m_renderTarget = null;
+                m_deviceD2D = null;
+                m_deviceContextD2D = null;
+
+                m_dummyRenderTargetTexture = GraphicsHelper.CreateRenderTargetTextureDummy(
+                    engineDevice.DeviceD3D11, 32, 32);
+                m_dummyDirect2DOverlay = new Direct2DOverlayRenderer(
+                    engineDevice, m_dummyRenderTargetTexture, 32, 32, DpiScaling.Default);
             }
         }
 
@@ -63,7 +91,9 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                return m_renderTarget != null;
+                return
+                    (m_renderTarget != null) ||
+                    ((m_dummyDirect2DOverlay != null) && (m_dummyDirect2DOverlay.IsLoaded));
             }
         }
     
@@ -87,8 +117,15 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                return m_renderTarget;
+                if (m_renderTarget != null) { return m_renderTarget; }
+                else if(m_dummyDirect2DOverlay != null) { return m_dummyDirect2DOverlay.RenderTarget2D; }
+                else { return null; }
             }
+        }
+
+        public bool IsUsingFallbackMethod
+        {
+            get { return m_dummyDirect2DOverlay != null; }
         }
     }
 }

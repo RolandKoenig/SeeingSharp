@@ -75,7 +75,15 @@ namespace SeeingSharp.Multimedia.Core
         public void Dispose()
         {
             // Dispose all created objects
-            GraphicsHelper.SafeDispose(ref m_renderTargetBitmap);
+            if (m_renderTarget2D != null)
+            {
+                GraphicsHelper.SafeDispose(ref m_renderTargetBitmap);
+                m_renderTarget2D = null;
+            }
+            else
+            {
+                GraphicsHelper.SafeDispose(ref m_renderTarget2D);
+            }
         }
 
         /// <summary>
@@ -88,18 +96,41 @@ namespace SeeingSharp.Multimedia.Core
                 (float)viewWidth / dpiScaling.ScaleFactorX,
                 (float)viewHeight / dpiScaling.ScaleFactorY);
 
-            // Create the render target
-            using (DXGI.Surface dxgiSurface = m_renderTarget3D.QueryInterface<DXGI.Surface>())
+            if(!m_device.IsUsingFallbackMethodFor2D)
             {
-                D2D.BitmapProperties1 bitmapProperties = new D2D.BitmapProperties1();
-                bitmapProperties.DpiX = dpiScaling.DpiX;
-                bitmapProperties.DpiY = dpiScaling.DpiY;
-                bitmapProperties.BitmapOptions = D2D.BitmapOptions.Target | D2D.BitmapOptions.CannotDraw;
-                bitmapProperties.PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, D2D.AlphaMode.Premultiplied);
+                // Create the render target
+                using (DXGI.Surface dxgiSurface = m_renderTarget3D.QueryInterface<DXGI.Surface>())
+                {
+                    D2D.BitmapProperties1 bitmapProperties = new D2D.BitmapProperties1();
+                    bitmapProperties.DpiX = dpiScaling.DpiX;
+                    bitmapProperties.DpiY = dpiScaling.DpiY;
+                    bitmapProperties.BitmapOptions = D2D.BitmapOptions.Target | D2D.BitmapOptions.CannotDraw;
+                    bitmapProperties.PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, D2D.AlphaMode.Premultiplied);
 
-                m_renderTargetBitmap = new SharpDX.Direct2D1.Bitmap1(m_device.DeviceContextD2D, dxgiSurface, bitmapProperties);
-                m_renderTarget2D = m_device.DeviceContextD2D;
-                m_graphics2D = new Graphics2D(m_device, m_device.DeviceContextD2D, scaledScreenSize);
+                    m_renderTargetBitmap = new SharpDX.Direct2D1.Bitmap1(m_device.DeviceContextD2D, dxgiSurface, bitmapProperties);
+                    m_renderTarget2D = m_device.DeviceContextD2D;
+                    m_graphics2D = new Graphics2D(m_device, m_device.DeviceContextD2D, scaledScreenSize);
+                }
+            }
+            else
+            {
+                using (DXGI.Surface dxgiSurface = m_renderTarget3D.QueryInterface<DXGI.Surface>())
+                {
+                    m_renderTarget2D = new D2D.RenderTarget(
+                        m_device.Core.FactoryD2D,
+                        dxgiSurface,
+                        new D2D.RenderTargetProperties()
+                        {
+                            MinLevel = D2D.FeatureLevel.Level_10,
+                            Type = D2D.RenderTargetType.Default,
+                            Usage = D2D.RenderTargetUsage.ForceBitmapRemoting,
+                            PixelFormat = new D2D.PixelFormat(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, D2D.AlphaMode.Premultiplied),
+                            DpiX = dpiScaling.DpiX,
+                            DpiY = dpiScaling.DpiY
+                        });
+                    m_graphics2D = new Graphics2D(m_device, m_renderTarget2D, scaledScreenSize);
+                    return;
+                }
             }
         }
 
@@ -108,11 +139,19 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void BeginDraw()
         {
-            m_device.DeviceContextD2D.Target = m_renderTargetBitmap;
-            m_device.DeviceContextD2D.DotsPerInch = m_renderTargetBitmap.DotsPerInch;
+            if (!m_device.IsUsingFallbackMethodFor2D)
+            {
+                m_device.DeviceContextD2D.Target = m_renderTargetBitmap;
+                m_device.DeviceContextD2D.DotsPerInch = m_renderTargetBitmap.DotsPerInch;
 
-            // Start Direct2D rendering
-            m_renderTarget2D.BeginDraw();
+                // Start Direct2D rendering
+                m_renderTarget2D.BeginDraw();
+            }
+            else
+            {
+                // Start Direct2D rendering
+                m_renderTarget2D.BeginDraw();
+            }
         }
 
         /// <summary>
@@ -120,9 +159,18 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void EndDraw()
         {
-            // Finish Direct2D drawing
-            m_renderTarget2D.EndDraw();
-            m_device.DeviceContextD2D.Target = null;
+            if (!m_device.IsUsingFallbackMethodFor2D)
+            {
+                m_renderTarget2D.EndDraw();
+
+                // Finish Direct2D drawing
+                m_device.DeviceContextD2D.Target = null;
+            }
+            else
+            {
+                // Finish Direct2D drawing
+                m_renderTarget2D.EndDraw();
+            }
         }
 
         /// <summary>

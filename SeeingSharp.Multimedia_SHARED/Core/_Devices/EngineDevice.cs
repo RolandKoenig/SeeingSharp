@@ -466,6 +466,17 @@ namespace SeeingSharp.Multimedia.Core
         }
 #endif
 
+        public bool IsUsingFallbackMethodFor2D
+        {
+            get
+            {
+                return
+                    (m_core.Force2DFallbackMethod) ||
+                    (m_core.FactoryD2D_2 == null) ||
+                    ((m_handlerD2D != null) && (m_handlerD2D.IsUsingFallbackMethod));
+            }
+        }
+
         /// <summary>
         /// Gets the main Direct3D 11 context object.
         /// </summary>
@@ -496,7 +507,10 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal DXGI.Factory2 FactoryDxgi
         {
-            get { return m_handlerDXGI.Factory; }
+            get
+            {
+                return m_handlerDXGI.Factory;
+            }
         }
 #endif
 

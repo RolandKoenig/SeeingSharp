@@ -109,6 +109,7 @@ namespace SeeingSharp.Multimedia.Core
 
         #region Configurations
         private bool m_debugEnabled;
+        private bool m_force2DFallback;
         private TargetHardware m_targetHardware;
         private SeeingSharpPlatform m_platform;
         #endregion
@@ -116,12 +117,13 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsCore"/> class.
         /// </summary>
-        protected GraphicsCore(TargetHardware targetHardware, bool debugEnabled)
+        protected GraphicsCore(TargetHardware targetHardware, bool debugEnabled, bool force2DFallback)
         {
             try
             {
                 // Upate RK.Common members
                 m_debugEnabled = debugEnabled;
+                m_force2DFallback = force2DFallback;
                 m_targetHardware = targetHardware;
                 m_platform = PlatformDetector.DetectPlatform();
                 m_devices = new List<EngineDevice>();
@@ -163,6 +165,7 @@ namespace SeeingSharp.Multimedia.Core
                     return;
                 }
                 this.FactoryD2D = m_factoryHandlerD2D.Factory;
+                this.FactoryD2D_2 = m_factoryHandlerD2D.Factory2;
                 this.FactoryDWrite = m_factoryHandlerDWrite.Factory;
                 this.FactoryWIC = m_factoryHandlerWIC.Factory;
                 this.XAudioDevice = m_factoryHandlerXAudio2.Device;
@@ -389,7 +392,7 @@ namespace SeeingSharp.Multimedia.Core
                 // Initialize graphics core object
                 if (!GraphicsCore.IsInitialized)
                 {
-                    GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+                    GraphicsCore.Initialize(TargetHardware.Direct3D11, false, false);
                 }
             }
         }
@@ -413,16 +416,16 @@ namespace SeeingSharp.Multimedia.Core
             switch (featureLevel)
             {
                 case D3D.FeatureLevel.Level_11_0:
-                    Initialize(TargetHardware.Direct3D11, false);
+                    Initialize(TargetHardware.Direct3D11, false, false);
                     break;
 
                 case D3D.FeatureLevel.Level_10_1:
                 case D3D.FeatureLevel.Level_10_0:
-                    Initialize(TargetHardware.Direct3D10, false);
+                    Initialize(TargetHardware.Direct3D10, false, false);
                     break;
 
                 default:
-                    Initialize(TargetHardware.Minimalistic, false);
+                    Initialize(TargetHardware.Minimalistic, false, false);
                     break;
             }
         }
@@ -434,7 +437,17 @@ namespace SeeingSharp.Multimedia.Core
         {
             if (s_current != null) { return; }
 
-            s_current = new GraphicsCore(targetHardware, enableDebug);
+            s_current = new GraphicsCore(targetHardware, enableDebug, false);
+        }
+
+        /// <summary>
+        /// Initializes the GraphicsCore object.
+        /// </summary>
+        public static void Initialize(TargetHardware targetHardware, bool enableDebug, bool force2DFallback)
+        {
+            if (s_current != null) { return; }
+
+            s_current = new GraphicsCore(targetHardware, enableDebug, force2DFallback);
         }
 
         /// <summary>
@@ -444,7 +457,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             PlatformDetector.SetPlatform(platform);
 
-            Initialize(targetHardware, enableDebug);
+            Initialize(targetHardware, enableDebug, false);
         }
 
         /// <summary>
@@ -739,7 +752,12 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the Direct2D factory object.
         /// </summary>
-        internal D2D.Factory2 FactoryD2D;
+        internal D2D.Factory FactoryD2D;
+
+        /// <summary>
+        /// Gets the Direct2D factory object.
+        /// </summary>
+        internal D2D.Factory2 FactoryD2D_2;
 
         /// <summary>
         /// Gets the DirectWrite factory object.
@@ -750,5 +768,10 @@ namespace SeeingSharp.Multimedia.Core
         /// The global XAudio2 device
         /// </summary>
         internal XA.XAudio2 XAudioDevice;
+
+        internal bool Force2DFallbackMethod
+        {
+            get { return m_force2DFallback; }
+        }
     }
 }
