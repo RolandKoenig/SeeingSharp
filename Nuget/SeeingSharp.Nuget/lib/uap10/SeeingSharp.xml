@@ -4,513 +4,14 @@
         <name>SeeingSharp</name>
     </assembly>
     <members>
-        <member name="M:SeeingSharp.View.IViewService.SetViewServiceHost(Windows.UI.Xaml.FrameworkElement)">
+        <member name="T:SeeingSharp.Util.BooleanToVisibilityConverter">
             <summary>
-            Tells the ViewService which FrameworkElement it is hosted by.
+            Converts a Boolean into a Visibility.
             </summary>
-            <param name="frameworkElement">The framework element.</param>
         </member>
-        <member name="M:SeeingSharp.View.ViewServiceNode.#ctor(Windows.UI.Xaml.FrameworkElement)">
+        <member name="P:SeeingSharp.Util.BooleanToVisibilityConverter.IsReversed">
             <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.View.ViewServiceNode"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.View.ViewServiceNode.OnViewModel_ViewServiceRequest(System.Object,SeeingSharp.Util.ViewServiceRequestEventArgs)">
-            <summary>
-            Called when the viewmodel request a view service.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Bootstrapper.TranslationBootstrapper.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
-            <summary>
-            Executes the background action behind this item.
-            </summary>
-            <returns></returns>
-        </member>
-        <member name="P:SeeingSharp.Bootstrapper.TranslationBootstrapper.OrderID">
-            <summary>
-            Gets a simple order id. The list of bootstrapper items will be sorted by this ID.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Bootstrapper.TranslationBootstrapper.Description">
-            <summary>
-            Gets a short description of this item for the UI (e. g. for splash screens).
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Checking.Ensure">
-            <summary>
-            This class contains some helper methods which can be used
-            to check method parameters.
-            Note: All methods are only executing in DebugBuilds.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Checking.SeeingSharpCheckException.#ctor(System.String)">
-            <summary>
-            Creates a new CommonLibraryException object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Checking.SeeingSharpCheckException.#ctor(System.String,System.Exception)">
-            <summary>
-            Creates a new CommonLibraryException object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.ExceptionAnalyzers.SystemExceptionAnalyzer.ReadExceptionInfo(System.Exception)">
-            <summary>
-            Reads all exception information from the given exception object.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-        </member>
-        <member name="M:SeeingSharp.ExceptionAnalyzers.SystemExceptionAnalyzer.GetInnerExceptions(System.Exception)">
-            <summary>
-            Gets all inner exceptions provided by the given exception object.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.#ctor">
-            <summary>
-            Prevents a default instance of the <see cref="T:SeeingSharp.Infrastructure.SeeingSharpApplication" /> class from being created.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeForUnitTests">
-            <summary>
-            Initializes the SeeingSharpApplication object for UnitTests.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeAsync(System.Reflection.Assembly,System.Collections.Generic.IEnumerable{System.Reflection.Assembly},System.String[])">
-            <summary>
-            Initializes the SeeingSharpApplication object.
-            </summary>
-            <param name="mainAssembly">The main assembly of the application.</param>
-            <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
-            <param name="startupArguments">All arguments passed to this application.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeUIEnvironment">
-            <summary>
-            Initializes the UI environment.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.RegisterSingleton``1">
-            <summary>
-            Registers a new singleton of the given type.
-            </summary>
-            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.RegisterSingleton``1(``0)">
-            <summary>
-            Registers a new singleton of the given type.
-            </summary>
-            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
-            <param name="singletonObject">The object to register.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.RegisterService``1(``0)">
-            <summary>
-            Registers the given service.
-            </summary>
-            <typeparam name="T">The type of the service to register.</typeparam>
-            <param name="service">The service object to register.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.TryGetService``1(``0@)">
-            <summary>
-            Tries to get the service of the given type.
-            </summary>
-            <typeparam name="T">The type of the service to get.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.TryGetService``1">
-            <summary>
-            Tries to get the service of the given type.
-            </summary>
-            <typeparam name="T">The type of the service to get.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.GetService``1(``0@)">
-            <summary>
-            Gets the service of the given type.
-            </summary>
-            <typeparam name="T">The type of the service.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.GetService``1">
-            <summary>
-            Gets the service of the given type.
-            </summary>
-            <typeparam name="T">The type of the service.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.GetAssemblyEnumerable(System.Reflection.Assembly,System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
-            <summary>
-            Helper method.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Current">
-            <summary>
-            Gets the current instance of this application.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.IsInitialized">
-            <summary>
-            Is the application initialized?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.ProductName">
-            <summary>
-            Gets the name of this product.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.ProductVersion">
-            <summary>
-            Gets the version of this product.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.StartupArguments">
-            <summary>
-            Gets a collection containing all startup arguments passed by the caller of this program.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.AppAssemblies">
-            <summary>
-            A list containing all assemblies given during initialization.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.UIMessenger">
-            <summary>
-            Gets the messenger of the ui.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.TypeQuery">
-            <summary>
-            Gets the object which is responsible for type query.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Translator">
-            <summary>
-            Gets the current translator object.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Bootstrapper">
-            <summary>
-            Gets the application's bootstrapper.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Singletons">
-            <summary>
-            Gets a container holding all registered singletons.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.AssemblyQueryableTypeAttribute.TargetType">
-            <summary>
-            Gets The type which is to be found through assembly query.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.AssemblyQueryableTypeAttribute.ContractType">
-            <summary>
-            Gets the type of the contract, under which the target type is to be found too.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.UINavigatablePageAttribute.#ctor(System.String)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.UINavigatablePageAttribute"/> class.
-            </summary>
-            <param name="pageName">Name of the page.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.Bootstrapper" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.LoadBootstrapperItems">
-            <summary>
-            Loads all bootstrapper items
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.RunAsync(SeeingSharp.Infrastructure.SeeingSharpApplication)">
-            <summary>
-            Runs all items within this bootstrapper.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.Bootstrapper.Booted">
-            <summary>
-            Are all items finished?
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.Bootstrapper.CurrentItem">
-            <summary>
-            Gets the currently executing item.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.IBootstrapperItem.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
-            <summary>
-            Executes the background action behind this item.
-            </summary>
-            <param name="app">The current application instance.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.IBootstrapperItem.OrderID">
-            <summary>
-            Gets a simple order id. The list of bootstrapper items will be sorted by this ID.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.IBootstrapperItem.Description">
-            <summary>
-            Gets a short description of this item for the UI (e. g. for splash screens).
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor(System.Exception)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
-            </summary>
-            <param name="ex">The ex.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.AnalyzeException(System.Exception,SeeingSharp.Infrastructure.ExceptionInfoNode,System.Collections.Generic.IEnumerable{SeeingSharp.Infrastructure.IExceptionAnalyzer})">
-            <summary>
-            Analyzes the given exception.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-            <param name="targetNode">The target node where to put all data to.</param>
-            <param name="exceptionAnalyzers">All loaded analyzer objects.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.ChildNodes">
-            <summary>
-            Gets a collection containing all subnodes.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.MainMessage">
-            <summary>
-            Gets or sets the main message.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.ExceptionInfoNode.#ctor(System.Exception)">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfoNode"/> class.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.ChildNodes">
-            <summary>
-            Gets a collection containing all subnodes.
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Infrastructure.IExceptionAnalyzer">
-            <summary>
-            This interface is used by the error-reporting framework.
-            It queries for all information provided by an exception which will be presentet to
-            the user / developer.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.ReadExceptionInfo(System.Exception)">
-            <summary>
-            Reads all exception information from the given exception object.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.GetInnerExceptions(System.Exception)">
-            <summary>
-            Gets all inner exceptions provided by the given exception object.
-            </summary>
-            <param name="ex">The exception to be analyzed.</param>
-        </member>
-        <member name="T:SeeingSharp.Infrastructure.PlatformClass">
-            <summary>
-            Controls the class of the hosting platform.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Infrastructure.PlatformClass.Smartphone">
-            <summary>
-            The application is running on a smartphone.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Infrastructure.PlatformClass.Tablet">
-            <summary>
-            The application is running on a tablet.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Infrastructure.PlatformClass.Desktop">
-            <summary>
-            The application is running on a desktop.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.SingletonContainer" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.RegisterSingleton``1">
-            <summary>
-            Registers a new singleton of the given type.
-            </summary>
-            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.RegisterSingleton``1(``0)">
-            <summary>
-            Registers a new singleton of the given type.
-            </summary>
-            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
-            <param name="singletonObject">The object to register.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.RegisterSingleton``1(``0,System.String)">
-            <summary>
-            Registers a singleton on the given name.
-            </summary>
-            <typeparam name="T">The type of the singleton.</typeparam>
-            <param name="singletonObject">The object to register.</param>
-            <param name="name">The name for the singleton</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.ContainsSingleton(System.String)">
-            <summary>
-            Is there any singleton with the given name?
-            </summary>
-            <param name="singletonName">The name of the singleton.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.GetSingleton``1">
-            <summary>
-            Gets the singleton of the given type.
-            </summary>
-            <typeparam name="T">The type of the singleton.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.GetSingleton``1(System.String)">
-            <summary>
-            Gets the singleton of the given type.
-            </summary>
-            <typeparam name="T">The type of the singleton.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.TryGetSingleton``1">
-            <summary>
-            Tries to get the singleton of the given type.
-            Null is returned when the singleton is not available.
-            </summary>
-            <typeparam name="T">The type of the singleton.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.ContainsSingleton(System.Type)">
-            <summary>
-            Is there any singleton with the given type?
-            </summary>
-            <param name="type">The type of the singleton.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SingletonContainer.Item(System.Type)">
-            <summary>
-            Gets the singleton object of the given type.
-            </summary>
-            <param name="typeOfSingleton">The type of the singleton.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SingletonContainer.Item(System.String)">
-            <summary>
-            Gets the singleton with the given name.
-            </summary>
-            <param name="name">The name of the singleton.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.SeeingSharpTranslator" /> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateString(System.String,System.String)">
-            <summary>
-            Translates the given string from the given category.
-            </summary>
-            <param name="category">The category.</param>
-            <param name="translatableString">The translatable string.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateAllTranslatableClasses">
-            <summary>
-            Translates all translatable classes.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.QueryTranslationsAsync(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
-            <summary>
-            Queries for all translations found in loaded assemblies.
-            </summary>
-            <param name="currentAssemblies">A collection containing all currently loaded assemblies.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.LoadTranslationFile(System.String,System.IO.Stream)">
-            <summary>
-            Loads a translation file from the given stream.
-            </summary>
-            <param name="fileName">The name of the file from which the given stream loads data.</param>
-            <param name="inStream">The input stream.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Language">
-            <summary>
-            Gets the current language this app runs on.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Culture">
-            <summary>
-            Gets the culture this app is started with.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TranslatedWord.ToString">
-            <summary>
-            Returns a <see cref="T:System.String" /> that represents this instance.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TranslationXmlFile.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.TranslationXmlFile"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TranslationXmlFile.BuildDictionary">
-            <summary>
-            Builds a dictionary for faster access.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TranslationXmlFile.TryGetTranslation(System.String,System.String@)">
-            <summary>
-            Gets the translation for the given sentence.
-            </summary>
-            <param name="original">The original sentence.</param>
-            <param name="actTranslated">The translation of the given string.</param>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.TranslationXmlFile.LanguageKey">
-            <summary>
-            Gets the language this file is loaded for.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Infrastructure.TranslationXmlFile.Words">
-            <summary>
-            Gets a collection containing all translated words.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.#ctor">
-            <summary>
-            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.TypeQueryHandler"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetAndInstanciateByContract``1">
-            <summary>
-            Gets and instanciates all types which are implementing the given contract.
-            </summary>
-            <typeparam name="ContractType">The implemented contract.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypesByAttribute``1">
-            <summary>
-            Gets a collection containing all types which have the given attribute attached.
-            </summary>
-            <typeparam name="T1">The type of the attribute.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract``1">
-            <summary>
-            Gets a list containing all types that implement the given contract.
-            </summary>
-            <typeparam name="ContractType">The implemented contract.</typeparam>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract(System.Type)">
-            <summary>
-            Gets a list containing all types that implement the given contract.
-            </summary>
-            <param name="contractType">The implemented contract.</param>
-        </member>
-        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypes(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
-            <summary>
-            Queries for types in the given collection of assemblies.
-            </summary>
-            <param name="assembliesToQuery">A collection containing all assemblies for the query.</param>
-        </member>
-        <member name="M:SeeingSharp.SeeingSharpException.#ctor(System.String)">
-            <summary>
-            Creates a new CommonLibraryException object
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.SeeingSharpException.#ctor(System.String,System.Exception)">
-            <summary>
-            Creates a new CommonLibraryException object
+            If set to True, conversion is reversed: True will become Collapsed.
             </summary>
         </member>
         <member name="M:SeeingSharp.Util.CommonTools.GetBackingArray``1(System.Collections.Generic.List{``0})">
@@ -2729,16 +2230,6 @@
             Gets the Messenger of the UI thread.
             </summary>
         </member>
-        <member name="T:SeeingSharp.Util.BooleanToVisibilityConverter">
-            <summary>
-            Converts a Boolean into a Visibility.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Util.BooleanToVisibilityConverter.IsReversed">
-            <summary>
-            If set to True, conversion is reversed: True will become Collapsed.
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Util.PerformanceAnalyzer.#ctor(System.TimeSpan,System.TimeSpan)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Util.PerformanceAnalyzer"/> class.
@@ -3042,6 +2533,11 @@
             Starts the thread.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Util.ObjectThread.WaitUntilSoppedAsync">
+            <summary>
+            Waits until this ObjectThread has stopped.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Util.ObjectThread.StartAsync">
             <summary>
             Starts this thread. The returned task is completed when starting is finished.
@@ -3221,6 +2717,499 @@
         <member name="P:SeeingSharp.Util.ObjectThreadExceptionEventArgs.State">
             <summary>
             Gets current state of the thread.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Bootstrapper.TranslationBootstrapper.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
+            <summary>
+            Executes the background action behind this item.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:SeeingSharp.Bootstrapper.TranslationBootstrapper.OrderID">
+            <summary>
+            Gets a simple order id. The list of bootstrapper items will be sorted by this ID.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Bootstrapper.TranslationBootstrapper.Description">
+            <summary>
+            Gets a short description of this item for the UI (e. g. for splash screens).
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Checking.Ensure">
+            <summary>
+            This class contains some helper methods which can be used
+            to check method parameters.
+            Note: All methods are only executing in DebugBuilds.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Checking.SeeingSharpCheckException.#ctor(System.String)">
+            <summary>
+            Creates a new CommonLibraryException object
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Checking.SeeingSharpCheckException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates a new CommonLibraryException object
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.ExceptionAnalyzers.SystemExceptionAnalyzer.ReadExceptionInfo(System.Exception)">
+            <summary>
+            Reads all exception information from the given exception object.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+        </member>
+        <member name="M:SeeingSharp.ExceptionAnalyzers.SystemExceptionAnalyzer.GetInnerExceptions(System.Exception)">
+            <summary>
+            Gets all inner exceptions provided by the given exception object.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.#ctor">
+            <summary>
+            Prevents a default instance of the <see cref="T:SeeingSharp.Infrastructure.SeeingSharpApplication" /> class from being created.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeForUnitTests">
+            <summary>
+            Initializes the SeeingSharpApplication object for UnitTests.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeAsync(System.Reflection.Assembly,System.Collections.Generic.IEnumerable{System.Reflection.Assembly},System.String[])">
+            <summary>
+            Initializes the SeeingSharpApplication object.
+            </summary>
+            <param name="mainAssembly">The main assembly of the application.</param>
+            <param name="otherAssemblies">All other assemblies which should be search during TypeQuery.</param>
+            <param name="startupArguments">All arguments passed to this application.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.InitializeUIEnvironment">
+            <summary>
+            Initializes the UI environment.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.RegisterSingleton``1">
+            <summary>
+            Registers a new singleton of the given type.
+            </summary>
+            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.RegisterSingleton``1(``0)">
+            <summary>
+            Registers a new singleton of the given type.
+            </summary>
+            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
+            <param name="singletonObject">The object to register.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.RegisterService``1(``0)">
+            <summary>
+            Registers the given service.
+            </summary>
+            <typeparam name="T">The type of the service to register.</typeparam>
+            <param name="service">The service object to register.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.TryGetService``1(``0@)">
+            <summary>
+            Tries to get the service of the given type.
+            </summary>
+            <typeparam name="T">The type of the service to get.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.TryGetService``1">
+            <summary>
+            Tries to get the service of the given type.
+            </summary>
+            <typeparam name="T">The type of the service to get.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.GetService``1(``0@)">
+            <summary>
+            Gets the service of the given type.
+            </summary>
+            <typeparam name="T">The type of the service.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.GetService``1">
+            <summary>
+            Gets the service of the given type.
+            </summary>
+            <typeparam name="T">The type of the service.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpApplication.GetAssemblyEnumerable(System.Reflection.Assembly,System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Helper method.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Current">
+            <summary>
+            Gets the current instance of this application.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.IsInitialized">
+            <summary>
+            Is the application initialized?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.ProductName">
+            <summary>
+            Gets the name of this product.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.ProductVersion">
+            <summary>
+            Gets the version of this product.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.StartupArguments">
+            <summary>
+            Gets a collection containing all startup arguments passed by the caller of this program.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.AppAssemblies">
+            <summary>
+            A list containing all assemblies given during initialization.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.UIMessenger">
+            <summary>
+            Gets the messenger of the ui.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.TypeQuery">
+            <summary>
+            Gets the object which is responsible for type query.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Translator">
+            <summary>
+            Gets the current translator object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Bootstrapper">
+            <summary>
+            Gets the application's bootstrapper.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpApplication.Singletons">
+            <summary>
+            Gets a container holding all registered singletons.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.AssemblyQueryableTypeAttribute.TargetType">
+            <summary>
+            Gets The type which is to be found through assembly query.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.AssemblyQueryableTypeAttribute.ContractType">
+            <summary>
+            Gets the type of the contract, under which the target type is to be found too.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.UINavigatablePageAttribute.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.UINavigatablePageAttribute"/> class.
+            </summary>
+            <param name="pageName">Name of the page.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.Bootstrapper" /> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.LoadBootstrapperItems">
+            <summary>
+            Loads all bootstrapper items
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.Bootstrapper.RunAsync(SeeingSharp.Infrastructure.SeeingSharpApplication)">
+            <summary>
+            Runs all items within this bootstrapper.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.Bootstrapper.Booted">
+            <summary>
+            Are all items finished?
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.Bootstrapper.CurrentItem">
+            <summary>
+            Gets the currently executing item.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.IBootstrapperItem.Execute(SeeingSharp.Infrastructure.SeeingSharpApplication)">
+            <summary>
+            Executes the background action behind this item.
+            </summary>
+            <param name="app">The current application instance.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.IBootstrapperItem.OrderID">
+            <summary>
+            Gets a simple order id. The list of bootstrapper items will be sorted by this ID.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.IBootstrapperItem.Description">
+            <summary>
+            Gets a short description of this item for the UI (e. g. for splash screens).
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.#ctor(System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfo"/> class.
+            </summary>
+            <param name="ex">The ex.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfo.AnalyzeException(System.Exception,SeeingSharp.Infrastructure.ExceptionInfoNode,System.Collections.Generic.IEnumerable{SeeingSharp.Infrastructure.IExceptionAnalyzer})">
+            <summary>
+            Analyzes the given exception.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+            <param name="targetNode">The target node where to put all data to.</param>
+            <param name="exceptionAnalyzers">All loaded analyzer objects.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.ChildNodes">
+            <summary>
+            Gets a collection containing all subnodes.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfo.MainMessage">
+            <summary>
+            Gets or sets the main message.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.ExceptionInfoNode.#ctor(System.Exception)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.ExceptionInfoNode"/> class.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.ExceptionInfoNode.ChildNodes">
+            <summary>
+            Gets a collection containing all subnodes.
+            </summary>
+        </member>
+        <member name="T:SeeingSharp.Infrastructure.IExceptionAnalyzer">
+            <summary>
+            This interface is used by the error-reporting framework.
+            It queries for all information provided by an exception which will be presentet to
+            the user / developer.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.ReadExceptionInfo(System.Exception)">
+            <summary>
+            Reads all exception information from the given exception object.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.IExceptionAnalyzer.GetInnerExceptions(System.Exception)">
+            <summary>
+            Gets all inner exceptions provided by the given exception object.
+            </summary>
+            <param name="ex">The exception to be analyzed.</param>
+        </member>
+        <member name="T:SeeingSharp.Infrastructure.PlatformClass">
+            <summary>
+            Controls the class of the hosting platform.
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Infrastructure.PlatformClass.Smartphone">
+            <summary>
+            The application is running on a smartphone.
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Infrastructure.PlatformClass.Tablet">
+            <summary>
+            The application is running on a tablet.
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Infrastructure.PlatformClass.Desktop">
+            <summary>
+            The application is running on a desktop.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.SingletonContainer" /> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.RegisterSingleton``1">
+            <summary>
+            Registers a new singleton of the given type.
+            </summary>
+            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.RegisterSingleton``1(``0)">
+            <summary>
+            Registers a new singleton of the given type.
+            </summary>
+            <typeparam name="T">The type of the singleton to create an object of.</typeparam>
+            <param name="singletonObject">The object to register.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.RegisterSingleton``1(``0,System.String)">
+            <summary>
+            Registers a singleton on the given name.
+            </summary>
+            <typeparam name="T">The type of the singleton.</typeparam>
+            <param name="singletonObject">The object to register.</param>
+            <param name="name">The name for the singleton</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.ContainsSingleton(System.String)">
+            <summary>
+            Is there any singleton with the given name?
+            </summary>
+            <param name="singletonName">The name of the singleton.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.GetSingleton``1">
+            <summary>
+            Gets the singleton of the given type.
+            </summary>
+            <typeparam name="T">The type of the singleton.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.GetSingleton``1(System.String)">
+            <summary>
+            Gets the singleton of the given type.
+            </summary>
+            <typeparam name="T">The type of the singleton.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.TryGetSingleton``1">
+            <summary>
+            Tries to get the singleton of the given type.
+            Null is returned when the singleton is not available.
+            </summary>
+            <typeparam name="T">The type of the singleton.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SingletonContainer.ContainsSingleton(System.Type)">
+            <summary>
+            Is there any singleton with the given type?
+            </summary>
+            <param name="type">The type of the singleton.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SingletonContainer.Item(System.Type)">
+            <summary>
+            Gets the singleton object of the given type.
+            </summary>
+            <param name="typeOfSingleton">The type of the singleton.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SingletonContainer.Item(System.String)">
+            <summary>
+            Gets the singleton with the given name.
+            </summary>
+            <param name="name">The name of the singleton.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.SeeingSharpTranslator" /> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateString(System.String,System.String)">
+            <summary>
+            Translates the given string from the given category.
+            </summary>
+            <param name="category">The category.</param>
+            <param name="translatableString">The translatable string.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.TranslateAllTranslatableClasses">
+            <summary>
+            Translates all translatable classes.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.QueryTranslationsAsync(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Queries for all translations found in loaded assemblies.
+            </summary>
+            <param name="currentAssemblies">A collection containing all currently loaded assemblies.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.SeeingSharpTranslator.LoadTranslationFile(System.String,System.IO.Stream)">
+            <summary>
+            Loads a translation file from the given stream.
+            </summary>
+            <param name="fileName">The name of the file from which the given stream loads data.</param>
+            <param name="inStream">The input stream.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Language">
+            <summary>
+            Gets the current language this app runs on.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.SeeingSharpTranslator.Culture">
+            <summary>
+            Gets the culture this app is started with.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TranslatedWord.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TranslationXmlFile.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.TranslationXmlFile"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TranslationXmlFile.BuildDictionary">
+            <summary>
+            Builds a dictionary for faster access.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TranslationXmlFile.TryGetTranslation(System.String,System.String@)">
+            <summary>
+            Gets the translation for the given sentence.
+            </summary>
+            <param name="original">The original sentence.</param>
+            <param name="actTranslated">The translation of the given string.</param>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.TranslationXmlFile.LanguageKey">
+            <summary>
+            Gets the language this file is loaded for.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Infrastructure.TranslationXmlFile.Words">
+            <summary>
+            Gets a collection containing all translated words.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Infrastructure.TypeQueryHandler"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetAndInstanciateByContract``1">
+            <summary>
+            Gets and instanciates all types which are implementing the given contract.
+            </summary>
+            <typeparam name="ContractType">The implemented contract.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypesByAttribute``1">
+            <summary>
+            Gets a collection containing all types which have the given attribute attached.
+            </summary>
+            <typeparam name="T1">The type of the attribute.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract``1">
+            <summary>
+            Gets a list containing all types that implement the given contract.
+            </summary>
+            <typeparam name="ContractType">The implemented contract.</typeparam>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.GetTypesByContract(System.Type)">
+            <summary>
+            Gets a list containing all types that implement the given contract.
+            </summary>
+            <param name="contractType">The implemented contract.</param>
+        </member>
+        <member name="M:SeeingSharp.Infrastructure.TypeQueryHandler.QueryTypes(System.Collections.Generic.IEnumerable{System.Reflection.Assembly})">
+            <summary>
+            Queries for types in the given collection of assemblies.
+            </summary>
+            <param name="assembliesToQuery">A collection containing all assemblies for the query.</param>
+        </member>
+        <member name="M:SeeingSharp.SeeingSharpException.#ctor(System.String)">
+            <summary>
+            Creates a new CommonLibraryException object
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.SeeingSharpException.#ctor(System.String,System.Exception)">
+            <summary>
+            Creates a new CommonLibraryException object
             </summary>
         </member>
         <member name="M:SeeingSharp.MathExtensions.GetAllPoints(System.Collections.Generic.IEnumerable{SeeingSharp.Line})">

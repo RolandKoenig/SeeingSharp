@@ -586,6 +586,12 @@
             Gets or sets the clear color for the 3D view.
             </summary>
         </member>
+        <member name="P:SeeingSharp.Multimedia.Views.SeeingSharpPanelPainter.IsOperational">
+            <summary>
+            True if the control is connected with the main rendering loop.
+            False if something went wrong.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel.#ctor">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Views.SeeingSharpRenderPanel"/> class.
@@ -890,7 +896,7 @@
             See http://www.codeproject.com/Articles/37474/Threadsafe-Events
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.#ctor">
+        <member name="M:SeeingSharp.Multimedia.Core.EngineMainLoop.#ctor(SeeingSharp.Multimedia.Core.GraphicsCore)">
             <summary>
             Prevents a default instance of the <see cref="T:SeeingSharp.Multimedia.Core.EngineMainLoop"/> class from being created.
             </summary>
@@ -996,9 +1002,21 @@
             Gets a list containing all InputFrames.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.GraphicsCore"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.AutomatedTest_NewTestEnviornment">
+            <summary>
+            This method is implemented for automated tests only!
+            Is sets <see cref="P:SeeingSharp.Multimedia.Core.GraphicsCore.Current"/> to null to enable a separate instance inside a using block. 
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.AutomatedTest_ForceDeviceInitError(System.Boolean)">
+            <summary>
+            This method is implemented for automated tests only!
+            It simulates a device initialization exception all next times GraphicsCore.Initialize is called.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.GetFontFamilyNames(System.String)">
@@ -1016,6 +1034,12 @@
             Suspends rendering completely.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.SetTestInstance(SeeingSharp.Multimedia.Core.GraphicsCore)">
+            <summary>
+            Overrides the current instance with a testing instance.
+            This method is only meant to be used within automated tests!
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.InitializeDefaultAsync">
             <summary>
             Performs default initialization logic.
@@ -1028,6 +1052,11 @@
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Initialize(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean)">
+            <summary>
+            Initializes the GraphicsCore object.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Initialize(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean,System.Boolean)">
             <summary>
             Initializes the GraphicsCore object.
             </summary>
@@ -1142,6 +1171,11 @@
             Gets the total count of loaded devices.
             </summary>
         </member>
+        <member name="P:SeeingSharp.Multimedia.Core.GraphicsCore.RegisteredRenderLoopCount">
+            <summary>
+            Gets the total count of registered RenderLoop objects.
+            </summary>
+        </member>
         <member name="P:SeeingSharp.Multimedia.Core.GraphicsCore.DefaultSoftwareDevice">
             <summary>
             Gets the default software device.
@@ -1183,6 +1217,11 @@
             </summary>
         </member>
         <member name="F:SeeingSharp.Multimedia.Core.GraphicsCore.FactoryD2D">
+            <summary>
+            Gets the Direct2D factory object.
+            </summary>
+        </member>
+        <member name="F:SeeingSharp.Multimedia.Core.GraphicsCore.FactoryD2D_2">
             <summary>
             Gets the Direct2D factory object.
             </summary>
@@ -1475,6 +1514,12 @@
             Raised when the current camera has changed.
             </summary>
         </member>
+        <member name="E:SeeingSharp.Multimedia.Core.RenderLoop.Rendered">
+            <summary>
+            Raised directly after rendering a frame.
+            Be careful, this event comes from a background rendering thread!
+            </summary>
+        </member>
         <member name="E:SeeingSharp.Multimedia.Core.RenderLoop.ManipulateFilterList">
             <summary>
             Raised when it is possible for the UI thread to manipulate current filter list.
@@ -1716,6 +1761,12 @@
         <member name="P:SeeingSharp.Multimedia.Core.RenderLoop.VisibleObjectCount">
             <summary>
             Gets the total count of visible objects.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.RenderLoop.IsOperational">
+            <summary>
+            True if the <see cref="T:SeeingSharp.Multimedia.Core.RenderLoop"/> is connected with the main rendering loop.
+            False if something went wrong during initialization.
             </summary>
         </member>
         <member name="F:SeeingSharp.Multimedia.Core.RenderLoop.VisibleObjectCountInternal">
@@ -7542,6 +7593,11 @@
             </summary>
             <param name="device">The device for which to get the image.</param>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.IImageInternal.TryGetSourceBitmap">
+            <summary>
+            Tries to get the <see cref="T:SeeingSharp.Multimedia.Drawing2D.BitmapResource"/> which is the source of this image. 
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing2D.DirectionalBlurEffectResource.BuildEffect(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Builds the effect.
@@ -7560,6 +7616,11 @@
             </summary>
             <param name="device">The device for which to get the input.</param>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.BitmapResource.SeeingSharp#Multimedia#Drawing2D#IImageInternal#TryGetSourceBitmap">
+            <summary>
+            Tries to get the <see cref="T:SeeingSharp.Multimedia.Drawing2D.BitmapResource"/> which is the source of this image. 
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Drawing2D.BrushResource.GetBrush(SeeingSharp.Multimedia.Core.EngineDevice)">
             <summary>
             Gets the brush for the given device.
@@ -7569,6 +7630,11 @@
         <member name="M:SeeingSharp.Multimedia.Drawing2D.EffectResource.#ctor(SeeingSharp.Multimedia.Drawing2D.IImage[])">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Drawing2D.EffectResource"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Drawing2D.EffectResource.SeeingSharp#Multimedia#Drawing2D#IImageInternal#TryGetSourceBitmap">
+            <summary>
+            Tries to get the <see cref="T:SeeingSharp.Multimedia.Drawing2D.BitmapResource"/> which is the source of this image. 
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Drawing2D.EffectResource.SeeingSharp#Multimedia#Drawing2D#IImageInternal#GetImageObject(SeeingSharp.Multimedia.Core.EngineDevice)">
