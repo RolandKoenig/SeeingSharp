@@ -41,8 +41,16 @@ namespace SeeingSharp.Multimedia.Core
 
         internal FactoryHandlerXAudio2()
         {
-            m_xaudioDevice = new SharpDX.XAudio2.XAudio2(SharpDX.XAudio2.XAudio2Version.Default);
-            m_masteringVoice = new SharpDX.XAudio2.MasteringVoice(m_xaudioDevice);
+            try
+            {
+                m_xaudioDevice = new SharpDX.XAudio2.XAudio2(SharpDX.XAudio2.XAudio2Version.Default);
+                m_masteringVoice = new SharpDX.XAudio2.MasteringVoice(m_xaudioDevice);
+            }
+            catch (Exception)
+            {
+                m_xaudioDevice = null;
+                m_masteringVoice = null;
+            }
         }
 
         internal XA.XAudio2 Device
