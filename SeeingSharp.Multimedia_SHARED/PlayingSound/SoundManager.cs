@@ -78,6 +78,8 @@ namespace SeeingSharp.Multimedia.PlayingSound
             soundFile.EnsureNotNullOrDisposed(nameof(soundFile));
             volume.EnsurePositive(nameof(volume));
 
+            if (!m_xaudioDevice.IsLoaded) { return; }
+
             // Play the sound on the device
             using (var sourceVoice = new XA.SourceVoice(m_xaudioDevice.Device, soundFile.Format, true))
             {

@@ -82,6 +82,7 @@ namespace SeeingSharp.Multimedia.Core
         #endregion
 
         #region Global device handlers
+        private Exception m_initException;
         private FactoryHandlerWIC m_factoryHandlerWIC;
         private FactoryHandlerD2D m_factoryHandlerD2D;
         private FactoryHandlerDWrite m_factoryHandlerDWrite;
@@ -155,8 +156,10 @@ namespace SeeingSharp.Multimedia.Core
                     m_factoryHandlerDWrite = new FactoryHandlerDWrite(this);
                     m_factoryHandlerXAudio2 = new FactoryHandlerXAudio2();
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    m_initException = ex;
+
                     m_devices.Clear();
                     m_factoryHandlerWIC = null;
                     m_factoryHandlerD2D = null;
@@ -218,8 +221,10 @@ namespace SeeingSharp.Multimedia.Core
                     m_mainLoopTask = m_mainLoop.Start(m_mainLoopCancelTokenSource.Token);
                 }
             }
-            catch (Exception)
+            catch (Exception ex2)
             {
+                m_initException = ex2;
+
                 m_hardwareInfo = null;
                 m_devices.Clear();
                 m_configuration = null;
@@ -245,12 +250,14 @@ namespace SeeingSharp.Multimedia.Core
         /// This method is implemented for automated tests only!
         /// It simulates a device initialization exception all next times GraphicsCore.Initialize is called.
         /// </summary>
-        public static void AutomatedTest_ForceDeviceInitError(bool forceException)
+        public static IDisposable AutomatedTest_ForceDeviceInitError(bool forceException)
         {
-            if (s_current?.MainLoop?.RegisteredRenderLoopCount > 0) { throw new SeeingSharpException("Current environment still active!"); }
+            if (s_current != null) { throw new SeeingSharpException("This call is only valid before Initialize was called!"); }
 
-            s_current = null;
+            bool prevValue = s_throwDeviceInitError;
             s_throwDeviceInitError = forceException;
+
+            return new DummyDisposable(() => s_throwDeviceInitError = prevValue);
         }
 
         /// <summary>
@@ -587,7 +594,16 @@ namespace SeeingSharp.Multimedia.Core
             {
                 return 
                     (s_current != null) && 
-                    (s_current.m_devices.Count > 0);
+                    (s_current.m_devices.Count > 0) &&
+                    (s_current.m_initException == null);
+            }
+        }
+
+        public Exception InitException
+        {
+            get
+            {
+                return s_current?.m_initException;
             }
         }
 

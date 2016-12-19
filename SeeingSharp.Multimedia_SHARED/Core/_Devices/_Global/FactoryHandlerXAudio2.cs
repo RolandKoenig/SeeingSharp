@@ -53,6 +53,16 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        public bool IsLoaded
+        {
+            get
+            {
+                return
+                    (m_xaudioDevice != null) &&
+                    (m_masteringVoice != null);
+            }
+        }
+
         internal XA.XAudio2 Device
         {
             get { return m_xaudioDevice; }

@@ -23,16 +23,20 @@
 #endregion
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing2D;
 using SeeingSharp.Multimedia.Views;
 using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Xunit;
+
+using GDI = System.Drawing;
 
 namespace SeeingSharp.Tests.Rendering
 {
@@ -40,6 +44,54 @@ namespace SeeingSharp.Tests.Rendering
     public class ErrorHandlingTests
     {
         public const string TEST_CATEGORY = "SeeingSharp Multimedia ErrorHandling";
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task MemoryRenderLoop_2DFallbackRendering()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            using (GraphicsCore.AutomatedTest_NewTestEnviornment())
+            {
+                GraphicsCore.Initialize(
+                    TargetHardware.Direct3D11, false, 
+                    force2DFallback: true);
+                Assert.True(GraphicsCore.IsInitialized);
+
+                Polygon2D polygon = new Polygon2D(new Vector2[]
+                {
+                    new Vector2(10, 10),
+                    new Vector2(900, 100),
+                    new Vector2(800, 924),
+                    new Vector2(50, 1014),
+                    new Vector2(10, 10)
+                });
+                using (SolidBrushResource solidBrush = new SolidBrushResource(Color4.LightGray))
+                using (SolidBrushResource solidBrushBorder = new SolidBrushResource(Color4.Gray))
+                using (PolygonGeometryResource polygonGeometry = new PolygonGeometryResource(polygon))
+                using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+                {
+                    // Perform rendering
+                    memRenderTarget.ClearColor = Color4.CornflowerBlue;
+                    await memRenderTarget.RenderLoop.Register2DDrawingLayerAsync((graphics) =>
+                    {
+                        // 2D rendering is made here
+                        graphics.DrawGeometry(polygonGeometry, solidBrushBorder, 3f);
+                        graphics.FillGeometry(polygonGeometry, solidBrush);
+                    });
+                    await memRenderTarget.AwaitRenderAsync();
+
+                    // Take screenshot
+                    GDI.Bitmap screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+                    //screenshot.DumpToDesktop("Blub.png");
+
+                    // Calculate and check difference
+                    float diff = BitmapComparison.CalculatePercentageDifference(
+                        screenshot, Properties.Resources.ReferenceImage_SimpleGeometry2D);
+                    Assert.True(diff < 0.2, "Difference to reference image is to big!");
+                }
+            }
+        }
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
@@ -51,9 +103,8 @@ namespace SeeingSharp.Tests.Rendering
             bool isGraphicsCoreInitialized = true;
             int registeredRenderLoopCount = 1;
             using (GraphicsCore.AutomatedTest_NewTestEnviornment())
+            using (GraphicsCore.AutomatedTest_ForceDeviceInitError(true))
             {
-                GraphicsCore.AutomatedTest_ForceDeviceInitError(true);
-
                 using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
                 {
                     isRenderTargetOperational = memRenderTarget.IsOperational;
