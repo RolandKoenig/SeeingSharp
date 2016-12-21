@@ -138,7 +138,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\_Util\MemoryMappedTexture32bpp.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_Util\MemoryMappedTextureFloat.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_Util\MFHelper.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\_Util\PlatformDetector.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_Util\TextureUploader.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_Util\WicBitmapSourceInternal.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Drawing2D\Custom2DDrawingLayer.cs" />

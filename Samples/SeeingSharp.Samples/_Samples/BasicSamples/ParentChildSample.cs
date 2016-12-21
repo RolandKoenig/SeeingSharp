@@ -42,8 +42,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "Parent Child",
         Constants.SAMPLE_BASICS_PARENT_CHILD_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/ParentChildSample.cs",
-        SampleTargetPlatform.All)]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/ParentChildSample.cs")]
     public class ParentChildSample : SampleBase
     {
         public override async Task OnStartupAsync(RenderLoop targetRenderLoop)

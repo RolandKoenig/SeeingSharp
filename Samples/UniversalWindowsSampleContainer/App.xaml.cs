@@ -64,10 +64,7 @@ namespace UniversalWindowsSampleContainer
                     new string[] { e.Arguments });
                 try
                 {
-                    GraphicsCore.Initialize(
-                        TargetHardware.Direct3D11,
-                        false,
-                        SeeingSharpPlatform.ModernPCOrTabletApp);
+                    GraphicsCore.Initialize();
 
                     // Force high texture quality on tablet devices
                     foreach (EngineDevice actDevice in GraphicsCore.Current.LoadedDevices)

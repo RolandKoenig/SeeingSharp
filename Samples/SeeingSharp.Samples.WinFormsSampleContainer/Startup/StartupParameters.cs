@@ -42,13 +42,6 @@ namespace WinFormsSampleContainer.Startup
         }
 
         [XmlAttribute]
-        public TargetHardware TargetHardware
-        {
-            get;
-            set;
-        }
-
-        [XmlAttribute]
         public bool ForcedDriverLevelEnabled
         {
             get;

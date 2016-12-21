@@ -32,14 +32,12 @@ namespace SeeingSharp.Samples.Base
     public class SampleInfoAttribute : Attribute
     {
         public SampleInfoAttribute(
-            string category, string name, int orderID, string codeUrl, 
-            SampleTargetPlatform targetPlatform)
+            string category, string name, int orderID, string codeUrl)
         {
             this.Category = category;
             this.Name = name;
             this.OrderID = orderID;
             this.CodeUrl = codeUrl;
-            this.TargetPlatform = targetPlatform;
         }
 
         public string Category
@@ -61,12 +59,6 @@ namespace SeeingSharp.Samples.Base
         }
 
         public string CodeUrl
-        {
-            get;
-            private set;
-        }
-
-        public SampleTargetPlatform TargetPlatform
         {
             get;
             private set;

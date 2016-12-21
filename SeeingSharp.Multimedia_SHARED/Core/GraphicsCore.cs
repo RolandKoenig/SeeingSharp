@@ -111,22 +111,18 @@ namespace SeeingSharp.Multimedia.Core
         #region Configurations
         private bool m_debugEnabled;
         private bool m_force2DFallback;
-        private TargetHardware m_targetHardware;
-        private SeeingSharpPlatform m_platform;
         #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsCore"/> class.
         /// </summary>
-        protected GraphicsCore(TargetHardware targetHardware, bool debugEnabled, bool force2DFallback)
+        protected GraphicsCore(bool debugEnabled, bool force2DFallback)
         {
             try
             {
                 // Upate RK.Common members
                 m_debugEnabled = debugEnabled;
                 m_force2DFallback = force2DFallback;
-                m_targetHardware = targetHardware;
-                m_platform = PlatformDetector.DetectPlatform();
                 m_devices = new List<EngineDevice>();
                 m_performanceCalculator = new PerformanceAnalyzer(TimeSpan.FromSeconds(1.0), TimeSpan.FromSeconds(2.0));
                 m_performanceCalculator.SyncContext = SynchronizationContext.Current; // <-- TODO
@@ -194,7 +190,6 @@ namespace SeeingSharp.Multimedia.Core
                 {
                     EngineDevice actEngineDevice = new EngineDevice(
                         this,
-                        targetHardware,
                         m_configuration,
                         actAdapterInfo.Adapter,
                         actAdapterInfo.IsSoftwareAdapter,
@@ -399,7 +394,7 @@ namespace SeeingSharp.Multimedia.Core
                 // Initialize graphics core object
                 if (!GraphicsCore.IsInitialized)
                 {
-                    GraphicsCore.Initialize(TargetHardware.Direct3D11, false, false);
+                    GraphicsCore.Initialize(false, false);
                 }
             }
         }
@@ -411,60 +406,28 @@ namespace SeeingSharp.Multimedia.Core
         {
             if (s_current != null) { return; }
 
-            //Get supported feature level
-            D3D.FeatureLevel featureLevel = D3D.FeatureLevel.Level_9_1;
-            try
-            {
-                featureLevel = D3D11.Device.GetSupportedFeatureLevel();
-            }
-            catch (Exception) { }
-
             //Call initialization methods
-            switch (featureLevel)
-            {
-                case D3D.FeatureLevel.Level_11_0:
-                    Initialize(TargetHardware.Direct3D11, false, false);
-                    break;
-
-                case D3D.FeatureLevel.Level_10_1:
-                case D3D.FeatureLevel.Level_10_0:
-                    Initialize(TargetHardware.Direct3D10, false, false);
-                    break;
-
-                default:
-                    Initialize(TargetHardware.Minimalistic, false, false);
-                    break;
-            }
+            Initialize(false, false);
         }
 
         /// <summary>
         /// Initializes the GraphicsCore object.
         /// </summary>
-        public static void Initialize(TargetHardware targetHardware, bool enableDebug)
+        public static void Initialize(bool enableDebug)
         {
             if (s_current != null) { return; }
 
-            s_current = new GraphicsCore(targetHardware, enableDebug, false);
+            s_current = new GraphicsCore(enableDebug, false);
         }
 
         /// <summary>
         /// Initializes the GraphicsCore object.
         /// </summary>
-        public static void Initialize(TargetHardware targetHardware, bool enableDebug, bool force2DFallback)
+        public static void Initialize(bool enableDebug, bool force2DFallback)
         {
             if (s_current != null) { return; }
 
-            s_current = new GraphicsCore(targetHardware, enableDebug, force2DFallback);
-        }
-
-        /// <summary>
-        /// Initializes the GraphicsCore object with the given target platform value.
-        /// </summary>
-        public static void Initialize(TargetHardware targetHardware, bool enableDebug, SeeingSharpPlatform platform)
-        {
-            PlatformDetector.SetPlatform(platform);
-
-            Initialize(targetHardware, enableDebug, false);
+            s_current = new GraphicsCore(enableDebug, force2DFallback);
         }
 
         /// <summary>
@@ -626,22 +589,6 @@ namespace SeeingSharp.Multimedia.Core
         public UniqueGenericKeyGenerator ResourceKeyGenerator
         {
             get { return m_resourceKeyGenerator; }
-        }
-
-        /// <summary>
-        /// Gets the target hardware.
-        /// </summary>
-        public TargetHardware TargetHardware
-        {
-            get { return m_targetHardware; }
-        }
-
-        /// <summary>
-        /// Gets the platform on which this application is running currently.
-        /// </summary>
-        public SeeingSharpPlatform CurrentPlatform
-        {
-            get { return m_platform; }
         }
 
         /// <summary>

@@ -30,7 +30,7 @@ namespace WpfSampleContainer
                 },
                 new string[0]).Wait();
             SeeingSharpApplication.Current.InitializeUIEnvironment();
-            GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+            GraphicsCore.Initialize();
         }
 
         protected override void OnActivated(EventArgs e)

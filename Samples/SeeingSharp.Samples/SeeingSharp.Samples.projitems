@@ -14,7 +14,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)_Base\SampleDescription.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Base\SampleInfoAttribute.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Base\SampleSceneBuilder.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)_Base\_Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Constants.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Performance\PerformanceAnalysisViewModel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)_Performance\PerformanceSnapshot.cs" />

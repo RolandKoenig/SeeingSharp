@@ -45,8 +45,7 @@ namespace SeeingSharp.Samples.Base.MFSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_MF, "VideoTexture",
         Constants.SAMPLE_MF_VIDEOTEXTURE_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/MFSamples/VideoTextureSample.cs",
-        SampleTargetPlatform.All)]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/MFSamples/VideoTextureSample.cs")]
     public class VideoTextureSample : SampleBase
     {
         private AsyncRealtimeVideoReader m_videoReader;

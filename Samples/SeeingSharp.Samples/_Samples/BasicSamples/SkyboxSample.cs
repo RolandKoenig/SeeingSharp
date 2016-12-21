@@ -44,8 +44,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "Skybox",
         Constants.SAMPLE_BASICS_SKYBOX_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/SkyboxSample.cs",
-        SampleTargetPlatform.All)]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/SkyboxSample.cs")]
     public class SkyboxSample : SampleBase
     {
         /// <summary>

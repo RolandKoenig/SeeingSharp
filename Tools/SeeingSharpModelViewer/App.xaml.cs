@@ -24,7 +24,7 @@ namespace SeeingSharpModelViewer
 
             // Initialize UI and Graphics
             SeeingSharpApplication.Current.InitializeUIEnvironment();
-            GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+            GraphicsCore.Initialize();
 
             // Load the main window
             MainWindow mainWindow = new SeeingSharpModelViewer.MainWindow();

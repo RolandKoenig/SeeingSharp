@@ -32,17 +32,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public GraphicsCoreConfiguration()
         {
-            this.TargetHardware = Core.TargetHardware.Direct3D10;
             this.DebugEnabled = false;
-        }
-
-        /// <summary>
-        /// Gets or sets the target hardware.
-        /// </summary>
-        public TargetHardware TargetHardware
-        {
-            get;
-            set;
         }
 
         /// <summary>

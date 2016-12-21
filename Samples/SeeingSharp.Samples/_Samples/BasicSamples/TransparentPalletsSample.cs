@@ -44,8 +44,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "TransparentPallets",
         Constants.SAMPLE_BASICS_TRANSPARENTPALLETS_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/TransparentPalletsSample.cs",
-        SampleTargetPlatform.All)]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/TransparentPalletsSample.cs")]
     public class TransparentPalletsSample : SampleBase
     {
         /// <summary>

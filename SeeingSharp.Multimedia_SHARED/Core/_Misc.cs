@@ -114,27 +114,6 @@ namespace SeeingSharp.Multimedia.Core
     }
 
     /// <summary>
-    /// Enumeration containing supported target hardware
-    /// </summary>
-    public enum TargetHardware
-    {
-        /// <summary>
-        /// Engine targets Direct3D 9 hardware (used on tablets and smartphones).
-        /// </summary>
-        Minimalistic,
-
-        /// <summary>
-        /// Engine targets Direct3D 10 hardware.
-        /// </summary>
-        Direct3D10,
-
-        /// <summary>
-        /// Engine targets Direct3D 11 hardware.
-        /// </summary>
-        Direct3D11
-    }
-
-    /// <summary>
     /// Enumeration containing 3 levels of antialiasing quality.
     /// </summary>
     public enum AntialiasingQualityLevel
@@ -230,27 +209,6 @@ namespace SeeingSharp.Multimedia.Core
         /// High quality.
         /// </summary>
         Hight
-    }
-
-    /// <summary>
-    /// Describes the platform Seeing# runs on.
-    /// </summary>
-    public enum SeeingSharpPlatform
-    {
-        /// <summary>
-        /// The engine runs currently on Windows Phone.
-        /// </summary>
-        WindowsPhone,
-
-        /// <summary>
-        /// The engine runs currently as modern PC or tablet app (= Windows Store App).
-        /// </summary>
-        ModernPCOrTabletApp,
-
-        /// <summary>
-        /// The engine runs currently in Windows desktop environment.
-        /// </summary>
-        Desktop
     }
 
     /// <summary>

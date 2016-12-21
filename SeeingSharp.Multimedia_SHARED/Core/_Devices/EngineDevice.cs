@@ -52,7 +52,6 @@ namespace SeeingSharp.Multimedia.Core
 
         #region Main members
         private DXGI.Adapter1 m_adapter;
-        private TargetHardware m_targetHardware;
         private GraphicsDeviceConfiguration m_configuration;
         private GraphicsCore m_core;
         private bool m_isSoftwareAdapter;
@@ -93,10 +92,9 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineDevice"/> class.
         /// </summary>
-        internal EngineDevice(GraphicsCore core, TargetHardware targetHardware, GraphicsCoreConfiguration coreConfiguration, DXGI.Adapter1 adapter, bool isSoftwareAdapter, bool debugEnabled)
+        internal EngineDevice(GraphicsCore core, GraphicsCoreConfiguration coreConfiguration, DXGI.Adapter1 adapter, bool isSoftwareAdapter, bool debugEnabled)
         {
             m_core = core;
-            m_targetHardware = targetHardware;
             m_adapter = adapter;
             m_isSoftwareAdapter = isSoftwareAdapter;
             m_debugEnabled = debugEnabled;
@@ -109,11 +107,11 @@ namespace SeeingSharp.Multimedia.Core
             try
             {
 #if UNIVERSAL
-                m_handlerD3D11 = new DeviceHandlerD3D11(targetHardware, adapter, debugEnabled);
+                m_handlerD3D11 = new DeviceHandlerD3D11(adapter, debugEnabled);
                 m_handlerDXGI = new DeviceHandlerDXGI(adapter, m_handlerD3D11.Device);
 #endif
 #if DESKTOP
-                m_handlerD3D11 = new DeviceHandlerD3D11(targetHardware, adapter, debugEnabled);
+                m_handlerD3D11 = new DeviceHandlerD3D11(adapter, debugEnabled);
                 m_handlerDXGI = new DeviceHandlerDXGI(adapter, m_handlerD3D11.Device);
                 m_handlerD3D9 = new DeviceHandlerD3D9(adapter, isSoftwareAdapter, debugEnabled); 
 #endif
@@ -184,7 +182,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Creates a list containing all available devices.
         /// </summary>
-        public static IEnumerable<EngineDevice> CreateDevices(GraphicsCore core, TargetHardware targetHardware, GraphicsCoreConfiguration coreConfiguration, bool debugEnabled)
+        public static IEnumerable<EngineDevice> CreateDevices(GraphicsCore core, GraphicsCoreConfiguration coreConfiguration, bool debugEnabled)
         {
             using(DXGI.Factory1 dxgiFactory = new DXGI.Factory1())
             {
@@ -194,7 +192,7 @@ namespace SeeingSharp.Multimedia.Core
                     DXGI.Adapter1 actAdapter = dxgiFactory.GetAdapter1(loop);
                     bool isSoftware = actAdapter.Description1.Description.StartsWith("Microsoft Basic Render Driver");
 
-                    yield return new EngineDevice(core, targetHardware, coreConfiguration, actAdapter, isSoftware, debugEnabled);
+                    yield return new EngineDevice(core, coreConfiguration, actAdapter, isSoftware, debugEnabled);
                 }
             }
         }

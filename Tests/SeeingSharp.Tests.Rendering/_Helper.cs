@@ -48,7 +48,7 @@ namespace SeeingSharp.Tests.Rendering
             // Initialize the graphics engine
             if (!GraphicsCore.IsInitialized) 
             { 
-                GraphicsCore.Initialize(TargetHardware.Direct3D11, false);
+                GraphicsCore.Initialize();
                 GraphicsCore.Current.SetDefaultDeviceToSoftware();
                 GraphicsCore.Current.DefaultDevice.ForceDetailLevel(DetailLevel.High);
             }

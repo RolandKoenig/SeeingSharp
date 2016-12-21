@@ -84,11 +84,6 @@ namespace SeeingSharp.Samples.Base
             get { return m_sampleClass; }
         }
 
-        public SampleTargetPlatform TargetPlatform
-        {
-            get { return m_attrib.TargetPlatform; }
-        }
-
         public ResourceLink ImageLink
         {
             get

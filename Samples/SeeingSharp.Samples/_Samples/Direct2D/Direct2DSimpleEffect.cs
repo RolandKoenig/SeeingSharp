@@ -46,8 +46,7 @@ namespace SeeingSharp.Samples.Base.Direct2D
     [SampleInfo(
         Constants.SAMPLEGROUP_DIRECT2D, "Simple Effect",
         Constants.SAMPLE_DIRECT2D_SIMPLE_EFFECT,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/Direct2D/Direct2DSimpleEffect.cs",
-        SampleTargetPlatform.All)]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/Direct2D/Direct2DSimpleEffect.cs")]
     public class Direct2DSimpleEffect : SampleBase
     {
         private StandardBitmapResource m_starBitmap;

@@ -46,8 +46,7 @@ namespace SeeingSharp.Samples.Base.Input
     [SampleInfo(
         Constants.SAMPLEGROUP_INPUT, "XBox Controller",
         Constants.SAMPLE_INPUT_XBOX_CONTROLLER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/Input/XBoxControllerInputSample.cs",
-        SampleTargetPlatform.AllExcludingSmartphone)]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/Input/XBoxControllerInputSample.cs")]
     public class XBoxControllerInputSample : SampleBase
     {
         /// <summary>

@@ -54,7 +54,7 @@ namespace SeeingSharp.Tests.Rendering
             using (GraphicsCore.AutomatedTest_NewTestEnviornment())
             {
                 GraphicsCore.Initialize(
-                    TargetHardware.Direct3D11, false, 
+                    enableDebug: false, 
                     force2DFallback: true);
                 Assert.True(GraphicsCore.IsInitialized);
 

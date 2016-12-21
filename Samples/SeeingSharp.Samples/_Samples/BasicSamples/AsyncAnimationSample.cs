@@ -44,8 +44,7 @@ namespace SeeingSharp.Samples.Base.BasicSamples
     [SampleInfo(
         Constants.SAMPLEGROUP_BASIC, "AsyncAnimation", 
         Constants.SAMPLE_BASICS_ASYNCANIM_ORDER,
-        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/AsyncAnimationSample.cs",
-        SampleTargetPlatform.All)]
+        "https://github.com/RolandKoenig/SeeingSharp/blob/master/Samples/SeeingSharp.Samples/_Samples/BasicSamples/AsyncAnimationSample.cs")]
     public class AsyncAnimationPalletSample : SampleBase
     {
         private const int MAX_COUNT_BANANAS = 15;
