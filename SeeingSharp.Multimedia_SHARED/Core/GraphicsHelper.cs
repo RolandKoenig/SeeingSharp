@@ -57,7 +57,7 @@ namespace SeeingSharp.Multimedia.Core
         internal const DXGI.Format DEFAULT_TEXTURE_FORMAT_OBJECT_ID = DXGI.Format.R32_Float;
         internal const DXGI.Format DEFAULT_TEXTURE_FORMAT_DEPTH = DXGI.Format.D32_Float_S8X24_UInt;
         internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT = WIC.PixelFormat.Format32bppBGRA;
-        internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT_D2D = WIC.PixelFormat.Format32bppPBGRA; 
+        internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT_D2D = WIC.PixelFormat.Format32bppPBGRA;
 
 #if DESKTOP
         /// <summary>
@@ -225,6 +225,39 @@ namespace SeeingSharp.Multimedia.Core
 #endif
 
 #if UNIVERSAL
+        /// <summary>
+        /// Creates the SwapChain object that is used on WinRT platforms.
+        /// </summary>
+        /// <param name="device">The device on which to create the SwapChain.</param>
+        /// <param name="coreWindow">The target CoreWindow object.</param>
+        /// <param name="width">Width of the screen in pixels.</param>
+        /// <param name="height">Height of the screen in pixels.</param>
+        /// <param name="gfxConfig">Current graphics configuration.</param>
+        internal static DXGI.SwapChain1 CreateSwapChainForCoreWindow(EngineDevice device, ComObject coreWindow, int width, int height, GraphicsViewConfiguration gfxConfig)
+        {
+            device.EnsureNotNull(nameof(device));
+            width.EnsurePositive(nameof(width));
+            height.EnsurePositive(nameof(height));
+            gfxConfig.EnsureNotNull(nameof(gfxConfig));
+
+            DXGI.SwapChainDescription1 desc = new SharpDX.DXGI.SwapChainDescription1()
+            {
+                Width = width,
+                Height = height,
+                Format = DEFAULT_TEXTURE_FORMAT,
+                Stereo = false,
+                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
+                Usage = SharpDX.DXGI.Usage.BackBuffer | SharpDX.DXGI.Usage.RenderTargetOutput,
+                BufferCount = 2,
+                Scaling = SharpDX.DXGI.Scaling.None,
+                SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,
+                AlphaMode = SharpDX.DXGI.AlphaMode.Ignore
+            };
+
+            //Creates the swap chain for the given CoreWindow object
+            return new DXGI.SwapChain1(device.FactoryDxgi, device.DeviceD3D11, coreWindow, ref desc);
+        }
+
         /// <summary>
         /// Creates the SwapChain object that is used on WinRT platforms.
         /// </summary>
