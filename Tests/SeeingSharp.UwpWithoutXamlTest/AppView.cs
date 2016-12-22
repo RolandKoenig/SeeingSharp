@@ -1,8 +1,13 @@
 ﻿using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.Objects;
+using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,7 +20,11 @@ namespace SeeingSharp.UwpWithoutXamlTest
 {
     internal class AppView : IFrameworkView, IDisposable
     {
-        private bool m_windowClosed;
+        #region Main window
+        private CoreWindow m_mainWindow;
+        private SeeingSharpCoreWindowPainter m_mainWindowPainter;
+        private bool m_mainWindowClosed;
+        #endregion
 
         public void Initialize(CoreApplicationView applicationView)
         {
@@ -27,7 +36,7 @@ namespace SeeingSharp.UwpWithoutXamlTest
                         typeof(GraphicsCore).GetTypeInfo().Assembly
                 },
                 new string[] { }).Wait();
-            GraphicsCore.Initialize();
+            GraphicsCore.Initialize(enableDebug: true);
 
             applicationView.Activated += this.OnViewActivated;
 
@@ -46,16 +55,45 @@ namespace SeeingSharp.UwpWithoutXamlTest
         /// </summary>
         public void Run()
         {
-            while(!m_windowClosed)
-            {
+            RenderLoop targetRenderLoop = m_mainWindowPainter.RenderLoop;
+            Camera3DBase camera = targetRenderLoop.Camera;
 
-            }
+            // Configure camera
+            camera.Position = new Vector3(2f, 2f, 2f);
+            camera.Target = new Vector3(0f, 0.5f, 0f);
+            camera.UpdateCamera();
+
+            targetRenderLoop.Scene.ManipulateSceneAsync((manipulator) =>
+            {
+                // Create pallet geometry resource
+                PalletType pType = new PalletType();
+                pType.ContentColor = Color4.Transparent;
+                var resPalletGeometry = manipulator.AddResource<GeometryResource>(
+                    () => new GeometryResource(pType));
+
+                // Create pallet object
+                GenericObject palletObject = manipulator.AddGeneric(resPalletGeometry);
+                palletObject.Color = Color4.GreenColor;
+                palletObject.EnableShaderGeneratedBorder();
+                palletObject.BuildAnimationSequence()
+                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_180DEG, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .RotateEulerAnglesTo(new Vector3(0f, EngineMath.RAD_360DEG, 0f), TimeSpan.FromSeconds(2.0))
+                    .WaitFinished()
+                    .CallAction(() => palletObject.RotationEuler = Vector3.Zero)
+                    .ApplyAndRewind();
+            }).FireAndForget();
+
+            m_mainWindow.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
         }
 
         public void SetWindow(CoreWindow window)
         {
-            // Register for notification that the app window is being closed.
-            window.Closed += this.OnWindowClosed;
+            m_mainWindow = window;
+            m_mainWindow.Closed += this.OnMainWindow_Closed;
+
+            m_mainWindowPainter = new SeeingSharpCoreWindowPainter(window);
+            m_mainWindowPainter.ClearColor = Windows.UI.Colors.CornflowerBlue;
         }
 
         public void Uninitialize()
@@ -68,9 +106,9 @@ namespace SeeingSharp.UwpWithoutXamlTest
 
         }
 
-        private void OnWindowClosed(CoreWindow sender, CoreWindowEventArgs arg)
+        private void OnMainWindow_Closed(CoreWindow sender, CoreWindowEventArgs arg)
         {
-            m_windowClosed = true;
+            m_mainWindowClosed = true;
         }
 
         /// <summary>

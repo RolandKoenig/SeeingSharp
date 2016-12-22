@@ -247,9 +247,9 @@ namespace SeeingSharp.Multimedia.Core
                 Format = DEFAULT_TEXTURE_FORMAT,
                 Stereo = false,
                 SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
-                Usage = SharpDX.DXGI.Usage.BackBuffer | SharpDX.DXGI.Usage.RenderTargetOutput,
+                Usage = SharpDX.DXGI.Usage.RenderTargetOutput,
                 BufferCount = 2,
-                Scaling = SharpDX.DXGI.Scaling.None,
+                Scaling = DXGI.Scaling.None,
                 SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,
                 AlphaMode = SharpDX.DXGI.AlphaMode.Ignore
             };
