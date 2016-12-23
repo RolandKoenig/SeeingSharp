@@ -95,7 +95,7 @@ namespace SeeingSharp.Multimedia.Views
             m_displayInfo.OrientationChanged += OnDisplayInfo_OrientationChanged;
 
             // Store current dpi setting
-            m_dpiScaling = new DpiScaling(m_displayInfo.RawDpiX, m_displayInfo.RawDpiY);
+            m_dpiScaling = new DpiScaling(m_displayInfo.LogicalDpi, m_displayInfo.LogicalDpi);
 
             // Create the RenderLoop object
             GraphicsCore.Touch();
@@ -154,6 +154,8 @@ namespace SeeingSharp.Multimedia.Views
 
         public Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SDM.RawViewportF, Size2, DpiScaling> OnRenderLoop_CreateViewResources(EngineDevice device)
         {
+            m_renderLoop.ViewConfiguration.AntialiasingEnabled = false;
+
             // Get the pixel size of the screen
             Size2 viewSize = GetTargetRenderPixelSize();
 
@@ -258,7 +260,7 @@ namespace SeeingSharp.Multimedia.Views
         {
             if (m_isDisposed) { return; }
 
-            m_dpiScaling = new DpiScaling(m_displayInfo.RawDpiX, m_displayInfo.RawDpiY);
+            m_dpiScaling = new DpiScaling(m_displayInfo.LogicalDpi, m_displayInfo.LogicalDpi);
 
             this.UpdateRenderLoopViewSize();
         }
@@ -311,6 +313,14 @@ namespace SeeingSharp.Multimedia.Views
             get { return GetTargetRenderPixelSize(); }
         }
 
+        public Size2 ActualSize
+        {
+            get
+            {
+                return new Size2((int)m_targetWindow.Bounds.Width, (int)m_targetWindow.Bounds.Height);
+            }
+        }
+
         /// <summary>
         /// Gets a collection containing all SceneComponents associated to this view.
         /// </summary>
@@ -334,6 +344,15 @@ namespace SeeingSharp.Multimedia.Views
         public CoreWindow TargetWindow
         {
             get { return m_targetWindow; }
+        }
+
+        public CoreDispatcher Disptacher
+        {
+            get
+            {
+                if (m_targetWindow == null) { return null; }
+                return m_targetWindow.Dispatcher;
+            }
         }
 
         public RenderLoop RenderLoop

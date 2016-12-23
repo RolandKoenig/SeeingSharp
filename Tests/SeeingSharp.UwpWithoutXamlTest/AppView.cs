@@ -1,4 +1,5 @@
 ﻿using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Components;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Objects;
@@ -59,7 +60,7 @@ namespace SeeingSharp.UwpWithoutXamlTest
             Camera3DBase camera = targetRenderLoop.Camera;
 
             // Configure camera
-            camera.Position = new Vector3(2f, 2f, 2f);
+            camera.Position = new Vector3(-5f, -5f, -5f);
             camera.Target = new Vector3(0f, 0.5f, 0f);
             camera.UpdateCamera();
 
@@ -73,6 +74,7 @@ namespace SeeingSharp.UwpWithoutXamlTest
 
                 // Create pallet object
                 GenericObject palletObject = manipulator.AddGeneric(resPalletGeometry);
+                palletObject.Position = new Vector3();
                 palletObject.Color = Color4.GreenColor;
                 palletObject.EnableShaderGeneratedBorder();
                 palletObject.BuildAnimationSequence()
@@ -82,7 +84,11 @@ namespace SeeingSharp.UwpWithoutXamlTest
                     .WaitFinished()
                     .CallAction(() => palletObject.RotationEuler = Vector3.Zero)
                     .ApplyAndRewind();
+
             }).FireAndForget();
+
+            targetRenderLoop.SceneComponents.Add(
+                new FreeMovingCameraComponent());
 
             m_mainWindow.Activate();
             m_mainWindow.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);

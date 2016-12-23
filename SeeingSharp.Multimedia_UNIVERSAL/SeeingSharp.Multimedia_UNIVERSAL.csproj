@@ -57,6 +57,8 @@
     </Compile>
     <Compile Include="Compatibility.cs" />
     <Compile Include="Input\_Generic\GenericGamepadHandler.cs" />
+    <Compile Include="Input\_WinRT\CoreWindowKeyAndMouseInputHandler.cs" />
+    <Compile Include="Input\_WinRT\WinRTKeyAndMouseInputHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Views\SeeingSharpCoreWindowPainter.cs" />
     <Compile Include="Views\SeeingSharpPanelPainter.cs" />
