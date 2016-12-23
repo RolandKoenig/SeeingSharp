@@ -84,6 +84,7 @@ namespace SeeingSharp.UwpWithoutXamlTest
                     .ApplyAndRewind();
             }).FireAndForget();
 
+            m_mainWindow.Activate();
             m_mainWindow.Dispatcher.ProcessEvents(CoreProcessEventsOption.ProcessUntilQuit);
         }
 

@@ -28,11 +28,13 @@ using System;
 using System.Threading;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reactive.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.UI.Core;
 using Windows.Foundation;
+using Windows.Graphics.Display;
 
 //Some namespace mappings
 using DXGI = SharpDX.DXGI;
@@ -50,6 +52,8 @@ namespace SeeingSharp.Multimedia.Views
 
         #region Configuration
         private CoreWindow m_targetWindow;
+        private IDisposable m_observerSizeChanged;
+        private DisplayInformation m_displayInfo;
         #endregion
 
         #region Main engine objects
@@ -57,13 +61,15 @@ namespace SeeingSharp.Multimedia.Views
         #endregion
 
         #region State variables
+        private bool m_isDisposed;
         private Size m_lastRefreshTargetSize;
+        private DpiScaling m_dpiScaling;
         #endregion
 
         #region Resources from Direct3D 11
         private DXGI.SwapChain1 m_swapChain;
         private D3D11.Texture2D m_backBuffer;
-        private D3D11.Texture2D m_backBufferMultisampled;
+        //private D3D11.Texture2D m_backBufferMultisampled;
         private D3D11.Texture2D m_depthBuffer;
         private D3D11.RenderTargetView m_renderTargetView;
         private D3D11.DepthStencilView m_renderTargetDepth;
@@ -75,8 +81,21 @@ namespace SeeingSharp.Multimedia.Views
         /// <param name="targetWindow">The target window.</param>
         public SeeingSharpCoreWindowPainter(CoreWindow targetWindow)
         {
+            // Attach to SizeChanged event (refresh view resources only after a specific time)
             m_targetWindow = targetWindow;
             m_targetWindow.SizeChanged += OnTargetWindow_SizeChanged;
+            m_observerSizeChanged = Observable.FromEventPattern<WindowSizeChangedEventArgs>(m_targetWindow, "SizeChanged")
+                .Throttle(TimeSpan.FromSeconds(0.5))
+                .ObserveOn(SynchronizationContext.Current)
+                .Subscribe((eArgs) => OnTargetWindow_ThrottledSizeChanged(eArgs.Sender as CoreWindow, eArgs.EventArgs));
+
+            // Attach to display setting changes
+            m_displayInfo = DisplayInformation.GetForCurrentView();
+            m_displayInfo.DpiChanged += OnDisplayInfo_DpiChanged;
+            m_displayInfo.OrientationChanged += OnDisplayInfo_OrientationChanged;
+
+            // Store current dpi setting
+            m_dpiScaling = new DpiScaling(m_displayInfo.RawDpiX, m_displayInfo.RawDpiY);
 
             // Create the RenderLoop object
             GraphicsCore.Touch();
@@ -96,12 +115,17 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         public void Dispose()
         {
+            if (m_isDisposed) { return; }
+            m_isDisposed = true;
+
+            m_targetWindow.SizeChanged -= OnTargetWindow_SizeChanged;
+
+            m_displayInfo.DpiChanged -= OnDisplayInfo_DpiChanged;
+            m_displayInfo.OrientationChanged -= OnDisplayInfo_OrientationChanged;
+
             // Clear view resources
             m_renderLoop.UnloadViewResources();
             m_renderLoop.DeregisterRenderLoop();
-
-            // Clear event registrations
-            m_targetWindow.SizeChanged -= OnTargetWindow_SizeChanged;
         }
 
         /// <summary>
@@ -109,9 +133,8 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         private Size2 GetTargetRenderPixelSize()
         {
-            double currentWidth = m_targetWindow.Bounds.Width;
-            double currentHeight = m_targetWindow.Bounds.Height;
-
+            double currentWidth = m_targetWindow.Bounds.Width * m_dpiScaling.ScaleFactorX;
+            double currentHeight = m_targetWindow.Bounds.Height * m_dpiScaling.ScaleFactorY;
             return new Size2(
                 (int)(currentWidth > MIN_PIXEL_SIZE_WIDTH ? currentWidth : MIN_PIXEL_SIZE_WIDTH),
                 (int)(currentHeight > MIN_PIXEL_SIZE_HEIGHT ? currentHeight : MIN_PIXEL_SIZE_HEIGHT));
@@ -131,29 +154,18 @@ namespace SeeingSharp.Multimedia.Views
 
         public Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SDM.RawViewportF, Size2, DpiScaling> OnRenderLoop_CreateViewResources(EngineDevice device)
         {
-            m_backBufferMultisampled = null;
-
+            // Get the pixel size of the screen
             Size2 viewSize = GetTargetRenderPixelSize();
 
             // Create the SwapChain and associate it with the SwapChainBackgroundPanel 
-            m_swapChain = GraphicsHelper.CreateSwapChainForCoreWindow(device, new SharpDX.ComObject(m_targetWindow), viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
+            using (SharpDX.ComObject targetWindowCom = new SharpDX.ComObject(m_targetWindow))
+            {
+                m_swapChain = GraphicsHelper.CreateSwapChainForCoreWindow(device, targetWindowCom, viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
+            }
 
             // Get the backbuffer from the SwapChain
             m_backBuffer = D3D11.Texture2D.FromSwapChain<D3D11.Texture2D>(m_swapChain, 0);
-
-            // Define the render target (in case of multisample an own render target)
-            D3D11.Texture2D backBufferForRenderloop = null;
-            if (m_renderLoop.ViewConfiguration.AntialiasingEnabled)
-            {
-                m_backBufferMultisampled = GraphicsHelper.CreateRenderTargetTexture(device, viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
-                m_renderTargetView = new D3D11.RenderTargetView(device.DeviceD3D11, m_backBufferMultisampled);
-                backBufferForRenderloop = m_backBufferMultisampled;
-            }
-            else
-            {
-                m_renderTargetView = new D3D11.RenderTargetView(device.DeviceD3D11, m_backBuffer);
-                backBufferForRenderloop = m_backBuffer;
-            }
+            m_renderTargetView = new D3D11.RenderTargetView(device.DeviceD3D11, m_backBuffer);
 
             //Create the depth buffer
             m_depthBuffer = GraphicsHelper.CreateDepthBufferTexture(device, viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
@@ -163,11 +175,7 @@ namespace SeeingSharp.Multimedia.Views
             SharpDX.Mathematics.Interop.RawViewportF viewPort = GraphicsHelper.CreateDefaultViewport(viewSize.Width, viewSize.Height);
             m_lastRefreshTargetSize = new Size(viewSize.Width, viewSize.Height);
 
-            DpiScaling dpiScaling = new DpiScaling();
-            dpiScaling.DpiX = 96.0f;
-            dpiScaling.DpiY = 96.0f;
-
-            return Tuple.Create(backBufferForRenderloop, m_renderTargetView, m_depthBuffer, m_renderTargetDepth, viewPort, viewSize, dpiScaling);
+            return Tuple.Create(m_backBuffer, m_renderTargetView, m_depthBuffer, m_renderTargetDepth, viewPort, viewSize, m_dpiScaling);
         }
 
         public void OnRenderLoop_DisposeViewResources(EngineDevice device)
@@ -176,12 +184,13 @@ namespace SeeingSharp.Multimedia.Views
             m_depthBuffer = GraphicsHelper.DisposeObject(m_depthBuffer);
             m_renderTargetView = GraphicsHelper.DisposeObject(m_renderTargetView);
             m_backBuffer = GraphicsHelper.DisposeObject(m_backBuffer);
-            m_backBufferMultisampled = GraphicsHelper.DisposeObject(m_backBufferMultisampled);
             m_swapChain = GraphicsHelper.DisposeObject(m_swapChain);
         }
 
         public bool OnRenderLoop_CheckCanRender(EngineDevice device)
         {
+            if (m_isDisposed) { return false; }
+
             return m_targetWindow.Visible;
         }
 
@@ -197,6 +206,8 @@ namespace SeeingSharp.Multimedia.Views
 
         public void OnRenderLoop_Present(EngineDevice device)
         {
+            if (m_isDisposed) { return; }
+
             // Present all rendered stuff on screen
             // First parameter indicates synchronization with vertical blank
             //  see http://msdn.microsoft.com/en-us/library/windows/desktop/bb174576(v=vs.85).aspx
@@ -207,6 +218,7 @@ namespace SeeingSharp.Multimedia.Views
         private void OnTargetWindow_SizeChanged(CoreWindow sender, WindowSizeChangedEventArgs args)
         {
             if (!GraphicsCore.IsInitialized) { return; }
+            if (m_isDisposed) { return; }
 
             // Get the current pixel size and apply it on the camera
             Size2 viewSize = GetTargetRenderPixelSize();
@@ -219,6 +231,36 @@ namespace SeeingSharp.Multimedia.Views
             {
                 UpdateRenderLoopViewSize();
             }
+        }
+
+        private void OnTargetWindow_ThrottledSizeChanged(CoreWindow sender, WindowSizeChangedEventArgs args)
+        {
+            if (!GraphicsCore.IsInitialized) { return; }
+            if (m_isDisposed) { return; }
+
+            // Ignore event, if nothing has changed..
+            Size2 actSize = GetTargetRenderPixelSize();
+            if ((m_lastRefreshTargetSize.Width == (int)actSize.Width) &&
+                (m_lastRefreshTargetSize.Height == (int)actSize.Height))
+            {
+                return;
+            }
+
+            UpdateRenderLoopViewSize();
+        }
+
+        private void OnDisplayInfo_OrientationChanged(DisplayInformation sender, object args)
+        {
+            if (m_isDisposed) { return; }
+        }
+
+        private void OnDisplayInfo_DpiChanged(DisplayInformation sender, object args)
+        {
+            if (m_isDisposed) { return; }
+
+            m_dpiScaling = new DpiScaling(m_displayInfo.RawDpiX, m_displayInfo.RawDpiY);
+
+            this.UpdateRenderLoopViewSize();
         }
 
         /// <summary>
@@ -262,6 +304,11 @@ namespace SeeingSharp.Multimedia.Views
         {
             get { return m_renderLoop.Camera; }
             set { m_renderLoop.Camera = value; }
+        }
+
+        public Size2 PixelSize
+        {
+            get { return GetTargetRenderPixelSize(); }
         }
 
         /// <summary>

@@ -388,7 +388,7 @@ namespace SeeingSharp.Multimedia.Views
             m_renderDeviceContext = m_renderDevice.ImmediateContext;
 
             //Create the swap chain and the render target
-            m_swapChain = GraphicsHelper.CreateDefaultSwapChain(this, device, m_renderLoop.ViewConfiguration);
+            m_swapChain = GraphicsHelper.CreateSwapChainForWinForms(this, device, m_renderLoop.ViewConfiguration);
             m_backBuffer = D3D11.Texture2D.FromSwapChain<D3D11.Texture2D>(m_swapChain, 0);
             m_renderTarget = new D3D11.RenderTargetView(m_renderDevice, m_backBuffer);
 

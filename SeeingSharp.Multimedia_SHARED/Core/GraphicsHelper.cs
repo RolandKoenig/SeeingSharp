@@ -66,7 +66,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <param name="targetControl">Target control of the swap chain.</param>
         /// <param name="device">Graphics device.</param>
         /// <param name="gfxConfig">The current graphics configuration.</param>
-        internal static DXGI.SwapChain1 CreateDefaultSwapChain(WinForms.Control targetControl, EngineDevice device, GraphicsViewConfiguration gfxConfig)
+        internal static DXGI.SwapChain1 CreateSwapChainForWinForms(WinForms.Control targetControl, EngineDevice device, GraphicsViewConfiguration gfxConfig)
         {
             targetControl.EnsureNotNull(nameof(targetControl));
             device.EnsureNotNull(nameof(device));
@@ -246,8 +246,8 @@ namespace SeeingSharp.Multimedia.Core
                 Height = height,
                 Format = DEFAULT_TEXTURE_FORMAT,
                 Stereo = false,
-                SampleDescription = new SharpDX.DXGI.SampleDescription(1, 0),
-                Usage = SharpDX.DXGI.Usage.RenderTargetOutput,
+                SampleDescription = new DXGI.SampleDescription(1, 0),
+                Usage = SharpDX.DXGI.Usage.BackBuffer | SharpDX.DXGI.Usage.RenderTargetOutput,
                 BufferCount = 2,
                 Scaling = DXGI.Scaling.None,
                 SwapEffect = SharpDX.DXGI.SwapEffect.FlipSequential,

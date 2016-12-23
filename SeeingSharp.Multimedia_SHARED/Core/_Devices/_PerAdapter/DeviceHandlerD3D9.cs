@@ -83,6 +83,9 @@ namespace SeeingSharp.Multimedia.Core
                         }
                     }
 
+                    // Direct3D 9 is only relevant on the primary device
+                    if(m_adapterIndex < 0) { return; }
+
                     // Try to create the device
                     m_deviceEx = new D3D9.DeviceEx(m_direct3DEx, m_adapterIndex, D3D9.DeviceType.Hardware, IntPtr.Zero, createFlags, presentparams);
                 }

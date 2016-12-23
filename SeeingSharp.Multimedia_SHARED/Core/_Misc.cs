@@ -59,6 +59,12 @@ namespace SeeingSharp.Multimedia.Core
         public float DpiX;
         public float DpiY;
 
+        public DpiScaling(float dpiX, float dpiY)
+        {
+            this.DpiX = dpiX;
+            this.DpiY = dpiY;
+        }
+
         public float ScaleFactorX
         {
             get { return DpiX / 96.0f; }

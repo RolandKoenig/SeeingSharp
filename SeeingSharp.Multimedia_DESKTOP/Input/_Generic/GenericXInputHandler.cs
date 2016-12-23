@@ -27,10 +27,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using SeeingSharp.Infrastructure;
+using SeeingSharp.Multimedia.Core;
 
 // Namespace mappings
 using XI = SharpDX.XInput;
-using SeeingSharp.Multimedia.Core;
 
 // Define assembly attributes for type that is defined in this file
 [assembly: AssemblyQueryableType(

@@ -428,6 +428,20 @@ namespace SeeingSharp.Multimedia.Core
         }
 
 #if DESKTOP
+        /// <summary>
+        /// Checks whether direct3d9 is loaded.
+        /// This interface is required to render into a Wpf view.
+        /// </summary>
+        public bool IsDirect3D9Loaded
+        {
+            get
+            {
+                return
+                    (m_handlerD3D9 != null) &&
+                    (m_handlerD3D9.Device != null);
+            }
+        }
+
         internal D3D9.DeviceEx DeviceD3D9
         {
             get { return m_handlerD3D9.Device; }
