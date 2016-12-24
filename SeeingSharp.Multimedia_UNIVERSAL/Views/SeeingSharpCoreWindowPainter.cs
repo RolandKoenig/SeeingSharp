@@ -69,7 +69,7 @@ namespace SeeingSharp.Multimedia.Views
         #region Resources from Direct3D 11
         private DXGI.SwapChain1 m_swapChain;
         private D3D11.Texture2D m_backBuffer;
-        //private D3D11.Texture2D m_backBufferMultisampled;
+        private D3D11.Texture2D m_backBufferMultisampled;
         private D3D11.Texture2D m_depthBuffer;
         private D3D11.RenderTargetView m_renderTargetView;
         private D3D11.DepthStencilView m_renderTargetDepth;
@@ -154,8 +154,6 @@ namespace SeeingSharp.Multimedia.Views
 
         public Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SDM.RawViewportF, Size2, DpiScaling> OnRenderLoop_CreateViewResources(EngineDevice device)
         {
-            m_renderLoop.ViewConfiguration.AntialiasingEnabled = false;
-
             // Get the pixel size of the screen
             Size2 viewSize = GetTargetRenderPixelSize();
 
@@ -167,7 +165,20 @@ namespace SeeingSharp.Multimedia.Views
 
             // Get the backbuffer from the SwapChain
             m_backBuffer = D3D11.Texture2D.FromSwapChain<D3D11.Texture2D>(m_swapChain, 0);
-            m_renderTargetView = new D3D11.RenderTargetView(device.DeviceD3D11, m_backBuffer);
+
+            // Define the render target (in case of multisample an own render target)
+            D3D11.Texture2D backBufferForRenderloop = null;
+            if (m_renderLoop.ViewConfiguration.AntialiasingEnabled)
+            {
+                m_backBufferMultisampled = GraphicsHelper.CreateRenderTargetTexture(device, viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
+                m_renderTargetView = new D3D11.RenderTargetView(device.DeviceD3D11, m_backBufferMultisampled);
+                backBufferForRenderloop = m_backBufferMultisampled;
+            }
+            else
+            {
+                m_renderTargetView = new D3D11.RenderTargetView(device.DeviceD3D11, m_backBuffer);
+                backBufferForRenderloop = m_backBuffer;
+            }
 
             //Create the depth buffer
             m_depthBuffer = GraphicsHelper.CreateDepthBufferTexture(device, viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
@@ -177,7 +188,7 @@ namespace SeeingSharp.Multimedia.Views
             SharpDX.Mathematics.Interop.RawViewportF viewPort = GraphicsHelper.CreateDefaultViewport(viewSize.Width, viewSize.Height);
             m_lastRefreshTargetSize = new Size(viewSize.Width, viewSize.Height);
 
-            return Tuple.Create(m_backBuffer, m_renderTargetView, m_depthBuffer, m_renderTargetDepth, viewPort, viewSize, m_dpiScaling);
+            return Tuple.Create(backBufferForRenderloop, m_renderTargetView, m_depthBuffer, m_renderTargetDepth, viewPort, viewSize, m_dpiScaling);
         }
 
         public void OnRenderLoop_DisposeViewResources(EngineDevice device)
@@ -185,6 +196,7 @@ namespace SeeingSharp.Multimedia.Views
             m_renderTargetDepth = GraphicsHelper.DisposeObject(m_renderTargetDepth);
             m_depthBuffer = GraphicsHelper.DisposeObject(m_depthBuffer);
             m_renderTargetView = GraphicsHelper.DisposeObject(m_renderTargetView);
+            m_backBufferMultisampled = GraphicsHelper.DisposeObject(m_backBufferMultisampled);
             m_backBuffer = GraphicsHelper.DisposeObject(m_backBuffer);
             m_swapChain = GraphicsHelper.DisposeObject(m_swapChain);
         }
@@ -209,6 +221,12 @@ namespace SeeingSharp.Multimedia.Views
         public void OnRenderLoop_Present(EngineDevice device)
         {
             if (m_isDisposed) { return; }
+
+            // Copy contents of the backbuffer if in multisampling mode
+            if (m_backBufferMultisampled != null)
+            {
+                device.DeviceImmediateContextD3D11.ResolveSubresource(m_backBufferMultisampled, 0, m_backBuffer, 0, GraphicsHelper.DEFAULT_TEXTURE_FORMAT);
+            }
 
             // Present all rendered stuff on screen
             // First parameter indicates synchronization with vertical blank
