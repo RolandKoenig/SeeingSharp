@@ -1178,12 +1178,17 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer"/> class.
             </summary>
         </member>
+        <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.#ctor(SeeingSharp.Multimedia.Core.EngineDevice,SharpDX.Direct3D11.Texture2D,System.Int32,System.Int32,SeeingSharp.Multimedia.Core.DpiScaling,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer"/> class.
+            </summary>
+        </member>
         <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.Dispose">
             <summary>
             Disposes all resources of this object completely.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.CreateResources(System.Int32,System.Int32,SeeingSharp.Multimedia.Core.DpiScaling)">
+        <member name="M:SeeingSharp.Multimedia.Core.Direct2DOverlayRenderer.CreateResources(System.Int32,System.Int32,SeeingSharp.Multimedia.Core.DpiScaling,System.Boolean)">
             <summary>
             Creates all resources 
             </summary>
@@ -1334,7 +1339,17 @@
             Gets a list containing all InputFrames.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean,System.Boolean)">
+        <member name="E:SeeingSharp.Multimedia.Core.GraphicsCore.InternalCachedException">
+            <summary>
+            Occurs when [internal cached exception].
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#cctor">
+            <summary>
+            Initializes the <see cref="T:SeeingSharp.Multimedia.Core.GraphicsCore"/> class.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.#ctor(System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.GraphicsCore"/> class.
             </summary>
@@ -1345,7 +1360,13 @@
             Is sets <see cref="P:SeeingSharp.Multimedia.Core.GraphicsCore.Current"/> to null to enable a separate instance inside a using block. 
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.AutomatedTest_ForceDeviceInitError(System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.AutomatedTest_ForceDeviceInitError">
+            <summary>
+            This method is implemented for automated tests only!
+            It simulates a device initialization exception all next times GraphicsCore.Initialize is called.
+            </summary>
+        </member>
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.AutomatedTest_ForceD2DInitError">
             <summary>
             This method is implemented for automated tests only!
             It simulates a device initialization exception all next times GraphicsCore.Initialize is called.
@@ -1371,12 +1392,6 @@
             Suspends rendering completely.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.SetTestInstance(SeeingSharp.Multimedia.Core.GraphicsCore)">
-            <summary>
-            Overrides the current instance with a testing instance.
-            This method is only meant to be used within automated tests!
-            </summary>
-        </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.InitializeDefaultAsync">
             <summary>
             Performs default initialization logic.
@@ -1388,19 +1403,14 @@
             Initializes the graphics engine.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Initialize(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Initialize(System.Boolean)">
             <summary>
             Initializes the GraphicsCore object.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Initialize(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean,System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Initialize(System.Boolean,System.Boolean)">
             <summary>
             Initializes the GraphicsCore object.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.Initialize(SeeingSharp.Multimedia.Core.TargetHardware,System.Boolean,SeeingSharp.Multimedia.Core.SeeingSharpPlatform)">
-            <summary>
-            Initializes the GraphicsCore object with the given target platform value.
             </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.GraphicsCore.IsAnyHardwareDeviceLoaded">
@@ -1476,16 +1486,6 @@
         <member name="P:SeeingSharp.Multimedia.Core.GraphicsCore.ResourceKeyGenerator">
             <summary>
             Gets the current resource key generator.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.GraphicsCore.TargetHardware">
-            <summary>
-            Gets the target hardware.
-            </summary>
-        </member>
-        <member name="P:SeeingSharp.Multimedia.Core.GraphicsCore.CurrentPlatform">
-            <summary>
-            Gets the platform on which this application is running currently.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.GraphicsCore.Configuration">
@@ -1573,7 +1573,7 @@
             The global XAudio2 device
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.CreateDefaultSwapChain(System.Windows.Forms.Control,SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.GraphicsViewConfiguration)">
+        <member name="M:SeeingSharp.Multimedia.Core.GraphicsHelper.CreateSwapChainForWinForms(System.Windows.Forms.Control,SeeingSharp.Multimedia.Core.EngineDevice,SeeingSharp.Multimedia.Core.GraphicsViewConfiguration)">
             <summary>
             Creates a default SwapChain for the given target control.
             </summary>
@@ -4412,11 +4412,6 @@
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.GraphicsCoreConfiguration" /> class.
             </summary>
         </member>
-        <member name="P:SeeingSharp.Multimedia.Core.GraphicsCoreConfiguration.TargetHardware">
-            <summary>
-            Gets or sets the target hardware.
-            </summary>
-        </member>
         <member name="P:SeeingSharp.Multimedia.Core.GraphicsCoreConfiguration.DebugEnabled">
             <summary>
             Can enable debug mode for all created devices.
@@ -4490,7 +4485,7 @@
             Gets current core configuration.
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.EngineDevice.#ctor(SeeingSharp.Multimedia.Core.GraphicsCore,SeeingSharp.Multimedia.Core.TargetHardware,SeeingSharp.Multimedia.Core.GraphicsCoreConfiguration,SharpDX.DXGI.Adapter1,System.Boolean,System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.EngineDevice.#ctor(SeeingSharp.Multimedia.Core.GraphicsCore,SeeingSharp.Multimedia.Core.GraphicsCoreConfiguration,SharpDX.DXGI.Adapter1,System.Boolean,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.EngineDevice"/> class.
             </summary>
@@ -4506,7 +4501,7 @@
             </summary>
             <param name="qualityLevel">The quality level for which a sample description is needed.</param>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.EngineDevice.CreateDevices(SeeingSharp.Multimedia.Core.GraphicsCore,SeeingSharp.Multimedia.Core.TargetHardware,SeeingSharp.Multimedia.Core.GraphicsCoreConfiguration,System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.EngineDevice.CreateDevices(SeeingSharp.Multimedia.Core.GraphicsCore,SeeingSharp.Multimedia.Core.GraphicsCoreConfiguration,System.Boolean)">
             <summary>
             Creates a list containing all available devices.
             </summary>
@@ -4582,6 +4577,12 @@
         <member name="P:SeeingSharp.Multimedia.Core.EngineDevice.DeviceD3D11">
             <summary>
             Gets the Direct3D 11 device object.
+            </summary>
+        </member>
+        <member name="P:SeeingSharp.Multimedia.Core.EngineDevice.IsDirect3D9Loaded">
+            <summary>
+            Checks whether direct3d9 is loaded.
+            This interface is required to render into a Wpf view.
             </summary>
         </member>
         <member name="P:SeeingSharp.Multimedia.Core.EngineDevice.DeviceImmediateContextD3D11">
@@ -4683,11 +4684,10 @@
             All initialization logic for the D3D11 device
             </summary>
         </member>
-        <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerD3D11.#ctor(SeeingSharp.Multimedia.Core.TargetHardware,SharpDX.DXGI.Adapter1,System.Boolean)">
+        <member name="M:SeeingSharp.Multimedia.Core.DeviceHandlerD3D11.#ctor(SharpDX.DXGI.Adapter1,System.Boolean)">
             <summary>
             Initializes a new instance of the <see cref="T:SeeingSharp.Multimedia.Core.DeviceHandlerD3D11"/> class.
             </summary>
-            <param name="targetHardware">The target hardware for which to create this device.</param>
             <param name="dxgiAdapter">The tasrget adapter.</param>
             <param name="debugEnabled">Is debug mode enabled?</param>
         </member>
@@ -4971,26 +4971,6 @@
             Driver runs on Direct3D9 hardware.
             </summary>
         </member>
-        <member name="T:SeeingSharp.Multimedia.Core.TargetHardware">
-            <summary>
-            Enumeration containing supported target hardware
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Multimedia.Core.TargetHardware.Minimalistic">
-            <summary>
-            Engine targets Direct3D 9 hardware (used on tablets and smartphones).
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Multimedia.Core.TargetHardware.Direct3D10">
-            <summary>
-            Engine targets Direct3D 10 hardware.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Multimedia.Core.TargetHardware.Direct3D11">
-            <summary>
-            Engine targets Direct3D 11 hardware.
-            </summary>
-        </member>
         <member name="T:SeeingSharp.Multimedia.Core.AntialiasingQualityLevel">
             <summary>
             Enumeration containing 3 levels of antialiasing quality.
@@ -5079,26 +5059,6 @@
         <member name="F:SeeingSharp.Multimedia.Core.GeometryQuality.Hight">
             <summary>
             High quality.
-            </summary>
-        </member>
-        <member name="T:SeeingSharp.Multimedia.Core.SeeingSharpPlatform">
-            <summary>
-            Describes the platform Seeing# runs on.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Multimedia.Core.SeeingSharpPlatform.WindowsPhone">
-            <summary>
-            The engine runs currently on Windows Phone.
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Multimedia.Core.SeeingSharpPlatform.ModernPCOrTabletApp">
-            <summary>
-            The engine runs currently as modern PC or tablet app (= Windows Store App).
-            </summary>
-        </member>
-        <member name="F:SeeingSharp.Multimedia.Core.SeeingSharpPlatform.Desktop">
-            <summary>
-            The engine runs currently in Windows desktop environment.
             </summary>
         </member>
         <member name="T:SeeingSharp.Multimedia.Core.CoordinateSystem">
@@ -7678,21 +7638,6 @@
             Converts the given TimeSpan value to a duration value for media foundation
             </summary>
             <param name="timespan">The timespan.</param>
-        </member>
-        <member name="T:SeeingSharp.Multimedia.Core.PlatformDetector">
-            <summary>
-            A helper class which is responsible for detecting the current platform.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.PlatformDetector.#cctor">
-            <summary>
-            Initializes the <see cref="T:SeeingSharp.Multimedia.Core.PlatformDetector"/> class.
-            </summary>
-        </member>
-        <member name="M:SeeingSharp.Multimedia.Core.PlatformDetector.DetectPlatform">
-            <summary>
-            Checks on which platform we are running currently.
-            </summary>
         </member>
         <member name="M:SeeingSharp.Multimedia.Core.TextureUploader.#ctor(SeeingSharp.Multimedia.Core.EngineDevice,SharpDX.Direct3D11.Texture2D)">
             <summary>

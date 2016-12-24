@@ -24,6 +24,8 @@
 using SeeingSharp.Checking;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing2D;
+using SeeingSharp.Multimedia.Drawing3D;
+using SeeingSharp.Multimedia.Objects;
 using SeeingSharp.Multimedia.Views;
 using SeeingSharp.Util;
 using System;
@@ -47,7 +49,79 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public async Task MemoryRenderLoop_2DFallbackRendering()
+        public async Task MemoryRenderTarget_2DInitError()
+        {
+            await UnitTestHelper.InitializeWithGrahicsAsync();
+
+            GDI.Bitmap screenshot = null;
+            using (UnitTestHelper.FailTestOnInternalExceptions())
+            using (GraphicsCore.AutomatedTest_NewTestEnviornment())
+            using (GraphicsCore.AutomatedTest_ForceD2DInitError())
+            {
+                GraphicsCore.Initialize();
+                Assert.True(GraphicsCore.IsInitialized);
+                Assert.False(GraphicsCore.Current.DefaultDevice.Supports2D);
+
+                using (SolidBrushResource solidBrush = new SolidBrushResource(Color4.Gray))
+                using (TextFormatResource textFormat = new TextFormatResource("Arial", 36))
+                using (SolidBrushResource textBrush = new SolidBrushResource(Color4.RedColor))
+                using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
+                {
+                    memRenderTarget.ClearColor = Color4.CornflowerBlue;
+
+                    // Get and configure the camera
+                    PerspectiveCamera3D camera = memRenderTarget.Camera as PerspectiveCamera3D;
+                    camera.Position = new Vector3(0f, 5f, -7f);
+                    camera.Target = new Vector3(0f, 0f, 0f);
+                    camera.UpdateCamera();
+
+                    // 2D rendering is made here
+                    Custom2DDrawingLayer d2dDrawingLayer = new Custom2DDrawingLayer((graphics) =>
+                    {
+                        RectangleF d2dRectangle = new RectangleF(10, 10, 236, 236);
+                        graphics.Clear(Color4.LightBlue);
+                        graphics.FillRoundedRectangle(
+                            d2dRectangle, 30, 30,
+                            solidBrush);
+
+                        d2dRectangle.Inflate(-10, -10);
+                        graphics.DrawText("Hello Direct2D!", textFormat, d2dRectangle, textBrush);
+                    });
+
+                    // Define scene
+                    await memRenderTarget.Scene.ManipulateSceneAsync((manipulator) =>
+                    {
+                        var resD2DTexture = manipulator.AddResource<Direct2DTextureResource>(
+                            () => new Direct2DTextureResource(d2dDrawingLayer, 256, 256));
+                        var resD2DMaterial = manipulator.AddSimpleColoredMaterial(resD2DTexture);
+                        var geoResource = manipulator.AddResource<GeometryResource>(
+                            () => new GeometryResource(new PalletType(
+                                palletMaterial: NamedOrGenericKey.Empty,
+                                contentMaterial: resD2DMaterial)));
+
+                        GenericObject newObject = manipulator.AddGeneric(geoResource);
+                        newObject.RotationEuler = new Vector3(0f, EngineMath.RAD_90DEG / 2f, 0f);
+                        newObject.Scaling = new Vector3(2f, 2f, 2f);
+                    });
+
+                    // Take screenshot
+                    await memRenderTarget.AwaitRenderAsync();
+                    screenshot = await memRenderTarget.RenderLoop.GetScreenshotGdiAsync();
+
+                    //screenshot.DumpToDesktop("Blub.png");
+                }
+            }
+
+            // Calculate and check difference
+            Assert.NotNull(screenshot);
+            bool isNearEqual = BitmapComparison.IsNearEqual(
+                screenshot, Properties.Resources.ReferenceImage_SimpleObject);
+            Assert.True(isNearEqual, "Difference to reference image is to big!");
+        }
+
+        [Fact]
+        [Trait("Category", TEST_CATEGORY)]
+        public async Task MemoryRenderTarget_2DFallbackRendering()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -95,7 +169,7 @@ namespace SeeingSharp.Tests.Rendering
 
         [Fact]
         [Trait("Category", TEST_CATEGORY)]
-        public async Task MemoryRenderLoop_GraphicsInitError()
+        public async Task MemoryRenderTarget_GraphicsInitError()
         {
             await UnitTestHelper.InitializeWithGrahicsAsync();
 
@@ -103,7 +177,7 @@ namespace SeeingSharp.Tests.Rendering
             bool isGraphicsCoreInitialized = true;
             int registeredRenderLoopCount = 1;
             using (GraphicsCore.AutomatedTest_NewTestEnviornment())
-            using (GraphicsCore.AutomatedTest_ForceDeviceInitError(true))
+            using (GraphicsCore.AutomatedTest_ForceDeviceInitError())
             {
                 using (MemoryRenderTarget memRenderTarget = new MemoryRenderTarget(1024, 1024))
                 {

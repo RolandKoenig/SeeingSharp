@@ -322,15 +322,19 @@ namespace SeeingSharp.Multimedia.Core
         internal T GetResource<T>(NamedOrGenericKey resourceKey, Func<T> createMethod)
             where T : Resource
         {
-            if (m_resources.ContainsKey(resourceKey)) { return m_resources[resourceKey].Resource as T; }
-            else
+            if (m_resources.ContainsKey(resourceKey))
             {
-                T newResource = createMethod();
-                if (newResource == null) { return null; }
+                T result = m_resources[resourceKey].Resource as T;
 
-                AddResource(resourceKey, newResource);
-                return newResource;
+                if(result != null) { return result; }
+                else { m_resources.Remove(resourceKey); }
             }
+
+            T newResource = createMethod();
+            if (newResource == null) { return null; }
+
+            AddResource(resourceKey, newResource);
+            return newResource;
         }
 
         /// <summary>

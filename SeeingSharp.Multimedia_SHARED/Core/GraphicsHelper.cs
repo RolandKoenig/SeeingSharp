@@ -1163,9 +1163,10 @@ namespace SeeingSharp.Multimedia.Core
             if (objectToDispose == null) { return null; }
 
             try { objectToDispose.Dispose(); }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Generic exception handling..
+                GraphicsCore.PublishInternalExceptionInfo(
+                    ex, InternalExceptionLocation.DisposeGraphicsObject);
             }
             return null;
         }

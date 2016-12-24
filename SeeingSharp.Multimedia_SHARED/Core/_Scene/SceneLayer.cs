@@ -276,7 +276,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             List<SceneObject> invalidObjects = null;
 
-            //Load all resources
+            // Load all resources
             int sceneObjectArrayLength = m_sceneObjects.Count;
             SceneObject[] sceneObjectArray = m_sceneObjects.GetBackingArray();
             for (int loop = 0; loop < sceneObjectArrayLength; loop++)
@@ -286,15 +286,15 @@ namespace SeeingSharp.Multimedia.Core
                 try
                 {
                     // Load all resources of the object
-                    // TODO: Optimize resource loading!
                     if (!actObject.IsLoaded(renderState.Device))
                     {
                         actObject.LoadResources(renderState.Device, renderState.CurrentResources);
                     }
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //TODO: Handle exception correctly
+                    GraphicsCore.PublishInternalExceptionInfo(
+                        ex, InternalExceptionLocation.Loading3DObject);
 
                     //Build list of invalid objects
                     if (invalidObjects == null) { invalidObjects = new List<SceneObject>(); }
@@ -428,7 +428,11 @@ namespace SeeingSharp.Multimedia.Core
             {
                 //Unload the object if it is loaded
                 try { actObject.UnloadResources(); }
-                catch (Exception) { }
+                catch (Exception ex)
+                {
+                    GraphicsCore.PublishInternalExceptionInfo(
+                        ex, InternalExceptionLocation.UnloadingInvalid3DObject);
+                }
 
                 //Remove this object from this layer
                 this.RemoveObject(actObject);

@@ -120,6 +120,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         private unsafe void ApplyTransformStack()
         {
+            if(m_renderTarget == null) { return; }
+
             Matrix3x2 top = m_transformStack.Top;
             m_renderTarget.Transform =
                 *(SDXM.RawMatrix3x2*)&top;
@@ -176,6 +178,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="clearColor">Color of the clear.</param>
         public void Clear(Color4 clearColor)
         {
+            if (m_renderTarget == null) { return; }
+
             m_renderTarget.Clear(clearColor.ToDXColor());
         }
 
@@ -184,6 +188,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawGeometry(Geometry2DResourceBase geometry, BrushResource brush, float strokeWidth = 1f)
         {
+            if (m_renderTarget == null) { return; }
+
             geometry.EnsureNotNullOrDisposed(nameof(geometry));
             brush.EnsureNotNull(nameof(brush));
             strokeWidth.EnsurePositive(nameof(strokeWidth));
@@ -199,6 +205,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawRectangle(RectangleF rectangle, BrushResource brush, float strokeWidth = 1f)
         {
+            if (m_renderTarget == null) { return; }
+
             brush.EnsureNotNull(nameof(brush));
             rectangle.EnsureNotEmpty(nameof(rectangle));
             strokeWidth.EnsurePositive(nameof(strokeWidth));
@@ -214,6 +222,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawRoundedRectangle(RectangleF rectangle, float radiusX, float radiusY, BrushResource brush, float strokeWidth = 1f)
         {
+            if (m_renderTarget == null) { return; }
+
             rectangle.EnsureNotEmpty(nameof(rectangle));
             brush.EnsureNotNull(nameof(brush));
             radiusX.EnsurePositive(nameof(radiusX));
@@ -246,6 +256,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void DrawLine(Vector2 start, Vector2 end, BrushResource brush, float strokeWidth = 1f)
         {
+            if (m_renderTarget == null) { return; }
+
             brush.EnsureNotNull(nameof(brush));
             strokeWidth.EnsurePositiveAndNotZero(nameof(strokeWidth));
 
@@ -262,6 +274,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="brush">The brush to be used.</param>
         public void FillRectangle(RectangleF rectangle, BrushResource brush)
         {
+            if (m_renderTarget == null) { return; }
+
             rectangle.EnsureNotEmpty(nameof(rectangle));
             brush.EnsureNotNull(nameof(brush));
 
@@ -275,6 +289,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void FillGeometry(Geometry2DResourceBase geometry, BrushResource brush)
         {
+            if (m_renderTarget == null) { return; }
+
             geometry.EnsureNotNullOrDisposed(nameof(geometry));
             brush.EnsureNotNull(nameof(brush));
 
@@ -288,6 +304,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// </summary>
         public void FillGeometry(Geometry2DResourceBase geometry, BrushResource brush, BrushResource opacityBrush)
         {
+            if (m_renderTarget == null) { return; }
+
             geometry.EnsureNotNullOrDisposed(nameof(geometry));
             brush.EnsureNotNull(nameof(brush));
 
@@ -306,6 +324,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
         /// <param name="brush">The brush to be used.</param>
         public void FillRoundedRectangle(RectangleF rectangle, float radiusX, float radiusY, BrushResource brush)
         {
+            if (m_renderTarget == null) { return; }
+
             rectangle.EnsureNotEmpty(nameof(rectangle));
             brush.EnsureNotNull(nameof(brush));
             radiusX.EnsurePositive(nameof(radiusX));
@@ -335,6 +355,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
             DrawTextOptions drawOptions = DrawTextOptions.None,
             MeasuringMode measuringMode = MeasuringMode.Natural)
         {
+            if (m_renderTarget == null) { return; }
+
             textToDraw.EnsureNotNull(nameof(textToDraw));
             targetRectangle.EnsureNotEmpty(nameof(targetRectangle));
             brush.EnsureNotNull(nameof(brush));
@@ -365,6 +387,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor, 
             int frameIndex = 0)
         {
+            if (m_renderTarget == null) { return; }
+
             bitmap.EnsureNotNull(nameof(bitmap));
             destinationRectangle.EnsureNotEmpty(nameof(destinationRectangle));
             opacity.EnsureInRange(0f, 1f, nameof(opacity));
@@ -425,6 +449,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
             BitmapInterpolationMode interpolationMode = BitmapInterpolationMode.NearestNeighbor,
             int frameIndex = 0)
         {
+            if (m_renderTarget == null) { return; }
+
             bitmap.EnsureNotNull(nameof(bitmap));
             opacity.EnsureInRange(0f, 1f, nameof(opacity));
 
@@ -487,6 +513,8 @@ namespace SeeingSharp.Multimedia.Drawing2D
             IImage image,
             Vector2 destinationOrigin)
         {
+            if (m_renderTarget == null) { return; }
+
             image.EnsureNotNull(nameof(image));
 
             IImageInternal internalImage = image as IImageInternal;
@@ -615,8 +643,16 @@ namespace SeeingSharp.Multimedia.Drawing2D
 
         public Matrix3x2 Transform
         {
-            get { return m_renderTarget.Transform.ToMatrix(); }
-            set { m_renderTarget.Transform = value.ToDXMatrix(); }
+            get
+            {
+                if (m_renderTarget == null) { return Matrix3x2.Identity; }
+                return m_renderTarget.Transform.ToMatrix();
+            }
+            set
+            {
+                if (m_renderTarget == null) { return; }
+                m_renderTarget.Transform = value.ToDXMatrix();
+            }
         }
     }
 }

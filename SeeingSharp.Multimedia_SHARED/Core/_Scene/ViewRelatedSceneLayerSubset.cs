@@ -776,8 +776,11 @@ namespace SeeingSharp.Multimedia.Core
                         {
                             actSubscription.RenderMethod(renderState);
                         }
-                        catch (Exception)
+                        catch (Exception ex)
                         {
+                            GraphicsCore.PublishInternalExceptionInfo(
+                                ex, InternalExceptionLocation.Rendering3DObject);
+
                             // Mark this object as invalid
                             if (invalidObjects == null) { invalidObjects = new List<SceneObject>(); }
                             invalidObjects.Add(actSubscription.SceneObject);

@@ -62,11 +62,20 @@ namespace SeeingSharp.Multimedia.Core
         /// Initializes a new instance of the <see cref="Direct2DOverlayRenderer"/> class.
         /// </summary>
         public Direct2DOverlayRenderer(EngineDevice device, D3D11.Texture2D renderTarget3D, int viewWidth, int viewHeight, DpiScaling dpiScaling)
+            : this(device, renderTarget3D, viewWidth, viewHeight, dpiScaling, false)
+        {
+
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Direct2DOverlayRenderer"/> class.
+        /// </summary>
+        internal Direct2DOverlayRenderer(EngineDevice device, D3D11.Texture2D renderTarget3D, int viewWidth, int viewHeight, DpiScaling dpiScaling, bool forceInit)
         {
             m_device = device;
             m_renderTarget3D = renderTarget3D;
 
-            CreateResources(viewWidth, viewHeight, dpiScaling);
+            CreateResources(viewWidth, viewHeight, dpiScaling, forceInit);
         }
 
         /// <summary>
@@ -89,12 +98,19 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Creates all resources 
         /// </summary>
-        private void CreateResources(int viewWidth, int viewHeight, DpiScaling dpiScaling)
+        private void CreateResources(int viewWidth, int viewHeight, DpiScaling dpiScaling, bool forceInit)
         {
             // Calculate the screen size in device independent units
             Size2F scaledScreenSize = new Size2F(
                 (float)viewWidth / dpiScaling.ScaleFactorX,
                 (float)viewHeight / dpiScaling.ScaleFactorY);
+
+            // Cancel here if the device does not support 2D rendering
+            if((!forceInit) &&
+               (!m_device.Supports2D))
+            {
+                return;
+            }
 
             if(!m_device.IsUsingFallbackMethodFor2D)
             {
@@ -139,6 +155,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void BeginDraw()
         {
+            if(m_renderTarget2D == null) { return; }
+
             if (!m_device.IsUsingFallbackMethodFor2D)
             {
                 m_device.DeviceContextD2D.Target = m_renderTargetBitmap;
@@ -159,6 +177,8 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public void EndDraw()
         {
+            if(m_renderTarget2D == null) { return; }
+
             if (!m_device.IsUsingFallbackMethodFor2D)
             {
                 m_renderTarget2D.EndDraw();

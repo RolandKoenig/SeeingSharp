@@ -57,6 +57,12 @@ namespace SeeingSharp.Multimedia.Core
     {
         #region Members for Unittesting
         private static bool s_throwDeviceInitError;
+        private static bool s_throwD2DInitDeviceError;
+        #endregion
+
+        #region Members for exception handling
+        private static List<EventHandler<InternalCatchedExceptionEventArgs>> s_internalExListeners;
+        private static object s_internalExListenersLock;
         #endregion
 
         #region Singleton instance
@@ -112,6 +118,38 @@ namespace SeeingSharp.Multimedia.Core
         private bool m_debugEnabled;
         private bool m_force2DFallback;
         #endregion
+
+        /// <summary>
+        /// Occurs when [internal cached exception].
+        /// </summary>
+        public static event EventHandler<InternalCatchedExceptionEventArgs> InternalCachedException
+        {
+            add
+            {
+                if(value == null) { return; }
+                lock(s_internalExListenersLock)
+                {
+                    s_internalExListeners.Add(value);
+                }
+            }
+            remove
+            {
+                if(value == null) { return; }
+                lock(s_internalExListenersLock)
+                {
+                    s_internalExListeners.Remove(value);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Initializes the <see cref="GraphicsCore"/> class.
+        /// </summary>
+        static GraphicsCore()
+        {
+            s_internalExListeners = new List<EventHandler<InternalCatchedExceptionEventArgs>>();
+            s_internalExListenersLock = new object();
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="GraphicsCore"/> class.
@@ -227,6 +265,31 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        internal static void PublishInternalExceptionInfo(
+            Exception ex,
+            InternalExceptionLocation location)
+        {
+            List<EventHandler<InternalCatchedExceptionEventArgs>> handlers = null;
+            lock(s_internalExListenersLock)
+            {
+                if(s_internalExListeners.Count > 0)
+                {
+                    handlers = new List<EventHandler<InternalCatchedExceptionEventArgs>>(
+                        s_internalExListeners);
+                }
+            } 
+
+            foreach(var actEventHandler in handlers)
+            {
+                try
+                {
+                    actEventHandler(null, new InternalCatchedExceptionEventArgs(
+                        ex, location));
+                }
+                catch { }
+            }
+        }
+
         /// <summary>
         /// This method is implemented for automated tests only!
         /// Is sets <see cref="GraphicsCore.Current"/> to null to enable a separate instance inside a using block. 
@@ -245,14 +308,26 @@ namespace SeeingSharp.Multimedia.Core
         /// This method is implemented for automated tests only!
         /// It simulates a device initialization exception all next times GraphicsCore.Initialize is called.
         /// </summary>
-        public static IDisposable AutomatedTest_ForceDeviceInitError(bool forceException)
+        public static IDisposable AutomatedTest_ForceDeviceInitError()
         {
             if (s_current != null) { throw new SeeingSharpException("This call is only valid before Initialize was called!"); }
 
-            bool prevValue = s_throwDeviceInitError;
-            s_throwDeviceInitError = forceException;
+            s_throwDeviceInitError = true;
 
-            return new DummyDisposable(() => s_throwDeviceInitError = prevValue);
+            return new DummyDisposable(() => s_throwDeviceInitError = false);
+        }
+
+        /// <summary>
+        /// This method is implemented for automated tests only!
+        /// It simulates a device initialization exception all next times GraphicsCore.Initialize is called.
+        /// </summary>
+        public static IDisposable AutomatedTest_ForceD2DInitError()
+        {
+            if (s_current != null) { throw new SeeingSharpException("This call is only valid before Initialize was called!"); }
+
+            s_throwD2DInitDeviceError = true;
+
+            return new DummyDisposable(() => s_throwD2DInitDeviceError = false);
         }
 
         /// <summary>
@@ -349,15 +424,6 @@ namespace SeeingSharp.Multimedia.Core
                 GraphicsCore.InitializeDefaultAsync()
                     .Wait();
             }
-        }
-
-        /// <summary>
-        /// Overrides the current instance with a testing instance.
-        /// This method is only meant to be used within automated tests!
-        /// </summary>
-        public static void SetTestInstance(GraphicsCore testInstance)
-        {
-            s_current = testInstance;
         }
 
         /// <summary>
@@ -509,11 +575,6 @@ namespace SeeingSharp.Multimedia.Core
             throw new NotImplementedException();
         }
 
-        public static bool IsInitializedDummy
-        {
-            get { return s_current != null; }
-        }
-
         /// <summary>
         /// Gets current singleton instance.
         /// </summary>
@@ -568,6 +629,11 @@ namespace SeeingSharp.Multimedia.Core
             {
                 return s_current?.m_initException;
             }
+        }
+
+        internal static bool ThrowD2DInitDeviceError
+        {
+            get { return s_throwD2DInitDeviceError; }
         }
 
         /// <summary>

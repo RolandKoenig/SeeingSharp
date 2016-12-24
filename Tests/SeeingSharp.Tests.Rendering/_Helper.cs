@@ -29,6 +29,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Util;
 
 namespace SeeingSharp.Tests.Rendering
 {
@@ -54,6 +55,36 @@ namespace SeeingSharp.Tests.Rendering
             }
 
             Assert.True(GraphicsCore.IsInitialized, "GraphicsCore could not be initialized!");
+
+            
+        }
+
+        public static IDisposable FailTestOnInternalExceptions()
+        {
+            Exception internalEx = null;
+            InternalExceptionLocation location = InternalExceptionLocation.DisposeGraphicsObject;
+
+            EventHandler<InternalCatchedExceptionEventArgs> eventHandler = (object sender, InternalCatchedExceptionEventArgs e) =>
+            {
+                if(internalEx == null)
+                {
+                    internalEx = e.Exception;
+                    location = e.Location;
+                }
+            };
+
+            GraphicsCore.InternalCachedException += eventHandler;
+            return new DummyDisposable(() =>
+            {
+                GraphicsCore.InternalCachedException -= eventHandler;
+
+                Assert.True(internalEx == null, $"Internal exception at {location}: {internalEx}");
+            });
+        }
+
+        private static void OnGraphicsCore_InternalCachedException(object sender, InternalCatchedExceptionEventArgs e)
+        {
+           
         }
     }
 }

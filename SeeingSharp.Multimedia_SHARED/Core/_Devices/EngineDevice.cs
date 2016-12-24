@@ -489,6 +489,16 @@ namespace SeeingSharp.Multimedia.Core
             }
         }
 
+        public bool Supports2D
+        {
+            get
+            {
+                return
+                    (m_handlerD2D != null) &&
+                    (m_handlerD2D.IsLoaded);
+            }
+        }
+
         /// <summary>
         /// Gets the main Direct3D 11 context object.
         /// </summary>

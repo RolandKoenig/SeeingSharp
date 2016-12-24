@@ -28,6 +28,42 @@ using System.Text;
 
 namespace SeeingSharp.Multimedia.Core
 {
+    public class InternalCatchedExceptionEventArgs : EventArgs
+    {
+        internal InternalCatchedExceptionEventArgs(
+            Exception ex,
+            InternalExceptionLocation location)
+        {
+            this.Exception = ex;
+            this.Location = location;
+        }
+
+        public Exception Exception
+        {
+            get;
+            private set;
+        }
+
+        public InternalExceptionLocation Location
+        {
+            get;
+            private set;
+        }
+    }
+
+    public enum InternalExceptionLocation
+    {
+        Rendering3DObject,
+
+        Loading3DObject,
+
+        UnloadingInvalid3DObject,
+
+        DisposeObject,
+
+        DisposeGraphicsObject
+    }
+
     public class ManipulateFilterListArgs : EventArgs
     {
         public ManipulateFilterListArgs(List<SceneObjectFilter> filterList)
