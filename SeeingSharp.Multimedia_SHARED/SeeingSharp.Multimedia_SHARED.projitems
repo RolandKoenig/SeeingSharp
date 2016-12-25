@@ -9,7 +9,6 @@
     <Import_RootNamespace>SeeingSharp.Multimedia_SHARED</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="$(MSBuildThisFileDirectory)Input\_Generic\" />
     <Folder Include="$(MSBuildThisFileDirectory)Objects\_ImportExport\_Formats\_Cmo\" />
     <Folder Include="$(MSBuildThisFileDirectory)Resources\Models\" />
   </ItemGroup>

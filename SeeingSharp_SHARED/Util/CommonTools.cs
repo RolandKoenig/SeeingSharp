@@ -175,6 +175,32 @@ namespace SeeingSharp.Util
             }
         }
 
+        public static bool HasAnyElement<T>(IEnumerable<T> collection)
+        {
+            IReadOnlyCollection<T> readonlyCollection = collection as IReadOnlyCollection<T>;
+            if (readonlyCollection != null)
+            {
+                return readonlyCollection.Count > 0;
+            }
+            else
+            {
+                ICollection simpleCollection = collection as ICollection;
+                if (simpleCollection != null)
+                {
+                    return simpleCollection.Count > 0;
+                }
+                else
+                {
+                    // Try to loop forward to the first element
+                    foreach(T actElement in collection)
+                    {
+                        return true;
+                    }
+                    return false;
+                }
+            }
+        }
+
         /// <summary>
         /// Gets the total count of items within the given collection.
         /// </summary>

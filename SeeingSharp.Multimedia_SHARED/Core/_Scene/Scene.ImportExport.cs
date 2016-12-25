@@ -40,7 +40,6 @@ namespace SeeingSharp.Multimedia.Core
         {
             objectsToExport.EnsureNotNull(nameof(objectsToExport));
             objectsToExport.EnsureMoreThanZeroElements(nameof(objectsToExport));
-            objectsToExport.EnsureObjectOfScene(this, nameof(objectsToExport));
 
             // Create result object container
             ExportModelContainer result = new ExportModelContainer();
@@ -52,6 +51,8 @@ namespace SeeingSharp.Multimedia.Core
                 // First step: Register all objects which we want to export
                 foreach (SceneObject actObject in objectsToExport)
                 {
+                    actObject.EnsureObjectOfScene(this, nameof(objectsToExport));
+
                     if (!actObject.IsExportable) { continue; }
 
                     result.RegisterOriginalObject(actObject);

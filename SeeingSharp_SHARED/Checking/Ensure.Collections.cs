@@ -62,17 +62,10 @@ namespace SeeingSharp.Checking
             if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
 
             // Get the collection count
-            int collectionCount = -1;
-            collectionCount = CommonTools.GetCollectionCount<T>(collection);
+            bool hasAnyElement = CommonTools.HasAnyElement(collection);
 
             // Check result
-            if(collectionCount < 0)
-            {
-                throw new SeeingSharpCheckException(string.Format(
-                    "Collection {0} within method {1} could not be checked because of unsupported type!",
-                    checkedVariableName, callerMethod));
-            }
-            else if (collectionCount == 0)
+            if(!hasAnyElement)
             {
                 throw new SeeingSharpCheckException(string.Format(
                     "Collection {0} within method {1} musst have more than zero elements!",
