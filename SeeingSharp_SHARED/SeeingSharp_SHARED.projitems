@@ -90,7 +90,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Util\_IO\_Misc.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_IO\_ResourceLinkImpl\AssemblyResourceLinkSource.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_IO\_ResourceLinkImpl\DesktopFileSystemResourceLink.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Util\_IO\_ResourceLinkImpl\StorageFileResourceLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_IO\_ResourceLinkImpl\StreamFactoryResourceLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_IO\_ResourceLinkImpl\UriResourceLink.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Util\_Messaging\MessagePublishException.cs" />

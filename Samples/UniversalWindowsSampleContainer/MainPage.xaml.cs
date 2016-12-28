@@ -27,6 +27,8 @@ namespace UniversalWindowsSampleContainer
         {
             this.InitializeComponent();
 
+            System.Security.Cryptography.MD5.Create();
+
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.BackgroundColor = Color.FromArgb(255, 126, 127, 130);
             titleBar.ForegroundColor = Colors.White;

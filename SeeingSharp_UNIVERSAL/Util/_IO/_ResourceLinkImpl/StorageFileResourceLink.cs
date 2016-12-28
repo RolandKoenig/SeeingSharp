@@ -21,7 +21,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-#if UNIVERSAL
 using System;
 using System.Threading;
 using System.IO;
@@ -36,8 +35,10 @@ namespace SeeingSharp.Util
 {
     public class StorageFileResourceLink : ResourceLink
     {
-        private StorageFile m_storageFile;
-        private StorageFolder m_storageParentFolder;
+        #region State
+        private string m_filePath;
+        private string m_folderPath;
+        #endregion
 
         /// <summary>
         /// Initializes a new instance of the <see cref="StorageFileResourceLink"/> class.
@@ -50,8 +51,27 @@ namespace SeeingSharp.Util
         {
             storageFile.EnsureNotNull(nameof(storageFile));
 
-            m_storageFile = storageFile;
-            m_storageParentFolder = parentFolder;
+            m_filePath = storageFile.Path;
+            if (parentFolder != null)
+            {
+                m_folderPath = parentFolder.Path;
+            }
+            else
+            {
+                m_folderPath = Path.GetDirectoryName(m_filePath);
+            }
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageFileResourceLink"/> class.
+        /// </summary>
+        /// <param name="filePath">The full path to the file.</param>
+        public StorageFileResourceLink(string filePath)
+        {
+            filePath.EnsureNotNullOrEmptyOrWhiteSpace(filePath);
+
+            m_filePath = filePath;
+            m_folderPath = Path.GetDirectoryName(m_filePath);
         }
 
         /// <summary>
@@ -67,13 +87,12 @@ namespace SeeingSharp.Util
         /// </summary>
         public override string ToString()
         {
-            if (!string.IsNullOrEmpty(m_storageFile.Path)) { return "StorageFile: " + m_storageFile.Path; }
-            else { return "StoageFile: " + m_storageFile.Name; }
+            return $"StorageFile: {m_filePath}, StorageFolder: {m_folderPath}";
         }
 
         public override bool Exists()
         {
-            return m_storageFile != null;
+            return File.Exists(m_filePath);
         }
 
         /// <summary>
@@ -85,17 +104,20 @@ namespace SeeingSharp.Util
         {
             newFileName.EnsureNotNullOrEmptyOrWhiteSpace(nameof(newFileName));
 
-            if(m_storageParentFolder != null)
+            if(!string.IsNullOrEmpty(m_folderPath))
             {
-                StorageFolder actStorageFolder = m_storageParentFolder;
+                string targetFolder = m_folderPath;
                 for(int loop=0; loop<subdirectories.Length; loop++)
                 {
-                    actStorageFolder = actStorageFolder.GetFolderAsync(subdirectories[loop]).AsTask().Result;
+                    if (string.IsNullOrEmpty(subdirectories[loop])) { continue; }
+
+                    targetFolder = Path.Combine(targetFolder, subdirectories[loop]);
                 }
+                string targetFile = Path.Combine(targetFolder, newFileName);
 
                 return new StorageFileResourceLink(
-                    actStorageFolder.GetFileAsync(newFileName).AsTask().Result,
-                    actStorageFolder);
+                    StorageFile.GetFileFromPathAsync(targetFile).GetResults(),
+                    StorageFolder.GetFolderFromPathAsync(targetFolder).GetResults());
             }
             else
             {
@@ -108,7 +130,7 @@ namespace SeeingSharp.Util
         /// </summary>
         public override Stream OpenInputStream()
         {
-            return m_storageFile.OpenStreamForReadAsync().Result;
+            return File.OpenRead(m_filePath);
         }
 
         /// <summary>
@@ -117,7 +139,11 @@ namespace SeeingSharp.Util
         /// <returns></returns>
         public override async Task<Stream> OpenInputStreamAsync()
         {
-            return await m_storageFile.OpenStreamForReadAsync();
+            StorageFile storageFile = await StorageFile.GetFileFromPathAsync(m_filePath)
+                .AsTask().ConfigureAwait(false);
+
+            return await storageFile.OpenStreamForReadAsync()
+                .ConfigureAwait(false);
         }
 
         /// <summary>
@@ -125,12 +151,7 @@ namespace SeeingSharp.Util
         /// </summary>
         public override Stream OpenOutputStream()
         {
-            // Bad construct to map asynchronous API to synchronous OpenInputStream function
-            // .. but it works for now and don't create a Deadlock on the UI
-            return Task.Factory.StartNew(async () =>
-            {
-                return await this.OpenInputStreamAsync().ConfigureAwait(false);
-            }).Result.Result;
+            return File.OpenWrite(m_filePath);
         }
 
         /// <summary>
@@ -140,9 +161,9 @@ namespace SeeingSharp.Util
         {
             get 
             {
-                if (string.IsNullOrEmpty(m_storageFile.Path)) { return string.Empty; }
+                if (string.IsNullOrEmpty(m_filePath)) { return string.Empty; }
 
-                return base.GetExtensionFromFileName(m_storageFile.Path);
+                return base.GetExtensionFromFileName(m_filePath);
             }
         }
 
@@ -163,4 +184,3 @@ namespace SeeingSharp.Util
         }
     }
 }
-#endif

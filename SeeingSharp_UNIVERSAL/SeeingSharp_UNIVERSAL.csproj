@@ -56,6 +56,7 @@
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\_IO\_ResourceLinkImpl\StorageFileResourceLink.cs" />
     <Compile Include="Util\_Mvvm\_Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Util\_Mvvm\_Converters\Vector2ToMultilineStringConverter.cs" />
     <Compile Include="Util\_Mvvm\_Converters\Vector3ToMultilineStringConverter.cs" />
