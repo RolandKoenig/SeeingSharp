@@ -5,9 +5,9 @@ The base library is separated into the following projects:
  - SeeingSharp.Multimedia
  - SeeingSharp.BuildTasks
  
-All libraries are optimized to work on most current Windows platforms containing Windows tablets (also ARM based), Desktop and Server Systems and Windows Phone (starting 8.1). The libraries are separated in 
+All libraries are optimized to work on most current Windows platforms containing Windows tablets, desktop and server systems, XBox One and Windows Phone (10. 8 or 8.1 is not supported anymore). The libraries are separated in 
  - a "DESKTOP" version optimized for Windows.Forms and WPF.
- - a "UNIVERSAL" version optimized for Windows Store and Windows Phone Store.
+ - a "UNIVERSAL" version optimized for Windows Store (UWP)
 
 You can download the current stable version of Seeing# using Nuget:
 https://www.nuget.org/packages?q=SeeingSharp
