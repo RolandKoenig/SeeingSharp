@@ -25,11 +25,7 @@ https://www.nuget.org/packages?q=SeeingSharp
 See separated GitHub project 
 https://github.com/RolandKoenig/SeeingSharp.Tutorials
 
-### Library SeeingSharp
-This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
-
-### Library SeeingSharp.Multimedia
-This one is the most complex library in this project. It contains the graphics engine with the following features.
+### Features
  - Full integration into Windows.Forms, WPF and WinRT
  - Heavy multithreading (all calculations and rendering is done in background threads)
  - Working with multiple graphics devices at once (dynamically configure the target device per view)
@@ -39,4 +35,10 @@ This one is the most complex library in this project. It contains the graphics e
  - Support for software rendering using WARP technology
  - Integration of Direct2D directly into the 3D render process (works also on Windows 7 platform)
  - Integration of Media Foundation to enable VideoTextures (read video files) and VideoCapturing (write video files)
+ - Import of external 3D models 
+ - Building of custom 3D models by code
  - And much more..
+
+### Libraries
+ - SeeingSharp: This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
+ - SeeingSharp.Multimedia: This one is the most complex library in this project. It contains the graphics engine, classes for video/sound, ...
