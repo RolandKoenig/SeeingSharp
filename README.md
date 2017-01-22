@@ -1,5 +1,9 @@
 # SeeingSharp
-SeeingSharp is an application framework including a DirectX based graphics engine which I'am using for most of my hobby projects. 
+### Screenshots
+![alt tag](Misc/WikiImages/SeeingSharp_Samples.png)
+
+### Common information
+SeeingSharp is library including a DirectX based graphics engine which I'am using for most of my hobby projects. 
 The base library is separated into the following projects:
  - SeeingSharp
  - SeeingSharp.Multimedia
@@ -12,8 +16,10 @@ All libraries are optimized to work on most current Windows platforms containing
 You can download the current stable version of Seeing# using Nuget:
 https://www.nuget.org/packages?q=SeeingSharp
 
-### Screenshots
-![alt tag](Misc/WikiImages/SeeingSharp_Samples.png)
+### Sample apps
+ - Windows.Forms: http://www.rolandk.de/files/frozensky.samples/winforms/setup.exe
+ - WPF: http://www.rolandk.de/files/frozensky.samples/wpf/setup.exe
+ - Windows Store: https://www.microsoft.com/de-de/store/p/seeing-samples/9nblggh1rj07
 
 ### Library SeeingSharp
 This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
