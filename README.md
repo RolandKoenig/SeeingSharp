@@ -7,7 +7,7 @@ The base library is separated into the following projects:
  
 All libraries are optimized to work on most current Windows platforms containing Windows tablets, desktop and server systems, XBox One and Windows Phone (10. 8 or 8.1 is not supported anymore). The libraries are separated in 
  - a "DESKTOP" version optimized for Windows.Forms and WPF.
- - a "UNIVERSAL" version optimized for Windows Store (UWP)
+ - a "UNIVERSAL" version optimized for Windows Store (UWP) (for tablet, phone and XBox One)
 
 You can download the current stable version of Seeing# using Nuget:
 https://www.nuget.org/packages?q=SeeingSharp
