@@ -21,6 +21,10 @@ https://www.nuget.org/packages?q=SeeingSharp
  - WPF: http://www.rolandk.de/files/frozensky.samples/wpf/setup.exe
  - Windows Store: https://www.microsoft.com/de-de/store/p/seeing-samples/9nblggh1rj07
 
+### Tutorials
+See separated GitHub project 
+https://github.com/RolandKoenig/SeeingSharp.Tutorials
+
 ### Library SeeingSharp
 This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
 
