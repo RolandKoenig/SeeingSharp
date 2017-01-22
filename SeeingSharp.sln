@@ -25,6 +25,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{4EBD257C-4
 		Misc\_SeeingSharp.Tools.licenseheader = Misc\_SeeingSharp.Tools.licenseheader
 		LICENSE = LICENSE
 		LicenseOverview.xlsx = LicenseOverview.xlsx
+		README.md = README.md
 		Misc\SolutionInfo.cs = Misc\SolutionInfo.cs
 	EndProjectSection
 EndProject
@@ -86,7 +87,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\SeeingSharp.Samples\SeeingSharp.Samples.projitems*{1e91e314-92a5-4d55-b227-fd0af4427c71}*SharedItemsImports = 4
 		Samples\SeeingSharp.Samples\SeeingSharp.Samples.projitems*{2f1fd63d-4ec2-4fc9-b91f-c655029a7ed3}*SharedItemsImports = 13
-		SeeingSharp_SHARED\SeeingSharp_SHARED.projitems*{4a63b2b9-ed7d-427f-80f2-1b253d927f00}*SharedItemsImports = 4
 		SeeingSharp_SHARED\SeeingSharp_SHARED.projitems*{6db78969-0fff-4778-912a-194846229fda}*SharedItemsImports = 4
 		SeeingSharp.Multimedia_SHARED\SeeingSharp.Multimedia_SHARED.projitems*{761c1f6e-0eca-42b8-a9af-86d0570b9ce8}*SharedItemsImports = 4
 		SeeingSharp.Multimedia_SHARED\SeeingSharp.Multimedia_SHARED.projitems*{7d56912b-c3e5-4b80-9171-53e447ac1429}*SharedItemsImports = 13

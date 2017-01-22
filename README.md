@@ -12,6 +12,9 @@ All libraries are optimized to work on most current Windows platforms containing
 You can download the current stable version of Seeing# using Nuget:
 https://www.nuget.org/packages?q=SeeingSharp
 
+### Screenshots
+![alt tag](Misc/WikiImages/SeeingSharp_Samples.png)
+
 ### Library SeeingSharp
 This one contains all base classes including resource loading/saving, helpers for the MVVM pattern, a main service container and much more. I put all methods/classes there which are not directly related to graphics processing.
 
