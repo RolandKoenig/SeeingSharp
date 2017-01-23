@@ -31,14 +31,16 @@ namespace SeeingSharp.Multimedia.Core
     {
         private const string TRANSLATABLE_GROUP_COMMON_OUTPUT_INFO = "Common output information";
 
+        private int m_adapterIndex;
         private int m_outputIndex;
         private DXGI.OutputDescription m_outputDescription;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineOutputInfo" /> class.
         /// </summary>
-        internal EngineOutputInfo(int outputIndex, DXGI.Output output)
+        internal EngineOutputInfo(int adapterIndex, int outputIndex, DXGI.Output output)
         {
+            m_adapterIndex = adapterIndex;
             m_outputIndex = outputIndex;
             m_outputDescription = output.Description;
         }
@@ -51,10 +53,34 @@ namespace SeeingSharp.Multimedia.Core
             get { return m_outputDescription.DeviceName; }
         }
 
+        public int AdapterIndex
+        {
+            get { return m_adapterIndex; }
+        }
+
+        public int OutputIndex
+        {
+            get { return m_outputIndex; }
+        }
+
         public bool IsAttachedToDesktop
         {
             get { return m_outputDescription.IsAttachedToDesktop; }
         }
+
+        /// <summary>
+        /// Gets the total count of pixels on X axis.
+        /// </summary>
+        public int DesktopWidth => m_outputDescription.DesktopBounds.Right - m_outputDescription.DesktopBounds.Left;
+
+        /// <summary>
+        /// Gets the total count of pixels on Y axis.
+        /// </summary>
+        public int DesktopHeight => m_outputDescription.DesktopBounds.Bottom - m_outputDescription.DesktopBounds.Top;
+
+        public int DesktopXPos => m_outputDescription.DesktopBounds.Left;
+
+        public int DesktopYPos => m_outputDescription.DesktopBounds.Top;
 
         public string DesktopResolution
         {

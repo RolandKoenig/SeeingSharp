@@ -64,6 +64,20 @@ namespace SeeingSharp.Multimedia.Core
             LoadAdapterInformation();
         }
 
+        internal DXGI.Output GetOutputByOutputInfo(EngineOutputInfo outputInfo)
+        {
+            int adapterCount = m_dxgiFactory.GetAdapterCount1();
+            if(outputInfo.AdapterIndex >= adapterCount) { throw new SeeingSharpException($"Unable to find adapter with index {outputInfo.AdapterIndex}!"); }
+
+            using (DXGI.Adapter1 adapter = m_dxgiFactory.GetAdapter1(outputInfo.AdapterIndex))
+            {
+                int outputCount = adapter.GetOutputCount();
+                if(outputInfo.OutputIndex >= outputCount) { throw new SeeingSharpException($"Unable to find output with index {outputInfo.OutputIndex} on adapter {outputInfo.AdapterIndex}!"); }
+
+                return adapter.GetOutput(outputInfo.OutputIndex);
+            }
+        }
+
         /// <summary>
         /// Loads all adapter information and builds up all needed view models in a background thread.
         /// </summary>

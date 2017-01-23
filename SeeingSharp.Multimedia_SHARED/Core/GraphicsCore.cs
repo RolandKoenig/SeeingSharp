@@ -604,9 +604,22 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the dxgi factory object.
         /// </summary>
-        internal EngineHardwareInfo HardwareInfo
+        public EngineHardwareInfo HardwareInfo
         {
             get { return m_hardwareInfo; }
+        }
+
+        /// <summary>
+        /// Gets the first output monitor.
+        /// </summary>
+        public EngineOutputInfo DefaultOutput
+        {
+            get
+            {
+                return m_hardwareInfo.Adapters
+                    .FirstOrDefault()?
+                    .Outputs.FirstOrDefault();
+            }
         }
 
         /// <summary>

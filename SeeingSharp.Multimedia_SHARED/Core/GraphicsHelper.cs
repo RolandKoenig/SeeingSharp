@@ -60,6 +60,62 @@ namespace SeeingSharp.Multimedia.Core
         internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT_D2D = WIC.PixelFormat.Format32bppPBGRA;
 
 #if DESKTOP
+        internal static Tuple<WinForms.Form, DXGI.SwapChain1> CreateSwapChainForFullScreen(EngineOutputInfo outputInfo, EngineDevice device, GraphicsViewConfiguration gfxConfig)
+        {
+            device.EnsureNotNull(nameof(device));
+            gfxConfig.EnsureNotNull(nameof(gfxConfig));
+
+            WinForms.Form resultForm = new WinForms.Form();
+            resultForm.Location = new GDI.Point(
+                outputInfo.DesktopXPos + 10,
+                outputInfo.DesktopYPos + 10);
+            resultForm.Size = new System.Drawing.Size(outputInfo.DesktopWidth, outputInfo.DesktopHeight);
+            resultForm.CreateControl();
+            //resultForm.SetStyle(WinForms.ControlStyles.AllPaintingInWmPaint, true);
+            //resultForm.SetStyle(WinForms.ControlStyles.ResizeRedraw, true);
+            //resultForm.SetStyle(WinForms.ControlStyles.OptimizedDoubleBuffer, false);
+            //resultForm.SetStyle(WinForms.ControlStyles.Opaque, true);
+            //resultForm.SetStyle(WinForms.ControlStyles.Selectable, true);
+            //resultForm.DoubleBuffered = false;
+
+            // Create the swap chain description
+            DXGI.SwapChainDescription1 swapChainDesc = new DXGI.SwapChainDescription1();
+            if (gfxConfig.AntialiasingEnabled && device.IsStandardAntialiasingPossible)
+            {
+                swapChainDesc.BufferCount = 2;
+                swapChainDesc.SampleDescription = device.GetSampleDescription(gfxConfig.AntialiasingQuality);
+            }
+            else
+            {
+                swapChainDesc.BufferCount = 2;
+                swapChainDesc.SampleDescription = new DXGI.SampleDescription(1, 0);
+            }
+
+            // Set common parameters
+            swapChainDesc.Width = outputInfo.DesktopWidth;
+            swapChainDesc.Height = outputInfo.DesktopHeight;
+            swapChainDesc.Format = DEFAULT_TEXTURE_FORMAT;
+            swapChainDesc.Scaling = DXGI.Scaling.Stretch;
+            swapChainDesc.SwapEffect = DXGI.SwapEffect.Discard;
+            swapChainDesc.Usage = DXGI.Usage.RenderTargetOutput;
+            swapChainDesc.Flags = DXGI.SwapChainFlags.AllowModeSwitch;
+
+            // Create and return the swap chain and the render target
+            DXGI.SwapChain1 resultSwapChain = new DXGI.SwapChain1(
+                device.FactoryDxgi, device.DeviceD3D11, resultForm.Handle,
+                ref swapChainDesc,
+                new SharpDX.DXGI.SwapChainFullScreenDescription()
+                {
+                    RefreshRate = new DXGI.Rational(60, 1),
+                    Scaling = SharpDX.DXGI.DisplayModeScaling.Centered,
+                    Windowed = true
+                },
+                null);
+
+            // Return both created objects
+            return Tuple.Create(resultForm, resultSwapChain);
+        }
+
         /// <summary>
         /// Creates a default SwapChain for the given target control.
         /// </summary>

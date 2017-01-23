@@ -117,6 +117,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="Views\Design\SeeingSharpRenderControlSceneComponentsEditor.cs" />
+    <Compile Include="Views\FullscreenRenderTarget.cs" />
     <Compile Include="Views\SeeingSharpRendererControl.cs">
       <SubType>Component</SubType>
     </Compile>
