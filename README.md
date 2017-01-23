@@ -3,13 +3,13 @@
 ![alt tag](Misc/WikiImages/SeeingSharp_Samples.png)
 
 ### Common information
-SeeingSharp is library including a DirectX based graphics engine which I'am using for most of my hobby projects. 
+SeeingSharp is a library including a DirectX based graphics engine which I'am using for most of my hobby projects. 
 The base library is separated into the following projects:
  - SeeingSharp
  - SeeingSharp.Multimedia
  - SeeingSharp.BuildTasks
  
-All libraries are optimized to work on most current Windows platforms containing Windows tablets, desktop and server systems, XBox One and Windows Phone (10. 8 or 8.1 is not supported anymore). The libraries are separated in 
+All libraries are optimized to work on most current Windows platforms containing Windows tablets, desktop and server systems, XBox One and Windows Phone 10 (8 or 8.1 is not supported anymore). The libraries are separated in 
  - a "DESKTOP" version optimized for Windows.Forms and WPF.
  - a "UNIVERSAL" version optimized for Windows Store (UWP) (for tablet, phone and XBox One)
 
@@ -35,8 +35,8 @@ https://github.com/RolandKoenig/SeeingSharp.Tutorials
  - Support for software rendering using WARP technology
  - Integration of Direct2D directly into the 3D render process (works also on Windows 7 platform)
  - Integration of Media Foundation to enable VideoTextures (read video files) and VideoCapturing (write video files)
- - Import of external 3D models 
- - Building of custom 3D models by code
+ - Import external 3D models 
+ - Build custom 3D models by code
  - And much more..
 
 ### Libraries
