@@ -21,7 +21,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-#if DESKTOP
 
 using System;
 using System.Collections.Generic;
@@ -113,7 +112,7 @@ namespace SeeingSharp.Multimedia.Input
         /// </summary>
         public Type[] GetSupportedViewTypes()
         {
-            return new Type[] { typeof(Control) };
+            return new Type[] { typeof(Control), typeof(IInputControlHost) };
         }
 
         /// <summary>
@@ -123,9 +122,14 @@ namespace SeeingSharp.Multimedia.Input
         public void Start(IInputEnabledView viewObject)
         {
             m_currentControl = viewObject as Control;
-            if (m_currentControl == null) { throw new ArgumentException("Unable to handle given view object!"); }
+            if (m_currentControl == null)
+            {
+                IInputControlHost inputControlHost = viewObject as IInputControlHost;
+                m_currentControl = inputControlHost?.GetWinFormsInputControl();
+                if (m_currentControl == null) { throw new ArgumentException("Unable to handle given view object!"); }
+            }
 
-            m_focusHandler = m_currentControl as IInputEnabledView;
+            m_focusHandler = viewObject as IInputEnabledView;
             if (m_focusHandler == null) { throw new ArgumentException("Unable to handle given view object!"); }
 
             m_renderLoop = m_focusHandler.RenderLoop;
@@ -368,4 +372,3 @@ namespace SeeingSharp.Multimedia.Input
         }
     }
 }
-#endif

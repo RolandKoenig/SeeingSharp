@@ -60,23 +60,16 @@ namespace SeeingSharp.Multimedia.Core
         internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT_D2D = WIC.PixelFormat.Format32bppPBGRA;
 
 #if DESKTOP
-        internal static Tuple<WinForms.Form, DXGI.SwapChain1> CreateSwapChainForFullScreen(EngineOutputInfo outputInfo, EngineDevice device, GraphicsViewConfiguration gfxConfig)
+        internal static DXGI.SwapChain1 CreateSwapChainForFullScreen(WinForms.Form hostForm, EngineOutputInfo outputInfo, EngineDevice device, GraphicsViewConfiguration gfxConfig)
         {
             device.EnsureNotNull(nameof(device));
             gfxConfig.EnsureNotNull(nameof(gfxConfig));
 
-            WinForms.Form resultForm = new WinForms.Form();
-            resultForm.Location = new GDI.Point(
+            hostForm.Location = new GDI.Point(
                 outputInfo.DesktopXPos + 10,
                 outputInfo.DesktopYPos + 10);
-            resultForm.Size = new System.Drawing.Size(outputInfo.DesktopWidth, outputInfo.DesktopHeight);
-            resultForm.CreateControl();
-            //resultForm.SetStyle(WinForms.ControlStyles.AllPaintingInWmPaint, true);
-            //resultForm.SetStyle(WinForms.ControlStyles.ResizeRedraw, true);
-            //resultForm.SetStyle(WinForms.ControlStyles.OptimizedDoubleBuffer, false);
-            //resultForm.SetStyle(WinForms.ControlStyles.Opaque, true);
-            //resultForm.SetStyle(WinForms.ControlStyles.Selectable, true);
-            //resultForm.DoubleBuffered = false;
+            hostForm.Size = new System.Drawing.Size(outputInfo.DesktopWidth, outputInfo.DesktopHeight);
+            if (!hostForm.IsHandleCreated) { hostForm.CreateControl(); }
 
             // Create the swap chain description
             DXGI.SwapChainDescription1 swapChainDesc = new DXGI.SwapChainDescription1();
@@ -102,7 +95,7 @@ namespace SeeingSharp.Multimedia.Core
 
             // Create and return the swap chain and the render target
             DXGI.SwapChain1 resultSwapChain = new DXGI.SwapChain1(
-                device.FactoryDxgi, device.DeviceD3D11, resultForm.Handle,
+                device.FactoryDxgi, device.DeviceD3D11, hostForm.Handle,
                 ref swapChainDesc,
                 new SharpDX.DXGI.SwapChainFullScreenDescription()
                 {
@@ -113,7 +106,7 @@ namespace SeeingSharp.Multimedia.Core
                 null);
 
             // Return both created objects
-            return Tuple.Create(resultForm, resultSwapChain);
+            return resultSwapChain;
         }
 
         /// <summary>

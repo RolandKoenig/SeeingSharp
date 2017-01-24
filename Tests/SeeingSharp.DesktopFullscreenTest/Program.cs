@@ -1,4 +1,5 @@
 ﻿using SeeingSharp.Multimedia.Core;
+using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Multimedia.Views;
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,43 @@ namespace SeeingSharp.DesktopFullscreenTest
             s_renderTarget = new FullscreenRenderTarget(
                 GraphicsCore.Current.DefaultOutput);
             s_renderTarget.ClearColor = Color4.CornflowerBlue;
+            s_renderTarget.RenderLoop.SceneComponents.Add(
+                new ExitComponent());
+            
+        }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        private class ExitComponent : SceneComponent
+        {
+            public ExitComponent()
+            {
+
+            }
+
+            protected override void Attach(SceneManipulator manipulator, ViewInformation correspondingView)
+            {
+                
+            }
+
+            protected override void Detach(SceneManipulator manipulator, ViewInformation correspondingView)
+            {
+                
+            }
+
+            protected override void Update(SceneRelatedUpdateState updateState, ViewInformation correspondingView)
+            {
+                base.Update(updateState, correspondingView);
+
+                foreach(var actInputFrame in updateState.InputFrames)
+                {
+                    if(actInputFrame.DefaultKeyboard.IsKeyDown(WinVirtualKey.Escape))
+                    {
+                        Environment.Exit(0);
+                    }
+                }
+            }
         }
     }
 }

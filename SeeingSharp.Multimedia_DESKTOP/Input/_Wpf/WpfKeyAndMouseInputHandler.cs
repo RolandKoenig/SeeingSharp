@@ -21,7 +21,6 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
-#if DESKTOP
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Drawing3D;
 using SeeingSharp.Multimedia.Views;
@@ -307,4 +306,3 @@ namespace SeeingSharp.Multimedia.Input
         }
     }
 }
-#endif

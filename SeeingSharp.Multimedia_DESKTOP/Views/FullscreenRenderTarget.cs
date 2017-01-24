@@ -42,7 +42,8 @@ namespace SeeingSharp.Multimedia.Views
 {
     //For handling of staging resource see
     // http://msdn.microsoft.com/en-us/library/windows/desktop/ff476259(v=vs.85).aspx
-    public class FullscreenRenderTarget : IDisposable, ISeeingSharpPainter, IRenderLoopHost
+    public class FullscreenRenderTarget 
+        : IDisposable, ISeeingSharpPainter, IRenderLoopHost, IInputEnabledView, IInputControlHost
     {
         #region Configuration
         private EngineOutputInfo m_targetOutput;
@@ -61,7 +62,7 @@ namespace SeeingSharp.Multimedia.Views
         #endregion
 
         #region All needed direct3d resources
-        private Form m_dummyForm;
+        private DummyForm m_dummyForm;
         private D3D11.Device m_device;
         private D3D11.DeviceContext m_deviceContext;
         private DXGI.SwapChain1 m_swapChain;
@@ -106,8 +107,19 @@ namespace SeeingSharp.Multimedia.Views
 
             m_renderAwaitors = new ThreadSaveQueue<TaskCompletionSource<object>>();
 
-            //Create the RenderLoop object
+            // Ensure that graphics is initialized
             GraphicsCore.Touch();
+
+            // Create the dummy form
+            m_dummyForm = new DummyForm();
+            m_dummyForm.SetStyleCustom(ControlStyles.AllPaintingInWmPaint, true);
+            m_dummyForm.SetStyleCustom(ControlStyles.ResizeRedraw, true);
+            m_dummyForm.SetStyleCustom(ControlStyles.OptimizedDoubleBuffer, false);
+            m_dummyForm.SetStyleCustom(ControlStyles.Opaque, true);
+            m_dummyForm.SetStyleCustom(ControlStyles.Selectable, true);
+            m_dummyForm.SetDoubleBuffered(false);
+
+            // Create and start the renderloop
             m_renderLoop = new RenderLoop(syncContext, this);
             m_renderLoop.Camera.SetScreenSize(pixelWidth, pixelHeight);
             m_renderLoop.RegisterRenderLoop();
@@ -134,6 +146,11 @@ namespace SeeingSharp.Multimedia.Views
             m_renderLoop.Dispose();
         }
 
+        Control IInputControlHost.GetWinFormsInputControl()
+        {
+            return m_dummyForm;
+        }
+
         /// <summary>
         /// Disposes all loaded view resources.
         /// </summary>
@@ -145,8 +162,6 @@ namespace SeeingSharp.Multimedia.Views
             m_renderTarget = GraphicsHelper.DisposeObject(m_renderTarget);
             m_copyHelperTextureStaging = GraphicsHelper.DisposeObject(m_copyHelperTextureStaging);
             m_swapChain = GraphicsHelper.DisposeObject(m_swapChain);
-
-            m_dummyForm = GraphicsHelper.DisposeObject(m_dummyForm);
 
             m_device = null;
             m_deviceContext = null;
@@ -165,9 +180,7 @@ namespace SeeingSharp.Multimedia.Views
             m_deviceContext = m_device.ImmediateContext;
 
             // Create swapchain and dummy form
-            Tuple<Form, DXGI.SwapChain1> dummy = GraphicsHelper.CreateSwapChainForFullScreen(m_targetOutput, device, m_renderLoop.ViewConfiguration);
-            m_dummyForm = dummy.Item1;
-            m_swapChain = dummy.Item2;
+            m_swapChain = GraphicsHelper.CreateSwapChainForFullScreen(m_dummyForm, m_targetOutput, device, m_renderLoop.ViewConfiguration);
 
             // Take width and height out of the render target
             m_renderTarget = D3D11.Texture2D.FromSwapChain<D3D11.Texture2D>(m_swapChain, 0);
@@ -276,6 +289,30 @@ namespace SeeingSharp.Multimedia.Views
         public bool IsOperational
         {
             get { return m_renderLoop.IsOperational; }
+        }
+
+        public bool Focused
+        {
+            get
+            {
+                return (m_dummyForm != null) && (m_dummyForm.ContainsFocus);
+            }
+        }
+
+        //*********************************************************************
+        //*********************************************************************
+        //*********************************************************************
+        private class DummyForm : Form
+        {
+            public void SetStyleCustom(ControlStyles flag, bool value)
+            {
+                base.SetStyle(flag, value);
+            }
+
+            public void SetDoubleBuffered(bool value)
+            {
+                base.DoubleBuffered = value;
+            }
         }
     }
 }

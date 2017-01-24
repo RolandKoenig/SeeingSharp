@@ -109,7 +109,10 @@
     <Compile Include="..\Misc\SolutionInfo.cs">
       <Link>Properties\SolutionInfo.cs</Link>
     </Compile>
+    <Compile Include="Input\IInputControlHost.cs" />
     <Compile Include="Input\_Generic\GenericXInputHandler.cs" />
+    <Compile Include="Input\_WinForms\WinFormsKeyAndMouseInputHandler.cs" />
+    <Compile Include="Input\_Wpf\WpfKeyAndMouseInputHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
