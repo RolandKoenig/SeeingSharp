@@ -9,13 +9,15 @@ namespace SeeingSharp.Multimedia.Core
 {
     public struct EngineOutputModeInfo : IEquatable<EngineOutputModeInfo>
     {
+        private EngineOutputInfo m_hostOutput;
         private int m_pixelWidth;
         private int m_pixelHeight;
         private int m_refreshRateNumerator;
         private int m_refreshRateDenominator;
 
-        internal EngineOutputModeInfo(DXGI.ModeDescription modeDescription)
+        internal EngineOutputModeInfo(EngineOutputInfo hostOutput, DXGI.ModeDescription modeDescription)
         {
+            m_hostOutput = hostOutput;
             m_pixelWidth = modeDescription.Width;
             m_pixelHeight = modeDescription.Height;
             m_refreshRateNumerator = modeDescription.RefreshRate.Numerator;
@@ -67,6 +69,11 @@ namespace SeeingSharp.Multimedia.Core
                 return false;
 
             return Equals((EngineOutputInfo)value);
+        }
+
+        public EngineOutputInfo HostOutput
+        {
+            get { return m_hostOutput; }
         }
 
         public int PixelWidth

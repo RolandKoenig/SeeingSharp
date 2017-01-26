@@ -31,6 +31,7 @@ using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.ComponentModel;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -47,8 +48,6 @@ namespace SeeingSharp.Multimedia.Views
     {
         #region Configuration
         private EngineOutputInfo m_targetOutput;
-        private int m_pixelWidth;
-        private int m_pixelHeight;
         private SynchronizationContext m_syncContext;
         #endregion
 
@@ -100,11 +99,6 @@ namespace SeeingSharp.Multimedia.Views
 
             //Set confiugration
             m_targetOutput = outputInfo;
-            m_pixelWidth = pixelWidth;
-            m_pixelHeight = pixelHeight;
-            if(m_pixelWidth <= 0) { m_pixelWidth = outputInfo.SupportedModes[0].PixelWidth; }
-            if(m_pixelHeight <= 0) { m_pixelHeight = outputInfo.SupportedModes[0].PixelHeight; }
-
             m_renderAwaitors = new ThreadSaveQueue<TaskCompletionSource<object>>();
 
             // Ensure that graphics is initialized
@@ -118,6 +112,7 @@ namespace SeeingSharp.Multimedia.Views
             m_dummyForm.SetStyleCustom(ControlStyles.Opaque, true);
             m_dummyForm.SetStyleCustom(ControlStyles.Selectable, true);
             m_dummyForm.SetDoubleBuffered(false);
+            m_dummyForm.CreateControl();
 
             // Create and start the renderloop
             m_renderLoop = new RenderLoop(syncContext, this);
@@ -172,29 +167,31 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.Mathematics.Interop.RawViewportF, Size2, DpiScaling> IRenderLoopHost.OnRenderLoop_CreateViewResources(EngineDevice device)
         {
-            int width = m_pixelWidth;
-            int height = m_pixelHeight;
-
             //Get references to current render device
             m_device = device.DeviceD3D11;
             m_deviceContext = m_device.ImmediateContext;
 
+            EngineOutputModeInfo outpoutMode = m_targetOutput.SupportedModes.First();
+
             // Create swapchain and dummy form
-            m_swapChain = GraphicsHelper.CreateSwapChainForFullScreen(m_dummyForm, m_targetOutput, device, m_renderLoop.ViewConfiguration);
+            m_swapChain = GraphicsHelper.CreateSwapChainForFullScreen(
+                m_dummyForm, 
+                m_targetOutput, outpoutMode,
+                device, m_renderLoop.ViewConfiguration);
 
             // Take width and height out of the render target
             m_renderTarget = D3D11.Texture2D.FromSwapChain<D3D11.Texture2D>(m_swapChain, 0);
             m_renderTargetView = new D3D11.RenderTargetView(m_device, m_renderTarget);
 
             //Create the depth buffer
-            m_renderTargetDepth = GraphicsHelper.CreateDepthBufferTexture(device, width, height, m_renderLoop.ViewConfiguration);
+            m_renderTargetDepth = GraphicsHelper.CreateDepthBufferTexture(device, outpoutMode.PixelWidth, outpoutMode.PixelHeight, m_renderLoop.ViewConfiguration);
             m_renderTargetDepthView = new D3D11.DepthStencilView(m_device, m_renderTargetDepth);
 
             //Define the viewport for rendering
-            SharpDX.Mathematics.Interop.RawViewportF viewPort = GraphicsHelper.CreateDefaultViewport(width, height);
+            SharpDX.Mathematics.Interop.RawViewportF viewPort = GraphicsHelper.CreateDefaultViewport(outpoutMode.PixelWidth, outpoutMode.PixelHeight);
 
             //Return all generated objects
-            return Tuple.Create(m_renderTarget, m_renderTargetView, m_renderTargetDepth, m_renderTargetDepthView, viewPort, new Size2(width, height), DpiScaling.Default);
+            return Tuple.Create(m_renderTarget, m_renderTargetView, m_renderTargetDepth, m_renderTargetDepthView, viewPort, new Size2(outpoutMode.PixelWidth, outpoutMode.PixelHeight), DpiScaling.Default);
         }
 
         /// <summary>

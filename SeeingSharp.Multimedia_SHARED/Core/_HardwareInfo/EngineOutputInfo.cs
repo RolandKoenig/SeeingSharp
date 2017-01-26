@@ -57,7 +57,7 @@ namespace SeeingSharp.Multimedia.Core
             EngineOutputModeInfo[] engineModes = new EngineOutputModeInfo[modes.Length];
             for(int loop=0; loop<engineModes.Length; loop++)
             {
-                engineModes[loop] = new EngineOutputModeInfo(modes[loop]);
+                engineModes[loop] = new EngineOutputModeInfo(this, modes[loop]);
             }
             Array.Sort(engineModes, (left, right) =>
             {

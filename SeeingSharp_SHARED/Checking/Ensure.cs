@@ -39,6 +39,21 @@ namespace SeeingSharp.Checking
     /// </summary>
     public static partial class Ensure
     {
+        public static void EnsureEqual(
+            this object toCompare, object other, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if (toCompare != other)
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Object {0} within method {1} has not the expected value!",
+                    checkedVariableName, callerMethod));
+            }
+        }
+
         [Conditional("DEBUG")]
         public static void EnsureNotNullOrDisposed(
             this ICheckDisposed disposable, string checkedVariableName,

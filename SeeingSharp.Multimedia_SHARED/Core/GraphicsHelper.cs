@@ -60,15 +60,19 @@ namespace SeeingSharp.Multimedia.Core
         internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT_D2D = WIC.PixelFormat.Format32bppPBGRA;
 
 #if DESKTOP
-        internal static DXGI.SwapChain1 CreateSwapChainForFullScreen(WinForms.Form hostForm, EngineOutputInfo outputInfo, EngineDevice device, GraphicsViewConfiguration gfxConfig)
+        internal static DXGI.SwapChain1 CreateSwapChainForFullScreen(
+            WinForms.Form hostForm, 
+            EngineOutputInfo outputInfo, EngineOutputModeInfo outputMode,
+            EngineDevice device, GraphicsViewConfiguration gfxConfig)
         {
             device.EnsureNotNull(nameof(device));
             gfxConfig.EnsureNotNull(nameof(gfxConfig));
+            outputMode.HostOutput.EnsureEqual(outputInfo, $"{nameof(outputMode)}.{nameof(outputMode.HostOutput)}");
 
             hostForm.Location = new GDI.Point(
                 outputInfo.DesktopXPos + 10,
                 outputInfo.DesktopYPos + 10);
-            hostForm.Size = new System.Drawing.Size(outputInfo.DesktopWidth, outputInfo.DesktopHeight);
+            hostForm.Size = new System.Drawing.Size(outputMode.PixelWidth, outputMode.PixelHeight);
             if (!hostForm.IsHandleCreated) { hostForm.CreateControl(); }
 
             // Create the swap chain description
@@ -85,8 +89,8 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Set common parameters
-            swapChainDesc.Width = outputInfo.DesktopWidth;
-            swapChainDesc.Height = outputInfo.DesktopHeight;
+            swapChainDesc.Width = outputMode.PixelWidth;
+            swapChainDesc.Height = outputMode.PixelHeight;
             swapChainDesc.Format = DEFAULT_TEXTURE_FORMAT;
             swapChainDesc.Scaling = DXGI.Scaling.Stretch;
             swapChainDesc.SwapEffect = DXGI.SwapEffect.Discard;
@@ -100,7 +104,7 @@ namespace SeeingSharp.Multimedia.Core
                 new SharpDX.DXGI.SwapChainFullScreenDescription()
                 {
                     RefreshRate = new DXGI.Rational(60, 1),
-                    Scaling = SharpDX.DXGI.DisplayModeScaling.Centered,
+                    Scaling = SharpDX.DXGI.DisplayModeScaling.Unspecified,
                     Windowed = true
                 },
                 null);

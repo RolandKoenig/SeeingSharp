@@ -30,6 +30,7 @@ using System.Text;
 using System.Numerics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SeeingSharp.Util;
 using SeeingSharp.Infrastructure;
 using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Drawing3D;
@@ -136,9 +137,9 @@ namespace SeeingSharp.Multimedia.Input
             if (m_renderLoop == null) { throw new ArgumentException("Unable to handle given view object!"); }
 
             // Perform event registrations on UI thread
-            m_currentControl.BeginInvoke(new Action(() =>
+            viewObject.RenderLoop.UISynchronizationContext.PostAsync(() =>
             {
-                if(m_currentControl == null) { return; }
+                if (m_currentControl == null) { return; }
 
                 m_currentControl.MouseEnter += OnMouseEnter;
                 m_currentControl.MouseClick += OnMouseClick;
@@ -151,8 +152,7 @@ namespace SeeingSharp.Multimedia.Input
                 m_currentControl.KeyDown += OnKeyDown;
                 m_currentControl.LostFocus += OnLostFocus;
                 m_currentControl.GotFocus += OnGotFocus;
-            }));
-
+            }).FireAndForget();
         }
 
         /// <summary>
