@@ -102,8 +102,8 @@ namespace SeeingSharp.Multimedia.Views
             m_targetOutput = outputInfo;
             m_pixelWidth = pixelWidth;
             m_pixelHeight = pixelHeight;
-            if(m_pixelWidth <= 0) { m_pixelWidth = outputInfo.DesktopWidth; }
-            if(m_pixelHeight <= 0) { m_pixelHeight = outputInfo.DesktopHeight; }
+            if(m_pixelWidth <= 0) { m_pixelWidth = outputInfo.SupportedModes[0].PixelWidth; }
+            if(m_pixelHeight <= 0) { m_pixelHeight = outputInfo.SupportedModes[0].PixelHeight; }
 
             m_renderAwaitors = new ThreadSaveQueue<TaskCompletionSource<object>>();
 

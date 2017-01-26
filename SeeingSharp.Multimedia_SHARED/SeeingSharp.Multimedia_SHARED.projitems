@@ -6,7 +6,7 @@
     <SharedGUID>7d56912b-c3e5-4b80-9171-53e447ac1429</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>SeeingSharp.Multimedia_SHARED</Import_RootNamespace>
+    <Import_RootNamespace>SeeingSharp.Multimedia</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)Objects\_ImportExport\_Formats\_Cmo\" />
@@ -97,6 +97,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\_HardwareInfo\EngineAdapterInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_HardwareInfo\EngineHardwareInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_HardwareInfo\EngineOutputInfo.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\_HardwareInfo\EngineOutputModeInfo.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_HostedObjects\DummyOpacityProvider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_HostedObjects\HostedObjectTransformDataMapper.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\_HostedObjects\IEngineHostedSceneObject.cs" />

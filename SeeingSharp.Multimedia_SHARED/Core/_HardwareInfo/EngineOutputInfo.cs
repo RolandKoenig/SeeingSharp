@@ -21,6 +21,9 @@
     along with this program.  If not, see http://www.gnu.org/licenses/.
 */
 #endregion
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.ComponentModel;
 
 using DXGI = SharpDX.DXGI;
@@ -34,6 +37,7 @@ namespace SeeingSharp.Multimedia.Core
         private int m_adapterIndex;
         private int m_outputIndex;
         private DXGI.OutputDescription m_outputDescription;
+        private EngineOutputModeInfo[] m_outputInfos;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineOutputInfo" /> class.
@@ -43,6 +47,39 @@ namespace SeeingSharp.Multimedia.Core
             m_adapterIndex = adapterIndex;
             m_outputIndex = outputIndex;
             m_outputDescription = output.Description;
+
+            // Get all supported modes
+            DXGI.ModeDescription[] modes = output.GetDisplayModeList(
+                GraphicsHelper.DEFAULT_TEXTURE_FORMAT,
+                DXGI.DisplayModeEnumerationFlags.Interlaced);
+
+            // Convert and sort them
+            EngineOutputModeInfo[] engineModes = new EngineOutputModeInfo[modes.Length];
+            for(int loop=0; loop<engineModes.Length; loop++)
+            {
+                engineModes[loop] = new EngineOutputModeInfo(modes[loop]);
+            }
+            Array.Sort(engineModes, (left, right) =>
+            {
+                int result = left.PixelCount.CompareTo(right.PixelCount);
+                if (result == 0) { result = left.RefreshRateNumerator.CompareTo(right.RefreshRateNumerator); }
+                return result;
+            });
+
+            // Strip them (we want to have each relevant mode once)
+            List<EngineOutputModeInfo> strippedModeList = new List<EngineOutputModeInfo>(engineModes.Length);
+            EngineOutputModeInfo lastOutputMode = new EngineOutputModeInfo();
+            for (int loop=engineModes.Length - 1; loop > -1; loop--)
+            {
+                if(!engineModes[loop].Equals(lastOutputMode))
+                {
+                    lastOutputMode = engineModes[loop];
+                    strippedModeList.Add(lastOutputMode);
+                }
+            }
+
+            // Store mode list
+            m_outputInfos = strippedModeList.ToArray();
         }
 
         /// <summary>
@@ -104,6 +141,11 @@ namespace SeeingSharp.Multimedia.Core
         public string Rotation
         {
             get { return m_outputDescription.Rotation.ToString(); }
+        }
+
+        public EngineOutputModeInfo[] SupportedModes
+        {
+            get { return m_outputInfos; }
         }
     }
 }
