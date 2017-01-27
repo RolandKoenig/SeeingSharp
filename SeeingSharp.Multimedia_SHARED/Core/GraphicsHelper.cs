@@ -72,7 +72,7 @@ namespace SeeingSharp.Multimedia.Core
             hostForm.Location = new GDI.Point(
                 outputInfo.DesktopXPos + 10,
                 outputInfo.DesktopYPos + 10);
-            hostForm.Size = new System.Drawing.Size(outputMode.PixelWidth, outputMode.PixelHeight);
+            hostForm.Size = new System.Drawing.Size(200, 200);
             if (!hostForm.IsHandleCreated) { hostForm.CreateControl(); }
 
             // Create the swap chain description
@@ -103,7 +103,7 @@ namespace SeeingSharp.Multimedia.Core
                 ref swapChainDesc,
                 new SharpDX.DXGI.SwapChainFullScreenDescription()
                 {
-                    RefreshRate = new DXGI.Rational(60, 1),
+                    RefreshRate = new DXGI.Rational(outputMode.RefreshRateNumerator, outputMode.RefreshRateDenominator),
                     Scaling = SharpDX.DXGI.DisplayModeScaling.Unspecified,
                     Windowed = true
                 },
