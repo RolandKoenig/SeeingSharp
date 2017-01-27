@@ -1,6 +1,7 @@
 ﻿using SeeingSharp.Multimedia.Core;
 using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Multimedia.Views;
+using SeeingSharp.Multimedia.Components;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,9 +36,10 @@ namespace SeeingSharp.DesktopFullscreenTest
             s_renderTarget = new FullscreenRenderTarget(
                 GraphicsCore.Current.DefaultOutput);
             s_renderTarget.ClearColor = Color4.CornflowerBlue;
-            s_renderTarget.RenderLoop.SceneComponents.Add(
-                new ExitComponent());
-            
+            s_renderTarget.RenderLoop.SceneComponents.Add(new ExitComponent());
+            s_renderTarget.RenderLoop.SceneComponents.Add(new GradientBackgroundComponent());
+            s_renderTarget.RenderLoop.SceneComponents.Add(new SimpleCenteredCubeComponent());
+            s_renderTarget.RenderLoop.SceneComponents.Add(new FocusedPointCameraComponent());
         }
 
         //*********************************************************************

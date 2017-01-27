@@ -143,6 +143,11 @@ namespace SeeingSharp.Multimedia.Core
             get { return m_outputDescription.Rotation.ToString(); }
         }
 
+        public EngineOutputModeInfo DefaultMode
+        {
+            get { return m_outputInfos[0]; }
+        }
+
         public EngineOutputModeInfo[] SupportedModes
         {
             get { return m_outputInfos; }

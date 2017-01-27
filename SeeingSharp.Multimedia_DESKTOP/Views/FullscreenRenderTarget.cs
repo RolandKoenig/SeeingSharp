@@ -112,6 +112,8 @@ namespace SeeingSharp.Multimedia.Views
             m_dummyForm.SetStyleCustom(ControlStyles.Opaque, true);
             m_dummyForm.SetStyleCustom(ControlStyles.Selectable, true);
             m_dummyForm.SetDoubleBuffered(false);
+            m_dummyForm.MouseEnter += (sender, eArgs) => Cursor.Hide();
+            m_dummyForm.MouseLeave += (sender, eArgs) => Cursor.Show();
             m_dummyForm.CreateControl();
 
             // Create and start the renderloop

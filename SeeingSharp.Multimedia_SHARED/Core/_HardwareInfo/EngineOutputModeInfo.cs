@@ -26,7 +26,7 @@ namespace SeeingSharp.Multimedia.Core
 
         public override string ToString()
         {
-            return $"{m_pixelWidth} x {m_pixelHeight} by refresh rate {m_refreshRateNumerator}/{m_refreshRateDenominator}";
+            return $"{m_pixelWidth} x {m_pixelHeight}  {m_refreshRateNumerator / m_refreshRateDenominator} Hz";
         }
 
         public override int GetHashCode()
