@@ -152,6 +152,12 @@ namespace SeeingSharp.Multimedia.Input
                 m_currentControl.KeyDown += OnKeyDown;
                 m_currentControl.LostFocus += OnLostFocus;
                 m_currentControl.GotFocus += OnGotFocus;
+
+                // Handle initial focus state
+                if(m_currentControl.Focused || m_currentControl.ContainsFocus)
+                {
+                    m_stateKeyboard.NotifyFocusGot();
+                }
             }).FireAndForget();
         }
 
