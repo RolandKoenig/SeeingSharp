@@ -9,6 +9,8 @@ namespace SeeingSharp.Multimedia.Core
 {
     public struct EngineOutputModeInfo : IEquatable<EngineOutputModeInfo>
     {
+        public static readonly EngineOutputModeInfo Empty = default(EngineOutputModeInfo);
+
         private EngineOutputInfo m_hostOutput;
         private int m_pixelWidth;
         private int m_pixelHeight;

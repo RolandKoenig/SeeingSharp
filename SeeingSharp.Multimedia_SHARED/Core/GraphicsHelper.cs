@@ -59,7 +59,16 @@ namespace SeeingSharp.Multimedia.Core
         internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT = WIC.PixelFormat.Format32bppBGRA;
         internal static readonly Guid DEFAULT_WIC_BITMAP_FORMAT_D2D = WIC.PixelFormat.Format32bppPBGRA;
 
-#if DESKTOP
+#if DESKTOP        
+        /// <summary>
+        /// Creates the swap chain for fullscreen mode.
+        /// </summary>
+        /// <param name="hostForm">The host form.</param>
+        /// <param name="outputInfo">The target output display.</param>
+        /// <param name="outputMode">The first output mode.</param>
+        /// <param name="device">The rendering device.</param>
+        /// <param name="gfxConfig">Graphics configuration configuration.</param>
+        /// <returns></returns>
         internal static DXGI.SwapChain1 CreateSwapChainForFullScreen(
             WinForms.Form hostForm, 
             EngineOutputInfo outputInfo, EngineOutputModeInfo outputMode,
@@ -95,7 +104,7 @@ namespace SeeingSharp.Multimedia.Core
             swapChainDesc.Scaling = DXGI.Scaling.Stretch;
             swapChainDesc.SwapEffect = DXGI.SwapEffect.Discard;
             swapChainDesc.Usage = DXGI.Usage.RenderTargetOutput;
-            swapChainDesc.Flags = DXGI.SwapChainFlags.AllowModeSwitch;
+            swapChainDesc.Flags = DXGI.SwapChainFlags.None;
 
             // Create and return the swap chain and the render target
             DXGI.SwapChain1 resultSwapChain = new DXGI.SwapChain1(

@@ -48,6 +48,7 @@ namespace SeeingSharp.Multimedia.Views
     {
         #region Configuration
         private EngineOutputInfo m_targetOutput;
+        private EngineOutputModeInfo m_targetOutputMode;
         private SynchronizationContext m_syncContext;
         #endregion
 
@@ -65,8 +66,6 @@ namespace SeeingSharp.Multimedia.Views
         private D3D11.Device m_device;
         private D3D11.DeviceContext m_deviceContext;
         private DXGI.SwapChain1 m_swapChain;
-
-        private D3D11.Texture2D m_copyHelperTextureStaging;
         private D3D11.Texture2D m_renderTarget;
         private D3D11.Texture2D m_renderTargetDepth;
         private D3D11.RenderTargetView m_renderTargetView;
@@ -82,9 +81,8 @@ namespace SeeingSharp.Multimedia.Views
         /// Initializes a new instance of the <see cref="FullscreenRenderTarget" /> class.
         /// </summary>
         /// <param name="outputInfo">The target output monitor.</param>
-        /// <param name="pixelHeight">Height for rendering (pixel height of monitor is taken by default).</param>
-        /// <param name="pixelWidth">Width for rendering (pixel width of the monitor is taken by default).</param>
-        public FullscreenRenderTarget(EngineOutputInfo outputInfo, int pixelWidth = 0, int pixelHeight = 0)
+        /// <param name="initialMode">The initial view mode.</param>
+        public FullscreenRenderTarget(EngineOutputInfo outputInfo, EngineOutputModeInfo initialMode = default(EngineOutputModeInfo))
         {
             outputInfo.EnsureNotNull(nameof(outputInfo));
 
@@ -99,6 +97,8 @@ namespace SeeingSharp.Multimedia.Views
 
             //Set confiugration
             m_targetOutput = outputInfo;
+            m_targetOutputMode = initialMode;
+            if(m_targetOutputMode.HostOutput != outputInfo) { m_targetOutputMode = m_targetOutput.DefaultMode; }
             m_renderAwaitors = new ThreadSaveQueue<TaskCompletionSource<object>>();
 
             // Ensure that graphics is initialized
@@ -118,7 +118,7 @@ namespace SeeingSharp.Multimedia.Views
 
             // Create and start the renderloop
             m_renderLoop = new RenderLoop(syncContext, this);
-            m_renderLoop.Camera.SetScreenSize(pixelWidth, pixelHeight);
+            m_renderLoop.Camera.SetScreenSize(m_targetOutputMode.PixelWidth, m_targetOutputMode.PixelHeight);
             m_renderLoop.RegisterRenderLoop();
         }
 
@@ -143,6 +143,19 @@ namespace SeeingSharp.Multimedia.Views
             m_renderLoop.Dispose();
         }
 
+        /// <summary>
+        /// Changes the output mode to the given one.
+        /// </summary>
+        /// <param name="newMode">The new mode.</param>
+        public void ChangeOutputMode(EngineOutputModeInfo newMode)
+        {
+            newMode.HostOutput.EnsureEqual(m_targetOutput, $"{nameof(newMode)}.{nameof(newMode.HostOutput)}");
+
+            m_targetOutputMode = newMode;
+            m_renderLoop.SetCurrentViewSize(m_targetOutputMode.PixelWidth, m_targetOutputMode.PixelHeight);
+            m_renderLoop.ForceViewRefresh();
+        }
+
         Control IInputControlHost.GetWinFormsInputControl()
         {
             return m_dummyForm;
@@ -153,11 +166,17 @@ namespace SeeingSharp.Multimedia.Views
         /// </summary>
         void IRenderLoopHost.OnRenderLoop_DisposeViewResources(EngineDevice device)
         {
+            // Switch to fullscreen
+            if (m_isInFullscreen)
+            {
+                m_isInFullscreen = false;
+                m_swapChain.SetFullscreenState(false, null);
+            }
+
             m_renderTargetDepthView = GraphicsHelper.DisposeObject(m_renderTargetDepthView);
             m_renderTargetDepth = GraphicsHelper.DisposeObject(m_renderTargetDepth);
             m_renderTargetView = GraphicsHelper.DisposeObject(m_renderTargetView);
             m_renderTarget = GraphicsHelper.DisposeObject(m_renderTarget);
-            m_copyHelperTextureStaging = GraphicsHelper.DisposeObject(m_copyHelperTextureStaging);
             m_swapChain = GraphicsHelper.DisposeObject(m_swapChain);
 
             m_device = null;
@@ -173,12 +192,10 @@ namespace SeeingSharp.Multimedia.Views
             m_device = device.DeviceD3D11;
             m_deviceContext = m_device.ImmediateContext;
 
-            EngineOutputModeInfo outpoutMode = m_targetOutput.SupportedModes.First();
-
             // Create swapchain and dummy form
             m_swapChain = GraphicsHelper.CreateSwapChainForFullScreen(
                 m_dummyForm, 
-                m_targetOutput, outpoutMode,
+                m_targetOutput, m_targetOutputMode,
                 device, m_renderLoop.ViewConfiguration);
 
             // Take width and height out of the render target
@@ -186,14 +203,14 @@ namespace SeeingSharp.Multimedia.Views
             m_renderTargetView = new D3D11.RenderTargetView(m_device, m_renderTarget);
 
             //Create the depth buffer
-            m_renderTargetDepth = GraphicsHelper.CreateDepthBufferTexture(device, outpoutMode.PixelWidth, outpoutMode.PixelHeight, m_renderLoop.ViewConfiguration);
+            m_renderTargetDepth = GraphicsHelper.CreateDepthBufferTexture(device, m_targetOutputMode.PixelWidth, m_targetOutputMode.PixelHeight, m_renderLoop.ViewConfiguration);
             m_renderTargetDepthView = new D3D11.DepthStencilView(m_device, m_renderTargetDepth);
 
             //Define the viewport for rendering
-            SharpDX.Mathematics.Interop.RawViewportF viewPort = GraphicsHelper.CreateDefaultViewport(outpoutMode.PixelWidth, outpoutMode.PixelHeight);
+            SharpDX.Mathematics.Interop.RawViewportF viewPort = GraphicsHelper.CreateDefaultViewport(m_targetOutputMode.PixelWidth, m_targetOutputMode.PixelHeight);
 
             //Return all generated objects
-            return Tuple.Create(m_renderTarget, m_renderTargetView, m_renderTargetDepth, m_renderTargetDepthView, viewPort, new Size2(outpoutMode.PixelWidth, outpoutMode.PixelHeight), DpiScaling.Default);
+            return Tuple.Create(m_renderTarget, m_renderTargetView, m_renderTargetDepth, m_renderTargetDepthView, viewPort, new Size2(m_targetOutputMode.PixelWidth, m_targetOutputMode.PixelHeight), DpiScaling.Default);
         }
 
         /// <summary>

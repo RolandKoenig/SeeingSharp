@@ -74,6 +74,7 @@ namespace SeeingSharp.Multimedia.Core
         private Size2 m_targetSize;
         private DpiScaling m_currentDpiScaling;
         private Scene m_targetScene;
+        private bool m_viewRefreshForced;
         #endregion
 
         #region Callback methods for current host object
@@ -209,6 +210,14 @@ namespace SeeingSharp.Multimedia.Core
             if (height < Constants.MIN_VIEW_HEIGHT) { height = Constants.MIN_VIEW_HEIGHT; }
 
             m_targetSize = new Size2(width, height);
+        }
+
+        /// <summary>
+        /// Forces a refresh of the current view.
+        /// </summary>
+        internal void ForceViewRefresh()
+        {
+            m_viewRefreshForced = true;
         }
 
         /// <summary>
@@ -771,8 +780,11 @@ namespace SeeingSharp.Multimedia.Core
                 if ((m_renderTargetView == null) ||
                     (m_targetSize != m_currentViewSize) ||
                     ((m_targetDevice != null) && (m_targetDevice != m_currentDevice)) ||
-                    (m_viewConfiguration.ViewNeedsRefresh))
+                    (m_viewConfiguration.ViewNeedsRefresh) ||
+                    (m_viewRefreshForced))
                 {
+                    m_viewRefreshForced = false;
+
                     try
                     {
                         // Trigger deregister on scene if needed
