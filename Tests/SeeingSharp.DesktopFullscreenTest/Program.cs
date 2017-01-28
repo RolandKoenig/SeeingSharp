@@ -2,6 +2,7 @@
 using SeeingSharp.Multimedia.Input;
 using SeeingSharp.Multimedia.Views;
 using SeeingSharp.Multimedia.Components;
+using SeeingSharp.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace SeeingSharp.DesktopFullscreenTest
             s_renderTarget.RenderLoop.SceneComponents.Add(new GradientBackgroundComponent());
             s_renderTarget.RenderLoop.SceneComponents.Add(new SimpleCenteredCubeComponent());
             s_renderTarget.RenderLoop.SceneComponents.Add(new FocusedPointCameraComponent());
+            s_renderTarget.WindowDestroyed += (innerSender, innerEArgs) => Application.Exit();
 
             await Task.Delay(5000);
 
@@ -80,7 +82,10 @@ namespace SeeingSharp.DesktopFullscreenTest
                 {
                     if(actInputFrame.DefaultKeyboard.IsKeyDown(WinVirtualKey.Escape))
                     {
-                        Environment.Exit(0);
+                        s_renderTarget.UISynchronizationContext.PostAlsoIfNull(() =>
+                        {
+                            Application.Exit();
+                        });
                     }
                 }
             }

@@ -54,6 +54,7 @@ namespace SeeingSharp.Multimedia.Views
 
         #region State
         private bool m_isInFullscreen;
+        private bool m_checkFullscreenNextTime;
         #endregion
 
         #region Reference to the render loop
@@ -76,6 +77,8 @@ namespace SeeingSharp.Multimedia.Views
         /// Raises before the render target starts rendering.
         /// </summary>
         public event CancelEventHandler BeforeRender;
+
+        public event EventHandler WindowDestroyed;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="FullscreenRenderTarget" /> class.
@@ -114,6 +117,8 @@ namespace SeeingSharp.Multimedia.Views
             m_dummyForm.SetDoubleBuffered(false);
             m_dummyForm.MouseEnter += (sender, eArgs) => Cursor.Hide();
             m_dummyForm.MouseLeave += (sender, eArgs) => Cursor.Show();
+            m_dummyForm.HandleDestroyed += OnDummyForm_HandleDestroyed;
+            m_dummyForm.GotFocus += OnDummyForm_GotFocus;
             m_dummyForm.CreateControl();
 
             // Create and start the renderloop
@@ -159,6 +164,24 @@ namespace SeeingSharp.Multimedia.Views
         Control IInputControlHost.GetWinFormsInputControl()
         {
             return m_dummyForm;
+        }
+
+        private void OnDummyForm_HandleDestroyed(object sender, EventArgs e)
+        {
+            if (!GraphicsCore.IsInitialized) { return; }
+
+            if (m_renderLoop.IsRegisteredOnMainLoop)
+            {
+                m_renderLoop.DiscardRendering = true;
+                m_renderLoop.DeregisterRenderLoop();
+            }
+
+            this.WindowDestroyed.Raise(this, EventArgs.Empty);
+        }
+
+        private void OnDummyForm_GotFocus(object sender, EventArgs e)
+        {
+            m_checkFullscreenNextTime = true;
         }
 
         /// <summary>
@@ -236,11 +259,37 @@ namespace SeeingSharp.Multimedia.Views
             if (!m_isInFullscreen)
             {
                 m_isInFullscreen = true;
+                m_checkFullscreenNextTime = false;
                 using (var targetOutput = GraphicsCore.Current.HardwareInfo.GetOutputByOutputInfo(m_targetOutput))
                 {
                     m_swapChain.SetFullscreenState(
                         new SharpDX.Mathematics.Interop.RawBool(true),
                         targetOutput);
+                    m_isInFullscreen = true;
+                }
+            }
+            else if(m_checkFullscreenNextTime)
+            {
+                m_checkFullscreenNextTime = false;
+
+                SharpDX.Mathematics.Interop.RawBool isFullscreen = false;
+                DXGI.Output fullscreenOutput = null;
+                m_swapChain.GetFullscreenState(out isFullscreen, out fullscreenOutput);
+                if (isFullscreen == false)
+                {
+                    m_isInFullscreen = false;
+
+                    if ((m_dummyForm.IsHandleCreated) &&
+                       (m_dummyForm.Focused || m_dummyForm.ContainsFocus))
+                    {
+                        m_isInFullscreen = true;
+                        using (var targetOutput = GraphicsCore.Current.HardwareInfo.GetOutputByOutputInfo(m_targetOutput))
+                        {
+                            m_swapChain.SetFullscreenState(
+                                new SharpDX.Mathematics.Interop.RawBool(true),
+                                targetOutput);
+                        }
+                    }
                 }
             }
         }
