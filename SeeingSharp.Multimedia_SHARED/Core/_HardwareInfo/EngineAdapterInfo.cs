@@ -31,18 +31,6 @@ using DXGI = SharpDX.DXGI;
 using D3D = SharpDX.Direct3D;
 using D3D11 = SharpDX.Direct3D11;
 
-//Some type mappings
-#if WINRT || UNIVERSAL
-using DxgiFactory = SharpDX.DXGI.Factory1;
-using DxgiAdapter = SharpDX.DXGI.Adapter1;
-using DxgiDevice = SharpDX.DXGI.Device1;
-#endif
-#if DESKTOP
-using DxgiAdapter = SharpDX.DXGI.Adapter1;
-using DxgiDevice = SharpDX.DXGI.Device1;
-using DxgiFactory = SharpDX.DXGI.Factory1;
-#endif
-
 namespace SeeingSharp.Multimedia.Core
 {
     public class EngineAdapterInfo 
@@ -50,7 +38,7 @@ namespace SeeingSharp.Multimedia.Core
         private const string TRANSLATABLE_GROUP_COMMON_HARDWARE_INFO = "Common hardware information";
 
         private List<EngineOutputInfo> m_outputs;
-        private DxgiAdapter m_adapter;
+        private DXGI.Adapter1 m_adapter;
         private int m_adapterIndex;
         private bool m_isSoftware;
         private D3D.FeatureLevel m_d3d11FeatureLevel;
@@ -59,7 +47,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineAdapterInfo" /> class.
         /// </summary>
-        internal EngineAdapterInfo(int adapterIndex, DxgiAdapter adapter)
+        internal EngineAdapterInfo(int adapterIndex, DXGI.Adapter1 adapter)
         {
             m_outputs = new List<EngineOutputInfo>();
             m_adapter = adapter;
@@ -108,7 +96,7 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the corresponding adapter.
         /// </summary>
-        internal DxgiAdapter Adapter
+        internal DXGI.Adapter1 Adapter
         {
             get { return m_adapter; }
         }

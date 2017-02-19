@@ -5,8 +5,8 @@
      - http://www.rolandk.de/wp (the autors homepage, german)
     Copyright (C) 2016 Roland König (RolandK)
 
-	This program is distributed under the terms of the Microsoft Public License (Ms-PL)-
-	More info at https://msdn.microsoft.com/en-us/library/ff647676.aspx
+    This program is distributed under the terms of the Microsoft Public License (Ms-PL)-
+    More info at https://msdn.microsoft.com/en-us/library/ff647676.aspx
 */
 #endregion License information (SeeingSharp and all based games/applications)
 
@@ -39,7 +39,6 @@ namespace SeeingSharpModelViewer
         private Scene m_scene;
         private RenderLoop m_renderLoop;
         private GenericObject m_hoveredObject;
-        private GenericObject m_selectedObject;
         #endregion Scene state
 
         public ObjectSelectionBehavior()
@@ -108,7 +107,7 @@ namespace SeeingSharpModelViewer
 
                 // Sync
                 GenericObject newHovered = null;
-                if ((topUnderCursor != null) && (m_selectedObject != topUnderCursor)) { newHovered = topUnderCursor; }
+                if (topUnderCursor != null) { newHovered = topUnderCursor; }
 
                 // Apply changes to the scene
                 if (m_hoveredObject != newHovered)

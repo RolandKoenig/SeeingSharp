@@ -78,6 +78,27 @@ namespace SeeingSharp.Util
 
         }
 
+        public static T TryExecute<T>(Func<T> funcToExec)
+        {
+            try
+            {
+                return funcToExec();
+            }
+            catch
+            {
+                return default(T);
+            }
+        }
+
+        public static void TryExecute(Action actionToExecute)
+        {
+            try
+            {
+                actionToExecute();
+            }
+            catch { }
+        }
+
         /// <summary>
         /// Calls the given function asynchronous.
         /// </summary>

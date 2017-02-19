@@ -27,6 +27,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SeeingSharp.Util;
 
 // Some namespace mappings
 #if UNIVERSAL
@@ -177,24 +178,6 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             return new DXGI.SampleDescription(1, 0);
-        }
-
-        /// <summary>
-        /// Creates a list containing all available devices.
-        /// </summary>
-        public static IEnumerable<EngineDevice> CreateDevices(GraphicsCore core, GraphicsCoreConfiguration coreConfiguration, bool debugEnabled)
-        {
-            using(DXGI.Factory1 dxgiFactory = new DXGI.Factory1())
-            {
-                int adapterCount = dxgiFactory.GetAdapterCount1();
-                for(int loop=0 ; loop<adapterCount; loop++)
-                {
-                    DXGI.Adapter1 actAdapter = dxgiFactory.GetAdapter1(loop);
-                    bool isSoftware = actAdapter.Description1.Description.StartsWith("Microsoft Basic Render Driver");
-
-                    yield return new EngineDevice(core, coreConfiguration, actAdapter, isSoftware, debugEnabled);
-                }
-            }
         }
 
         /// <summary>

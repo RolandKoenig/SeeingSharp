@@ -26,42 +26,58 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Threading.Tasks;
+using SeeingSharp.Util;
 
 //Some namespace mappings
 using DXGI = SharpDX.DXGI;
 using D3D = SharpDX.Direct3D;
 using D3D11 = SharpDX.Direct3D11;
 
-//Some type mappings
-using DxgiAdapter = SharpDX.DXGI.Adapter1;
-using DxgiDevice = SharpDX.DXGI.Device1;
-using DxgiFactory = SharpDX.DXGI.Factory1;
-
 namespace SeeingSharp.Multimedia.Core
 {
     public class EngineHardwareInfo 
     {
-        private DxgiFactory m_dxgiFactory;
+        private DXGI.Factory1 m_dxgiFactory;
         private List<EngineAdapterInfo> m_adapters;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="EngineHardwareInfo" /> class.
         /// </summary>
         internal EngineHardwareInfo()
-            : this(new DxgiFactory())
         {
-            
+            this.CreateFactory();
+            this.LoadAdapterInformation();
+        }
+
+        private void CreateFactory()
+        {
+            m_dxgiFactory = CommonTools.TryExecute(() => new DXGI.Factory4());
+            if (m_dxgiFactory == null) { m_dxgiFactory = CommonTools.TryExecute(() => new DXGI.Factory2()); }
+            if (m_dxgiFactory == null) { m_dxgiFactory = CommonTools.TryExecute(() => new DXGI.Factory1()); }
+            if (m_dxgiFactory == null) { throw new SeeingSharpGraphicsException("Unable to create the DXGI Factory object!"); }
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="EngineHardwareInfo" /> class.
+        /// Loads all adapter information and builds up all needed view models in a background thread.
         /// </summary>
-        internal EngineHardwareInfo(DxgiFactory dxgiFactory)
+        private void LoadAdapterInformation()
         {
-            m_dxgiFactory = dxgiFactory;
             m_adapters = new List<EngineAdapterInfo>();
 
-            LoadAdapterInformation();
+            int adapterCount = m_dxgiFactory.GetAdapterCount1();
+            for (int loop = 0; loop < adapterCount; loop++)
+            {
+                try
+                {
+                    DXGI.Adapter1 actAdapter = m_dxgiFactory.GetAdapter1(loop);
+                    m_adapters.Add(new EngineAdapterInfo(loop, actAdapter));
+                }
+                catch (Exception)
+                {
+                    //No exception handling needed here
+                    // .. adapter information simply can not be gathered
+                }
+            }
         }
 
         internal DXGI.Output GetOutputByOutputInfo(EngineOutputInfo outputInfo)
@@ -75,27 +91,6 @@ namespace SeeingSharp.Multimedia.Core
                 if(outputInfo.OutputIndex >= outputCount) { throw new SeeingSharpException($"Unable to find output with index {outputInfo.OutputIndex} on adapter {outputInfo.AdapterIndex}!"); }
 
                 return adapter.GetOutput(outputInfo.OutputIndex);
-            }
-        }
-
-        /// <summary>
-        /// Loads all adapter information and builds up all needed view models in a background thread.
-        /// </summary>
-        private void LoadAdapterInformation()
-        {
-            int adapterCount = m_dxgiFactory.GetAdapterCount1();
-            for (int loop = 0; loop < adapterCount; loop++)
-            {
-                try
-                {
-                    DxgiAdapter actAdapter = m_dxgiFactory.GetAdapter1(loop);
-                    m_adapters.Add(new EngineAdapterInfo(loop, actAdapter));
-                }
-                catch (Exception)
-                {
-                    //No exception handling needed here
-                    // .. adapter information simply can not be gathered
-                }
             }
         }
 

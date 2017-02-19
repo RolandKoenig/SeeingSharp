@@ -42,16 +42,6 @@ namespace SeeingSharp.DesktopFullscreenTest
             s_renderTarget.RenderLoop.SceneComponents.Add(new SimpleCenteredCubeComponent());
             s_renderTarget.RenderLoop.SceneComponents.Add(new FocusedPointCameraComponent());
             s_renderTarget.WindowDestroyed += (innerSender, innerEArgs) => Application.Exit();
-
-            await Task.Delay(5000);
-
-            s_renderTarget.ChangeOutputMode(
-                GraphicsCore.Current.DefaultOutput.SupportedModes.FirstOrDefault((actMode) => actMode.PixelWidth == 1600));
-
-            await Task.Delay(5000);
-
-            s_renderTarget.ChangeOutputMode(
-                GraphicsCore.Current.DefaultOutput.DefaultMode);
         }
 
         //*********************************************************************

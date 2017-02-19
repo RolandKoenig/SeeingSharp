@@ -161,6 +161,14 @@ namespace SeeingSharp.Multimedia.Views
             m_renderLoop.ForceViewRefresh();
         }
 
+        /// <summary>
+        /// Ensures that fullsreen mode is currently active.
+        /// </summary>
+        public void CheckAndEnsureFullsceeenActive()
+        {
+            m_checkFullscreenNextTime = true;
+        }
+
         Control IInputControlHost.GetWinFormsInputControl()
         {
             return m_dummyForm;
@@ -275,6 +283,7 @@ namespace SeeingSharp.Multimedia.Views
                 SharpDX.Mathematics.Interop.RawBool isFullscreen = false;
                 DXGI.Output fullscreenOutput = null;
                 m_swapChain.GetFullscreenState(out isFullscreen, out fullscreenOutput);
+                GraphicsHelper.SafeDispose(ref fullscreenOutput);
                 if (isFullscreen == false)
                 {
                     m_isInFullscreen = false;
