@@ -45,8 +45,10 @@ namespace SeeingSharp.Multimedia.Core
     {
         #region Resources from Direct3D11 api
         private DXGI.Adapter1 m_dxgiAdapter;
-        private D3D11.Device1 m_device;
+        private D3D11.Device1 m_device1;
+        private D3D11.Device3 m_device3;
         private D3D11.DeviceContext m_immediateContext;
+        private D3D11.DeviceContext3 m_immediateContext3;
         #endregion
 
         #region Parameters of created device
@@ -77,6 +79,9 @@ namespace SeeingSharp.Multimedia.Core
             List<Tuple<D3D.FeatureLevel, D3D11.DeviceCreationFlags, HardwareDriverLevel>> initParameterQueue =
                 new List<Tuple<D3D.FeatureLevel, D3D11.DeviceCreationFlags, HardwareDriverLevel>>();
 
+            // Define all trys for hardware initialization
+            initParameterQueue.Add(Tuple.Create(
+                D3D.FeatureLevel.Level_11_1, createFlagsBgra, HardwareDriverLevel.Direct3D11));
             initParameterQueue.Add(Tuple.Create(
                 D3D.FeatureLevel.Level_11_0, createFlagsBgra, HardwareDriverLevel.Direct3D11));
             initParameterQueue.Add(Tuple.Create(
@@ -108,7 +113,12 @@ namespace SeeingSharp.Multimedia.Core
                     // Try to create the device using current parameters
                     using (D3D11.Device device = new D3D11.Device(dxgiAdapter, direct3D11Flags, featureLevel))
                     {
-                        m_device = device.QueryInterface<D3D11.Device1>();
+                        m_device1 = device.QueryInterface<D3D11.Device1>();
+                        m_device3 = CommonTools.TryExecute(() => m_device1.QueryInterface<D3D11.Device3>());
+                        if(m_device3 != null)
+                        {
+                            m_immediateContext3 = m_device3.ImmediateContext3;
+                        }
                     }
 
                     // Device successfully created, save all parameters and break this loop
@@ -121,13 +131,13 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Throw exception on failure
-            if (m_device == null) 
+            if (m_device1 == null) 
             { 
                 throw new SeeingSharpGraphicsException("Unable to initialize d3d11 device!"); 
             }
 
             // Get immediate context from the device
-            m_immediateContext = m_device.ImmediateContext;
+            m_immediateContext = m_device1.ImmediateContext;
         }
 
         /// <summary>
@@ -136,7 +146,9 @@ namespace SeeingSharp.Multimedia.Core
         public void UnloadResources()
         {
             m_immediateContext = CommonTools.DisposeObject(m_immediateContext);
-            m_device = CommonTools.DisposeObject(m_device);
+            m_immediateContext3 = CommonTools.DisposeObject(m_immediateContext3);
+            m_device1 = CommonTools.DisposeObject(m_device1);
+            m_device3 = CommonTools.DisposeObject(m_device3);
 
             m_creationFlags = D3D11.DeviceCreationFlags.None;
             m_featureLevel = D3D.FeatureLevel.Level_11_0;
@@ -160,16 +172,35 @@ namespace SeeingSharp.Multimedia.Core
                 return
                     (m_featureLevel == D3D.FeatureLevel.Level_10_0) ||
                     (m_featureLevel == D3D.FeatureLevel.Level_10_1) ||
-                    (m_featureLevel == D3D.FeatureLevel.Level_11_0);
+                    (m_featureLevel == D3D.FeatureLevel.Level_11_0) ||
+                    (m_featureLevel == D3D.FeatureLevel.Level_11_1);
+            }
+        }
+
+        /// <summary>
+        /// Is the hardware Direct3D 11 or upper?
+        /// </summary>
+        public bool IsDirect3D11OrUpperHardware
+        {
+            get
+            {
+                return
+                    (m_featureLevel == D3D.FeatureLevel.Level_11_0) ||
+                    (m_featureLevel == D3D.FeatureLevel.Level_11_1);
             }
         }
 
         /// <summary>
         /// Gets the Direct3D 11 device.
         /// </summary>
-        internal D3D11.Device1 Device
+        internal D3D11.Device1 Device1
         {
-            get { return m_device; }
+            get { return m_device1; }
+        }
+
+        internal D3D11.Device3 Device3
+        {
+            get { return m_device3; }
         }
 
         /// <summary>
@@ -177,7 +208,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public IntPtr DeviceNativePointer
         {
-            get { return m_device.NativePointer; }
+            get { return m_device1.NativePointer; }
         }
 
         /// <summary>
@@ -189,11 +220,19 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets the immediate context.
+        /// </summary>
+        internal D3D11.DeviceContext3 ImmediateContext3
+        {
+            get { return m_immediateContext3; }
+        }
+
+        /// <summary>
         /// Is device successfully initialized?
         /// </summary>
         public bool IsInitialized
         {
-            get { return m_device != null; }
+            get { return m_device1 != null; }
         }
 
         /// <summary>
@@ -203,7 +242,7 @@ namespace SeeingSharp.Multimedia.Core
         {
             get
             {
-                if (m_device == null) { return "None"; }
+                if (m_device1 == null) { return "None"; }
 
                 return m_dxgiAdapter.ToString() + " - " + m_featureLevel + (this.IsDirect2DTextureEnabled ? " - Bgra" : " - No Bgra");
             }

@@ -331,6 +331,16 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
+        /// Gets the device with the given luid.
+        /// Null is returned if no device found.
+        /// </summary>
+        public EngineDevice TryGetDeviceByLuid(long luid)
+        {
+            return m_devices.FirstOrDefault(
+                (actDevice) => actDevice.Luid == luid);
+        }
+
+        /// <summary>
         /// Gets a collection containing all available font familily names.
         /// </summary>
         public IEnumerable<string> GetFontFamilyNames(string localeName = "en-us")
@@ -521,15 +531,6 @@ namespace SeeingSharp.Multimedia.Core
         }
 
         /// <summary>
-        /// Unloads the GraphicsCore object.
-        /// </summary>
-        public static void Unload()
-        {
-            if (s_current != null) { s_current.UnloadResources(); }
-            s_current = null;
-        }
-
-        /// <summary>
         /// Starts measuring the duration of the given activity.
         /// </summary>
         /// <param name="activityName">The name of the activity.</param>
@@ -565,14 +566,6 @@ namespace SeeingSharp.Multimedia.Core
         {
             if (s_current == null) { return new NamedOrGenericKey(); }
             return s_current.ResourceKeyGenerator.GetNextGeneric();
-        }
-
-        /// <summary>
-        /// Unloads all resources.
-        /// </summary>
-        private void UnloadResources()
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>

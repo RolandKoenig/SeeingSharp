@@ -49,6 +49,9 @@ namespace SeeingSharp.Multimedia.Core
             this.LoadAdapterInformation();
         }
 
+        /// <summary>
+        /// Create the DXGI factory object.
+        /// </summary>
         private void CreateFactory()
         {
             m_dxgiFactory = CommonTools.TryExecute(() => new DXGI.Factory4());

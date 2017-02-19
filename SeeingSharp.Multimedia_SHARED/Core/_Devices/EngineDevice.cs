@@ -52,7 +52,8 @@ namespace SeeingSharp.Multimedia.Core
         #endregion
 
         #region Main members
-        private DXGI.Adapter1 m_adapter;
+        private DXGI.Adapter1 m_adapter1;
+        private DXGI.AdapterDescription1 m_adapterDesc1;
         private GraphicsDeviceConfiguration m_configuration;
         private GraphicsCore m_core;
         private bool m_isSoftwareAdapter;
@@ -96,7 +97,8 @@ namespace SeeingSharp.Multimedia.Core
         internal EngineDevice(GraphicsCore core, GraphicsCoreConfiguration coreConfiguration, DXGI.Adapter1 adapter, bool isSoftwareAdapter, bool debugEnabled)
         {
             m_core = core;
-            m_adapter = adapter;
+            m_adapter1 = adapter;
+            m_adapterDesc1 = m_adapter1.Description1;
             m_isSoftwareAdapter = isSoftwareAdapter;
             m_debugEnabled = debugEnabled;
             m_configuration = new GraphicsDeviceConfiguration(coreConfiguration);
@@ -109,11 +111,11 @@ namespace SeeingSharp.Multimedia.Core
             {
 #if UNIVERSAL
                 m_handlerD3D11 = new DeviceHandlerD3D11(adapter, debugEnabled);
-                m_handlerDXGI = new DeviceHandlerDXGI(adapter, m_handlerD3D11.Device);
+                m_handlerDXGI = new DeviceHandlerDXGI(adapter, m_handlerD3D11.Device1);
 #endif
 #if DESKTOP
                 m_handlerD3D11 = new DeviceHandlerD3D11(adapter, debugEnabled);
-                m_handlerDXGI = new DeviceHandlerDXGI(adapter, m_handlerD3D11.Device);
+                m_handlerDXGI = new DeviceHandlerDXGI(adapter, m_handlerD3D11.Device1);
                 m_handlerD3D9 = new DeviceHandlerD3D9(adapter, isSoftwareAdapter, debugEnabled); 
 #endif
             }
@@ -197,7 +199,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </returns>
         public override string ToString()
         {
-            if (m_initializationException != null) { return m_adapter.Description1.Description; }
+            if (m_initializationException != null) { return m_adapter1.Description1.Description; }
             else { return m_handlerD3D11.DeviceModeDescription; }
         }
 
@@ -210,7 +212,7 @@ namespace SeeingSharp.Multimedia.Core
             // More on the used technique
             //  see http://msdn.microsoft.com/en-us/library/windows/apps/dn458384.aspx
 
-            D3D11.FormatSupport formatSupport = m_handlerD3D11.Device.CheckFormatSupport(GraphicsHelper.DEFAULT_TEXTURE_FORMAT);
+            D3D11.FormatSupport formatSupport = m_handlerD3D11.Device1.CheckFormatSupport(GraphicsHelper.DEFAULT_TEXTURE_FORMAT);
             if ((formatSupport & D3D11.FormatSupport.MultisampleRenderTarget) != D3D11.FormatSupport.MultisampleRenderTarget) { return false; }
             if ((formatSupport & D3D11.FormatSupport.MultisampleResolve) != D3D11.FormatSupport.MultisampleResolve) { return false; }
             if (m_handlerD3D11.FeatureLevel == SharpDX.Direct3D.FeatureLevel.Level_9_1) { return false; }
@@ -228,7 +230,7 @@ namespace SeeingSharp.Multimedia.Core
                 textureDescription.BindFlags = D3D11.BindFlags.ShaderResource | D3D11.BindFlags.RenderTarget;
                 textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
                 textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
-                D3D11.Texture2D testTexture = new D3D11.Texture2D(m_handlerD3D11.Device, textureDescription);
+                D3D11.Texture2D testTexture = new D3D11.Texture2D(m_handlerD3D11.Device1, textureDescription);
                 GraphicsHelper.SafeDispose(ref testTexture);
             }
             catch(Exception)
@@ -237,9 +239,9 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Check for quality levels
-            int lowQualityLevels = m_handlerD3D11.Device.CheckMultisampleQualityLevels(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, 2);
-            int mediumQualityLevels = m_handlerD3D11.Device.CheckMultisampleQualityLevels(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, 4);
-            int hightQualityLevels = m_handlerD3D11.Device.CheckMultisampleQualityLevels(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, 8);
+            int lowQualityLevels = m_handlerD3D11.Device1.CheckMultisampleQualityLevels(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, 2);
+            int mediumQualityLevels = m_handlerD3D11.Device1.CheckMultisampleQualityLevels(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, 4);
+            int hightQualityLevels = m_handlerD3D11.Device1.CheckMultisampleQualityLevels(GraphicsHelper.DEFAULT_TEXTURE_FORMAT, 8);
 
             // Generate sample descriptions for each possible quality level
             if (lowQualityLevels > 0)
@@ -282,7 +284,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         public string AdapterDescription
         {
-            get { return m_adapter.Description1.Description.Replace("\0", ""); }
+            get { return m_adapter1.Description1.Description.Replace("\0", ""); }
         }
 
         /// <summary>
@@ -407,7 +409,7 @@ namespace SeeingSharp.Multimedia.Core
         /// </summary>
         internal D3D11.Device1 DeviceD3D11
         {
-            get { return m_handlerD3D11.Device; }
+            get { return m_handlerD3D11.Device1; }
         }
 
 #if DESKTOP
@@ -460,6 +462,14 @@ namespace SeeingSharp.Multimedia.Core
             get { return m_handlerDXGI.Device; }
         }
 #endif
+
+        /// <summary>
+        /// A unique value that identifies the adapter.
+        /// </summary>
+        public long Luid
+        {
+            get { return m_adapterDesc1.Luid; }
+        }
 
         public bool IsUsingFallbackMethodFor2D
         {
