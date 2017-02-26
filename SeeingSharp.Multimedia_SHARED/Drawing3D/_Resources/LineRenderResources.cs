@@ -81,7 +81,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 () => new TypeSafeConstantBufferResource<ConstantBufferData>());
 
             m_inputLayout = new D3D11.InputLayout(
-                device.DeviceD3D11,
+                device.DeviceD3D11_1,
                 m_vertexShader.ShaderBytecode,
                 LineVertex.InputElements);
         }

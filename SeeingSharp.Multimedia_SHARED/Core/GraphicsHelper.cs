@@ -108,7 +108,7 @@ namespace SeeingSharp.Multimedia.Core
 
             // Create and return the swap chain and the render target
             DXGI.SwapChain1 resultSwapChain = new DXGI.SwapChain1(
-                device.FactoryDxgi, device.DeviceD3D11, hostForm.Handle,
+                device.FactoryDxgi, device.DeviceD3D11_1, hostForm.Handle,
                 ref swapChainDesc,
                 new SharpDX.DXGI.SwapChainFullScreenDescription()
                 {
@@ -157,7 +157,7 @@ namespace SeeingSharp.Multimedia.Core
 
             // Create and return the swap chain and the render target
             return new DXGI.SwapChain1(
-                device.FactoryDxgi, device.DeviceD3D11, targetControl.Handle,
+                device.FactoryDxgi, device.DeviceD3D11_1, targetControl.Handle,
                 ref swapChainDesc,
                 new SharpDX.DXGI.SwapChainFullScreenDescription()
                 {
@@ -205,7 +205,7 @@ namespace SeeingSharp.Multimedia.Core
                 DataRectangle dataRectangle = new DataRectangle(bitmapData.Scan0, bitmap.Width * 4);
 
                 // Load the texture
-                result = new D3D11.Texture2D(device.DeviceD3D11, new D3D11.Texture2DDescription()
+                result = new D3D11.Texture2D(device.DeviceD3D11_1, new D3D11.Texture2DDescription()
                 {
                     BindFlags = D3D11.BindFlags.ShaderResource | D3D11.BindFlags.RenderTarget,
                     CpuAccessFlags = D3D11.CpuAccessFlags.None,
@@ -220,7 +220,7 @@ namespace SeeingSharp.Multimedia.Core
                 }, new DataRectangle[] { dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle, dataRectangle });
 
                 // Workaround for now... auto generate mip-levels
-                using (D3D11.ShaderResourceView shaderResourceView = new D3D11.ShaderResourceView(device.DeviceD3D11, result))
+                using (D3D11.ShaderResourceView shaderResourceView = new D3D11.ShaderResourceView(device.DeviceD3D11_1, result))
                 {
                     device.DeviceImmediateContextD3D11.GenerateMips(shaderResourceView);
                 }
@@ -317,7 +317,7 @@ namespace SeeingSharp.Multimedia.Core
             };
 
             //Creates the swap chain for the given CoreWindow object
-            return new DXGI.SwapChain1(device.FactoryDxgi, device.DeviceD3D11, coreWindow, ref desc);
+            return new DXGI.SwapChain1(device.FactoryDxgi, device.DeviceD3D11_1, coreWindow, ref desc);
         }
 
         /// <summary>
@@ -349,7 +349,7 @@ namespace SeeingSharp.Multimedia.Core
             };
 
             //Creates the swap chain for XAML composition
-            return new DXGI.SwapChain1(device.FactoryDxgi, device.DeviceD3D11, ref desc);
+            return new DXGI.SwapChain1(device.FactoryDxgi, device.DeviceD3D11_1, ref desc);
         }
 #endif
 
@@ -378,7 +378,7 @@ namespace SeeingSharp.Multimedia.Core
                 CpuAccessFlags = D3D11.CpuAccessFlags.None,
                 ArraySize = 1
             };
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -406,7 +406,7 @@ namespace SeeingSharp.Multimedia.Core
                 textureDescription.OptionFlags = D3D11.ResourceOptionFlags.TextureCube;
             }
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription, rawImage.ToDataBox());
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription, rawImage.ToDataBox());
         }
 
         /// <summary>
@@ -522,7 +522,7 @@ namespace SeeingSharp.Multimedia.Core
             var dataRectangle = new SharpDX.DataRectangle(
                 m_mappedTexture.Pointer, 
                 m_mappedTexture.Width * 4);
-            D3D11.Texture2D result = new D3D11.Texture2D(device.DeviceD3D11, new SharpDX.Direct3D11.Texture2DDescription()
+            D3D11.Texture2D result = new D3D11.Texture2D(device.DeviceD3D11_1, new SharpDX.Direct3D11.Texture2DDescription()
             {
                 Width = m_mappedTexture.Width,
                 Height = m_mappedTexture.Height,
@@ -538,7 +538,7 @@ namespace SeeingSharp.Multimedia.Core
 
             //Workaround for now... auto generate mip-levels
             // TODO: Dispatch this call to render-thread..
-            using (D3D11.ShaderResourceView shaderResourceView = new D3D11.ShaderResourceView(device.DeviceD3D11, result))
+            using (D3D11.ShaderResourceView shaderResourceView = new D3D11.ShaderResourceView(device.DeviceD3D11_1, result))
             {
                 device.DeviceImmediateContextD3D11.GenerateMips(shaderResourceView);
             }
@@ -568,7 +568,7 @@ namespace SeeingSharp.Multimedia.Core
 
                 //Create the texture
                 var dataRectangle = new SharpDX.DataRectangle(buffer.DataPointer, stride);
-                D3D11.Texture2D result = new D3D11.Texture2D(device.DeviceD3D11, new SharpDX.Direct3D11.Texture2DDescription()
+                D3D11.Texture2D result = new D3D11.Texture2D(device.DeviceD3D11_1, new SharpDX.Direct3D11.Texture2DDescription()
                 {
                     Width = bitmapSource.Size.Width,
                     Height = bitmapSource.Size.Height,
@@ -584,7 +584,7 @@ namespace SeeingSharp.Multimedia.Core
 
                 //Workaround for now... auto generate mip-levels
                 // TODO: Dispatch this call to render-thread..
-                using (D3D11.ShaderResourceView shaderResourceView = new D3D11.ShaderResourceView(device.DeviceD3D11, result))
+                using (D3D11.ShaderResourceView shaderResourceView = new D3D11.ShaderResourceView(device.DeviceD3D11_1, result))
                 {
                     device.DeviceImmediateContextD3D11.GenerateMips(shaderResourceView);
                 }
@@ -681,7 +681,7 @@ namespace SeeingSharp.Multimedia.Core
             textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
             textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -709,7 +709,7 @@ namespace SeeingSharp.Multimedia.Core
             textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.Write;
             textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -738,7 +738,7 @@ namespace SeeingSharp.Multimedia.Core
             textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.None;
             textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription, rawData);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription, rawData);
         }
 
         /// <summary>
@@ -769,7 +769,7 @@ namespace SeeingSharp.Multimedia.Core
             textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.Read;
             textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -799,7 +799,7 @@ namespace SeeingSharp.Multimedia.Core
             textureDescription.CpuAccessFlags = D3D11.CpuAccessFlags.Read;
             textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -848,7 +848,7 @@ namespace SeeingSharp.Multimedia.Core
                 textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
             }
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -897,7 +897,7 @@ namespace SeeingSharp.Multimedia.Core
                 textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
             }
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -945,7 +945,7 @@ namespace SeeingSharp.Multimedia.Core
                 textureDescription.OptionFlags = D3D11.ResourceOptionFlags.None;
             }
 
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -1010,7 +1010,7 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Create the texture finally
-            return new D3D11.Texture2D(device.DeviceD3D11, textureDescription);
+            return new D3D11.Texture2D(device.DeviceD3D11_1, textureDescription);
         }
 
         /// <summary>
@@ -1023,7 +1023,7 @@ namespace SeeingSharp.Multimedia.Core
             device.EnsureNotNull(nameof(device));
             depthBuffer.EnsureNotNullOrDisposed(nameof(depthBuffer));
 
-            return new D3D11.DepthStencilView(device.DeviceD3D11, depthBuffer);
+            return new D3D11.DepthStencilView(device.DeviceD3D11_1, depthBuffer);
         }
 
         /// <summary>
@@ -1078,7 +1078,7 @@ namespace SeeingSharp.Multimedia.Core
             bufferDescription.Usage = D3D11.ResourceUsage.Dynamic;
             bufferDescription.StructureByteStride = vertexCount * vertexSize;
 
-            return new D3D11.Buffer(device.DeviceD3D11, bufferDescription);
+            return new D3D11.Buffer(device.DeviceD3D11_1, bufferDescription);
         }
 
         /// <summary>
@@ -1114,7 +1114,7 @@ namespace SeeingSharp.Multimedia.Core
             bufferDescription.Usage = D3D11.ResourceUsage.Immutable;
             bufferDescription.StructureByteStride = vertexSize;
 
-            D3D11.Buffer result = new D3D11.Buffer(device.DeviceD3D11, outStream, bufferDescription);
+            D3D11.Buffer result = new D3D11.Buffer(device.DeviceD3D11_1, outStream, bufferDescription);
             outStream.Dispose();
 
             return result;
@@ -1158,7 +1158,7 @@ namespace SeeingSharp.Multimedia.Core
             bufferDescriptionIndex.Usage = D3D11.ResourceUsage.Immutable;
 
             // Load the index buffer
-            D3D11.Buffer result = new D3D11.Buffer(device.DeviceD3D11, outStreamIndex, bufferDescriptionIndex);
+            D3D11.Buffer result = new D3D11.Buffer(device.DeviceD3D11_1, outStreamIndex, bufferDescriptionIndex);
 
             outStreamIndex.Dispose();
 
@@ -1414,7 +1414,7 @@ namespace SeeingSharp.Multimedia.Core
             }
 
             // Create the state object finally
-            return new D3D11.SamplerState(device.DeviceD3D11, samplerDesk);
+            return new D3D11.SamplerState(device.DeviceD3D11_1, samplerDesk);
         }
 
         /// <summary>

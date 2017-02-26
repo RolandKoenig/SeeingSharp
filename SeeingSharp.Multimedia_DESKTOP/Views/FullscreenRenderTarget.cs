@@ -220,7 +220,7 @@ namespace SeeingSharp.Multimedia.Views
         Tuple<D3D11.Texture2D, D3D11.RenderTargetView, D3D11.Texture2D, D3D11.DepthStencilView, SharpDX.Mathematics.Interop.RawViewportF, Size2, DpiScaling> IRenderLoopHost.OnRenderLoop_CreateViewResources(EngineDevice device)
         {
             //Get references to current render device
-            m_device = device.DeviceD3D11;
+            m_device = device.DeviceD3D11_1;
             m_deviceContext = m_device.ImmediateContext;
 
             // Create swapchain and dummy form

@@ -264,7 +264,7 @@ namespace SeeingSharp.Multimedia.Views
             int height = (int)pixelSize.Height;
 
             //Get references to current render device
-            D3D11.Device renderDevice = engineDevice.DeviceD3D11;
+            D3D11.Device renderDevice = engineDevice.DeviceD3D11_1;
             D3D11.DeviceContext renderDeviceContext = renderDevice.ImmediateContext;
 
             //Create the swap chain and the render target

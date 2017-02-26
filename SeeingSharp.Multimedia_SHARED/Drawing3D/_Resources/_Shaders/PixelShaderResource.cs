@@ -53,7 +53,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             if (m_pixelShader == null)
             {
-                m_pixelShader = new D3D11.PixelShader(device.DeviceD3D11, shaderBytecode);
+                m_pixelShader = new D3D11.PixelShader(device.DeviceD3D11_1, shaderBytecode);
             }
         }
 

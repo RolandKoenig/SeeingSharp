@@ -122,7 +122,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             switch (instancingMode)
             {
                 case MaterialApplyInstancingMode.SingleObject:
-                    return new D3D11.InputLayout(device.DeviceD3D11, m_vertexShader.ShaderBytecode, inputElements);
+                    return new D3D11.InputLayout(device.DeviceD3D11_1, m_vertexShader.ShaderBytecode, inputElements);
 
                 default:
                     throw new SeeingSharpGraphicsException(this.GetType() + " does not support " + typeof(MaterialApplyInstancingMode) + "." + instancingMode + "!");

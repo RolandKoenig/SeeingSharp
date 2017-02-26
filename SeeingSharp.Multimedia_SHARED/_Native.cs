@@ -34,5 +34,15 @@ namespace SeeingSharp.Multimedia
     {
         [DllImport("Mfreadwrite.dll", CallingConvention = CallingConvention.StdCall, EntryPoint = "MFCreateSourceReaderFromByteStream")]
         public static extern int MFCreateSourceReaderFromByteStream_Native(IntPtr pByteStream, IntPtr pAttributes, out IntPtr pSourceReader);
+
+        [DllImport(
+            "d3d11.dll",
+            EntryPoint = "CreateDirect3D11DeviceFromDXGIDevice",
+            SetLastError = true,
+            CharSet = CharSet.Unicode,
+            ExactSpelling = true,
+            CallingConvention = CallingConvention.StdCall
+            )]
+        public static extern UInt32 CreateDirect3D11DeviceFromDXGIDevice(IntPtr dxgiDevice, out IntPtr graphicsDevice);
     }
 }

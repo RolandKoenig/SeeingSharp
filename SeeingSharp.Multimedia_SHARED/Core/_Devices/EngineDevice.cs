@@ -407,9 +407,14 @@ namespace SeeingSharp.Multimedia.Core
         /// <summary>
         /// Gets the Direct3D 11 device object.
         /// </summary>
-        internal D3D11.Device1 DeviceD3D11
+        internal D3D11.Device1 DeviceD3D11_1
         {
             get { return m_handlerD3D11.Device1; }
+        }
+
+        internal D3D11.Device3 Device3D11_3
+        {
+            get { return m_handlerD3D11.Device3; }
         }
 
 #if DESKTOP

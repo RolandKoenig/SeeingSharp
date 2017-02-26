@@ -120,7 +120,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             }
 
             // Create view for shaders
-            m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
+            m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11_1, m_texture);
 
             // Some checking..
             m_isCubeTexture =

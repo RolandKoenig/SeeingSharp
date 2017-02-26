@@ -85,6 +85,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.UwpWithoutXamlT
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.DesktopFullscreenTest", "Tests\SeeingSharp.DesktopFullscreenTest\SeeingSharp.DesktopFullscreenTest.csproj", "{3081D9B1-7EEE-4339-A461-39DB62586774}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.HoloLense3DTest", "Tests\SeeingSharp.HoloLense3DTest\SeeingSharp.HoloLense3DTest.csproj", "{7A3C09D8-35D4-4520-B379-F646EC93E1F5}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\SeeingSharp.Samples\SeeingSharp.Samples.projitems*{1e91e314-92a5-4d55-b227-fd0af4427c71}*SharedItemsImports = 4
@@ -429,6 +431,18 @@ Global
 		{3081D9B1-7EEE-4339-A461-39DB62586774}.Release|x64.Build.0 = Release|Any CPU
 		{3081D9B1-7EEE-4339-A461-39DB62586774}.Release|x86.ActiveCfg = Release|Any CPU
 		{3081D9B1-7EEE-4339-A461-39DB62586774}.Release|x86.Build.0 = Release|Any CPU
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Debug|ARM.ActiveCfg = Debug|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Debug|x64.ActiveCfg = Debug|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Debug|x86.ActiveCfg = Debug|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Debug|x86.Build.0 = Debug|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Debug|x86.Deploy.0 = Debug|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|Any CPU.ActiveCfg = Release|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|ARM.ActiveCfg = Release|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|x64.ActiveCfg = Release|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|x86.ActiveCfg = Release|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|x86.Build.0 = Release|x86
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -454,5 +468,6 @@ Global
 		{EEFCB0AB-D9F8-47DF-8875-79078B7D8C22} = {A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}
 		{E9437B0A-91DC-41FB-97E8-95CC27339F03} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{3081D9B1-7EEE-4339-A461-39DB62586774} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
+		{7A3C09D8-35D4-4520-B379-F646EC93E1F5} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 	EndGlobalSection
 EndGlobal

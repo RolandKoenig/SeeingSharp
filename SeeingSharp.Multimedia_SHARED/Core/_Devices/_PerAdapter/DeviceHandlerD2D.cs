@@ -69,7 +69,7 @@ namespace SeeingSharp.Multimedia.Core
                 {
                     try
                     {
-                        using (DXGI.Device dxgiDevice = engineDevice.DeviceD3D11.QueryInterface<DXGI.Device>())
+                        using (DXGI.Device dxgiDevice = engineDevice.DeviceD3D11_1.QueryInterface<DXGI.Device>())
                         {
                             m_deviceD2D = new D2D.Device1(engineDevice.Core.FactoryD2D_2, dxgiDevice);
                             m_deviceContextD2D = new SharpDX.Direct2D1.DeviceContext(
@@ -89,7 +89,7 @@ namespace SeeingSharp.Multimedia.Core
                     m_deviceContextD2D = null;
 
                     m_dummyRenderTargetTexture = GraphicsHelper.CreateRenderTargetTextureDummy(
-                        engineDevice.DeviceD3D11, 32, 32);
+                        engineDevice.DeviceD3D11_1, 32, 32);
                     m_dummyDirect2DOverlay = new Direct2DOverlayRenderer(
                         engineDevice, m_dummyRenderTargetTexture, 32, 32, DpiScaling.Default, 
                         forceInit: true);

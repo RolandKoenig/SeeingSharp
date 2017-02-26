@@ -70,7 +70,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         protected internal virtual D3D11.Buffer CreateConstantBuffer(EngineDevice device)
         {
             return new D3D11.Buffer(
-                device.DeviceD3D11,
+                device.DeviceD3D11_1,
                 m_bufferSize,
                 D3D11.ResourceUsage.Dynamic,
                 D3D11.BindFlags.ConstantBuffer,

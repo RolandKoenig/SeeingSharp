@@ -89,7 +89,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                     m_texture = GraphicsHelper.LoadTextureFromBitmap(device, bitmap, 0);
 
                     //Create the view targeting the texture
-                    m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
+                    m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11_1, m_texture);
 
                     return;
                 }
@@ -99,7 +99,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 if(m_mappedTexture != null)
                 {
                     m_texture = GraphicsHelper.LoadTexture2DFromMappedTexture(device, m_mappedTexture);
-                    m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
+                    m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11_1, m_texture);
 
                     return;
                 }

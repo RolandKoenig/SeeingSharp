@@ -17,13 +17,13 @@ using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 
-namespace SeeingSharp.UwpWithoutXamlTest
+namespace SeeingSharp.HoloLense3DTest
 {
     internal class AppView : IFrameworkView, IDisposable
     {
         #region Main window
         private CoreWindow m_mainWindow;
-        private SeeingSharpCoreWindowPainter m_mainWindowPainter;
+        private SeeingSharpHolographicsSpacePainter m_mainWindowPainter;
         #endregion
 
         public void Initialize(CoreApplicationView applicationView)
@@ -97,8 +97,7 @@ namespace SeeingSharp.UwpWithoutXamlTest
         {
             m_mainWindow = window;
 
-            m_mainWindowPainter = new SeeingSharpCoreWindowPainter(window);
-            m_mainWindowPainter.ClearColor = Windows.UI.Colors.CornflowerBlue;
+            m_mainWindowPainter = new SeeingSharpHolographicsSpacePainter(window);
         }
 
         public void Uninitialize()

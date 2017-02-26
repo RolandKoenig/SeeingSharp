@@ -96,7 +96,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
             // Prepare texture
             m_texture = GraphicsHelper.CreateCpuWritableTexture(
                 device, m_videoWidth, m_videoHeight);
-            m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11, m_texture);
+            m_textureView = new D3D11.ShaderResourceView(device.DeviceD3D11_1, m_texture);
 
             // Read the thumbnail
             m_videoReader.SetCurrentPosition(m_thumbnailTimestamp);

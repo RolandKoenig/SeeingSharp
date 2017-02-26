@@ -348,18 +348,18 @@ namespace SeeingSharp.Multimedia.Views
             if (m_renderLoop.ViewConfiguration.AntialiasingEnabled)
             {
                 m_backBufferMultisampled = GraphicsHelper.CreateRenderTargetTexture(engineDevice, viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
-                m_renderTargetView = new D3D11.RenderTargetView(engineDevice.DeviceD3D11, m_backBufferMultisampled);
+                m_renderTargetView = new D3D11.RenderTargetView(engineDevice.DeviceD3D11_1, m_backBufferMultisampled);
                 backBufferForRenderloop = m_backBufferMultisampled;
             }
             else
             {
-                m_renderTargetView = new D3D11.RenderTargetView(engineDevice.DeviceD3D11, m_backBuffer);
+                m_renderTargetView = new D3D11.RenderTargetView(engineDevice.DeviceD3D11_1, m_backBuffer);
                 backBufferForRenderloop = m_backBuffer;
             }
 
             //Create the depth buffer
             m_depthBuffer = GraphicsHelper.CreateDepthBufferTexture(engineDevice, viewSize.Width, viewSize.Height, m_renderLoop.ViewConfiguration);
-            m_renderTargetDepth = new D3D11.DepthStencilView(engineDevice.DeviceD3D11, m_depthBuffer);
+            m_renderTargetDepth = new D3D11.DepthStencilView(engineDevice.DeviceD3D11_1, m_depthBuffer);
 
             //Define the viewport for rendering
             SharpDX.Mathematics.Interop.RawViewportF viewPort = GraphicsHelper.CreateDefaultViewport(viewSize.Width, viewSize.Height);

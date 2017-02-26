@@ -79,7 +79,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
                 dataStream.Position = 0;
 
                 return new D3D11.Buffer(
-                    device.DeviceD3D11,
+                    device.DeviceD3D11_1,
                     dataStream,
                     new D3D11.BufferDescription(
                         m_structureSize,

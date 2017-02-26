@@ -384,7 +384,7 @@ namespace SeeingSharp.Multimedia.Views
             m_factory = device.FactoryDxgi;
 
             //Get all devices
-            m_renderDevice = device.DeviceD3D11;
+            m_renderDevice = device.DeviceD3D11_1;
             m_renderDeviceContext = m_renderDevice.ImmediateContext;
 
             //Create the swap chain and the render target

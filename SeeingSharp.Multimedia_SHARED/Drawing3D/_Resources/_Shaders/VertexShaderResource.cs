@@ -52,7 +52,7 @@ namespace SeeingSharp.Multimedia.Drawing3D
         {
             if (m_vertexShader == null)
             {
-                m_vertexShader = new D3D11.VertexShader(device.DeviceD3D11, shaderBytecode);
+                m_vertexShader = new D3D11.VertexShader(device.DeviceD3D11_1, shaderBytecode);
             }
         }
 
