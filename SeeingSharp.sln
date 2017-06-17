@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}"
 EndProject
@@ -86,6 +86,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.DesktopFullscreenTest", "Tests\SeeingSharp.DesktopFullscreenTest\SeeingSharp.DesktopFullscreenTest.csproj", "{3081D9B1-7EEE-4339-A461-39DB62586774}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.HoloLense3DTest", "Tests\SeeingSharp.HoloLense3DTest\SeeingSharp.HoloLense3DTest.csproj", "{7A3C09D8-35D4-4520-B379-F646EC93E1F5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Concepts", "Tests\SeeingSharp.Concepts\SeeingSharp.Concepts.csproj", "{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}"
 EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
@@ -443,6 +445,22 @@ Global
 		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|x86.ActiveCfg = Release|x86
 		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|x86.Build.0 = Release|x86
 		{7A3C09D8-35D4-4520-B379-F646EC93E1F5}.Release|x86.Deploy.0 = Release|x86
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|ARM.Build.0 = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|x64.Build.0 = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Debug|x86.Build.0 = Debug|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|ARM.ActiveCfg = Release|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|ARM.Build.0 = Release|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|x64.ActiveCfg = Release|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|x64.Build.0 = Release|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|x86.ActiveCfg = Release|Any CPU
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -469,5 +487,6 @@ Global
 		{E9437B0A-91DC-41FB-97E8-95CC27339F03} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{3081D9B1-7EEE-4339-A461-39DB62586774} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{7A3C09D8-35D4-4520-B379-F646EC93E1F5} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
+		{40DAA6EA-9C9A-4F4A-9607-B201446AC3EE} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 	EndGlobalSection
 EndGlobal

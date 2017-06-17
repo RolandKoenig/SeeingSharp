@@ -2355,9 +2355,6 @@
           }
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
@@ -4834,9 +4831,6 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
-      },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -7354,9 +7348,6 @@
           "runtimes/aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
@@ -9842,9 +9833,6 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
-      },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -12371,9 +12359,6 @@
           "runtimes/aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
@@ -14859,9 +14844,6 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
-      },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -17387,9 +17369,6 @@
         "runtime": {
           "runtimes/aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
-      },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -23811,11 +23790,6 @@
         "system.xml.xmlserializer.4.0.11.nupkg.sha512",
         "system.xml.xmlserializer.nuspec"
       ]
-    },
-    "SeeingSharp.Multimedia.Resources/1.0.0": {
-      "type": "project",
-      "path": "../SeeingSharp.Multimedia.Resources/SeeingSharp.Multimedia.Resources.csproj",
-      "msbuildProject": "../SeeingSharp.Multimedia.Resources/SeeingSharp.Multimedia.Resources.csproj"
     },
     "SeeingSharp_UNIVERSAL/1.0.0": {
       "type": "project",

@@ -21967,7 +21967,12 @@
       "projectName": "SeeingSharp_UNIVERSAL",
       "projectPath": "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp_UNIVERSAL\\SeeingSharp_UNIVERSAL.csproj",
       "projectJsonPath": "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp_UNIVERSAL\\project.json",
-      "projectStyle": "ProjectJson"
+      "projectStyle": "ProjectJson",
+      "frameworks": {
+        "uap10.0": {
+          "projectReferences": {}
+        }
+      }
     },
     "dependencies": {
       "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",

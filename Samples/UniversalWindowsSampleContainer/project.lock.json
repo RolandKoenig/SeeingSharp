@@ -2410,15 +2410,12 @@
           }
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
         "dependencies": {
+          "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp.Multimedia.Resources\\SeeingSharp.Multimedia.Resources.csproj": "1.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-          "SeeingSharp.Multimedia.Resources": "1.0.0",
           "SeeingSharp_UNIVERSAL": "1.0.0",
           "SharpDX": "3.1.1",
           "SharpDX.DXGI": "3.1.1",
@@ -2432,9 +2429,6 @@
           "System.Reactive.Interfaces": "3.1.1",
           "System.Reactive.Linq": "3.1.1"
         }
-      },
-      "SeeingSharp.Samples.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -4968,15 +4962,12 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
         "dependencies": {
+          "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp.Multimedia.Resources\\SeeingSharp.Multimedia.Resources.csproj": "1.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-          "SeeingSharp.Multimedia.Resources": "1.0.0",
           "SeeingSharp_UNIVERSAL": "1.0.0",
           "SharpDX": "3.1.1",
           "SharpDX.DXGI": "3.1.1",
@@ -4990,9 +4981,6 @@
           "System.Reactive.Interfaces": "3.1.1",
           "System.Reactive.Linq": "3.1.1"
         }
-      },
-      "SeeingSharp.Samples.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -7565,15 +7553,12 @@
           "runtimes/aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
         "dependencies": {
+          "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp.Multimedia.Resources\\SeeingSharp.Multimedia.Resources.csproj": "1.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-          "SeeingSharp.Multimedia.Resources": "1.0.0",
           "SeeingSharp_UNIVERSAL": "1.0.0",
           "SharpDX": "3.1.1",
           "SharpDX.DXGI": "3.1.1",
@@ -7587,9 +7572,6 @@
           "System.Reactive.Interfaces": "3.1.1",
           "System.Reactive.Linq": "3.1.1"
         }
-      },
-      "SeeingSharp.Samples.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -10132,15 +10114,12 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
         "dependencies": {
+          "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp.Multimedia.Resources\\SeeingSharp.Multimedia.Resources.csproj": "1.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-          "SeeingSharp.Multimedia.Resources": "1.0.0",
           "SeeingSharp_UNIVERSAL": "1.0.0",
           "SharpDX": "3.1.1",
           "SharpDX.DXGI": "3.1.1",
@@ -10154,9 +10133,6 @@
           "System.Reactive.Interfaces": "3.1.1",
           "System.Reactive.Linq": "3.1.1"
         }
-      },
-      "SeeingSharp.Samples.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -12738,15 +12714,12 @@
           "runtimes/aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
         "dependencies": {
+          "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp.Multimedia.Resources\\SeeingSharp.Multimedia.Resources.csproj": "1.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-          "SeeingSharp.Multimedia.Resources": "1.0.0",
           "SeeingSharp_UNIVERSAL": "1.0.0",
           "SharpDX": "3.1.1",
           "SharpDX.DXGI": "3.1.1",
@@ -12760,9 +12733,6 @@
           "System.Reactive.Interfaces": "3.1.1",
           "System.Reactive.Linq": "3.1.1"
         }
-      },
-      "SeeingSharp.Samples.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -15305,15 +15275,12 @@
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
         "dependencies": {
+          "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp.Multimedia.Resources\\SeeingSharp.Multimedia.Resources.csproj": "1.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-          "SeeingSharp.Multimedia.Resources": "1.0.0",
           "SeeingSharp_UNIVERSAL": "1.0.0",
           "SharpDX": "3.1.1",
           "SharpDX.DXGI": "3.1.1",
@@ -15327,9 +15294,6 @@
           "System.Reactive.Interfaces": "3.1.1",
           "System.Reactive.Linq": "3.1.1"
         }
-      },
-      "SeeingSharp.Samples.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -17911,15 +17875,12 @@
           "runtimes/aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
       },
-      "SeeingSharp.Multimedia.Resources/1.0.0": {
-        "type": "project"
-      },
       "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
         "type": "project",
         "framework": "UAP,Version=v10.0",
         "dependencies": {
+          "D:\\Projects\\GitHub\\RolandKoenig\\SeeingSharp\\SeeingSharp.Multimedia.Resources\\SeeingSharp.Multimedia.Resources.csproj": "1.0.0",
           "Microsoft.NETCore.UniversalWindowsPlatform": "5.2.2",
-          "SeeingSharp.Multimedia.Resources": "1.0.0",
           "SeeingSharp_UNIVERSAL": "1.0.0",
           "SharpDX": "3.1.1",
           "SharpDX.DXGI": "3.1.1",
@@ -17933,9 +17894,6 @@
           "System.Reactive.Interfaces": "3.1.1",
           "System.Reactive.Linq": "3.1.1"
         }
-      },
-      "SeeingSharp.Samples.Resources/1.0.0": {
-        "type": "project"
       },
       "SeeingSharp_UNIVERSAL/1.0.0": {
         "type": "project",
@@ -24410,20 +24368,10 @@
         "system.xml.xmlserializer.nuspec"
       ]
     },
-    "SeeingSharp.Multimedia.Resources/1.0.0": {
-      "type": "project",
-      "path": "../../SeeingSharp.Multimedia.Resources/SeeingSharp.Multimedia.Resources.csproj",
-      "msbuildProject": "../../SeeingSharp.Multimedia.Resources/SeeingSharp.Multimedia.Resources.csproj"
-    },
     "SeeingSharp.Multimedia_UNIVERSAL/1.0.0": {
       "type": "project",
       "path": "../../SeeingSharp.Multimedia_UNIVERSAL/project.json",
       "msbuildProject": "../../SeeingSharp.Multimedia_UNIVERSAL/SeeingSharp.Multimedia_UNIVERSAL.csproj"
-    },
-    "SeeingSharp.Samples.Resources/1.0.0": {
-      "type": "project",
-      "path": "../SeeingSharp.Samples.Resources/SeeingSharp.Samples.Resources.csproj",
-      "msbuildProject": "../SeeingSharp.Samples.Resources/SeeingSharp.Samples.Resources.csproj"
     },
     "SeeingSharp_UNIVERSAL/1.0.0": {
       "type": "project",
