@@ -24,6 +24,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Reflection;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -199,6 +200,42 @@ namespace SeeingSharp.Checking
                 throw new SeeingSharpCheckException(string.Format(
                     "Object {0} within method {1} must not be null!",
                     checkedVariableName, callerMethod));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureNotNullWhenNullIsNotAllowed<T>(
+            this object objParam, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            if ((objParam == null) && 
+                (default(T) != null))
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Object {0} within method {1} must not be null because type argument is not by ref!",
+                    checkedVariableName, callerMethod));
+            }
+        }
+
+        [Conditional("DEBUG")]
+        public static void EnsureAssignableTo<T>(
+            this object objParam, string checkedVariableName,
+            [CallerMemberName]
+            string callerMethod = "")
+        {
+            if (objParam == null) { return; }
+            if (string.IsNullOrEmpty(callerMethod)) { callerMethod = "Unknown"; }
+
+            var genericTypeInfo = typeof(T).GetTypeInfo();
+            var argTypeInfo = objParam.GetType().GetTypeInfo();
+            if (!genericTypeInfo.IsAssignableFrom(argTypeInfo))
+            {
+                throw new SeeingSharpCheckException(string.Format(
+                    "Object {0} within method {1} can not be assigned to type {2}!",
+                    checkedVariableName, callerMethod, genericTypeInfo.FullName));
             }
         }
 
