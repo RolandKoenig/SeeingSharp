@@ -154,11 +154,6 @@
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <ItemGroup>
-    <SDKReference Include="BehaviorsXamlSDKManaged, Version=12.0">
-      <Name>Behaviors SDK %28XAML%29</Name>
-    </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\SeeingSharp.Multimedia.Resources\SeeingSharp.Multimedia.Resources.csproj">
       <Project>{f24f4dd8-52d6-49ce-b5b3-b8c840ccaa7f}</Project>
       <Name>SeeingSharp.Multimedia.Resources</Name>
