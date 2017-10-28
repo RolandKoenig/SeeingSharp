@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27004.2005
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{A86EC9F4-FA6E-4D47-AEC8-B279E6557EAE}"
 EndProject
@@ -79,8 +79,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.Samples.Resourc
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_Base", "_Base", "{EEFCB0AB-D9F8-47DF-8875-79078B7D8C22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp_ANDROID", "SeeingSharp_ANDROID\SeeingSharp_ANDROID.csproj", "{4A63B2B9-ED7D-427F-80F2-1B253D927F00}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.UwpWithoutXamlTest", "Tests\SeeingSharp.UwpWithoutXamlTest\SeeingSharp.UwpWithoutXamlTest.csproj", "{E9437B0A-91DC-41FB-97E8-95CC27339F03}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SeeingSharp.DesktopFullscreenTest", "Tests\SeeingSharp.DesktopFullscreenTest\SeeingSharp.DesktopFullscreenTest.csproj", "{3081D9B1-7EEE-4339-A461-39DB62586774}"
@@ -91,7 +89,6 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		Samples\SeeingSharp.Samples\SeeingSharp.Samples.projitems*{1e91e314-92a5-4d55-b227-fd0af4427c71}*SharedItemsImports = 4
 		Samples\SeeingSharp.Samples\SeeingSharp.Samples.projitems*{2f1fd63d-4ec2-4fc9-b91f-c655029a7ed3}*SharedItemsImports = 13
-		SeeingSharp_SHARED\SeeingSharp_SHARED.projitems*{4a63b2b9-ed7d-427f-80f2-1b253d927f00}*SharedItemsImports = 4
 		SeeingSharp_SHARED\SeeingSharp_SHARED.projitems*{6db78969-0fff-4778-912a-194846229fda}*SharedItemsImports = 4
 		SeeingSharp.Multimedia_SHARED\SeeingSharp.Multimedia_SHARED.projitems*{761c1f6e-0eca-42b8-a9af-86d0570b9ce8}*SharedItemsImports = 4
 		SeeingSharp.Multimedia_SHARED\SeeingSharp.Multimedia_SHARED.projitems*{7d56912b-c3e5-4b80-9171-53e447ac1429}*SharedItemsImports = 13
@@ -379,22 +376,6 @@ Global
 		{D9564440-77BD-495B-A256-B54EC41EBB11}.Release|ARM.ActiveCfg = Release|Any CPU
 		{D9564440-77BD-495B-A256-B54EC41EBB11}.Release|x64.ActiveCfg = Release|Any CPU
 		{D9564440-77BD-495B-A256-B54EC41EBB11}.Release|x86.ActiveCfg = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|ARM.Build.0 = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|x64.Build.0 = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Debug|x86.Build.0 = Debug|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|ARM.ActiveCfg = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|ARM.Build.0 = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|x64.ActiveCfg = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|x64.Build.0 = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|x86.ActiveCfg = Release|Any CPU
-		{4A63B2B9-ED7D-427F-80F2-1B253D927F00}.Release|x86.Build.0 = Release|Any CPU
 		{E9437B0A-91DC-41FB-97E8-95CC27339F03}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{E9437B0A-91DC-41FB-97E8-95CC27339F03}.Debug|ARM.ActiveCfg = Debug|ARM
 		{E9437B0A-91DC-41FB-97E8-95CC27339F03}.Debug|ARM.Build.0 = Debug|ARM
@@ -469,5 +450,8 @@ Global
 		{E9437B0A-91DC-41FB-97E8-95CC27339F03} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{3081D9B1-7EEE-4339-A461-39DB62586774} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
 		{7A3C09D8-35D4-4520-B379-F646EC93E1F5} = {6FEDBA53-10DE-44B9-B9AF-C6DBDFCAD451}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E5E81F0D-F957-40C2-AA3E-1969D38910C7}
 	EndGlobalSection
 EndGlobal

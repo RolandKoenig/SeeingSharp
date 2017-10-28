@@ -53,8 +53,13 @@ namespace SeeingSharp.BuildTasks
                     as string;
                 if (string.IsNullOrEmpty(winSdkPath))
                 {
-                    base.Log.LogError("Unable to compile shader: Windows SDK 8.1 64-Bit not found!");
-                    return false;
+                    winSdkPath = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Microsoft SDKs\\Windows\\v10.0", "InstallationFolder", null)
+                        as string;
+                    if (string.IsNullOrEmpty(winSdkPath))
+                    {
+                        base.Log.LogError("Unable to compile shader: Windows SDK v8.1 or v10 64-Bit not found!");
+                        return false;
+                    }
                 }
 
                 // Search fxc.exe
