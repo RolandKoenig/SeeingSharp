@@ -49,11 +49,11 @@ namespace SeeingSharp.BuildTasks
                 if (this.ShaderFiles == null) { return true; }
 
                 // Search the windows sdk path
-                string winSdkPath = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Microsoft SDKs\\Windows\\v8.1", "InstallationFolder", null)
+                string winSdkPath = Registry.GetValue("HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\Microsoft SDKs\\Windows\\v10.0", "InstallationFolder", null)
                     as string;
                 if (string.IsNullOrEmpty(winSdkPath))
                 {
-                    base.Log.LogError("Unable to compile shader: Windows SDK 8.1 64-Bit not found!");
+                    base.Log.LogError("Unable to compile shader: Windows SDK 10.0 64-Bit not found!");
                     return false;
                 }
 
