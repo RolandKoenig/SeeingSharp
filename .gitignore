@@ -191,3 +191,7 @@ Cert/
 *.ps_*.Debug.txt
 *.vs_*.Debug.cso
 *.vs_*.Debug.txt 
+/.vs/SeeingSharp/v15/Server/sqlite3
+/.vs/SeeingSharp/v15/sqlite3/db.lock
+/.vs/SeeingSharp/v15/sqlite3/storage.ide-shm
+/.vs/SeeingSharp/v15/sqlite3/storage.ide-wal
